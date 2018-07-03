@@ -1,0 +1,43 @@
+html {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+h2 {
+    background-color: blue;
+    color: white;
+    padding-left: 30px;
+}
+
+.redBgd {
+    background-color: red;
+}
+
+img {
+    width: 60px;
+    border-radius: 50%;
+}
+
+ol {
+    padding-left: 20px;
+}
+
+nav {
+    background-color: blue;
+    /* padding: 30px; */
+    color: white;
+    font-size: 30px;
+    height: 54px;
+    padding: 20px;
+
+}
+
+#left {
+    float: left;
+    
+}
+
+#right {
+    float: right;
+}
