@@ -10,7 +10,7 @@ h2 {
     padding-left: 30px;
 }
 
-.redBgd {
+.redBackground {
     background-color: red;
 }
 
@@ -33,11 +33,11 @@ nav {
 
 }
 
-#left {
+.left {
     float: left;
     
 }
 
-#right {
+.right {
     float: right;
 }
