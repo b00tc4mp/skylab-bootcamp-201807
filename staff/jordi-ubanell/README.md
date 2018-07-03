@@ -1,1 +1,1 @@
-https://github.com/JordiUbanell
+[Jordi](https://github.com/JordiUbanell)
