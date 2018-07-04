@@ -10,7 +10,7 @@ function askName() {
 }
 
 //-Function! => Generar Numero Random 
-function numRandom () {
+function numRandom() {
 	return Math.floor(Math.random() * 10 );
 }
 

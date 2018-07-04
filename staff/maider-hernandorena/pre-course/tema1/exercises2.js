@@ -27,28 +27,28 @@ myName.push(23);
 console.log ("My name is "+ myName[0] + " and i'm " + myName[2] + " years old");
 
 //g) Prepara una función para añadir tu City a la array, muestra un mensaje mostrando el contenido de toda la array, así aseguraremos los cambios.
-function myCityAdd (city){
+function myCityAdd(city){
 console.log (myName);
 }
-myCityAdd (myName.push("Beasain"));
+myCityAdd(myName.push("Beasain"));
 
 //h) Crea ahora, una funcion para eliminar la variable City y asegura los cambios.
-function myCityDelete (cityDelete){
+function myCityDelete(cityDelete){
 console.log (myName);
 }
-myCityAdd (myName.pop("Beasain"));
+myCityAdd(myName.pop("Beasain"));
 
 //j) Ahora, elimina el nombre y asegura los cambios
-function myNameDelete (nameDelete){
+function myNameDelete(nameDelete){
 console.log (myName);
 }
-myCityAdd (myName.shift("Maider"));
+myCityAdd(myName.shift("Maider"));
 
 //k) Quiero volver a introducir mi nombre pero si lo introduzco utilizando push() estará en la última posición, como podria hacer para introducirlo en la primera posición? 
-function myNameAdd (nameAdd){
+function myNameAdd(nameAdd){
 console.log (myName);
 }
-myCityAdd (myName.unshift("Maider"));
+myCityAdd(myName.unshift("Maider"));
 
 //l) Ahora, declara una array con los números del 0 a 10 y muestra cada número multiplicado por dos.
 var numbers = [0,1,2,3,4,5,6,7,8,9,10];

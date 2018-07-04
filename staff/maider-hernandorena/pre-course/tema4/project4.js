@@ -45,7 +45,7 @@ function pasapalabra(myObject) {
         askName();
     
     
-        function roundOne () {
+        function roundOne() {
     
             myObject.forEach(function(obj) {
     
@@ -63,7 +63,7 @@ function pasapalabra(myObject) {
                 } else if (userAnswer === "pasapalabra") {
                     alert("Pasas palabra. Pulsa aceptar para ver la siguiente pregunta y seguir con el juego.");
                 } else {
-                    console.log ("Ha abandonado el juego... Vuelva cuando quiera!");
+                    console.log("Ha abandonado el juego... Vuelva cuando quiera!");
                 }
             })
 
@@ -72,7 +72,7 @@ function pasapalabra(myObject) {
 
 
 
-        function roundTwo () {
+        function roundTwo() {
 
             myObject.forEach(function(obj) {
 
@@ -89,7 +89,7 @@ function pasapalabra(myObject) {
                 } else if (repeat === "pasapalabra") {
                     alert("Pasas palabra. Pulsa aceptar para ver la siguiente pregunta y seguir con el juego.");
                 } else {
-                    console.log ("Ha abandonado el juego... Vuelva cuando quiera!");
+                    console.log("Ha abandonado el juego... Vuelva cuando quiera!");
                 }
             }
             })

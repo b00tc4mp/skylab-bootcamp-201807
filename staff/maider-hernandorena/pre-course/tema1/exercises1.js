@@ -1,6 +1,6 @@
 //Strings
 //a) Puedes contar cuantas letras tiene tu nombre?
-function showLetters (name) {
+function showLetters(name) {
  	console.log ("My name has "+ name.length + " letters");
 }
 showLetters ("Maider");
@@ -20,7 +20,7 @@ name = nameSurname[1];
 console.log (nameSurname.join (" ")  +", " +  name);
 
 //e) Ahora, reemplaza tu nombre por "Mr/Ms" y vuelve a mostrar la variable con los cambios.
-abbreviation = nameSurname[1].replace ("Hernandorena","Mrs");
+abbreviation = nameSurname[1].replace("Hernandorena","Mrs");
 console.log ("Hello, " + abbreviation + " " + nameSurname[1]);
 
 //f) Selecciona tu apellido y transfórmalo a MAYÚSCULAS.

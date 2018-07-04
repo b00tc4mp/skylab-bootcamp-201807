@@ -1,7 +1,7 @@
 function bingo(){
 
 function askName() {
-    var person = prompt ("Introduzca su nombre", "nombre");
+    var person = prompt("Introduzca su nombre", "nombre");
     if (person != null) {
     	console.log("Bienvenid@ " + person + "!");
     } else {
@@ -10,7 +10,7 @@ function askName() {
 }
 askName();
 
-function numRandom () {
+function numRandom() {
     return Math.floor(Math.random() * 10 );
 }
 
@@ -34,8 +34,8 @@ function askTurn() {
             console.log("Bingooooo! Felicidades! Se acabo el juego!");
             return 0;
         }
-        var ask = confirm ('Quieres una bola nueva?');
-        if (ask === true) {
+        var ask = confirm('Quieres una bola nueva?');
+        if (ask) {
             newTurn();
         } else {
             console.log("Que pena que nos abandones... Vuelve cuando quieras!");

@@ -1,20 +1,20 @@
 //a) Primero, creamos una función que nos cree un saludo, pasa tu nombre como parámetro y devuélvelo por la consola.
-function myName (myName) {
+function myName(myName) {
 	console.log("Hola " + myName);
 }
-console.log (myName("Maider"));
+console.log(myName("Maider"));
 
 //b) Intenta retornar los valores en lugar de usar console.log
-function myName (myName) {
+function myName(myName) {
 	return "Hola " + myName;
 }
-console.log (myName("Maider"));
+console.log(myName("Maider"));
 
 //c) Ahora, añade tu edad y concaténala al return
 
 //Primera opción
-function myMessage (){
-	function myName (myName) {
+function myMessage(){
+	function myName(myName) {
 		return "Maider";
 	}
 	function myAge(myAge) {
@@ -22,10 +22,10 @@ function myMessage (){
 	}
 	return "Hola " + myName() + "! Tu edad es " + myAge();
 }
-console.log (myMessage());
+console.log(myMessage());
 
 //Segunda opción
-function myMessage2 (name2, age2){
+function myMessage2(name2, age2){
 	return "Hola " + name2 + "! Tu edad es " + age2;
 }
 console.log(myMessage2("Maider",23));
@@ -36,7 +36,7 @@ var myFunction = myMessage2("Ana", 25);
 console.log(myFunction);
 
 //e) Ahora declara otra funcion que devuelva tu edad y asigna su resultado a otra variable, intenta imprimir sus dos resultados concatenados
-function myName (myName) {
+function myName(myName) {
 	return "Maider";
 }
 function myAge(myAge) {
@@ -92,7 +92,7 @@ console.log(age());
 //no me funciona el return (no hace caso al número...)
 
 //j) Al return de la función name(), concaténale otro mensaje
-function name (name) {
+function name(name) {
 	return "Hola " + name + "! Un placer conocerte."
 }
 console.log(name("Maider"));

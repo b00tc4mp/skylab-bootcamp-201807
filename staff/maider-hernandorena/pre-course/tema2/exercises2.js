@@ -47,7 +47,7 @@ console.log(listValueProperties(avenger.fullName));
 
 
 //h) Lista todas las propiedades del objeto a través de un console.log()
-console.log ("Hi there, I'm " + avenger.fullName + " the " + avenger.classRoom + " from " + avenger.city);
+console.log("Hi there, I'm " + avenger.fullName + " the " + avenger.classRoom + " from " + avenger.city);
 
 //h1) Añade más propiedades al objeto, como... markAverage, country, job, studies...
 avenger.country = "Catalunya";
@@ -66,7 +66,7 @@ function Avenger(fullName, classRoom, city, country, job, studies) {
     this.job= job;
     this.studies= studies;
 }
-var tonyStark = new Avenger ("Tony Stark", "XI", "Barcelona", "Catalunya", "Frontend Developer", "Designer")
+var tonyStark = new Avenger("Tony Stark", "XI", "Barcelona", "Catalunya", "Frontend Developer", "Designer")
 console.log(listValueProperties(tonyStark));
 
 //j) Crea otro objeto y imprime sus propiedades por pantalla.
