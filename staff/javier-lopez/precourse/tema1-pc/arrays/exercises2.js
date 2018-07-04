@@ -2,8 +2,8 @@
 
 function separationLetters(name, lastName){
 	var elements = [name, lastName];
-	var valores= elements.join(' ');
-	var surname= valores.substr(valores.indexOf(" ")+1,valores.length);
+	var value = elements.join(' ');
+	var surname = value.substr( value.indexOf(" ")+1, value.length);
 	var array = surname.split("");
 	console.log(array.join("|"));
 }
