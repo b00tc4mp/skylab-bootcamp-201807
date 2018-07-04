@@ -18,7 +18,7 @@ var flights = [
 {id: 09, to: "Tel-Aviv", from: "Madrid", cost: 150,scale: false}
 ];
 
-let name = "";
+var name = "";
 
 function askNameWelcome(){
 	name = prompt("Por favor introduzca su nombre"); 
@@ -34,7 +34,7 @@ function askNameWelcome(){
 	}
 };*/
 
-let vuelos = [];
+var vuelos = [];
 
 function displayFlightsFriendly(){
 	flights.forEach(function(obj,i){
@@ -48,7 +48,7 @@ function displayFlightsFriendly(){
 	alert(vuelos);
 }
 
-let precioTotal = 0;
+var precioTotal = 0;
 
 function displayAveragePrice(){
 	flights.forEach(function(obj){
@@ -57,7 +57,7 @@ function displayAveragePrice(){
 	alert("El precio medio de los vuelos es de: " + precioTotal/flights.length + " €");
 };
 
-	let vuelosConEscala = 0;
+	var vuelosConEscala = 0;
 
 function displayScales(){
 	flights.forEach(function(obj){
@@ -66,7 +66,7 @@ function displayScales(){
 	alert("Hay "+vuelosConEscala+" vuelos con escala");
 };
 
-let destinosDeHoy = [];
+var destinosDeHoy = [];
 
 function todayFlights(){
 	flights.forEach(function(obj){
