@@ -1,22 +1,22 @@
-h) Crea ahora, una funcion para eliminar la variable City y asegura los cambios.
+//h) Crea ahora, una funcion para eliminar la variable City y asegura los cambios.
 
-var Details = ["Javier","Lopez","20"];
-function MycityAdd(city){
+var details = ["Javier","Lopez","20"];
+function mycityAdd(city){
 
-		Details.push(city);
+		details.push(city);
 		
-		console.log("City added to array! "+Details)
+		console.log("City added to array! "+details)
 
 }
 
-MycityAdd("Terrassa");
+mycityAdd("Terrassa");
 
-function MycityDelete(){
+function mycityDelete(){
 
-		Details.pop();
+		details.pop();
 		
-		console.log("City deleted of array! "+Details)
+		console.log("City deleted of array! "+details)
 
 }
 
-MycityDelete();
+mycityDelete();

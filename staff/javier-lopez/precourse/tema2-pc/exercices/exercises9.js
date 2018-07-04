@@ -9,10 +9,10 @@ var avenger = {
     id : 1 
 };
 
-function ShowPropertyRename(ObjectName){
-	ObjectName.fullName=ObjectName.name;
-	delete ObjectName.name;
-	console.log(ObjectName.fullName);
+function showPropertyRename(objectName){
+	objectName.fullName=objectName.name;
+	delete objectName.name;
+	console.log(objectName.fullName);
 }
 
-ShowPropertyRename(avenger);
+showPropertyRename(avenger);

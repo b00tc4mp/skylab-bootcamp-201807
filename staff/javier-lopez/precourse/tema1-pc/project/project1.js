@@ -5,45 +5,45 @@
 // cualquier cosa que no sean números.
 
 
-function Calculator(Number1, Number2){
+function calculator(number1, number2){
 	//We declarate the array
-	var Results =[];
+	var results =[];
 
-	if(isNaN(Number2)==false && isNaN(Number1)==false){
+	if(isNaN(number2)==false && isNaN(number1)==false){
 
 		//Rest
-		var TotalRest = Number1-Number2;
+		var totalRest = number1-number2;
 
 		//Detecting if it has decimals
-		Results.push("The result of the Rest of "+Number1+" and "+Number2+" is equal to "+Math.round(TotalRest * 1000) / 1000);
+		results.push("The result of the Rest of "+number1+" and "+number2+" is equal to "+Math.round(totalRest * 1000) / 1000);
 			
 
 		//Sum
-		var TotalSum = Number1+Number2;
+		var totalSum = number1+number2;
 
 		//Detecting if it has decimals
-		Results.push("The result of the Sum of "+Number1+" and "+Number2+" is equal to "+Math.round(TotalSum * 1000) / 1000);
+		results.push("The result of the Sum of "+number1+" and "+number2+" is equal to "+Math.round(totalSum * 1000) / 1000);
 
 		//Multiplication
-		var TotalMulti = Number1*Number2;
+		var totalMulti = number1*number2;
 
 		//Detecting if it has decimals
-		Results.push("The result of the Multiplication of "+Number1+" and "+Number2+" is equal to "+Math.round(TotalMulti * 1000) / 1000);
+		results.push("The result of the Multiplication of "+number1+" and "+number2+" is equal to "+Math.round(totalMulti * 1000) / 1000);
 
 		//Division
-		var TotalDivi = Number1/Number2;
+		var totalDivi = number1/number2;
 		
 		//Detecting if it has decimals
-		Results.push("The result of the Division of "+Number1+" and "+Number2+" is equal to "+Math.round(TotalDivi * 1000) / 1000);
+		results.push("The result of the Division of "+number1+" and "+number2+" is equal to "+Math.round(totalDivi * 1000) / 1000);
 	}
 	
 	//Verification of the numers
-	if(isNaN(Number2)==true){
+	if(isNaN(number2)==true){
 
-		if(isNaN(Number1)==false){
+		if(isNaN(number1)==false){
 
-			var SquareRoot = Math.sqrt(Number1);
-			Results.push("The result of the Square Root of "+Number1+" is equal to "+Math.round(SquareRoot * 1000) / 1000);
+			var squareRoot = Math.sqrt(number1);
+			Results.push("The result of the Square Root of "+number1+" is equal to "+Math.round(squareRoot * 1000) / 1000);
 		}else{
 			console.log("You didn't write any number");
 		}
@@ -52,14 +52,14 @@ function Calculator(Number1, Number2){
 
 
 	//Showing the results
-	for(var i=0;i<Results.length;i++){
-		console.log(Results[i]);
+	for(var i=0;i<results.length;i++){
+		console.log(results[i]);
 	}
 	
-	Results = [];
+	results = [];
 }
 
-Calculator(2.5,2);
+calculator(2.5,2);
 
 
 //Otra manera de limitar los decimales

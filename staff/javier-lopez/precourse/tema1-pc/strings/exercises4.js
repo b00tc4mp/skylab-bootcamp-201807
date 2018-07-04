@@ -1,13 +1,13 @@
 //d) Ahora, solo tu apellido.
 
 
-function ShowLastName(LastName){
+function showLastName(lastName){
 	
 	//Forma no automatica
-	console.log("My lastname is "+LastName.substr(7,5));
+	console.log("My lastname is "+lastName.substr(7,5));
 
 	//Forma automatica (No estoy del todo seguro)
-	console.log("My lastname is "+LastName.substr(LastName.indexOf(" ")+1,LastName.length));
+	console.log("My lastname is "+lastName.substr(LastName.indexOf(" ")+1,lastName.length));
 }
 
-ShowLastName("Javier Lopez Blasco");
+showLastName("Javier Lopez Blasco");

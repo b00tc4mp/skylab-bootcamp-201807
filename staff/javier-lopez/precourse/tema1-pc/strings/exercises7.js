@@ -1,8 +1,8 @@
 //f) Selecciona tu apellido y transfórmalo a MAYÚSCULAS.
 
 
-function UpperCase(Lastname){
-	var mySelection=Lastname.toUpperCase();
+function upperCase(lastname){
+	var mySelection=lastname.toUpperCase();
 	return mySelection;
 }
-console.log("My lastname is "+UpperCase("Lopez"));
+console.log("My lastname is "+upperCase("Lopez"));

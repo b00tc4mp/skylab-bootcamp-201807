@@ -8,9 +8,9 @@ var avenger = {
     id : 1 
 };
 //For in (Higher order function)
-function ShowAllProperties(ObjectName){
-	console.log("Hi there, I'm "+ObjectName.name+" and my class is "+ObjectName.class+", so my id is "+
-		ObjectName.id);	
+function showAllProperties(objectName){
+	console.log("Hi there, I'm "+objectName.name+" and my class is "+objectName.class+", so my id is "+
+		objectName.id);	
 }
 
-ShowAllProperties(avenger);
+showAllProperties(avenger);

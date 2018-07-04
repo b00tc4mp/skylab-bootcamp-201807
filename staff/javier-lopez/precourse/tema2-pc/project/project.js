@@ -12,74 +12,74 @@
 					{id: 9, to: "Tel-Aviv", from: "Madrid", cost: 150,scale: false}
 				]
 
-	function SkylabAirlines(Name){
+	function skylabAirlines(name){
 		//Wellcome Message
-		console.log("Welcome "+Name+"!!!");
+		console.log("Welcome "+name+"!!!");
 
 		//Showing Flights
-		ShowFlights();
+		showFlights();
 		//Showing the average price
-		AveragePrice();
+		averagePrice();
 
 		//Showing flights with scale
-		ShowScaleFlights();
+		showScaleFlights();
 
 		//Showing the last 5 flights
-		LastFlights();
+		lastFlights();
 	}
 	
 
 
 
 
-	function ShowFlights(){
+	function showFlights(){
 		for(i in flights){
-			var ScaleNeed ="";
+			var scaleNeed ="";
 			if(flights[i].scale ==false){
-				ScaleNeed ="it's not necessary to make a scale";
+				scaleNeed ="it's not necessary to make a scale";
 			}else{
-				ScaleNeed ="it's necessary to make a scale";
+				scaleNeed ="it's necessary to make a scale";
 			}
-			console.log("The flight with origin from "+flights[i].from+" to "+flights[i].to+" has a cost of "+flights[i].cost+" and "+ScaleNeed);
+			console.log("The flight with origin from "+flights[i].from+" to "+flights[i].to+" has a cost of "+flights[i].cost+" and "+scaleNeed);
 		}
 	}
 
 	function markAverage(){
 			
-			var Sum = 0;
+			var sum = 0;
 			
 			for (i in flights){
-				Sum = Sum + flights[i].cost;			
+				sum = sum + flights[i].cost;			
 			}
 			//Hacemos la media
-			var Average = Sum / flights.length;
-			return Average;
+			var average = sum / flights.length;
+			return average;
 		}
 
-	function ShowScaleFlights(){
-		var ScaleFlights =[];
+	function showScaleFlights(){
+		var scaleFlights =[];
 		for(i in flights){
 			if(flights[i].scale ==true){
-				ScaleFlights.push("the flight from: "+flights[i].from+" to: "+flights[i].to);
+				scaleFlights.push("the flight from: "+flights[i].from+" to: "+flights[i].to);
 			}
 		}
 		if(ScaleFlights.length>0){
-			console.log("There are "+ScaleFlights.length+" flights with scale, they are "+ScaleFlights.join(","));
+			console.log("There are "+scaleFlights.length+" flights with scale, they are "+scaleFlights.join(","));
 		}else{
 			console.log("There is no flight with scale");
 		}
 		
 	}
 
-	function AveragePrice(){
+	function averagePrice(){
 		console.log("The average price of all flights is = "+markAverage().toString()+"€");
 	}
 
-	function LastFlights(){
+	function lastFlights(){
 		console.log("Lasts flights are: ");
 		for(var i=Math.max(flights.length - 5, 1);i<flights.length;i++){
 			console.log("From: "+flights[i].from+" To: "+flights[i].to);
 		}
 	}
-	SkylabAirlines("Javier");
+	skylabAirlines("Javier");
 

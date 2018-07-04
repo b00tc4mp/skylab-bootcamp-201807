@@ -1,9 +1,9 @@
 //d1) Añade la resta...
 
-function Calculator(Number1, Number2){
-	var TotalSum = Number1 + Number2;
-	var TotalRest = Number1 - Number2;
-	console.log("The sum of "+Number1+" and "+Number2+" = "+TotalSum+", and the rest of is = "+TotalRest);
+function calculator(number1, number2){
+	var totalSum = number1 + number2;
+	var totalRest = number1 - number2;
+	console.log("The sum of "+number1+" and "+number2+" = "+totalSum+", and the rest of is = "+totalRest);
 }
 
-Calculator(2,3);
+calculator(2,3);

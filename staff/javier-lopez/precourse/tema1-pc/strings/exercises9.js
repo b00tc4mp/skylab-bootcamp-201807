@@ -1,11 +1,11 @@
 //h) Ahora, puedes seleccionar la inicial de tu nombre y apellido y mostrarlas por pantalla?
 
 
-function MyFirstLastNameLetters(Name, Lastname){
-	var MyName=Name.charAt(0).toUpperCase();
-	var MyLastName=Lastname.charAt(0).toUpperCase();
-	var Alltogether = MyName+"."+MyLastName;
-	return Alltogether;
+function myFirstLastNameLetters(name, lastname){
+	var myName=name.charAt(0).toUpperCase();
+	var myLastName=lastname.charAt(0).toUpperCase();
+	var alltogether = myName+"."+myLastName;
+	return alltogether;
 }
 
-console.log(MyFirstLastNameLetters("Javier", "Lopez"));
+console.log(myFirstLastNameLetters("Javier", "Lopez"));

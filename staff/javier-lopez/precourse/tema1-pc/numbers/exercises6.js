@@ -1,14 +1,14 @@
 //d2) Y la multiplicación
 
-function Calculator(Number1, Number2){
+function calculator(number1, number2){
 	//Operations
-	var TotalSum = Number1 + Number2;
-	var TotalRest = Number1 - Number2;
-	var TotalMult = Number1 * Number2;
+	var totalSum = number1 + number2;
+	var totalRest = number1 - number2;
+	var totalMult = number1 * number2;
 
 	//Show the result
-	console.log("The sum of "+Number1+" and "+Number2+" = "+TotalSum+
-		", the rest of is = "+TotalRest+", and the multiplication is = "+TotalMult);
+	console.log("The sum of "+number1+" and "+number2+" = "+totalSum+
+		", the rest of is = "+totalRest+", and the multiplication is = "+totalMult);
 }
 
-Calculator(2,3);
+calculator(2,3);

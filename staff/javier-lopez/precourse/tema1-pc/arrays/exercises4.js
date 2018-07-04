@@ -1,14 +1,14 @@
-d)Como en el ejercicio anterior, pero seleccionando tu apellido.
+//d)Como en el ejercicio anterior, pero seleccionando tu apellido.
 
-function SeparationLetters(Name, LastName){
-	var elements = [Name, LastName];
-	var Valores= elements.join(' ');
-	var Surname= Valores.substr(Valores.indexOf(" ")+1,Valores.length);
-	var Array = Surname.split("");
-	for(var i =0; i<Array.length;i++){
-		console.log(i+1+"º "+Array[i]);
+function separationLetters(name, lastName){
+	var elements = [name, lastName];
+	var valores= elements.join(' ');
+	var surname= valores.substr(valores.indexOf(" ")+1,valores.length);
+	var array = surname.split("");
+	for(var i =0; i<array.length;i++){
+		console.log(i+1+"º "+array[i]);
 	}
 	
 }
 
-console.log(SeparationLetters("Javier","Lopez"));
+console.log(separationLetters("Javier","Lopez"));

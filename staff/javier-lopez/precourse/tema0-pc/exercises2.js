@@ -1,2 +1,2 @@
-var Edad = 20;
-console.log(Edad);
+var edad = 20;
+console.log(edad);

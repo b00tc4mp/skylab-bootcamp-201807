@@ -1,21 +1,21 @@
 //b) Nono, que hora exactamente? Dime la hora sin minutos
-function ActualHour(){
-	var Dates = new Date();
-	var Hour = Dates.getHours().toString();
-	if(Hour<12 && Hour>6){
-	console.log("It's "+Hour+" of Morning");
+function actualHour(){
+	var dates = new Date();
+	var hour = Dates.getHours().toString();
+	if(hour<12 && hour>6){
+	console.log("It's "+hour+" of Morning");
     }
-	if(Hour>11 && Hour<21){
-    console.log("It's "+Hour+" of Afternoon");
+	if(hour>11 && hour<21){
+    console.log("It's "+hour+" of Afternoon");
 	}
-	if(Hour>20 && Hour<=23){
-    console.log("It's "+Hour+" of Night");
+	if(hour>20 && hour<=23){
+    console.log("It's "+hour+" of Night");
 	}
-	if(Hour>=0 && Hour<7){
-    console.log("It's "+Hour+" of Early Night");
+	if(hour>=0 && hour<7){
+    console.log("It's "+hour+" of Early Night");
 	}
 	
 	
 }
 
-ActualHour();
+actualHour();

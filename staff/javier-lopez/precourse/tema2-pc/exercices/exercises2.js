@@ -8,8 +8,8 @@ var avenger = {
     id : 1 
 };
 
-function PropertyNames(ObjectName){
-	console.log(Object.values(ObjectName));
+function propertyNames(objectName){
+	console.log(Object.values(objectName));
 }
 
 PropertyNames(avenger);

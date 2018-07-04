@@ -1,14 +1,14 @@
 //d1) Iguala el resultado a una variable nueva e imprímela por pantalla.
 
 
-function ShowLastName(LastName){
+function showLastName(lastName){
 
     //Forma automatica
-    console.log(LastName+", "+LastName.substr(LastName.indexOf(" ")+1,LastName.length));
+    console.log(lastName+", "+lastName.substr(lastName.indexOf(" ")+1,lastName.length));
 
 }
 
-ShowLastName("Javier Lopez");
+showLastName("Javier Lopez");
 
 
 

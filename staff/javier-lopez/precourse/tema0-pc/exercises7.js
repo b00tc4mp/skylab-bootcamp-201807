@@ -5,3 +5,4 @@ for(var i = 0;i<numeros.length;i++){
 		console.log("We are in the middle of loop");
 	}
 	console.log(numeros[i]);
+}

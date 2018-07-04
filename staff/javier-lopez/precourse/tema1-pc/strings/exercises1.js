@@ -1,7 +1,7 @@
 //a) Puedes contar cuantas letras tiene tu nombre?
 
-function LetterCounter(name){
+function letterCounter(name){
 	console.log(name.length);
 }
 
-LetterCounter("Javier");
+letterCounter("Javier");

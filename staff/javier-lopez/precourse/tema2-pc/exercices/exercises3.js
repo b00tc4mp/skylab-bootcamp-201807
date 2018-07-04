@@ -8,9 +8,9 @@ var avenger = {
     id : 1 
 };
 
-function ModifyPropertyValue(ObjectName){
-	ObjectName.class = "XI";
-	console.log(ObjectName);
+function modifyPropertyValue(objectName){
+	objectName.class = "XI";
+	console.log(objectName);
 }
 
-PropertyNames(avenger);
+modifyPropertyValue(avenger);

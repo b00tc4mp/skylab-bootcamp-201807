@@ -11,8 +11,8 @@ var avenger = {
 };
 
 
-function PropertyNames(ObjectName){
-	console.log(Object.keys(ObjectName));
+function propertyNames(objectName){
+	console.log(Object.keys(objectName));
 }
 
 PropertyNames(avenger);

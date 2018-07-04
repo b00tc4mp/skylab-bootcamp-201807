@@ -1,8 +1,8 @@
 //c) Ahora, añade tu edad y concaténala al return
 
-function Message(Name, Age){
-	var MyMessage = "Hello "+Name+", you're "+Age+" years old."; 
-	return MyMessage;
+function message(name, age){
+	var myMessage = "Hello "+name+", you're "+age+" years old."; 
+	return myMessage;
 }
 
-console.log(Message("Javier", 20));
+console.log(message("Javier", 20));

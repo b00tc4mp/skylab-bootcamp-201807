@@ -2,10 +2,10 @@
 
 
 
-function UpperCase(Lastname){
-	var mySelection=Lastname.charAt(0).toUpperCase()+Lastname.slice(1);
+function upperCase(lastname){
+	var mySelection=lastname.charAt(0).toUpperCase()+lastname.slice(1);
 	return mySelection;
 }
 
-var something = UpperCase("lopez") + " is awesome";
+var something = upperCase("lopez") + " is awesome";
 console.log(something);

@@ -8,9 +8,9 @@ var avenger = {
     id : 1 
 };
 
-function PropertyNames(ObjectName){
-	ObjectName.city = "New York";
-	console.log(ObjectName.city);
+function propertyNames(objectName){
+	objectName.city = "New York";
+	console.log(objectName.city);
 }
 
-PropertyNames(avenger);
+propertyNames(avenger);

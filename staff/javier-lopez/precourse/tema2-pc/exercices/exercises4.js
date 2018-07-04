@@ -9,9 +9,9 @@ var avenger = {
     id : 1 
 };
 
-function PropertyNames(ObjectName){
-	delete ObjectName.id;
-	console.log(ObjectName);
+function propertyNames(objectName){
+	delete objectName.id;
+	console.log(objectName);
 }
 
-PropertyNames(avenger);
+propertyNames(avenger);

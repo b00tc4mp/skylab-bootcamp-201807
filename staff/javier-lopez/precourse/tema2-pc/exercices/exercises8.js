@@ -9,9 +9,9 @@ var avenger = {
 };
 
 
-function PropertyRename(ObjectName){
-	ObjectName.fullName=ObjectName.name;
-	delete ObjectName.name;
+function propertyRename(objectName){
+	objectName.fullName=objectName.name;
+	delete objectName.name;
 }
 
-PropertyRename(avenger);
+propertyRename(avenger);

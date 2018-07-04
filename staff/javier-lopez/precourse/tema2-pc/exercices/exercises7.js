@@ -9,8 +9,8 @@ var avenger = {
     id : 1 
 };
 
-function PropertyCount(ObjectName){
-	console.log(Object.keys(ObjectName).length);
+function propertyCount(objectName){
+	console.log(Object.keys(objectName).length);
 }
 
-PropertyCount(avenger);
+propertyCount(avenger);

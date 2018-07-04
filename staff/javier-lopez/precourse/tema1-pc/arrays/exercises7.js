@@ -1,12 +1,12 @@
-g) Prepara una función para añadir tu City a la array, muestra un mensaje mostrando el contenido de toda la array, así aseguraremos los cambios.
+//g) Prepara una función para añadir tu City a la array, muestra un mensaje mostrando el contenido de toda la array, así aseguraremos los cambios.
 
-function Mycity(Name, LastName, age, city){
+function mycity(name, lastName, age, city){
 
-		var Details = [Name, LastName, age];
-		Details.push(city);
+		var details = [name, lastName, age];
+		details.push(city);
 		
-		console.log("City added to array! "+Details)
+		console.log("City added to array! "+details)
 
 }
 
-Mycity("Javier","Lopez","20","Terrassa");
+mycity("Javier","Lopez","20","Terrassa");

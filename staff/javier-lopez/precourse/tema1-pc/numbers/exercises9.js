@@ -1,24 +1,24 @@
 //e) Podemos controlar este error con un condicional if? Todavia por acabar
 
 
-function Calculator(Number1, Number2){
+function calculator(number1, number2){
 	//Operations
-	var TotalSum = Number1 + Number2;
-	var TotalRest = Number1 - Number2;
-	var TotalMult = Number1 * Number2;
-	var TotalDiv = Number1/Number2;
+	var totalSum = number1 + number2;
+	var totalRest = number1 - number2;
+	var totalMult = number1 * number2;
+	var totalDiv = number1/number2;
 
 	//Detect if it's a number
-	if(isNaN(Number1)==true || isNaN(Number2)==true){
+	if(isNaN(number1)==true || isNaN(number2)==true){
 		console.log("You can't do this operation!");
 	}
 
 	//Show the result if they are numbers
-		if(isNaN(Number1)==false && isNaN(Number2)==false){
-			console.log("The sum of "+Number1+" and "+Number2+" = "+TotalSum+
-		", the rest of is = "+TotalRest+", the multiplication is = "+TotalMult+
-		", and the division is = "+TotalDiv);
+		if(isNaN(number1)==false && isNaN(number2)==false){
+			console.log("The sum of "+number1+" and "+number2+" = "+totalSum+
+		", the rest of is = "+totalRest+", the multiplication is = "+totalMult+
+		", and the division is = "+totalDiv);
 	}
 }
 
-Calculator(1,2);
+calculator(1,2);

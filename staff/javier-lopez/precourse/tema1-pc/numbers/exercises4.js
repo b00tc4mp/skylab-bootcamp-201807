@@ -1,9 +1,9 @@
 //d) Hagamos una calculadora. Primero, la suma.
 
 
-function Calculator(Number1, Number2){
-	var TotalSum = Number1 + Number2;
-	console.log(TotalSum);
+function calculator(number1, number2){
+	var totalSum = number1 + number2;
+	console.log(totalSum);
 }
 
 Calculator(2,3);

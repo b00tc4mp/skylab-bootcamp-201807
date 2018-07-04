@@ -8,12 +8,12 @@ var avenger = {
     id : 1 
 };
 
-function AddMoreProperties(ObjectName){
-	ObjectName.country = "United States";
-	ObjectName.job = "Hero";
-	ObjectName.partner = "Doctor Strange";
-	ObjectName.enemy = "Thanos";
-	console.log(ObjectName);
+function addMoreProperties(objectName){
+	objectName.country = "United States";
+	objectName.job = "Hero";
+	objectName.partner = "Doctor Strange";
+	objectName.enemy = "Thanos";
+	console.log(objectName);
 }
 
-AddMoreProperties(avenger);
+addMoreProperties(avenger);

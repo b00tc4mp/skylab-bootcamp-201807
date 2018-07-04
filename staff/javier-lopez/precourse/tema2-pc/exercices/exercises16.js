@@ -12,22 +12,22 @@ var avenger1 = {
 	Age: 50
 };
 
-function ShowingNames(Object, Object2){
+function showingNames(Object, Object2){
 	//Declaramos el array
-	var Arrays = [];
+	var arrays = [];
 
 	//Metemos los objetos en un array
-	Arrays.push(avenger);
-	Arrays.push(avenger1);
+	arrays.push(avenger);
+	arrays.push(avenger1);
 
 	//Hacemos un array de los nombres
-	var NameArray = [];
+	var nameArray = [];
 
-	for(const value of Arrays){
-		NameArray.push(value.Name);
+	for(const value of arrays){
+		nameArray.push(value.Name);
 		//console.log(value.Name);
 	}
-	console.log(NameArray.join(', '));
+	console.log(nameArray.join(', '));
 }
 
-ShowingNames(avenger, avenger1);
+showingNames(avenger, avenger1);

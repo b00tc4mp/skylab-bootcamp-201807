@@ -1,8 +1,8 @@
 //b) Intenta retornar los valores en lugar de usar console.log
 
-function Wellcome(Name){
+function wellcome(name){
 	
-	return "Hello "+Name;
+	return "Hello "+name;
 }
 
-console.log(Wellcome("Javier"));
+console.log(wellcome("Javier"));

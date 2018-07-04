@@ -1,11 +1,11 @@
-b) Ahora solo selecciona tu apellido y muestra cada letra separada por "|".
+//b) Ahora solo selecciona tu apellido y muestra cada letra separada por "|".
 
-function SeparationLetters(Name, LastName){
-	var elements = [Name, LastName];
-	var Valores= elements.join(' ');
-	var Surname= Valores.substr(Valores.indexOf(" ")+1,Valores.length);
-	var Array = Surname.split("");
-	console.log(Array.join("|"));
+function separationLetters(name, lastName){
+	var elements = [name, lastName];
+	var valores= elements.join(' ');
+	var surname= valores.substr(valores.indexOf(" ")+1,valores.length);
+	var array = surname.split("");
+	console.log(array.join("|"));
 }
 
-console.log(SeparationLetters("Javier","Lopez"));
+console.log(separationLetters("Javier","Lopez"));

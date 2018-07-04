@@ -1,2 +1,2 @@
-var data ={Nombre: "Javier", Edad: 20};
+var data ={nombre: "Javier", edad: 20};
 console.log(data);
