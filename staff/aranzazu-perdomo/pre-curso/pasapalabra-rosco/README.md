@@ -9,5 +9,5 @@ Para este proyecto se ha usado:
 * JAVASCRIPT
 
 
-![pantalla inicio](inicio.png)
-![rosco](rosco.png)
+![pantalla inicio](inicio.png);
+![rosco](rosco.png);
