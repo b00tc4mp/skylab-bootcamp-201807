@@ -38,7 +38,7 @@ var clickFunction = function(e) {
   //document.getElementById(this.id).classList.remove("coord");
   var tempID = this.id;
   setTimeout(function() {
-    checkCoors(tempID.split(","));
+    checkCoords(tempID.split(","));
   }, 300);
   //alert(this.id)
   document
@@ -263,7 +263,7 @@ function hasGameEnded() {
   return true;
 }
 
-function checkCoors(userCoords) {
+function checkCoords(userCoords) {
   for (var i = 1; i < shipReg.length; i++) {
     for (var j = 0; j < shipReg[i].length; j++) {
       if (
