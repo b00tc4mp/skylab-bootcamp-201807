@@ -1,10 +1,10 @@
 
 var userName = document.getElementById('user_name').value;
-var arrayOfRanking=[
+var arrayOfRanking= [
 {user: 'Jhon Nieve', points: 21},
 {user: 'Daenerys Targaryen', points: 20},
 {user: 'Tyrion Lannister', points: 15},];
-var rankingName=['Jhon Nieve','Daenerys Targaryen','Tyrion Lannister'];
+var rankingName= ['Jhon Nieve','Daenerys Targaryen','Tyrion Lannister'];
 var preguntas = 0;
 var correcto = 0;
 var incorrecto = 0;
