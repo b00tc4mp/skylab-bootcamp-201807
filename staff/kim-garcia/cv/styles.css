@@ -1,18 +1,8 @@
 body{
     margin: 0 auto;
     width: 50%;
-    background-color: gold;
+    background-color: aliceblue
     
-}
-ul {
-    background: #3399ff;
-    padding: 20px;
-}
-
-
-ul li {
-    background: #cce5ff;
-    margin: 5px;
 }
 
 h1 {
