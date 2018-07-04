@@ -26,7 +26,7 @@ function askName() {
 //El usuario visualizará todos los vuelos disponibles de una forma amigable: El vuelo con origen: Barcelona, y destino: Madrid tiene un coste de XXXX€ y no realiza ninguna escala.
 function listFlights (){
 	function scale(){
-		if (flights.scale === false) {
+		if (flights.scale) {
 			return "ninguna";
 		} else {
 			return "alguna";
@@ -52,7 +52,7 @@ console.log (avg);
 function scaleCounter() {
 	var counter = 0;
 	flights.forEach(function(obj){
-		if (obj.scale === true) {
+		if (obj.scale) {
 			counter++;
 		}
 	})

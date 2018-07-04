@@ -15,8 +15,8 @@ function numRandom() {
 }
 
 //Genero 5 filas de 5 numeros hasta el 50 y que no se repitan
-var numbers = [1,2,3,4,5,6,7,8,9,10]
-var carton = [2,5,8,9,4]
+var numbers = [1,2,3,4,5,6,7,8,9,10];
+var carton = [2,5,8,9,4];
 function shuffle(a) {
     var j, x, i;
     for (i = a.length - 1; i > 0; i--) {
