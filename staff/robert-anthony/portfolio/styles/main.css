@@ -14,7 +14,7 @@ body {
   margin-right: 10px;
   display: grid;
   grid-template-areas: "headerarea headerarea" ". mainarea" "footerarea footerarea";
-  grid-template-rows: 160px 1fr 50px;
+  grid-template-rows: 180px 1fr 30px;
   grid-template-columns: 200px 1fr; }
 
 header {
@@ -29,6 +29,7 @@ header {
     color: darkred;
     letter-spacing: .2em; }
   header address {
+    letter-spacing: .2em;
     display: block;
     flex: 1 1;
     text-align: right;
@@ -51,20 +52,33 @@ ul li {
   margin-left: 5rem;
   cursor: pointer; }
   ul li a {
+    font-size: 1em;
+    letter-spacing: .2em;
     text-decoration: none;
-    color: darkgrey; }
+    color: darkred;
+    text-transform: lowercase; }
     ul li a:hover, ul li a:active {
-      color: darkred; }
+      color: yellow; }
 
 main {
   grid-area: mainarea;
   display: flex;
   flex-direction: column;
   align-items: flex-end; }
+  main > aside {
+    position: fixed;
+    left: 80px;
+    top: 400px;
+    color: darkgrey;
+    font-weight: 700;
+    font-size: 2rem;
+    text-transform: lowercase;
+    letter-spacing: .5em; }
 
 footer {
   grid-area: footerarea;
-  background: orange; }
+  height: 40px;
+  background: darkred; }
 
 #development, #design {
   width: 70%;
