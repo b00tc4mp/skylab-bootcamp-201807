@@ -1,0 +1,122 @@
+html {
+      background-color: black;
+      color:lime;
+}
+*{
+  font-family: 'Roboto Mono', monospace;
+}
+
+button{
+      margin-left: 30px;
+      background-color: black;
+      color: lime;
+      font-size: 30px;
+}
+input{
+    background-color: black;
+    border: solid;
+    border-color: lime;
+    color: lime;
+    font-size: 30px;
+}
+
+#listRules{
+  list-style: upper-roman;
+}
+#myCanvas{
+  position: absolute;
+    left: -50%;
+
+}
+#welcomePerson{
+  margin-left: 25px;
+}
+#wrapper{
+  position: absolute;
+  top: 50%;
+  left: 45%;
+  transform: translate(-50%, -50%);
+
+}
+#modulo2 {
+  display: none;
+  position: absolute;
+  top: 0%;
+  left: 110%;
+  width: 100%;
+  width: -moz-available;          /* WebKit-based browsers will ignore this. */
+  width: -webkit-fill-available;  /* Mozilla-based browsers will ignore this. */
+  width: fill-available;
+}
+#tableWrapper{
+    display: none;
+    border: solid;
+
+}
+
+#controlsGame{
+    display: none;
+}
+
+#ranking{
+
+    background-color: aqua
+}
+
+#endMsgContainer{
+    display: none;
+}
+
+#table{
+  background-image: url(../resources/radar.gif);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: 30px,100px;
+  height: 500px;
+  width: 800px;
+  text-align: center;
+  border-color: white;
+}
+
+table tr td {
+	width: 8.80%;
+  color: green;
+}
+
+table tr td:first-child {
+    background-color: black;
+}
+
+.flip {
+	transition: 0.6s;
+	transform-style: preserve-3d;
+	position: relative;
+	transform: rotateY(360deg);
+}
+.hitShip{
+  background-image: url(../resources/titanic.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+}
+
+.hitWater{
+  background-image: url(../resources/image.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position-x: center;
+  background-position-y: -5px;
+}
+
+  @keyframes shipHere {
+  from { background-color: inherit; }
+  to { background-color: lime; }
+}
+
+.shipHere{
+  animation: shipHere 1s infinite;
+}
+
+.coord{
+      cursor: url(../resources/crosshair1.png) 16 16,pointer;
+}
