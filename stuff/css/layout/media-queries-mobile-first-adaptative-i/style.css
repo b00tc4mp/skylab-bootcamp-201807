@@ -1,0 +1,24 @@
+body {
+    background-color: red;
+    color: white;
+    font-size: 24px;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+@media screen and (min-device-width: 481px) and (max-device-width: 768px) and (orientation:portrait) {
+    body {
+        background-color: green;
+    }
+}
+
+@media screen and (min-device-width: 481px) and (max-device-width: 768px) and (orientation:landscape) {
+    body {
+        background-color: lightgreen;
+    }
+}
+
+@media screen and (min-width: 769px) {
+    body {
+        background-color: blue;
+    }
+}
