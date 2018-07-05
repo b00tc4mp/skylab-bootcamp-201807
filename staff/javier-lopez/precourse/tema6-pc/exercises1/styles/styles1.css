@@ -1,0 +1,24 @@
+#form{
+	margin-left: 450px;
+}
+
+#contact{
+	border-top: 1px solid gray;
+	padding-left: 20px; 
+	padding-bottom: 20px;
+	background: #C0AA75;
+	width: 500px;
+}
+
+#button{
+	margin-top: 10px;
+	margin-left: 200px;
+}
+
+label{
+    display: inline-block;
+    float: left;
+    clear: left;
+    width: 200px;
+    text-align: left;
+}

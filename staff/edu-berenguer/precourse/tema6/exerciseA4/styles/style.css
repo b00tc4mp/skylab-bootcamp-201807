@@ -1,0 +1,18 @@
+
+#general{
+    width: 900px;
+    height: 550px;
+    background-color: black;
+}
+.internalDiv{
+    border: solid white 4px;
+    background-color: #c9c9c9;
+    width: 150px;
+    height: 150px;
+    float: left;
+    margin: 10px;
+    text-align: center;
+}
+p{
+    margin-top: 65px;
+}
