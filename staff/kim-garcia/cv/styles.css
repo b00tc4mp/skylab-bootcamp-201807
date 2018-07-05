@@ -1,0 +1,25 @@
+body{
+    margin: 0 auto;
+    width: 50%;
+    background-color: gold;
+    
+}
+ul {
+    background: #3399ff;
+    padding: 20px;
+}
+
+
+ul li {
+    background: #cce5ff;
+    margin: 5px;
+}
+
+h1 {
+    color: black;
+    margin-left: 20px;
+}
+
+table {
+    margin-bottom: 20px;
+}
