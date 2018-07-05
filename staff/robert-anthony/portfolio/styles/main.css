@@ -1,0 +1,30 @@
+body {
+  margin: 0;
+  padding: 0;
+  height: 100vh; }
+
+#container {
+  height: 100%;
+  display: grid;
+  grid-template-areas: "headerarea headerarea" "mainarea mainarea" "footerarea footerarea";
+  grid-template: repeat(2, 1fr)/repeat(2, 1fr); }
+
+header {
+  grid-area: headerarea;
+  background: red; }
+
+main {
+  grid-area: mainarea;
+  background: lightblue; }
+
+footer {
+  grid-area: footerarea;
+  background: orange; }
+
+#education, #experience, #projects {
+  width: 800px; }
+
+#education, #experience {
+  display: none; }
+
+/*# sourceMappingURL=main.css.map */
