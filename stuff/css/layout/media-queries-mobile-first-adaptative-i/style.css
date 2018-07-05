@@ -1,0 +1,18 @@
+body {
+    background-color: magenta;
+    color: white;
+    font-size: 24px;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+@media screen and (min-width: 480px ) {
+    body {
+        background-color: indigo;
+    }
+}
+
+@media screen and (min-width: 768px) {
+    body {
+        background-color: deepskyblue;
+    }
+}
