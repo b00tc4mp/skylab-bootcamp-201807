@@ -1,0 +1,162 @@
+.hide {
+	display: none;
+}
+
+.main-container {
+	background-color: aliceblue;
+	overflow: auto;
+	height: 100vh;
+}
+
+.welcome-container {
+	margin: 50px;
+	text-align: center;
+}
+
+.welcome-title {
+	font-size: 50px;
+	text-transform: uppercase;
+}
+
+.welcome-container form {
+	margin: 30px;
+}
+
+.new-game {
+	margin: 20px 0;
+}
+
+.pasapalabra-container {
+	margin: 100px auto;
+}
+
+.user-circle {
+	text-align: center;
+    font-size: 40px;
+}
+
+.circle-container {
+	position: relative;
+	margin: auto;
+    width: 400px;
+    height: 400px;
+}
+
+.circle-letter {
+	position: absolute;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    background-color: dodgerblue;
+    border-radius: 100%;
+    border: 2px solid white;
+}
+
+@-webkit-keyframes blinker {
+  from {opacity: 1.0;}
+  to {opacity: 0.0;}
+}
+
+.circle-letter .blink{
+	text-decoration: blink;
+	-webkit-animation-name: blinker;
+	-webkit-animation-duration: 0.6s;
+	-webkit-animation-iteration-count:infinite;
+	-webkit-animation-timing-function:ease-in-out;
+	-webkit-animation-direction: alternate;
+}
+
+.circle-letter.bad {
+    background-color: red;
+}
+
+.circle-letter.good {
+    background-color: green;
+}
+	
+.circle-letter span {
+	vertical-align: -webkit-baseline-middle;
+    color: white;
+    text-transform: uppercase;
+}
+
+.numCorrect {
+	position: absolute;
+	bottom: 46px;
+    left: -30px;
+	width: 38px;
+    height: 38px;
+    text-align: center;
+    background-color: crimson;
+    border-radius: 100%;
+    border: 2px solid white;
+}
+
+.countdown {
+	position: absolute;
+	bottom: 0;
+    left: -7px;
+    width: 48px;
+    height: 34px;
+    text-align: center;
+    background-color: crimson;
+    border-radius: 80%;
+    border: 2px solid white;
+}
+
+.countdown span, .numCorrect span {
+	vertical-align: -webkit-baseline-middle;
+    color: white;
+    font-size: 25px;
+    line-height: 34px;
+}
+
+.inner-question, .inner-endmsg {
+	border-radius: 100%;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    text-align: center;
+    margin: 30px;
+}
+
+.inner-question p {
+    font-size: 24px;
+}
+
+.inner-question input {
+    display: block;
+    margin: 20px auto 10px auto;
+}
+
+.endmsg {
+	text-transform: uppercase;
+	font-size: 30px;
+}
+
+.stop {
+	position: absolute;
+    bottom: 40px;
+    left: 172px;
+}
+
+.ranking-container {
+	margin-bottom: 30px;
+}
+
+.ranking-container table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    min-width: 600px;
+    margin: auto;
+}
+
+.ranking-container td, .ranking-container th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+.ranking-container tr:nth-child(even) {
+    background-color: #dddddd;
+}
