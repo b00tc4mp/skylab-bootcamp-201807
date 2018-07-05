@@ -1,43 +1,72 @@
-html {
+* {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
+    font-family: 'Roboto Condensed', sans-serif;
 }
 
-h2 {
-    background-color: blue;
-    color: white;
-    padding-left: 30px;
+header {
+    background-color: #4B4141;
+    text-align: center;
+    width: 800px;
+    margin: 0 auto;
+    padding: 30px 0;
+    color: #B9E2E3;
 }
 
-.redBackground {
-    background-color: red;
+main {
+    width: 800px;
+    margin: 0 auto;
+}
+
+aside {
+    background-color:#B9E2E3;
+    width: 30%;
+    text-align: center;
+    float: left;
+    color: #4B4141;
+}
+aside section {
+    padding-bottom: 30px;
 }
 
 img {
-    width: 60px;
-    border-radius: 50%;
+    width: 160px;
+    border-radius: 5%;
+    margin-top: 40px;
 }
 
-ol {
-    padding-left: 20px;
+section h1 {
+    background-color: #4B4141;
+    padding: 10px 0;
+    margin-bottom: 10px;
+    padding-left: 10px;
+    color: #B9E2E3;
 }
 
-nav {
-    background-color: blue;
-    /* padding: 30px; */
-    color: white;
-    font-size: 30px;
-    height: 54px;
-    padding: 20px;
-
+time {
+    font-size: 20px;
 }
 
-.left {
+#principal section p {
+    padding-bottom: 15px;
+}
+
+#principal {
+    width: 70%;
     float: left;
-    
+    padding: 30px;
 }
 
-.right {
-    float: right;
+#principal section {
+    padding-bottom: 30px;
 }
+
+ul li {
+    list-style: none;
+}
+
+aside figure {
+    padding-bottom: 20px;
+}
+

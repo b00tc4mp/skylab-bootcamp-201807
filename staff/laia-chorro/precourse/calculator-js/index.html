@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>CalculatorJS</title>
+	<link rel="stylesheet" href="styles/styles.css">
+</head>
+<body>
+	<div class="calc-container">
+		<div class="screen">
+			<input type="text" id="screen-input" placeholder="0" value="" class="screen-input">
+		</div>
+		<div class="button-container">
+			<div class="button-row" class="button-row">
+				<input type="button" class="button" value="7" onclick='concatNumInScreen(7)'>
+				<input type="button" class="button" value="8" onclick='concatNumInScreen(8)'>
+				<input type="button" class="button" value="9" onclick='concatNumInScreen(9)'>
+				<input type="button" class="button" value=&divide; onclick='concatNumInScreen("&divide;")'>
+			</div>
+			<div class="button-row">
+				<input type="button" class="button" value="4" onclick='concatNumInScreen(4)'>
+				<input type="button" class="button" value="5" onclick='concatNumInScreen(5)'>
+				<input type="button" class="button" value="6" onclick='concatNumInScreen(6)'>
+				<input type="button" class="button" value=&times; onclick='concatNumInScreen("&times;")'>
+			</div>
+			<div class="button-row">
+				<input type="button" class="button" value="1" onclick='concatNumInScreen(1)'>
+				<input type="button" class="button" value="2" onclick='concatNumInScreen(2)'>
+				<input type="button" class="button" value="3" onclick='concatNumInScreen(3)'>
+				<input type="button" class="button" value="-" onclick='concatNumInScreen("-")'>
+			</div>
+			<div class="button-row">
+				<input type="button" class="button" value="0" onclick='concatNumInScreen(0)'>
+				<input type="button" class="button" value="." onclick='concatNumInScreen(".")'>
+				<input type="button" class="button" value="+" onclick='concatNumInScreen("+")'>
+				<input type="button" class="button equal" value="=" onclick='showResultInScreen()'>
+			</div>
+		</div>
+	</div>
+	
+	<script src="app/calculator.js"></script>
+</body>
+</html>

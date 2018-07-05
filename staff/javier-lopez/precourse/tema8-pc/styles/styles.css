@@ -1,0 +1,151 @@
+body{
+	background-color: #336DD3;
+}
+
+#question{
+	background-color: white;
+	width: 400px;
+	margin-left: 500px;
+}
+
+div {
+	font-family: Arial;
+	font-size: 20pt;
+	font-weight: bolder;
+	width: 30px;
+	height: 30px;
+	border-color: black;
+	border-style: solid;
+	background-color: #535A65;
+	color: white;
+	margin: 10px;
+	text-align: center;
+	vertical-align: middle;
+	border-radius: 20px;
+	position: absolute;
+}
+
+
+#A{
+	left: 480px;
+	top:30px;
+}
+			
+#B {
+	left: 548.84px;
+	top: 35.3px;
+}
+			
+#C {
+	left: 616.07px;
+	top: 51.06px;
+}
+			
+#D {
+	left: 680.09px;
+	top: 76.93px;
+}
+			
+#E {
+	left: 739.39px;
+	top: 112.28px;
+}
+			
+#F {
+	left: 792.6px;
+	top: 156.3px;
+}
+			
+#G {
+	left: 828.44px;
+	top: 207.93px;
+	}
+			
+#H {
+	left: 875.84px;
+	top: 265.97px;
+}
+			
+#I {
+	left: 903.993px;
+	top: 329.05px;
+}
+			
+#J {
+	left: 922.03px;
+	top: 395.68px;
+	}
+
+#K {
+
+}
+			
+#L {
+	left: 929.73px;
+	top: 464.4px;
+	}
+			
+#M {
+	left: 926.83px;
+	top: 533.28px;
+	}
+			
+#N {
+	left: 913.42px;
+	top: 900.01px;
+}
+
+#O {
+	left: 32.47px;
+	top: 527.04px;
+}
+			
+#P {
+	left: 30.54px;
+	top: 458.02px;
+}
+			
+#Q {
+	left: 39.19px;
+	top: 389.51px;
+}
+			
+#R {
+	left: 58.22px;
+	top: 323.14px;
+}
+			
+#S {
+	left: 87.19px;
+	top: 260.46px;
+}
+			
+#T {
+	left: 125.4px;
+	top: 202.95px;
+}
+			
+#U {
+	left: 171.95px;
+	top: 151.96px;
+}
+			
+#V {
+	left: 225.77px;
+	top: 108.7px;
+}
+			
+#X {
+	left: 285.56px;
+	top: 74.18px;
+}
+			
+#Y {
+	left: 349.94px;
+	top: 49.21px;
+}
+			
+#Z {
+	left: 417.37px;
+	top: 34.38px;
+}
