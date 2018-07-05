@@ -26,10 +26,10 @@ header img {
 }
 
 header button {
-    margin-top: 60px;
-    margin-left: 100px;
-    width: 100px;
-    height: 40px;
+    margin-top: 55px;
+    margin-left: 70px;
+    width: 140px;
+    height: 50px;
     background-color: #333333;
     color: #ffffff;
     border: none;
@@ -46,30 +46,50 @@ header button {
 }
 
 .flex-container button {
-    margin-top: -20px;
+    margin-top: -30px;
     margin-left: 0px;
     margin-right: 1px;
     width: auto;
-    height: 40px;
-    padding-left: 15px;
-    padding-right: 15px;
+    height: 50px;
+    padding-left: 25px;
+    padding-right: 25px;
     background-color: #c7e5f1;
     color: #333333;
     font-weight: bolder;
-    border: none;
+    border-radius: 0;
+}
+
+.flex-container button.first-header-button {
+    border-radius: 7px 0 0 7px;
+}
+
+.flex-container button.last-header-button {
+    border-radius: 0 7px 7px 0;
+}
+
+input[type="search"] {
+    border: 0.5px solid #cecece;
+    height: 50%;
     border-radius: 7px;
+    padding-left: 10px;
+    color: #969696;
 }
 
 .grid-container {
     display: grid;
     grid-template-columns: 1fr 1fr;
     background-color: #4abdd2;
+    border-bottom: 1px solid #969696;
 }
 
 .left {
     grid-column-start: 1;
     grid-column-end: 2;
     justify-self: center;
+}
+
+img.left {
+    margin-bottom: 49px;
 }
 
 .right {
@@ -94,8 +114,10 @@ header button {
     display: grid;
     width: 80%;
     margin-left: 10%;
+    margin-top: -50px;
     grid-template-columns: repeat(4, 25%);
     background-color: #dfdfdf;
+    border-radius: 20px 20px 0px 0px;
 }
 
 .container-two-title {
@@ -125,11 +147,22 @@ header button {
     margin-top: 10px;
     margin-bottom: 50px;
     width: 90%;
-    height: 20px;
+    height: 25px;
     background-color: #333333;
     color: #ffffff;
     border: none;
     border-radius: 5px;
+    text-align: left;
+    padding-left: 20px;
+}
+
+footer {
+    background-color: #333333;
+}
+
+footer section {
+    width: 80%;
+    margin-left: 10%;
 }
 
 .grid-container-footer {
@@ -140,9 +173,32 @@ header button {
     color: #ffffff;
 }
 
-.grid-container-footer .footer-p {
+.grid-container-footer article {
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+footer section article h5 {
+    font-weight: bolder;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+footer section article ul {
+    padding-left: 0;
+}
+
+footer section article ul li {
+    list-style: none;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+p.footer {
     grid-column-start: 1;
     grid-column-end: 5;
-    padding-left: 40px;
-    font-size: 30px;
+    text-align: center;
+    font-size: 12px;
+    margin-top: 80px;
+    margin-bottom: 180px;
 }
