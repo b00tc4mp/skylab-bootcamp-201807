@@ -10,8 +10,8 @@
 
 <body>
     <header>
-        <a href="#home"><img src="logo.png"></a>
         <nav>
+            <a href="#home"><img src="logo.png"></a>
             <ul>
                 <li><a href="#about">ABOUT</a></li>
                 <li><a href="#projects">PROJECTS</a></li>
@@ -21,74 +21,78 @@
     </header>
 
     <main>
-        <a name="home">
-            <iframe width="700" height="500" src="https://www.youtube.com/embed/WdIq2pgW8QU" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-            <a href="#about"><img src="arrow.png" width="50px" height="50px"></a>
+        <a id="home">
+            <img src="mountain.png">
         </a>
-        <a name="about">
-            <img src="girl.png">
-            <h1>Julia Juliana</h1>
-            <h2>UX Designer</h2>   
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero deleniti molestias animi quibusdam voluptates tempore eaque veniam delectus. Blanditiis eos cumque, officia sequi inventore tempore dicta neque reiciendis similique earum.</p>
+        <a id="about">
+            <section>
+                <img src="girl.png">
+                <h1>Julia Juliana</h1>
+                <h2>UX Designer</h2>   
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero deleniti molestias animi quibusdam voluptates tempore eaque veniam delectus.</p>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero deleniti molestias animi quibusdam voluptates tempore eaque veniam delectus. Blanditiis eos cumque, officia sequi inventore tempore dicta neque reiciendis similique earum.</p>
+            </section>
         </a>
-        <a name="projects">
-            <h2>PROJECTS</h2>
-            <ul>
-                <li>
-                    <img src="project.png">
-                    <p><strong>Project 1</strong></p>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                </li>
-                <li>
-                    <img src="project.png">
-                    <p><strong>Project 2</strong></p>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                </li>
-                <li>
-                    <img src="project.png">
-                    <p><strong>Project 3</strong></p>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                </li>
-            </ul>
-            <ul>
-                <li>
-                    <img src="project.png">
-                    <p><strong>Project 4</strong></p>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                </li>
-                <li>
-                    <img src="project.png">
-                    <p><strong>Project 5</strong></p>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                </li>
-                <li>
-                    <img src="project.png">
-                    <p><strong>Project 6</strong></p>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                </li>
-            </ul>
+        <a id="projects">
+            <section>
+                <h2>PROJECTS</h2>
+                <div class="flex-container">
+                    <article>
+                        <img src="project.png">
+                        <p><strong>Project 1</strong></p>
+                        <p>Lorem ipsum dolor sit amet consec tetur adipisicing elit.</p>
+                    </article>
+                    <article>
+                        <img src="project.png">
+                        <p><strong>Project 2</strong></p>
+                        <p>Lorem ipsum dolor sit amet consec tetur adipisicing elit.</p>
+                    </article>
+                    <article>
+                        <img src="project.png">
+                        <p><strong>Project 3</strong></p>
+                        <p>Lorem ipsum dolor sit amet consec tetur adipisicing elit.</p>
+                    </article>
+                    <article>
+                        <img src="project.png">
+                        <p><strong>Project 4</strong></p>
+                        <p>Lorem ipsum dolor sit amet consect etur adipisicing elit.</p>
+                    </article>
+                    <article>
+                        <img src="project.png">
+                        <p><strong>Project 5</strong></p>
+                        <p>Lorem ipsum dolor sit amet consecte tur adipisicing elit.</p>
+                    </article>
+                    <article>
+                        <img src="project.png">
+                        <p><strong>Project 6</strong></p>
+                        <p>Lorem ipsum dolor sit amet consectet ur adipisicing elit.</p>
+                    </article>
+                </div>
+            </section>
         </a>
-        <a name="contact">
-            <h2>CONTACT</h2>
-            <form action="">
-                <fieldset>
-                    <legend>Contact:</legend>
-                    <p>Name</p>
-                    <input type="text" name="firstname" value="Name">
-                    <p>Email</p>
-                    <input type="text" name="email" value="info@example.com">
-                    <p>Message</p>
-                    <textarea name="textarea" rows="10" cols="80">Write maximum 100 characters</textarea>
-                    <input type="submit" onclick="alert('Your message has been sent! Thank you!')" value="SEND">
-                </fieldset>
-            </form>   
-            <aside>
-                <ul>
-                    <li><img src=""><strong> Telephone:</strong> +34 666 000 666</li>
-                    <li><img src=""><strong> City:</strong> Barcelona</li>
-                    <li><img src=""><strong> Car License:</strong> B+</li>
-                </ul>
-            </aside>
+        <a id="contact">
+            <section>
+                <h2>CONTACT</h2>
+                <form action="">
+                    <fieldset>
+                        <legend>Contact:</legend>
+                        <p>Name</p>
+                        <input type="text" name="firstname" value="Name">
+                        <p>Email</p>
+                        <input type="text" name="email" value="info@example.com">
+                        <p>Message</p>
+                        <textarea name="textarea" rows="10" cols="80">Write maximum 100 characters</textarea>
+                        <input type="submit" onclick="alert('Your message has been sent! Thank you!')" value="SEND">
+                    </fieldset>
+                </form>   
+                <aside>
+                    <ul>
+                        <li><img src=""><strong> Telephone:</strong> +34 666 000 666</li>
+                        <li><img src=""><strong> City:</strong> Barcelona</li>
+                        <li><img src=""><strong> Car License:</strong> B+</li>
+                    </ul>
+                </aside>
+            </section>
         </a>
     </main>
 
