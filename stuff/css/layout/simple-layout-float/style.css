@@ -1,0 +1,29 @@
+body {
+    margin: 0;
+}
+
+header, nav, section, aside, footer {
+    background-color: black;
+    border: 1px solid tomato;
+    color: white;
+    font-size: 24px;
+    text-align: center;
+}
+
+header, footer {
+    height: 25vh;
+}
+
+nav {
+    float: left;
+    width: 25%;
+}
+
+section {
+    float: left;
+    width: 50%;
+}
+
+nav, section, aside {
+    height: 50vh;
+}
