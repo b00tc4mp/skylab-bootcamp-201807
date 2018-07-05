@@ -1,0 +1,17 @@
+div{
+    height: 200px;
+    width: 800px;
+    padding-top: 35px;
+}
+
+img{
+    width: 150px;
+    height: 150px;
+    float: left;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+div:hover{
+    background-color: #c9c9c9;
+}
