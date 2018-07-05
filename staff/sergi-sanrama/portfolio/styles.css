@@ -1,0 +1,43 @@
+body{
+    background: linear-gradient(to bottom, #00ffff 0%, #0099ff 100%);
+}
+
+main{
+    text-align: center;
+}
+
+h1{
+    color: grey;
+    font-size:5vw;
+}
+
+.flex-container {
+    display: flex;
+    flex-wrap: nowrap;  
+}
+
+.flex-container > div > img{
+    width: 80%;
+    margin: 50px;
+    text-align: center;
+    border-radius: 10%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+  img:hover {
+    box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
+}
+
+.title-section{
+    color: grey;
+    font-size: 30px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.text-travell{
+    text-align: center;
+    margin: 5% 10%;
+    line-height: 25px;
+
+}
