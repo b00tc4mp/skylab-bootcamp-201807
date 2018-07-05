@@ -62,7 +62,7 @@ section {
 }
 
 h1, #projects h2, #contact h2 {
-    font-size: 60px;
+    font-size: 50px;
     color: #43a2be;
     margin-top: 0;
     margin-bottom: 0;
@@ -88,4 +88,55 @@ h1, #projects h2, #contact h2 {
 
 p strong {
     font-size: 22px;
+}
+
+form {
+    background-color: #c1dee7;
+}
+
+fieldset {
+    border: none;
+    color: #666666;
+}
+
+fieldset  p {
+    margin-bottom: 0;
+}
+
+input.buttom {
+    width: 100px;
+    height: 50px;
+    background-color: #43a2be;
+    color: #ffffff;
+    font-size: 20px;
+    border: none;
+    border-radius: 8px;
+}
+
+footer {
+    background-color: #333333;
+    color: #ffffff;
+    width: 100%;
+    height: 100px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+footer ul {
+    list-style: none;
+    margin-left: 100px;
+}
+
+footer ul li {
+    display: inline;
+    margin-right: 20px;
+}
+
+footer ul li img {
+    width: 30px;
+    height: 30px;
+}
+
+footer ul li a {
+    color: #ffffff;
 }
