@@ -1,0 +1,84 @@
+div{
+    width: 900px;
+    height: 50px;
+}
+.generalButton{
+    width: 90px;
+    height: 35px;
+    margin: 5px;
+}
+.smallButton{
+    width: 70px;
+    height: 30px;
+    margin: 5px;
+    border-radius: 40%;
+}
+.lastButton{
+    width: 90px;
+    height: 60px;
+    border-radius: 20px;
+    margin: 5px;
+}
+.borderLine{
+    border-radius: 20px;
+}
+.secondLine{
+    background-color: white;
+
+}
+.buttonGrey{
+    background-color: #EAEAEA;
+}
+.buttonBlue{
+    background-color: #699DE7;
+}
+.buttonGreen{
+    background-color: #6CC778;
+}
+.buttonBlue2{
+    background-color: #6DC1E3;
+}
+.buttonYellow{
+    background-color: #F6CE6A;
+}
+.buttonRed{
+    background-color: #DC5F67;
+}
+.letterblack{
+    color:black;
+}
+.letterWhite{
+    color:white;
+}
+
+.firstButtonSecondLineandfourthLine{
+    border: solid #bcb8b4 1px;
+    background-color: white;
+    color: #bcb8b4;
+}
+.secondButtonSecondLineandfourthLine{
+    border: solid #699DE7 1px;
+    background-color: white;
+    color: #699DE7;
+}
+.thirdButtonSecondLineandfourthLine{
+    border: solid #6CC778 1px;
+    background-color: white;
+    color: #6CC778;
+}
+.fourthButtonSecondLineandfourthLine{
+    border: solid #6DC1E3 1px;
+    background-color: white;
+    color: #6DC1E3;
+}
+.fifthButtonSecondLineandfourthLine{
+    border: solid #F6CE6A 1px;
+    background-color: white;
+    color: #F6CE6A;
+}
+.sixthButtonSecondLineandfourthLine{
+    border: solid #DC5F67 1px;
+    background-color: white;
+    color: #DC5F67;
+}
+
