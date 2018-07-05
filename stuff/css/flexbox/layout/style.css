@@ -1,0 +1,46 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    color: white;
+    font-size: 22px;
+    text-align: center;
+}
+
+header {
+    background-color: #5e78aa;
+    padding: 30px;
+}
+
+.flex-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.flex-item {
+    height: 250px;
+    padding: 10px;
+}
+
+.flex-item.aside {
+    background-color: #435b85;
+    flex: 1;
+}
+
+.flex-item.main {
+    background-color: #2d3f5f;
+    flex: 2;
+}
+
+footer {
+    background-color: #5e78aa;
+    padding: 10px;
+    text-align: center;
+}
+
+@media (min-width: 600px) {
+    .flex-container {
+      flex-direction: row;
+    }
+}
