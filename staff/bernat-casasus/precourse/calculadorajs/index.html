@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+    <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <title>Calculator</title>
+            <link rel="icon" href="styles/calculator.ico">
+            <link rel="stylesheet" href="styles/styles.css">
+            <script type="text/javascript" src="app/app.js"></script>
+        </head>
+        <body>
+            <div class="calculator">
+                <form action="#" name="calculator" id="calculator">
+                    <p id="screenText">0</p>
+
+                    <br>
+                        <input type="button" value="%" onclick="porcent()" />
+                        <input type="button" value="Raiz" onclick="squareRoot()" />
+                        <input type="button" value="1/x" onclick="inverse()" />
+                        <input type="button" value="x2" onclick="xTimesTwo()"  />
+                    <br>
+                    
+                        
+                        <input type="button" value="Retr" onclick="deleteNum()"   />
+                        <input type="button" value="CE" onclick="clean()"  />
+                        <input type="button" value="C" onclick="cleanAll()"  />
+                        <input type="button" value="/" onclick="operator('/')"  />
+                    <br>
+
+                    
+                        <input class="number" type="button" value="7" onclick="number('7')" />
+                        <input class="number" type="button" value="8" onclick="number('8')" />
+                        <input class="number" type="button" value="9" onclick="number('9')" />
+                        <input type="button" value="*" onclick="operator('*')"  />
+
+                    
+                    <br>
+                        <input class="number" type="button" value="4" onclick="number('4')" />
+                        <input class="number" type="button" value="5" onclick="number('5')" />
+                        <input class="number" type="button" value="6" onclick="number('6')" />
+                        <input type="button" value="-" onclick="operator('-')" />
+
+                    <br>
+                    
+                        <input class="number" type="button" value="1" onclick="number('1')" />
+                        <input class="number" type="button" value="2" onclick="number('2')" />
+                        <input class="number" type="button" value="3" onclick="number('3')" />
+                        <input type="button" value="+" onclick="operator('+')" />
+
+                    <br>
+               
+                        <input type="button" value="+/-" onclick="opuest()" />
+                        <input class="number" type="button" value="0" onclick="number('0')" />
+                        <input type="button" value="," onclick="number('.')" />
+                        <input type="button" value="=" onclick="result()" />
+
+                   <br>
+                </form>
+
+                <p>
+
+                        <input id="mini" type="button" value="Ergonomic Version" onclick="open('calculator-mini.html','calculator', 'width=305,height=370,toolbar=no, statusbar=no,menubar=no,titlebar=no')" />
+                </p>
+            </div>
+            <script src="app/app.js"></script>
+        </body>
+        </html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Pasapalabra</title>
+	<link rel="stylesheet" href="styles/styles.css">
+</head>
+<body>
+	<div class="main-container">
+		<div id="welcome-container" class="welcome-container">
+			<div class="welcome-title">Welcome to pasapalabra</div>
+			<form>
+				Name: <input id="name" type="text" name="name"><br>
+				<input id="new-game" class="new-game" type="button" value="New game">
+			</form>
+		</div>
+		<div id="pasapalabra-container" class="pasapalabra-container hide">
+			<div class="user-circle">
+				<span>User </span><span id="username-circle"></span>
+			</div>
+			<div id="circle-container" class="circle-container">
+				<i class="circle-letter" style="visibility:hidden; height:0;"></i>
+				<div id="letter-container"></div>
+				<div class="numCorrect"><span id="numCorrect-text">0</span></div>
+				<div class="countdown"><span id="countdown-text"></span></div>
+				<div id="inner-question" class="inner-question">
+					<p></p>
+					<input type="text" id="answer" placeholder="Answer here">
+				</div>
+				<input type="button" class="stop" id="stop" value="EXIT">
+				<div id="inner-endmsg" class="inner-endmsg hide">
+					<p class="endmsg">The end</p>
+					<p id="inner-pointsmsg"></p>
+					<input type="button" id="restart" value="Play again!">
+				</div>
+			</div>			
+		</div>
+
+		<div id="ranking-container" class="ranking-container hide">
+			<table>
+				<thead>
+					<tr>
+						<th>Ranking</th>
+						<th>User</th>
+						<th>Points</th>
+					</tr>
+				</thead>
+				<tbody></tbody>
+			</table>
+		</div>
+	</div>
+	
+	<script src="app/pasapalabra.js"></script>
+</body>
+</html>

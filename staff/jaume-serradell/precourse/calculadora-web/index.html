@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>CalculadoraJS</title>
+	<link rel="stylesheet" type="text/css" href="styles/styles.css">
+</head>
+<body>
+
+	<div id="devName">
+		<h1>Calculadora HTML+CSS+JS</h1>
+		<h2>by Jaume Serradell<h2>
+	</div>
+
+	<div id="content">
+		<div id="screenCalculator">
+			<p id="numberCalc"></p>
+		</div>
+		<div id="buttonsCalculator">
+			<div>
+				<button type="button" class="yellow" onclick="start()">ON</button>
+				<button type="button" class="yellow" onclick="resetScreen(0)">C</button>
+				<button type="button" class="skylab" onclick="window.open('http://www.skylabcoders.com/es','','scrollbars=yes,menubar=no,width=500, resizable=yes,toolbar=no,location=no,status=no')"></button>
+				<button type="button" class="green noMarginRight" onclick="printValue('x')">*</button>
+			</div>
+			<div>
+				<button type="button" class="black" onclick="printValue(7)">7</button>
+				<button type="button" class="black" onclick="printValue(8)">8</button>
+				<button type="button" class="black" onclick="printValue(9)">9</button>
+				<button type="button" class="green noMarginRight fontSize" onclick="printValue('/')">÷</button>	
+			</div>
+			<div>
+				<button type="button" class="black" onclick="printValue(4)">4</button>
+				<button type="button" class="black" onclick="printValue(5)">5</button>
+				<button type="button" class="black" onclick="printValue(6)">6</button>
+				<button type="button" class="green noMarginRight" onclick="printValue('-')">-</button>		
+			</div>
+			<div>
+				<button type="button" class="black" onclick="printValue(1)">1</button>
+				<button type="button" class="black" onclick="printValue(2)">2</button>
+				<button type="button" class="black" onclick="printValue(3)">3</button>
+				<button type="button" class="green noMarginRight" onclick="printValue('+')">+</button>	
+			</div>
+			<div>
+				<button type="button" class="black" onclick="printValue(0)">0</button>
+				<button type="button" class="black" onclick="printValue('.')">.</button>
+				<button type="button" class="green fontSize" onclick="raiz()">√</button>
+				<button type="button" class="green noMarginRight" onclick="calculate()">=</button>	
+			</div>
+		</div>
+	</div>
+
+	<script src="app/app.js"></script>
+	
+</body>
+</html>

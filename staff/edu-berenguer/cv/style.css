@@ -1,0 +1,52 @@
+body{
+    background-color: rgb(232, 229, 225);
+    padding: 30px;
+}
+
+header h1{
+    text-align: center;
+    border: 2px solid black;
+    padding: 20px;
+}
+
+nav{
+    float: left;
+    width: 600px;
+}
+nav ul li a{
+    float: left;
+    border: 1px black solid;
+    padding: 5px;
+    text-decoration-line: none;
+    font-size: 25px;
+}
+nav a:hover{
+    color:rgb(215, 124, 124);
+}
+ul{
+    list-style: none;
+    
+}
+main{
+    clear: both;
+}
+figure{
+    float: right;
+    overflow: hidden;
+}
+img{
+    border-radius: 50%;
+    border:solid black 2px;
+}
+
+h2{
+    background-color: darkcyan;
+    padding: 5px;
+}
+footer{
+    float: right;
+    margin: 10px;
+}
+footer a:hover{
+    color: rgb(215, 124, 124);
+}

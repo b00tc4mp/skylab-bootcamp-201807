@@ -1,0 +1,24 @@
+h1{
+    color: black;
+}
+table, td{
+    border: none
+}
+
+#bio{
+    background-color: blue;
+    width: 250px;
+    text-align: center;
+    height: 800px;
+    
+}
+
+#experience{
+    width: 650px;
+    padding-left: 50px;
+}
+
+#pic{
+    width: 200px;
+    padding-left: 17px;
+}
