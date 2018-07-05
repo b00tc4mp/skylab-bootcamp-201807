@@ -1,0 +1,107 @@
+@font-face {
+    font-family: digitalCalculator;
+    src: url(../fonts/digital.ttf);
+}
+
+* {
+	font-family: digitalCalculator;
+	margin: 0;
+	padding: 0;
+}
+
+h1, h2 {
+	text-align: center;
+}
+
+#devName {
+	padding-top: 50px;
+}
+
+
+#content {
+	width: 338px;
+	margin: 30px auto;
+	border:2px solid #999;
+	border-radius: 12px;
+}
+
+#screenCalculator {
+	background-color:#000;
+	padding: 35px 35px 0px;
+	text-align: right;
+	border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    height: 60px;
+}
+
+#numberCalc {
+	color: #15dc31;
+	font-size: 35px;
+	word-spacing: 20px;
+	text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.3);
+}
+
+#buttonsCalculator {
+	padding:20px;
+	height: 280px;
+	border-bottom: 2px solid #999;
+	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#eeeeee+0,cccccc+100;Gren+3D */
+	background: #eeeeee; /* Old browsers */
+	background: -moz-linear-gradient(top, #eeeeee 0%, #cccccc 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(top, #eeeeee 0%,#cccccc 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to bottom, #eeeeee 0%,#cccccc 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', endColorstr='#cccccc',GradientType=0 ); /* IE6-9 */
+	border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+button {
+	width: 63px;
+    height: 43px;
+    font-size: 24px;
+    text-align: center;
+    cursor: pointer;
+    outline: none;
+    border: 1px solid #666;
+    border-radius: 8px;
+    box-shadow: 0 2px #999;
+    margin-right: 14px;
+    margin-bottom: 13px;
+    float: left;
+}
+
+button:active {
+  box-shadow: 0 0;
+  transform: translateY(2px);
+}
+
+.skylab {
+	background-image: url(../img/skylabLogoWhite.jpg);
+    background-size: 35px 35px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: #fff;
+}
+
+.fontSize {
+	font-size: 19px !important;
+}
+
+.noMarginRight {
+	margin-right:0 !important;
+}
+
+.green {
+	background-color:#4b858e;
+	color:#fff;
+}
+
+.yellow {
+	background-color:#f7c80b;
+	color:#666;
+}
+
+.black {
+	background-color:#423f35;
+	color:#fff;
+}

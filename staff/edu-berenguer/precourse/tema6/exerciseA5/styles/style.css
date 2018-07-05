@@ -1,0 +1,49 @@
+body{
+    background-color: #7DBB5B;
+}
+
+#centralDiv{
+    width: 360px;
+    height: 320px;
+    background-color: #FFFFFF;
+    margin: 0 auto;
+    margin-top: 200px;
+}
+
+form{
+    margin-top: 25px;
+    width: 200px;
+    height: 100px;
+    margin: 0 auto;
+}
+
+input{
+    margin-top: 30px;
+    width: 200px;
+    height: 40px;
+    background-color: #F2F2F2;
+    display: inline-block;
+    border: none;
+    padding-left: 5px;
+}
+::placeholder { 
+    color: #BDBDBD; 
+}
+#login{
+    color: #FFFFFF;
+    background-color: #4FAE51;
+    text-align: center;
+}
+label{
+    
+    color: #DEDEDE;
+    font-size: 12px;
+}
+a{
+    color: #4FAE51;
+    font-size: 12px;
+}
+.divLabel{
+    margin-top: 8px;
+    text-align: center;
+}

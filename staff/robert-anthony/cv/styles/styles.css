@@ -1,0 +1,26 @@
+body {
+  margin: 0;
+  padding: 30px;
+  background: ivory;
+  background-image: url("../images/foto.jpg");
+  background-repeat: no-repeat;
+  background-position: top 50px right 20%;
+  font-family: 'Montserrat', sans-serif; }
+
+h1 {
+  color: darkred; }
+
+.heading {
+  font-size: 1.5em;
+  margin-left: 20px;
+  color: darkred; }
+
+.heading2 {
+  color: darkolivegreen;
+  font-size: 1.2em; }
+
+#main {
+  margin-left: 5%;
+  width: 50%; }
+
+/*# sourceMappingURL=styles.css.map */

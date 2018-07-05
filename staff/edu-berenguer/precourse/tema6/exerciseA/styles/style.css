@@ -1,0 +1,33 @@
+h5{
+    margin-bottom: 5px;
+    margin-left: 5px;
+}
+form{
+    background-color: #DEDBD3;
+    width: 400px;
+    height: 280px;
+    border: 1px solid #F0F1EC;
+}
+
+label{
+    display: inline-block;
+    width: 100px;
+    text-align: left;
+    margin-right: 60px;
+   
+}
+input{
+    border: 1px #BCB8B4 solid;
+}
+button{
+    margin-top: 15px;
+    
+}
+#button{
+    height: 55px;
+    margin-top: 8px;
+    background-color: #F3F3F3;
+    text-align: center;
+}
+
+

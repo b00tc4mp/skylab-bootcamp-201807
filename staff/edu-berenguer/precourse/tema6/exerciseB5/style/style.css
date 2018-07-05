@@ -1,0 +1,119 @@
+nav{
+    background-color: #437FB9;
+    height: 50px;
+    width: 100%;
+
+}
+a:link{ 
+    text-decoration:none; 
+} 
+a:hover{
+    color: rgb(204, 193, 193);
+}
+A:visited{ 
+    color: white; 
+    text-decoration: none 
+}
+h1{
+    float: left;
+    margin-left:40px; 
+}
+ul{
+    
+    list-style: none;
+    text-align: center;
+}
+li{
+    float: left;
+    margin-left: 75px;
+    margin-top: 15px;
+    color: white;
+}
+#text{
+    margin-left: 180px;
+    margin-top: 10px;
+    width: 300px;
+    height: 25px;
+}
+#submit{
+    margin-left: 10px;
+    height: 30px;
+    width: 90px;
+    background-color: #CECECE;
+}
+#guias{
+    margin-top: 5px;
+    width: 95%;
+    height: 40px;
+    background-color: #6287B4;
+    text-align: center;
+    margin: 0 auto;
+}
+#guias p{
+    padding: 4px;
+    height: 10px;
+    color: white;
+}
+section{
+    width: 95%;
+    margin:0 auto;
+}
+.firstImages{
+    margin: 15px;
+    width: 300px;
+    height: 150px;
+}
+#left{
+    width: 60%;
+    margin-left: 40px;
+    height: 320px;
+    float: left;
+}
+#tittleDivLeft{
+    width: 100%;
+    height: 30px;
+    background-color: #437FB9;
+    text-align: center;
+    color: white;
+}
+#imageLeft{
+    width: 40px;
+    height: 250px;
+    float: left;
+}
+.imagesDivLeft{
+    height: 60px;
+    width: 80px;
+    margin: 3px;
+}
+.descriptionLeft{
+    float: right;
+    height: 60px;
+    width:700px;
+    margin: 5px;
+}
+.descriptionLeft p{
+    margin: 1px;
+}
+#right{
+    height: 320px;
+    width: 30%;
+    float: right;
+    margin-right: 60px;
+}
+#tittleDivRight{
+    width: 100%;
+    height: 30px;
+    text-align: center;
+    background-color: #437FB9;
+    color: white;
+}
+.imagesDivRight{
+    height: 65px;
+    width: 60px;
+    margin: 3px;
+}
+.descriptionRight p{
+    margin-top: 17px;
+    margin-left: 100px;
+}
