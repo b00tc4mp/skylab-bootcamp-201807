@@ -1,0 +1,71 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+}
+
+header, #projects, footer{
+    width: 60%;
+    margin: auto;
+    text-align: center;
+}
+
+header{
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+
+#links{
+    margin: auto;
+    background-color: aqua;
+    height: 100px;
+    
+}
+
+#links ul{
+    
+    
+}
+
+#links li{
+    display: inline-block;
+    margin: auto;
+    margin-top: 40px;
+    
+}
+
+#links a{
+    margin: 10px;
+    background-color: aqua;
+    text-decoration: none;
+    margin-top: 50px;
+    
+}
+
+#links a:hover{
+    
+    background-color: black;
+    
+}
+
+#projects{
+    
+
+}
+
+footer{
+
+}
+
+li{
+    list-style: none;
+}
+
+h1{
+    font-size: 50px;
+    margin-bottom: 25px;
+}
+
+header h3{
+    margin-bottom: 20px;
+}
