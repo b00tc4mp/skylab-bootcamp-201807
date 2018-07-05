@@ -1,0 +1,27 @@
+html, body {
+    background-color: #cde0f3;
+    margin: 10px;
+}
+
+.flex-container {
+    border: 5px solid #4d62ca;
+}
+
+.flex-container > div {
+    padding: 10px;
+    text-align: center;
+    font-size: 2em;
+    color: white;
+  }
+
+.flex-container > div:nth-child(1) {
+    background-color: #d1a86a;	
+}
+  
+.flex-container > div:nth-child(2) {
+    background-color: #752928;
+}
+
+.flex-container > div:nth-child(3) {
+    background-color: #65bd91;
+}
