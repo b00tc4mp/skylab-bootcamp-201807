@@ -5,82 +5,88 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>CV</title>
-    <!-- <link rel="stylesheet" href="./styles.css"> -->
+    <link rel="stylesheet" href="./styles.css">
 </head>
 <body>
-    <header>
-        <!-- <img src="https://cdn2.iconfinder.com/data/icons/ios-7-icons/50/user_male2-512.png" alt="John Button" width="120"> -->
-        <hgroup>
-            <h1>John Button</h1>
-            <h2>Desarrollador Fullstack</h2>
-        </hgroup>
-        <section>
-            <ul>
-                <li><a href="#">Descargar pdf</a></li>
-                <li><a href="mailto:>johnbutton@coffee.com">johnbutton@coffee.com</a></li>
-                <li><a href="tel:612612612">612612612</a></li>
-            </ul>
-        </section>
-    </header>
-    <main>
-        <section>
-            <h1>Perfil</h1>
-            <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec fringilla enim a quam volutpat molestie. 
-                Donec ac nisi tincidunt, mollis augue a, semper libero. Aenean id justo quis odio luctus sodales a scelerisque 
-                felis. Sed nunc leo, tincidunt nec justo eget, fermentum eleifend purus.
-            </p>
-        </section>
-        <section>
-            <h1>Habilidades</h1>
-            <dl>
-                <dt>Diseño Web</dt>
-                <dd>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</dd>
-            </dl>
-            <dl>
-                <dt>Diseño de Interfaces</dt>
-                <dd>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</dd>
-            </dl>
-            <dl>
-                <dt>Desarrollo Web</dt>
-                <dd>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</dd>
-            </dl>
-        </section>
-        <section>
-            <h1>Técnicas</h1>
-            <ul>
-                <li>HTML</li>
-                <li>CSS</li>
-                <li>Javascript</li>
-                <li>React</li>
-                <li>Node</li>
-                <li>Mongo DB</li>
-                <li>OS X</li>
-            </ul>
-        </section>
-        <section>
-            <h1>Experiencia</h1>
-            <article>
-                <h1>Typeform</h1>
-                <h2>Desarrollador Fullstack</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-            </article>
-            <article>
-                <h1>Apple</h1>
-                <h2>Soporte</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-            </article>
-        </section>
-        <section>
-            <h1>Educación</h1>
-            <dl>
-                <dt>Skylab Coders Academy - Barcelona, España</dt>
-                <dd>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</dd>
-            </dl>
-        </section>
-    </main>
-    <footer>
-        <small>John Button — <a href="mailto:>johnbutton@coffee.com">johnbutton@coffee.com</a> — <a href="tel:612612612">612612612</a></small>
-    </footer>
+    <div class="container">
+        <header>
+            <section>
+                <!-- <img src="https://cdn2.iconfinder.com/data/icons/ios-7-icons/50/user_male2-512.png" alt="John Button" width="120"> -->
+                <hgroup>
+                    <h1>John Button</h1>
+                    <h2>Desarrollador Fullstack</h2>
+                </hgroup>
+                <ul>
+                    <li><a href="#">Descargar pdf</a></li>
+                    <li><a href="mailto:>johnbutton@coffee.com">johnbutton@coffee.com</a></li>
+                    <li><a href="tel:612612612">612612612</a></li>
+                </ul>
+            </section>
+        </header>
+        <main>
+            <section class="pefil">
+                <h1>Perfil</h1>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec fringilla enim a quam volutpat molestie. 
+                    Donec ac nisi tincidunt, mollis augue a, semper libero. Aenean id justo quis odio luctus sodales a scelerisque 
+                    felis. Sed nunc leo, tincidunt nec justo eget, fermentum eleifend purus.
+                </p>
+            </section>
+            <section class="habilidades">
+                <h1>Habilidades</h1>
+                <div class="list">
+                    <dl class="habilidad">
+                        <dt>Diseño Web</dt>
+                        <dd>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</dd>
+                    </dl>
+                    <dl class="habilidad">
+                        <dt>Diseño de Interfaces</dt>
+                        <dd>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</dd>
+                    </dl>
+                    <dl class="habilidad">
+                        <dt>Desarrollo Web</dt>
+                        <dd>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</dd>
+                    </dl>
+                </div>
+            </section>
+            <section class="tecnicas">
+                <h1>Técnicas</h1>
+                <ul>
+                    <li>HTML</li>
+                    <li>CSS</li>
+                    <li>Javascript</li>
+                    <li>React</li>
+                    <li>Node</li>
+                    <li>Mongo DB</li>
+                    <li>OS X</li>
+                </ul>
+            </section>
+            <section class="experiencia">
+                <h1>Experiencia</h1>
+                <div>
+                    <article class="trabajo">
+                        <h1>Typeform</h1>
+                        <h2>Desarrollador Fullstack</h2>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                    </article>
+                    <article class="trabajo">
+                        <h1>Apple</h1>
+                        <h2>Soporte</h2>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                    </article>
+                </div>
+            </section>
+            <section class="educacion">
+                <h1>Educación</h1>
+                <dl class="estudio">
+                    <dt>Skylab Coders Academy - Barcelona, España</dt>
+                    <dd>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</dd>
+                </dl>
+            </section>
+        </main>
+        <footer>
+            <small>John Button — <a href="mailto:>johnbutton@coffee.com">johnbutton@coffee.com</a> — <a href="tel:612612612">612612612</a></small>
+        </footer>
+    </div>
 </body>
 </html>
