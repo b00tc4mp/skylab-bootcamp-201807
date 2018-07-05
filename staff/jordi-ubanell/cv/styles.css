@@ -1,0 +1,44 @@
+body {
+    background-color: whitesmoke;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    font-family: 'IBM Plex Mono', monospace, Courier;
+}
+
+h1{
+    color: #666;
+    font-size: 4rem;
+    font-weight: 700;
+}
+
+h2{
+    color: #666;
+    font-size: 2rem;
+}
+
+
+
+.flex-container {
+    display: flex;
+    height: 300px;
+    justify-content: center;
+    align-items: center;
+  }
+
+div{
+    margin: 4rem;
+    max-width: 50rem;
+}
+
+p{
+    color: #666;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+
+html{
+    margin: 0;
+    padding: 0;
+}

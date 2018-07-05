@@ -1,0 +1,10 @@
+.calculadora{
+	display: block;
+	margin:0 auto;
+	padding: 20px;
+	background-color: #5AD425;
+	width: 300px;
+	height: 500px;
+	border-radius: 25px;
+}
+
