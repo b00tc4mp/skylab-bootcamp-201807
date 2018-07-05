@@ -1,10 +1,32 @@
+* {
+    font-family: 'Merriweather', serif;
+}
+
+html {
+    background: linear-gradient(to bottom, #ffcc00 0%, #ff99cc 100%);
+}
+
+h1:after{
+    display: block;
+    border: 2px solid black;
+    content: ' ';
+}
+
 p {
 	font-size: 1em;
 	line-height: 1.4em;
 	margin-bottom: 20px;
     color: #444;
     padding: 25px;
-    width: 700px;
+    width: 70%;
+}
+
+li {
+    line-height: 2em;
+}
+
+section,footer {
+    padding: 10px;
 }
 
 #my-picture {
@@ -13,24 +35,10 @@ p {
     margin-right: 10%;
 }
 
-section,footer {
-    padding: 10px;
-}
 
-html {
-    background: linear-gradient(to bottom, #ffcc00 0%, #ff99cc 100%);
-}
 
-li {
-    line-height: 2em;
-}
 
-* {
-    font-family: 'Merriweather', serif;
-}
 
-h1:after{
-    display: block;
-    border: 2px solid black;
-    content: ' ';
-}
+
+
+
