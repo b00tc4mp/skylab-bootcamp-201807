@@ -1,21 +1,24 @@
-body {
+#container {
   margin: 0;
   padding: 0;
   display: grid;
-  grid-template-columns: 1fr 800px;
-  grid-template-rows: 300px 1fr;
-  grid-template-areas: "header header" "main" "main"; }
+  grid-template-areas: "headerarea headerarea" "mainarea mainarea" "footerarea footerarea";
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(3, 1fr); }
 
 header {
-  grid-area: header; }
+  grid-area: headerarea;
+  background: red; }
 
 main {
-  grid-area: main; }
+  grid-area: mainarea;
+  background: lightblue; }
 
-section[data-hierarchy="experience"] {
-  display: none; }
+footer {
+  grid-area: footerarea;
+  background: orange; }
 
-section[data-hierarchy="projects"] {
-  display: none; }
+#education, #experience, #projects {
+  width: 800px; }
 
 /*# sourceMappingURL=styles.css.map */
