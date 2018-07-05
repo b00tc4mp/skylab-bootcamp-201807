@@ -18,8 +18,7 @@ body {
 }
 
 header {
-    background-color:#66D7D1;
-    opacity:0.4;
+    background-color: rgba(102, 215, 209, .2);
     border-radius: 25px;
 }
 
@@ -74,11 +73,11 @@ ul {
     line-height: 1.4;
     padding-left: 0;
     list-style-type: none;
-    color:#61A4AB;
+    color: rgba(255, 255, 255, 0.5);
 }
 
 footer ul {
-    background-color:#66D7D1;
+    background-color:rgb(102,215,209, .7);
     opacity:0.4;
     border-radius: 25px;
     text-align: center;
@@ -93,10 +92,6 @@ footer ul {
     img {
         margin:50px;
 
-    }
-    ul li {
-
-        color:#C3B692;
     }
     footer ul li{
         color:#4E505B;
