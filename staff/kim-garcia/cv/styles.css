@@ -43,6 +43,9 @@ img {
 ul {
     list-style-type: circle;
 }
+#datos {
+    list-style-type: none;
+}
 
 
 h2 {
