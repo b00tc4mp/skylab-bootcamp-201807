@@ -1,0 +1,370 @@
+//a) Escribe una función que liste los nombres de propiedad del objeto 
+//(Puedes usar el objeto creado más arriba)
+//console.log(something, somethingMore, somethingMoreAndMore)
+
+
+var avenger = { 
+    name : "Tony", 
+    class : "VII", 
+    id : 1 
+};
+
+for(prop in avenger){
+	console.log(prop)
+}
+
+// name
+// class
+// id
+
+//b) Ahora, crea una función que liste solo los valores de las propiedades.
+//console.log(somethingThatShowsThings) //Tony, VII, 01
+
+var avenger = { 
+    name : "Tony", 
+    class : "VII", 
+    id : 1 
+};
+
+for(prop in avenger){
+	console.log(avenger[prop])
+}
+// tony
+// vii
+// 1
+
+
+//c) Cambia el valor de la propiedad class por "XI" y asegurate de que
+// los cambios se han efectuado.
+//console.log(property.ThisProperty) //new class = XI
+var avenger = { 
+    name : "Tony", 
+    class : "VII", 
+    id : 1 
+};
+
+avenger.class = "XII"
+console.log(avenger.class)
+// XII
+
+
+//d) Ahora, elimina la propiedad ID y asegura los cambios.
+//console.log(property.ThisProperty) //Not exist :(
+
+var avenger = { 
+    name : "Tony", 
+    class : "VII", 
+    id : 1 
+};
+
+delate avenger.id 
+console.log(avenger.id)
+
+
+//e) Añade una nueva propiedad, por ejemplo city y dale un valor.
+//http://www.w3schools.com/js/js_properties.asp
+
+var avenger = { 
+    name : "Tony", 
+    class : "VII", 
+    id : 1 
+};
+avenger.sexo = "Masculino"
+console.log(avenger.sexo)
+
+
+//f) Lista el numero de propiedades que contiene el objeto.
+//console.log() // There are 4 info fields
+
+
+var avenger = { 
+    name : "Tony", 
+    class : "VII", 
+    id : 1 
+};
+var array = []
+for(prop in avenger){
+	array.push(prop)
+}
+console.log(array.length) //3
+
+
+//g) Cambia la propiedad name por fullName.
+//console.log(fullName) // Tony Stark
+var avenger = { 
+    name : "Tony", 
+    class : "VII", 
+    id : 1 
+};
+Object.defineProperty(avenger, name,{
+	fullName =
+
+})
+console.log(avenger)
+//!!!!!!!!!!!!COMO??????????? eliminas y vuelves a crear NO SE PUEDE MELON
+
+//h) Lista todas las propiedades del objeto a través de un console.log()
+//console.log(...) // "Hi there, I'm Tony Stark..."
+var yoMisma = {
+	name : "Kim",
+	lastName : "Garcia",
+	age : 26,
+	ciudad : "Barcelona",
+}
+console.log("Hey, this is " + yoMisma.name + " " + yoMisma.lastName + " tengo " + yoMisma.age + " y vivo en " + yoMisma.ciudad + ".")
+
+
+//h1) Añade más propiedades al objeto, como... markAverage, country, job, studies...
+var avenger = { 
+    name : "Tony", 
+    class : "VII", 
+    id : 1 
+};
+avenger.country = "NYC"
+avenger.age = "Inmortal"
+
+for (prop in avenger){
+	console.log(avenger[prop])
+}
+
+
+//i) Crea un constructor de objetos llamado "Avenger", 
+//al cual le pasarás ciertos parametros, creando una instancia del objeto 
+//con las propiedades de nuestro objeto creado. (Échale un ojo a la referencia de abajo.)
+//http://www.w3schools.com/js/js_object_definition.asp
+
+Example:
+
+function Avenger(fullName, classRoom, city, job, studies,markAv) {
+    this.fullName = fullName;
+    this.classRoom = classRoom;
+    this.city = city;
+    this.job= job;
+    this.studies= studies;
+    this.markAv = markAv;
+}
+var tonyStark = new Avenger ("Tony Stark", "XI", "NYC", "Ingeneer", "MIT", 10)
+console.log(tonyStark)
+
+
+//////////////INTERESANTEEE/////////////////creas un objeto general
+function Avenger(fullName, classRoom, city) {
+	this.fullName = fullName ;
+	this.classRoom = classRoom ;
+	this.city = city ;
+}
+
+var kimG = new Avenger("Kim", "Skylab", "Barcelona")
+console.log(kimG)
+// Avenger {fullName: "Kim", classRoom: "Skylab", city: "Barcelona"}
+
+
+//j) Crea otro objeto y imprime sus propiedades por pantalla.
+//var otherAvenger = new Avenger...
+//console.log(otherAvenger) // Hulk...
+
+function objetando(nom, last, age){
+	this.nom = nom ;
+	this.last = last ;
+	this.age = age ;
+}
+
+var esto = new objetando("caja", "de madera", "100")
+console.log(esto)
+
+
+//k) Crea una propiedad del objeto que liste automáticamente los valores de la instancia. .
+// Example of property:
+
+function objetando(nom, last, age){
+	this.nom = nom ;
+	this.last = last ;
+	this.age = age ;
+	this.listProperties = function(){
+    console.log(this.nom + ", " + this.last + ", " + this.age) 
+}
+}
+var esto = new objetando("caja", "de madera", "100")
+console.log(esto)
+
+
+//l) Ahora, crea una función que solo liste los nombres de los objetos 
+//instanciados
+//console.log(someFunction) // Tony Stark, Hulk, Thor...
+//constructor
+function Objetando(nom, last, age){
+	this.nom = nom ;
+	this.last = last ;
+	this.age = age ;
+	
+}
+
+var esto = new Objetando("A" , "B", 23)
+var eso = new Objetando("C", "D", 12)
+var aquello = new Objetando("X", "w", 11)
+
+//console.log(esto)
+//objetando {nom: "A", last: "B", age: 23}
+
+var array = [esto, eso, aquello]
+array.forEach(function(obj){
+	console.log(obj.nom)
+})
+// A
+// C
+// X
+//////
+
+
+//m) Crea varios objetos con las mismas propiedades, como por ejemplo la ciudad, 
+//crea una función para que solo liste los nombres de los Avengers que sean de la 
+//misma ciudad y 
+//cuantos hay.
+//console.log(myFunction) // Are 3 avengers living in NYC: Tony, Hulk, Hawkeye
+//Hint: Intenta tener a todos los objetos dentro de una array, 
+//al tener todos los datos juntos, 
+//podrás filtrarlos y mostrarlos...
+Resources => https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/G"lobal_Objects/Array/filter?v=control => https://developer.mozilla.org/es/docs/Web/JavaScript/Referencia/Objetos_globales/Array/forEach
+
+
+function Const(name, last, age, city){
+	this.name = name ;
+	this.last = last ;
+	this.age = age ;
+	this.city = city ;
+}
+
+var pepe = new Const("Pep", "Guardiola", 12 , "Barcelona")
+var juan = new Const("Juanito", "Menganito", 44, "Barcelona")
+var jose = new Const("Pep", "Outumuro", 23, "Mejico")
+var maria = new Const("Merilu", "Micas", 88, "Andorra")
+var pilar = new Const("Pils", "Finquin", 22, "Barcelona")
+
+var personas = [pepe, juan, jose, maria, pilar]
+
+function nacidosB(a){
+	var newArr = personas.filter(function(cities){
+		return (cities.city === a)
+	});
+
+var namesC = []
+for (var i=0; i<newArr.length;i++){
+	namesC.push(newArr[i].name)
+}
+console.log("Hay " + newArr.length + " personas q vivien " + a + " son " + namesC.toString())
+
+}
+nacidosB("Barcelona")
+
+
+
+
+////GERARD/////
+function whoBornNyc(nycCity){
+	var newArr = wwe.filter(function(cities){
+		return (cities.city === nycCity);
+});
+var namesWwe = []
+for (var i=0;i<newArr.length;i++){
+	namesWwe.push(newArr[i].name)
+}
+console.log("Hay " + newArr.length + " luchadores que viven en " + nycCity + " son " + namesWwe.toString())
+}
+whoBornNyc("Texas")
+/////////////
+
+
+
+//n) Para acabar, créate a ti mismo y crea una función que recoja todas
+// las markAv y muestre la media.
+
+function Class(name, nota){
+	this.name = name;
+	this.nota = nota;
+}
+var kim = new Class("Kim", 10);
+var gerard = new Class("Gery", 2);
+var jaume = new Class("J", 4);
+var victor = new Class("Vics", 7);
+var alumnos = [kim, gerard, jaume, victor]
+
+
+var arr = []
+var acc = 0
+alumnos.forEach(function(obj){
+	acc += obj.nota
+	arr.push(obj.nota)
+})
+console.log(acc/arr.length)
+
+//ñ) Ahora, crea una funcion que recoja los avengers en parejas 
+//(será necesario que tengan un id, por comodidad al aparejarlos), 
+//es decir, de dos en dos, compare sus markAv y que muestre el mayor de ambos.
+//console.log(myFunction()) 
+// HawkEye vs Tony => Tony is better! \n Thor vs Hulk => Hulk is better! \n Vision vs Captain America => Vision is better
+
+//ñ1) Intenta crear las parejas de forma aleatoria.
+Hint=> https://developer.mozilla.org/es/docs/Web/JavaScript/Referencia/Objetos_globales/Math/random
+
+function Class(name, nota){
+	this.name = name;
+	this.nota = nota;
+}
+var kim = new Class("Kim", 10);
+var gerard = new Class("Gery", 2);
+var jaume = new Class("J", 4);
+var victor = new Class("Vics", 7);
+var array = [kim, gerard, jaume, victor]
+
+function shuffle (array) {
+  var i = 0
+    , j = 0
+    , temp = null
+
+  for (i = array.length - 1; i > 0; i -= 1) {
+    j = Math.floor(Math.random() * (i + 1))
+    temp = array[i]
+    array[i] = array[j]
+    array[j] = temp
+  }
+}
+
+
+
+///JAUME
+var avenger = [
+	{id: 1, fullName: "Steve Rogers", avengerName: "Captain America", gender: "Male", city: "New York City", markAv: 10},
+	{id: 2, fullName: "Tony Stark", avengerName: "IronMan", gender: "Male", city: "New York City", markAv: 15},
+	{id: 3, fullName: "Thor Odinson", avengerName: "Thor", gender: "Male", city: "Los Angeles", markAv: 13},
+	{id: 4, fullName: "Bruce Banner", avengerName: "Hulk", gender: "Male", city: "Maryland", markAv: 20},
+	{id: 5, fullName: "Clint Barton", avengerName: "Hawkeye", gender: "Male", city: "Los Angeles", markAv: 8},
+	{id: 6, fullName: "Natasha Romanoff", avengerName: "Black Widow", gender: "Female", city: "Paris", markAv: 14},
+	{id: 7, fullName: "Nick Fury", avengerName: "Nick Fury", gender: "Female", city: "New York City", markAv: 5},
+	{id: 8, fullName: "Jaume Serradell", avengerName: "Jaumeserr", gender: "Male", city: "Barcelona", markAv: 18}
+]
+
+function avengerPairs(myObject) {
+
+	var arr = [];
+
+	for (var i=0; i<avenger.length; i++) {
+		arr.push([avenger[i], avenger[i+1]]);
+		i++;
+	}
+
+	for (var i=0; i<arr.length; i++) {
+		
+		console.log(Math.max(arr[i][0].markAv, arr[i][1].markAv));
+
+		if (arr[i][0].markAv < arr[i][1].markAv) {
+			console.log(arr[i][0].fullName + " vs " + arr[i][1].fullName + " => " + arr[i][1].fullName + " is better!");
+		} else if (arr[i][0].markAv === arr[i][1].markAv) {
+			console.log(arr[i][0].fullName + " vs " + arr[i][1].fullName + " => Are equals!");
+		} else {
+			console.log(arr[i][0].fullName + " vs " + arr[i][1].fullName + " => " + arr[i][0].fullName + " is better!");
+		}
+	}
+}
+
+avengerPairs(avenger);
+

@@ -1,0 +1,82 @@
+
+//a) Declara tu nombre y muéstralo por consola
+var name = "Kim"
+console.log(name)
+
+//b) Declara tu edad y muéstralo por consola
+var edad = 26
+console.log(edad)
+
+//c) Declara tu nombre, tu apellido y tu edad en un array en diferentes posiciones y muéstrala por consola
+var info = ["kim", "Garcia", 26]
+console.log(info)
+
+//d) Declara tu nombre y tu edad dentro de un objeto y muéstralo por consolaar data = { }
+var data = {}
+data.name = "Kim"
+data.age = 26
+console.log(data)
+
+//e) Ahora utiliza el array que has creado anteriormente para recorrerlo y mostrar una a una todas las posiciones del array
+
+for (var i = 0 ; i <= info.length ; i++) {
+ console.log(info[i])
+}
+
+//f) Crea una estructura condicional que imprima el número mayor entre dos números.
+//f1) Crea otra condicion else if para contemplar la posibilidad de que los dos números sean iguales
+var a = 100
+var b= 0
+if(a>b){
+	console.log(a)
+} else if(a==b){
+	console.log( a + b)
+} else{
+	console.log(b)}
+
+//g) Crea una array de 5 numeros, y recorrela, mostrando además un mensaje cuando, esté a la mitad, muestre un mensaje 'We are in the middle of loop'.
+var loopingArray = [ 1, 2, 3, 5, 8 ]
+for (var i = 0; i <= loopingArray.length; i++) {
+	if(loopingArray[i] === Math.floor(loopingArray.length/2)){
+		console.log("The middle")
+	}else{
+		console.log("Looping")
+	}
+}
+	
+
+
+var x = 2.5
+console.log(Math.floor(x)) // MMMMMMMMMMMMMath MAYUS PAYUS
+
+
+//g1) Declara tu nombre y tu edad dos variables y crea un condicional para, en caso de no coincidir con tus datos, mostrar un error
+
+var myName = "kim"
+var myAge = 26
+if(myName != "kim" || myAge != 26){
+	console.log("Yep... Te colastes")
+}else{
+	console.log("¿Como tu por aqui?")
+}
+
+
+
+//g2) Crea una array, introduce los datos anteriores y unos cuantos más de forma que al recorrer la array, muestre un mensaje cuando encuentre tus datos.
+var myName = "kim"
+var myAge = 26
+
+var datosVarios = [ "Melon" , 2, "Maribor", (3 + 2), myAge, myName,]
+
+for (var i = 0; i < datosVarios.length; i++) {
+	if(datosVarios[i] === "kim"){
+		console.log("We find your data! " + datosVarios[i])
+	}else if (datosVarios[i] ===  26) {
+		console.log("We find your data!" + datosVarios[i])
+
+	}else{
+
+	}
+}
+
+
