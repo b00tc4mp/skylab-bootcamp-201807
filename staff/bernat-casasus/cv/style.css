@@ -89,7 +89,7 @@ footer ul {
     opacity: 0.4;
 }
 
-@media screen and (max-width:900px) {
+@media screen and (max-width:1200px) {
     img {
         margin:50px;
 
