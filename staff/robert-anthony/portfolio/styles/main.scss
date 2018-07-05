@@ -18,7 +18,7 @@ body {
   margin-right: 10px;
   display: grid;
   grid-template-areas: "headerarea headerarea" ". mainarea" "footerarea footerarea";
-  grid-template-rows: 160px 1fr 50px;
+  grid-template-rows: 180px 1fr 30px;
   grid-template-columns: 200px 1fr;
 
 }
@@ -30,6 +30,7 @@ header {
   align-items: flex-end;
   padding-right: 20px;
 
+
   justify-content: space-between;
   h2 {
     font-weight: 900;
@@ -38,7 +39,7 @@ header {
 
   }
   address {
-
+    letter-spacing: .2em;
     display: block;
     flex: 1 1;
     text-align: right;
@@ -67,10 +68,13 @@ ul li {
   margin-left: 5rem;
   cursor: pointer;
   a {
+    font-size:1em;
+    letter-spacing:.2em;
     text-decoration: none;
-    color: $main-text-color;
+    color: darkred;
+    text-transform: lowercase;
     &:hover, &:active {
-      color: darkred;
+      color: yellow;
     }
   }
 }
@@ -80,11 +84,22 @@ main {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+  & > aside {
+    position:fixed;
+    left: 80px;
+    top:400px;
+    color:$main-text-color;
+    font-weight: 700;
+    font-size:2rem;
+    text-transform:lowercase;
+    letter-spacing: .5em;
+  }
 }
 
 footer {
   grid-area: footerarea;
-  background: orange;
+  height:40px;
+  background: darkred;
 }
 
 #development, #design {

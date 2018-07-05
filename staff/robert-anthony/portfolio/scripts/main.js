@@ -19,9 +19,8 @@ function handleMenuClick(e) {
       TweenMax.to(mappy[element],0.25, {opacity:1,display:"grid"});
     } else {
       TweenMax.to(mappy[element],0.25, {opacity:0,display:"none"});
-
     }
-
+    document.getElementById('location').innerHTML = mappy[id].substring(1);
   });
 
 }
