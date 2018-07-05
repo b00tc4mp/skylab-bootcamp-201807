@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>PasapalabraJS</title>
+	<link rel="stylesheet" type="text/css" href="styles/styles.css">
+</head>
+
+<body>
+
+	<div class="container">
+		<header>
+			<h1>Pasapalabra</h1>
+			<h2>by Maider Hernandorena</h2>
+		</header>
+		
+		<main>
+
+			<div class="rosco">
+				<div class="letraA">A</div>
+				<div class="letraB">B</div>
+				<div class="letraC">C</div>
+				<div class="letraD">D</div>
+				<div class="letraE">E</div>
+				<div class="letraF">F</div>
+				<div class="letraG">G</div>
+				<div class="letraH">H</div>
+				<div class="letraI">I</div>
+				<div class="letraJ">J</div>
+				<div class="letraK">K</div>
+				<div class="letraL">L</div>
+				<div class="letraM">M</div>
+				<div class="letraN">N</div>
+				<div class="letraÑ">Ñ</div>
+				<div class="letraO">O</div>
+				<div class="letraP">P</div>
+				<div class="letraQ">Q</div>
+				<div class="letraR">R</div>
+				<div class="letraS">S</div>
+				<div class="letraT">T</div>
+				<div class="letraU">U</div>
+				<div class="letraV">V</div>
+				<div class="letraW">W</div>
+				<div class="letraX">X</div>
+				<div class="letraY">Y</div>
+				<div class="letraZ">Z</div>
+			</div>	
+
+			<div id="question">
+				<h3 id="questions">Pulsa JUGAR y leerás la primera pregunta</h3>
+			</div>
+
+			<button id="play" class="playButton" onclick="play(this)">Jugar</button>
+
+			<div class="answer">
+				<input id="answer" autocomplete="off" placeholder="escribe tu respuesta"; style="visibility: hidden;">
+				<button id="userAnswer" class="otherButton" onclick="checkAnswer()" style="visibility: hidden;">Enviar</button>
+				<button id="pasaPalabra" class="otherButton" onclick="pasaPalabra()" style="visibility: hidden;">Pasapalabra</button>
+			</div>
+
+			<div  id ="results">      
+				<h4>Total aciertos: <span id="showOk">0</span></h4>
+				<h4>Total fallos: <span id="showBad">0</span></h4>
+			</div>
+
+			<button id="playAgain" class="playAgainButton" onclick="playAgain()">Jugar otra vez</button>
+
+		</main>
+
+	</div>
+
+<script language="javascript" type="text/javascript" src="app/app.js"></script>
+
+</body>
+
+</html>

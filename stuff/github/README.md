@@ -1,0 +1,1 @@
+[Collapse/Expand files in the Files Changed view of a Pull Request · Issue #514 · isaacs/github](https://github.com/isaacs/github/issues/514)
