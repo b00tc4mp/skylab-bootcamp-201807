@@ -1,0 +1,91 @@
+* {
+	font-family: 'Montserrat', sans-serif;
+}
+
+body {
+	background: #000801;	
+	color: white;
+}
+
+p {
+	background: #000801;
+	color: #08FF1C;
+}
+
+input {
+	background: #022900;
+	border: 0px;
+	color: #08FF1C;
+	font-size: 20px;
+}
+
+table {
+	z-index: 1;
+	position: absolute;
+	margin-left: 600px;
+	color: #08FF1C;
+	background: #022900;
+}
+
+table, th, td {
+	border: 1px solid #ADFFB0;
+	border-collapse: collapse;
+}
+
+th, td {
+	padding: 5px;
+}
+
+th {
+    text-align: left;
+}
+
+.letra {
+	z-index: 1;
+	position: absolute;
+	width: 50px;
+	height: 50px;
+	font-size: 30px;
+	border-radius: 50%;
+	/*background: #000801;*/
+	background: #022900;
+	color: #08FF1C;
+}
+
+.acierto {
+	border: 5px solid #08FF1C;
+}
+
+.fallo {
+	border: 5px solid red;
+}
+
+.start {
+	background-color: #4CAF50;
+	font-size: 20px;
+	border-radius: 8px;
+	border: 2px solid #4CAF50;
+	-webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    /*box-shadow: 0 8px 16px 0 #ADFFB0, 0 6px 20px 0 #ADFFB0;*/
+}
+
+.start:hover {
+	background-color: #4CAF50; /* Green */
+    color: white;
+}
+
+.stop {
+	background-color: red;
+	font-size: 20px;
+	border-radius: 8px;
+	border: 2px solid red;
+	-webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    /*box-shadow: 0 8px 16px 0 #ADFFB0, 0 6px 20px 0 #ADFFB0;*/
+}
+
+.stop:hover {
+	background-color: red; /* Green */
+    color: white;
+}

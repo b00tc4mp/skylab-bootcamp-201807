@@ -1,0 +1,45 @@
+
+/*general aspects: borders and background-color*/
+.calculator { 
+	 width: 250px;
+	 border: 3px; 
+    text-align: center;
+    background-color: #1792A4; 
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 5px;
+    padding: 15px;  }
+
+/*mainScreen: border, position, background-color, text-style..*/					 
+#screenText {     
+	margin: 0 auto;
+    margin-top:5px;
+    width: 72%; 
+    border: 2px #80C9C6 solid; 
+    height: 40px;
+    text-align: right; 
+    padding: 10px 5px 0px 0px;
+    background-color: white; 
+    font-family: "courier new"; 
+    overflow: hidden;
+    font-size: 20px;
+    border-radius: 5px;}
+
+/*buttons style: width and position*/
+.calculator [type=button] { 
+	width: 45px; 
+	height: 25px;
+	padding: 0;
+	background-color:#44b4c4;
+    color:white;
+    border: none;
+    border-radius: 5px;
+    text-align: center;
+    text-decoration: none;  }
+/*botones especiales*/
+.calculator [type=button].number{
+    background-color:#80C9C6;
+}
+.calculator [type=button]:hover{
+    background-color:#A3D5D1;
+    cursor:pointer;
+}
