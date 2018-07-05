@@ -1,0 +1,19 @@
+header, footer {
+    height: 20%;
+}
+
+main {
+    height: 60%;
+}
+
+nav, aside {
+    width: 20%;
+    height: 100%;
+    float: left;
+}
+
+section {
+    width: 60%;
+    height: 100%;
+    float: left;
+}
