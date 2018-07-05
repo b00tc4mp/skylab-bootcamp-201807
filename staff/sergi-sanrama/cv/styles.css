@@ -1,0 +1,31 @@
+
+body{
+
+}
+h1{
+    font: bold;				
+    
+    width:35%;
+    border-radius:10px;
+    margin:15px auto;
+    text-align:center;
+    padding:15px;
+        
+};
+
+h2{
+    margin:0;
+    padding:5px 0px 5px 8px;
+   
+};
+
+section{
+    width:90%;												
+    border-top: 1px #999;						
+    margin:15px auto;
+}
+
+figure{
+    margin-top:25px;
+
+};

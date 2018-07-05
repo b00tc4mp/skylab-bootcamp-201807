@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>PASAPALABRA</title>
+    
+</head>
+
+<body>
+   <div id="contenedor-principal">
+       <div id="menu-principal">
+           <p id="menu_title">PASAPALABRA</p>
+           <p id="menu_subtitle">SKYLAB CODERS</p>
+           
+            <button id="instrucciones" class="btn_menu" onclick="mostrarInstrucciones()">Instrucciones</button>
+            <button id="juego" class="btn_menu" onclick="newUserIntro()">Start</button>
+            <button id="mejores-jugadores" class="btn_menu" onclick="mostrarRanking()">Ranking</button>
+              
+              
+              <div id="introducir-nombre">
+				<input id="usuario" type="text" placeholder="Introduce tu nombre">
+				<button id="ok_menu" class="ok_btn_menu" onclick="newUser()">OK</button>
+				<p id="alerta">Lo siento, ese nombre ya está siendo utilizado por otro usuario</p>
+				
+			  </div>
+       </div>     
+   </div>
+   <div id="contenedor-instrucciones">
+       <div id=instrucciones style="color:white" >
+           <p id="menu_title">PASAPALABRA</p>
+           <p id="menu_subtitle">SKYLAB CODERS</p>
+           <p>Bienvenido/a a Pasapalabra Skylab Coders</p>
+           <p>Dispones de 180 segundos de tiempo para responder todas las preguntas</p>
+           <p>Despues de escribir una respuesta, pulsa <strong style="color:blue">OK</strong> para validarla</p>
+           <p>Si no te acuerdas de la respuesta, tienes la opción de pasar a la siguiente pregunta, pulsando <strong style="color:green">PASAPALABRA</strong></p>
+           <p>Puedes terminar el juego cuando quieras, pulsa <strong style="color:red">STOP</strong></p>
+           <p>Al final de la partida, podrás ver en el ranking, el lugar en que has quedado de la clasificación</p>
+           <button id="stop" class="btn_return" onclick="returnToMenu()">Volver al menú principal</button>
+       </div>
+       
+       
+   </div>
+  <div id="contenedor-juego">
+		<header>
+			<p id="titlename">PASAPALABRA</p>
+			<p id="subtitle">SKYLAB CODERS</p>
+		</header>
+		<div id="globalLetters" >
+			<span class="letters">A<span class="results"></span></span>
+			<span class="letters">B<span class="results"></span></span>
+			<span class="letters">C<span class="results"></span></span>
+			<span class="letters">D<span class="results"></span></span>
+			<span class="letters">E<span class="results"></span></span>
+			<span class="letters">F<span class="results"></span></span>
+			<span class="letters">G<span class="results"></span></span>
+			<span class="letters">H<span class="results"></span></span>
+			<span class="letters">I<span class="results"></span></span>
+			<span class="letters">J<span class="results"></span></span>
+			<span class="letters">K<span class="results"></span></span>
+			<span class="letters">L<span class="results"></span></span>
+			<span class="letters">M<span class="results"></span></span>
+			<span class="letters">N<span class="results"></span></span>
+			<span class="letters">Ñ<span class="results"></span></span>
+			<span class="letters">O<span class="results"></span></span>
+			<span class="letters">P<span class="results"></span></span>
+			<span class="letters">Q<span class="results"></span></span>
+			<span class="letters">R<span class="results"></span></span>
+			<span class="letters">S<span class="results"></span></span>
+			<span class="letters">T<span class="results"></span></span>
+			<span class="letters">U<span class="results"></span></span>
+			<span class="letters">V<span class="results"></span></span>
+			<span class="letters">W<span class="results"></span></span>
+			<span class="letters">X<span class="results"></span></span>
+			<span class="letters">Y<span class="results"></span></span>
+			<span class="letters">Z<span class="results"></span></span>
+		</div>
+		<p id="preguntas">Skylab Coders Academy</p>
+		<div id="usuario_btn">
+			<button id="timer" class="results_panel">Tiempo</button>
+			<button id="correcto" class="results_panel">Aciertos</button>
+			<button id="incorrecto" class="results_panel">Errores</button>
+			<input id="respuesta" type="text" placeholder="Pon aquí tu respuesta!!">
+			<button id="ok" class="btn_game" onclick="answerAnalyzer()">OK</button>
+			<button id="pasapalabra" class="btn_game" onclick="userPasapalabra()">PASAPALABRA</button>
+			<button id="stop" class="btn_game" onclick="endGame()">Salir del juego</button>
+		</div> 
+   
+    </div> 
+    <div id="contenedor-ranking">
+            <div id="mejor-jugador" style="color:white">
+                <p id="menu_title">PASAPALABRA</p>
+                <p id="menu_subtitle">SKYLAB CODERS</p>
+                <p id="mejores" style="color:yellow">Clasificación general:</p>
+                <ol id="lista">
+                    <li id="primero">Jhon Nieve con un total de 21 puntos</li>
+                    <li id="segundo">Daenerys Targaryen con un total de 20 puntos </li>
+                    <li id="tercero">Tyrion Lannister con un total de 15 puntos</li>
+                    
+                </ol>
+                <button id="stop" class="btn_return" onclick="returnToMenu()">Volver al menú principal</button>
+            </div>
+        
+        </div>
+        
+   
+
+
+<script type="text/javascript" src="main.js"></script>
+</body>
+</html>
