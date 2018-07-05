@@ -29,7 +29,7 @@ section,footer {
     padding: 10px;
 }
 
-#my-picture {
+.head-picture {
     float: right;
     width: 200px;
     margin-right: 10%;
