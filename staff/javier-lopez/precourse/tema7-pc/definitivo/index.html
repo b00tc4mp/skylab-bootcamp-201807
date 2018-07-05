@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>CalculatorJS</title>
+		<link rel="stylesheet" type="text/css" href="styles/styles.css">
+	</head>
+	<body>
+		<h1>Skylab Calculator</h1>
+			<div class="calculadora">
+				<form action="#" name="calculadora" id="calculadora">
+					<p id="result">0</p>
+					<p>
+						<input type="button" value="0" onclick="number('0')" />
+						<input type="button" value="1" onclick="number('1')" />
+						<input type="button" value="2" onclick="number('2')" />
+						<input type="button" value="3" onclick="number('3')" />
+						<input type="button" value="4" onclick="number('4')" />				
+					</p>
+					<p>	
+						<input type="button" value="5" onclick="number('5')" />		
+						<input type="button" value="6" onclick="number('6')" />
+						<input type="button" value="7" onclick="number('7')" />
+						<input type="button" value="8" onclick="number('8')" />
+						<input type="button" value="9" onclick="number('9')" />
+					</p>
+					<p>
+						<input type="button" value="+" onclick="operar('+')" />
+						<input type="button" value="-" onclick="operar('-')" />
+						<input type="button" value="*" onclick="operar('*')" />
+						<input type="button" value="/" onclick="operar('/')"  />
+						<input type="button" value="√" onclick="raizc()" />
+					</p>
+					<p>
+						<input type="button" value="." onclick="number('.')" />
+						<input type="button" value="=" onclick="igualar()" />
+						<input type="button" class="largo" value="C" onclick="deleteResult()"  />
+					</p>
+				</form>
+			</div>
+		<script src="app/app.js"></script>
+	</body>
+</html>

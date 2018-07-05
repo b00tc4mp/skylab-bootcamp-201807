@@ -1,0 +1,577 @@
+Strings
+//a) Puedes contar cuantas letras tiene tu nombre?
+
+console.log(myName) // My Name has 4 letters 
+
+
+//b) Añade tu apellido e indica en que posición se encuentra
+
+console.log(myString)// Your first last name starts on position 5
+//c) Ahora, con tu apellido y nombre en la misma variable, muestra solo el nombre.
+console.log(myString) // My Name is Tony 
+//d) Ahora, solo tu apellido.
+
+var myName = "Kim Garcia"
+console.log("My last name is " + myName.substr(4)) // My lastname is Garcia
+
+
+//d1) Iguala el resultado a una variable nueva e imprímela por pantalla.
+
+var myName = "Kim Garcia"
+var nuevaVar = myName.substr(4)
+console.log(myName +", " + nuevaVar) // Tony Stark, Stark
+
+
+
+//e) Ahora, reemplaza tu nombre por "Mr/Ms" y vuelve a mostrar la variable con los cambios.
+myName = "Ms. Garcia"
+console.log("Hello, " + myName) // Hello, Mr. Stark 
+
+
+//f) Selecciona tu apellido y transfórmalo a MAYÚSCULAS.
+var myName = "Kim Garcia"
+console.log("my lastname is " + myName.substr(4).toUpperCase()) // my lastname is STARK
+//g) Ahora declara una variable nueva e igualala a la anterior variable sumándole, además, un mensaje.
+var nueva = myName + " molamil"
+console.log(nueva)
+
+
+//h) Ahora, puedes seleccionar la inicial de tu nombre y apellido y mostrarlas por pantalla?
+var myName = "Kim Garcia"
+console.log(myName.charAt(0) + " ." + myName.charAt(4) + " .")
+
+
+
+
+//Arrays
+//a) Declara tu nombre completo en una array y muéstralo por pantalla separando cada letra por "/"
+var nom = ["K" , "I" , "M" , "G" , "A" , "N" , "T" , "O" , "N"]  
+console.log(nom.join(" / ")) 
+
+var nom = ["K" , "I" , "M"]  
+console.log(nom.join("/")) 
+
+var nom2 = ["KIM"] 
+console.log(nom2[0].split('').join('/'))
+//K/I/M
+
+//b) Ahora solo selecciona tu apellido y muestra cada letra separada por "|"
+var nom = ["K" , "I" , "M" , "G" , "A" , "N" , "T" , "O" , "N"]
+console.log( nom.slice(3).join("|"))
+
+// G|A|N|T|O|N
+
+
+
+//_______inciso, probando de correr el array a partir del 3______________
+
+for (var i = 3; i < nom.length; i++) {
+	console.log(nom[i])
+}
+//______________________________________________________________________
+
+//c) Ahora muestra cada letra de tu nombre con su posición (necesitarás un bucle for)
+var nom = "Kim Garcia"
+var soloNom = nom.split(" ", 1)
+for (var i = 0; i < 3; i++) {
+	console.log(nom[i])
+}
+
+
+var nom = "Kim Garcia"
+var soloNom = nom.split(" ", 1)
+console.log(soloNom)
+//["Kim"]
+
+
+console.log(myName) // 1º T, 2º O, 3º N, 4º Y
+Resource: https://www.w3schools.com/jsref/jsref_split.asp
+
+//RESPUESTA JAUME///////////////////////
+function showSeparate(name, position) {
+
+	var result = name.split(" "); // coges el name y lo convierte en un array
+	var resultName = result[position].split("");
+
+	console.log(result); // no cal
+	
+	for (var i=0; i<name.length; i++) {
+		console.log(i + 1 + "º " + resultName[i].toUpperCase());
+	}
+
+}
+
+showSeparate("Jaume Serradell Andreu", 0);
+///////////////////////////////////////
+/// lets try ///
+function showSeparate (name, position) {
+
+	var result = name.split(" ")
+	var resultName = result[position].split("")
+
+	for (var i=0; i<name.length; i++) {
+		console.log( i + 1 + "º " + resultName[i].toUpperCase())
+
+	}
+
+}
+
+showSeparate("Kim Garcia Anton", 0)
+
+
+//d)Como en el ejercicio anterior, pero seleccionando tu apellido
+
+function showSeparate (name, position) {
+
+	var result = name.split(" ")
+	var resultName = result[position].split("")
+
+	for (var i=0; i<name.length; i++) {
+		console.log( i + 5 + "º " + resultName[i].toUpperCase())
+
+	}
+
+}
+
+showSeparate("Kim Garcia Anton", 1)
+
+
+console.log(myLastName) // 5º S, 6º T, 7º A, 8º R, 9º K
+Resource: https://www.w3schools.com/jsref/jsref_length_array.asp
+
+//e) Puedes indicarme las iniciales de tu nombre y apellido? Como en el ejercicio h de la sección de strings
+
+function showSeparate (name) {
+
+	var result = name.split(" ")
+	// [kim garcia anton
+
+	for (var i=0; i<name.length; i++) {
+		console.log(result[i].charAt(0) + ". ")
+	}
+
+}
+showSeparate("Kim Garcia Anton")
+//K.
+//G.
+//A. se pueden juntar?
+
+//// el codigo de abajo me sobra. 
+var resultName = result[].charAt(0)
+var resultApellido = result[1].charAt(0)
+
+
+//f) Ahora, reformula la array, introduciendo tu nombre en primera posición, tu apellido en segunda, y además añade en otra posicion tu edad. Muestra por pantalla solo tu nombre y tu edad en un solo mensaje.
+
+function presentacion(nombre, apellido, edad){
+	var yo = [nombre , apellido , edad];
+	console.log(" Me llamo " + yo[0] + " y tengo " + yo[2] + " años")
+
+	
+}
+
+
+presentacion("Kim", "Garcia" , 26)
+
+console.log(mySelector) // My name is TONY and i'm 40 years old
+
+
+//g) Prepara una función para añadir tu City a la array, muestra un mensaje mostrando el 
+//contenido de toda la array, así aseguraremos los cambios.
+
+
+function myCityAdd(nombre, apellido, edad, city){
+	var yo = [nombre , apellido , edad];
+	yo.push(city)
+	console.log("Añadida la city ---> " + yo)
+
+	
+}
+
+myCityAdd("Kim", "Garcia" , 26 , "Barcelona")
+
+//Añadida la city ---> Kim,Garcia,26,Barcelona
+console.log(myCityAdd) // City added to array! => Tony, Stark, 40, New York
+
+
+
+//h) Crea ahora, una funcion para eliminar la variable City y asegura los cambios.
+
+function eliminarCity (nombre, apellido, edad, city){
+	var yo = [nombre, apellido , edad , city]
+	yo.pop() //elimina el ultimo, no hace falta poner nada entre parentesis
+	console.log( "ciudad eliminada ---> " + yo)
+}
+
+eliminarCity("Kim", "Garcia" , 26 , "Barcelona")
+
+//ciudad eliminada ---> Kim,Garcia,26
+
+
+myCityAdd() // City added to array! => Tony, Stark, 40, New York
+myCityDelete() // City deleted! => Tony, Stark, 40
+
+
+
+
+
+//j) Ahora, elimina el nombre y asegura los cambios Resources: https://www.w3schools.com/jsref/jsref_shift.asp
+function eliminarNom (nombre, apellido, edad, city){
+	var yo = [nombre, apellido , edad , city]
+	yo.shift() 
+	console.log( "nombre eliminado ---> " + yo)
+}
+
+eliminarNom("Kim", "Garcia" , 26 , "Barcelona")
+
+//k) Quiero volver a introducir mi nombre pero si lo introduzco utilizando push() 
+//estará en la última posición, como podria hacer para introducirlo en la primera posición? 
+//Resources: https://www.w3schools.com/jsref/jsref_splice.asp
+
+function anadirNom (nombre, apellido, edad, city){
+	var yo = [apellido , edad , city]
+	yo.splice(0 , 0 , "name") 
+	console.log( "nombre anadido ---> " + yo)
+}
+
+anadirNom("Kim", "Garcia" , 26 , "Barcelona")
+//nombre anadido ---> name,Garcia,26,Barcelona
+
+
+//l) Ahora, declara una array con los números del 0 a 10 y muestra cada número multiplicado por dos.
+
+var arrayNum = []
+
+function probando () {
+	for (var i = 0; i <= 10; i++) {
+	arrayNum.push(i*2) // aqui los mandas al array creado anteriormente
+} //imprime numero del 0 al 10, los multiplica por dos y los añade al array
+
+console.log(arrayNum)
+}
+probando()
+ 
+//VM572:8 (11) [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20]
+//numbers = [...]
+// var multByTwo = numbers.map(...)
+//El método map() crea un nuevo array con los resultados de la
+// llamada a la función indicada aplicados a cada uno de sus elementos.
+
+var numbers = [1, 5, 10, 15];
+var doubles = numbers.map(function(x) {
+   return x * 2;
+
+
+//l1) Reformula la función para que puedas especificar por cual número debería multiplicar cada elemento de la array.
+
+var num = 3; // cada número se multiplicará por 3
+function multByNum(num){
+    var arrayMult = numbers.map(...)
+    return arrayMult
+}
+//Resource: https://www.w3schools.com/jsref/jsref_map.asp
+
+var numbers = [1,2,3,4,5,6,7,8,9,10];
+
+function porDos(num){
+	return num * 2
+}
+function myFunction() {
+	var nueva = numbers.map(porDos)
+	console.log(myFunction())
+}
+
+myFunction()
+
+///internet
+var numbers = [65, 44, 12, 4];
+
+function multiplyArrayElement(num) {
+    return num * document.getElementById("multiplyWith").value;
+}
+
+function myFunction() {
+    document.getElementById("demo").innerHTML = numbers.map(multiplyArrayElement);
+}
+
+/////////
+
+
+function multi() {
+	var multBy = numbers.map(function(x) {
+		return x * 2;
+	});
+
+	console.log(multBy);
+}
+
+multi();
+
+
+
+///////////// elementos loop for añadidos en un array previamente declarado ////////
+var numbers =[]
+for (var i = 0; i <= 10; i++) {
+	numbers.push(i)
+}
+///////////////////////
+
+
+
+
+
+//m) Podrías mostrarlos en el orden inverso? Resources: https://www.w3schools.com/jsref/jsref_sort.asp
+
+var arrayNum = []
+
+function probando () {
+	for (var i = 0; i <= 10; i++) {
+	arrayNum.push(i*2) // aqui los mandas al array creado anteriormente
+} //imprime numero del 0 al 10, los multiplica por dos y los añade al array
+
+console.log(arrayNum.reverse())
+}
+probando()
+//[20, 18, 16, 14, 12, 10, 8, 6, 4, 2, 0]
+
+
+//JAUME
+//m) Podrías mostrarlos en el orden inverso?
+var numbers = [1,2,3,4,5,6,7,8,9,10];
+
+function multi(num) {
+	var multBy = numbers.map(function(x) {
+		return x * num;
+	});
+
+	console.log(multBy.reverse());
+}
+
+multi(2);
+//[20, 18, 16, 14, 12, 10, 8, 6, 4, 2, 0]
+
+//n) Puedes indicarme que letras se repiten de tu nombre y cuantas veces?
+console.log(repeatLetters) // Tony Stark, the letter 'T' => 2 times.
+
+//JAUME
+
+//n) Puedes indicarme que letras se repiten de tu nombre y cuantas veces?
+function duplicateLetter(o) {
+    var letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    var arr = o.toUpperCase().split('');
+    var count = [];
+
+    for(var i=0; i<arr.length; i++) {
+        pos = letters.indexOf(arr[i]);
+        
+        if(pos < 0) {
+        	continue;	
+        } // This is for space between names, because indexOf of space is -1
+        
+        if(count[pos]) { 
+    		count[pos] = count[pos];
+		} else { // count[pos] is false, '', null, undefined, 0, or any other value that evaluates to false.
+    		count[pos] = 0;
+		}
+        count[pos]++;
+    }
+
+    for(var j=0; j<count.length; j++) {
+        if(!(count[j] > 0)) continue; // The letter never appeared.
+        console.log(o + ", the letter '" + letters[v] + "' => " + count[v] + ' times.');
+    }
+}
+
+duplicateLetter("Captain America");
+
+
+
+
+
+
+//n1) Ahora muestra por consola que letras NO se repiten y muestra tu nombre sin esas letras
+console.log(repeatLetters) // Tony Stark, the letters => o, n, y, s, a, r, k are not repeated, the name is => Ony Sark
+
+
+
+Numbers
+//a) Que hora es? Declara la hora como número y devuelvela como String
+console.log(myString + myNumberStringify) // I'ts 10.45 of morning
+Hint => https://www.w3schools.com/jsref/jsref_tostring_number.asp
+
+function timeToString() {
+	var date = new Date(); // pa que?
+	var dayTime = date.toLocaleTimeString().substr(0,5); // toLocaleTimeString() = 14:56:14 
+	console.log(dayTime);
+
+	var dayTime = "It's " + dayTime;
+
+
+  	if (dayTime < "14:00") {
+  		dayTime += " of morning";
+  	}else if ((dayTime >= "14:00") || (dayTime <= "20:00")) {
+  		dayTime += " of afternoon";
+  	} else {
+  		dayTime += " of night";
+  	}
+	
+	console.log(dayTime);
+}
+
+timeToString();
+
+
+var date = new Date()
+	console.log(date)
+//Mon Jun 04 2018 14:55:08 GMT+0200 (Hora de verano romance)
+
+var dayTime = date.toLocaleTimeString();
+	console.log(dayTime);
+// 14:56:14
+
+
+
+//b) Nono, que hora exactamente? Dime la hora sin minutos
+console.log(myString) // It's around 10 of morning
+
+function horaSinMin (){
+	var date = new Date
+	var dayTime = date.toLocaleTimeString().substr(0,2);
+
+
+	var dayTime = "It's around " + dayTime
+
+	if ( dayTime < "14" ) {
+		dayTime += " of morning";
+	} else if (( dayTime >= "14" ) || (dayTime < "20")){
+		dayTime += " of afternoon";
+	} else {
+		dayTime += " of night"; // vas añadiendo cosas a la variable dayTime
+	}
+	console.log(dayTime)
+}
+horaSinMin()
+//It's around 15 of afternoon
+
+//JAUME
+function timeToString(time) {
+	console.log("It's around " + Math.round(time).toString() + "(" + typeof time.toString() + ")" + " of morning");
+}
+
+timeToString(10.45);
+
+//Math.round redondea al valor entero mas cercano
+//Type of es mera informacio
+
+
+
+
+//c) Ahora, declara tu hora y muéstrala redondeada.
+console.log(...(10.34)) // 11!
+Hint => https://www.w3schools.com/jsref/jsref_round.asp
+// A DALT
+
+//d) Hagamos una calculadora. Primero, la suma.
+//console.log(sum) //The sum of 7+3 is 10
+
+function sum(x , y){
+	return (x + y)
+}
+
+//d1) Añade la resta...
+function subs (x, y){
+	return  (x - y)
+}
+
+
+function sumsubs(x, y){
+	console.log("The sum and rest of " + x + " and " + y  + " is " + sum(x,y) + " and " + subs(x,y))
+}
+
+sumsubs(3, 7)
+//The sum and rest of 3 and 7 is 10 and -4
+//console.log(sum + rest) // The sum and rest of 7 and 3 is 10 and 4 
+
+//COMPLETAAAAAAAAAAA:
+
+function sum(x , y){
+	return (x + y)
+}
+
+//d1) Añade la resta...
+function subs (x, y){
+	return  (x - y)
+}
+
+//d2) Y la multiplicación
+function multi (x, y){
+	return (x * y)
+}
+
+//d3) Por ultimo, la división
+function divi (x, y){
+	return (x / y)
+}
+
+function sumsubsmult(x, y){
+	console.log("The sum, the rest, the multi and the divi of " + x + " and " + y  + " are " + sum(x,y) + ", " + subs(x,y) +", " + multi(x,y) + " and " + divi(x,y)) 
+}
+
+sumsubsmult(3, 7)
+//The sum, the rest, the multi and the divi of 3 and 7 are 10, -4, 21 and 0.42857142857142855
+
+//d4) Ahora, intenta multiplicar un número por una string, que devuelve?
+
+sumsubsmultdivi( 3 , "Melon")
+
+console.log(10*"hour") // ....?!
+
+
+//e) Podemos controlar este error con un condicional if?
+//console.log(10*"hour") // You can't do this operation!,
+
+//la suma
+function sum(x , y){
+	return (x + y)
+}
+
+//d1) Añade la resta...
+function subs (x, y){
+	return  (x - y)
+}
+
+//d2) Y la multiplicación
+function multi (x, y){
+	return (x * y)
+}
+
+//d3) Por ultimo, la división
+function divi (x, y){
+	return (x / y)
+}
+
+
+function sumsubsmult(x, y){
+	if ( typeof x !== Number || typeof y !== Number) {
+	console.log("You can't do it")
+}
+
+sumsubsmult(3, 7)
+
+
+//e) Podemos controlar este error con un condicional if?   /////Revisar//////
+function calculateTime(time) {
+	
+	console.log(typeof time);
+
+	if (isNaN(time)) {
+		console.log("Is not a number");
+	} else {
+		console.log("It's a number!")
+	}	
+}
+
+calculateTime(10.45);
+
+
+
