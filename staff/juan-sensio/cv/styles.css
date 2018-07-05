@@ -2,6 +2,59 @@
 	font-family: 'Montserrat', sans-serif;
 }
 
+body {
+    display: -webkit-flex;
+    display: flex;
+    background-color: rgb(243, 235, 235);
+}
+
+container {
+    -webkit-flex: 1;
+    flex: 1;
+}
+
+nav {
+    margin-left: 10px;
+    margin-top: 20px;
+}
+
+header, footer {
+    background-color: rgb(243, 235, 235);
+}
+
+footer {
+    clear: left;
+    margin-left: 20px;
+    padding-top: 20px;
+}
+
+main > section {
+    float: left;
+    width: 300px;
+    margin: 0px 20px;
+}
+
+mark {
+    background-color: rgb(243, 235, 235);
+    color: black;
+    font-weight: bold;
+}
+
+h1 {
+    margin-left: 20px;
+    margin-bottom: 0px;
+}
+
 h2 {
     color: brown;
 }
+
+a {
+    margin: 0px 10px;
+    text-decoration: none;
+    color: rgb(136, 12, 12);
+}
+
+
+
+
