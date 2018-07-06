@@ -1,0 +1,30 @@
+@import "mobile.css" screen and (max-width: 768px);
+@import "desktop.css" screen and (min-width: 768px);
+
+* {
+    padding: 0;
+    margin: 0;
+    border: 0;
+    box-sizing: border-box;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+html {
+    background-color: white;
+}
+
+body {
+    background-color:black;
+}
+
+body, header, main, aside, section, footer {
+    border: 1px solid white;
+    background-color: black;
+    color: white;
+    text-align: center;
+}
