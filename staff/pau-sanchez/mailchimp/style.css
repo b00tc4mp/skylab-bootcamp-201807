@@ -18,6 +18,7 @@ header{
     display:grid;
     grid-template-rows: 49px 50px 211px 83px 54px 1fr;
     grid-template-columns: 1fr 459px 467px 1fr;
+    border-bottom: 1px solid #373c44;
 }
 
 #header1{
@@ -53,7 +54,7 @@ nav{
   font-size: 0.9em;
   background-color: #d1eef4;
   width: 550px;
-
+  
 }
 
 nav li{
@@ -61,16 +62,38 @@ nav li{
     margin-top: 0px;
     height: 47px;
     padding-top: 15px;
-    padding-left: 10px;
-    padding-right: 10px;
+    padding-left: 7px;
+    padding-right: 7px;
+    
 }
 
 .nab{
     color: black;
+    font-weight: bold;
+    height: 35px;
+    border-right: 2px solid #bfc4cc;
+    border-image: linear-gradient(to left, #bfc4cc, rgba(0, 0, 0, 0)) 1 100%;
+    
 }
 
 .li{
     padding-left: 10px;
+    
+}
+
+.search{
+    padding-top: 5px;
+}
+
+.search input{
+    border-radius: 3px;
+    border: none;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.2) inset, 0 -1px 0 rgba(0,0,0,0.05) inset;
+    padding-right: 10px;
+    height: 23px;
+    padding-left: 5px;
+    color: rgba(201, 189, 189, 0.753);
+    font-weight: bold;
     
 }
 
@@ -80,6 +103,7 @@ nav li{
     border: none;
     border-radius: 7px;
     background-color: black;
+    background: linear-gradient(#4c4b4a, #000000);
     width: 125px;
 }    
 
@@ -88,8 +112,11 @@ nav li{
     grid-row: 3;
     grid-column: 3/4;
     color: white;
-    font-weight: bolder;
-    font-size: 75px;
+    font-weight: 700;
+    font-size: 90px;
+    line-height: 0.9;
+    margin-top: 35px;
+    letter-spacing: -2px;
 
 
 }
@@ -116,6 +143,7 @@ nav li{
 
 #header5 button{
     background-color: red;
+    background: linear-gradient(#e2866f, #dd451f);
     width: 220px;
     height: 50px;
     border: none;
@@ -132,6 +160,7 @@ nav li{
     display:grid;
     grid-template-rows: 74px 419px 1fr;
     grid-template-columns: 13px 205px 31px 205px 31px 205px 31px 205px 13px;
+    border-radius: 9px 9px 0px 0px;
 }
 
 
@@ -243,6 +272,7 @@ nav li{
     grid-column: 1 / 4;
     background-image: url("pics/noisepattern.png");
     background-repeat: repeat;
+    border-top: 1px solid white;
 }
 
 footer{
