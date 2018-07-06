@@ -33,5 +33,7 @@
 .confirm__button {
   margin: 0 auto;
   display: block; }
+.confirm__button--highlight {
+  background-color: gray; }
 
 /*# sourceMappingURL=style.css.map */
