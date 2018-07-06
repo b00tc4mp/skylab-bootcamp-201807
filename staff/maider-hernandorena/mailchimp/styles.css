@@ -53,8 +53,7 @@ header button {
 
 .flex-container button {
     margin-top: 0px;
-    margin-left: 0px;
-    margin-right: 1px;
+    margin-left: 1px;
     width: auto;
     height: 50px;
     padding-left: 25px;
