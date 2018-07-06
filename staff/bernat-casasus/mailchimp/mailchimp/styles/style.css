@@ -1,0 +1,88 @@
+*{
+  box-sizing: border-box;
+  color:white;
+}
+
+body {
+  margin:0 auto;
+  width: 80%;
+  background-color:black;
+}
+
+.grid-container {
+  display: grid;
+  height: 100%;
+  grid-template-columns: 1fr 4fr 4fr 4fr 4fr 1fr;
+  grid-template-rows: 100px 428px 450px 500px;
+  grid-template-areas: ". header header header header ." ". monkey monkey monkey monkey ." ". articles articles articles articles ." "footer footer footer footer footer footer";
+}
+
+header {
+  grid-area: header;
+  background-color:#46bdd5;
+  display:flex;
+  flex-direction: column;
+}
+
+.sing-in-button {
+  display:flex;
+  justify-content: flex-end;
+  
+}
+
+nav ul {
+  display:flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  list-style-type: none;
+}
+
+.nav-buttons li{
+  padding:5px;
+  list-style-type: none;
+
+}
+
+.nav-buttons {
+  padding-left:0px; 
+  background-color: grey;
+  border-radius: 10px;
+
+}
+.monkey {
+  grid-area: monkey;
+  background-color:#46bdd5;
+  display:flex;
+  justify-content: center;
+
+}
+
+article p {
+  padding-left: 40px;
+  width:457px;
+}
+
+.articles {
+  grid-area: articles;
+  background-color:#ccd0cf;
+}
+
+footer {
+  grid-area: footer;
+  background-color:black;
+  color:white;
+}
+
+footer section {
+  display:flex;
+  justify-content: space-evenly;
+}
+
+section ul li {
+  list-style-type: none;
+}
+
+section ul li:first-child{
+  font-weight: bold;
+  font-size: 20px;
+}
