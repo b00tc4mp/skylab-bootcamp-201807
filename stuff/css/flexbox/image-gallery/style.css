@@ -1,0 +1,21 @@
+* {
+    box-sizing: border-box;
+    color: #333333;
+}
+  
+.flex-container {
+    display: flex;
+    flex-flow: row wrap;
+    width: 100%;
+}
+
+.flex-container > div {
+    flex: 1 1 250px;
+    margin: 2px;
+}
+
+.flex-container > div > img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
