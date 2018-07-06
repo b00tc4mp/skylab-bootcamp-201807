@@ -1,0 +1,46 @@
+html {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 200px;
+}
+
+.container {
+    display: grid;
+    height:100vh;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(3, 200px);
+    grid-template-areas: "one one one two two" "one one one four ." "five five five five three";
+    grid-gap:10px 10px;
+    /* background-color:orange; */
+}
+
+.item1 {
+    grid-area: one;
+    background-color: blue;
+    line-height:400px;
+}
+
+.item2 {
+    grid-area: two;
+    background-color: red;
+}
+
+.item3 {
+    grid-area: three;
+    background-color: green;
+}
+
+.item4 {
+    grid-area: four;
+    background-color: yellow;
+}
+
+.item5 {
+    grid-area: five;
+    background-color: black;
+    color:white;
+}
