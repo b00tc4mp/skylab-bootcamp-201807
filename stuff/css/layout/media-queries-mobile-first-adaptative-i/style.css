@@ -1,18 +1,24 @@
 body {
-    background-color: magenta;
+    background-color: red;
     color: white;
     font-size: 24px;
     font-family: 'Courier New', Courier, monospace;
 }
 
-@media screen and (min-width: 480px ) {
+@media screen and (min-device-width: 481px) and (max-device-width: 768px) and (orientation:portrait) {
     body {
-        background-color: indigo;
+        background-color: green;
     }
 }
 
-@media screen and (min-width: 768px) {
+@media screen and (min-device-width: 481px) and (max-device-width: 768px) and (orientation:landscape) {
     body {
-        background-color: deepskyblue;
+        background-color: lightgreen;
+    }
+}
+
+@media screen and (min-width: 769px) {
+    body {
+        background-color: blue;
     }
 }
