@@ -1,0 +1,101 @@
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box; }
+
+body {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: center; }
+
+div.container {
+  width: 100%;
+  display: grid;
+  grid-template-rows: 515px auto minmax(300px, 1fr); }
+
+header {
+  height: 515px;
+  background: #00c0d8 url(../images/chimp.png) no-repeat bottom left 100px;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 300px 706px 1fr;
+  grid-template-rows: 50px 50px 1fr;
+  grid-template-areas: ". . . " ". nav ." ". signup ."; }
+  header nav {
+    grid-area: nav;
+    position: relative;
+    background: pink; }
+    header nav ul {
+      display: flex;
+      justify-content: flex-end;
+      padding: 0;
+      margin: 0; }
+      header nav ul li {
+        list-style: none;
+        display: inline-block;
+        height: 50px;
+        background-color: #caeff5;
+        padding: 20px 15px;
+        margin: 0; }
+        header nav ul li a {
+          text-decoration: none; }
+    header nav #login-button {
+      position: absolute;
+      left: 650px;
+      top: -50px;
+      color: white;
+      display: inline-block; }
+    header nav #logo {
+      position: absolute;
+      left: -250px; }
+  header #signup {
+    grid-area: signup;
+    color: white;
+    margin-left: 240px; }
+
+main {
+  width: 100%;
+  height: 100%;
+  background-color: #cacfce;
+  display: flex;
+  flex-direction: row;
+  justify-content: center; }
+  main #whats-new {
+    background: #d1ebea;
+    width: 990px;
+    margin-top: -50px;
+    -webkit-border-radius: 1%;
+    -moz-border-radius: 1%;
+    border-radius: 1%;
+    display: grid;
+    grid-template-columns: repeat(4, 220px);
+    grid-template-rows: 50px 1fr;
+    grid-column-gap: 20px; }
+    main #whats-new h2 {
+      grid-column: 1/5;
+      grid-row: 1/2; }
+    main #whats-new ul li {
+      list-style: none;
+      display: inline-block; }
+
+footer {
+  background: #191814;
+  height: 300px;
+  display: grid;
+  grid-template-columns: repeat(4, 220px); }
+  footer h6 {
+    color: white; }
+  footer ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: inline-block; }
+    footer ul a {
+      text-decoration: none;
+      color: darkgrey; }
+      footer ul a:hover, footer ul a:active {
+        color: white; }
+
+/*# sourceMappingURL=main.css.map */
