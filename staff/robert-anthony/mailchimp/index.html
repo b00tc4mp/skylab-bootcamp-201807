@@ -6,13 +6,13 @@
   <link rel="stylesheet" href="styles/main.css">
 </head>
 <body>
-<div class="container">
+<div class="main__container">
   <header>
 
     <nav>
-      <img src="images/main_logo.png" alt="" id="logo">
+      <img src="images/main_logo.png" alt="" id="logo" class="nav__logo">
 
-      <h6 id="login-button">Log In</h6>
+      <h6 id="login-button" class="nav__login-button">Log In</h6>
 
       <ul>
         <li><a href="">Sign Up Free</a></li>
@@ -21,20 +21,20 @@
         <li><a href="">Resources</a></li>
         <li><a href="">Support</a></li>
         <li><a href="">Blog</a></li>
-        <li><input type="text" placeholder="Search"></li>
+        <li><input type="text" class="nav__input-search" placeholder="Search"></li>
       </ul>
     </nav>
-    <section id="signup">
+    <section id="signup" class="header__section-signup">
       <p class="signup-text"><span class="signup-big">Easy Email Newsletters</span>MailChipm helps you design email
         newsletters, share them on social networks, integrate with services you already use, and track your results.
         It's like your own personal publishing platform.</p>
-      <button id="signup-button">Sign Up Free</button>
+      <button id="signup-button" class="header__button-signup">Sign Up Free</button>
     </section>
   </header>
   <main>
-    <section id="whats-new">
-    <h2 id="whats-new-title">What's New</h2>
-      <article class="whats-new"><img src="images/home/templates.jpg" alt="More templates!" class="whats-new-image">
+    <section id="whats-new" class="main__section-whats-new">
+    <h2 id="whats-new-title" class="whatsnew__title">What's New</h2>
+      <article class="whatsnew__article"><img src="images/home/templates.jpg" alt="More templates!" class="whatsnew__article-image">
         <h4>New Feature</h4>
         <h3>More Templates!</h3>
         Curabitur id nisi non ante porttitor volutpat. Maecenas porttitor enim eu sollicitudin condimentum. In hac
@@ -42,9 +42,9 @@
         vitae nisi semper ultricies. Nulla sodales quis orci nec condimentum. Ut facilisis lobortis mauris et lacinia.
         Vivamus eget volutpat ligula. Curabitur risus nisl, ultricies a commodo ut, ultrices quis orci. Donec sagittis
         tincidunt erat.
-        <button class="whats-new-button">Learn More</button>
+        <button class="whatsnew__article-button">Learn More</button>
       </article>
-      <article class="whats-new"><img src="images/home/denim2.jpg" alt="Raleigh Denim" class="whats-new-image">
+      <article class="whatsnew__article"><img src="images/home/denim2.jpg" alt="Raleigh Denim" class="whatsnew__article-image">
         <h4>Customer Story</h4>
         <h3>Raleigh Denim</h3>
         Curabitur id nisi non ante porttitor volutpat. Maecenas porttitor enim eu sollicitudin condimentum. In hac
@@ -53,9 +53,9 @@
         Vivamus eget volutpat ligula. Curabitur risus nisl, ultricies a commodo ut, ultrices quis orci. Donec sagittis
         tincidunt erat.
 
-        <button class="whats-new-button">Learn More</button>
+        <button class="whatsnew__article-button">Learn More</button>
       </article>
-      <article class="whats-new"><img src="images/home/unfurlr-thumb.jpg" alt="Unfurlr" class="whats-new-image">
+      <article class="whatsnew__article"><img src="images/home/unfurlr-thumb.jpg" alt="Unfurlr" class="whatsnew__article-image">
         <h4>App Spotlight</h4>
         <h3>Unfurlr</h3>
         Curabitur id nisi non ante porttitor volutpat. Maecenas porttitor enim eu sollicitudin condimentum. In hac
@@ -64,9 +64,9 @@
         Vivamus eget volutpat ligula. Curabitur risus nisl, ultricies a commodo ut, ultrices quis orci. Donec sagittis
         tincidunt erat.
 
-        <button class="whats-new-button">Learn More</button>
+        <button class="whatsnew__article-button">Learn More</button>
       </article>
-      <article class="whats-new"><img src="images/home/golden-monkeys.jpg" alt="Golden Monkeys" class="whats-new-image">
+      <article class="whats-new"><img src="images/home/golden-monkeys.jpg" alt="Golden Monkeys" class="whatsnew__article-image">
         <h4>App Spotlight</h4>
         <h3>Golden Monkeys</h3>
         Curabitur id nisi non ante porttitor volutpat. Maecenas porttitor enim eu sollicitudin condimentum. In hac
@@ -74,12 +74,14 @@
         vitae nisi semper ultricies. Nulla sodales quis orci nec condimentum. Ut facilisis lobortis mauris et lacinia.
         Vivamus eget volutpat ligula. Curabitur risus nisl, ultricies a commodo ut, ultrices quis orci. Donec sagittis
         tincidunt erat.
-        <button class="whats-new-button">Learn More</button>
+        <button class="whatsnew__article-button">Learn More</button>
       </article>
     </section>
   </main>
   <footer>
-    <article class="footer-article">
+
+    <section class="footer__section-main">
+    <article class="footer__article">
       <h6>About Us</h6>
       <ul>
         <li><a href="">asdf</a></li>
@@ -92,7 +94,7 @@
         <li><a href="">asdf</a></li>
       </ul>
     </article>
-    <article class="footer-article">
+    <article class="footer__article">
       <h6>Connect With Us</h6>
       <ul>
         <li><a href="">asdf</a></li>
@@ -101,7 +103,7 @@
 
       </ul>
     </article>
-    <article class="footer-article">
+    <article class="footer__article">
       <h6>Contact Us</h6>
       <ul>
         <li><a href="">asdf</a></li>
@@ -111,7 +113,7 @@
 
       </ul>
     </article>
-    <article class="footer-article">
+    <article class="footer__article">
       <h6>Legal Info</h6>
       <ul>
         <li><a href="">asdf</a></li>
@@ -121,7 +123,8 @@
 
       </ul>
     </article>
-    <p class="copyright">Nam vitae velit in ligula molestie condimentum.</p>
+    <p class="footer__copyright">Nam vitae velit in ligula molestie condimentum.</p>
+    </section>
   </footer>
 </div>
 </body>

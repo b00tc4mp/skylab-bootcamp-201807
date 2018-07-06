@@ -15,6 +15,14 @@ $sign-up-grey: rgb(79, 82, 75);
 
 $bottom-column-width: 220px;
 
+%main_and_footer_grid_setup {
+  padding:0 20px 20px 20px;
+  display:grid;
+  grid-template-columns: repeat(4, $bottom-column-width);
+  grid-column-gap:20px;
+}
+
+
 * {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -29,7 +37,7 @@ body {
   justify-content: center;
 }
 
-div.container {
+div.main__container {
   width: 100%;
   display: grid;
   grid-template-rows: $header-height auto minmax($footer-height, 1fr);
@@ -47,10 +55,9 @@ header {
 
     grid-area: nav;
     position: relative;
-    background: pink;
     ul {
-      display:flex;
-      justify-content:flex-end;
+      display: flex;
+      justify-content: flex-end;
 
       padding: 0;
       margin: 0;
@@ -67,19 +74,19 @@ header {
         }
       }
     }
-    #login-button {
+   .nav__login-button {
       position: absolute;
       left: 650px;
       top: -50px;
       color: white;
       display: inline-block;
     }
-    #logo {
+    .nav__logo {
       position: absolute;
       left: -250px;
     }
   }
-  #signup {
+  .header__section-signup {
     grid-area: signup;
     color: white;
     margin-left: 240px;
@@ -89,22 +96,27 @@ header {
 
 main {
   width: 100%;
-  height:100%;
+  height: 100%;
   background-color: $main-grey;
   display: flex;
   flex-direction: row;
   justify-content: center;
-  #whats-new {
+  .main__section-whats-new {
+
     background: $whats-new-white;
     width: $whats-new-width;
-   margin-top: -50px;
+    margin-top: -50px;
     -webkit-border-radius: 1%;
     -moz-border-radius: 1%;
     border-radius: 1%;
+
+  /*  padding: 0 20px;
     display: grid;
     grid-template-columns: repeat(4, $bottom-column-width);
+    grid-column-gap: 20px;*/
+ @extend %main_and_footer_grid_setup;
+
     grid-template-rows: 50px 1fr;
-    grid-column-gap: 20px;
     h2 {
       grid-column: 1/5;
       grid-row: 1/2;
@@ -120,28 +132,38 @@ footer {
 
   background: $footer-grey;
   height: $footer-height;
-  display: grid;
-  grid-template-columns: repeat(4, $bottom-column-width);
-  h6 {
-    color: white;
-  }
-  ul {
-    margin: 0;
-    padding: 0;
-    li {
-    }
-    list-style: none;
-    display: inline-block;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  .footer__section-main{
+    width: $whats-new-width;
 
-    a {
-      text-decoration: none;
-      color: darkgrey;
-      &:hover, &:active {
-        color: white;
+    /*  padding: 0 20px;
+   display: grid;
+   grid-template-columns: repeat(4, $bottom-column-width);
+   grid-column-gap: 20px;*/
+    @extend %main_and_footer_grid_setup;
+
+    h6 {
+      color: white;
+    }
+    ul {
+      margin: 0;
+      padding: 0;
+      li {
+      }
+      list-style: none;
+      display: inline-block;
+      background: cyan;
+      a {
+        text-decoration: none;
+        color: darkgrey;
+        &:hover, &:active {
+          color: white;
+        }
       }
     }
   }
-
 }
 
 
