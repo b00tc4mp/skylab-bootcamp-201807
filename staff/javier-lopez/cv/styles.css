@@ -1,10 +1,10 @@
-figure img{
-    border-radius: 100px;
-}
-
 body{
     background: -webkit-linear-gradient(-45deg, #35577D, #141E30);
     background: linear-gradient(-45deg, #35577D, #141E30);
+}
+
+figure img{
+    border-radius: 100px;
 }
 
 main header{
