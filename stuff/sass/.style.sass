@@ -1,0 +1,67 @@
+$dialog__background-color: aliceblue
+$dialog__border-color: skyblue
+$dialog__border-color--danger: red
+$dialog__font: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
+$dialog__color: cornflowerblue
+$dialog__body-color: black
+
+$alert__background-color--danger: peachpuff
+$alert__title-font: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+
+.dialog
+    display: inline-block
+    border-radius: 1em
+    border-style: solid
+    border-width: 0.1em
+    border-color: $dialog__border-color 
+    background-color: $dialog__background-color
+    box-shadow: 0.1em 0.1em 0.1em 0.1em rgba(0,0,0,0.75)
+    padding: 0.7em
+    font-family: $dialog__font
+    font-size: 1.2em
+    max-width: 30vw
+    color: $dialog__color
+
+    &__body
+        text-align: justify
+        color: $dialog__body-color
+
+    &__button
+        font-family: inherit
+        font-size: inherit
+        border-radius: 0.4em
+        border-color: $dialog__body-color
+
+.alert
+    @extend .dialog
+
+    &__title
+        font-family: $alert__title-font
+
+    &__body
+        @extend .dialog__body
+
+    &--danger
+        border-color: $dialog__border-color--danger
+        background-color: $alert__background-color--danger
+        color: red
+    
+    &__button
+        @extend .dialog__button
+        margin: 0 auto
+        display: block
+
+.confirm
+    @extend .dialog
+
+    &__body
+        @extend .dialog__body
+
+    &__button
+        @extend .dialog__button
+        margin: 0 auto
+        display: block
+    
+    &__button--highlight
+        background-color: gray
+        
