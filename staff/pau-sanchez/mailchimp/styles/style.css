@@ -35,38 +35,7 @@ header{
     grid-column: 2/4;
     display: flex;
 }
-/*
-#navi{
-    display: flex;
-    justify-content: right;
-    align-items: center;
-    padding-left: 35px;
-    
-}
 
-nav{
-  margin-right: 10px;  
-  height: 50px;
-  align-items: right;
-  padding: 0 10px;
-  border-radius: 5px;
-  color: #fff;
-  font-size: 0.9em;
-  background-color: #d1eef4;
-  width: 550px;
-  
-}
-
-nav li{
-    display:inline-block;
-    margin-top: 0px;
-    height: 47px;
-    padding-top: 15px;
-    padding-left: 7px;
-    padding-right: 7px;
-    
-}
-*/
 
 nav{
     display:flex;
