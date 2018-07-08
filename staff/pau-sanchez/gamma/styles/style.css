@@ -1,53 +1,45 @@
-/* For mobile phones: */
-*{
+* {
   padding: 0;
   margin: 0;
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
 }
 
-body{
+body {
   min-width: 421px;
 }
 
-
-.navigationbar--logo{
- margin-top: 10px;
- margin-left: 15px;
- font-weight: bold;
- color: #1CAA98;
- font-size: 20px;
- padding-bottom: 10px;
+.navigationbar--logo {
+  margin-top: 10px;
+  margin-left: 15px;
+  font-weight: bold;
+  color: #1CAA98;
+  font-size: 20px;
+  padding-bottom: 10px;
 }
 
-.navigationbar--elements{
-  padding-left:15px;
+.navigationbar--elements {
+  padding-left: 15px;
   margin-top: 15px;
 }
-
-.navigationbar--elements a{
-  padding-left:15px;
+.navigationbar--elements a {
+  padding-left: 15px;
 }
 
-
-
-
-li{
+li {
   list-style: none;
 }
 
-.elements--links{
+.elements--links {
   display: none;
 }
 
-.navigationbar{
+.navigationbar {
   display: flex;
-   flex-direction: row;
-   background-color: #F8F8F8;
-   height: 50px;
+  flex-direction: row;
+  background-color: #F8F8F8;
+  height: 50px;
 }
 
-
-  
 .navigationbar--burgericon {
   width: 30px;
   height: 5px;
@@ -55,11 +47,11 @@ li{
   margin: 6px 0;
 }
 
-nav{
+nav {
   background-color: #F8F8F8;
 }
 
-.navigationbar label{
+.navigationbar label {
   padding-top: 4px;
   border: 1px solid #CCCCCC;
   border-radius: 7px;
@@ -69,29 +61,25 @@ nav{
   margin-right: 15px;
 }
 
-#menuTrigger,
-nav {
-    display: none;
+#menuTrigger, nav {
+  display: none;
 }
 
 #menuTrigger:checked + nav {
-    display: block;
+  display: block;
 }
 
-.navigationbar ul{
+.navigationbar ul {
   display: flex;
 }
 
-.elements--links a{
+.elements--links a {
   color: black;
   text-decoration: none;
 }
 
-/*INFO*/
-
-.main--info{
+.main--info {
   display: flex;
-  /*background-image: url('pics/header_background.jpg');*/
   background-color: black;
   justify-content: space-evenly;
 }
@@ -100,52 +88,49 @@ nav {
   text-align: center;
 }
 
-.main--info h1{
+.main--info h1 {
   font-size: 45px;
   color: white;
   margin: 10px 0;
 }
 
-.sales--text p{
+.sales--text p {
   font-size: 20px;
   color: white;
   margin: 10px 0;
 }
 
-.info--sales{
-  display:flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-}
-
-.sales--apps{
-  display:flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin: 10px 0;
-}
-
-.sales--apps img{
-  margin: 10px 0;
-}
-
-.info--pic img{
-  display: none;
-}
-
-/*DEMOS*/
-
-.demo--container{
+.info--sales {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
 }
 
-.container--card{
+.sales--apps {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 10px 0;
+}
+.sales--apps img {
+  margin: 10px 0;
+}
+
+.info--pic img {
+  display: none;
+}
+
+.demo--container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.container--card {
   margin-top: 50px;
   margin-bottom: 50px;
-  display:grid;
+  display: grid;
   grid-template-columns: 421px;
   grid-template-rows: 343px 50px 1fr;
   justify-content: center;
@@ -153,39 +138,37 @@ nav {
   margin-right: 5px;
 }
 
-.card--pic{
-  grid-column: 1 / 2;
+.card--pic {
+  grid-column: 1/2;
   grid-row: 1;
   border: 1px solid #CCCCCC;
 }
 
-.card--title{
+.card--title {
   margin-top: 10px;
 }
 
-.title--feature{
+.title--feature {
   font-size: 30px;
   font-weight: bold;
 }
 
-.card--pic img{
+.card--pic img {
   width: 419px;
   height: 341px;
 }
 
-.card--title{
+.card--title {
   grid-column: 1;
   grid-row: 2/3;
 }
 
-.card--infotext{
+.card--infotext {
   margin-top: 10px;
   grid-column: 1;
-  grid-row:  3 / 4;
-  
+  grid-row: 3/4;
 }
-
-.card--infotext button{
+.card--infotext button {
   margin-top: 10px;
   padding: 10px;
   border-radius: 5px;
@@ -194,9 +177,7 @@ nav {
   font-weight: bold;
 }
 
-/*FEATURES*/
-
-.footer--features{
+.footer--features {
   color: white;
   background-color: #1CAA98;
   display: flex;
@@ -204,77 +185,75 @@ nav {
   padding-left: 50px;
 }
 
-.features--title{
+.features--title {
   font-size: 20px;
 }
 
-.features--text{
+.features--text {
   display: block;
   margin-top: 25px;
   font-size: 20px;
   line-height: 1.6;
 }
 
-.features--pic{
+.features--pic {
   display: block;
   padding-left: 50px;
   margin-right: 0px;
 }
 
-/*PAGE TITLE*/
-
-.pagetitle{
+.pagetitle {
   background-color: green;
   height: 100px;
   color: white;
-  
 }
 
-.pagetitle--title h1{
+.pagetitle--title h1 {
   font-size: 50px;
   margin-left: 15px;
   padding-top: 15px;
 }
 
-
-/*FORM*/
-
-.mainabout--info{
+.mainabout--info {
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
-.main form .container--card{
+.main form .container--card {
   margin-left: 20px;
 }
 
-.container--form{
+.container--form {
   display: block;
 }
 
-.form--inputs{
-  display:flex;
+.form--inputs {
+  display: flex;
   flex-direction: column;
   margin: 50px 30px;
 }
-
-.form--inputs p{
+.form--inputs p {
   font-weight: bold;
   margin-bottom: 7px;
 }
-
-.form--inputs input, textarea{
+.form--inputs input {
   border-radius: 5px;
   border: 1px solid #CCCCCC;
-  color: #999999
+  color: #999999;
 }
 
-.form--inputs input{
+textarea {
+  border-radius: 5px;
+  border: 1px solid #CCCCCC;
+  color: #999999;
+}
+
+.form--inputs input {
   height: 30px;
 }
 
-.form--button{
+.form--button {
   margin-top: 10px;
   padding: 10px;
   border-radius: 5px;
@@ -284,30 +263,26 @@ nav {
   width: 75px;
 }
 
-
-
-/*ABOUT US*/
-
-.infoabout--text{
+.infoabout--text {
   margin-bottom: 35px;
   margin-left: 15px;
   margin-right: 15px;
 }
 
-.infoabout--title{
+.infoabout--title {
   font-size: 30px;
   font-weight: bold;
   margin: 20px 0;
 }
 
-.info--panels{
+.info--panels {
   margin-bottom: 20px;
   margin-left: 15px;
   margin-right: 15px;
 }
 
 .panels--collapsible {
-  background-color:#F5F5F5;
+  background-color: #F5F5F5;
   color: black;
   border: 1px solid #CCCCCC;
   border-radius: 10px 10px 0px 0px;
@@ -328,58 +303,49 @@ nav {
   border: 1px solid #CCCCCC;
   border-radius: 0px 0px 10px 10px;
 }
-
-.panels--content p{
+.panels--content p {
   padding: 10px;
 }
 
-/*FOOTER */
-
-
-.footer--bottom{
+.footer--bottom {
   color: white;
   background-color: black;
 }
 
-.bottom--links{
+.bottom--links {
   padding-top: 10px;
   padding-bottom: 10px;
 }
-
-.bottom--links a{
+.bottom--links a {
   color: white;
   text-decoration: none;
   padding: 5px;
 }
-
-.bottom--links ul{
+.bottom--links ul {
   display: flex;
-   flex-direction: row;
-   align-items: center;
-   justify-content: center;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
 }
 
-
-.bottom--credits{
+.bottom--credits {
   display: block;
   text-align: center;
   padding-bottom: 100px;
 }
 
-/*MEDIA QUERIES*/
-
 @media (min-width: 768px) {
-  .navigationbar--burgericon, .navigationbar label{
+  .navigationbar--burgericon, .navigationbar label {
     display: none;
   }
 
-  .elements--links{
+  .elements--links {
     display: block;
   }
 
-  .footer--features{
-     flex-direction: row;
-     justify-content: space-around;
+  .footer--features {
+    flex-direction: row;
+    justify-content: space-around;
   }
 
   .features--pic {
@@ -387,66 +353,63 @@ nav {
     margin-left: 200px;
   }
 
-  .sales--apps{
-    display:flex;
+  .sales--apps {
+    display: flex;
     flex-direction: row;
   }
 
-  .form--inputs{
-    display:flex;
+  .form--inputs {
+    display: flex;
     flex-direction: column;
     margin: 50px 30px;
     width: 500px;
   }
 
-  .info--infoabout{
+  .info--infoabout {
     margin-right: 50px;
-    
   }
-  /* For vertical tablets: */
-
+}
 @media (min-width: 1024px) {
-  .navigationbar--burgericon{
+  .navigationbar--burgericon {
     display: none;
   }
 
-  .elements--links{
+  .elements--links {
     display: block;
   }
 
-  .demo--container{
+  .demo--container {
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
   }
 
-  .info--pic img{
+  .info--pic img {
     display: block;
     margin-top: 30px;
   }
 
-  .mainabout--info{
+  .mainabout--info {
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
   }
-
-    /* For horizontal tables: */  
-
+}
 @media (min-width: 1400px) {
-  .navigationbar--burgericon{
+  .navigationbar--burgericon {
     display: none;
   }
-  .elements--links{
+
+  .elements--links {
     display: block;
   }
 
-  .form--inputs{
-    display:flex;
+  .form--inputs {
+    display: flex;
     flex-direction: column;
     margin: 50px 30px;
     width: 750px;
   }
-    /* For desktop: */  
+}
 
 /*# sourceMappingURL=style.css.map */
