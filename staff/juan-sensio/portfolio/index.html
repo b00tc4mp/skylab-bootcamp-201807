@@ -10,26 +10,27 @@
 </head>
 
 <body>
-    <header>
-        <h1> Aitor Menta</h1>
-        <nav id="top">
-            <a href="#about">ABOUT</a>
-            <a href="#projects">PROJECTS</a>
-            <a href="#contact">CONTACT</a>
+    
+    <header id="top">
+        <h1 class="header__name">Aitor Menta</h1>
+        <nav class="menu">
+            <a class="menu__link" href="#about">about</a>
+            <a class="menu__link" href="#projects">projects</a>
+            <a class="menu__link" href="#contact">contact</a>
         </nav>
     </header>
 
     <main>
 
-        <section id="about">
+        <section class="content__about" id="about">
             <h2>Aitor Menta</h2>
             <h3>Full-Stack Web Developer</h3>
             <p> HTML, CSS, JS, Git </p>
         </section>
 
-        <section id="projects">
+        <section class="content__projects" id="projects">
             <h2>Projects</h2>
-            <div class="projects">
+            <div class="content__projects__body">
                 <section>
                     <h3>Skylab coders web page. </h3>
                     <p> I developed the website for the
@@ -42,7 +43,7 @@
             </div>
         </section>
 
-        <section id="contact">
+        <section class="content__contact" id="contact">
             <h2>Contact</h2>
             <p>Carrer de Roc Boronat, 35 (Barcelona)</p>
             <p>698203948</p>
@@ -54,10 +55,10 @@
     </main>
 
     <footer>
-        <p>Last update:
-            <time>2018-06-06</time>.
+        <p class="footer__date">Last update:
+            <time>2018-07-06</time>.
         </p>
-        <a href="#top">TOP</a>
+        <a class="footer__link" href="#top">TOP</a>
     </footer>
 </body>
 
