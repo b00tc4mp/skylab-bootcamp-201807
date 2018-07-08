@@ -10,7 +10,7 @@ html {
 
 body {
   display: grid;
-  grid-template-rows: 50px min-content min-content;
+  grid-template-rows: 108px min-content min-content;
   margin: 0;
   padding: 0;
 }
@@ -133,9 +133,9 @@ body {
         @media #{$from-580} {
           &.capture-life__image--app-store {
             margin-left: 1em;
+            margin-right: 2em;
             @media #{$from-1400} {
               margin-left: 0;
-              margin-right: 2em;
             }
           }
 
@@ -183,7 +183,7 @@ body {
         border: lightgrey solid 1px;
         order: 1;
         @media #{$from-1400} {
-         order:-1;
+          order: -1;
         }
       }
       .products__article-button {
@@ -227,32 +227,52 @@ body {
     }
 
   }
-  .bottom__menu-container {
+  .bottom__menu-and-copyright-container {
+    padding-top: 2em;
+    padding-bottom: 2em;
     background: $footer__grey;
-    align-self: center;
-    width: max-content;
-    @media #{$from-580} {
-      align-self: flex-start;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+    align-items: center;
+    @media #{$from-1400} {
+      flex-direction: row;
+      justify-content: space-between;
     }
-    .bottom__menu-menu {
-      @include menu--no-style--horizontal(rgb(0, 100, 200));
-      padding-left: 5%;
-      color: white;
-      .bottom__menu-item {
-        padding-right: 1em;
+    .bottom__menu-container {
+      width: max-content;
+      margin-bottom:1em;
+      @media #{$from-580} {
+        align-self: flex-start;
+        margin-bottom:0;
+      }
+      @media #{$from-1400} {
+        align-self: center;
+        width: 50%;
+      }
+      .bottom__menu-menu {
+        @include menu--no-style--horizontal(rgb(0, 100, 200));
+        padding-left: 5%;
+        color: white;
+        .bottom__menu-item {
+          padding-right: 1em;
+        }
       }
     }
   }
+
   .bottom__copyright {
-    align-self: center;
 
     color: white;
-    margin-bottom: 2em;
-    margin-top: 5%;
 
+    width: max-content;
     @media #{$from-580} {
       align-self: flex-end;
       padding-right: 5%;
+      text-align: right;
+
     }
   }
 }
