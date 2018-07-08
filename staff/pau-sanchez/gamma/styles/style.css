@@ -10,7 +10,7 @@ body{
 }
 
 
-.logo{
+.navigationbar--logo{
  margin-top: 10px;
  margin-left: 15px;
  font-weight: bold;
@@ -19,12 +19,12 @@ body{
  padding-bottom: 10px;
 }
 
-.nav_elements{
+.navigationbar--elements{
   padding-left:15px;
   margin-top: 15px;
 }
 
-.nav_elements a{
+.navigationbar--elements a{
   padding-left:15px;
 }
 
@@ -35,11 +35,11 @@ li{
   list-style: none;
 }
 
-.links{
+.elements--links{
   display: none;
 }
 
-.nav_container{
+.navigationbar{
   display: flex;
    flex-direction: row;
    background-color: #F8F8F8;
@@ -48,7 +48,7 @@ li{
 
 
   
-.burger {
+.navigationbar--burgericon {
   width: 30px;
   height: 5px;
   background-color: #888888;
@@ -59,7 +59,7 @@ nav{
   background-color: #F8F8F8;
 }
 
-.nav_container label{
+.navigationbar label{
   padding-top: 4px;
   border: 1px solid #CCCCCC;
   border-radius: 7px;
@@ -78,49 +78,47 @@ nav {
     display: block;
 }
 
-.nav_container ul{
+.navigationbar ul{
   display: flex;
 }
 
-.links a{
+.elements--links a{
   color: black;
   text-decoration: none;
 }
 
 /*INFO*/
 
-.info{
+.main--info{
   display: flex;
   /*background-image: url('pics/header_background.jpg');*/
   background-color: black;
   justify-content: space-evenly;
-  
-  
 }
 
-.info-name h1, .info-text p {
+.sales--name h1, .sales--text p {
   text-align: center;
 }
 
-.info h1{
+.main--info h1{
   font-size: 45px;
   color: white;
   margin: 10px 0;
 }
 
-.info-text p{
+.sales--text p{
   font-size: 20px;
   color: white;
   margin: 10px 0;
 }
 
-.info-left{
+.info--sales{
   display:flex;
   flex-direction: column;
   justify-content: space-evenly;
 }
 
-.info-apps{
+.sales--apps{
   display:flex;
   flex-direction: column;
   align-items: center;
@@ -128,23 +126,23 @@ nav {
   margin: 10px 0;
 }
 
-.info-apps img{
+.sales--apps img{
   margin: 10px 0;
 }
 
-.info-right img{
+.info--pic img{
   display: none;
 }
 
 /*DEMOS*/
 
-.demo_container{
+.demo--container{
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
 }
 
-.demo_card{
+.container--card{
   margin-top: 50px;
   margin-bottom: 50px;
   display:grid;
@@ -155,40 +153,39 @@ nav {
   margin-right: 5px;
 }
 
-.democard-pic{
+.card--pic{
   grid-column: 1 / 2;
   grid-row: 1;
   border: 1px solid #CCCCCC;
 }
 
-.democard-title{
+.card--title{
   margin-top: 10px;
 }
 
-.demo-title{
-  
+.title--feature{
   font-size: 30px;
   font-weight: bold;
 }
 
-.democard-pic img{
+.card--pic img{
   width: 419px;
   height: 341px;
 }
 
-.democard-title{
+.card--title{
   grid-column: 1;
   grid-row: 2/3;
 }
 
-.democard-info{
+.card--infotext{
   margin-top: 10px;
   grid-column: 1;
   grid-row:  3 / 4;
   
 }
 
-.democard-info button{
+.card--infotext button{
   margin-top: 10px;
   padding: 10px;
   border-radius: 5px;
@@ -199,7 +196,7 @@ nav {
 
 /*FEATURES*/
 
-.features{
+.footer--features{
   color: white;
   background-color: #1CAA98;
   display: flex;
@@ -207,34 +204,33 @@ nav {
   padding-left: 50px;
 }
 
-.featuretitle{
+.features--title{
   font-size: 20px;
 }
 
-.features-text{
+.features--text{
   display: block;
   margin-top: 25px;
   font-size: 20px;
   line-height: 1.6;
-  
-  
-
 }
 
-.features-pic{
+.features--pic{
   display: block;
   padding-left: 50px;
   margin-right: 0px;
 }
+
 /*PAGE TITLE*/
-.page_title{
+
+.pagetitle{
   background-color: green;
   height: 100px;
   color: white;
   
 }
 
-.title h1{
+.pagetitle--title h1{
   font-size: 50px;
   margin-left: 15px;
   padding-top: 15px;
@@ -243,44 +239,42 @@ nav {
 
 /*FORM*/
 
-.main-form{
+.mainabout--info{
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
-.main form .demo_card{
+.main form .container--card{
   margin-left: 20px;
 }
 
-form_container{
+.container--form{
   display: block;
 }
 
-.form_inputs{
+.form--inputs{
   display:flex;
   flex-direction: column;
   margin: 50px 30px;
-  
-  
 }
 
-.form_inputs p{
+.form--inputs p{
   font-weight: bold;
   margin-bottom: 7px;
 }
 
-.form_inputs input, textarea{
+.form--inputs input, textarea{
   border-radius: 5px;
   border: 1px solid #CCCCCC;
   color: #999999
 }
 
-.form_inputs input{
+.form--inputs input{
   height: 30px;
 }
 
-.button_form{
+.form--button{
   margin-top: 10px;
   padding: 10px;
   border-radius: 5px;
@@ -294,25 +288,25 @@ form_container{
 
 /*ABOUT US*/
 
-.about_text{
+.infoabout--text{
   margin-bottom: 35px;
   margin-left: 15px;
   margin-right: 15px;
 }
 
-.about_text_title{
+.infoabout--title{
   font-size: 30px;
   font-weight: bold;
   margin: 20px 0;
 }
 
-.panel_container{
+.info--panels{
   margin-bottom: 20px;
   margin-left: 15px;
   margin-right: 15px;
 }
 
-.collapsible {
+.panels--collapsible {
   background-color:#F5F5F5;
   color: black;
   border: 1px solid #CCCCCC;
@@ -326,7 +320,7 @@ form_container{
   margin-top: 10px;
 }
 
-.content {
+.panels--content {
   padding: 0 15px;
   display: none;
   overflow: hidden;
@@ -335,30 +329,30 @@ form_container{
   border-radius: 0px 0px 10px 10px;
 }
 
-.content p{
+.panels--content p{
   padding: 10px;
 }
 
 /*FOOTER */
 
 
-.bottom-footer{
+.footer--bottom{
   color: white;
   background-color: black;
 }
 
-.footerlinks{
+.bottom--links{
   padding-top: 10px;
   padding-bottom: 10px;
 }
 
-.footerlinks a{
+.bottom--links a{
   color: white;
   text-decoration: none;
   padding: 5px;
 }
 
-.footerlinks ul{
+.bottom--links ul{
   display: flex;
    flex-direction: row;
    align-items: center;
@@ -366,71 +360,72 @@ form_container{
 }
 
 
-.credits{
+.bottom--credits{
   display: block;
   text-align: center;
   padding-bottom: 100px;
 }
 
+/*MEDIA QUERIES*/
 
 @media (min-width: 768px) {
-  .burger, .nav_container label{
+  .navigationbar--burgericon, .navigationbar label{
     display: none;
   }
 
-  .links{
+  .elements--links{
     display: block;
   }
 
-  .features{
+  .footer--features{
      flex-direction: row;
      justify-content: space-around;
   }
 
-  .features-pic, {
+  .features--pic {
     justify-content: flex-end;
     margin-left: 200px;
   }
 
-  .info-apps{
+  .sales--apps{
     display:flex;
     flex-direction: row;
   }
 
-  .form_inputs{
+  .form--inputs{
     display:flex;
     flex-direction: column;
     margin: 50px 30px;
     width: 500px;
   }
 
-  .about_info{
+  .info--infoabout{
     margin-right: 50px;
     
   }
   /* For vertical tablets: */
 
 @media (min-width: 1024px) {
-  .burger{
+  .navigationbar--burgericon{
     display: none;
   }
 
-  .links{
+  .elements--links{
     display: block;
   }
 
-  .demo_container{
+  .demo--container{
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
   }
 
-  .info-right img{
+  .info--pic img{
     display: block;
     margin-top: 30px;
   }
 
-  .main-form{
+  .mainabout--info{
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
@@ -439,14 +434,14 @@ form_container{
     /* For horizontal tables: */  
 
 @media (min-width: 1400px) {
-  .burger{
+  .navigationbar--burgericon{
     display: none;
   }
-  .links{
+  .elements--links{
     display: block;
   }
 
-  .form_inputs{
+  .form--inputs{
     display:flex;
     flex-direction: column;
     margin: 50px 30px;
