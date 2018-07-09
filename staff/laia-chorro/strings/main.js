@@ -9,15 +9,9 @@ function countWords(string) {
         var letter = string[i],
             nextLetter = string[i+1],
             space = ' ' || ' ';
-
-        
-
-        if (letter === space) {
-            words++;
-        }
         
     }
-debugger;
+
 
     return words;
 }
