@@ -1,0 +1,14 @@
+@import '../base'
+
+.list
+    list-style: none
+
+    &__item:before
+        content: "\2605\0020"
+
+    &__item--active
+        text-decoration: underline
+        color: $base__color--active
+
+    &__item--inactive
+        color: $base__color--inactive
