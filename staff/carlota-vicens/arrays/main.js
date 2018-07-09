@@ -11,3 +11,9 @@ function addElements(array){
     }
     return res;
 }
+console.log(addElements([1,2,3,4,5])===15); // true
+console.log(addElements([1,2,3,4,5,6])===21); // true
+console.log(addElements([1,2,3])===6); // true
+
+
+
