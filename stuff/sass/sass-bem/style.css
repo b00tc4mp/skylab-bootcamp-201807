@@ -1,0 +1,39 @@
+.dialog, .alert, .confirm {
+  display: inline-block;
+  border-radius: 1em;
+  border-style: solid;
+  border-width: 0.1em;
+  border-color: skyblue;
+  background-color: aliceblue;
+  box-shadow: 0.1em 0.1em 0.1em 0.1em rgba(0, 0, 0, 0.75);
+  padding: 0.7em;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  font-size: 1.2em;
+  max-width: 30vw;
+  color: cornflowerblue; }
+  .dialog__body, .alert__body, .confirm__body {
+    text-align: justify;
+    color: black; }
+  .dialog__button, .alert__button, .confirm__button {
+    font-family: inherit;
+    font-size: inherit;
+    border-radius: 0.4em;
+    border-color: black; }
+
+.alert__title {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; }
+.alert--danger {
+  border-color: red;
+  background-color: peachpuff;
+  color: red; }
+.alert__button {
+  margin: 0 auto;
+  display: block; }
+
+.confirm__button {
+  margin: 0 auto;
+  display: block; }
+.confirm__button--highlight {
+  background-color: gray; }
+
+/*# sourceMappingURL=style.css.map */

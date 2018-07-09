@@ -1,0 +1,146 @@
+body
+    margin: 0
+    font-family: Arial, Helvetica, sans-serif
+    font-size: 16px
+    color: #333333
+
+.header
+    position: fixed
+    top: 0
+    height: 100px
+    width: 100%
+    background-color: #ffffff
+
+    &__fixed-menu
+        padding-left: 40px
+        padding-right: 40px
+
+        &__navigation
+            float: right
+            margin: 40px auto
+            list-style: none
+
+            &__item
+                display: inline
+                padding-left: 30px
+                padding-right: 30px
+                font-size: 22px
+
+                &__link
+                    text-decoration: none
+                    color: #333333
+
+                    &:hover
+                        color: #43a2be
+                        text-decoration: underline overline
+
+.slide
+    width: 100%
+
+.about
+    padding: 200px 100px
+
+    &__img
+        width: 200px
+        height: 260px
+        float: left
+        margin-left: 150px
+
+    &__title
+        margin-left: 400px
+        padding-right: 220px
+        font-size: 50px
+        color: #43a2be
+        margin-top: 0
+        margin-bottom: 0
+    
+    &__subtitle
+        @extend .about__title
+        font-size: 22px
+        color: #333333
+        margin-bottom: 50px
+        font-weight: lighter
+
+    &__text
+        @extend .about__subtitle
+        font-size: 16px
+        margin-bottom: 20px
+
+.projects
+
+    &__title
+        @extend .about__title
+        margin-left: 100px
+        margin-bottom: 50px
+
+    &__flex
+        display: flex
+        flex-direction: row
+        flex-wrap: wrap
+        justify-content: center
+
+        &__post
+            width: 270px
+            margin: 40px
+
+            &__title
+                font-size: 20px
+                color: #333333
+                text-decoration: none
+
+                &:hover
+                    color: #43a2be
+
+.contact
+
+    &__title
+        @extend .projects__title
+
+    &__form
+        width: 80%
+        margin-left: 100px
+        background-color: #c1dee7
+
+        &__box
+            border: none
+            color: #666666    
+
+            &__text
+                margin-bottom: 0
+
+            &__button
+                width: 100px
+                height: 50px
+                background-color: #43a2be
+                color: #ffffff
+                font-size: 20px
+                border: none
+                border-radius: 8px
+                cursor: pointer
+                margin-left: 50px
+
+.footer
+    margin-top: 100px
+    background-color: #333333
+    color: #ffffff
+    width: 100%
+    height: 100px
+    padding-top: 30px
+    padding-bottom: 30px
+
+    &__list
+        margin-left: 100px
+
+        &__text
+            display: inline
+            margin-right: 20px
+
+            &__img
+                width: 20px
+                height: 20px
+
+            &__link
+                color: #ffffff
+
+                &:hover
+                    color: #43a2be
