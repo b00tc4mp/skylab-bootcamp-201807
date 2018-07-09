@@ -5,7 +5,7 @@
 body{
     margin: 0 auto;
     background-color: black;
-    width: 80%;
+    width: 90%;
 }
 
 .grid-container {
@@ -85,5 +85,4 @@ ul .nav-button{
     justify-content: flex-start;
     flex-direction: column;
     flex-wrap: nowrap;
-    width: 480px;
 }
