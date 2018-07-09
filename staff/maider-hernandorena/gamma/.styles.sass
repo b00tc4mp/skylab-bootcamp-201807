@@ -1,0 +1,284 @@
+body
+    font-family: Arial, Helvetica, sans-serif
+    font-size: 16px
+    color: #333333
+    margin: 0
+    width: 100%
+    
+.header
+    height: 50px
+    background-color: #cfcfcf
+    border-bottom: 1px solid #999999
+
+    &__logo
+        color: #0d968f
+        margin: 0
+        padding-left: 10px
+        padding-top: 10px
+
+    &__menu
+        float: right
+        margin-top: -50px
+
+        &__icon
+            width: 40px
+            height: 40px
+            padding-right: 10px
+            padding-top: 10px
+
+.title
+    @extend .header__logo
+    color: #ffffff
+    background-color: #0d968f
+    height: 50px
+
+    &__text
+        margin: 10px
+
+.publi
+    padding: 20px
+    background-image: url("images/site_showcase_bg.jpg")
+
+    &__title
+        text-align: center
+        color: #ffffff
+
+        &__highlighted
+            color: #0d968f
+
+    &__text
+        @extend .publi__title
+
+    &__icon
+        width: 200px
+        height: 60px
+        display: block
+        margin: 10px auto
+
+    &__movil
+        display: none
+
+.all-posts
+
+    &__post
+        padding: 5%
+
+        &__img
+            width: 100%
+            margin-top: 10px
+            border: 1px solid #999999
+
+        &__title
+            font-size: 26px
+            margin: 10px 0
+
+        &__text
+            margin: 0
+
+        &__button
+            @extend .all-posts__post__img
+            width: 30%
+            height: 40px
+            background-color: #ffffff
+
+.items
+    
+    &__list
+        margin: 5px 15px
+        border: 1px solid #999999
+        border-radius: 5px
+
+        &__title
+            background-color: #cfcfcf
+            height: 20px
+            font-size: 16px
+            margin: 0
+            padding: 5px 10px
+
+        &__text
+            padding: 5px 10px
+            margin: 0
+
+.contact
+    padding: 15px
+
+    &__form
+        
+        &__text
+            font-weight: bolder
+            margin-bottom: 5px
+
+        &__space
+            width: 100%
+            height: 30px
+            border: 1px solid #999999
+            border-radius: 5px
+            color: #999999
+            padding-left: 5px
+
+        &__big-space
+            @extend .contact__form__space
+            height: 70px
+
+        &__button
+            @extend .all-posts__post__button
+
+.gamma
+    background-color: #0d968f
+    color: #ffffff
+    padding: 20px 40px
+
+    &__features
+
+        &__title
+            @extend .publi__title
+            text-align: left
+            margin-bottom: 10
+        
+        &__list
+            list-style: none
+            padding: 0
+
+            &__text
+                margin-bottom: 20
+
+                &:before
+                    content: "\2713\0020"
+
+    &__img
+        width: 70%
+
+.footer
+    background-color: #333333
+    color: #ffffff
+    text-align: center
+    height: 100px
+    padding-top: 20px
+    font-size: 12px
+    width: 100%
+
+    &__list
+        list-style: none
+        padding: 0
+
+        &__link
+            text-decoration: none
+            color: #ffffff
+
+            &__text
+                display: inline
+                margin: 0 10px
+
+    &__copyright
+        margin-top: 20px
+
+//Responsive up to 500px
+
+@media only screen and (min-width: 500px)
+
+    .publi
+    
+        &__title
+            text-align: left
+
+        &__icon
+            display: inline
+            margin: 10px auto
+
+    .gamma-features
+
+        &__img
+            width: 50%
+
+//Resposive up to 900px
+
+@media only screen and (min-width: 900px)
+
+    .items
+        margin: auto 5%
+    
+    .gamma-features
+
+        &__img
+            width: 40%
+
+//Resposive up to 1100px
+
+@media only screen and (min-width: 1100px)
+
+    .title
+
+        &__text
+            margin-left: 10%
+            font-size: 30px
+
+    .publi
+        padding: 100px
+        height: 400px
+
+        &__title
+            font-size: 40px
+
+        &__text
+            font-size: 20px
+
+        &__icon
+            width: 200px
+            height: 70px
+
+        &__movil
+            display: inherit
+            float: right
+            margin-top: -198px
+            margin-right: 5%
+
+    .all-posts
+        display: grid
+        grid-template-columns: repeat(3, 1fr)
+        margin: 5% 10%
+        width: 80%
+
+        &__post
+            
+            &__button
+
+                width: 40%
+
+    .main
+        display: grid
+        grid-template-columns: repeat(2, 50%)
+        width: 80%
+        margin: 5% 10%
+
+        .contact
+            grid-column-start: 1
+            grid-column-end: 2
+
+            &__form
+
+                &__button
+                    width: 20%
+
+        .main-left
+            grid-column-start: 1
+            grid-column-end: 2
+
+        .all-posts
+            display: initial
+            grid-column-start: 2
+            grid-column-end: 3
+
+    .gamma
+        display: grid
+        grid-template-columns: 1fr, 1fr
+        width: 100%
+
+        &__features
+            grid-column-start: 1
+            grid-column-end: 2
+            margin-left: 20%
+
+        &__img
+            grid-column-start: 2
+            grid-column-end: 3
+            width: 40%

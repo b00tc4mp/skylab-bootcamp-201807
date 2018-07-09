@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Julia Juliana Portfolio</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header class="header">
+        <nav class="header__fixed-menu">
+            <a href="#home"><img class="header__fixed-menu__logo" src="images/logo.png"></a>
+            <ul class="header__fixed-menu__navigation">
+                <li class="header__fixed-menu__navigation__item"><a class="header__fixed-menu__navigation__item__link" href="#about">ABOUT</a></li>
+                <li class="header__fixed-menu__navigation__item"><a class="header__fixed-menu__navigation__item__link" href="#projects">PROJECTS</a></li>
+                <li class="header__fixed-menu__navigation__item"><a class="header__fixed-menu__navigation__item__link" href="#contact">CONTACT</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <a id="home">
+            <img class="slide" src="images/mountain.png">
+        </a>
+        <a id="about">
+            <section class="about">
+                <img class="about__img" src="images/girl.png">
+                <h1 class="about__title">JULIA JULIANA</h1>
+                <h2 class="about__subtitle">UX Designer</h2>   
+                <p class="about__text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero deleniti molestias animi quibusdam voluptates tempore eaque veniam delectus.</p>
+                <p class="about__text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero deleniti molestias animi quibusdam voluptates tempore eaque veniam delectus. Blanditiis eos cumque, officia sequi inventore tempore dicta neque reiciendis similique earum.</p>
+            </section>
+        </a>
+        <a id="projects">
+            <section class="projects">
+                <h2 class="projects__title">PROJECTS</h2>
+                <div class="projects__flex">
+                    <article class="projects__flex__post">
+                        <img class="projects__flex__post__img" src="images/project.png">
+                        <a class="projects__flex__post__title" href=""><h3>Project 1</h3></a>
+                        <p class="projects__flex__post__text">Lorem ipsum dolor sit amet consec tetur adipisicing elit.</p>
+                    </article>
+                    <article class="projects__flex__post">
+                        <img class="projects__flex__post__img" src="images/project.png">
+                        <a class="projects__flex__post__title" href=""><h3>Project 2</h3></a>
+                        <p class="projects__flex__post__text">Lorem ipsum dolor sit amet consec tetur adipisicing elit.</p>
+                    </article>
+                    <article class="projects__flex__post">
+                        <img class="projects__flex__post__img" src="images/project.png">
+                        <a class="projects__flex__post__title" href=""><h3>Project 3</h3></a>
+                        <p class="projects__flex__post__text">Lorem ipsum dolor sit amet consec tetur adipisicing elit.</p>
+                    </article>
+                    <article class="projects__flex__post">
+                        <img class="projects__flex__post__img" src="images/project.png">
+                        <a class="projects__flex__post__title" href=""><h3>Project 4</h3></a>
+                        <p class="projects__flex__post__text">Lorem ipsum dolor sit amet consec tetur adipisicing elit.</p>
+                    </article>
+                    <article class="projects__flex__post">
+                        <img class="projects__flex__post__img" src="images/project.png">
+                        <a class="projects__flex__post__title" href=""><h3>Project 5</h3></a>
+                        <p class="projects__flex__post__text">Lorem ipsum dolor sit amet consec tetur adipisicing elit.</p>
+                    </article>
+                    <article class="projects__flex__post">
+                        <img class="projects__flex__post__img" src="images/project.png">
+                        <a class="projects__flex__post__title" href=""><h3>Project 6</h3></a>
+                        <p class="projects__flex__post__text">Lorem ipsum dolor sit amet consec tetur adipisicing elit.</p>
+                    </article>
+                </div>
+            </section>
+        </a>
+        <a id="contact">
+            <section class="contact">
+                <h2 class="contact__title">CONTACT</h2>
+                <form class="contact__form" action="">
+                    <fieldset class="contact__form__box">
+                        <p class="contact__form__box__text">Name</p>
+                        <input type="text" name="firstname">
+                        <p class="contact__form__box__text">Email</p>
+                        <input type="text" name="email">
+                        <p class="contact__form__box__text">Message</p>
+                        <textarea name="textarea" rows="10" cols="80"></textarea>
+                        <input class="contact__form__box__button" class="buttom" type="submit" onclick="alert('Your message has been sent! Thank you!')" value="SEND">
+                    </fieldset>
+                </form>   
+            </section>
+        </a>
+    </main>
+
+    <footer class="footer">
+        <ul class="footer__list">
+            <li class="footer__list__text"><img class="footer__list__text__img" src="images/phone.png"> 666 000 666</li>
+            <li class="footer__list__text"><img class="footer__list__text__img" src="images/address.png"> Barcelona</li>
+            <li class="footer__list__text"><img class="footer__list__text__img" src="images/car.png"> B+</li>
+        </ul>
+        <ul class="footer__list">
+            <li class="footer__list__text"><img class="footer__list__text__img" src="images/linkedin.png"><a class="footer__list__text__link" href=""> LinkedIn</a></li>
+            <li class="footer__list__text"><img class="footer__list__text__img" src="images/insta.png"><a class="footer__list__text__link" href=""> Instagram</a></li>
+            <li class="footer__list__text"><img class="footer__list__text__img" src="images/github.png"><a class="footer__list__text__link" href=""> Github</a></li>
+        </ul>
+    </footer>
+</body>
+
+</html>

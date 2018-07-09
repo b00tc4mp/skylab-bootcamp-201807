@@ -1,0 +1,13 @@
+$base__color: darkgray !default
+$base__color--active: lightgray !default
+$base__color--inactive: gray !default
+
+$base__boder-color: black !default
+
+$base__font-size: 10 !default
+
+@function px($value)
+    @return $value + px
+
+@function to-rem($px, $base: $base__font-size)
+    @return ($px / $base) * 1rem
