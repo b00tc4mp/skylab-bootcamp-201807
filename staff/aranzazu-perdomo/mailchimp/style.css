@@ -1,4 +1,3 @@
-
 *,
 *::after,
 *::before {
@@ -38,8 +37,7 @@ header a {
 
 
 
-ul {
-  padding: 0; }
+
 
   header {
     display: flex;
@@ -259,4 +257,3 @@ ul {
           left: 2px;
           color: #fff;
 }
-
