@@ -1,0 +1,7 @@
+header, nav, aside, footer {
+    height: 20%;
+}
+
+main, section {
+    height: 60%;
+}
