@@ -6,34 +6,32 @@ body
     font-size: 16px
     font-family: 'Roboto', sans-serif
 
-
 h1 
     font-size: 3rem
-    color: white
-
-
+    color: $color
 
 h2 
     color: white
     font-size: 3rem
 
-
 h3 
     color: white
     font-size: 2rem
 
-
 .span
     color: #1caa98
-
 
 p 
     font-size: 1rem
 
-
 .white-color 
     color: white
 
+.gray-background
+    background-color: #e7e7e7
+
+.green-background
+    background-color: #1caa98
 
 .div-50
     width: 50%
@@ -41,20 +39,16 @@ p
     flex-direction: column
     align-content: flex-end
 
-
-
 header, main, section, footer
     width: 100%
     min-height: 300px
-    background-color: greenyellow
     display: flex
     flex-direction: row
     flex-wrap: wrap
     margin-bottom: 2px
     justify-content: center
 
-
-.header
+.header_a
     max-width: 1200px
     padding: 0 3em
     min-height: 300px
@@ -62,8 +56,7 @@ header, main, section, footer
     display: flex
     justify-content: space-between
 
-
-.main
+.main_a
     max-width: 1200px
     padding: 0 3em
     min-height: 300px
@@ -71,30 +64,28 @@ header, main, section, footer
     background-size: contain, cover
     justify-content: space-between
 
-
 .background-image 
-        border: 2px solid black
-        padding: 25px
-        background-image: url(./images/site_showcase_bg.jpg)
-        background-repeat: no-repeat
-        background-size: auto
+    background-image: url(./images/site_showcase_bg.jpg)
+    background-repeat: no-repeat
+    background-size: auto
 
-
-.footer
+.footer_a
     max-width: 1200px
     padding: 0 3em
     min-height: 300px
-    background-color:#1caa98
     display: flex
     justify-content: space-between
 
+ul a
+    text-decoration: none
+    list-style:none
+    color: white
 
 li a
-    decoration: none
+    text-decoration: none
+    list-style:none
     color: white
 
-
-link a
-    decoration: none
+link
+    text-decoration: none
     color: white
-
