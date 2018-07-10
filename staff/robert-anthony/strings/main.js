@@ -103,14 +103,9 @@ console.log(words.length === 1); // => true
 
 function findWordsRegex (string, func ){
   var returnArr = splitToWordsRegex(string).filter(function(element) {
-    if (element) {
-      if (func(element)) {
-        return element;
-      }
-    }
+    if (element && func(element)) return element;
   });
   return returnArr;
-
 }
 
 var words = findWordsRegex('hello world', function (word) {
