@@ -1,0 +1,6 @@
+
+function toCamelCase(string) {
+
+    
+
+}
