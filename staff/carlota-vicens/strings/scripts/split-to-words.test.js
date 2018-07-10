@@ -14,3 +14,11 @@ console.log(words[2] === 'c'); // true
 var words = splitToWords('      ');
 
 console.log(words.length === 0); // true
+
+var words=splitToWords(' \t\n');
+
+console.log(words.length===0); //true
+
+var words=splitToWords (' $ % & !');
+
+console.log(words.lenght===0); 

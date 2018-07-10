@@ -2,22 +2,24 @@
 
 function splitToWords(string) {
   
-    var aux;
+    var aux='';
     var words= [];
     var blankBefore = true;
 
     for (var i = 0; i < string.length; i++) {
         var char = string[i];
-        if (hasSymbol(char)){
-            if (isBlank(char) ) {
-                aux.concat(char);
-            }else {
-                words.push(aux);   
+       
+            if (!isBlank(char) && !hasSymbol(char) ) {
+                aux= aux.concat(char);
+            }else if (aux.length){
+                words.push(aux);  
+                aux= ''; 
             }
         }
 
-    }
-    console.log(words);
+    
+    if(aux.length) words.push(aux);
+    
     return words; 
     
-}
+    }
