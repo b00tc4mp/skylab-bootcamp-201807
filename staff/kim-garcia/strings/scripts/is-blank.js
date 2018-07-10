@@ -12,5 +12,5 @@
 // }
 
 function isBlank(string) {
-    return /^\s*$/.test(string);
+    return /^\s*$/.test(string);  //excluye /eso/
 }
