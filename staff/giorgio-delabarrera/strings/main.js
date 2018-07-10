@@ -52,8 +52,8 @@ function countWords(text) {
         return [tabCode, spaceCode].indexOf(character.charCodeAt()) > -1;
     }
 
-    var isLetter = function(character) {
-        return !isSeparator(character);
+    var hasValue = function(character) {
+        return character.length && !isSeparator(character);
     }
 
     var hasLetter = false;
@@ -62,7 +62,7 @@ function countWords(text) {
         
         var character = text[i];
         
-        if (isLetter(character)) {
+        if (hasValue(character)) {
             if (!hasLetter) {
                 hasLetter = true;
                 count++;
