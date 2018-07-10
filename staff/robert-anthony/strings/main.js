@@ -103,7 +103,7 @@ console.log(words.length === 1); // => true
 
 function findWordsRegex (string, func ){
   var returnArr = splitToWordsRegex(string).filter(function(element) {
-    if (element && func(element)) return element;
+    return element && func(element);
   });
   return returnArr;
 }
