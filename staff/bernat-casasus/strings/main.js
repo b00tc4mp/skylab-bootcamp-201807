@@ -4,7 +4,7 @@
         // TODO: count words in string using a standard loop (split and trim are forbidden), taking into account spaces and tabs
         var count = 0;
         for(var i = 0; i < string.length; i++){
-            if(string.charAt(i) !== (" " || "    ")){
+            if(string.charAt(i) !== "\b" && string.charAt(i) !== "\n" && string.charAt(i) !== "\t" && string.charAt(i) !== " " && string.charAt(i) !== "    "){
                 if(i === 0){
                     count++;
                 }else if(string.charAt(i-1) === (" " || "	")){
@@ -15,11 +15,14 @@
         return count;
     }
 
+
     console.log(countWords('hello world') === 2); // => true
     console.log(countWords('') === 0); // => true
     console.log(countWords('1 2 3 4 5') === 5); // => true
     console.log(countWords('    ') === 0); // => true
     console.log(countWords('one   two       three   four     five') === 5); // => true
+    console.log(countWords('hello world \t\n') === 2); //true
+    console.log(countWords('... ,,, ;;; :::') === 0); //true
 
 
 // split to words
@@ -57,11 +60,11 @@
 
         return result;
     }
-    var letras="abcdefghyjklmnñopqrstuvwxyz";
-    function tiene_letras(texto){
-        texto = texto.toLowerCase();
-        for(i=0; i<texto.length; i++){
-           if (letras.indexOf(texto.charAt(i),0)!=-1){
+    var letters="abcdefghyjklmnñopqrstuvwxyz";
+    function tiene_letras(words){
+        words = words.toLowerCase();
+        for(i=0; i<words.length; i++){
+           if (letters.indexOf(words.charAt(i),0)!=-1){
               return 1;
            }
         }
