@@ -9,7 +9,7 @@ header {
 
 .buttonNav {
     background-color: black;
-    color: white;
+    color: white; 
     padding: 15px;
     border-radius: 10px;
     font-size: 15px;
@@ -29,6 +29,7 @@ header {
     grid-column-start: 2;
     grid-column-end: 3;
 }
+
 
 .signupfree {
     grid-column-start: 3;
