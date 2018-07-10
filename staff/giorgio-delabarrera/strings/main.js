@@ -47,29 +47,25 @@ function countWords(text) {
 
     var count = 0;
 
-    var isSeparator = function(character) {
-        var tabCode = 9, spaceCode = 32;
-        return [tabCode, spaceCode].indexOf(character.charCodeAt()) > -1;
+    var isLetterOrDigit = function(character) {
+        var re = /[\da-zA-Z]/;
+        return re.test(character);
     }
 
-    var hasValue = function(character) {
-        return character.length && !isSeparator(character);
-    }
-
-    var hasLetter = false;
+    var hasLetterOrDigit = false;
 
     for (var i = 0; i < text.length; i++) {
         
         var character = text[i];
         
-        if (hasValue(character)) {
-            if (!hasLetter) {
-                hasLetter = true;
+        if (isLetterOrDigit(character)) {
+            if (!hasLetterOrDigit) {
+                hasLetterOrDigit = true;
                 count++;
             }
         }
         else {
-            hasLetter = false;
+            hasLetterOrDigit = false;
         }   
     }
 
@@ -84,13 +80,9 @@ function splitToWords(text) {
         return index === text.length - 1;
     }
 
-    var isSeparator = function(character) {
-        var tabCode = 9, spaceCode = 32;
-        return [tabCode, spaceCode].indexOf(character.charCodeAt()) > -1;
-    }
-
-    var hasValue = function(character) {
-        return character.length && !isSeparator(character);
+    var isLetterOrDigit = function(character) {
+        var re = /[\da-zA-Z]/;
+        return re.test(character);
     }
 
     var word = '';
@@ -100,7 +92,7 @@ function splitToWords(text) {
         
         var character = text[i];
 
-        if (hasValue(character)) {
+        if (isLetterOrDigit(character)) {
             toAdd = true;
             word = word.concat(character);
             if (isLastCharacter(i, text)) {
@@ -123,48 +115,6 @@ function findWords(string, func) {
     
     var foundWords = [];
     
-    var splitToWords = function(text) {
-        var words = [];
-
-        var isLastCharacter = function(index, text) {
-            return index === text.length - 1;
-        }
-
-        var isSeparator = function(character) {
-            var tabCode = 9, spaceCode = 32, commaCode = 44;
-            return [tabCode, spaceCode, commaCode].indexOf(character.charCodeAt()) > -1;
-        }
-
-        var hasValue = function(character) {
-            return character.length && !isSeparator(character);
-        }
-
-        var word = '';
-        var toAdd = false;
-
-        for (var i = 0; i < text.length; i++) {
-            
-            var character = text[i];
-
-            if (hasValue(character)) {
-                toAdd = true;
-                word = word.concat(character);
-                if (isLastCharacter(i, text)) {
-                    words.push(word);
-                }
-            }
-            else {
-                if (toAdd) {
-                    toAdd = false;
-                    words.push(word);
-                    word = '';
-                }
-            }   
-        }
-
-        return words;
-    }
-
     var words = splitToWords(string);
 
     for (var i = 0; i < words.length; i++) {
