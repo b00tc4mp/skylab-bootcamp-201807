@@ -1,23 +1,21 @@
-function isSplitSymbol(letter) {
-    var tab = '\t',
-        space = ' ',
-        comma = ',';
 
-    return letter === space || letter === tab || letter === comma;
+function isAlphaNumeric(string) {
+    var regexAlphaNumeric = /[A-Za-z0-9à-úçñ'·ý]/; // Any alphanumeric symbol including accents
+
+    return string && string.match(regexAlphaNumeric);
 }
 
 // count words
 function countWords(string) {
     // TODO: count words in string using a standard loop
-
     var words = 0;
 
     for (var i = 0; i < string.length; i++) {
         var letter = string[i],
             nextLetter = string[i+1],
-            isFirstWord = i === 0 && !isSplitSymbol(letter);
+            isFirstWord = i === 0 && isAlphaNumeric(letter);
 
-        if (isFirstWord || isSplitSymbol(letter) && nextLetter && !isSplitSymbol(nextLetter)) {
+        if (isFirstWord || !isAlphaNumeric(letter) && isAlphaNumeric(nextLetter)) {
             words++;
         }        
     }
@@ -41,10 +39,10 @@ function splitToWords(string) {
         var letter = string[i],
             nextLetter = string[i+1];
 
-        if (!isSplitSymbol(letter) ) {
+        if (isAlphaNumeric(letter) ) {
             word += letter;
 
-            if (!nextLetter || isSplitSymbol(nextLetter) ) {
+            if (!nextLetter || !isAlphaNumeric(nextLetter) ) {
                 words.push(word);
                 word = '';
             }
