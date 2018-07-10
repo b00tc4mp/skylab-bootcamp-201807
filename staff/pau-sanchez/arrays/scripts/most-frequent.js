@@ -5,11 +5,14 @@ function mostFrequent(array) {
 
 
     for (var i = 0; i < array.length; i++){
-        if (base.indexOf(array[i]) === -1){
-            base.push(array[i])
-        } else if (base.indexOf(array[i]) > -1){
-            frequent.push(array[i])
-        }
+       for (var j = 0; j < array.length; j++){
+           if (array[i] === array[j] && array.indexOf(array[i]) !== j){
+               if(frequent.indexOf(array[i]) === -1){
+                frequent.push(array[i])
+               }
+                
+           }
+       }
     }
 
     
