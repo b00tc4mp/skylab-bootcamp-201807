@@ -1,4 +1,3 @@
-
 //count letters
 
 function countWords(string){
@@ -12,33 +11,35 @@ function countWords(string){
 }
 
 //count words
-function isSpace(value) {
-    return [" ","	"].indexOf(value) > -1;
-  };
-  
-  function countWords(str) {
-      var count = 0;
-      if (str.length) {
-          if (!isSpace(str[0])) { count++ };
-          for (var i = 1; i < str.length; i++) {
-              var curr = str[i];
-              var prev = str[i - 1];
-              if (!isSpace(curr) && isSpace(prev)) {
-                  count++;
-              }
-          }
-      }
-      return count;
-  };
+    //Forma 1
+        function isSpace(value) {
+            return [" ", "	", ",", ".",";",":", "/"].indexOf(value) > -1;
+        };
 
-console.log(countWords("hello world") == 2); // => true
-console.log(countWords("") == 0); // => true
-console.log(countWords("1 2 3 4 5") == 5); // => true
-console.log(countWords("    ") == 0); // => true
-console.log(countWords("one     two     three   four    five") == 5); // => true
-console.log(countWords("... //// ,,,, ") == 0); // => true
+        function countWords(str) {
+            var count = 0;
+            if (str.length) {
+                if (!isSpace(str[0])) { count++ };
+                for (var i = 1; i < str.length; i++) {
+                    var curr = str[i];
+                    var prev = str[i - 1];
+                    if (!isSpace(curr) && isSpace(prev)) {
+                        count++;
+                    }
+                }
+            }
+            return count;
+        };
 
+        console.log(countWords(" hello world") == 2); // => true
+        console.log(countWords("") == 0); // => true
+        console.log(countWords("1 2 3 4 5") == 5); // => true
+        console.log(countWords("    ") == 0); // => true
+        console.log(countWords("one     two     three   four    five") == 5); // => true
+        console.log(countWords("... //// ,,,, ") == 0); // => true
 
+    //Forma 2
+    
 
 
 
