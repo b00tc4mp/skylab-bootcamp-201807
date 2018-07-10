@@ -8,9 +8,9 @@ function findWords(string, func) {
     var matchingWords = []
 
     for (var i= 0; i < words.length; i++) {  // oye funcion, para esta word mira si cumple el if siguiente
-        var word = word[i]; 
+        var word = words[i]; 
         
-        if (func(word)) matchingWords.push(word); //true
+        if (func(word)) matchingWords.push(word); //true {si solo hay un statment no hacen falta}
     }
     return matchingWords;
 }
