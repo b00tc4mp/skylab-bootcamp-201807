@@ -18,13 +18,37 @@ function isSpace(value) {
       return count;
   };
 
+  function isPuncOrWhitespace(ch) {
+//return  (ch !== " " ||ch !== " " );
+var testy = ",.!=?:;";
+var foundit = testy.indexOf(ch);
+// -1 .... false
+// ... true
+  }
 
+  //version de pau
+  function countWords(string) {
+            var chars = 0;
+            for (var i = 0; i < string.length; i++){
+               if(isPuncOrWhitespace(string[i]) && (string[(i+1)] === " ")   ){
+               chars +=1;
+               }
+               
+           }
+           if (chars > 0){chars+=1}
+           return chars;
+        }
+
+  
 
 console.log(countWords('hello world')===2);
 console.log(countWords('')===0);
 console.log(countWords('1 2 3 4 5')===5);
 console.log(countWords('   ')===0);
 console.log(countWords('one two three four five')===5);
+console.log(countWords('hola mundo \t\n') === 2); // true
+console.log(countWords('... ,,, ;;; :::') === 0); // true
+
 
 //split to words
 //version alejandro
