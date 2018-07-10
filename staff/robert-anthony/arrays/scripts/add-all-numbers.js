@@ -1,4 +1,3 @@
-add all numbers
 
 function addAllNumbers(numbers) {
   // TODO: implement using a standard loop (for or while, as you wish)
