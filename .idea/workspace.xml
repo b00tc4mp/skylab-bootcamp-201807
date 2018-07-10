@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
+<<<<<<< HEAD
     <list default="true" id="463651dc-e778-4628-a463-3b2d93618638" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/staff/robert-anthony/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/staff/robert-anthony/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/staff/robert-anthony/strings/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/staff/robert-anthony/strings/index.html" afterDir="false" />
@@ -12,6 +13,11 @@
     <ignored path="$PROJECT_DIR$/temp/" />
     <ignored path="$PROJECT_DIR$/tmp/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+=======
+    <list default="true" id="b7970919-0584-4353-a21e-6ebd068ee642" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/staff/robert-anthony/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/staff/robert-anthony/.idea/workspace.xml" afterDir="false" />
+    </list>
+>>>>>>> feature/arrays
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,6 +36,7 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
+<<<<<<< HEAD
   <component name="NodeModulesDirectoryManager">
     <handled-path value="$PROJECT_DIR$/staff/robert-anthony/express-playground/node_modules" />
   </component>
@@ -41,6 +48,10 @@
   <component name="ProjectFrameBounds" extendedState="6" fullScreen="true">
     <option name="width" value="1440" />
     <option name="height" value="900" />
+=======
+  <component name="NodePackageJsonFileManager">
+    <packageJsonPaths />
+>>>>>>> feature/arrays
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -80,11 +91,14 @@
       </pane>
     </panes>
   </component>
+<<<<<<< HEAD
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
   </component>
+=======
+>>>>>>> feature/arrays
   <component name="RunDashboard">
     <option name="ruleStates">
       <list>
@@ -112,9 +126,12 @@
     </task>
     <servers />
   </component>
+<<<<<<< HEAD
   <component name="TimeTrackingManager">
     <option name="totallyTimeSpent" value="666000" />
   </component>
+=======
+>>>>>>> feature/arrays
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="6" />
     <editor active="true" />
@@ -138,12 +155,15 @@
       <window_info anchor="bottom" id="Find" order="1" />
     </layout>
   </component>
+<<<<<<< HEAD
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
   </component>
+=======
+>>>>>>> feature/arrays
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/staff/manuel-barzi/strings/main.js">
       <provider selected="true" editor-type-id="text-editor">
