@@ -10,8 +10,7 @@ function isSplitSymbol(letter) {
 function countWords(string) {
     // TODO: count words in string using a standard loop
 
-    var words = 0,
-        string = string.trim();
+    var words = 0;
 
     for (var i = 0; i < string.length; i++) {
         var letter = string[i],
@@ -37,8 +36,6 @@ function splitToWords(string) {
     // TODO implement using standard loop
     var word = '',
         words = [];
-
-    string = string.trim();
 
     for (var i = 0; i < string.length; i++) {
         var letter = string[i],
