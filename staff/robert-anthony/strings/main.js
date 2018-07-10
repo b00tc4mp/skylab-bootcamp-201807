@@ -1,9 +1,9 @@
 "use strict"
 
 function whitespace(string) {
-  var regex = RegExp(/^\s*$/);
-  return regex.test(string);
-  // return (ch == ' ') || (ch == '\t') || (ch == '\n');
+  //  var regex = RegExp(/^\s*$/);
+  // return regex.test(string);
+  return (string == ' ') || (string == '\t') || (string == '\n');
 }
 
 
@@ -44,8 +44,8 @@ function splitToWords(string) {
   var inWord = false;
   var isWhitespace;
 
-  for (var i = 0; i <= string.length; i++) {
-    isWhitespace = whitespace(string.charAt(i));
+  for (var i = 0; i < string.length; i++) {
+    isWhitespace = whitespace(string[i]);
     if (inWord && isWhitespace) {
       words.push(string.slice(wordStart, i));
       inWord = false;
@@ -72,7 +72,8 @@ console.log(words[1] === 'b'); // => true
 console.log(words[2] === 'c'); // => true
 
 var words = splitToWords('      ');
-
+console.log("....");
+console.log(words);
 console.log(words.length === 0); // => true
 
 
@@ -80,7 +81,7 @@ console.log(words.length === 0); // => true
 
 
 function punctuationOrWhiteSpace(string) {
-  var regex = /[\s  _.,!"'/$]+/;
+  var regex = /[\s  _.,;?:!"'/$]+/;
   return regex.test(string);
 }
 
@@ -93,7 +94,7 @@ function findWords(string, func) {
   var tmpString = '';
 
   for (var i = 0; i <= string.length; i++) {
-    isPuncOrWhitespace = punctuationOrWhiteSpace(string.charAt(i));
+    isPuncOrWhitespace = punctuationOrWhiteSpace(string[i]);
     if (inWord && isPuncOrWhitespace) {
       tmpString = string.slice(wordStart, i);
       if (func(tmpString)) words.push(tmpString);
@@ -101,6 +102,7 @@ function findWords(string, func) {
     } else if (!inWord && !isPuncOrWhitespace) {
       wordStart = i;
       inWord = true;
+
     }
   }
   if (inWord) {
