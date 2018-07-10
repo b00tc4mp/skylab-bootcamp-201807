@@ -23,7 +23,7 @@ var values = [1, 2, 3, 'w', 5, 2, 1, 'w'];
 
 var most = mostFrequent(values);
 
-console.log(most.length === 2);
+console.log(most.length === 3);
 console.log(most[0] === 1);
 console.log(most[1] === 2);
 console.log(most[2] === 'w');
