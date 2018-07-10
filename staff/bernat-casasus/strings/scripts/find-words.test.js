@@ -1,6 +1,3 @@
-
-
-
 var words = findWords('hello world', function (word) {
     return word.indexOf('e') > -1;
 });

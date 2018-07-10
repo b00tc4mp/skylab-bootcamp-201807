@@ -15,6 +15,27 @@
         return count;
     }
 
+    //solucion de Alex
+    function isSpace(value) {
+        return ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"].indexOf(value) > -1;
+      };
+      
+      function countWords(str) {
+          var count = 0;
+          if (str.length) {
+              if (!isSpace(str[0])) { count++ };
+              for (var i = 1; i < str.length; i++) {
+                  var curr = str[i];
+                  var prev = str[i - 1];
+                  if (!isSpace(curr) && isSpace(prev)) {
+                      count++;
+                  }
+              }
+          }
+          return count;
+      };
+
+    //solucion manu
 
     console.log(countWords('hello world') === 2); // => true
     console.log(countWords('') === 0); // => true
