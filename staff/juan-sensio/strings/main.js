@@ -20,7 +20,6 @@ console.log(countWords('  hello       world   ') === 2); // > true
 console.log(countWords('    ') === 0); // > true
 console.log(countWords('  1 2       3 4  5   ') === 5); // > true
 console.log(countWords(' hola mundo \t \n') === 2); // > true
-debugger;
 console.log(countWords(' ... ,,, ;;; ::::  ') === 0); // > true
 
 // split to words
@@ -43,8 +42,6 @@ function splitToWords(str) {
 }
 
 var words = splitToWords('   hello      world,    ');
-console.log(words);
-
 console.log(words.length === 2); // > true
 console.log(words[0] === 'hello'); // > true
 console.log(words[1] === 'world'); // > true
@@ -53,7 +50,6 @@ console.log(words[1] === 'world'); // > true
 
 function findWords(str, func) {
     var words = splitToWords(str);
-    console.log(words);
     var newWords = [];
     for(var i in words)
         if(func(words[i]))
