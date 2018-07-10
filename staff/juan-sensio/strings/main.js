@@ -1,13 +1,16 @@
 // count words
-var pass = [" ", "\t", ","];
+var pass = [" ", "\t", "\n", ",", ".", ":", ";"];
 function countWords(str) {
     
     var sum = 0;
     for(var i=0; i<str.length; i++) {
-        if(pass.indexOf(str[i]) == -1) {
+        var char = str[i];
+        if(pass.indexOf(char) == -1) {
             sum++;
-            while(pass.indexOf(str[i]) == -1 && i < str.length)
+            while(pass.indexOf(char) == -1 && i < str.length) {
                 i++;
+                char = str[i];
+            }
         } 
     }
     return sum;
@@ -16,6 +19,9 @@ function countWords(str) {
 console.log(countWords('  hello       world   ') === 2); // > true
 console.log(countWords('    ') === 0); // > true
 console.log(countWords('  1 2       3 4  5   ') === 5); // > true
+console.log(countWords(' hola mundo \t \n') === 2); // > true
+debugger;
+console.log(countWords(' ... ,,, ;;; ::::  ') === 0); // > true
 
 // split to words
 function splitToWords(str) {
