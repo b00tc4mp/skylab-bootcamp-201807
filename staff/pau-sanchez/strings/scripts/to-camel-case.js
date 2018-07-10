@@ -1,5 +1,4 @@
 function toCamelCase(string) {
-        
         var words = splitToWords(string);
         var finalW = "";
                
