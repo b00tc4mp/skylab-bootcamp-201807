@@ -8,3 +8,4 @@ console.log(toCamelCase('HELLO') === 'hello'); // true
 console.log(toCamelCase('aBrACAdaBrA') === 'abracadabra'); // true
 console.log(toCamelCase('i love js') === 'iLoveJs'); // true
 console.log(toCamelCase('# @ | & % = ?') === ''); // true
+console.log(toCamelCase('hello 123') === 'hello123'); // true
