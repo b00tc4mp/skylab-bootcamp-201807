@@ -1,5 +1,5 @@
 
-//count words
+//count letters
 
 function countWords(string){
     var words =0;
@@ -11,7 +11,7 @@ function countWords(string){
     }
 }
 
-//Opción 2
+//count words
 function isSpace(value) {
     return [" ","	"].indexOf(value) > -1;
   };
@@ -35,7 +35,8 @@ console.log(countWords("hello world") == 2); // => true
 console.log(countWords("") == 0); // => true
 console.log(countWords("1 2 3 4 5") == 5); // => true
 console.log(countWords("    ") == 0); // => true
-console.log(countWords("one     two     three   four    five") == 0); // => true
+console.log(countWords("one     two     three   four    five") == 5); // => true
+console.log(countWords("... //// ,,,, ") == 0); // => true
 
 
 
