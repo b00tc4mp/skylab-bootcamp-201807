@@ -8,10 +8,20 @@ function reduce(array, func, initial) {
 }
 */
 
-var numbersArr = [1,2,3,4,5,6,7];
-var stringsArr = ["hi","there","what"];
+var numbersArr = [1, 2, 3];
+var stringsArr = ["hi", "there", "what"];
 
-console.log(reduce(numbersArr,function(){return} ))
+console.log(reduce(numbersArr, function (accumulator, current) {
+  console.log(accumulator,current)
+  return accumulator + current * 2
+}, 0) === 12);
+
+
+console.log(reduce(stringsArr, function (accumulator, current) {
+  console.log(accumulator,current)
+  return accumulator + " " + current.toUpperCase();
+}, "Well yes,") === "Well yes, HI THERE WHAT");
+
 
 
 
