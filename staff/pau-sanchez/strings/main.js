@@ -2,22 +2,28 @@
 console.log("count words")
     function countWords(string) {
         var chars = 0;
+        var regex = /[A-Za-z0-9\xC0-\xff]/ /*///[A-Za-z0-9\xC0-\xff]/  */
         for (var i = 0; i < string.length; i++){
-            if( (string[i] !== " " || string[i] !== " ") && (string[(i+1)] === " ")    ){
+            if ((i === (string.length - 1)) && (string[i].match(regex) !== null)){
             chars +=1;
+            } else if ((string[i].match(regex) !== null) && (string[(i+1)].match(regex) === null)){
+            chars +=1;    
             }
         }
-        if (chars > 0){chars+=1}
+        
         return chars;
     }
-   
+  
+  
 
     console.log(countWords("hello world") === 2);
     console.log(countWords("") === 0);
-    console.log(countWords("1 2 3 4 5") === 5);
+    console.log(countWords("ç Ï à ñ 5") === 5);
     console.log(countWords("  ") === 0);
     console.log(countWords("one   two     three   four  five") === 5);
-
+    console.log(countWords("hola mundo \t\n") === 2);
+    console.log(countWords("... ,,, ;;; :::") === 0);
+/*
 // split to words
 console.log("split to words")
 // TODO implement using standard loop
@@ -111,3 +117,4 @@ console.log(words[0] === 'hello'); // => true
 console.log(words[1] === 'world'); // => true
 console.log(words[2] === 'hello'); // => true 
 
+*/
