@@ -14,7 +14,6 @@ function toCamelCase(string) {
   var tempWord = '';
   var returnString = "";
   var word;
-console.log(string,words,words.length);
 
   for (var i = 0; i < words.length; i++) {
     word = words[i];
@@ -32,6 +31,5 @@ console.log(string,words,words.length);
       returnString = returnString.concat(tempWord);
     }
   }
-  console.log(returnString);
   return returnString;
 }
