@@ -16,3 +16,9 @@ console.log(words[2] === 'c'); // => true
 var words = splitToWords('      ');
 
 console.log(words.length === 0); // => true
+
+
+var words = splitToWords(' hello\tworld\n');
+console.log(words.length === 2);
+console.log(words[0] === 'hello');
+console.log(words[1] === 'world');
