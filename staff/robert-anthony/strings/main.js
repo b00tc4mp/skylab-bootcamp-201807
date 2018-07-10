@@ -1,10 +1,30 @@
 "use strict"
 
+function splitToWordsRegex(string) {
+  return string.match(/\b\w+\b/g);
+}
+
+function isNotWordCharacter(ch) {
+
+  var regex = /\W/;
+  return  regex.test(ch);
+}
+
+
+
+function punctuationOrWhiteSpace(string) {
+  var regex = /[\s  _.,;?:!"'/$]+/;
+  return regex.test(string);
+}
+
+
 function whitespace(string) {
   //  var regex = RegExp(/^\s*$/);
   // return regex.test(string);
-  return (string == ' ') || (string == '\t') || (string == '\n');
+//  return (string == ' ') || (string == '\t') || (string == '\n');
+  return punctuationOrWhiteSpace(string);
 }
+
 
 
 function countWords(stringy) {
@@ -45,7 +65,7 @@ function splitToWords(string) {
   var isWhitespace;
 
   for (var i = 0; i < string.length; i++) {
-    isWhitespace = whitespace(string[i]);
+    isWhitespace = isNotWordCharacter(string[i]);
     if (inWord && isWhitespace) {
       words.push(string.slice(wordStart, i));
       inWord = false;
@@ -73,17 +93,40 @@ console.log(words[2] === 'c'); // => true
 
 var words = splitToWords('      ');
 console.log("....");
-console.log(words);
 console.log(words.length === 0); // => true
+
+var words = splitToWords('abded');
+console.log(words.length === 1); // => true
 
 
 // find words (that match expression in provided function)
 
+function findWordsRegex (string, func ){
+  var returnArr = splitToWordsRegex(string).filter(function(element) {
+    if (element) {
+      if (func(element)) {
+        return element;
+      }
+    }
+  });
+  return returnArr;
 
-function punctuationOrWhiteSpace(string) {
-  var regex = /[\s  _.,;?:!"'/$]+/;
-  return regex.test(string);
 }
+
+var words = findWordsRegex('hello world', function (word) {
+  return word.indexOf('e') > -1;
+});
+console.log(words.length === 1); // => true
+console.log(words[0] === 'hello'); // => true
+
+var words = findWordsRegex('hello world, hello universe', function (word) {
+  return word.indexOf('o') > -1;
+});
+console.log(words.length === 3); // => true
+console.log(words[0] === 'hello'); // => true
+console.log(words[1] === 'world'); // => true
+console.log(words[2] === 'hello'); // => true
+
 
 function findWords(string, func) {
   // TODO: implement using a standard loop
@@ -93,16 +136,15 @@ function findWords(string, func) {
   var isPuncOrWhitespace;
   var tmpString = '';
 
-  for (var i = 0; i <= string.length; i++) {
-    isPuncOrWhitespace = punctuationOrWhiteSpace(string[i]);
+  for (var i = 0; i < string.length; i++) {
+    isPuncOrWhitespace = isNotWordCharacter(string[i]);
     if (inWord && isPuncOrWhitespace) {
       tmpString = string.slice(wordStart, i);
-      if (func(tmpString)) words.push(tmpString);
+      if (func(string.slice(wordStart, i))) words.push(tmpString);
       inWord = false;
     } else if (!inWord && !isPuncOrWhitespace) {
       wordStart = i;
       inWord = true;
-
     }
   }
   if (inWord) {
@@ -125,5 +167,6 @@ console.log(words.length === 3); // => true
 console.log(words[0] === 'hello'); // => true
 console.log(words[1] === 'world'); // => true
 console.log(words[2] === 'hello'); // => true
+
 
 
