@@ -11,7 +11,7 @@
     console.log(secret === 'my secret');
 })();
 
-// retrieve secret fails on wrong password
+// retrieve fails on wrong password
 
 (function () {
     var message;
@@ -25,7 +25,7 @@
     console.log(message === 'wrong password');
 })();
 
-// retrieve secret fails on wrong password
+// retrieve fails on wrong password
 
 (function () {
     var message;
@@ -39,7 +39,7 @@
     console.log(message === 'wrong password');
 })();
 
-// retrieve secret fails on wrong password
+// retrieve fails on wrong password
 
 (function () {
     var message;
@@ -53,7 +53,7 @@
     console.log(message === 'wrong password');
 })();
 
-// retrieve secret fails on wrong password
+// retrieve fails on wrong password
 
 (function () {
     var message;
@@ -67,7 +67,7 @@
     console.log(message === 'wrong password');
 })();
 
-// retrieve secret fails on wrong password
+// retrieve fails on wrong password
 
 (function () {
     var message;
@@ -163,16 +163,6 @@
 
 // update fails on wrong new password
 
-(function() {
-    safeBox.keep('456', 'my new secret');
-
-    var secret = safeBox.retrieve('456');
-
-    console.log(secret === 'my new secret');
-})();
-
-// update fails on wrong new password
-
 (function () {
     var message;
 
@@ -226,3 +216,32 @@
 
     console.log(message === 'wrong new password');
 })();
+
+// Alejandro
+
+(function () {
+    var message;
+
+    try {
+        safeBox.updatePassword('456', 456);
+    } catch (error) {
+        message = error.message;
+    }
+
+    console.log(message === 'wrong new password');
+})();
+
+// Alejandro 2
+
+(function () {
+    var message;
+
+    try {
+        safeBox.updatePassword(456, 456);
+    } catch (error) {
+        message = error.message;
+    }
+
+    console.log(message === 'wrong password');
+})();
+
