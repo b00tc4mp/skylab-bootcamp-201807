@@ -1,0 +1,88 @@
+*{
+    font-family: Proxima Nova, Arial, Helvetica, sans-serif;
+    font-weight: lighter;
+}
+body{
+    margin: 0 auto;
+    background-color: black;
+    width: 90%;
+}
+
+.grid-container {
+    display: grid;
+    height: 100%;
+    grid-template-columns: 1fr 4fr 4fr 4fr 4fr 1fr;
+    grid-template-rows: 100px 428px 300px 300px;
+    grid-template-areas: ". header header header header ." ". monkey monkey monkey monkey ." ". whatsnew whatsnew whatsnew whatsnew ." ". footer footer footer footer .";
+  }
+  
+ header {
+    grid-area: header;
+    background-color: #46bdd5;
+}
+  
+  .monkey {
+    grid-area: monkey;
+    background-color: #46bdd5;
+  }
+  
+  .whatsnew {
+    grid-area: whatsnew;
+    background-color: #ccd0cf;
+  }
+  
+footer {
+    grid-area: footer;
+    background-color: black;
+    color: white;
+
+
+}
+section.footermenu, section.lasttext{
+    display: flex;
+    justify-content: space-evenly;
+}
+ul{
+    list-style: none;
+}
+section article ul li{
+ color: grey;
+}
+header{
+    display: flex;
+    flex-direction: column;
+}
+.log{
+    display: flex;
+    justify-content: flex-end;
+}
+nav>ul{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+nav ul ul{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+.nav-button>li{
+    padding: 10px;
+}
+.nav-button{
+    background-color: grey;
+    border-radius: 10px;
+}
+ul .nav-button{
+    padding: 0px;
+}
+.monkey{
+    display:flex;
+    justify-content: flex-start;
+}
+.textmonkey{
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    flex-wrap: nowrap;
+}
