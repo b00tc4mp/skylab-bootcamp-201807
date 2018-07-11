@@ -2,7 +2,7 @@ function sort(array, reverse) {
     // TODO return array sorted alphabetically / numerically (use of Array.prototype.sort is forbidden)
     var result = [];
     var long = array.length;
-
+    if(typeof array[0] !== 'string'){
         if(reverse === false || reverse === undefined){
             for(var i = 0; i < long; i++){
                 result.unshift(highestNumber(array));
@@ -15,6 +15,28 @@ function sort(array, reverse) {
             }
         }
         return result;
+    }else{
+        if(reverse === false || reverse === undefined){
+
+        for(var i = 0; i < long; i++){
+            result.unshift(highestLetter(array));
+            array.splice(array.indexOf(highestLetter(array)),1);
+        }
+
+       
+        }else{
+
+            
+        for(var i = 0; i < long; i++){
+            result.push(highestLetter(array));
+            array.splice(array.indexOf(highestLetter(array)),1);
+        }
+
+        }
+        return result;
+    }
+
+        
 }
 
 
