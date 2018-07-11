@@ -6,6 +6,13 @@ var safeBox = (function() {
         secret: ''
     };
 
+    var isValidString = function(value) {
+        return (typeof value === 'string' && value.length) ? true : false;
+    }
+
+    var WRONG_PASSWORD = 'wrong password';
+    var WRONG_NEW_PASSWORD = 'wrong new password';
+
     return {
         /**
          * Keeps the secret safe
@@ -16,9 +23,12 @@ var safeBox = (function() {
          * @throws {Error} If password is wrong
          */
         keep: function(password, secret) {
-            // TODO
-            console.log(keys);
-            
+
+            if (isValidString(password) === false) throw new Error(WRONG_PASSWORD);
+            if (isValidString(secret) === false) throw new Error(WRONG_PASSWORD);
+
+            keys.password = password;
+            keys.secret = secret;
         },
 
         /**
@@ -31,8 +41,11 @@ var safeBox = (function() {
          * @throws {Error} If wrong password
          */
         retrieve: function(password) {
-            // TODO
+
+            if (isValidString(password) === false) throw new Error(WRONG_PASSWORD);
+            if (keys.password !== password) throw new Error(WRONG_PASSWORD);
             
+            return keys.secret;
         },
 
         /**
@@ -44,7 +57,12 @@ var safeBox = (function() {
          * @throws {Error} If current and/or new password are wrong
          */
         updatePassword(password, newPassword) {
-            // TODO
+
+            if (isValidString(password) === false) throw new Error(WRONG_PASSWORD);
+            if (isValidString(newPassword) === false) throw new Error(WRONG_NEW_PASSWORD);
+            if (keys.password !== password) throw new Error(WRONG_PASSWORD);
+            
+            keys.password = newPassword;
         },
     };
 
