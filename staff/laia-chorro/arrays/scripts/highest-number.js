@@ -3,12 +3,12 @@ function highestNumber(numbers) {
     var maxNum;
 
     for (var i = 0; i < numbers.length; i++) {
-        var num = Number(numbers[i]);
+        var num = numbers[i];
 
-        if (!Number.isNaN(num) && (!maxNum || num > maxNum)) {
+        if ((!maxNum || num > maxNum)) {
             maxNum = num;
         }
-    } 
+    }
 
     return maxNum;
 }
