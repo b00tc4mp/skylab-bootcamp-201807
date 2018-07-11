@@ -25,7 +25,6 @@ console.log(sorted[2] === 1);
 var chars = ['b', 'c', 'a'];
 
 var sorted = sort(chars);
-
 console.log(sorted.length === 3);
 console.log(sorted[0] === 'a');
 console.log(sorted[1] === 'b');

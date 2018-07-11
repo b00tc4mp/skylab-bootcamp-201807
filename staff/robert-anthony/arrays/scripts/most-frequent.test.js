@@ -1,5 +1,5 @@
 // test 1
-
+console.log("most frequent test");
 var numbers = [1, 2, 3, 4, 5, 2];
 
 var most = mostFrequent(numbers);
