@@ -1,8 +1,19 @@
-safeBox = (function () {
+safeBox = (function setupSafebox () {
   var _secret;
   var _password = "123";
 
   return {
+
+    failPassword: function(password) {
+      return (typeof password !== "string" || password === "" || password !== _password);
+    },
+    failNewPassword: function(newPassword){
+      return (typeof password !== "string" || password === "" );
+
+    },
+
+    WRONG_PASSWORD:"wrong password",
+    WRONG_NEW_PASSWORD:"wrong new password",
     /**
      * Keeps the secret safe
      *
@@ -13,7 +24,7 @@ safeBox = (function () {
      */
     keep: function(password, secret) {
       // TODO
-      if (password !== _password) throw new Error("wrong password");
+      if (this.failPassword(password)) throw new Error(this.WRONG_PASSWORD);
       _password = password;
     },
 
@@ -28,7 +39,7 @@ safeBox = (function () {
      */
     retrieve: function(password) {
       // TODO
-      
+      if (this.failPassword(password)) throw new Error(this.WRONG_PASSWORD);
     },
 
     /**
@@ -41,11 +52,11 @@ safeBox = (function () {
      */
     updatePassword(password, newPassword) {
       // TODO
+      if (this.failPassword(password)) throw new Error(this.WRONG_PASSWORD);
+      if (this.failNewPassword(newPassword)) throw new Error(this.WRONG_NEW_PASSWORD);
+
     }
   }
 
 })();
-
-safeBox.setSecret("abc");
-console.log(safeBox.getSecret());
 
