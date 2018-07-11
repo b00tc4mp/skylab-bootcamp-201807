@@ -9,6 +9,7 @@ console.log(sorted[0] === 1);
 console.log(sorted[1] === 2);
 console.log(sorted[2] === 3);
 
+
 // test 2
 
 var chars = [2, 1, 3];
@@ -42,3 +43,4 @@ console.log(sorted[0] === 'world');
 console.log(sorted[1] === 'universe');
 console.log(sorted[2] === 'hello');
 console.log(sorted[3] === 'and');
+
