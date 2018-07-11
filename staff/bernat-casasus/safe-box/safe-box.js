@@ -50,7 +50,13 @@ var safeBox = {
     }
 //Retrieve
     function retrieve(password){
-        if(password === savedPassword) return savedSecret;
+
+        if(typeof password === 'string' && !isNaN(password) && password.length > 0 ){
+            return savedSecret;
+        }else{
+            throw new Error('wrong password');
+        }
+
     }
 //UpdatePassword
     function updatePassword(password,newPassword){
