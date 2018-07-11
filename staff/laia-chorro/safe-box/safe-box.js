@@ -44,12 +44,10 @@ var safeBox;
          * @throws {Error} If current and/or new password are wrong
          */
         updatePassword(password, newPassword) {
-            debugger;
-            if (!newPassword || typeof newPassword !== 'string') {
-                throw new Error('wrong new password');
-            }
-
             if (password === myPassword) {
+                if (!newPassword || typeof newPassword !== 'string') {
+                    throw new Error('wrong new password');
+                }
                 myPassword = newPassword;
             } else {
                 throw new Error('wrong password');
