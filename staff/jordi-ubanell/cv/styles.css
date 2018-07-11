@@ -2,22 +2,29 @@ body {
     background-color: whitesmoke;
     margin: 0;
     padding: 0;
-    font-size: 20px;
+    font-size: 16px;
     font-family: 'IBM Plex Mono', monospace, Courier;
 }
 
 h1{
     color: #666;
-    font-size: 4rem;
+    font-size: 4em;
     font-weight: 700;
 }
 
 h2{
     color: #666;
-    font-size: 2rem;
+    font-size: 2.5em;
 }
 
+.multicolumn{
+    column-count: 2;
+}
 
+.twocolumns{
+    display:flex;
+    justify-content: space-between;
+}
 
 .flex-container {
     display: flex;
@@ -25,18 +32,39 @@ h2{
     justify-content: center;
     align-items: center;
   }
-
-div{
-    margin: 4rem;
+cite, blockquote, section, address, div{
+    margin: 2em 4em;
     max-width: 50rem;
 }
 
-p{
+
+.wide-article{
+    width: 45%;
+}
+
+
+li, p{
     color: #666;
-    font-size: 1rem;
+    font-size: 1em;
     font-weight: 600;
 }
 
+header, footer{
+    background-color: gainsboro;
+    display: flex;
+    justify-content: space-between;
+
+    margin: 0;
+    padding: 1em;
+    border: solid gray 2px;
+    -webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+            box-sizing: border-box;
+}
+
+news{
+
+}
 
 html{
     margin: 0;

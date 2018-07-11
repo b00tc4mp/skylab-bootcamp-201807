@@ -1,0 +1,51 @@
+*{
+	margin: 0px;
+	padding: 0px;
+	font-family: "Proxima Nova";
+}
+body{
+    background-color:#282828;
+    margin: 0 auto;
+    width: 90%;
+}
+
+.grid-container {
+    display: grid;
+    height: 100%;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 20em 20em 20em;
+    grid-template-areas: "presentation cv cv" "about cv cv" "about cv cv" "about cv cv";
+  }
+  
+  .presentation {
+    grid-area: presentation;
+    background-color: #1f2e35;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .about {
+    grid-area: about;
+    background: linear-gradient(to bottom right,#334750,#1f2e35);
+  }
+  
+  .cv {
+    grid-area: cv;
+    background-color: #e6e6e6;
+  }
+  .photo{
+      border-radius: 50%;
+      width: 10em;
+      height: 10em;
+  }
+  .name{
+      font-family: "Proxima Nova";
+      color: #e6e6e6;
+      font-weight: lighter;
+      display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+  }
