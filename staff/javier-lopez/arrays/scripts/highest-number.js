@@ -8,6 +8,8 @@ function highestNumber(numbers) {
             }
         }
         return highest;
+    }else{
+        return undefined;
     }
-    return undefined;
+
 }
