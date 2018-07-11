@@ -23,6 +23,7 @@ var safeBox = {
     retrieve: function(password) {
         // TODO
     },
+    
 
     /**
      * Updates the access password
