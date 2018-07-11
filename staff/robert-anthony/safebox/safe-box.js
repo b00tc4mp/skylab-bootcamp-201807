@@ -8,7 +8,7 @@ safeBox = (function setupSafebox () {
       return (typeof password !== "string" || password === "" || password !== _password);
     },
     failNewPassword: function(newPassword){
-      return (typeof password !== "string" || password === "" );
+      return (typeof newPassword !== "string" || newPassword === "" );
 
     },
 
@@ -26,6 +26,7 @@ safeBox = (function setupSafebox () {
       // TODO
       if (this.failPassword(password)) throw new Error(this.WRONG_PASSWORD);
       _password = password;
+      _secret = secret;
     },
 
     /**
@@ -40,6 +41,7 @@ safeBox = (function setupSafebox () {
     retrieve: function(password) {
       // TODO
       if (this.failPassword(password)) throw new Error(this.WRONG_PASSWORD);
+      return _secret;
     },
 
     /**
@@ -54,7 +56,7 @@ safeBox = (function setupSafebox () {
       // TODO
       if (this.failPassword(password)) throw new Error(this.WRONG_PASSWORD);
       if (this.failNewPassword(newPassword)) throw new Error(this.WRONG_NEW_PASSWORD);
-
+    _password = newPassword;
     }
   }
 
