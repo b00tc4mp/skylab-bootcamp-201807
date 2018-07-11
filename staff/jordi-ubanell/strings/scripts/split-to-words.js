@@ -36,3 +36,4 @@ function splitToWords(string) {
                         var char = string[i];
                 }
         }
+}        

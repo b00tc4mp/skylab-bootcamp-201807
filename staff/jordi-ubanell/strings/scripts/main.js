@@ -33,76 +33,12 @@
 //     return true;
 // }
 
-function isBlank(string) {
-    return /^\s*$/.test(string);
-}
-
-console.log(isBlank('a') === false); // true
-console.log(isBlank('abc') === false); // true
-console.log(isBlank(' ')); // true
-console.log(isBlank('\t')); // true
-console.log(isBlank('\n')); // true
-console.log(isBlank('')); // true
-console.log(isBlank(' \t\n')); // true
-console.log(isBlank(' \t\n &%$@') === false); // true
-
-// has symbol
-
-function hasSymbol(string) {
-    return /[^\w\sà-úÀ-Úä-üÄ-Üâ-ûñç]/.test(string);
-}
-
-console.log(hasSymbol('a') === false); // true
-console.log(hasSymbol('ABC') === false); // true
-console.log(hasSymbol('abc') === false); // true
-console.log(hasSymbol('ñç') === false); // true
-console.log(hasSymbol('') === false); // true
-console.log(hasSymbol('.')); // true
-console.log(hasSymbol(':')); // true
-console.log(hasSymbol(';')); // true
-console.log(hasSymbol('...')); // true
-console.log(hasSymbol('abc;')); // true
-console.log(hasSymbol(' ') === false); // true
-console.log(hasSymbol('\t') === false); // true
-console.log(hasSymbol('\n') === false); // true
-console.log(hasSymbol(' \t\n') === false); // true
-console.log(hasSymbol('#')); // true
-console.log(hasSymbol('%')); // true
-console.log(hasSymbol('$')); // true
-console.log(hasSymbol('=')); // true
-console.log(hasSymbol('123') === false); // true
-console.log(hasSymbol('áéíóúàèìòùäëïöüâêîôûÁÉÍÓÚÀÈÌÒÙÄËÏÖÜÂÊÎÔÛñÑçÇ \t\n') === false); // true
-
-// count words
-
-function countWords(string) {
-    var count = 0;
-    var blankBefore = true;
-
-    for (var i = 0; i < string.length; i++) {
-        var char = string[i];
-
-        if (!isBlank(char)) {
-            if (blankBefore && !hasSymbol(char)) {
-                count++;
-
-                blankBefore = false;
-            }
-        } else blankBefore = true;
-    }
-
-    return count;
-}
 
 
 
-console.log(countWords('hello world') === 2); // => true
-console.log(countWords('') === 0); // => true
-console.log(countWords('1 2 3 4 5') === 5); // => true
-console.log(countWords('    ') === 0); // => true
-console.log(countWords('one   two       three   four     five') === 5); // => true
-console.log(countWords('hola mundo \t\n') === 2); // true
-console.log(countWords('... ,,, ;;; :::') === 0); // true
+
+
+
 
 
 // split to words
