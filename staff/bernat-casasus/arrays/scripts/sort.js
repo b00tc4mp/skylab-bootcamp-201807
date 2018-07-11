@@ -2,7 +2,7 @@ function sort(array, reverse) {
     // TODO return array sorted alphabetically / numerically (use of Array.prototype.sort is forbidden)
     var result = [];
     var long = array.length;
-    
+
         if(reverse === false || reverse === undefined){
             for(var i = 0; i < long; i++){
                 result.unshift(highestNumber(array));
