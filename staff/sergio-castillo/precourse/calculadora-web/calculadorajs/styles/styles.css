@@ -1,0 +1,111 @@
+@font-face {
+        font-family: "Digital-7";
+        src: url("Digital-7.ttf") format("truetype");
+    }
+
+*{
+	font-family: 'Roboto', sans-serif;
+	background-color: #444241;
+}
+::-webkit-input-placeholder { /* Safari y Chrome */
+   color: #fd2f1f;
+}
+
+#calculatorbase{
+    background-color: #fbf8d1;
+    height: 550px;
+    width: 375px;
+    position: absolute;
+    top:50%;
+    left:50%;
+    margin-left: -208.5px;
+    margin-top: -296.5px;
+    padding-left: 42px;
+    padding-top: 43px;
+    border-radius: 10px;
+}
+
+#firstline{
+	margin-top: -5%;
+    margin-left: -5%;
+    height: 180px;
+    width: 370px;
+    border-radius: 10px;
+    background-color: #fbf8d1;
+    border: 1px solid #e5e1bd;
+}
+
+#commodore{
+    margin-top: 3%;
+    margin-left: 3%;
+    height: 157px;
+    width: 348px;
+    border-radius: 10px;
+    background-image: url("commodore.jpg");
+    box-shadow: inset 0px 0px 21px 3px rgba(0,0,0,0.75);
+
+}
+
+#screen{
+    position: absolute;
+    height: 40px;
+    width: 269px;
+    margin-top: 3%;
+    margin-left: 16%;
+    background-color: black;
+    padding-top: 7px;
+    border-style: none;
+    text-align: end;
+    font-family: 'Digital-7';
+    font-size: 40px;
+    color: #fd2f1f;
+}
+
+#keyword{
+    margin-top: 28%;
+    margin-left: -5%;
+    height: 240px;
+    width: 370px;
+    border-radius: 10px;
+    background-color: #494949;
+    box-shadow: inset 0px 0px 21px 3px rgba(0,0,0,0.75);
+}
+button{
+    box-shadow: 4px 4px 7px 0px rgba(0,0,0,0.75);
+}
+#redbutton{
+	margin-top: 15px;
+	margin-left: 11px;
+    height: 40px;
+    width: 60px;
+    border-radius: 18px;
+    background-color: #fd2f1f;
+    border-style: none;
+}
+#whitebutton{
+	margin-top: 15px;
+	margin-left: 8px;
+    height: 40px;
+    width: 60px;
+    border-radius: 18px;
+    background-color: #f2f6ef;
+    border-style: none;
+}
+#bluebutton{
+	margin-top: 15px;
+	margin-left: 8px;
+    height: 40px;
+    width: 60px;
+    border-radius: 18px;
+    background-color: #40b2d9;
+    border-style: none;
+}
+#calculate{
+	height: 50px;
+    width: 150px;
+    border-radius: 5px;
+}
+#results{
+	list-style: none;
+	font-size: 20px;
+}
