@@ -14,6 +14,8 @@ var safeBox = {
 //Variables declaration and initialization.
     var savedPassword="123";
     var savedSecret="my secret";
+    var WARING_WRONG_PASS = 'wrong password';
+    var WARING_WRONG_NEW_PASS = 'wrong new password';
     /**
      * Checks if there are ilegal words.
      * 
@@ -22,7 +24,7 @@ var safeBox = {
      */
 //controlWords
     function controlWords(word){
-        return (typeof word !== 'string' || isNaN(word) || !word.length || word === undefined) ? true : false;
+        return (typeof word !== 'string' || !word.length) ? true : false;
     }
     /**
      * Keeps the secret safe
@@ -34,8 +36,8 @@ var safeBox = {
      */
 //Keep
     function keep(password,secret){
-        if(controlWords(password)) throw new Error('wrong password');
-        if(password !== savedPassword) throw new Error('wrong password');
+        if(controlWords(password)) throw new Error(WARING_WRONG_PASS);
+        if(password !== savedPassword) throw new Error(WARING_WRONG_PASS);
         if(password === savedPassword) savedSecret = secret;  
     }
     /**
@@ -50,8 +52,8 @@ var safeBox = {
 //Retrieve
     function retrieve(password){
 
-        if(controlWords(password)) throw new Error('wrong password');
-        if(password !== savedPassword) throw new Error('wrong password');
+        if(controlWords(password)) throw new Error(WARING_WRONG_PASS);
+        if(password !== savedPassword) throw new Error(WARING_WRONG_PASS);
         if(password === savedPassword) return savedSecret;
     }
     /**
@@ -64,9 +66,9 @@ var safeBox = {
      */
 //UpdatePassword
     function updatePassword(password,newPassword){
-        if(controlWords(password )) throw new Error('wrong password');
-        if(controlWords(newPassword)) throw new Error('wrong new password');
-        if(password !== savedPassword) throw new Error('wrong password');
+        if(controlWords(password )) throw new Error(WARING_WRONG_PASS);
+        if(controlWords(newPassword)) throw new Error(WARING_WRONG_NEW_PASS);
+        if(password !== savedPassword) throw new Error(WARING_WRONG_PASS);
         if(password === savedPassword) savedPassword = newPassword;
     }
 //Link to object properties.
