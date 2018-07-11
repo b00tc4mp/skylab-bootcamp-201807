@@ -38,34 +38,37 @@ var safeBox = {
 };
 
 (function (){
-
+//Variables declaration and initialization.
     var savedPassword="123";
     var savedSecret="my secret";
 
+    function controlWords(word){
+        if(typeof word !== 'string' || isNaN(word) || !word.length || word === undefined) return true;
+        return false;
+    }
 //Keep
     function keep(password,secret){
-        if(password === savedPassword){
-            savedSecret = secret;
-        }
+        if(controlWords(password)) throw new Error('wrong password');
+        if(password !== savedPassword) throw new Error('wrong password');
+        if(password === savedPassword) savedSecret = secret;  
     }
 //Retrieve
     function retrieve(password){
 
-        if(typeof password === 'string' && !isNaN(password) && password.length > 0 ){
-            return savedSecret;
-        }else{
-            throw new Error('wrong password');
-        }
-
+        if(controlWords(password)) throw new Error('wrong password');
+        if(password !== savedPassword) throw new Error('wrong password');
+        if(password === savedPassword) return savedSecret;
     }
 //UpdatePassword
     function updatePassword(password,newPassword){
-        if(password === savedPassword){
-            savedPassword = newPassword;
-        }
+        if(controlWords(password )) throw new Error('wrong password');
+        if(controlWords(newPassword)) throw new Error('wrong new password');
+        if(password !== savedPassword) throw new Error('wrong password');
+        if(password === savedPassword) savedPassword = newPassword;
     }
-
+//Link to object properties.
     safeBox.keep = keep;
     safeBox.retrieve = retrieve;
     safeBox.updatePassword = updatePassword;
 })();
+
