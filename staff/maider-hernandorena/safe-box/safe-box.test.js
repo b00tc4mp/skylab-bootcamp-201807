@@ -4,21 +4,29 @@ function assert(message, result) {
 }
 
 
-// keep and retrieve succeed on correct password
+// secret is not a property
+
+assert('secret is not a property', safeBox.secret === undefined); // true
+
+// password is not a property
+
+assert('password is not a property', safeBox.password === undefined); // true
+
+// keep succeeds on correct password
 
 (function () {
-    safeBox.keep('123', 'my secret');
-    
-    assert('keep and retrieve succeed on correct password', safeBox.secret === undefined); // true
-    assert('keep and retrieve succeed on correct password', safeBox.password === undefined); // true
+    var message;
 
-    var secret = safeBox.retrieve('123');
+    try {
+        safeBox.keep('123', 'my secret');
+    } catch (error) {
+        message = error.message;
+    }
 
-    assert('keep and retrieve succeed on correct password', secret === 'my secret');
+    assert('keep succeeds on correct password', message === undefined);
 })();
 
-
-//keep fails on wrong passwords
+// keep fails on wrong password
 
 (function () {
     var message;
@@ -29,23 +37,44 @@ function assert(message, result) {
         message = error.message;
     }
 
-    assert('keep fails on wrong passwords', message === 'wrong password');
+    assert('keep fails on wrong password', message === 'wrong password');
 })();
 
-//keep fails on wrong passwords
+// keep fails on wrong password
 
 (function () {
     var message;
 
     try {
-        safeBox.keep(123, 'my secret');
+        safeBox.keep('', 'my secret');
     } catch (error) {
         message = error.message;
     }
 
-    assert('keep fails on wrong passwords', message === 'wrong password');
+    assert('keep fails on wrong password', message === 'wrong password');
 })();
 
+// keep fails on wrong password
+
+(function () {
+    var message;
+
+    try {
+        safeBox.keep(undefined, 'my secret');
+    } catch (error) {
+        message = error.message;
+    }
+
+    assert('keep fails on wrong password', message === 'wrong password');
+})();
+
+// retrieve succeed on correct password
+
+(function () {
+    var secret = safeBox.retrieve('123');
+
+    assert('retrieve succeed on correct password', secret === 'my secret');
+})();
 
 // retrieve fails on wrong password
 
@@ -58,7 +87,7 @@ function assert(message, result) {
         message = error.message;
     }
 
-    assert('retrieve fails on wrong password',message === 'wrong password');
+    assert('retrieve fails on wrong password', message === 'wrong password');
 })();
 
 // retrieve fails on wrong password
@@ -72,7 +101,7 @@ function assert(message, result) {
         message = error.message;
     }
 
-    assert('retrieve fails on wrong password',message === 'wrong password');
+    assert('retrieve fails on wrong password', message === 'wrong password');
 })();
 
 // retrieve fails on wrong password
@@ -86,7 +115,7 @@ function assert(message, result) {
         message = error.message;
     }
 
-    assert('retrieve fails on wrong password',message === 'wrong password');
+    assert('retrieve fails on wrong password', message === 'wrong password');
 })();
 
 // retrieve fails on wrong password
@@ -100,7 +129,7 @@ function assert(message, result) {
         message = error.message;
     }
 
-    assert('retrieve fails on wrong password',message === 'wrong password');
+    assert('retrieve fails on wrong password', message === 'wrong password');
 })();
 
 // retrieve fails on wrong password
@@ -114,7 +143,7 @@ function assert(message, result) {
         message = error.message;
     }
 
-    assert('retrieve fails on wrong password',message === 'wrong password');
+    assert('retrieve fails on wrong password', message === 'wrong password');
 })();
 
 // update succeeds on correct password
@@ -124,7 +153,7 @@ function assert(message, result) {
 
     var secret = safeBox.retrieve('456');
 
-    assert('update succeeds on correct password', secret === 'my secret');
+    assert('update fails on wrong password', secret === 'my secret');
 })();
 
 // update fails on wrong password
@@ -252,32 +281,3 @@ function assert(message, result) {
 
     assert('update fails on wrong new password', message === 'wrong new password');
 })();
-
-// update fails on wrong new password
-
-(function () {
-    var message;
-
-    try {
-        safeBox.updatePassword('456', 456);
-    } catch (error) {
-        message = error.message;
-    }
-
-    assert('update fails on wrong new password', message === 'wrong new password');
-})();
-
-// update fails on wrong password
-
-(function () {
-    var message;
-
-    try {
-        safeBox.updatePassword(456, 456);
-    } catch (error) {
-        message = error.message;
-    }
-
-    assert('update fails on wrong password', message === 'wrong password');
-})();
-
