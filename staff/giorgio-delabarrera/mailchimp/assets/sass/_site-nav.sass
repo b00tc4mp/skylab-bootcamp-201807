@@ -1,0 +1,35 @@
+.site-nav
+
+    &__list
+        display: flex
+    
+    &__list-item
+        flex-direction: row
+        background-color: #d2eef4
+        padding: 12px 14px
+        display: flex
+        align-items: center
+
+    &__list-item:first-child
+        border-radius: 8px 0 0 8px
+    
+    &__list-item:last-child
+        border-radius: 0 8px 8px 0
+    
+    &__list-item:not(:first-child)
+        border-left: 1px solid #c6dde2
+
+    &__link
+        color: #4c4d48
+        font-weight: bold
+        text-shadow: 0.05rem 0.05rem #ffffff
+
+    &__search
+        padding: 5px 10px
+        font-size: inherit
+        border: 1px solid #c6ced2
+        border-radius: 8px
+        font-weight: lighter
+
+    &__search::placeholder,
+        color: rgb(190, 190, 190)
