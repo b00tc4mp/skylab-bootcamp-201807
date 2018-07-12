@@ -47,27 +47,21 @@ var safeBox = {
     var masterpassword="123";
     var mysecret="my secret";
 
+
     function keep(password, secret){
         if (typeof(password)!== 'string') {throw Error('wrong password')}
         mysecret=secret;
         masterpassword=password;
-
     }
    
-
     function retrieve(password){
         if (masterpassword === password) { 
-            
             return mysecret;
         }else {
             throw new Error('wrong password');
-           
         }
-    
-        
     }
     
-
     function updatePassword(password, newpassword){
         if (typeof(newpassword)!=='string' || !newpassword.length){ throw Error('wrong new password')}
         if (masterpassword!== password){ throw Error('wrong password')}
@@ -75,6 +69,8 @@ var safeBox = {
             masterpassword= newpassword;    
         } 
     }
+
+
     safeBox.keep=keep;
     safeBox.retrieve = retrieve;
     safeBox.updatePassword= updatePassword;
