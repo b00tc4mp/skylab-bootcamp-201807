@@ -1,0 +1,141 @@
+$primary-color: #4fa798
+
+*
+    padding: 0
+    margin: 0
+    box-sizing: border-box
+    font-family: 'Roboto', sans-serif
+    
+.navigation
+    background-color: white
+    display: flex
+
+    &__logo
+        color: $primary-color
+        padding: 1.2em
+
+    &__list
+        display: flex
+        list-style: none
+
+        &-items
+            padding: 1.2em
+            color: #777777
+
+            &-anchors
+                text-decoration: none
+                color: #777777
+
+        &-items:hover
+            background-color: #e7e7e7
+
+.section
+    display: flex
+    justify-content: center
+    
+.section-hero 
+    display: flex
+    flex-wrap: wrap
+    justify-content: center
+    align-items: center
+    background: url("img/site_showcase_bg.jpg")
+    background-size: cover
+    padding-top: 3em
+
+    &__left
+        color: white
+
+        &-title
+            font-size: 5em
+            padding-bottom: 0.4em
+
+            &--green
+                color: $primary-color
+
+        &-body
+            font-size: 1.4em
+            padding-bottom: 1.6em
+
+        &-apps
+            margin-right: 1em
+            
+
+    &__right-photo
+        display: block
+
+.section-articles       
+    display: flex
+    justify-content: space-around
+    flex-wrap: wrap
+    padding: 5em 0
+
+    &__article
+        width: 356px
+        
+        &-img
+            height: 292px
+            border: 1px solid #cccccc
+
+        &-title
+            padding: 0.5em 0 0
+
+        &-text
+            font-size: 0.9em
+            line-height: 1.5em
+            padding: 1.2em 0
+
+        &-button
+            padding: 0.7em 1em
+            font-size: 0.9em
+            border-radius: 0.4em
+            border: 1px solid #cccccc
+
+        &-button:hover
+            background-color: $primary-color
+            color: white
+            border: white
+            cursor: pointer
+
+.section-features
+    display: flex
+    flex-wrap: wrap
+    justify-content: space-around
+    background-color: $primary-color
+    padding: 3em 0
+    color: white
+
+    &__list
+        list-style: none
+
+        &-items
+            padding-bottom:20px
+
+        &-items:first-child
+            font-size: 2em
+            font-weight: bold
+
+.section-footer
+    display: flex
+    flex-wrap: wrap
+    justify-content: space-around
+    background-color: #333333
+    color: white
+    padding: 2.2em 0
+    font-size:0.9em
+
+    &__list
+        display: flex
+        list-style: none   
+
+        &-items
+            padding: 0 1em
+            
+            &-anchors
+                color: white
+                text-decoration: none
+
+            &-anchors:hover
+                text-decoration: underline
+
+           
+

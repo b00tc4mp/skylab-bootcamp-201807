@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pasapalabra</title>
+    <link rel="stylesheet" type="text/css" href="styles/styles.css">
+    <link href="https://fonts.googleapis.com/css?family=Comfortaa" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Bad+Script|Codystar|Faster+One|Fira+Mono|Henny+Penny|Monofett|Nova+Mono|Sarina"
+          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Courgette" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
+</head>
+<body>
+<header id="pageHeader">Pasapalabra</header>
+<div id="letter-display">
+
+
+</div>
+<div id="user-interaction">
+    <div id="user-output">
+        <div id="questionSpace"></div>
+        <div id="message"></div>
+    </div>
+    <div id="user-input">
+        <label for="input" autofocus id="inputLabel">Responde aquí:</label>
+        <input type="text" id="input">
+        <button id="replayButton" class="buttonHidden">Jugar Otra Vez</button>
+        <button id="pasapalabraButton" class="buttonHidden">Pasapalabra</button>
+        <button id="terminarButton" class="buttonHidden">Salir</button>
+    </div>
+
+</div>
+<aside id="scoreBoard" class="scoreboardClosed">
+    <div id="cerrar">
+        <div>X</div>
+
+    </div>
+    <div id="scores" class="table">
+
+    </div>
+
+</aside>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.0.1/TweenMax.min.js"></script>
+
+<script src="js/main.js"></script>
+</body>
+</html>
