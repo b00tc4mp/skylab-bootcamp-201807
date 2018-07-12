@@ -1,0 +1,33 @@
+html, body {
+  height: 100%; }
+
+body {
+  background: #49cc5e;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center; }
+  body #dialog {
+    background: white; }
+    body #dialog fieldset {
+      border: 0; }
+
+#flexy {
+  width: 450px;
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; }
+  #flexy button, #flexy input {
+    border: none;
+    background: lightgrey;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    color: grey;
+    height: 20px;
+    padding: 10px; }
+  #flexy button {
+    background: #49cc5e; }
+
+/*# sourceMappingURL=main.css.map */

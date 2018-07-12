@@ -1,0 +1,137 @@
+body {
+  margin: 0;
+  background-color: gray;
+}
+
+header {
+  background-color: #4CBDD3;
+}
+
+.buttonNav {
+  background-color: black;
+  color: white;
+  padding: 15px;
+  border-radius: 10px;
+  font-size: 15px;
+}
+
+.search {
+  font-size: 13px;
+  color: grey;
+}
+
+.grid-header {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+}
+
+.logo {
+  grid-column-start: 2;
+  grid-column-end: 3;
+}
+
+.signupfree {
+  grid-column-start: 3;
+  grid-column-end: 4;
+  justify-self: center;
+}
+
+.pricing {
+  grid-column-start: 5;
+  grid-column-end: 6;
+}
+
+.features {
+  grid-column-start: 6;
+  grid-column-end: 7;
+}
+
+.resources {
+  grid-column-start: 7;
+  grid-column-end: 8;
+}
+
+.support {
+  grid-column-start: 8;
+  grid-column-end: 9;
+}
+
+.blog {
+  grid-column-start: 9;
+  grid-column-end: 10;
+}
+
+input[type=search] {
+  grid-column-start: 10;
+  grid-column-end: 11;
+}
+
+.grid-monkey {
+  display: grid;
+  background-color: #4CBDD3;
+  grid-template-columns: 1fr 1fr;
+}
+
+.monkey {
+  justify-self: center;
+  margin-bottom: 26px;
+}
+
+.sign {
+  padding-top: 7%;
+  padding-right: 45%;
+}
+
+.sign p {
+  color: gray;
+  font-size: 17px;
+}
+
+.buttonFree {
+  background-color: red;
+  color: white;
+  padding: 15px;
+  border-radius: 10px;
+  font-size: 15px;
+}
+
+.grid-whatsnew {
+  display: grid;
+  grid-template-columns: repeat(4, 25%);
+  width: 90%;
+  background-color: gainsboro;
+  margin-left: 5%;
+  margin-top: -30px;
+  border-radius: 15px 15px 0 0;
+}
+
+.grid-whatsnew h1 {
+  grid-column-start: 1;
+  grid-column-end: 5;
+}
+
+.grid-whatsnew p {
+  color: gray;
+  font-size: 17px;
+  margin-right: 170px;
+}
+
+footer {
+  background-color: black;
+}
+
+.grid-footer {
+  display: grid;
+  grid-template-columns: repeat(4, 25%);
+  background-color: black;
+  color: white;
+  width: 90%;
+  margin-left: 5%;
+}
+
+li {
+  list-style-type: none;
+  font-size: 18px;
+}
+
+/*# sourceMappingURL=style.css.map */
