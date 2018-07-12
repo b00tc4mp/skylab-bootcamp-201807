@@ -3,7 +3,7 @@ var safeBox;
 (function(){
 
     var myPassword = '123';
-    var mySecret = 'my secret';
+    var mySecret;
     /**
      * Keeps the secret safe
      * 
@@ -16,13 +16,12 @@ var safeBox;
     safeBox = {
 
         keep: function(password, secret) {
-            myPassword = password;
-            mySecret = secret;
-            /* if(typeof myPassword !== 'string') {
-                throw new Error(myPassword + ' is not the correct answer');
+           
+            if (password !== myPassword || typeof myPassword !== 'string') {
+                throw new Error('wrong password');
             } else {
                 mySecret = secret;
-            } */
+            }
 
         },
 
@@ -54,7 +53,7 @@ var safeBox;
         updatePassword: function(password, newPassword) {
             // TODO
             if (myPassword === password) {
-                if (!newPassword || typeof newPassword !== 'string' ) {
+                if (typeof newPassword !== 'string' || !newPassword.length ) {
                     throw new Error('wrong new password');
                 } 
                 myPassword = newPassword;
