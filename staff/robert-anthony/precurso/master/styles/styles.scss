@@ -1,0 +1,308 @@
+/*
+font-family: 'Faster One', cursive;
+font-family: 'Codystar', cursive;
+font-family: 'Sarina', cursive;
+font-family: 'Monofett', cursive;
+font-family: 'Henny Penny', cursive;
+font-family: 'Nova Mono', monospace;
+font-family: 'Bad Script', cursive;
+font-family: 'Fira Mono', monospace;
+
+*/
+
+$mainFont: 'Open Sans', sans-serif;
+
+$blueish: #1800ff;
+$ivory: rgb(255, 255, 240);
+$whiteish: rgba(255, 255, 240, 0.5);
+$area_border: rgba(255, 255, 255, 0.65) solid 1px;
+$area_bg: rgba(255, 237, 0, 0.54);
+$greenish: rgba(1, 255, 53, .65);
+$letterBorderPartial: double 1px;
+
+$letterBackground: rgba(151, 10, 150, .85);
+
+%text-snazz {
+  background: rgba(0, 255, 21, 0.58);
+  border: solid 1px rgba(0, 255, 100, 0.6);
+}
+
+.textSnazz {
+  @extend %text-snazz;
+  display: inline-block;
+  margin-right: 30%;
+  padding: .5em;
+}
+
+.letterBig {
+  background-color: rgba(78, 91, 255, .8);
+  transform: scale(2.0);
+  color: red;
+  z-index: 20;
+  border: $letterBorderPartial rgba(0, 200, 255, 0.8);
+
+}
+
+.letterCorrect {
+  border: $letterBorderPartial rgba(0, 255, 100, 0.8);
+  background-color: rgba(1, 255, 155, .5);
+}
+
+.letterIncorrect {
+  border: $letterBorderPartial rgba(255, 100, 0, 0.8);
+  background-color: rgba(255, 0, 0, .7);
+}
+
+.letterPasapalabra {
+  border: $letterBorderPartial rgba(255, 255, 100, 0.7);
+  background-color: rgba(255, 255, 0, 0.7);
+
+}
+
+.letterNormal {
+
+  background-color: $letterBackground;
+  color: white;
+  border: $letterBorderPartial rgba(200, 0, 200, 0.8);
+
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  color: white;
+  background: url("../images/ghibliroad.jpg") no-repeat;
+  background-attachment: fixed;
+  background-position: left bottom -20px;
+  background-size: cover;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+  background-color: skyblue;
+
+  font-family: $mainFont;
+  border: 12px solid rgba(27, 129, 46, 0.87);
+  padding: 0;
+  margin: 0;
+  display: grid;
+  height: 100%;;
+  grid-template-rows: 70px 1fr;
+  grid-template-columns: 640px 1fr;
+  grid-gap: 5px;
+  grid-template-areas: "pageHeader pageHeader " "letterDisplay userInteraction ";
+}
+
+#letter-display {
+  grid-area: letterDisplay;
+  position: relative;
+  div {
+    height: 50px;
+    width: 50px;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    font-family: 'Comfortaa', sans-serif;
+
+    position: absolute;
+    flex-direction: row;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+#user-interaction {
+  display: grid;
+  grid-gap: 5px;
+  grid-area: userInteraction;
+  grid-template-rows: 2fr 1fr;
+  grid-template-areas: "userOutput" "userInput";
+
+  button {
+    cursor: pointer;
+    border-radius: 5%;
+    width: 150px;
+    height: 40px;
+    text-align: center;
+    background-color: $greenish;
+    color: white;
+    border: white solid .9px;
+    font-size: .75em;
+    margin-top: 15px;
+    &:hover, &:active {
+      border-color: rgba(255, 234, 0, 0.9);
+      color: rgba(255, 234, 0, 0.9);
+
+    }
+  }
+
+  .buttonHidden {
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  .buttonVisible {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  #replayButton {
+    visibility: hidden;
+    display: none;
+  }
+
+  #user-output {
+    grid-area: userOutput;
+    display: grid;
+    grid-gap: 5px;
+    grid-template-rows: 2fr 1fr;
+    grid-template-areas: "questionSpace" "message";
+
+  }
+  #user-input {
+    //   border: $area_border;
+
+    //background: $area_bg;
+    padding: 15px;
+    grid-area: userInput;
+    font-size: 1.5em;
+
+    input {
+      color: white;
+      background: transparent;
+      height: 40px;
+      width: 80%;
+      margin-top: 10px;
+      font-size: 1em;
+      padding: 5px;
+      padding: 5px;
+      border: $blueish solid 1px;
+
+    }
+  }
+}
+
+#message {
+  grid-area: message;
+  display: flex;
+  padding-left: 25%;
+
+  flex-direction: column;
+  justify-content: center;
+  // border: $area_border;
+  background-image: url("../images/ghibli2.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: top left;
+  font-size: 1.5em;
+
+}
+
+#questionSpace {
+  padding: 15px;
+  padding-right: 20%;
+  // border: $area_border;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  // background: $area_bg;
+  // background-image: url("../images/logo.png");
+  background-size: contain;
+  background-position: bottom -40px right -40px;
+  background-repeat: no-repeat;
+
+  font-family: 'Courgette', cursive;
+  grid-area: questionSpace;
+  font-size: 1.5em;
+
+}
+
+.scoreboardOpen {
+  left: 80%;
+}
+
+.scoreboardClosed {
+  left: 100vw;
+}
+
+#scoreBoard {
+  width: 300px;
+  height: 100%;
+  position: absolute;
+  background: url("../images/Mascara_sin_rostro.png") fixed top right -80px no-repeat;
+  background-color: rgba(78, 91, 255, .8);
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  border: $letterBorderPartial rgba(0, 200, 255, 0.8);
+
+  grid-area: scoreBoard;
+  font-family: $mainFont;
+  #cerrar {
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    height: 20px;
+    width: 20px;
+    display: flex;
+    flex-direction: column;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    @extend %text-snazz;
+    border-style: solid;
+    border-size:2px;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    &:hover, &:active {
+      border: solid 2px white;
+    }
+    > div {
+      color: black;
+      &:hover, &:active {
+        color:white;
+      }
+      }
+
+  }
+}
+
+.table {
+  left: 10px;
+  top: 40px;
+  display: table;
+  width: 60%;
+  color: white;
+  position: relative;
+  .tableHeader {
+    display: table-header-group;
+    color: red;
+    font-weight: bold;
+    text-decoration: underline;
+  }
+  .tableRow {
+    display: table-row;
+    width: 100%;
+    margin-top: .5em;
+  }
+  .tableCell {
+    padding: .25em;
+    width: 50%;
+    display: table-cell;
+
+  }
+}
+
+#pageHeader {
+  font-family: 'Faster One', cursive;
+  font-size: 10vh;
+  grid-area: pageHeader;
+}
+
+

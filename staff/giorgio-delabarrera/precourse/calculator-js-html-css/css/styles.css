@@ -1,0 +1,160 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+
+@font-face {
+  font-family: 'DsDigi';
+  src: url('../fonts/DS-DIGI.TTF') format('truetype');
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-family: sans-serif;
+  line-height: 1.15;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  -ms-overflow-style: scrollbar;
+  -webkit-tap-highlight-color: transparent;
+}
+
+@-ms-viewport {
+  width: device-width;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+}
+
+.flex-container {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background-color: #5dbec9;
+  display: -webkit-box;      /* OLD - iOS 6-, Safari 3.1-6 */
+  display: -moz-box;         /* OLD - Firefox 19- (buggy but mostly works) */
+  display: -ms-flexbox;      /* TWEENER - IE 10 */
+  display: -webkit-flex;     /* NEW - Chrome */
+  display: flex; 
+  justify-content: center;
+  align-items: center;
+}
+
+#calculator {
+  background-color: #444444;
+  width: 350px;
+  height: 485px;
+  border-radius: 20px;
+  padding: 22px;
+}
+
+.panel {
+  background-color: #ffffff;
+  width: 100%;
+  height: 130px;
+  border-radius: 8px;
+  padding: 11px;
+  margin-bottom: 25px;
+}
+
+#display {
+  background-color: #d2d3d5;
+  /* width: 100%; */
+  height: 93px;
+  border-radius: 6px;
+  overflow: hidden;
+  text-align: right;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+#display span {
+  padding-top: 6px;
+  display: inline-block;
+  transform: scaleY(1.4);
+  -moz-transform: scaleY(1.4);
+  font-size: 51pt;
+  color: #434446;
+  font-family: 'DsDigi';
+  transition-property: font-size;
+  transition-duration: 4s;
+  transition-delay: 2s;
+}
+
+#keypad {
+  display: grid;
+  grid-template-rows: repeat(5, 1fr);
+  grid-template-columns: repeat(4, 1fr);
+  grid-column-gap: 11px;
+  grid-row-gap: 19px;
+  padding: 0 11px;
+}
+
+#keypad button {
+  background-color: #ffffff;
+  border-radius: 9px;
+  padding: 2px 0;
+  text-align: center;
+  width: 100%;
+  font-size: 20pt;
+  color: #444444;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+}
+
+#keypad button:focus {
+  outline:0;
+}
+
+#keypad button:active {
+  transform: scale(.9);
+}
+
+#keypad button[name="clean"] {
+  background-color: #fc573f !important;
+  color: #ffffff !important;
+  font-size: 16pt;
+}
+
+#keypad button[name="negate"] {
+  font-size: 16pt;
+}
+
+#keypad button[name="percent"] {
+  background-image: url('../img/percent.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 26px;
+}
+
+#keypad button[name="multiply"] {
+  font-size: 20pt;
+  padding-top: 0px;
+}
+
+#keypad button[name="divide"] {
+  background-image: url('../img/divide.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 26px;
+}
+
+#keypad button[name="subtract"] {
+  background-image: url('../img/subtract.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 26px;
+}
+
+#keypad button[name="zero"] {
+  grid-column: 1 / span 2;
+  grid-row: 5;
+}
