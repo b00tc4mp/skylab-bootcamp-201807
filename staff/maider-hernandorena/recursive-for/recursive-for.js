@@ -1,5 +1,3 @@
-var numbers = [1, 2, 3];
-var mul2 = [];
 var count = 0;
 
 function recursiveFor(numbers, fun) {
@@ -9,5 +7,13 @@ function recursiveFor(numbers, fun) {
         count++
         recursiveFor(numbers, fun);
     } 
-        console.log(mul2);
+};
+
+// opcion Manu
+function _recursiveFor(array, callback) {
+    // TODO implement a for-loop without for, but just recursion
+    if (array.length) {
+        callback(array[0]);
+        recursiveFor(array.slice(1), callback);
+    } 
 };
