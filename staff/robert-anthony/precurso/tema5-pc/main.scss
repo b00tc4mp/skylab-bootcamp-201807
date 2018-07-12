@@ -1,0 +1,55 @@
+$greeny: rgb(73, 204, 94);
+
+html, body {
+  height: 100%;
+}
+
+body {
+  background: $greeny;
+  margin: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  #dialog {
+
+
+
+    background: white;
+    fieldset {
+      border: 0;
+
+
+    }
+  }
+}
+
+
+
+#flexy {
+  width: 450px;
+
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  justify-content: center;
+  button, input {
+    border: none;
+    background: lightgrey;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    color: grey;
+    height: 20px;
+    padding: 10px;
+
+
+
+  }
+  button {
+
+    background: $greeny;
+  }
+}

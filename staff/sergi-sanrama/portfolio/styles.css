@@ -1,0 +1,56 @@
+body{
+    background: linear-gradient(to bottom, #d3dadf 0%, #268dd1 100%);
+}
+
+main{
+    font-family: "Times New Roman", Times, serif;
+    text-align: center;
+}
+
+nav.link{
+    text-decoration: none;
+}
+
+h1{
+    color: grey;
+    font-size:5vw;
+}
+
+.flex-container {
+    display: flex;
+    flex-wrap: nowrap;  
+}
+
+
+.flex-container > div > img{
+    width: 80%;
+    margin:5%;
+    text-align: center;
+    border-radius: 10%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+  img:hover {
+    box-shadow: 0 0 2px 1px rgba(236, 240, 241, 0.5);
+}
+
+.title-section{
+    color: grey;
+    font-size: 30px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.title-section:hover{
+    color: aliceblue;
+    font-size: 250%;
+}
+
+.text-travell{
+    text-align: center;
+    margin: 5% 10%;
+    line-height: 25px;
+
+    font-size:2vw;
+    line-height: 1.5em
+}

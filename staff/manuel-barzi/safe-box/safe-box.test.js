@@ -1,17 +1,76 @@
-// keep and retrieve succeed on correct password
+// secret is not a property
+
+assert('secret is not a property', safeBox.secret === undefined); // true
+
+// password is not a property
+
+assert('password is not a property', safeBox.password === undefined); // true
+
+// keep succeeds on correct password
 
 (function () {
-    safeBox.keep('123', 'my secret');
-    
-    console.log(safeBox.secret === undefined); // true
-    console.log(safeBox.password === undefined); // true
+    var message;
 
-    var secret = safeBox.retrieve('123');
+    try {
+        safeBox.keep('123', 'my secret');
+    } catch (error) {
+        message = error.message;
+    }
 
-    console.log(secret === 'my secret');
+    assert('keep succeeds on correct password', message === undefined);
 })();
 
-// retrieve secret fails on wrong password
+// keep fails on wrong password
+
+(function () {
+    var message;
+
+    try {
+        safeBox.keep('456', 'my secret');
+    } catch (error) {
+        message = error.message;
+    }
+
+    assert('keep fails on wrong password', message === 'wrong password');
+})();
+
+// keep fails on wrong password
+
+(function () {
+    var message;
+
+    try {
+        safeBox.keep('', 'my secret');
+    } catch (error) {
+        message = error.message;
+    }
+
+    assert('keep fails on wrong password', message === 'wrong password');
+})();
+
+// keep fails on wrong password
+
+(function () {
+    var message;
+
+    try {
+        safeBox.keep(undefined, 'my secret');
+    } catch (error) {
+        message = error.message;
+    }
+
+    assert('keep fails on wrong password', message === 'wrong password');
+})();
+
+// retrieve succeed on correct password
+
+(function () {
+    var secret = safeBox.retrieve('123');
+
+    assert('retrieve succeed on correct password', secret === 'my secret');
+})();
+
+// retrieve fails on wrong password
 
 (function () {
     var message;
@@ -22,10 +81,10 @@
         message = error.message;
     }
 
-    console.log(message === 'wrong password');
+    assert('retrieve fails on wrong password', message === 'wrong password');
 })();
 
-// retrieve secret fails on wrong password
+// retrieve fails on wrong password
 
 (function () {
     var message;
@@ -36,10 +95,10 @@
         message = error.message;
     }
 
-    console.log(message === 'wrong password');
+    assert('retrieve fails on wrong password', message === 'wrong password');
 })();
 
-// retrieve secret fails on wrong password
+// retrieve fails on wrong password
 
 (function () {
     var message;
@@ -50,10 +109,10 @@
         message = error.message;
     }
 
-    console.log(message === 'wrong password');
+    assert('retrieve fails on wrong password', message === 'wrong password');
 })();
 
-// retrieve secret fails on wrong password
+// retrieve fails on wrong password
 
 (function () {
     var message;
@@ -64,10 +123,10 @@
         message = error.message;
     }
 
-    console.log(message === 'wrong password');
+    assert('retrieve fails on wrong password', message === 'wrong password');
 })();
 
-// retrieve secret fails on wrong password
+// retrieve fails on wrong password
 
 (function () {
     var message;
@@ -78,7 +137,7 @@
         message = error.message;
     }
 
-    console.log(message === 'wrong password');
+    assert('retrieve fails on wrong password', message === 'wrong password');
 })();
 
 // update succeeds on correct password
@@ -88,7 +147,7 @@
 
     var secret = safeBox.retrieve('456');
 
-    console.log(secret === 'my secret');
+    assert('update fails on wrong password', secret === 'my secret');
 })();
 
 // update fails on wrong password
@@ -102,7 +161,7 @@
         message = error.message;
     }
 
-    console.log(message === 'wrong password');
+    assert('update fails on wrong password', message === 'wrong password');
 })();
 
 // update fails on wrong password
@@ -116,7 +175,7 @@
         message = error.message;
     }
 
-    console.log(message === 'wrong password');
+    assert('update fails on wrong password', message === 'wrong password');
 })();
 
 // update fails on wrong password
@@ -130,7 +189,7 @@
         message = error.message;
     }
 
-    console.log(message === 'wrong password');
+    assert('update fails on wrong password', message === 'wrong password');
 })();
 
 // update fails on wrong password
@@ -144,7 +203,7 @@
         message = error.message;
     }
 
-    console.log(message === 'wrong password');
+    assert('update fails on wrong password', message === 'wrong password');
 })();
 
 // update fails on wrong password
@@ -158,17 +217,7 @@
         message = error.message;
     }
 
-    console.log(message === 'wrong password');
-})();
-
-// update fails on wrong new password
-
-(function() {
-    safeBox.keep('456', 'my new secret');
-
-    var secret = safeBox.retrieve('456');
-
-    console.log(secret === 'my new secret');
+    assert('update fails on wrong password', message === 'wrong password');
 })();
 
 // update fails on wrong new password
@@ -182,7 +231,7 @@
         message = error.message;
     }
 
-    console.log(message === 'wrong new password');
+    assert('update fails on wrong new password', message === 'wrong new password');
 })();
 
 // update fails on wrong new password
@@ -196,7 +245,7 @@
         message = error.message;
     }
 
-    console.log(message === 'wrong new password');
+    assert('update fails on wrong new password', message === 'wrong new password');
 })();
 
 // update fails on wrong new password
@@ -210,7 +259,7 @@
         message = error.message;
     }
 
-    console.log(message === 'wrong new password');
+    assert('update fails on wrong new password', message === 'wrong new password');
 })();
 
 // update fails on wrong new password
@@ -224,5 +273,5 @@
         message = error.message;
     }
 
-    console.log(message === 'wrong new password');
+    assert('update fails on wrong new password', message === 'wrong new password');
 })();
