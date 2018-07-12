@@ -1,0 +1,119 @@
+body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  color: darkgrey;
+  font-family: 'Lato', sans-serif;
+  background: url(../images/png-machine-overview-edit-400.png);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: top left; }
+
+#container {
+  height: 100%;
+  margin-right: 10px;
+  display: grid;
+  grid-template-areas: "headerarea headerarea" ". mainarea" "footerarea footerarea";
+  grid-template-rows: 180px 1fr 30px;
+  grid-template-columns: 200px 1fr; }
+
+header {
+  grid-area: headerarea;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  padding-right: 20px;
+  justify-content: space-between; }
+  header h2 {
+    font-weight: 900;
+    color: darkred;
+    letter-spacing: .2em; }
+  header address {
+    letter-spacing: .2em;
+    display: block;
+    flex: 1 1;
+    text-align: right;
+    font-style: normal; }
+    header address a {
+      text-decoration: none;
+      letter-spacing: .2em;
+      color: darkgrey; }
+      header address a:hover, header address a:active {
+        text-decoration: underline;
+        color: red; }
+  header h2 {
+    flex: 1 1;
+    margin: 0; }
+  header ul {
+    flex: 1 1 2rem; }
+
+ul li {
+  display: inline-block;
+  margin-left: 5rem;
+  cursor: pointer; }
+  ul li a {
+    font-size: 1em;
+    letter-spacing: .2em;
+    text-decoration: none;
+    color: darkred;
+    text-transform: lowercase; }
+    ul li a:hover, ul li a:active {
+      color: yellow; }
+
+main {
+  grid-area: mainarea;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end; }
+  main > aside {
+    position: fixed;
+    left: 80px;
+    top: 400px;
+    color: darkgrey;
+    font-weight: 700;
+    font-size: 2rem;
+    text-transform: lowercase;
+    letter-spacing: .5em; }
+
+footer {
+  grid-area: footerarea;
+  height: 40px;
+  background: darkred; }
+
+#development, #design {
+  width: 70%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto;
+  grid-auto-flow: row;
+  grid-auto-rows: auto;
+  justify-content: flex-end; }
+  #development article, #design article {
+    border: 1px dotted red;
+    border-collapse: collapse;
+    padding: 1em;
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between; }
+    #development article dl dt, #design article dl dt {
+      font-family: Courier; }
+
+#cv {
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end; }
+
+#design, #cv {
+  display: none; }
+
+#design {
+  z-index: 1; }
+
+#development {
+  z-index: 2; }
+
+#dv {
+  z-index: 3; }
+
+/*# sourceMappingURL=main.css.map */
