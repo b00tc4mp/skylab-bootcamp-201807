@@ -1,10 +1,12 @@
 var safeBox;
 
+
+
 (function() {
 
     var myPassword = '123',
-        mySecret = 'my secret';
-
+    mySecret = 'my secret';
+    
     safeBox = {
     
         /**
