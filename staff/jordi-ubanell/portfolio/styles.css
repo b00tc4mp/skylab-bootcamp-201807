@@ -1,0 +1,72 @@
+body {
+    background-color: whitesmoke;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    font-family: 'IBM Plex Mono', monospace, Courier;
+}
+
+h1{
+    color: #666;
+    font-size: 4rem;
+    font-weight: 700;
+}
+
+h2{
+    color: #666;
+    font-size: 2.5rem;
+}
+
+.multicolumn{
+    column-count: 2;
+}
+
+.twocolumns{
+    display:flex;
+    justify-content: space-between;
+}
+
+.flex-container {
+    display: flex;
+    height: 300px;
+    justify-content: center;
+    align-items: center;
+  }
+cite, blockquote, section, address, div{
+    margin: 2rem 4rem;
+    max-width: 50rem;
+}
+
+
+.wide-article{
+    width: 45%;
+}
+
+
+li, p{
+    color: #666;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+header, footer{
+    background-color: gainsboro;
+    display: flex;
+    justify-content: space-between;
+
+    margin: 0;
+    padding: 1rem;
+    border: solid gray 2px;
+    -webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+            box-sizing: border-box;
+}
+
+news{
+
+}
+
+html{
+    margin: 0;
+    padding: 0;
+}
