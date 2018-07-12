@@ -11,7 +11,11 @@
     console.log(secret === 'my secret');
 })();
 
+<<<<<<< HEAD
 // retrieve fails on wrong password
+=======
+// retrieve secret fails on wrong password
+>>>>>>> feature/strings
 
 (function () {
     var message;
@@ -25,7 +29,11 @@
     console.log(message === 'wrong password');
 })();
 
+<<<<<<< HEAD
 // retrieve fails on wrong password
+=======
+// retrieve secret fails on wrong password
+>>>>>>> feature/strings
 
 (function () {
     var message;
@@ -39,7 +47,11 @@
     console.log(message === 'wrong password');
 })();
 
+<<<<<<< HEAD
 // retrieve fails on wrong password
+=======
+// retrieve secret fails on wrong password
+>>>>>>> feature/strings
 
 (function () {
     var message;
@@ -53,7 +65,11 @@
     console.log(message === 'wrong password');
 })();
 
+<<<<<<< HEAD
 // retrieve fails on wrong password
+=======
+// retrieve secret fails on wrong password
+>>>>>>> feature/strings
 
 (function () {
     var message;
@@ -67,7 +83,11 @@
     console.log(message === 'wrong password');
 })();
 
+<<<<<<< HEAD
 // retrieve fails on wrong password
+=======
+// retrieve secret fails on wrong password
+>>>>>>> feature/strings
 
 (function () {
     var message;
@@ -163,6 +183,19 @@
 
 // update fails on wrong new password
 
+<<<<<<< HEAD
+=======
+(function() {
+    safeBox.keep('456', 'my new secret');
+
+    var secret = safeBox.retrieve('456');
+
+    console.log(secret === 'my new secret');
+})();
+
+// update fails on wrong new password
+
+>>>>>>> feature/strings
 (function () {
     var message;
 
