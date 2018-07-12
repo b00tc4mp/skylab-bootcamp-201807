@@ -1,14 +1,4 @@
-var safeBox = {
-    keep: function(password, secret) {
-        // TODO
-    },
-    retrieve: function(password) {
-        // TODO
-    },
-    updatePassword: function(password, newPassword) {
-        // TODO
-    }
-};
+var safeBox = {};
 
 (function (){
 //Variables declaration and initialization.
