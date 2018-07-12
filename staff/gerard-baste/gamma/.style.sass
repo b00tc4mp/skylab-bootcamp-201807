@@ -1,0 +1,100 @@
+
+$nav_first_child_color: #28A998
+$header_background_color: #f8f8f8
+
+*
+    padding: 0
+    margin: 0
+    box-sizing: border-box
+
+
+header
+    background-image: url("site_showcase_bg.jpg")
+    background-size: cover
+
+.header-nav__list
+    display: flex
+    list-style: none
+    background-color: $header_background_color
+
+    &-element
+        font-size: 1.2em
+        padding: 0.6em
+
+    &-element:first-child 
+        color: $nav_first_child_color
+        font-size: 1.5em
+
+    &-element:nth-child(n+2)
+        padding-top: 1em
+        
+.section-photos
+    display: flex
+
+.section-photos_main
+    align-self: center
+    
+    color: white
+    margin-top: 2em
+
+h1 
+    font-size: 2.8em
+span
+    color: #28A998
+    
+.first-text
+    font-size: 1.7em
+
+.photos
+    margin-top: 3em
+
+.hand_phone
+    margin-right: 12em
+    display: block
+
+.main-information
+    display: flex
+    padding: 5em 0
+    background-color: white
+    justify-content: space-around
+    
+
+    &__article
+        width: 356px
+
+    &__article-photo
+        border: 0.1em solid #dcdcdc
+        height: 292px
+        
+.second-main
+    display: flex
+    background-color: #28A998
+    color: white
+    justify-content: space-around
+
+    &__text-title
+        font-size: 2em
+        padding-top: 0.9em
+
+    &__text__list-element
+        list-style: none
+        padding: 0.3em
+        font-size: 1.1em
+
+.second-main__photo
+    padding-top: 0.9em
+    
+
+.footerr
+    display: flex
+    background-color: black
+    color: white
+    justify-content: space-around
+    padding: 0.6em
+
+    &__container-list
+        display: flex
+        list-style: none
+
+        &-element
+            padding: 0.6em

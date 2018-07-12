@@ -1,0 +1,234 @@
+header .nav__menu-container .nav__menu .nav__menu-button--sign-up {
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#4c4c4c+0,595959+12,666666+25,474747+39,2c2c2c+50,000000+51,111111+60,2b2b2b+76,1c1c1c+91,131313+100;Black+Gloss+%231 */
+  background: #4c4c4c;
+  /* Old browsers */
+  background: -moz-linear-gradient(top, #4c4c4c 0%, #595959 12%, #666666 25%, #474747 39%, #2c2c2c 50%, black 51%, #111111 60%, #2b2b2b 76%, #1c1c1c 91%, #131313 100%);
+  /* FF3.6-15 */
+  background: -webkit-linear-gradient(top, #4c4c4c 0%, #595959 12%, #666666 25%, #474747 39%, #2c2c2c 50%, black 51%, #111111 60%, #2b2b2b 76%, #1c1c1c 91%, #131313 100%);
+  /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to bottom, #4c4c4c 0%, #595959 12%, #666666 25%, #474747 39%, #2c2c2c 50%, black 51%, #111111 60%, #2b2b2b 76%, #1c1c1c 91%, #131313 100%);
+  /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#4c4c4c', endColorstr='#131313', GradientType=0);
+  /* IE6-9 */ }
+
+.main__content .main__section-whats-new, footer .footer__section-main {
+  padding: 0 20px 20px 20px;
+  display: grid;
+  grid-template-columns: repeat(4, 220px);
+  grid-column-gap: 20px; }
+
+header .header__button-signup {
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#fc7f3c+0,fc7f3c+50,fc5800+51,fc5800+100 */
+  background: #fc7f3c;
+  /* Old browsers */
+  background: -moz-linear-gradient(top, #fc7f3c 0%, #fc7f3c 50%, #fc5800 51%, #fc5800 100%);
+  /* FF3.6-15 */
+  background: -webkit-linear-gradient(top, #fc7f3c 0%, #fc7f3c 50%, #fc5800 51%, #fc5800 100%);
+  /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to bottom, #fc7f3c 0%, #fc7f3c 50%, #fc5800 51%, #fc5800 100%);
+  /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fc7f3c', endColorstr='#fc5800', GradientType=0);
+  /* IE6-9 */ }
+
+header .header__button-signup, .main__content .main__section-whats-new .whatsnew__article .whatsnew__article-button {
+  -webkit-border-radius: 0.7em;
+  -moz-border-radius: 0.7em;
+  border-radius: 0.7em;
+  cursor: pointer; }
+
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box; }
+
+body {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 16px; }
+
+div.main__container {
+  width: 100%;
+  display: grid;
+  grid-template-rows: 515px auto auto; }
+
+header {
+  height: 515px;
+  background: #00c0d8 url(../images/chimp.png) no-repeat bottom left 100px;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 300px 706px 1fr;
+  grid-template-rows: 50px 50px 1fr;
+  grid-template-areas: ". . . " ". nav ." ". signup ."; }
+  header .header__button-signup {
+    border: none;
+    border-top: #BC3E00 1px solid;
+    border-bottom: #BC3E00 1px solid;
+    width: 209px;
+    height: 50px;
+    color: white;
+    text-shadow: 1px 1px black;
+    font-size: 1em; }
+  header .header__signup-text {
+    color: teal;
+    font-size: .9em; }
+    header .header__signup-text .header__signup-text-title {
+      display: inline-block;
+      margin: 15px 0;
+      font-size: 5em;
+      letter-spacing: -.05em;
+      line-height: 1.1em;
+      color: white; }
+  header .nav__menu-container {
+    grid-area: nav;
+    position: relative; }
+    header .nav__menu-container .nav__menu {
+      display: flex;
+      justify-content: flex-end;
+      padding: 0;
+      margin: 0; }
+      header .nav__menu-container .nav__menu .nav__menu-button {
+        font-size: 0.8rem;
+        list-style: none;
+        display: inline-block;
+        border-left: 1px solid rgba(255, 255, 255, 0.95);
+        border-right: 1px solid rgba(100, 100, 100, 0.3);
+        height: 46px;
+        background-color: #caeff5;
+        padding: 20px 15px;
+        margin: 0;
+        line-height: .6em;
+        cursor: pointer;
+        color: #646464; }
+        header .nav__menu-container .nav__menu .nav__menu-button--left-button {
+          border-radius: 0.7em 0 0 0.7em;
+          border-left: none; }
+        header .nav__menu-container .nav__menu .nav__menu-button--search-button {
+          border-radius: 0 0.7em 0.7em 0;
+          border-right: none; }
+          header .nav__menu-container .nav__menu .nav__menu-button--search-button .nav__input-search {
+            margin-top: -10px;
+            background-image: url(../images/search.png);
+            background-repeat: no-repeat;
+            background-position: center right;
+            height: 2em;
+            padding: .5em;
+            border: 1px solid lightgrey;
+            -webkit-border-radius: 0.4em;
+            -moz-border-radius: 0.4em;
+            border-radius: 0.4em; }
+        header .nav__menu-container .nav__menu .nav__menu-button--sign-up {
+          margin-right: 15px;
+          border-radius: 0.7em;
+          border: none;
+          border-top: 1px black solid;
+          border-bottom: 1px black solid;
+          text-shadow: 2px 2px black;
+          color: white;
+          padding-left: 20px;
+          padding-right: 20px; }
+        header .nav__menu-container .nav__menu .nav__menu-button a {
+          text-decoration: none;
+          color: inherit; }
+          header .nav__menu-container .nav__menu .nav__menu-button a:hover, header .nav__menu-container .nav__menu .nav__menu-button aactive {
+            color: cornflowerblue; }
+    header .nav__menu-container .nav__login-button {
+      position: absolute;
+      left: 650px;
+      top: -55px;
+      color: white;
+      display: inline-block;
+      font-size: .8em;
+      cursor: pointer; }
+    header .nav__menu-container .nav__logo {
+      position: absolute;
+      left: -250px; }
+  header .header__section-signup {
+    grid-area: signup;
+    color: white;
+    margin-left: 240px; }
+
+.main__content {
+  width: 100%;
+  height: 100%;
+  background-color: #cacfce;
+  display: flex;
+  flex-direction: row;
+  justify-content: center; }
+  .main__content .main__section-whats-new {
+    background: #f0f0f0;
+    width: 990px;
+    margin-top: -50px;
+    -webkit-border-radius: 1%;
+    -moz-border-radius: 1%;
+    border-radius: 1%;
+    grid-template-rows: 70px 1fr;
+    color: #464b46; }
+    .main__content .main__section-whats-new .whatsnew__main-title {
+      grid-column: 1/5;
+      grid-row: 1/2;
+      font-size: 1.8em; }
+    .main__content .main__section-whats-new .whatsnew__article .whatsnew__article-image {
+      border-top: 1px solid lightgrey;
+      border-bottom: 1px solid lightgrey; }
+    .main__content .main__section-whats-new .whatsnew__article .whatsnew__article-title {
+      font-size: 1em;
+      margin-bottom: 30px; }
+      .main__content .main__section-whats-new .whatsnew__article .whatsnew__article-title .whatsnew__article-subtitle {
+        font-size: 1.5em; }
+        .main__content .main__section-whats-new .whatsnew__article .whatsnew__article-title .whatsnew__article-subtitle:before {
+          content: "\A";
+          white-space: pre; }
+    .main__content .main__section-whats-new .whatsnew__article .whatsnew__article-button {
+      background: #3f3f37;
+      color: white;
+      text-shadow: 1px 1px black;
+      width: 208px;
+      height: 29px;
+      margin-top: 40px;
+      background-image: url("../images/arrows.png");
+      background-repeat: no-repeat;
+      background-position: top .7em right .2em; }
+    .main__content .main__section-whats-new ul li {
+      list-style: none;
+      display: inline-block; }
+
+footer {
+  height: 100%;
+  background: #191814;
+  display: flex;
+  flex-direction: row;
+  justify-content: center; }
+  footer .footer__section-main {
+    width: 990px;
+   /*  padding: 0 20px;
+  display: grid;
+  grid-template-columns: repeat(4, $bottom-column-width);
+  grid-column-gap: 20px;*/
+    grid-template-rows: repeat(2, 1fr); }
+    footer .footer__section-main .footer__contact-column-title {
+      color: white;
+      font-size: 1em;
+      margin-bottom: 1em; }
+    footer .footer__section-main .footer__contact-column-link-container {
+      margin: 0;
+      padding: 0;
+      list-style-type: none; }
+      footer .footer__section-main .footer__contact-column-link-container .footer__contact-column-link a {
+        text-decoration: none;
+        color: #3c3c3c; }
+        footer .footer__section-main .footer__contact-column-link-container .footer__contact-column-link a:hover, footer .footer__section-main .footer__contact-column-link-container .footer__contact-column-link a:active {
+          color: white; }
+  footer .footer__copyright {
+    grid-area: 2 / 1 / 3 / 5;
+    color: #3c3c3c;
+    margin-top: 30px;
+    width: 90%;
+    margin-left: 5%;
+    margin-right: 5%;
+    text-align: center; }
+
+/*# sourceMappingURL=main.css.map */

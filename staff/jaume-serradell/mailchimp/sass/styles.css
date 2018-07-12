@@ -1,0 +1,190 @@
+/* STYLES */
+* {
+  padding: 0;
+  margin: 0;
+  font-family: "Roboto", sans-serif;
+  box-sizing: border-box;
+}
+
+body {
+  background-image: url(assets/bg.png);
+  background-repeat: repeat-x;
+  background-position: top;
+  background-color: black;
+}
+
+main {
+  width: 1000px;
+  margin: 0 auto;
+}
+
+header {
+  display: flex;
+  justify-content: flex-end;
+  width: 1000px;
+  margin: 20px auto;
+}
+
+header div {
+  flex-grow: 1;
+  height: 400px;
+}
+
+header button {
+  border-radius: 10px;
+  background: linear-gradient(to bottom, #7d7e7d 0%, #0e0e0e 100%);
+  border: none;
+  margin-right: 10px;
+  padding: 0 30px;
+  font-size: 14px;
+  color: white;
+}
+
+nav {
+  display: flex;
+  background-color: #D5EDF4;
+  border-radius: 10px;
+}
+
+input[type=text] {
+  margin: 12px 20px;
+  border-radius: 5px;
+  border: none;
+  padding: 0 40px 0 10px;
+  width: 200px;
+  -webkit-box-shadow: inset 1px 1px 5px 0px rgba(0, 0, 0, 0.29);
+  -moz-box-shadow: inset 1px 1px 5px 0px rgba(0, 0, 0, 0.29);
+  box-shadow: inset 1px 1px 5px 0px rgba(0, 0, 0, 0.29);
+  font-size: 13px;
+  background-image: url(assets/search.png);
+  background-color: white;
+  background-size: 16px;
+  background-repeat: no-repeat;
+  background-position: center right 10px;
+  height: 30px;
+}
+
+ul {
+  list-style: none;
+}
+
+nav ul li {
+  border-right: 1px solid black;
+  padding: 19px 18px;
+  font-size: 13px;
+}
+
+nav ul {
+  display: flex;
+}
+
+#hero {
+  display: flex;
+  width: 900px;
+  margin: 0 auto;
+}
+
+#hero img {
+  margin-right: 25px;
+  display: block;
+}
+
+#hero .text img {
+  padding-top: 20px;
+}
+
+#hero p {
+  padding: 20px 0;
+  font-size: 14px;
+  line-height: 23px;
+  color: darkslategray;
+}
+
+#hero button {
+  background: linear-gradient(to bottom, #f85032 0%, #f16f5c 50%, #f6290c 51%, #f02f17 71%, #e73827 100%);
+  padding: 20px 50px;
+  color: white;
+  border-radius: 8px;
+  border: none;
+  font-size: 16px;
+}
+
+#whatNew {
+  background-color: #F0F0F0;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  width: 1000px;
+  margin: 0 auto;
+  -webkit-box-shadow: 0px 0px 8px 2px rgba(0, 0, 0, 0.15);
+  -moz-box-shadow: 0px 0px 8px 2px rgba(0, 0, 0, 0.15);
+  box-shadow: 0px 0px 8px 2px rgba(0, 0, 0, 0.15);
+  padding: 20px 30px;
+}
+
+#whatNew h2 {
+  padding-bottom: 10px;
+}
+
+#whatNew section {
+  display: flex;
+  justify-content: space-between;
+}
+
+#whatNew figure {
+  padding-bottom: 20px;
+}
+
+#whatNew article {
+  width: 210px;
+  display: flex;
+  flex-direction: column;
+}
+
+#whatNew article p {
+  font-size: 12px;
+  line-height: 19px;
+  padding: 20px 0;
+  color: #999;
+  flex-grow: 1;
+}
+
+#whatNew article a {
+  background-color: black;
+  padding: 9px 18px;
+  color: white;
+  border-radius: 5px;
+  width: 100%;
+  display: block;
+  font-size: 12px;
+  display: flex;
+}
+
+#webMap {
+  background-color: black;
+  width: 100%;
+  color: white;
+  display: flex;
+  justify-content: space-evenly;
+  padding-top: 20px;
+  font-size: 14px;
+}
+
+#webMap ul li:first-child {
+  color: white;
+  padding-bottom: 10px;
+}
+
+#webMap ul li {
+  color: #999;
+  line-height: 25px;
+}
+
+footer {
+  background-color: black;
+  color: #999;
+  text-align: center;
+  padding: 100px 0 10px;
+  font-size: 14px;
+}
+
+/*# sourceMappingURL=styles.css.map */
