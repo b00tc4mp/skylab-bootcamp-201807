@@ -1,0 +1,201 @@
+header {
+    height: 350px;
+    background-color: #4EBDD2;
+}
+
+nav {
+    height: 50px;
+    display: grid;
+    grid-template: 1fr / 1fr 2fr 1fr 1fr 1fr 8fr 1fr;
+    align-items: center;
+    justify-items: center;
+    padding-top: 10px;
+}
+
+#logo {
+    width: 100%;
+    grid-column: 2/4;
+}
+
+nav button {
+    font-size: 5px;
+}
+
+#navSignUp {
+    grid-column: 4/6;
+    background-color: #555555;
+    border: none;
+    color: white;
+    height: 50%;
+    border-radius: 5px;
+    font-size: 8px;
+}
+
+#signUp {
+    background-color: #f44336;
+    border: none;
+    color: white;
+    height: 15%;
+    width: 30%;
+    border-radius: 5px;
+}
+
+#navbar button {
+    border: none;
+    background: none;
+    font-size: 8px;
+}
+
+#navbar {
+    background-color: #D4ECF1; 
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    border-radius: 5px;
+    height: 50%;
+    width: 100%;
+}
+
+#input {
+    display: flex;
+    flex-direction: row;
+    align-items: center; 
+    background: white;
+    border-radius: 3px;
+    width: 15%;
+    justify-content: flex-end;
+}
+
+nav input {
+    width: 90%;
+    height: 50%;
+    font-size: 8px;
+    color: rgb(177, 175, 175);
+    border: none;
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+    justify-self: flex-start;
+}
+
+#search {
+    width: 10%;
+    background: white;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    padding-right: 2px;
+} 
+
+header section {
+    display: grid;
+    grid-template: 265px 1fr / 1fr 1fr;
+}
+
+#presentation {
+    margin-left: 5%;
+    color: rgb(33, 108, 131);
+    font-size: 8px;
+}
+
+#presentation img {
+    width: 100%;
+    max-width: 280px;
+    margin-top: 20px;
+    justify-self: flex-start;
+}
+
+#presentation p {
+    padding-right: 70px;
+}
+
+#mono {
+    width: 80%;
+    max-width: 280px;
+    justify-self: flex-end;
+    align-self: flex-end;
+}
+
+main {
+    background-image: url("images/noisepattern.png");
+    height: 280px;
+}
+
+.container {
+    height: 110%;
+    width: 90%;
+    background-color: white;
+    position: relative;
+    left: 5%;
+    top: -10%;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+h2 {
+    margin: 0;
+    margin-left: 2%;
+    font-size: 15px;
+    padding-top: 20px;
+    padding-left: 10px;
+}
+
+#grid{
+    display: grid;
+    grid-template: 50% 30% 20% / repeat(4, 1fr);
+    grid-gap: 10px 20px;
+    margin: 10px 20px;
+}
+
+#grid img {
+    width: 100%;
+    max-width: 130px;
+}
+
+#grid button {
+    background-color: #555555;
+    color: white;
+    border-radius: 5px;
+}
+
+#grid h3 {
+    margin-top: -5px;
+}
+
+#learn {
+    width: 0%;
+}
+
+.info {
+    font-size: 8px;
+}
+
+footer {
+    background-color: black;
+    color: white;
+    font-size: 8px;
+}
+
+.containerFooter {
+    display: grid;
+    grid-template: 1fr / 1fr 1fr 1fr 1fr;
+    grid-gap: 10px 30px;
+    justify-content: center;
+    margin: 0px 8%;
+}
+
+footer p {
+    line-height: 1px;
+    color: grey;
+}
+
+footer a {
+    text-decoration: none;
+    color: grey;
+}
+
+.tradeMark {
+    text-align: center;
+    line-height: 20px;
+    margin: 30px 0;
+    padding-bottom: 60px;
+}
