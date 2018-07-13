@@ -9,9 +9,14 @@ function recursiveFor(numbers, callback) {
     //     return recursiveFor(numbers,func);
     // }
 
-    if(numbers.length !== mul2.length){
-        callback(numbers[count]);
-        count++;
+    // if(numbers.length !== mul2.length){
+    //     callback(numbers[count]);
+    //     count++;
+    //     recursiveFor(numbers,callback);
+    // }
+
+    if(numbers.length){
+        callback(numbers.shift());
         recursiveFor(numbers,callback);
     }
 }
