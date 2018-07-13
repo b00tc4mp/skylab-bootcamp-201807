@@ -94,6 +94,7 @@ function SearchPanel(title, cssClass, tag) {
   var searchInput = document.createElement('input');
   searchInput.type = "search";
   searchInput.placeholder = "Search term...";
+  searchInput.autofocus = true;
   var searchButton = document.createElement('button');
   searchButton.type = "submit";
   searchButton.innerHTML = "Submit";
@@ -104,14 +105,12 @@ function SearchPanel(title, cssClass, tag) {
   this._onSearch = function () {
   };
 
-  searchButton.addEventListener('onfocus', function() {
-    searchInput.value = "";
-  }.bind(this));
-
   this.element.addEventListener('submit', function (event) {
     event.preventDefault();
     var query = searchInput.value;
     this._onSearch(query);
+    searchInput.value = "";
+
   }.bind(this));
 }
 
