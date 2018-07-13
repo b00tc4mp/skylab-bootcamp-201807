@@ -1,0 +1,426 @@
+*{
+	background-color: #e6e6e6;
+	margin: 0px;
+	padding: 0px;
+	font-family: "Proxima Nova";
+}
+#container {
+	width: 1200px;
+	height: 725px;
+	margin: 0 auto;
+}
+nav{
+	width:1200px;
+	height:50px;
+}
+div.navegador{
+	height: 50px;
+	width:50px;
+	background-image: url("navicon.svg");
+	float: left;
+}
+div.title{
+	height: 50px;
+	width:200px;
+	background-image: url("title.svg");
+	float: left;
+}
+div.x{
+	height: 50px;
+	width:50px;
+	float: right;
+	background-image: url("end.svg");
+}
+#pasapalabra{
+	border: 0px;
+	padding: 0px;
+	width: 610px;
+	margin: 0 auto;
+	margin-top: 212.5px;
+}
+div.choose{
+	border: 0px;
+	padding: 0px;
+	height: 50px;
+	width: 610px;
+	margin: 0 auto;
+	background-image: url("choose.svg");
+}
+#html5pasapalabra{
+	margin: 0px;
+	padding: 0px;
+	height: 200px;
+    width: 200px;
+    background-image: url("Html5Icon.svg");
+    border-style: none;
+    border: 0px;
+}
+#html5pasapalabra:hover{
+	background-image: url("Html5Iconhover.svg");
+
+}
+#css3pasapalabra{
+	margin: 0px;
+	padding: 0px;
+	height: 200px;
+    width: 200px;
+    background-image: url("CSS3Icon.svg");
+    border-style: none;
+    border: 0px;
+}
+#css3pasapalabra:hover{
+	background-image: url("CSS3Iconhover.svg");
+}
+
+#jspasapalabra{
+	margin: 0px;
+	padding: 0px;
+	height: 200px;
+    width: 200px;
+    background-image: url("JsIcon.svg");
+    border-style: none;
+    border: 0px;
+}
+#jspasapalabra:hover{
+	background-image: url("JsIconhover.svg");
+}
+div.game{
+	width: 1200px;
+	height: 675px;
+}
+div.circle{
+	width: 400px;
+	height: 400px;
+	margin: 0 auto;
+	background-image: url("JsIcon.svg");
+	background-repeat: no-repeat;
+  	background-position: center;
+}
+#circlejs{
+	background-image: url("JsIcon.svg");
+	background-repeat: no-repeat;
+  	background-position: center;
+}
+#circlehtml5{
+	background-image: url("Html5Icon.svg");
+	background-repeat: no-repeat;
+  	background-position: center;
+}
+#circlecss3{
+	background-image: url("CSS3Icon.svg");
+	background-repeat: no-repeat;
+  	background-position: center;
+}
+div.playandinfo{
+	width: 600px;
+	height: 275px;
+	margin: 0 auto;
+}
+div.controls{
+	width: 400px;
+	height: 275px;
+	margin: 0 auto;
+}
+
+ul{
+	list-style: none;
+}
+ul.circle{
+	width: 400px;
+	height: 400px;
+	margin: 0 auto;
+}
+li{
+	text-align: center;
+	line-height: -2px;
+}
+li.letter {
+	float:left;
+     width: 35px;
+     height: 35px;
+     -moz-border-radius: 50%;
+     -webkit-border-radius: 50%;
+     border-radius: 50%;
+     font-size: 22px;
+     background-color: #ffd900;
+     -moz-box-shadow: 0px 5px 15px #888;
+	-webkit-box-shadow: 0px 5px 15px #888;
+	box-shadow: 0px 5px 15px #888;
+     background-image: url(bolaJs.svg);
+}
+li.letterht{
+	background-image: url(bolaHtml5.svg);
+}
+li.lettercss{
+	background-image: url(bolaCSS3.svg);
+}
+#letterA{
+	position: absolute;
+	margin-left: 181.5px;
+}
+p{
+	background-color: transparent;
+	margin-top: 6.5px;
+}
+#letterB{
+	position: absolute;
+	margin-left: 225.2px;
+	margin-top:5px;
+}
+#letterC{
+	position: absolute;
+	margin-left: 265.1px;
+	margin-top: 18.5px;
+}
+#letterD{
+	position: absolute;
+	margin-left: 300.6px;
+	margin-top:42.9px;
+}
+#letterE{
+	position: absolute;
+	margin-left: 328.8px;
+	margin-top:73.9px;
+}
+#letterF{
+	position: absolute;
+	margin-left: 351.1px;
+	margin-top:110.5px;
+}
+#letterG{
+	position: absolute;
+	margin-left: 363px;
+	margin-top:151.2px;
+}
+#letterH{
+	position: absolute;
+	margin-left: 365.2px;
+	margin-top:193.6px;
+}
+#letterI{
+	position: absolute;
+	margin-left: 358px;
+	margin-top:235.3px;
+}
+#letterJ{
+	position: absolute;
+	margin-left: 341px;
+	margin-top:274.2px;
+}
+#letterK{
+	position: absolute;
+	margin-left: 315.6px;
+	margin-top:308.2px;
+}
+#letterL{
+	position: absolute;
+	margin-left: 283.1px;
+	margin-top:335.3px;
+}
+#letterM{
+	position: absolute;
+	margin-left: 245.3px;
+	margin-top:354.35px;
+}
+#letterN{
+	position: absolute;
+	margin-left: 204px;
+	margin-top:364.1px;
+}
+#letterÑ{
+	position: absolute;
+	margin-left: 161.6px;
+	margin-top: 364.1px;
+}
+#letterO{
+	position: absolute;
+	margin-left: 120.5px;
+	margin-top:354.2px;
+}
+#letterP{
+	position: absolute;
+	margin-left: 82.6px;
+	margin-top:335.2px;
+}
+#letterQ{
+	position: absolute;
+	margin-left: 50px;
+	margin-top:308px;
+}
+#letterR{
+	position: absolute;
+	margin-left: 24.8px;
+	margin-top:274px;
+}
+#letterS{
+	position: absolute;
+	margin-left: 8px;
+	margin-top:235px;
+}
+#letterT{
+	position: absolute;
+	margin-left: 0.5px;
+	margin-top:193.2px;
+}
+#letterU{
+	position: absolute;
+	margin-left: 3px;
+	margin-top:151px;
+}
+#letterV{
+	position: absolute;
+	margin-left: 15.2px;
+	margin-top:110.2px;
+}
+#letterW{
+	position: absolute;
+	margin-left: 36.5px;
+	margin-top:73.8px;
+}
+#letterX{
+	position: absolute;
+	margin-left: 65.8px;
+	margin-top:42.8px;
+}
+#letterY{
+	position: absolute;
+	margin-left: 101px;
+	margin-top:19.5px;
+}
+#letterZ{
+	position: absolute;
+	margin-left: 139.9px;
+	margin-top:5px;
+}
+div.scoreinrealtime{
+	position: absolute;
+	text-align: center;
+	margin-left: 145px;
+	margin-top: 285px;
+	height: 30px;
+	width: 30px;
+	border-radius: 10px;
+    border-style: solid;
+    border-color: black;
+    border-width: 1px;
+    font-size: 22px;
+    color: green;
+}
+div.failsinrealtime{
+	position: absolute;
+	text-align: center;
+	margin-left: 185px;
+	margin-top: 285px;
+	height: 30px;
+	width: 30px;
+	border-radius: 10px;
+    border-style: solid;
+    border-color: black;
+    border-width: 1px;
+    font-size: 22px;
+    color: red;
+}
+div.pasapalabrainrealtime{
+	position: absolute;
+	text-align: center;
+	margin-left: 225px;
+	margin-top: 285px;
+	height: 30px;
+	width: 30px;
+	border-radius: 10px;
+    border-style: solid;
+    border-color: black;
+    border-width: 1px;
+    font-size: 22px;
+    color: black;
+}
+div.buttonplay{
+	height: 30px;
+    width: 100px;
+    margin: 0 auto;
+    margin-top: 20px;
+}
+#javascriptplay{
+    height: 30px;
+    width: 100px;
+    border-radius: 10px;
+    border-style: solid;
+    border-color: #ffd900;
+    border-width: 1px;
+    font-size: 22px;
+    color: black;
+}
+#html5play{
+    height: 30px;
+    width: 100px;
+    border-radius: 10px;
+    border-style: solid;
+    border-color: #e44f26;
+    border-width: 1px;
+    font-size: 22px;
+    color: black;
+}
+#css3play{
+    height: 30px;
+    width: 100px;
+    border-radius: 10px;
+    border-style: solid;
+    border-color: #0061b1;
+    border-width: 1px;
+    font-size: 22px;
+    color: black;
+    }
+div.info{
+	margin-top: 20px;
+	text-align: center;
+}
+p.definition{
+	width: 400px;
+	height: 100px;
+	border-radius: 10px;
+    border-style: solid;
+    border-width: 1px;
+	text-align: center;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	color:black;
+}
+div.score{
+	margin: 0 auto;
+	width: 400px;
+	height: 100px;
+	border-radius: 10px;
+    border-style: solid;
+    border-width: 1px;
+	text-align: center;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	color:black;
+}
+#jsdefinition,#jsscore{
+	border-color: #ffd900;
+}
+#html5definition, #html5score{
+	border-color: #e44f26;
+}
+#css3definition, #css3score{
+	border-color: #0061b1;
+}
+#userandanswer{
+	height: 30px;
+    width: 93px;
+    border-radius: 10px;
+
+}
+button.validate, button.pasapalabra, button.exit{
+	height: 30px;
+    width: 93px;
+    border-radius: 10px;
+    border-style: solid;
+    border-color: black;
+    border-width: 1px;
+    font-size: 12px;
+    color: black;
+}
+
+

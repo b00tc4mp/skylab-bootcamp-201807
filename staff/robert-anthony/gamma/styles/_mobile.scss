@@ -1,0 +1,27 @@
+/* from https://css-tricks.com/three-line-menu-navicon/ */
+$mobile__menu-color: rgb(136, 136, 136);
+
+.mobile__menu-icon {
+  font-size:35px;
+  color: $mobile__menu-color;
+  border: 1px $mobile__menu-color solid;
+  padding: 9px;
+  margin: 3px;
+  width: 38px;
+  height: 38px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  -webkit-transform: scaleY(.65);
+  -moz-transform: scaleY(.65);
+  -ms-transform: scaleY(.65);
+  -o-transform: scaleY(.65);
+  transform: scaleY(.65);
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 5px;
+}
+
+
+
