@@ -46,14 +46,14 @@ var safeBox = {
             if(masterPassword === password){
                 masterSecret = secret;
             }
-            else throw new Error ("wrong password")
+            else throw new Error ("wrong password");
     }
 
     function retrieve (password){
         if(masterPassword === password){
             return masterSecret;
         }
-        else throw new Error ("wrong password")
+        else throw new Error ("wrong password");
     }
 
     function update(password,newPassword){
@@ -86,4 +86,4 @@ var safeBox = {
         safeBox.keep = keep;
         safeBox.retrieve = retrieve;
         safeBox.updatePassword = update;
- })()
+ })();
