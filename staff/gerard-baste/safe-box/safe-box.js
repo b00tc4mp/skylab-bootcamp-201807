@@ -49,7 +49,7 @@ var safeBox = {
             else throw new Error ("wrong password")
     }
 
-    function get (password){
+    function retrieve (password){
         if(masterPassword === password){
             return masterSecret;
         }
@@ -68,22 +68,22 @@ var safeBox = {
         }
     } 
 
-//typeof password === "undefined"
+// //typeof password === "undefined"
 
-    function _keep (password,secret){
-        keep(password,secret);
-    }
+//     function _keep (password,secret){
+//         keep(password,secret);
+//     }
 
-     function _get(password){
-        return get(password);
-     }
+//      function _get(password){
+//         return get(password);
+//      }
 
-    function _update(password,newPassword){
-        update(password,newPassword);
-    }
+//     function _update(password,newPassword){
+//         update(password,newPassword);
+//     }
 
 
-    safeBox.keep = _keep;
-    safeBox.retrieve = _get;
-    safeBox.updatePassword = _update;
-})()
+        safeBox.keep = keep;
+        safeBox.retrieve = retrieve;
+        safeBox.updatePassword = update;
+ })()
