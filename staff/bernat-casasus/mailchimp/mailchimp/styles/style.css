@@ -1,0 +1,219 @@
+*{
+  box-sizing: border-box;
+  color:white;
+}
+
+body {
+  margin:0 auto;
+  background-image: url(../images/resources/bg.png);
+  background-repeat: repeat-x;
+  font-family: Optima,Segoe,Segoe UI,Candara,Calibri,Arial,sans-serif; 
+  min-width: 1900px;
+}
+
+.grid-container {
+  display: grid;
+  height: 100vh;
+  grid-template-columns: 23% repeat(10,1fr) 23%;
+  grid-template-rows: 6em 1fr 33.1em 20em;
+  grid-template-areas: ". header header header header header header header header header header ." ". monkey monkey monkey monkey monkey monkey monkey monkey monkey monkey ." ". articles articles articles articles articles articles articles articles articles articles ." "footer footer footer footer footer footer footer footer footer footer footer footer";
+}
+
+header {
+  grid-area: header;
+  background-color: #46BCD2;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+
+}
+
+.head-content {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.head-content div {
+  flex-grow: 1;
+}
+
+.head-content button {
+  border-radius: 10px;
+  background: linear-gradient(to bottom, rgba(125,126,125,1) 0%,rgba(14,14,14,1) 100%);    
+  border: none;
+  margin-right:3%;
+  padding: 0 30px;
+  font-size: 14px;
+  color: white;
+
+
+}
+
+.sing-in-button {
+  display:flex;
+  justify-content: flex-end;
+  margin: 0px 15px 5px 0px;
+}
+
+nav {
+  height: 50px;
+  display: flex;
+  background-color: #D5EDF4;
+  border-radius: 8px;
+}
+
+nav ul {
+  display: flex;
+  list-style: none;
+}
+
+nav ul li {
+  border-right: 1px solid black;
+  padding-right: 15px;
+  padding-left: 15px;
+  font-size: 13px;
+  color: black;
+}
+
+input[type="text"] {
+  margin: 12px 20px;
+  border-radius: 5px;
+  border: none;
+  padding: 0 40px 0 10px;
+  width: 200px;
+  -webkit-box-shadow: inset 1px 1px 5px 0px rgba(0,0,0,0.29);
+  -moz-box-shadow: inset 1px 1px 5px 0px rgba(0,0,0,0.29);
+  box-shadow: inset 1px 1px 5px 0px rgba(0,0,0,0.29);
+  font-size: 13px;
+  background-image: url(../images/search.png);
+  background-color: white;
+  background-size: 16px;
+  background-repeat: no-repeat;
+  background-position: center right 10px;
+  height: 30px;
+}
+
+.monkey {
+  grid-area: monkey;
+  background-color: #46BCD2;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  margin-top:2%;
+
+}
+
+.easy-email {
+  margin-top: 8%;
+}
+
+.monkey button {
+  background: linear-gradient(to bottom, rgba(248,80,50,1) 0%,rgba(241,111,92,1) 50%,rgba(246,41,12,1) 51%,rgba(240,47,23,1) 71%,rgba(231,56,39,1) 100%);
+  padding: 20px 50px;
+  color: white;
+  border-radius: 8px;
+  border: none;
+  font-size: 16px;
+}
+
+.newsletter-art {
+  width: 450px;
+  text-align: left;
+
+}
+
+.easy-email-text{
+  color:#324F4F;
+}
+
+.articles {
+
+  grid-area: articles;
+  background-color: #F0F0F0;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  padding: 0px 40px;
+  -webkit-box-shadow: 0px 0px 8px 2px rgba(0,0,0,0.15);
+  -moz-box-shadow: 0px 0px 8px 2px rgba(0,0,0,0.15);
+  box-shadow: 0px 0px 8px 2px rgba(0,0,0,0.15);
+ 
+}
+
+.articles-container {
+  display:flex;
+  font-size: 0.8em;
+
+}
+
+.articles h2{
+  color:black;
+  font-size: 2em;
+  padding-bottom: 20px;
+  margin:0px;
+}
+
+article {
+  display:flex;
+  flex-direction: column;
+  width:23%;
+  margin:1%;
+
+}
+
+article p {
+  font-size: 12px;
+  line-height: 19px;
+  padding:20px 0;
+  color: #999;
+  flex-grow: 1;
+}
+h3, h4 {
+  margin:0px;
+  color:black;
+}
+
+figure{
+  margin:0px;
+  margin-bottom: 15px;
+}
+
+figure img{
+  width:100%;
+  
+}
+
+article a {
+  background-color: black;
+  padding: 9px 18px;
+  color: white;
+  border-radius: 5px;
+  width: 100%;
+  display: block;
+  font-size: 12px;
+  display: flex;
+}
+
+footer {
+  grid-area: footer;
+  background-color: black;
+  font-weight: 100;
+
+}
+
+footer section {
+  display:flex;
+  justify-content: space-evenly;
+}
+
+section ul li {
+  list-style-type: none;
+
+}
+
+section ul li:first-child{
+  font-weight: bold;
+  font-size: 20px;
+  font-weight: 500;
+}
+

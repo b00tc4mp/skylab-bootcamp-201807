@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>CalculadoraJS</title>
+	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="styles/styles.css">
+</head>
+<body>
+	<div id="calculatorbase">
+		<div id="firstline">
+			<div id="commodore">
+				<div id="screen">
+				</div>
+			</div>
+		</div>
+		<div id="keyword">
+			<button id="redbutton" name="on" onclick="start()">ON/OFF</button>
+			<button id="whitebutton" onclick="saveNumber(7)">7</button>
+			<button id="whitebutton" onclick="saveNumber(8)">8</button>
+			<button id="whitebutton" onclick="saveNumber(9)">9</button>
+			<button id="bluebutton" onclick="operation('/')">/</button>
+			<button id="redbutton" onclick="eliminateNumber()"><==</button>
+			<button id="whitebutton" onclick="saveNumber(4)">4</button>
+			<button id="whitebutton" onclick="saveNumber(5)">5</button>
+			<button id="whitebutton"onclick="saveNumber(6)">6</button>
+			<button id="bluebutton" onclick="operation('x')">*</button>
+			<button id="redbutton">%</button>
+			<button id="whitebutton" onclick="saveNumber(1)">1</button>
+			<button id="whitebutton" onclick="saveNumber(2)">2</button>
+			<button id="whitebutton" onclick="saveNumber(3)">3</button>
+			<button id="bluebutton" onclick="operation('-')">-</button>
+			<button id="redbutton" onclick="reset()">AC</button>
+			<button id="whitebutton" onclick="saveNumber(0)">0</button>
+			<button id="whitebutton" onclick="saveNumber('.')">.</button>
+			<button id="bluebutton" onclick="operation('=')">=</button>
+			<button id="bluebutton" onclick="operation('+')">+</button>
+		</div>
+	<div>
+	<script type="text/javascript" src="app/app.js"></script>
+</body>
+</html>
