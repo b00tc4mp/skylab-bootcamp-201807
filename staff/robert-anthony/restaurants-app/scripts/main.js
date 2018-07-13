@@ -1,5 +1,7 @@
-var log = console.log.bind(console);
+"use strict"
 
+var SEARCH_CHOICES_NAME = "choices";
+var log = console.log.bind(console);
 
 
 // my custom components
@@ -8,74 +10,183 @@ var log = console.log.bind(console);
 *
 *
 * */
-function SearchPanel(title,tag) {
-    // TODO
-  Panel.call(this,title,tag);
+
+
+function ClassedComponent(cssClass, tag) {
+  Component.call(this, tag);
+  this.element.classList.add(cssClass);
+
+}
+
+ClassedComponent.prototype = Object.create(Component.prototype);
+ClassedComponent.prototype.constructor = ClassedComponent;
+
+/*
+*
+*
+*
+* */
+
+
+function Checkboxes(options, cssClass) {
+  Component.call(this);
+  this.element.classList.add(cssClass);
+
+  options.forEach(function (element, i) {
+    var checkbox = document.createElement('input');
+    checkbox.type = "checkbox";
+    checkbox.name = element.name;
+    checkbox.value = element.value;
+    checkbox.id = i;
+
+    var label = document.createElement('label')
+    label.htmlFor = i;
+    label.appendChild(document.createTextNode(element.name));
+
+    this.element.appendChild(checkbox);
+    this.element.appendChild(label);
+  }, this);
+}
+
+Checkboxes.prototype = Object.create(ClassedComponent.prototype);
+Checkboxes.prototype.constructor = Checkboxes;
+
+/*
+*
+*
+*
+*
+* */
+
+function RadioButtons(groupName, options, cssClass) {
+  Component.call(this);
+  this.element.classList.add(cssClass);
+  options.forEach(function (element, i) {
+    var radio = document.createElement('input');
+    radio.type = "radio";
+    radio.name = groupName;
+    radio.value = element;
+    radio.id = i;
+    radio.checked = i ? false : true;
+    var label = document.createElement('label')
+    label.htmlFor = i;
+    label.appendChild(document.createTextNode(element));
+
+    this.element.appendChild(radio);
+    this.element.appendChild(label);
+  }.bind(this));
+}
+
+RadioButtons.prototype = Object.create(Component.prototype);
+RadioButtons.prototype.constructor = RadioButtons;
+
+/*
+*
+*
+*
+*
+* */
+
+function SearchPanel(title, cssClass, tag) {
+  // TODO
+  Panel.call(this, title, "form");
 
   var searchInput = document.createElement('input');
+  searchInput.type = "search";
+  searchInput.placeholder = "Search term...";
   var searchButton = document.createElement('button');
-  searchButton.innerHTML = "Search";
+  searchButton.type = "submit";
+  searchButton.innerHTML = "Submit";
   this.element.appendChild(searchInput);
   this.element.appendChild(searchButton);
-  this.element.classList.add(SearchPanel.MY_CLASS);
+  this.element.classList.add(cssClass);
+
+  this._onSearch = function () {
+  };
+
+  searchButton.addEventListener('onfocus', function() {
+    searchInput.value = "";
+  }.bind(this));
+
+  this.element.addEventListener('submit', function (event) {
+    event.preventDefault();
+    var query = searchInput.value;
+    this._onSearch(query);
+  }.bind(this));
 }
 
 SearchPanel.prototype = Object.create(Panel.prototype);
 SearchPanel.prototype.constructor = SearchPanel;
-SearchPanel.MY_CLASS = "searchPanel";
+SearchPanel.prototype.onSearch = function (callback) {
+  // this.element.children[2].addEventListener('click', callback);
+  this._onSearch = callback;
 
-SearchPanel.prototype.addSearchCallback = function (callback) {
-
-  this.element.children[2].addEventListener('click', callback);
 };
-
 SearchPanel.prototype.getSearchTerm = function (callback) {
-
- return this.element.children[1].value;
+  return this.element.children[1].value;
 };
+
 /*
 *
 *
 * */
 
 /**/
-function ResultsList(dataArray,tag) {
+function ResultsList(dataArray, cssClass) {
 
-  List.call(this, dataArray,tag);
+  List.call(this, dataArray, "ul");
 
-  this.element.classList.add(ResultsList.MY_CLASS);
-    // TODO
+  this.element.classList.add(cssClass);
+  // TODO
 }
 
-ResultsList.prototype.setData = function (data) {
-  this.element.empty();
-};
-ResultsList.prototype = Object.create(List.prototype);
+
+ResultsList.prototype = Object.create(Component.prototype);
 ResultsList.prototype.constructor = ResultsList;
-ResultsList.MY_CLASS = "resultsList";
+ResultsList.prototype.setData = function (data) {
+  while (this.element.firstChild) {
+    this.element.removeChild(this.element.firstChild);
+  }
+  data.forEach(function (element) {
+    let li = document.createElement("li");
+    li.innerHTML = element.name;
 
-// my logic ...
-
-var first1000Restaurants = restaurants.slice(0,1000);
-
-var searchPanel = new SearchPanel("Search for restaurants","section");
-  document.body.appendChild(searchPanel.element);
-
-var resultsArray = new ResultsList(["abce","def","ghi"]);
-document.body.appendChild(resultsArray.element);
-
-searchPanel.addSearchCallback(doRestaurantSearch);
+    this.element.appendChild(li);
+  }.bind(this));
+};
 
 
-function doRestaurantSearch(){
-let results;
+var searchChoices = ["name", "borough", "cuisine"];
+
+
+
+var mainContainer = new ClassedComponent("mainContainer");
+document.body.appendChild(mainContainer.element);
+
+
+var searchPanel = new SearchPanel("Search for restaurants", "searchPanel", "section");
+mainContainer.element.appendChild(searchPanel.element);
+
+var checkboxes = new RadioButtons(SEARCH_CHOICES_NAME, searchChoices, "radioButtons");
+searchPanel.element.appendChild(checkboxes.element);
+
+var resultsList = new ResultsList([], "resultsList");
+mainContainer.element.appendChild(resultsList.element);
+
+
+searchPanel.onSearch(doRestaurantSearch);
+
+
+function doRestaurantSearch() {
+  log(document.querySelector('input[name="choices"]:checked').value)
+  let choice = document.querySelector('input[name=' + SEARCH_CHOICES_NAME + ']:checked').value;
+  let results;
   let term = searchPanel.getSearchTerm();
   if (term) {
-
-    results = first1000Restaurants.filter(function(element) {
-     return element.findIndex(term) != -1;
-    }).slice(0,100);
-
+    results = restaurants.filter(function (element) {
+      return element[choice].toLowerCase().includes(term.toLowerCase());
+    }).slice(0, 100);
+    if (results) resultsList.setData(results);
   }
 
 }

@@ -1,8 +1,74 @@
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Lato', sans-serif;
+
+}
+
+.mainContainer {
+  width: 50%;
+  margin-left: 20%;
+  margin-top:100px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  background: skyblue;
+  padding:20px;
+}
+
 .searchPanel {
-  background:red;
+  h1 {
+    font-weight: 700;
+color:white;
+    letter-spacing:.2em;
+  }
+  input {
+    margin:0 10px;
+    border:darkgreen;
+    -webkit-border-radius: 3px;
+    height:30px;
+    font-size:1.2em;
+    color:deepskyblue;
+    padding:2px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+
+  }
+  button {
+    margin:0;
+    padding:2px;
+    font-size:1.5em;
+    background:white;
+    color:deepskyblue;
+    -webkit-border-radius: 10%;
+    -moz-border-radius: 10%;
+    border-radius: 10%;
+    cursor:pointer;
+  }
 }
 
 .resultsList {
 
-  list-style-type:none;
+  overflow: hidden;
+  overflow-y: scroll;
+  list-style-type: none;
+  width:100%;
+}
+
+.radioButtons {
+margin-top: 20px;
+  color:darkslategrey;
+  display:flex;
+  align-items:center;
+
+label {
+  color:white;
+}
 }
