@@ -11,7 +11,7 @@ describe('Array.prototype.findIndex()', function () {
             expect(firstIndexFound).toBe(3);
     });
 
-    it('Returns -1 when any element from the array is bigger than 200.', function() {
+    it('Returns -1 when NO element from the array is bigger than 200.', function() {
         var findFirstNumBiggerThanTwoHundred = function(num) {return num > 200;},
             firstIndexFound = nums.findIndex(findFirstNumBiggerThanTwoHundred);
 

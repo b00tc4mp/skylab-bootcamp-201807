@@ -12,7 +12,7 @@ describe('Array.prototype.find()', function() {
             expect(firstNumFound).toBe(12);
     });
 
-    it('Returns undefined when any element from the array is bigger than 200.', function() {
+    it('Returns undefined when NO element from the array is bigger than 200.', function() {
         var numsBiggerThanTwoHundred = function(num) {return num > 200;},
             firstNumFound = nums.find(numsBiggerThanTwoHundred);
 
