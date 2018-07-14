@@ -20,5 +20,3 @@ describe('Array.from', function() {
         expect(emptyArray.constructor === Array).toBe(true);
     });
 });
-
-
