@@ -60,7 +60,7 @@ function searchi(array) {
 // asignamos la funcion de busqueda cuando apretamos el boton
 var results = [];
 search.element.onsubmit = function (event) {
-    event.preventDefault();
+    //event.preventDefault();
     results = searchi(restaurants);
     finalResults.update(results);
 }
