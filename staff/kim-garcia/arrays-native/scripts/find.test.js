@@ -1,3 +1,6 @@
+
+// expected output: 12
+
 'use strict';
 
 describe('Array.prototype.find', function () {
@@ -7,18 +10,12 @@ describe('Array.prototype.find', function () {
         array = [1, 2, 3, 4, 5];
     });
 
-    it('should iterate and operate correctly', function() {
-        var result = array.find(function(item) {
-            return item > 2;
+    it('should return the first value that pass the condition ', function() {
+        var found = array.find(function(element){
+           return element > 2
         });
 
-        expect(array.length).toBe(5);
-        expect(array[0]).toBe(1);
-        expect(array[1]).toBe(2);
-        expect(array[2]).toBe(3);
-        expect(array[3]).toBe(4);
-        expect(array[4]).toBe(5);
+        expect(found).toBe(3);
 
-        expect(result).toBe(3);
     });
 });
