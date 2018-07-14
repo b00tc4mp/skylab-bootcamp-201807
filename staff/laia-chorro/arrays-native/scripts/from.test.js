@@ -2,7 +2,7 @@
 
 describe('Array.from', function() {
 
-    it ('should iterate and create an array copy from the chars contained in the string', function() {
+    it ('Should iterate and create an array copy from the chars contained in the string', function() {
         var string = 'foo';
         var arrayOfChars = Array.from(string);
 
@@ -12,7 +12,7 @@ describe('Array.from', function() {
         expect(arrayOfChars[2]).toBe('o');
     });
 
-    it ('should return an empty array from a number', function() {
+    it ('Should return an empty array from a number', function() {
         var singleNum = 1,
             emptyArray = Array.from(singleNum);
 
