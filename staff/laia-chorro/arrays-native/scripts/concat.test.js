@@ -28,7 +28,7 @@ describe('Array.prototype.concat', function() {
         
     });
 
-    it('Used to merge three arrays into new array.', function() {
+    it('Merge three arrays into new array.', function() {
         var array1 = [1, 2],
             array2 = ['d', 'e'],
             array3 = [3, 4],
