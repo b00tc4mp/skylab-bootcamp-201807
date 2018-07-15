@@ -12,17 +12,28 @@ body {
 }
 
 .mainContainer {
-  width: 50%;
-  margin-left: 20%;
-  margin-top:100px;
+  margin-left: 20px;
+  margin-top:20px;
   -webkit-border-radius: 10px;
   -moz-border-radius: 10px;
   border-radius: 10px;
   background: skyblue;
   padding:20px;
+ display:grid;
+  grid-template-columns: 500px 1fr;
+  grid-template-rows:max-content max-content;
+  grid-template-areas: "searchArea searchArea" "resultArea detailArea";
+
+}
+
+.detailPanel {
+  grid-area:detailArea;
+  height:100px;
+  width:200px;
 }
 
 .searchPanel {
+  grid-area:searchArea;
   h1 {
     font-weight: 700;
 color:white;
@@ -56,10 +67,14 @@ color:white;
 
 .resultsList {
 
+grid-area:resultArea ;
   overflow: hidden;
   overflow-y: scroll;
   list-style-type: none;
   width:100%;
+  li {
+    cursor: pointer;
+  }
 }
 
 .radioButtons {

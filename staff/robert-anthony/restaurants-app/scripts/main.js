@@ -87,6 +87,37 @@ RadioButtons.prototype.constructor = RadioButtons;
 *
 * */
 
+function SettableList(cssClass) {
+  Component.call(this, 'ul');
+
+
+}
+
+SettableList.prototype = Object.create(List.prototype);
+SettableList.constructor = SettableList;
+SettableList.prototype.setData = function (data) {
+  if (!data instanceof Array || data.length === 0) return;
+  data.forEach(function (item) {
+    var li = document.createElement('li');
+    li.innerHTML = item;
+    this.element.appendChild(li);
+  }.bind(this));
+
+};
+
+SettableList.prototype.clearData = function () {
+  while (this.element.firstChild) {
+    this.element.removeChild(this.element.firstChild);
+  }
+};
+
+/*
+*
+*
+*
+*
+* */
+
 function SearchPanel(title, cssClass, tag) {
   // TODO
   Panel.call(this, title, "form");
@@ -104,7 +135,7 @@ function SearchPanel(title, cssClass, tag) {
   this._onSearch = function () {
   };
 
-  searchButton.addEventListener('onfocus', function() {
+  searchButton.addEventListener('onfocus', function () {
     searchInput.value = "";
   }.bind(this));
 
@@ -126,6 +157,57 @@ SearchPanel.prototype.getSearchTerm = function (callback) {
   return this.element.children[1].value;
 };
 
+RadioButtons.prototype = Object.create(Component.prototype);
+RadioButtons.prototype.constructor = RadioButtons;
+
+/*
+*
+*
+*
+*
+* */
+
+function DetailPanel(title, cssClass) {
+  // TODO
+  Panel.call(this, title, "section");
+
+  this.element.classList.add(cssClass);
+
+  this.infoDisplay = new SettableList("settableList");
+  this.element.appendChild(this.infoDisplay.element);
+
+  this.locationButton = document.createElement('button');
+  this.locationButton.innerHTML = "Location";
+  this.element.appendChild(this.locationButton);
+
+
+  this._onShowLocation = function () {
+  };
+
+
+  this.locationButton.addEventListener('click', function (event) {
+    this._onShowLocation("a location");
+  }.bind(this));
+}
+
+DetailPanel.prototype = Object.create(Panel.prototype);
+DetailPanel.prototype.constructor = DetailPanel;
+DetailPanel.prototype.onShowLocation = function (callback) {
+  this._onShowLocation = callback;
+};
+
+DetailPanel.prototype.setData = function (data) {
+  this.infoDisplay.clearData();
+
+  var infoToDisplay = [];
+  infoToDisplay.push(data.name);
+  infoToDisplay.push(data.address.building + " " + data.address.street + " " + data.borough + " " + "" + data.address.zipcode);
+  infoToDisplay.push(data.grades[0].grade);
+  this.infoDisplay.setData(infoToDisplay);
+  ;
+};
+
+
 /*
 *
 *
@@ -137,12 +219,28 @@ function ResultsList(dataArray, cssClass) {
   List.call(this, dataArray, "ul");
 
   this.element.classList.add(cssClass);
-  // TODO
+
+  this._elementClick = function () {
+
+  };
+
+  this.element.addEventListener('click', function (event) {
+    var restaurantName = event.target.innerHTML;
+    var restaurantData = restaurants.find(function (element) {
+      return (element.name === restaurantName);
+    });
+    this._elementClick(restaurantData);
+
+  }.bind(this))
 }
 
 
 ResultsList.prototype = Object.create(Component.prototype);
 ResultsList.prototype.constructor = ResultsList;
+ResultsList.prototype.onElementClick = function (callback) {
+  log("assigning element click", callback)
+  this._elementClick = callback;
+};
 ResultsList.prototype.setData = function (data) {
   while (this.element.firstChild) {
     this.element.removeChild(this.element.firstChild);
@@ -159,22 +257,26 @@ ResultsList.prototype.setData = function (data) {
 var searchChoices = ["name", "borough", "cuisine"];
 
 
-
 var mainContainer = new ClassedComponent("mainContainer");
 document.body.appendChild(mainContainer.element);
 
 
 var searchPanel = new SearchPanel("Search for restaurants", "searchPanel", "section");
 mainContainer.element.appendChild(searchPanel.element);
+searchPanel.onSearch(doRestaurantSearch);
+
 
 var checkboxes = new RadioButtons(SEARCH_CHOICES_NAME, searchChoices, "radioButtons");
 searchPanel.element.appendChild(checkboxes.element);
 
 var resultsList = new ResultsList([], "resultsList");
 mainContainer.element.appendChild(resultsList.element);
+resultsList.onElementClick(showRestaurantDetails);
 
+var detailsPanel = new DetailPanel("", "detailsPanel", "div");
+mainContainer.element.appendChild(detailsPanel.element);
 
-searchPanel.onSearch(doRestaurantSearch);
+detailsPanel.onShowLocation(showRestaurantLocation);
 
 
 function doRestaurantSearch() {
@@ -190,3 +292,13 @@ function doRestaurantSearch() {
   }
 
 }
+
+
+function showRestaurantDetails(data) {
+  detailsPanel.setData(data);
+}
+
+function showRestaurantLocation(location) {
+  log("showing restaurant location", location)
+}
+
