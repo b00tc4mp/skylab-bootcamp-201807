@@ -180,13 +180,14 @@ function DetailPanel(title, cssClass) {
   this.locationButton.innerHTML = "Location";
   this.element.appendChild(this.locationButton);
 
+  this.currentDetailData = null;
 
   this._onShowLocation = function () {
   };
 
 
   this.locationButton.addEventListener('click', function (event) {
-    this._onShowLocation("a location");
+    this._onShowLocation(this.currentDetailData.address.coord)
   }.bind(this));
 }
 
@@ -197,6 +198,7 @@ DetailPanel.prototype.onShowLocation = function (callback) {
 };
 
 DetailPanel.prototype.setData = function (data) {
+  this.currentDetailData = data;
   this.infoDisplay.clearData();
 
   var infoToDisplay = [];
