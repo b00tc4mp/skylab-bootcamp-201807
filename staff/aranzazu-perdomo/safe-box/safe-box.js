@@ -195,3 +195,7 @@ var safeBox;
         }
     };
 })();
+<<<<<<< HEAD
+=======
+ 
+>>>>>>> feature/new-folder-array
