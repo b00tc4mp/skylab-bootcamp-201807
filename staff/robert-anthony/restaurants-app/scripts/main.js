@@ -153,9 +153,9 @@ SearchPanel.prototype.onSearch = function (callback) {
   this._onSearch = callback;
 
 };
-SearchPanel.prototype.getSearchTerm = function (callback) {
-  return this.element.children[1].value;
-};
+// SearchPanel.prototype.getSearchTerm = function (callback) {
+//   return this.element.children[1].value;
+// };
 
 RadioButtons.prototype = Object.create(Component.prototype);
 RadioButtons.prototype.constructor = RadioButtons;
@@ -185,7 +185,6 @@ function DetailPanel(title, cssClass) {
   this._onShowLocation = function () {
   };
 
-
   this.locationButton.addEventListener('click', function (event) {
     this._onShowLocation(this.currentDetailData.address.coord)
   }.bind(this));
@@ -202,9 +201,9 @@ DetailPanel.prototype.setData = function (data) {
   this.infoDisplay.clearData();
 
   var infoToDisplay = [];
-  infoToDisplay.push(data.name);
-  infoToDisplay.push(data.address.building + " " + data.address.street + " " + data.borough + " " + "" + data.address.zipcode);
-  infoToDisplay.push(data.grades[0].grade);
+  infoToDisplay.push("<span>Name:</span> " + data.name);
+  infoToDisplay.push("<span>Address:</span> " + data.address.building + " " + data.address.street + ", " + data.borough + ", " + "" + data.address.zipcode);
+  infoToDisplay.push("<span>Grade:</span> " + data.grades[0].grade);
   this.infoDisplay.setData(infoToDisplay);
   ;
 };
@@ -240,7 +239,6 @@ function ResultsList(dataArray, cssClass) {
 ResultsList.prototype = Object.create(Component.prototype);
 ResultsList.prototype.constructor = ResultsList;
 ResultsList.prototype.onElementClick = function (callback) {
-  log("assigning element click", callback)
   this._elementClick = callback;
 };
 ResultsList.prototype.setData = function (data) {
@@ -275,17 +273,17 @@ var resultsList = new ResultsList([], "resultsList");
 mainContainer.element.appendChild(resultsList.element);
 resultsList.onElementClick(showRestaurantDetails);
 
-var detailsPanel = new DetailPanel("", "detailsPanel", "div");
+var detailsPanel = new DetailPanel("Restaurant Detail", "detailsPanel", "div");
 mainContainer.element.appendChild(detailsPanel.element);
 
 detailsPanel.onShowLocation(showRestaurantLocation);
 
 
-function doRestaurantSearch() {
-  log(document.querySelector('input[name="choices"]:checked').value)
+function doRestaurantSearch(term) {
+  TweenMax.to(detailsPanel.element,0.25, {autoAlpha:0})
+
   let choice = document.querySelector('input[name=' + SEARCH_CHOICES_NAME + ']:checked').value;
   let results;
-  let term = searchPanel.getSearchTerm();
   if (term) {
     results = restaurants.filter(function (element) {
       return element[choice].toLowerCase().includes(term.toLowerCase());
@@ -295,12 +293,15 @@ function doRestaurantSearch() {
 
 }
 
-
 function showRestaurantDetails(data) {
+  TweenMax.to(detailsPanel.element,0.25, {autoAlpha:1});
+  log(detailsPanel)
   detailsPanel.setData(data);
 }
 
 function showRestaurantLocation(location) {
-  log("showing restaurant location", location)
+  var url = "http://maps.google.com/?q=" + location[1] + "," + location[0];
+  log(url)
+  window.open(url);
 }
 
