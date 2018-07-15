@@ -9,7 +9,7 @@ describe('Array.prototype.some', function () {
 
     it('should iterate and operate correctly', function() {
         var result = array.some(function(item) {
-            // checks whether an element is even
+            // checks whether an element is pair
             return item % 2 === 0;
             //return 'true' because there are some number that are multiple of 2
         });
