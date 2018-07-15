@@ -1,9 +1,10 @@
 function reduce(array, func, init) {
 <<<<<<< HEAD
     var arr= [];
-    for (var i=0; i<array.length; i++){
+    for (var i=0; i<array.length-1; i++){
         if(i==array.length-1){
             arr.push(func(array[i]));
+
         }
 
     }
