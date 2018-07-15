@@ -1,8 +1,5 @@
 "use strict";
 
-
-
-
 function Divs() {
     var element = document.createElement("div");
     this.element = element;
@@ -45,13 +42,11 @@ document.body.appendChild(searchField.element)
 var searchSubmit = new SearchButton();
 document.body.appendChild(searchSubmit.element)
 
-
-
-function List(array) {
+function List(results) {
     Divs.call(this, 'ul');
-    array.forEach(function (item) {
+    results.forEach(function (itemresult) {
         var li = document.createElement('li');
-        li.innerHTML = item;
+        li.innerHTML = itemresult;
         this.element.appendChild(li);
     }.bind(this));
 }
@@ -59,37 +54,26 @@ function List(array) {
 List.prototype = Object.create(Divs.prototype);
 List.prototype.constructor = List;
 
-
-
-
-var results = [restaurants[0].name, 2];
-
-
-
-var listResults = new List(results);
-document.body.appendChild(listResults.element)
-
+var query = document.getElementById('asd').value;
+var results = query;
 
 function filterAndPrint() {
-    var imprime = document.getElementById('asd').value;
-    if (imprime === "1") {
-        console.log("si")
-    } else { console.log(imprime) }
-
-
-
-
+    var listResults = new List(results);
+    document.body.appendChild(listResults.element)
 }
 
-//console.log(document.getElementById('asd').value);
 
+
+
+//console.log(document.getElementById('asd').value);
+/*
 
 var matching = restaurants.filter(restaurant){
     return restaurant.name.toLowerCase().indexOf(query)>-1;
 }
 
 
-
+*/
 
 
 
