@@ -6,49 +6,102 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: 'Lato', sans-serif; }
+  font-family: 'Lato', sans-serif;
+  font-weight: 400; }
 
 .mainContainer {
-  width: 50%;
-  margin-left: 20%;
-  margin-top: 100px;
+  margin-left: 20px;
+  margin-top: 20px;
   -webkit-border-radius: 10px;
   -moz-border-radius: 10px;
   border-radius: 10px;
-  background: skyblue;
-  padding: 20px; }
+  background: #5065eb;
+  padding: 20px;
+  display: grid;
+  grid-template-columns: 500px 1fr;
+  grid-template-rows: max-content max-content;
+  grid-template-areas: "searchArea searchArea" "resultArea detailArea"; }
 
-.searchPanel h1 {
-  font-weight: 700;
+.detailsPanel {
+  grid-area: detailArea;
+  height: 300px;
+  width: 100%;
   color: white;
-  letter-spacing: .2em; }
-.searchPanel input {
-  margin: 0 10px;
-  border: darkgreen;
-  -webkit-border-radius: 3px;
-  height: 30px;
-  font-size: 1.2em;
-  color: deepskyblue;
-  padding: 2px;
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px; }
-.searchPanel button {
-  margin: 0;
-  padding: 2px;
-  font-size: 1.5em;
-  background: white;
-  color: deepskyblue;
-  -webkit-border-radius: 10%;
-  -moz-border-radius: 10%;
-  border-radius: 10%;
-  cursor: pointer; }
+  font-weight: 300;
+  padding: 2em;
+  padding-bottom: 3em;
+  border: 4px dotted white;
+  list-style-type: none;
+  visibility: hidden; }
+  .detailsPanel button {
+    margin: 0;
+    padding: 4px;
+    font-size: 1.2em;
+    background: white;
+    color: #000eb3;
+    -webkit-border-radius: 10%;
+    -moz-border-radius: 10%;
+    border-radius: 10%;
+    cursor: pointer; }
+    .detailsPanel button:hover {
+      color: #ff7b00; }
+  .detailsPanel h1 {
+    font-weight: 900;
+    color: #fffb00;
+    letter-spacing: .2em; }
+  .detailsPanel ul {
+    list-style-type: none; }
+    .detailsPanel ul li {
+      margin: 0;
+      padding: 0; }
+  .detailsPanel span {
+    font-weight: 700;
+    color: #ff7b00; }
+
+.searchPanel {
+  grid-area: searchArea; }
+  .searchPanel h1 {
+    font-weight: 900;
+    color: #fffb00;
+    letter-spacing: .2em; }
+  .searchPanel input {
+    margin: 0 10px;
+    border: darkgreen;
+    -webkit-border-radius: 3px;
+    height: 30px;
+    font-size: 1.2em;
+    color: deepskyblue;
+    padding: 2px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px; }
+  .searchPanel button {
+    margin: 0;
+    padding: 4px;
+    font-size: 1.2em;
+    background: white;
+    color: #000eb3;
+    -webkit-border-radius: 10%;
+    -moz-border-radius: 10%;
+    border-radius: 10%;
+    cursor: pointer; }
+    .searchPanel button:hover {
+      color: #ff7b00; }
 
 .resultsList {
+  grid-area: resultArea;
+  font-weight: 300;
   overflow: hidden;
+  color: white;
   overflow-y: scroll;
   list-style-type: none;
   width: 100%; }
+  .resultsList li {
+    cursor: pointer;
+    margin: 0;
+    padding: 0; }
+    .resultsList li:hover {
+      color: #ff7b00; }
 
 .radioButtons {
   margin-top: 20px;
