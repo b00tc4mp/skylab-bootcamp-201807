@@ -5,19 +5,22 @@ var restaurants = restaurants.slice(0, 1000);
 // componente del search. Barra, boton y la funcion a la que llama al buscar.
 function SearchPanel() {
     Component.call(this, 'form');
+    var h1 = document.createElement('h1');
     var input = document.createElement('input');
     var button = document.createElement('input');
 
+    this.element.appendChild(h1);
     this.element.appendChild(input);
     this.element.appendChild(button);
     this.element.onsubmit = function (event) {
         event.preventDefault();
     }
 
+    h1.innerHTML = 'Find your favorite Restaurant on New York:';
+    input.value = '';
     input.type = 'search';
     button.value = 'Search';
     button.type = 'submit';
-    input.value = '';
 }
 SearchPanel.prototype = Object.create(Component.prototype);
 SearchPanel.prototype.constructor = SearchPanel;
