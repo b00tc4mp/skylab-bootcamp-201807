@@ -1,41 +1,37 @@
 // my custom components
 
+
 function SearchPanel() {
-    
     Component.call(this, 'form');
 
-    // input
     var input = document.createElement('input');
     input.type = 'search';
     input.placeholder = 'Input a text...';
 
-    // button
     var button = document.createElement('button');
     button.type = 'submit';
-    button.innerText = 'Search';
+    button.innerHTML = 'Search';
 
-    // form
     this.element.appendChild(input);
     this.element.appendChild(button);
 
-    this._onSearch = function() {};
+    var _callback;
 
-    this.element.addEventListener('submit', function(event) {
+    this.element.addEventListener('submit', function (event) {
         event.preventDefault();
-        var query = input.value;
-        
-        if (query) this._onSearch(query);
 
+        var query = input.value;
+
+        if (query && _callback) _callback(query);
     }.bind(this));
+
+    this.onSearch = function (callback) {
+        _callback = callback;
+    };
 }
 
 SearchPanel.prototype = Object.create(Component.prototype);
 SearchPanel.prototype.constructor = SearchPanel;
-
-SearchPanel.prototype.onSearch = function(callback) {
-    this._onSearch = callback;
-};
-
 
 function ResultsList() {
     Component.call(this, 'ul');
@@ -44,139 +40,99 @@ function ResultsList() {
 ResultsList.prototype = Object.create(Component.prototype);
 ResultsList.prototype.constructor = ResultsList;
 
-ResultsList.prototype.updateResults = function(results) {
+ResultsList.prototype.updateResults = function (results) { // => { id, text }
     this.element.innerHTML = '';
 
-    results.forEach(function(result) {
+    results.forEach(function (result) {
         var li = document.createElement('li');
+        var a = document.createElement('a');
 
-        li.innerHTML = result;
+        a.href = '#/' + result.id;
+        a.innerHTML = result.text;
+        a.onclick = function () {
+            if (this._callback) this._callback(result.id, result.text);
+        }.bind(this);
 
         this.element.appendChild(li);
+
+        li.appendChild(a);
     }, this);
+};
+
+ResultsList.prototype.onItemClick = function (callback) {
+    this._callback = callback;
+};
+
+/**
+ * 
+ * @param {string} title The item title
+ * @param {string} info The information about an item
+ * @param {[number]} coords The geodesic coordinates for google maps
+ */
+function DetailPanel(title, info, coords) {
+    Panel.call(this, title, 'section');
+
+    var p = document.createElement('p');
+    p.innerText = info;
+
+    this.element.appendChild(p);
+
+    var a = document.createElement('a');
+
+    a.href = 'https://www.google.com/maps?q=' + coords[1] + ',' + coords[0]; 
+    a.target = '_blank';
+    a.innerText = 'Show in Google Maps';
+
+    this.element.appendChild(a);
 }
 
-function ListItem() {
-    Component.call(this, 'a');
+DetailPanel.prototype = Object.create(Panel.prototype);
+DetailPanel.prototype.constructor = DetailPanel;
 
-    this.element.id = '';
-    this.element.href = '#';
-    this.element.innerText = 'List item';
+// my presentation logic
 
-    this._onClick = function() {};
+// optional, reduce the size of the restaurants loaded in memory
+// restaurants.splice(1000);
 
-    document.body.addEventListener('click', function(event) {
-    
-        if (event.target.tagName.toLowerCase() === 'a' && event.target.id === this.element.id) {
-            event.preventDefault();
+var search = new SearchPanel();
 
-            this._onClick(this.element.id);
-        }
+search.onSearch(function (query) {
+    var matching = logic.find(query);
 
-    }.bind(this));
-}
+    //console.log(matching);
 
-ListItem.prototype = Object.create(Component.prototype);
-ListItem.prototype.constructor = ListItem;
-
-ListItem.prototype.onClick = function(callback) {
-    this._onClick = callback;
-}
-
-
-function ItemDetail() {
-    Component.call(this);
-}
-
-ItemDetail.prototype = Object.create(Component.prototype);
-ItemDetail.prototype.constructor = ItemDetail;
-
-ItemDetail.prototype.updateDetail = function(item) {
-    this.element.innerHTML = item;
-}
-
-
-
-// my logic ...
-
-var GOOGLE_MAPS_BASE_URL = 'http://www.google.com/maps/place/';
-
-var searchPanel = new SearchPanel();
-
-var resultsList = new ResultsList();
-
-var itemDetail = new ItemDetail();
-
-searchPanel.onSearch(function(query) {
-
-    var matching = restaurants.filter(function(restaurant) {
-        return restaurant.name.toLowerCase().indexOf(query.toLowerCase()) > -1;
-    });
-
-    resultsList.updateResults(matching.map(function(restaurant) {
-
-        var listItem = new ListItem();
-        listItem.element.id = restaurant.restaurant_id;
-        listItem.element.href = 'detail/' + restaurant.restaurant_id;
-        listItem.element.innerText = restaurant.name;
-
-        listItem.onClick(function(id) {
-            
-            var matching = restaurants.filter(function(restaurant) {
-                return restaurant.restaurant_id === id;
-            });
-
-            var restaurant = (matching) ? matching[0] : null;
-
-            if (restaurant) {
-
-                itemDetail.updateDetail(function() {
-
-                    this.element.innerHTML = '';
-
-                    // title
-                    var titleElem = document.createElement('h1');
-                    titleElem.innerText = restaurant.name;
-
-                    this.element.appendChild(titleElem);
-
-                    // info
-                    var infoElem = document.createElement('div');
-                    
-                    var addressElem = document.createElement('address');
-                    addressElem.innerText = restaurant.address.building + ' ' + 
-                        restaurant.address.street + ' ' + 
-                        restaurant.address.zipcode;
-
-                    var boroughElem = document.createElement('div');
-                    boroughElem.innerText = restaurant.borough;
-
-                    var cuisineElem = document.createElement('div');
-                    cuisineElem.innerText = restaurant.cuisine;
-
-                    infoElem.appendChild(addressElem);
-                    infoElem.appendChild(boroughElem);
-                    infoElem.appendChild(cuisineElem);
-                    this.element.appendChild(infoElem);
-
-                    // location
-                    var linkLocationElem = document.createElement('a');
-                    linkLocationElem.href = GOOGLE_MAPS_BASE_URL + restaurant.address.coord[1] + ',' + restaurant.address.coord[0];
-                    linkLocationElem.target = '_blank';
-                    linkLocationElem.innerText = 'Location';
-
-                    this.element.appendChild(linkLocationElem);
-
-                    return this.element.innerHTML;
-
-                }.bind(itemDetail)());
-            }
-        });
-    
-        return listItem.element.outerHTML;
+    results.updateResults(matching.map(function (result) {
+        return {
+            id: result.restaurant_id,
+            text: result.name + ' (' + result.borough + ')'
+        };
     }));
 });
 
-document.body.appendChild(searchPanel.element);
-document.body.appendChild(resultsList.element);
-document.body.appendChild(itemDetail.element);
+var results = new ResultsList();
+
+var detailContainer = new Component();
+
+detailContainer.empty = function() {
+    this.element.innerHTML = '';
+}
+
+results.onItemClick(function (id, text) {
+    // console.log(id, text);
+
+    var restaurant = logic.getById(id);
+
+    detailContainer.empty();
+
+    var detail = new DetailPanel(restaurant.name, restaurant.address.building + ' ' + restaurant.address.street + ', ' + restaurant.borough + ' ' + restaurant.address.zipcode, restaurant.address.coord);
+
+    detailContainer.element.appendChild(detail.element);
+});
+
+console.log(restaurants);
+
+
+document.body.appendChild(search.element);
+document.body.appendChild(results.element);
+document.body.appendChild(detailContainer.element);
+
