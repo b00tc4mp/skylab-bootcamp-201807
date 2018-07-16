@@ -250,7 +250,7 @@ ResultsList.prototype.setData = function (data) {
   }
   data.forEach(function (element) {
     let li = document.createElement("li");
-    li.innerHTML = element.name;
+    li.innerHTML = element;
 
     this.element.appendChild(li);
   }.bind(this));
@@ -290,7 +290,7 @@ function doRestaurantSearch(term) {
   if (term) {
     results = restaurants.filter(function (element) {
       return element[choice].toLowerCase().includes(term.toLowerCase());
-    }).slice(0, 100);
+    }).map(function(element) {return element.name}).slice(0, 100);
     if (results) resultsList.setData(results);
   }
 
@@ -298,13 +298,11 @@ function doRestaurantSearch(term) {
 
 function showRestaurantDetails(data) {
   TweenMax.to(detailsPanel.element,0.25, {autoAlpha:1});
-  log(detailsPanel)
   detailsPanel.setData(data);
 }
 
 function showRestaurantLocation(location) {
   var url = "http://maps.google.com/?q=" + location[1] + "," + location[0];
-  log(url)
   window.open(url);
 }
 
