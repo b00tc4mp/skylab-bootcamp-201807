@@ -2,6 +2,8 @@
 
 [JavaScript books](https://freefrontend.com/javascript-books/)
 
+[JavaScript bind Function](https://davidwalsh.name/javascript-bind)
+
 [Prototypes](http://www.mollypages.org/tutorials/js.mp)
 
 [JavaScript Under The Hood](https://pt.slideshare.net/thangtd90/javascript-under-the-hood-2)
