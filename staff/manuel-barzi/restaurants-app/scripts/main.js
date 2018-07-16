@@ -99,8 +99,6 @@ var search = new SearchPanel();
 search.onSearch(function (query) {
     var matching = logic.find(query);
 
-    //console.log(matching);
-
     results.updateResults(matching.map(function (result) {
         return {
             id: result.restaurant_id,
