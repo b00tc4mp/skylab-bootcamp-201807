@@ -55,29 +55,33 @@ ResultsList.prototype.updateResults = function(results) {
         var bu = document.createElement("button");
         bu.innerHTML = result.name;
         bu.className = "infoName";
+        bu.setAttribute("onClick", "showInfoSpace("+index+")");
+        li.appendChild(bu);
+
         var di = document.createElement("div")
+        li.appendChild(di);
         di.className = "infoSpace";
         di.id = index;
-        bu.setAttribute("onClick", "showInfoSpace("+index+")");
-        li.appendChild(bu)
         
-        
-        bu.appendChild(di);
         var info = `
         <p class="infotext">Cuisine: ${result.cuisine}</p>
         <p class="infotext">Address: ${result.address.building} ${result.address.street} ${result.address.zipcode} ${result.borough}</p>
-        <a class="button-location" target="_blank" href="http://www.google.com/maps/place/${result.address.coord[1]},${result.address.coord[0]}">Map</a>` 
+        <a class="button-location" target="_blank" href="http://www.google.com/maps/place/${result.address.coord[1]},${result.address.coord[0]}">Map</a>`
         di.innerHTML = info;
     }, this);
 };
 
-function showInfoSpace(id){
+
+
+
+function showInfoSpace(id,event){
     
     if (document.getElementById(id).style.display === "block") {
         document.getElementById(id).style.display = "none";
     } else {
        document.getElementById(id).style.display = "block";
         }
+    
 }
 
 //restaurants.splice(100);
