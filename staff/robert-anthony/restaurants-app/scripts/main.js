@@ -229,10 +229,8 @@ function ResultsList(dataArray, cssClass) {
     if (event.target === this.element) return null;
 
     var data = event.target.innerHTML;
-    var restaurantData = restaurants.find(function (element) {
-      return (element.name === data);
-    });
-    this._elementClick(restaurantData);
+
+    this._elementClick(data);
 
   }.bind(this))
 }
@@ -295,10 +293,14 @@ function doRestaurantSearch(term) {
 
 }
 
-function showRestaurantDetails(data) {
+function showRestaurantDetails(restaurantName) {
+  if (!restaurantName) return;
+
+  var restaurantData = restaurants.find(function (element) {
+    return (element.name === restaurantName);
+  });
   TweenMax.to(detailsPanel.element,0.25, {autoAlpha:1});
-  log(detailsPanel)
-  detailsPanel.setData(data);
+  detailsPanel.setData(restaurantData);
 }
 
 function showRestaurantLocation(location) {
