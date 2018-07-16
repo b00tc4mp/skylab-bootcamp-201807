@@ -226,9 +226,11 @@ function ResultsList(dataArray, cssClass) {
   };
 
   this.element.addEventListener('click', function (event) {
-    var restaurantName = event.target.innerHTML;
+    if (event.target === this.element) return null;
+
+    var data = event.target.innerHTML;
     var restaurantData = restaurants.find(function (element) {
-      return (element.name === restaurantName);
+      return (element.name === data);
     });
     this._elementClick(restaurantData);
 
