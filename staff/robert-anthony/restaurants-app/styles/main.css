@@ -91,16 +91,16 @@ body {
 .resultsList {
   grid-area: resultArea;
   font-weight: 300;
-  overflow: hidden;
   color: white;
-  overflow-y: scroll;
   list-style-type: none;
   width: 100%; }
-  .resultsList li {
+  .resultsList li a {
+    text-decoration: none;
     cursor: pointer;
     margin: 0;
-    padding: 0; }
-    .resultsList li:hover {
+    padding: 0;
+    color: inherit; }
+    .resultsList li a:hover {
       color: #ff7b00; }
 
 .radioButtons {
@@ -110,5 +110,10 @@ body {
   align-items: center; }
   .radioButtons label {
     color: white; }
+
+.map {
+  margin: 0;
+  padding: 0;
+  height: 50%; }
 
 /*# sourceMappingURL=main.css.map */

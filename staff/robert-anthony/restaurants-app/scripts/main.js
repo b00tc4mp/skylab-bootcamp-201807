@@ -1,6 +1,5 @@
 "use strict"
 
-var SEARCH_CHOICES_NAME = "choices";
 var log = console.log.bind(console);
 
 
@@ -20,6 +19,54 @@ function ClassedComponent(cssClass, tag) {
 
 ClassedComponent.prototype = Object.create(Component.prototype);
 ClassedComponent.prototype.constructor = ClassedComponent;
+
+/*
+*
+*
+*
+* */
+
+function MapComponent(cssClass, tag) {
+  ClassedComponent.call(this, cssClass, tag);
+  var _mapContainer = document.createElement('div');
+  this.element.appendChild(_mapContainer);
+  this.setMap = function (coord) {
+    var myLatlng = new google.maps.LatLng(43.565529, -80.197645);
+    var mapOptions = {
+      zoom: 8,
+      center: myLatlng,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    }
+    var map = new google.maps.Map(this.element, mapOptions);
+
+    //=====Initialise Default Marker
+    var marker = new google.maps.Marker({
+      position: myLatlng,
+      map: map,
+      title: 'marker'
+      //=====You can even customize the icons here
+    });
+
+    //=====Initialise InfoWindow
+    var infowindow = new google.maps.InfoWindow({
+      content: "<B>Skyway Dr</B>"
+    });
+
+    //=====Eventlistener for InfoWindow
+    google.maps.event.addListener(marker, 'click', function () {
+      infowindow.open(map, marker);
+    });
+    this.clearMap = function () {
+      _mapContainer.innerHTML = '';
+    }
+  };
+
+  MapComponent.prototype = Object.create(ClassedComponent.prototype);
+  MapComponent.prototype.constructor = MapComponent;
+
+
+}
+
 
 /*
 *
@@ -58,8 +105,11 @@ Checkboxes.prototype.constructor = Checkboxes;
 *
 * */
 
-function RadioButtons(groupName, options, cssClass) {
+function RadioButtons(group, options, cssClass) {
   Component.call(this);
+
+  const groupName = group || "choices";
+
   this.element.classList.add(cssClass);
   options.forEach(function (element, i) {
     var radio = document.createElement('input');
@@ -74,11 +124,15 @@ function RadioButtons(groupName, options, cssClass) {
 
     this.element.appendChild(radio);
     this.element.appendChild(label);
+    this.getField = function () {
+      return document.querySelector('input[name=' + groupName + ']:checked').value
+    }
   }.bind(this));
 }
 
 RadioButtons.prototype = Object.create(Component.prototype);
 RadioButtons.prototype.constructor = RadioButtons;
+
 
 /*
 *
@@ -179,18 +233,20 @@ function DetailPanel(title, cssClass) {
   this.infoDisplay = new SettableList("settableList");
   this.element.appendChild(this.infoDisplay.element);
 
-  this.locationButton = document.createElement('button');
-  this.locationButton.innerHTML = "Location";
-  this.element.appendChild(this.locationButton);
+  /* this.locationButton = document.createElement('button');
+   this.locationButton.innerHTML = "Location";
+   this.element.appendChild(this.locationButton);*/
 
+  this.map = new MapComponent('map', 'div');
+  this.element.appendChild(this.map.element);
   this.currentDetailData = null;
 
   this._onShowLocation = function () {
   };
 
-  this.locationButton.addEventListener('click', function (event) {
-    this._onShowLocation(this.currentDetailData.address.coord)
-  }.bind(this));
+  /*  this.locationButton.addEventListener('click', function (event) {
+      this._onShowLocation(this.currentDetailData.address.coord)
+    }.bind(this));*/
 }
 
 DetailPanel.prototype = Object.create(Panel.prototype);
@@ -202,13 +258,12 @@ DetailPanel.prototype.onShowLocation = function (callback) {
 DetailPanel.prototype.setData = function (data) {
   this.currentDetailData = data;
   this.infoDisplay.clearData();
-
-  var infoToDisplay = [];
-  infoToDisplay.push("<span>Name:</span> " + data.name);
-  infoToDisplay.push("<span>Address:</span> " + data.address.building + " " + data.address.street + ", " + data.borough + ", " + "" + data.address.zipcode);
-  infoToDisplay.push("<span>Grade:</span> " + data.grades[0].grade);
-  this.infoDisplay.setData(infoToDisplay);
-  ;
+  this.map.setMap([])
+  // var infoToDisplay = [];
+  // infoToDisplay.push("<span>Name:</span> " + data.name);
+  // infoToDisplay.push("<span>Address:</span> " + data.address.building + " " + data.address.street + ", " + data.borough + ", " + "" + data.address.zipcode);
+  // infoToDisplay.push("<span>Grade:</span> " + data.grades[0].grade);
+  this.infoDisplay.setData(data);
 };
 
 
@@ -231,9 +286,7 @@ function ResultsList(dataArray, cssClass) {
   this.element.addEventListener('click', function (event) {
     if (event.target === this.element) return null;
 
-    var data = event.target.innerHTML;
-
-    this._elementClick(data);
+    this._elementClick({id: event.target.getAttribute('data-id'), text: event.target.innerHTML});
 
   }.bind(this))
 }
@@ -248,9 +301,13 @@ ResultsList.prototype.setData = function (data) {
   while (this.element.firstChild) {
     this.element.removeChild(this.element.firstChild);
   }
-  data.forEach(function (element) {
+  data.forEach(function (element, index) {
     let li = document.createElement("li");
-    li.innerHTML = element;
+    let a = document.createElement("a");
+    a.innerHTML = element.text;
+    a.href = "#/" + index;
+    a.setAttribute('data-id', element.id);
+    li.appendChild(a);
 
     this.element.appendChild(li);
   }.bind(this));
@@ -269,7 +326,7 @@ mainContainer.element.appendChild(searchPanel.element);
 searchPanel.onSearch(doRestaurantSearch);
 
 
-var checkboxes = new RadioButtons(SEARCH_CHOICES_NAME, searchChoices, "radioButtons");
+var checkboxes = new RadioButtons("choices", searchChoices, "radioButtons");
 searchPanel.element.appendChild(checkboxes.element);
 
 var resultsList = new ResultsList([], "resultsList");
@@ -283,27 +340,19 @@ detailsPanel.onShowLocation(showRestaurantLocation);
 
 
 function doRestaurantSearch(term) {
-  TweenMax.to(detailsPanel.element,0.25, {autoAlpha:0})
+  TweenMax.to(detailsPanel.element, 0.25, {autoAlpha: 0})
+  var field = checkboxes.getField();
 
-  let choice = document.querySelector('input[name=' + SEARCH_CHOICES_NAME + ']:checked').value;
-  let results;
-  if (term) {
-    results = restaurants.filter(function (element) {
-      return element[choice].toLowerCase().includes(term.toLowerCase());
-    }).map(function(element) {return element.name}).slice(0, 100);
-    if (results) resultsList.setData(results);
-  }
-
+  var results = logic.find(term, field);
+  if (results) resultsList.setData(results);
 }
 
-function showRestaurantDetails(restaurantName) {
-  if (!restaurantName) return;
 
-  var restaurantData = restaurants.find(function (element) {
-    return (element.name === restaurantName);
-  });
-  TweenMax.to(detailsPanel.element,0.25, {autoAlpha:1});
-  detailsPanel.setData(restaurantData);
+function showRestaurantDetails(restaurantData) {
+  if (!restaurantData) return;
+  var restaurantDetail = logic.requestByID(restaurantData.id);
+  detailsPanel.setData(restaurantDetail);
+  TweenMax.to(detailsPanel.element, 0.25, {autoAlpha: 1});
 
 }
 

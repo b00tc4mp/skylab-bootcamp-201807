@@ -57,7 +57,7 @@ body {
   color: white;
   font-weight: 300;
   padding: 2em;
-  padding-bottom:3em;
+  padding-bottom: 3em;
   border: 4px dotted white;
   list-style-type: none;
   visibility: hidden;
@@ -109,15 +109,17 @@ body {
 
   grid-area: resultArea;
   font-weight: 300;
-  overflow: hidden;
+  // overflow: hidden;
   color: white;
-  overflow-y: scroll;
+  // overflow-y: scroll;
   list-style-type: none;
   width: 100%;
-  li {
+  li a {
+    text-decoration: none;
     cursor: pointer;
     margin: 0;
     padding: 0;
+    color: inherit;
     &:hover {
       color: $orangey;
     }
@@ -133,4 +135,11 @@ body {
   label {
     color: white;
   }
+
+
+}
+.map {
+  margin: 0;
+  padding: 0;
+  height: 50%;
 }
