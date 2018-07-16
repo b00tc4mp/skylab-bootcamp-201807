@@ -125,6 +125,7 @@ function SearchPanel(title, cssClass, tag) {
   var searchInput = document.createElement('input');
   searchInput.type = "search";
   searchInput.placeholder = "Search term...";
+  searchInput.autofocus = true;
   var searchButton = document.createElement('button');
   searchButton.type = "submit";
   searchButton.innerHTML = "Submit";
@@ -143,6 +144,8 @@ function SearchPanel(title, cssClass, tag) {
     event.preventDefault();
     var query = searchInput.value;
     this._onSearch(query);
+    searchInput.value = "";
+
   }.bind(this));
 }
 
@@ -247,7 +250,7 @@ ResultsList.prototype.setData = function (data) {
   }
   data.forEach(function (element) {
     let li = document.createElement("li");
-    li.innerHTML = element.name;
+    li.innerHTML = element;
 
     this.element.appendChild(li);
   }.bind(this));
@@ -287,7 +290,7 @@ function doRestaurantSearch(term) {
   if (term) {
     results = restaurants.filter(function (element) {
       return element[choice].toLowerCase().includes(term.toLowerCase());
-    }).slice(0, 100);
+    }).map(function(element) {return element.name}).slice(0, 100);
     if (results) resultsList.setData(results);
   }
 
@@ -301,11 +304,11 @@ function showRestaurantDetails(restaurantName) {
   });
   TweenMax.to(detailsPanel.element,0.25, {autoAlpha:1});
   detailsPanel.setData(restaurantData);
+
 }
 
 function showRestaurantLocation(location) {
   var url = "http://maps.google.com/?q=" + location[1] + "," + location[0];
-  log(url)
   window.open(url);
 }
 
