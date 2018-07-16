@@ -11,7 +11,7 @@ var logic = {
         return results;
     },
 
-    getById: function(id) {
+    retrieveById: function(id) {
         var restaurant = restaurants.find(function (restaurant) {
             return restaurant.restaurant_id === id;
         });
