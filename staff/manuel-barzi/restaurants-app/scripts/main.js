@@ -107,20 +107,28 @@ search.onSearch(function (query) {
             text: result.name + ' (' + result.borough + ')'
         };
     }));
+
+    detailContainer.clear();
 });
 
 var results = new ResultsList();
 
 results.onItemClick(function (id, text) {
-    console.log(id, text);
-
-    var restaurant = logic.getById(id);
+    var restaurant = logic.retrieveById(id);
 
     var detail = new DetailPanel(restaurant.name, restaurant.address.building + ' ' + restaurant.address.street + ', ' + restaurant.borough + ' ' + restaurant.address.zipcode, restaurant.address.coord);
 
-    document.body.appendChild(detail.element);
+    detailContainer.clear();
+    detailContainer.appendChild(detail.element);
 });
+
+var detailContainer = document.createElement('div');
+
+detailContainer.clear = function() {
+    this.innerHTML = '';
+};
 
 document.body.appendChild(search.element);
 document.body.appendChild(results.element);
+document.body.appendChild(detailContainer);
 
