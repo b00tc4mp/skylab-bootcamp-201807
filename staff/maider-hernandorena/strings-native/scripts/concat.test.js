@@ -8,6 +8,9 @@ describe('String.prototype.concat', function () {
     });
 
     it('should operate correctly', function() {
-        // TODO
+        var result = string.concat('! I am Maider!');
+
+        expect(result).toBe('hello world! I am Maider!');
     });
+
 });
