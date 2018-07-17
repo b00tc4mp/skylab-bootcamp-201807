@@ -1,7 +1,6 @@
 // TODO implement a for-loop without for, but just recursion
 
 function _recursiveFor(array, callback) {
-
     if (array.length) {
         callback(array[0]);
 
