@@ -36,4 +36,3 @@ var logic = {
     }
 };
 
-logic.searchBeers('estrella', function(value){return console.log(value);});
