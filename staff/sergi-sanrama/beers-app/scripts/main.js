@@ -1,5 +1,3 @@
-// my custom components
-
 
 function SearchPanel() {
     Component.call(this, 'form');
@@ -67,9 +65,9 @@ ResultsList.prototype.onItemClick = function (callback) {
  * 
  * @param {string} title The item title
  * @param {string} info The information about an item
- * @param {[number]} coords The geodesic coordinates for google maps
+ * @param {string} imgSrc The image
  */
-function DetailPanel(title, info, coords) {
+function DetailPanel(title, info, imgSrc) {
     Panel.call(this, title, 'section');
 
     var p = document.createElement('p');
@@ -77,13 +75,11 @@ function DetailPanel(title, info, coords) {
 
     this.element.appendChild(p);
 
-    var a = document.createElement('a');
+    var img = document.createElement('img');
 
-    a.href = 'https://www.google.com/maps?q=' + coords[1] + ',' + coords[0]; 
-    a.target = '_blank';
-    a.innerText = 'Show in Google Maps';
+    img.src = imgSrc;
 
-    this.element.appendChild(a);
+    this.element.appendChild(img);
 }
 
 DetailPanel.prototype = Object.create(Panel.prototype);
@@ -97,27 +93,43 @@ DetailPanel.prototype.constructor = DetailPanel;
 var search = new SearchPanel();
 
 search.onSearch(function (query) {
-    var matching = logic.find(query);
+    //var matching = logic.find(query);
 
-    results.updateResults(matching.map(function (result) {
-        return {
-            id: result.restaurant_id,
-            text: result.name + ' (' + result.borough + ')'
-        };
-    }));
+    var matching;
+    var url = 'https://quiet-inlet-67115.herokuapp.com/api/search/all?q=' + query;
 
-    detailContainer.clear();
+    logic.searchBeers(url).then(function(response) {
+        matching = response;
+    
+        results.updateResults(matching.map(function (result) {
+            return {
+                id: result.id,
+                text: result.name + ' (' + result.type + ')'
+            };
+        }));
+        
+        detailContainer.clear();
+    }, function(error) {
+        console.error("Failed!", error);
+    })
+    
 });
 
 var results = new ResultsList();
 
 results.onItemClick(function (id, text) {
-    var restaurant = logic.retrieveById(id);
-
-    var detail = new DetailPanel(restaurant.name, restaurant.address.building + ' ' + restaurant.address.street + ', ' + restaurant.borough + ' ' + restaurant.address.zipcode, restaurant.address.coord);
-
-    detailContainer.clear();
-    detailContainer.appendChild(detail.element);
+    var url = 'https://quiet-inlet-67115.herokuapp.com/api/beer/' + id;
+    
+    logic.searchBeers(url).then(function(response) {    
+        var beer = response;
+        var detail = new DetailPanel(beer.name, beer.id, beer.labels.medium);
+    
+        detailContainer.clear();
+        detailContainer.appendChild(detail.element);
+    
+    }, function(error) {
+        console.error("Failed!", error);
+    })
 });
 
 var detailContainer = document.createElement('div');
