@@ -1,37 +1,31 @@
 var logic = {
-    searchBeers: function(query, callback) {
-        var request = new XMLHttpRequest();
 
-        request.onreadystatechange = function () {
-            if (request.readyState === 4 && request.status === 200) {
-                var beers = JSON.parse(request.responseText);
 
-                callback(beers);
-            }
-        };
+    _callAPI: function (path, callback) {
 
-        var url = 'https://quiet-inlet-67115.herokuapp.com/api/search/all?q=' + query;
 
-        request.open('get', url);
+      const base = "https://quiet-inlet-67115.herokuapp.com/api";
 
-        request.send();
+      var request = new XMLHttpRequest();
+
+      request.onreadystatechange = function () {
+        if (request.readyState === 4 && request.status === 200) {
+          var data = JSON.parse(request.responseText);
+          callback(data);
+        }
+      };
+      request.open('get', base + path);
+      request.send();
     },
 
-    retrieveBeerById: function(id, callback) {
-        var request = new XMLHttpRequest();
+    searchBeers: function (query, callback) {
+      var url = "/search/all?q=" + query;
+      this._callAPI(url, callback);
+    },
 
-        request.onreadystatechange = function () {
-            if (request.readyState === 4 && request.status === 200) {
-                var beer = JSON.parse(request.responseText);
+    retrieveBeerById: function (id, callback) {
+      this._callAPI("/beer/" + id, callback);
 
-                callback(beer);
-            }
-        };
-
-        var url = 'https://quiet-inlet-67115.herokuapp.com/api/beer/' + id;
-
-        request.open('get', url);
-
-        request.send();
     }
-};
+  }
+;
