@@ -1,37 +1,27 @@
 var logic = {
-    searchBeers: function(query, callback) {
+    _callApi: function(path, callback) {
         var request = new XMLHttpRequest();
 
         request.onreadystatechange = function () {
             if (request.readyState === 4 && request.status === 200) {
-                var beers = JSON.parse(request.responseText);
+                var res = JSON.parse(request.responseText);
 
-                callback(beers);
+                callback(res);
             }
         };
 
-        var url = 'https://quiet-inlet-67115.herokuapp.com/api/search/all?q=' + query;
+        var url = 'https://quiet-inlet-67115.herokuapp.com/api' + path;
 
         request.open('get', url);
 
         request.send();
     },
 
+    searchBeers: function(query, callback) {
+        this._callApi('/search/all?q=' + query, callback);
+    },
+
     retrieveBeerById: function(id, callback) {
-        var request = new XMLHttpRequest();
-
-        request.onreadystatechange = function () {
-            if (request.readyState === 4 && request.status === 200) {
-                var beer = JSON.parse(request.responseText);
-
-                callback(beer);
-            }
-        };
-
-        var url = 'https://quiet-inlet-67115.herokuapp.com/api/beer/' + id;
-
-        request.open('get', url);
-
-        request.send();
+        this._callApi('/beer/' + id, callback);
     }
 };
