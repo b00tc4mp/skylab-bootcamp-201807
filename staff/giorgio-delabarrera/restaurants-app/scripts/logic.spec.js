@@ -13,30 +13,26 @@ describe('logic', function () {
             expect(results.length).toBe(104);
         });
         
-        it('should each result name have word cream', function() {
+        it('should each result name have word "cream"', function() {
             for (var i = 0; i < results.length; i++)
             expect(results[i].name.toLowerCase()).toContain('cream');
         });
     });
 
-    describe('getById', function() {
+    describe('retrieveById', function() {
         var result;
 
         beforeEach(function() {
-            result = logic.getById('30075445');
-        })
-
-        it('should results defined', function() {
-            expect(result).toBeDefined();
+            result = logic.retrieveById('30075445');
         });
 
-        it('should results id 30075445', function() {
+        it('should retrieve the restaurant that matches the id "30075445"', function() {
             expect(result.restaurant_id).toBe('30075445');
-        });
-
-        it('should results name Morris Park Bake Shop', function() {
             expect(result.name).toBe('Morris Park Bake Shop');
+            expect(result.cuisine).toBe('Bakery');
+            expect(result.address).toBeDefined();
+            expect(result.address.zipcode).toBe('10462');
+            expect(result.address.building).toBe('1007');
         });
-
     });
 });

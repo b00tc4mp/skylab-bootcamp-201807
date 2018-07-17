@@ -4,7 +4,7 @@
  * @param {string} message The description of the assertion
  * @param {boolean} condition The condition to checked during assertion
  * 
- * @author staff
+ * @author manuelbarzi
  * @version 1.0.0
  */
 function assert(message, condition) {
