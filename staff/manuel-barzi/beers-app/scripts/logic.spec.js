@@ -25,7 +25,9 @@ describe('logic (beers)', function () {
         // });
 
         it('should find 4 beers matching criteria', function (done) {
-            logic.searchBeers('mahou', function (beers) {
+            logic.searchBeers('mahou', function (error, beers) {
+                expect(error).toBeUndefined();
+
                 foundBeers = beers;
 
                 expect(foundBeers).toBeDefined();
@@ -43,7 +45,9 @@ describe('logic (beers)', function () {
 
     describe('retrieve beer by id', function () {
         it('should retrieve beer matching the id', function (done) {
-            logic.retrieveBeerById('8OucfG', function (beer) {
+            logic.retrieveBeerById('8OucfG', function (error, beer) {
+                expect(error).toBeUndefined();
+                
                 expect(beer.name).toBe('Mahou Maestra');
                 expect(beer.id).toBe('8OucfG');
 
