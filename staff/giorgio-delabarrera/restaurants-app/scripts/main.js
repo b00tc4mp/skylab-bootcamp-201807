@@ -92,14 +92,12 @@ DetailPanel.prototype.constructor = DetailPanel;
 // my presentation logic
 
 // optional, reduce the size of the restaurants loaded in memory
-// restaurants.splice(1000);
+// restaurants.splice(100);
 
 var search = new SearchPanel();
 
 search.onSearch(function (query) {
     var matching = logic.find(query);
-
-    //console.log(matching);
 
     results.updateResults(matching.map(function (result) {
         return {
@@ -107,32 +105,28 @@ search.onSearch(function (query) {
             text: result.name + ' (' + result.borough + ')'
         };
     }));
+
+    detailContainer.clear();
 });
 
 var results = new ResultsList();
 
-var detailContainer = new Component();
-
-detailContainer.empty = function() {
-    this.element.innerHTML = '';
-}
-
 results.onItemClick(function (id, text) {
-    // console.log(id, text);
-
-    var restaurant = logic.getById(id);
-
-    detailContainer.empty();
+    var restaurant = logic.retrieveById(id);
 
     var detail = new DetailPanel(restaurant.name, restaurant.address.building + ' ' + restaurant.address.street + ', ' + restaurant.borough + ' ' + restaurant.address.zipcode, restaurant.address.coord);
 
-    detailContainer.element.appendChild(detail.element);
+    detailContainer.clear();
+    detailContainer.appendChild(detail.element);
 });
 
-console.log(restaurants);
+var detailContainer = document.createElement('div');
 
+detailContainer.clear = function() {
+    this.innerHTML = '';
+};
 
 document.body.appendChild(search.element);
 document.body.appendChild(results.element);
-document.body.appendChild(detailContainer.element);
+document.body.appendChild(detailContainer);
 
