@@ -66,8 +66,8 @@ ResultsList.prototype.onItemClick = function (callback) {
 /**
  * 
  * @param {string} title The item title
- * @param {string} info The information about an item
- * @param {[number]} abv The graduation of the beer
+ * @param {string} abv The graduation of the beer
+ * @param {string} description The information about an item
  */
 function DetailPanel(title, abv, description) {
     Panel.call(this, title, 'section');
