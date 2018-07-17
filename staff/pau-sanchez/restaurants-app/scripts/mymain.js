@@ -66,7 +66,9 @@ ResultsList.prototype.updateResults = function(results) {
         var info = `
         <p class="infotext">Cuisine: ${result.cuisine}</p>
         <p class="infotext">Address: ${result.address.building} ${result.address.street} ${result.address.zipcode} ${result.borough}</p>
-        <a class="button-location" target="_blank" href="http://www.google.com/maps/place/${result.address.coord[1]},${result.address.coord[0]}">Map</a>`
+        <a class="button-location" target="_blank" href="http://www.google.com/maps/place/${result.address.coord[1]},${result.address.coord[0]}">Map</a>
+        <iframe src = "https://maps.google.com/maps?q=${result.address.coord[1]},${result.address.coord[0]}&hl=es;z=14&amp;output=embed" width="400" height="200"></iframe>`
+        
         di.innerHTML = info;
     }, this);
 };
