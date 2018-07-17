@@ -3,26 +3,30 @@
 var API_DOMAIN = 'https://quiet-inlet-67115.herokuapp.com/api';
 
 var logic = {
-
-    find: function(query) {
+    
+    _requestAsync: function(method, url, callback) {
         
-        var request = new XMLHttpRequest(),
-            method = 'get',
-            url = API_DOMAIN + '/search/all?q=' + query;
-
+        var request = new XMLHttpRequest();
+        
         request.open(method, url);
-        request.onreadystatechange = function() {
-
+        request.onreadystatechange = function () {
             if (request.readyState === 4 && request.status === 200) {
-                //console.log(request.responseText);
-                beers = JSON.parse(request.responseText);
-
-                console.log('ok! response received!');
+                var result = JSON.parse(request.responseText);
+                callback(result);
             }
         };
         request.send();
+    },
+
+    searchBeers: function(query, callback) {
+        
+        var url = API_DOMAIN + '/search/all?q=' + query;
+        this._requestAsync('GET', url, callback);
+    },
+
+    retrieveBeerById: function(id, callback) {
+
+        var url = API_DOMAIN + '/beer' + id;
+        this._requestAsync('GET', url, callback);
     }
 };
-
-
-logic.find('mahou');

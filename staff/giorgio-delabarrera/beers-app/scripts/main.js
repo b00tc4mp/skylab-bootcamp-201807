@@ -1,10 +1,6 @@
 'use strict';
 
-/**
- * 
- */
 function SearchPanel() {
-
     Component.call(this, 'form');
 
     var input = document.createElement('input');
@@ -18,84 +14,59 @@ function SearchPanel() {
     this.element.appendChild(input);
     this.element.appendChild(button);
 
-    var _onSearch;
-
+    this.onSubmit = function() {};
+    
     this.element.addEventListener('submit', function(event) {
         event.preventDefault();
 
         var query = input.value;
-
-        if (query && _onSearch) _onSearch(query);
-    });
-
-    this.onSearch = function(callback) {
-        _onSearch = callback;
-    }
+        
+        this.onSubmit(query);
+        
+    }.bind(this));
 }
 
 SearchPanel.prototype = Object.create(Component.prototype);
 SearchPanel.prototype.constructor = SearchPanel;
 
-/**
- * 
- */
-function BeersList() {
+
+function BeersList(items) {
     Component.call(this, 'ul');
+
+    items.forEach(function(item) {
+        var li = document.createElement('li');
+
+        var a = document.createElement('a');
+        a.href = '#';
+        a.innerText = item.name;
+
+        li.appendChild(a);
+
+        this.element.appendChild(li);
+
+    }, this);
 }
 
 BeersList.prototype = Object.create(Component.prototype);
 BeersList.prototype.constructor = BeersList;
 
-BeersList.prototype.clean = function() {
-    this.element.innerHTML = '';
-}
-
-BeersList.prototype.updateResults = function(beers) {
-    
-    this.clean();
-
-    beers.forEach(function(beer) {
-
-        var li = document.createElement('li');
-
-        var a = document.createElement('a');
-        a.href = '#';
-        a.innerText = beer.name;
-
-        li.appendChild(a);
-
-        this.element.appendChild(li);
-    }, this);
-};
-
-/**
- * 
- */
-function BeerListItem() {
-    
-}
-
-/**
- * 
- */
-function BeerDetail() {
-    
-}
-
-
-
 // main
 
 var searchPanel = new SearchPanel();
 
-var beersList = new BeersList();
+var containerList = document.createElement('div');
 
-searchPanel.onSearch(function(query) {
-    
-    var beers = logic.find(query);
-    
-    // beersList.updateResults(beers);
-})
+searchPanel.onSubmit = function(value) {
+
+    logic.searchBeers(value, function(beers) {
+
+        containerList.innerHTML = '';
+
+        var beersList = new BeersList(beers);
+
+        containerList.appendChild(beersList.element);
+    });
+};
 
 document.body.appendChild(searchPanel.element);
-document.body.appendChild(beersList.element);
+document.body.appendChild(containerList);
