@@ -6,13 +6,15 @@
 var search = new SearchPanel();
 
 search.onSearch(function (query) {
-    logic.searchBeers(query, function(beers) {
-        results.updateResults(beers.map(function (beer) {
-            return {
-                id: beer.id,
-                text: beer.name
-            };
-        }));
+    logic.searchBeers(query, function (error, beers) {
+        if (error) alert('Sorry, we have temporary problem, try again later.');
+        else
+            results.updateResults(beers.map(function (beer) {
+                return {
+                    id: beer.id,
+                    text: beer.name
+                };
+            }));
     });
 
 
@@ -24,18 +26,21 @@ var results = new ResultsList();
 var DEFAULT_IMAGE = 'https://i.pinimg.com/originals/37/2a/2d/372a2d5e8a32991bb19982271d0762fe.jpg';
 
 results.onItemClick(function (id) {
-    logic.retrieveBeerById(id, function(beer) {
-        var detail = new DetailPanel(beer.name, beer.style.description, beer.labels? beer.labels.medium : DEFAULT_IMAGE);
-    
-        detailContainer.clear();
-        detailContainer.appendChild(detail.element);
+    logic.retrieveBeerById(id, function (error, beer) {
+        if (error) alert('Sorry, we have temporary problem, try again later.');
+        else {
+            var detail = new DetailPanel(beer.name, beer.style.description, beer.labels ? beer.labels.medium : DEFAULT_IMAGE);
+
+            detailContainer.clear();
+            detailContainer.appendChild(detail.element);
+        }
     });
 
 });
 
 var detailContainer = document.createElement('div');
 
-detailContainer.clear = function() {
+detailContainer.clear = function () {
     this.innerHTML = '';
 };
 

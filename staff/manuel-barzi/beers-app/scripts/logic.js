@@ -3,10 +3,12 @@ var logic = {
         var request = new XMLHttpRequest();
 
         request.onreadystatechange = function () {
-            if (request.readyState === 4 && request.status === 200) {
-                var res = JSON.parse(request.responseText);
-
-                callback(res);
+            if (request.readyState === 4) {
+                if (request.status === 200) {
+                    var res = JSON.parse(request.responseText);
+    
+                    callback(undefined, res);
+                } else callback(Error('request error, status ' + request.status));
             }
         };
 
