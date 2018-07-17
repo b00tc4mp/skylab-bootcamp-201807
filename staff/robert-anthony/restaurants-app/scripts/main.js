@@ -38,6 +38,7 @@ function MapComponent(cssClass, tag) {
       mapTypeId: google.maps.MapTypeId.ROADMAP
     }
     var map = new google.maps.Map(this.element, mapOptions);
+    google.maps.event.trigger(map, "resize");
 
     //=====Initialise Default Marker
     var marker = new google.maps.Marker({
@@ -56,16 +57,16 @@ function MapComponent(cssClass, tag) {
     google.maps.event.addListener(marker, 'click', function () {
       infowindow.open(map, marker);
     });
-    this.clearMap = function () {
-      _mapContainer.innerHTML = '';
-    }
-  };
-
-  MapComponent.prototype = Object.create(ClassedComponent.prototype);
-  MapComponent.prototype.constructor = MapComponent;
-
-
+  }
+  this.clearMap = function () {
+    _mapContainer.innerHTML = '';
+  }
 }
+
+MapComponent.prototype = Object.create(ClassedComponent.prototype);
+MapComponent.prototype.constructor = MapComponent;
+
+
 
 
 /*

@@ -2,7 +2,7 @@ var beers;
 
 function searchBeers(query) {
   var request = new XMLHttpRequest();
-
+console.log(request);
   request.onreadystatechange = function () {
     if (request.readyState === 4 && request.status === 200) {
       //console.log(request.responseText);
@@ -19,4 +19,6 @@ function searchBeers(query) {
 
   request.send();
 }
+
+searchBeers();
 
