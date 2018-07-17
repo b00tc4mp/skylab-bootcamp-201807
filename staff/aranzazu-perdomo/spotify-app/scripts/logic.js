@@ -42,10 +42,16 @@ var logic = {
     },
 
     retrieveTracksByAlbumId(id) {
-        // TODO
+        return this._callApi('/artists/' + id + '/tracks')
+        .then(function(res) {
+            return res.items;
+        });
     },
 
     retrieveTrackById(id) {
-        // TODO
+        return this._callApi('/tracks/' + id )
+        .then(function(res) {
+            return res.items;
+        });
     }
 };
