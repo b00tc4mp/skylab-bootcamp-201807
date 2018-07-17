@@ -6,12 +6,14 @@
 var search = new SearchPanel();
 
 search.onSearch(function (query) {
-    logic.searchBeers(query)
-        .then(function (beers) {
-            results.updateResults(beers.map(function (beer) {
+    logic.token = 'BQAd318nOQP7hreYymJaxfT5rAFKXGmnE6TBnswCTEDrajfOHW3eI8QxfcRdF_rLOxbG7hjT0f8vhBSHD1ju8zJBjfAHVdExkN6gAdkUm10vBxJfBAqtT0flqu7mf4SnRz8oaFi5mf4QZw';
+
+    logic.searchArtists(query)
+        .then(function (artist) {
+            results.updateResults(artist.map(function (artist) {
                 return {
-                    id: beer.id,
-                    text: beer.name
+                    id: artist.id,
+                    text: artist.name
                 };
             }));
 
@@ -24,12 +26,13 @@ search.onSearch(function (query) {
 
 var results = new ResultsList();
 
-var DEFAULT_IMAGE = 'https://i.pinimg.com/originals/37/2a/2d/372a2d5e8a32991bb19982271d0762fe.jpg';
+//var DEFAULT_IMAGE = 'https://images.vexels.com/media/users/3/137413/isolated/preview/4acb8e52632aa9b7c874b878eaf02bc4-spotify-icon-logo-by-vexels.png';
 
 results.onItemClick(function (id) {
-    logic.retrieveBeerById(id)
-        .then(function (beer) {
-            var detail = new DetailPanel(beer.name, beer.style.description, beer.labels ? beer.labels.medium : DEFAULT_IMAGE);
+    logic.retrieveAlbumsByArtistId(id)
+    
+        .then(function (artist) {
+            var detail = new DetailPanel(artist.name, artist.id, artist.images | DEFAUL_IMAGE);
 
             detailContainer.clear();
             detailContainer.appendChild(detail.element);
