@@ -214,7 +214,7 @@ DetailPanel.prototype.setData = function (data) {
   var infoToDisplay = [];
   data.forEach(function (element) {
 
-    infoToDisplay.push("<span>Album Title:</span> " + element);
+    infoToDisplay.push("<span>Album:</span> " + element);
   });
   this.infoDisplay.setData(infoToDisplay);
 
@@ -315,7 +315,7 @@ var resultsList = new ResultsList([], "resultsList");
 mainContainer.element.appendChild(resultsList.element);
 resultsList.onElementClick(showArtistAlbums);
 
-var detailsPanel = new DetailPanel("Album Detail", "detailsPanel", "div");
+var detailsPanel = new DetailPanel("Albums", "detailsPanel", "div");
 mainContainer.element.appendChild(detailsPanel.element);
 
 // detailsPanel.onShowLocation(showRestaurantLocation);
@@ -349,10 +349,5 @@ function showArtistAlbums(artistData) {
 
 }
 
-logic.token = "BQClAdI46qiyYPM0jod_YpScLdPr697SS9ysrG3UXxeUI5l6vFzqbNDZ9SqLBpRhJdG-1AXa_fG05fa-dr5Z6RcljQX2nroPn7gEyhzF0b8EKuwhYjo9i6ge5sqqQpcdI-9Q7UMByQmX";
-
-// function showRestaurantLocation(location) {
-//   var url = "http://maps.google.com/?q=" + location[1] + "," + location[0];
-//   window.open(url);
-//}
+logic.token = "BQCXBOfxnzH_VGqkjyYTYNqfp90vvV36gYQbJqj_A1XVVrPfXKgYbMtfskGm2gNGeRKlqGro0zn4tESsaOqePFLpzsUEb7xb-1Ddh_pKrmDivFpKFFT4mSWFFbtzqI-9FaW1aZm9hrVj";
 

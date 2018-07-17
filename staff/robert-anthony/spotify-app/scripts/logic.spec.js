@@ -11,6 +11,8 @@ describe('logic (spotify)', function () {
           expect(artists).toBeDefined();
           expect(artists.length).toBe(6);
           expect(artists[0].name).toBe('Sisters of Mercy');
+        }).catch(function(error){
+          expect(error).toBeDefined();
         });
     });
   });
@@ -19,10 +21,11 @@ describe('logic (spotify)', function () {
     it('should retrieve albums for given artist id', function () {
       return logic.retrieveAlbumsByArtistId("4HxBVyHaUa60eCSsJWxwWR")
         .then(function (albums) {
-          console.log(albums)
           expect(albums).toBeDefined();
           expect(albums.length).toBe(20);
           expect(albums[10].name).toBe('First and Last and Always');
+        }).catch(function(error){
+          expect(error).toBeDefined();
         });
     });
   });
@@ -34,6 +37,8 @@ describe('logic (spotify)', function () {
           expect(tracks).toBeDefined();
           expect(tracks.length).toBe(10);
           expect(tracks[0].name).toBe('Black Planet');
+        }).catch(function(error){
+          expect(error).toBeDefined();
         });
     });
   });
@@ -47,6 +52,8 @@ describe('logic (spotify)', function () {
           expect(track.duration_ms).toBe(204186);
           expect(track.name).toBe("Walk Away");
 
+        }).catch(function(error){
+          expect(error).toBeDefined();
         });
     });
   });
