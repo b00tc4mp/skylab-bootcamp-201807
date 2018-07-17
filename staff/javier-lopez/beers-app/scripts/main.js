@@ -1,6 +1,3 @@
-// my custom components
-
-
 function SearchPanel() {
     Component.call(this, 'form');
 
@@ -19,7 +16,6 @@ function SearchPanel() {
 
     this.element.addEventListener('submit', function (event) {
         event.preventDefault();
-
         var query = input.value;
 
         if (query && _callback) _callback(query);
@@ -67,23 +63,15 @@ ResultsList.prototype.onItemClick = function (callback) {
  * 
  * @param {string} title The item title
  * @param {string} info The information about an item
- * @param {[number]} coords The geodesic coordinates for google maps
+ * @param {[number]} abv The graduation of the beer
  */
-function DetailPanel(title, info, coords) {
+function DetailPanel(title, abv, description) {
     Panel.call(this, title, 'section');
 
     var p = document.createElement('p');
-    p.innerText = info;
+    p.innerText ='Graduation: ' + abv + '\n Description: ' + description;
 
     this.element.appendChild(p);
-
-    var a = document.createElement('a');
-
-    a.href = 'https://www.google.com/maps?q=' + coords[1] + ',' + coords[0]; 
-    a.target = '_blank';
-    a.innerText = 'Show in Google Maps';
-
-    this.element.appendChild(a);
 }
 
 DetailPanel.prototype = Object.create(Panel.prototype);
@@ -97,27 +85,30 @@ DetailPanel.prototype.constructor = DetailPanel;
 var search = new SearchPanel();
 
 search.onSearch(function (query) {
-    var matching = logic.find(query);
-
-    results.updateResults(matching.map(function (result) {
-        return {
-            id: result.restaurant_id,
-            text: result.name + ' (' + result.borough + ')'
-        };
-    }));
-
+    logic.searchBeers(query, function(beers){
+        results.updateResults(beers.map(function (result) {
+            return {
+                id: result.id,
+                text: result.name 
+            };
+        })); 
+    });
+    
     detailContainer.clear();
 });
 
 var results = new ResultsList();
 
-results.onItemClick(function (id, text) {
-    var restaurant = logic.retrieveById(id);
+results.onItemClick(function (id) {
+    logic.retrieveBeerById(id, function(beers){
+        var detail = new DetailPanel(beers.name, beers.abv, beers.description);
 
-    var detail = new DetailPanel(restaurant.name, restaurant.address.building + ' ' + restaurant.address.street + ', ' + restaurant.borough + ' ' + restaurant.address.zipcode, restaurant.address.coord);
+        detailContainer.clear();
+        detailContainer.appendChild(detail.element);
 
-    detailContainer.clear();
-    detailContainer.appendChild(detail.element);
+    });
+
+    
 });
 
 var detailContainer = document.createElement('div');
@@ -129,4 +120,3 @@ detailContainer.clear = function() {
 document.body.appendChild(search.element);
 document.body.appendChild(results.element);
 document.body.appendChild(detailContainer);
-
