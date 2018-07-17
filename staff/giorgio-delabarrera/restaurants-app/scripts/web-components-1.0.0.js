@@ -3,8 +3,8 @@
 /**
  * Web Components lib
  * 
- * @author manuelbarzi
  * @version 1.0.0
+ * @author staff
  */
 
 /**
