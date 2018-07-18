@@ -16,108 +16,6 @@ function ClassedComponent(cssClass, tag) {
 ClassedComponent.prototype = Object.create(Component.prototype);
 ClassedComponent.prototype.constructor = ClassedComponent;
 
-/*
-*
-*
-*
-* */
-
-
-/*
-*
-*
-*
-* */
-
-
-/*
-*
-*
-*
-* */
-/*
-
-
-function Checkboxes(options, cssClass) {
-  Component.call(this);
-  this.element.classList.add(cssClass);
-
-  options.forEach(function (element, i) {
-    var checkbox = document.createElement('input');
-    checkbox.type = "checkbox";
-    checkbox.name = element.name;
-    checkbox.value = element.value;
-    checkbox.id = i;
-
-    var label = document.createElement('label')
-    label.htmlFor = i;
-    label.appendChild(document.createTextNode(element.name));
-
-    this.element.appendChild(checkbox);
-    this.element.appendChild(label);
-  }, this);
-}
-
-Checkboxes.prototype = Object.create(ClassedComponent.prototype);
-Checkboxes.prototype.constructor = Checkboxes;
-*/
-
-/*
-*
-*
-*
-*
-* */
-//
-// function RadioButtons(group, options, cssClass) {
-//   Component.call(this);
-//
-//   const groupName = group || "choices";
-//
-//   this.element.classList.add(cssClass);
-//   options.forEach(function (element, i) {
-//     var radio = document.createElement('input');
-//     radio.type = "radio";
-//     radio.name = groupName;
-//     radio.value = element;
-//     radio.id = i;
-//     radio.checked = !i;
-//     var label = document.createElement('label')
-//     label.htmlFor = i;
-//     label.appendChild(document.createTextNode(element));
-//
-//     this.element.appendChild(radio);
-//     this.element.appendChild(label);
-//     this.getField = function () {
-//       return document.querySelector('input[name=' + groupName + ']:checked').value
-//     }
-//   }.bind(this));
-// }
-//
-// RadioButtons.prototype = Object.create(Component.prototype);
-// RadioButtons.prototype.constructor = RadioButtons;
-
-
-/*
-*
-*
-*
-*
-* */
-//
-// function SettableList(cssClass) {
-//   Component.call(this, 'ul');
-//
-//
-// }
-
-/*
-*
-*
-*
-*
-* */
-
 function SearchPanel(title, cssClass, tag) {
   Panel.call(this, title, "form");
 
@@ -155,12 +53,7 @@ SearchPanel.prototype.onSearch = function (callback) {
   this._onSearch = callback;
 
 };
-// SearchPanel.prototype.getSearchTerm = function (callback) {
-//   return this.element.children[1].value;
-// };
 
-// RadioButtons.prototype = Object.create(Component.prototype);
-// RadioButtons.prototype.constructor = RadioButtons;
 
 /*
 *
@@ -168,6 +61,7 @@ SearchPanel.prototype.onSearch = function (callback) {
 *
 *
 * */
+/*
 
 function DetailPanel(title, cssClass) {
   Panel.call(this, title, "ul");
@@ -211,39 +105,8 @@ DetailPanel.prototype.setData = function (data) {
     this.element.appendChild(li);
   }.bind(this));
 };
+*/
 
-
-function TrackDetailPanel(title, cssClass) {
-  DetailPanel.call(this, title, cssClass);b
-}
-
-TrackDetailPanel.prototype = Object.create(DetailPanel.prototype);
-TrackDetailPanel.prototype.constructor = TrackDetailPanel;
-
-
-TrackDetailPanel.prototype.setData = function (title, data, imageSrc) {
-  while (this.element.firstChild) {
-    this.element.removeChild(this.element.firstChild);
-  }
-  var h1 = document.createElement('h1');
-  h1.innerHTML = title;
-  this.element.appendChild(h1);
-  var img = document.createElement('img');
-  img.src = imageSrc;
-  this.element.appendChild(img);
-  data.forEach(function (element, index) {
-    let li = document.createElement("li");
-    let a = document.createElement("a");
-    a.innerHTML = element.name;
-    a.href = "#/" + index;
-    a.setAttribute('data-id', element.id);
-    li.appendChild(a);
-    a = document.createElement("a");
-
-
-    this.element.appendChild(li);
-  }.bind(this));
-};
 
 
 /**/
@@ -283,6 +146,37 @@ ResultsList.prototype.setData = function (data) {
     a.setAttribute('data-id', element.id);
     li.appendChild(a);
 
+    this.element.appendChild(li);
+  }.bind(this));
+};
+
+
+function TrackDetailPanel(cssClass) {
+  ResultsList.call(this,  cssClass);
+}
+
+TrackDetailPanel.prototype = Object.create(ResultsList.prototype);
+TrackDetailPanel.prototype.constructor = TrackDetailPanel;
+
+
+TrackDetailPanel.prototype.setData = function (title, data, imageSrc) {
+  while (this.element.firstChild) {
+    this.element.removeChild(this.element.firstChild);
+  }
+  var h1 = document.createElement('h1');
+  h1.innerHTML = title;
+  this.element.appendChild(h1);
+  var img = document.createElement('img');
+  img.src = imageSrc;
+  this.element.appendChild(img);
+  data.forEach(function (element, index) {
+    let li = document.createElement("li");
+    let a = document.createElement("a");
+    a.innerHTML = element.name;
+    a.href = "#/" + index;
+    a.setAttribute('data-id', element.id);
+    li.appendChild(a);
+    a = document.createElement("a");
     this.element.appendChild(li);
   }.bind(this));
 };

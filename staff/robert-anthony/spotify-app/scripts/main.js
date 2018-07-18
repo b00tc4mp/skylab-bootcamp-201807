@@ -14,7 +14,6 @@ function clearAudio() {
 
 
 
-var searchChoices = ["name", "borough", "cuisine"];
 
 
 var mainContainer = new ClassedComponent("mainContainer");
@@ -26,19 +25,16 @@ mainContainer.element.appendChild(searchPanel.element);
 searchPanel.onSearch(doArtistSearch);
 
 
-// var checkboxes = new RadioButtons("choices", searchChoices, "radioButtons");
-// searchPanel.element.appendChild(checkboxes.element);
-
 var resultsList = new ResultsList("resultsList");
 mainContainer.element.appendChild(resultsList.element);
 resultsList.onElementClick(showArtistAlbums);
 
-var albumsDetail = new DetailPanel("", "albumsDetail");
+var albumsDetail = new ResultsList("albumsDetail");
 mainContainer.element.appendChild(albumsDetail.element);
 albumsDetail.onElementClick(showAlbumTracks);
 
 
-var tracksDetail = new TrackDetailPanel("", "tracksDetail");
+var tracksDetail = new TrackDetailPanel("tracksDetail");
 mainContainer.element.appendChild(tracksDetail.element);
 tracksDetail.onElementClick(showTrackInfo);
 
@@ -96,7 +92,7 @@ function showTrackInfo(trackData) {
   logic.retrieveTrackById(trackData.id).then(function (trackData) {
     clearAudio();
 
-    if (trackData) {
+    if (trackData && trackData.preview_url) {
       _audio = new Audio(trackData.preview_url);
       _audio.play();
     }
@@ -104,5 +100,5 @@ function showTrackInfo(trackData) {
 
 }
 
-logic.token = "BQAyDZNFqqtI6EmDHKRfLEBkbr_8MQjBuIzOeQNzgJfQEOHtt8603Cz4JyIZil3Sdus51lknhTd-kMF6GLWAdXTlgGNdq-M0CmMNXDnWA4CIy2ztQRN6g9LpzeziVEjavSWPpvsInvs_";
+logic.token = "BQB7RV6HZCj0ur4FdKL4YVBjLKRvwypn1Gfcp5p6Yn680ujVhdEoE9ddhXRyxmCKHq3pkm_4_3WflEvJnjTE4W-N_oKZKetl71RMR-mjvZJo3yCqwaIKsxm73BTAIlPSiCReqzmck_xy";
 
