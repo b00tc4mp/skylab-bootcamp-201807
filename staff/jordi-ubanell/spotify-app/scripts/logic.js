@@ -21,22 +21,20 @@ var logic = {
 
             request.setRequestHeader('Authorization', 'Bearer ' + this.token);
 
-
             request.send();
         }.bind(this));
-
     },
 
     searchArtists: function (query) {
         return this._callApi('/search?type=artist&query=' + query)
-            .then(function(res) {
+            .then(function (res) {
                 return res.artists.items;
             });
     },
 
     retrieveAlbumsByArtistId(id) {
         return this._callApi('/artists/' + id + '/albums')
-            .then(function(res) {
+            .then(function (res) {
                 return res.items;
             });
     },
@@ -44,16 +42,16 @@ var logic = {
     retrieveTracksByAlbumId(id) {
         // TODO
         return this._callApi('/albums/' + id + '/tracks')
-            .then(function(res) {
+            .then(function (res) {
                 return res.items;
             });
     },
-    
+
 
     retrieveTrackById(id) {
         // TODO
-                return this._callApi('/tracks/' + id )
-            .then(function(res) {
+        return this._callApi('/tracks/' + id)
+            .then(function (res) {
                 return res;
             });
     }

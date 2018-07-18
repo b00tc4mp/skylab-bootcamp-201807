@@ -1,7 +1,7 @@
 'use strict';
 
 describe('logic (spotify)', function () {
-    logic.token = 'BQC0LXjWmhoASEa0nI0nWnOD_LB_Q3smDW6sjxIQFwkY1lWyWLS00Y42RWWUZaiZgLp6U4z9z74TpxxOJ3_gDJaEXyBK4Zmjh8qv6lYX04OB8YLLDidDEonCWpyyU0HGiXb5DiordlA';
+    logic.token = 'BQBR4LH-AR-LMprdvBtMSSJFudIG_0xOAGeqsdLcehpSrzFeCmHv2ryx8iUQ_-9vgLpXpsrEUIz7XcWxz-yri8nbhhTCNkRS4bhZJokQ0DAm-6ccGLfP-X4g9y0aiu_N9tkYAVf2Rr4';
 
     describe('search artists', function () {
         it('should find artists matching criteria', function () {
@@ -45,5 +45,5 @@ describe('logic (spotify)', function () {
                 });
         });
     }); 
-});n 
+});
 
