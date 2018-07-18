@@ -317,7 +317,7 @@ resultsList.onElementClick(showBeerDetails);
 var detailsPanel = new DetailPanel("Beer Detail", "detailsPanel", "div");
 mainContainer.element.appendChild(detailsPanel.element);
 
-// detailsPanel.onShowLocation(showRestaurantLocation);
+// albumsDetail.onShowLocation(showRestaurantLocation);
 
 
 function doBeerSearch(term) {

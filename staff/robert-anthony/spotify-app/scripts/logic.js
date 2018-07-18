@@ -32,6 +32,8 @@ var logic = {
       .then(function (res) {
         return res.artists.items;
 
+      }).catch(function(error){
+        console.log("Error on searching artists",error);
       });
   },
 
@@ -39,6 +41,8 @@ var logic = {
     return this._callApi('/artists/' + id + '/albums')
       .then(function (res) {
         return res.items;
+      }).catch(function(error){
+        console.log("Error on retrieving albums",error);
       });
   },
 
@@ -46,13 +50,26 @@ var logic = {
     return this._callApi('/albums/' + id + '/tracks')
       .then(function (results) {
         return results.items;
-      })
+      }).catch(function(error){
+        console.log("Error on retrieving tracks by albums id",error);
+      });
+  },
+
+  retrieveAlbumById(id) {
+    return this._callApi('/albums/' + id )
+      .then(function (results) {
+        return results;
+      }).catch(function(error){
+        console.log("Error on retrieving album by id",error);
+      });
   },
 
   retrieveTrackById(id) {
     return this._callApi('/tracks/' + id)
       .then(function (results) {
         return results;
-      })
+      }).catch(function(error){
+        console.log("Error on retrieving track info",error);
+      });
   }
 };

@@ -2,6 +2,15 @@
 
 var log = console.log.bind(console);
 
+var _audio = null;
+
+
+function clearAudio() {
+  if (_audio) {
+    _audio.pause();
+    _audio = null;
+  }
+}
 
 // my custom components
 /*
@@ -19,6 +28,13 @@ function ClassedComponent(cssClass, tag) {
 
 ClassedComponent.prototype = Object.create(Component.prototype);
 ClassedComponent.prototype.constructor = ClassedComponent;
+
+/*
+*
+*
+*
+* */
+
 
 /*
 *
@@ -106,24 +122,6 @@ function SettableList(cssClass) {
 
 }
 
-SettableList.prototype = Object.create(List.prototype);
-SettableList.constructor = SettableList;
-SettableList.prototype.setData = function (data) {
-  if (!data instanceof Array || data.length === 0) return;
-  data.forEach(function (item) {
-    var li = document.createElement('li');
-    li.innerHTML = item;
-    this.element.appendChild(li);
-  }.bind(this));
-
-};
-
-SettableList.prototype.clearData = function () {
-  while (this.element.firstChild) {
-    this.element.removeChild(this.element.firstChild);
-  }
-};
-
 /*
 *
 *
@@ -184,22 +182,28 @@ RadioButtons.prototype.constructor = RadioButtons;
 * */
 
 function DetailPanel(title, cssClass) {
-  Panel.call(this, title, "section");
+  Panel.call(this, title, "ul");
 
   this.element.classList.add(cssClass);
 
-  this.infoDisplay = new SettableList("settableList");
-  this.element.appendChild(this.infoDisplay.element);
+  // this.infoDisplay = new SettableList("settableList");
+  // this.element.appendChild(this.infoDisplay.element);
   this.imageHolder = document.createElement("div");
   this.element.appendChild(this.imageHolder);
 
 
   this.currentDetailData = null;
 
-  this._onShowLocation = function () {
+  this._elementClick = function () {
+
   };
 
+  this.element.addEventListener('click', function (event) {
+    if (event.target === this.element) return null;
 
+    this._elementClick({id: event.target.getAttribute('data-id'), text: event.target.innerHTML});
+
+  }.bind(this));
 }
 
 DetailPanel.prototype = Object.create(Panel.prototype);
@@ -207,57 +211,66 @@ DetailPanel.prototype.constructor = DetailPanel;
 DetailPanel.prototype.onShowLocation = function (callback) {
   this._onShowLocation = callback;
 };
+DetailPanel.prototype.onElementClick = function (callback) {
+  this._elementClick = callback;
+};
 
 DetailPanel.prototype.setData = function (data) {
-  this.currentDetailData = data;
-  this.infoDisplay.clearData();
-  var infoToDisplay = [];
-  data.forEach(function (element) {
+  while (this.element.firstChild) {
+    this.element.removeChild(this.element.firstChild);
+  }
+  data.forEach(function (element, index) {
+    let li = document.createElement("li");
+    let a = document.createElement("a");
+    a.innerHTML = element.name;
+    a.href = "#/" + index;
+    a.setAttribute('data-id', element.id);
+    li.appendChild(a);
 
-    infoToDisplay.push("<span>Album:</span> " + element);
-  });
-  this.infoDisplay.setData(infoToDisplay);
-
-
+    this.element.appendChild(li);
+  }.bind(this));
 };
 
 
-/*if (data.abv) infoToDisplay.push("<span>ABV:</span> " + data.abv);
-infoToDisplay.push("<span>Is Organic:</span> " + data.isOrganic);
-if (data.description) infoToDisplay.push("<span>Description:</span> " + data.description);
-if (data.style && data.style.name) infoToDisplay.push("<span>Style:</span> " + data.style.name);
-if (data.glass && data.glass.name) infoToDisplay.push("<span>Glass:</span> " + data.glass.name);*/
-/*
-  var imageURL = "";
+function TrackDetailPanel(title, cssClass) {
+  DetailPanel.call(this, title, cssClass);
 
-  if (data.label) {
-    switch (true) {
-      case (data.label.large !== undefined):
-        imageURL = data.label.large;
-        break;
-      case (data.label.medium != undefined):
-        imageURL = data.label.medium;
-        break;
-    }
 
+}
+
+TrackDetailPanel.prototype = Object.create(DetailPanel.prototype);
+TrackDetailPanel.prototype.constructor = TrackDetailPanel;
+
+
+TrackDetailPanel.prototype.setData = function (title, data, imageSrc) {
+  while (this.element.firstChild) {
+    this.element.removeChild(this.element.firstChild);
   }
-    imageURL = imageURL ||   "https://learn.kegerator.com/wp-content/uploads/2016/01/different-beer-glasses.jpg";
-    var elem = document.createElement("img");
-    elem.src = imageURL;
-    elem.classList.add("beer-image");
-    this.imageHolder.innerHTML = "";
-  this.imageHolder.appendChild(elem);
+  var h1 = document.createElement('h1');
+  h1.innerHTML = title;
+  this.element.appendChild(h1);
+  var img = document.createElement('img');
+  img.src = imageSrc;
+  this.element.appendChild(img);
+  data.forEach(function (element, index) {
+    let li = document.createElement("li");
+    let a = document.createElement("a");
+    a.innerHTML = element.name;
+    a.href = "#/" + index;
+    a.setAttribute('data-id', element.id);
+    li.appendChild(a);
+    a = document.createElement("a");
 
 
-/*
-*
-*
-* */
+    this.element.appendChild(li);
+  }.bind(this));
+};
+
 
 /**/
-function ResultsList(dataArray, cssClass) {
+function ResultsList(cssClass) {
 
-  List.call(this, dataArray, "ul");
+  Panel.call(this, "", "ul");
 
   this.element.classList.add(cssClass);
 
@@ -311,43 +324,80 @@ searchPanel.onSearch(doArtistSearch);
 // var checkboxes = new RadioButtons("choices", searchChoices, "radioButtons");
 // searchPanel.element.appendChild(checkboxes.element);
 
-var resultsList = new ResultsList([], "resultsList");
+var resultsList = new ResultsList("resultsList");
 mainContainer.element.appendChild(resultsList.element);
 resultsList.onElementClick(showArtistAlbums);
 
-var detailsPanel = new DetailPanel("Albums", "detailsPanel", "div");
-mainContainer.element.appendChild(detailsPanel.element);
+var albumsDetail = new DetailPanel("", "albumsDetail");
+mainContainer.element.appendChild(albumsDetail.element);
+albumsDetail.onElementClick(showAlbumTracks);
 
-// detailsPanel.onShowLocation(showRestaurantLocation);
+
+var tracksDetail = new TrackDetailPanel("", "tracksDetail");
+mainContainer.element.appendChild(tracksDetail.element);
+tracksDetail.onElementClick(showTrackInfo);
 
 
 function doArtistSearch(query) {
-  TweenMax.to(detailsPanel.element, 0.25, {autoAlpha: 0})
+  TweenMax.to(albumsDetail.element, 0.25, {autoAlpha: 0});
+  TweenMax.to(tracksDetail.element, 0.25, {autoAlpha: 0});
+  clearAudio();
+
   // var field = checkboxes.getField();
-
-
   logic.searchArtists(query).then(function (artists) {
     if (artists) {
       resultsList.setData(artists);
     }
   });
-
-
 }
 
+
+function showAlbumTracks(albumData) {
+  clearAudio();
+  var albumRetrieved;
+  TweenMax.to(tracksDetail.element, 0.25, {autoAlpha: 0});
+  console.log(albumData);
+  logic.retrieveAlbumById(albumData.id)
+    .then(function (album) {
+      albumRetrieved = album;
+    })
+    .then(function () {
+      return logic.retrieveTracksByAlbumId(albumData.id)
+    })
+    .then(function (tracks) {
+      var trackList = tracks.map(function (track) {
+        return {name: track.name, id: track.id};
+      });
+      tracksDetail.setData(albumRetrieved.name, trackList, albumRetrieved.images[1].url);
+      TweenMax.to(tracksDetail.element, 0.25, {autoAlpha: 1});
+    });
+}
 
 function showArtistAlbums(artistData) {
-
+  TweenMax.to(tracksDetail.element, 0.25, {autoAlpha: 0});
+  clearAudio();
   logic.retrieveAlbumsByArtistId(artistData.id).then(function (albums) {
     var albumList = albums.map(function (album) {
-      return album.name;
+      return {name: album.name, id: album.id};
     });
-    detailsPanel.setData(albumList);
-    TweenMax.to(detailsPanel.element, 0.25, {autoAlpha: 1});
+    albumsDetail.setData(albumList);
+    TweenMax.to(albumsDetail.element, 0.25, {autoAlpha: 1});
   });
-
 
 }
 
-logic.token = "BQCXBOfxnzH_VGqkjyYTYNqfp90vvV36gYQbJqj_A1XVVrPfXKgYbMtfskGm2gNGeRKlqGro0zn4tESsaOqePFLpzsUEb7xb-1Ddh_pKrmDivFpKFFT4mSWFFbtzqI-9FaW1aZm9hrVj";
+
+function showTrackInfo(trackData) {
+  logic.retrieveTrackById(trackData.id).then(function (trackData) {
+    clearAudio();
+
+    if (trackData) {
+      _audio = new Audio(trackData.preview_url);
+      _audio.play();
+    }
+  });
+
+}
+
+logic.token = "BQAyDZNFqqtI6EmDHKRfLEBkbr_8MQjBuIzOeQNzgJfQEOHtt8603Cz4JyIZil3Sdus51lknhTd-kMF6GLWAdXTlgGNdq-M0CmMNXDnWA4CIy2ztQRN6g9LpzeziVEjavSWPpvsInvs_";
 

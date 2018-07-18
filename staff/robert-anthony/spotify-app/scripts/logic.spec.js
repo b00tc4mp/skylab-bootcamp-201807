@@ -1,7 +1,7 @@
 'use strict';
 
 describe('logic (spotify)', function () {
-  logic.token = 'BQDyypeVY65TKVrioXwMtORLk399xhwY9o610llpTzspxICiQMasE1bNEjv9svCuEnnNpQRj_q0aWrpoEfK6MNZ59DZz91_LowyRNlsqluSkg7AesHP7rEO67vgABm160sJtZ-RqOE5k';
+  logic.token = 'BQBYBsrDk2VG1kxOCys68AT4mTOA5xN8uZiS3POoir87oyxYRJDJ0Qr3f8DchOn0SgTuQgNeo64S4LAOEes7dmGicNtqIKw22e_MSnJTFTPeTGodNrki1hv8l3IRSTqVdKH_KPTIcxxc';
 
   describe('search artists', function () {
     it('should find artists matching criteria', function () {
@@ -53,6 +53,21 @@ describe('logic (spotify)', function () {
           expect(track.name).toBe("Walk Away");
 
         }).catch(function(error){
+          expect(error).toBeDefined();
+        });
+    });
+  });
+
+  describe('retrieve album by id', function () {
+    it('should retrieve a specific album for a given id', function () {
+      return logic.retrieveAlbumById("71t6hGJmP26g2aAoFnTY4G")
+        .then(function (album) {
+          expect(album).toBeDefined();
+          expect(album.name).toBe("Rock 'N' Roll Saviors - The Early Years (Live)");
+          expect(album.release_date).toBe("2016-07-15");
+
+        }).catch(function(error){
+          console.log("other catch",error)
           expect(error).toBeDefined();
         });
     });

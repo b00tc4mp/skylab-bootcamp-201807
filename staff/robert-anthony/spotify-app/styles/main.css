@@ -18,12 +18,13 @@ body {
   background: #5065eb;
   padding: 20px;
   display: grid;
-  grid-template-columns: 500px 1fr;
+  grid-gap: 20px;
+  grid-template-columns: 400px 1fr 1fr;
   grid-template-rows: max-content max-content;
-  grid-template-areas: "searchArea searchArea" "resultArea detailArea"; }
+  grid-template-areas: "searchArea .  ." "resultArea albumsDetail  tracksDetail"; }
 
-.detailsPanel {
-  grid-area: detailArea;
+.albumsDetail {
+  grid-area: albumsDetail;
   height: min-content;
   width: 100%;
   color: white;
@@ -33,11 +34,15 @@ body {
   border: 4px dotted white;
   list-style-type: none;
   visibility: hidden; }
-  .detailsPanel .beer-image {
-    margin-left: 60px;
-    max-width: 500px;
-    max-height: 300px; }
-  .detailsPanel button {
+  .albumsDetail li a {
+    text-decoration: none;
+    cursor: pointer;
+    margin: 0;
+    padding: 0;
+    color: inherit; }
+    .albumsDetail li a:hover {
+      color: #ff7b00; }
+  .albumsDetail button {
     margin: 0;
     padding: 4px;
     font-size: 1.2em;
@@ -47,18 +52,106 @@ body {
     -moz-border-radius: 10%;
     border-radius: 10%;
     cursor: pointer; }
-    .detailsPanel button:hover {
+    .albumsDetail button:hover {
       color: #ff7b00; }
-  .detailsPanel h1 {
+  .albumsDetail h1 {
     font-weight: 900;
     color: #fffb00;
     letter-spacing: .2em; }
-  .detailsPanel ul {
+  .albumsDetail ul {
     list-style-type: none; }
-    .detailsPanel ul li {
+    .albumsDetail ul li {
       margin: 0;
       padding: 0; }
-  .detailsPanel span {
+  .albumsDetail span {
+    font-weight: 700;
+    color: #ff7b00; }
+
+.tracksDetail {
+  grid-area: tracksDetail;
+  height: min-content;
+  width: 100%;
+  color: white;
+  font-weight: 300;
+  padding: 2em;
+  padding-bottom: 3em;
+  border: 4px dotted white;
+  list-style-type: none;
+  visibility: hidden; }
+  .tracksDetail li a {
+    text-decoration: none;
+    cursor: pointer;
+    margin: 0;
+    padding: 0;
+    color: inherit; }
+    .tracksDetail li a:hover {
+      color: #ff7b00; }
+  .tracksDetail button {
+    margin: 0;
+    padding: 4px;
+    font-size: 1.2em;
+    background: white;
+    color: #000eb3;
+    -webkit-border-radius: 10%;
+    -moz-border-radius: 10%;
+    border-radius: 10%;
+    cursor: pointer; }
+    .tracksDetail button:hover {
+      color: #ff7b00; }
+  .tracksDetail h1 {
+    font-weight: 900;
+    color: #fffb00;
+    letter-spacing: .2em; }
+  .tracksDetail ul {
+    list-style-type: none; }
+    .tracksDetail ul li {
+      margin: 0;
+      padding: 0; }
+  .tracksDetail span {
+    font-weight: 700;
+    color: #ff7b00; }
+
+.trackInfoDetail {
+  grid-area: trackInfoDetail;
+  height: min-content;
+  width: 100%;
+  color: white;
+  font-weight: 300;
+  padding: 2em;
+  padding-bottom: 3em;
+  border: 4px dotted white;
+  list-style-type: none;
+  visibility: hidden; }
+  .trackInfoDetail li a {
+    text-decoration: none;
+    cursor: pointer;
+    margin: 0;
+    padding: 0;
+    color: inherit; }
+    .trackInfoDetail li a:hover {
+      color: #ff7b00; }
+  .trackInfoDetail button {
+    margin: 0;
+    padding: 4px;
+    font-size: 1.2em;
+    background: white;
+    color: #000eb3;
+    -webkit-border-radius: 10%;
+    -moz-border-radius: 10%;
+    border-radius: 10%;
+    cursor: pointer; }
+    .trackInfoDetail button:hover {
+      color: #ff7b00; }
+  .trackInfoDetail h1 {
+    font-weight: 900;
+    color: #fffb00;
+    letter-spacing: .2em; }
+  .trackInfoDetail ul {
+    list-style-type: none; }
+    .trackInfoDetail ul li {
+      margin: 0;
+      padding: 0; }
+  .trackInfoDetail span {
     font-weight: 700;
     color: #ff7b00; }
 
