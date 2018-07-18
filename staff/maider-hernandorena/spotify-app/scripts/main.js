@@ -1,19 +1,38 @@
 // my presentation logic
 
-// optional, reduce the size of the restaurants loaded in memory
-// restaurants.splice(100);
 
 var search = new SearchPanel();
 
 search.onSearch(function (query) {
-    logic.token = 'BQAd318nOQP7hreYymJaxfT5rAFKXGmnE6TBnswCTEDrajfOHW3eI8QxfcRdF_rLOxbG7hjT0f8vhBSHD1ju8zJBjfAHVdExkN6gAdkUm10vBxJfBAqtT0flqu7mf4SnRz8oaFi5mf4QZw';
+    logic.token = 'BQDt3Iz89nxC0KyiA98L3tJs1epqmv33HIX_7uV-JCcTPJowdaATomC4DFQ1XPJKLcXjgvSE10HQCebHkRXJW4n1Qqo0HasrqgksAXzNHZBFO-1xeI6f8GoCD8XOdmYl4BOojmmkeCR2Ww';
 
     logic.searchArtists(query)
         .then(function (artist) {
-            results.updateResults(artist.map(function (artist) {
+            resultsArtist.updateResults(artist.map(function (artist) {
                 return {
                     id: artist.id,
                     text: artist.name
+                };
+            }));
+
+            detailContainer.clear();
+        
+        })
+        .catch(function (error) {
+            alert('Sorry, we have temporary problem, try again later.');
+        });
+});
+
+var resultsArtist = new ResultsList();
+
+resultsArtist.onItemClick(function (id) {
+    logic.retrieveAlbumsByArtistId(id)
+
+        .then(function (albums) {
+            resultsAlbum.updateResults(albums.map(function (album) {
+                return {
+                    id: album.id,
+                    text: album.name
                 };
             }));
 
@@ -24,15 +43,36 @@ search.onSearch(function (query) {
         });
 });
 
-var results = new ResultsList();
+var resultsAlbum = new ResultsList();
 
-//var DEFAULT_IMAGE = 'https://images.vexels.com/media/users/3/137413/isolated/preview/4acb8e52632aa9b7c874b878eaf02bc4-spotify-icon-logo-by-vexels.png';
 
-results.onItemClick(function (id) {
-    logic.retrieveAlbumsByArtistId(id)
+resultsAlbum.onItemClick(function (id) {
+            logic.retrieveTracksByAlbumId(id)
+
+                .then(function (tracks) {
+                    resultsTracks.updateResults(tracks.map(function (track) {
+                        return {
+                            id: track.id,
+                            text: track.name
+                        };
+                    }));
+
+                    detailContainer.clear();
+                })
+                .catch(function (error) {
+                    alert('Sorry, we have temporary problem, try again later.');
+                });
+            });
+
+
+        var resultsTracks = new ResultsList();
+
+
+resultsTracks.onItemClick(function (id) {
+    logic.retrieveTrackById(id)
     
-        .then(function (artist) {
-            var detail = new DetailPanel(artist.name, artist.id, artist.images | DEFAUL_IMAGE);
+        .then(function (track) {
+            var detail = new DetailPanel('Track name: ' + track.name, 'Track popularity: ' + track.popularity, track.preview_url, track.external_urls.spotify);
 
             detailContainer.clear();
             detailContainer.appendChild(detail.element);
@@ -42,13 +82,14 @@ results.onItemClick(function (id) {
         });
 });
 
-var detailContainer = document.createElement('div');
+        var detailContainer = document.createElement('div');
 
-detailContainer.clear = function () {
-    this.innerHTML = '';
-};
+        detailContainer.clear = function () {
+            this.innerHTML = '';
+        };
 
-document.body.appendChild(search.element);
-document.body.appendChild(results.element);
-document.body.appendChild(detailContainer);
-
+        document.body.appendChild(search.element); 
+        document.body.appendChild(resultsArtist.element); 
+        document.body.appendChild(resultsAlbum.element); 
+        document.body.appendChild(resultsTracks.element); 
+        document.body.appendChild(detailContainer);

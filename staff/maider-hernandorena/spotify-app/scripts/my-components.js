@@ -68,18 +68,23 @@ ResultsList.prototype.onItemClick = function (callback) {
  * @param {string} info The information about an item
  * @param {string} image The image of the item
  */
-function DetailPanel(title, info, image) {
+function DetailPanel(title, popularity, preview, spotifyUrl) {
     Panel.call(this, title, 'section');
 
     var p = document.createElement('p');
-    p.innerText = info;
-
+    p.innerText = popularity;
     this.element.appendChild(p);
 
-    var img = document.createElement('img');
-    img.src = image;
+    var iframe = document.createElement('iframe');
+    iframe.src = preview;
+    this.element.appendChild(iframe);
 
-    this.element.appendChild(img);
+    var a1 = document.createElement('a');
+    a1.href = spotifyUrl;
+    a1.setAttribute('target', '_blank');
+    a1.innerHTML = 'Complete song on Spotify';
+    this.element.appendChild(a1);
+
 }
 
 DetailPanel.prototype = Object.create(Panel.prototype);
