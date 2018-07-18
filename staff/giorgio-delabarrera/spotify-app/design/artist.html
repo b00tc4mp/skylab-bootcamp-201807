@@ -4,65 +4,91 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Spotify App</title>
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
     
     <section>
-        <header>
-            <img src="img/logo.png" alt="Spotify">
-            <nav>
-                <ul>
-                    <li>
-                        <span>ICON</span>
-                        <span>Buscar</span>
+        <header id="sidebar">
+            <img src="assets/img/logo.png" alt="Spotify" id="logo">
+            <nav class="site-nav">
+                <ul class="site-nav__list">
+                    <li class="site-nav__list-item">
+                        <a href="#" class="site-nav__link">
+                            <div class="site-nav__link-icon">ICON</div>
+                            <div class="site-nav__link-text">Buscar</div>
+                        </a>
                     </li>
-                    <li>
-                        <span>ICON</span>
-                        <span>Inicio</span>
+                    <li class="site-nav__list-item">
+                        <a href="#" class="site-nav__link">
+                            <div class="site-nav__link-icon">ICON</div>
+                            <div class="site-nav__link-text">Inicio</div>
+                        </a>
+                    </li>
+                    <li class="site-nav__list-item">
+                        <a href="#" class="site-nav__link">
+                            <div class="site-nav__link-icon">ICON</div>
+                            <div class="site-nav__link-text">Tu biblioteca</div>
+                        </a>
                     </li>
                 </ul>
             </nav>
-            <section>
-                <h3>Escuchados recientemente</h3>
-                <ul>
-                    <li>Wonderwall - Oasis</li>
-                    <li>Yellow - Coldplay</li>
-                    <li>Patience - Guns and Roses</li>
+            <section class="recently-played">
+                <h2 class="recently-played__title">Last reproduced</h2>
+                <ul class="recently-played__list">
+                    <li class="recently-played__list-item">
+                        <a href="#" class="recently-played__title">Wonderwall - Oasis</a>
+                    </li>
+                    <li class="recently-played__list-item">
+                        <a href="#" class="recently-played__title">Yellow - Coldplay</a>
+                    </li>
+                    <li class="recently-played__list-item">
+                        <a href="#" class="recently-played__title">Patience - Guns and Roses</a>
+                    </li>
                 </ul>
             </section>
         </header>
         <main>
-            <section>
-                <h1>Oasis</h1>
+            <section class="artist-detail">
+                <h1 class="artist-detail__title">Oasis</h1>
             </section>
             <section>
                 <h2>Albumes</h2>
-                <div>
-                    <img src="http://dalelyles.com/musicmp3s/no_cover.jpg" alt="">
-                    <h3><a href="album.html">Default Album</a></h3>
-                    <h3>Oasis</h3>
+                <div class="album-list-item">
+                    <img class="album-list-item__image" src="http://dalelyles.com/musicmp3s/no_cover.jpg" alt="">
+                    <h3 class="album-list-item__title">
+                        <a href="album.html">Default Album</a>
+                    </h3>
+                    <div class="album-list-item__artist">Oasis</div>
                 </div>
-                <div>
-                    <img src="http://dalelyles.com/musicmp3s/no_cover.jpg" alt="">
-                    <h3><a href="album.html">Default Album</a></h3>
-                    <h3>Oasis</h3>
+                <div class="album-list-item">
+                    <img class="album-list-item__image" src="http://dalelyles.com/musicmp3s/no_cover.jpg" alt="">
+                    <h3 class="album-list-item__title">
+                        <a href="album.html">Default Album</a>
+                    </h3>
+                    <div class="album-list-item__artist">Oasis</div>
                 </div>
-                <div>
-                    <img src="http://dalelyles.com/musicmp3s/no_cover.jpg" alt="">
-                    <h3><a href="album.html">Default Album</a></h3>
-                    <h3>Oasis</h3>
+                <div class="album-list-item">
+                    <img class="album-list-item__image" src="http://dalelyles.com/musicmp3s/no_cover.jpg" alt="">
+                    <h3 class="album-list-item__title">
+                        <a href="album.html">Default Album</a>
+                    </h3>
+                    <div class="album-list-item__artist">Oasis</div>
                 </div>
-                <div>
-                    <img src="http://dalelyles.com/musicmp3s/no_cover.jpg" alt="">
-                    <h3><a href="album.html">Default Album</a></h3>
-                    <h3>Oasis</h3>
+                <div class="album-list-item">
+                    <img class="album-list-item__image" src="http://dalelyles.com/musicmp3s/no_cover.jpg" alt="">
+                    <h3 class="album-list-item__title">
+                        <a href="album.html">Default Album</a>
+                    </h3>
+                    <div class="album-list-item__artist">Oasis</div>
                 </div>
             </section>
         </main>
     </section>
-    <aside>Player</aside>
+    <footer>
+        <section class="player"></section>
+    </footer>
 
 </body>
 </html>

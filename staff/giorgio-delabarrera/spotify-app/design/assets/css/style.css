@@ -1,0 +1,75 @@
+@font-face {
+    font-family: "CircularSpUI";
+    src: url("../fonts/CircularSpUIv3T-Book.woff2") format('woff2');
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+  
+html,
+body,
+ul,
+dl,
+dd {
+    margin: 0;
+    padding: 0;
+}
+  
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+dl,
+ul {
+    margin-top: 0;
+}
+
+ul > li {
+    list-style: none;
+}
+
+a {
+    text-decoration: none; 
+}
+  
+
+body {
+    background-color: #181818;
+    height: 100%;
+    color: hsla(0,0%,100%,.6);
+    font-family: "CircularSpUI", sans-serif;
+}
+
+header {
+    width: 220px;
+    height: 100vh;
+    position: fixed;
+    background-color: rgba(0,0,0,.5);
+}
+
+main {
+    width: 100%;
+    padding-left: 220px;
+}
+
+header img {
+    width: 60px;
+}
+
+.player-container {
+    background-color: #282828;
+    height: 91px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+.search {
+    background-color: #282828;
+}
