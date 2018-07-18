@@ -15,3 +15,15 @@ describe('logic (beers)', function () {
     });
     
 });
+
+describe('retrieveBeerById', function(){
+
+    beforeEach(function(done){
+        
+
+
+
+    })
+
+
+})
