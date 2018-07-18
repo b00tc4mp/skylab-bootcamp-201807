@@ -1,3 +1,5 @@
+"use strict";
+
 var ArtistPanel = function () {
     Component.call(this, 'section');
     var h1 = document.createElement('h1');
