@@ -68,7 +68,7 @@ ResultsList.prototype.onItemClick = function (callback) {
  * @param {string} info The information about an item
  * @param {string} image The image of the item
  */
-function DetailPanel(title, info, image) {
+function DetailPanel(title, info, image, preview_url) {
     Panel.call(this, title, 'section');
 
     var p = document.createElement('p');
@@ -78,7 +78,11 @@ function DetailPanel(title, info, image) {
 
     var img = document.createElement('img');
     img.src = image;
-
+    
+    var audio=document.createElement("audio");
+    var source=document.createElement("source");
+    source.src=preview_url;
+    audio.appendChild(source);
     this.element.appendChild(img);
 }
 

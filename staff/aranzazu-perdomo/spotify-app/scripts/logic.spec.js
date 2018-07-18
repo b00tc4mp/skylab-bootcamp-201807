@@ -1,8 +1,7 @@
 'use strict';
 
 describe('logic (spotify)', function () {
-    logic.token = 'BQBJQ5mU9frVfjPJJ6cXm7pAUkAov0UUhYVF9fUo2z8xds0iDkrbF1m6FIsmRCHP7uZbFoO29QZIdxNc75KDcjVyeOM0aHWlhn02Vr2Yv-kjIJk3ab2SaIBBNDi8zsULrH0koYahEawqfHMZ6T29d38iWK6swHuD5xVE6wneUqBYkSN4T9HDCJjk9ZtG0tM7vc4VoOiHXQyhU9SvGk-6Z3z8kg';
-    
+    logic.token = 'BQDV5GwFQsSPsh22gtCs-trR4DxhBauswKm9mcamVUiL2D_JTGnrbUU7Mna_b5eVo_ehhat0MKM8xWt879-yrtVUmSPSMGBsEF747pmnaebSZ6p3F98MAPZKGPRaFBIjkpuSzPw45FJumZaSspX3B8wY-q864g1iVZYahdD6lP2wvYokKu6_wJR5A79Zm1JPBEhH1HOo_BCv9woH5ngmwUvMZA'
     describe('search artists', function () {
         it('should find artists matching criteria', function () {
             return logic.searchArtists('madonna')
@@ -24,4 +23,28 @@ describe('logic (spotify)', function () {
                 });
         });
     });
+
+    describe('retrieve tracks by album id', function () {
+        it('should retrieve tracks for given album id', function () {
+            return logic.retrieveTracksByAlbumId('1ZZSvLZfbkBDIFPSMi3Cqk')
+                .then(function (tracks) {
+                    expect(tracks).toBeDefined();
+                    expect(tracks.length).toBe(1);
+                    expect(tracks[0].name).toBe("Cut To The Feeling");
+                });
+        });
+    });
+
+    describe('retrieve tracks by id', function () {
+        it('should retrieve tracks for given  id', function () {
+            return logic.retrieveTrackById("1pG9UBPDateu64y8lfHSOk")
+                .then(function (track) {
+                    expect(track).toBeDefined();
+                    expect(track.name).toBe('Cut To The Feeling');
+                });
+        });
+    });
+   
+   
+
 });

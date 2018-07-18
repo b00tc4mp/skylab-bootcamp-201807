@@ -42,7 +42,7 @@ var logic = {
     },
 
     retrieveTracksByAlbumId(id) {
-        return this._callApi('/artists/' + id + '/tracks')
+        return this._callApi('/albums/' + id + '/tracks')
         .then(function(res) {
             return res.items;
         });
@@ -51,7 +51,7 @@ var logic = {
     retrieveTrackById(id) {
         return this._callApi('/tracks/' + id )
         .then(function(res) {
-            return res.items;
+            return res;
         });
     }
 };
