@@ -21,8 +21,8 @@ var logic = {
 
             request.setRequestHeader('Authorization', 'Bearer ' + this.token);
 
-            request.send();
 
+            request.send();
         }.bind(this));
 
     },
