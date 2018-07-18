@@ -1,7 +1,11 @@
 'use strict';
 
 describe('logic (spotify)', function () {
+<<<<<<< HEAD:staff/kim-garcia/spotify-app/scripts/logic.spec.js
+    logic.token = 'BQDeTDrIuN2_hLvFc7PSP-mrt8OIayeRozCIoE1NXbiTXem-Apma1ofetOT7kuqRpjmtebHVcTi-jEW_JktPXp6WpB2lWpaTkvpGuq7RLoWSmORgZE-P7n1GTyXJ9xmhp3i7uRAt97UheEZDqEa1qmrwdjQ';
+=======
     logic.token = 'BQB5E-cSm2NXdDZZckNZJ20CU-2dfMT-7cXoNMP6BCUNFOfpcPsmAvnVpQt0ZqBILy36KRvEaiQivqONg8JlvbY6QPlWjIBsy17MVZZZUQqnQBq3Zjum__N121LTgO_lgDlDi0VFSWzp';
+>>>>>>> upstream/develop:staff/manuel-barzi/spotify-app/scripts/logic.spec.js
     
     describe('search artists', function () {
         it('should find artists matching criteria', function () {
@@ -49,4 +53,20 @@ describe('logic (spotify)', function () {
                 });
         });
     });
+
+    describe("Retrieve tracks by album id", function (){
+        it('should retrieve tracks for given albums id', function () {
+           return logic.retrieveTracksByAlbumId('48duP4hfEqa6b3B9VeYfkI')
+           .then(function(tracks){
+               expect(tracks).toBeDefined();
+               expect(tracks.length).toBe(1);
+               expect(tracks[0].name).toBe("Jerusalem Is A Mountain - Original Mix");
+
+           })
+
+        })
+    })
+
+
+
 });

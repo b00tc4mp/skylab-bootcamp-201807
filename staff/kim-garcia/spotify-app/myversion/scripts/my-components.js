@@ -40,7 +40,7 @@ ResultsList.prototype = Object.create(Component.prototype);
 ResultsList.prototype.constructor = ResultsList;
 
 ResultsList.prototype.updateResults = function (results) { // => { id, text }
-    this.clear();
+    this.element.innerHTML = '';
 
     results.forEach(function (result) {
         var li = document.createElement('li');
@@ -52,66 +52,61 @@ ResultsList.prototype.updateResults = function (results) { // => { id, text }
             if (this._callback) this._callback(result.id, result.text);
         }.bind(this);
 
+
+
         this.element.appendChild(li);
 
         li.appendChild(a);
     }, this);
 };
 
-ResultsList.prototype.clear = function() {
-    this.element.innerHTML = '';
-};
-
 ResultsList.prototype.onItemClick = function (callback) {
     this._callback = callback;
 };
 
+// /**
+//  * 
+//  * @param {string} title The item title
+//  * @param {string} info The information about an item
+//  * @param {string} image The image of the item
+//  */
+// function _DetailPanel(title, info, image) {
+//     Panel.call(this, title, 'section');
+
+//     var p = document.createElement('p');
+//     p.innerText = info;
+
+//     this.element.appendChild(p);
+
+//     var img = document.createElement('img');
+//     img.src = image;
+
+//     this.element.appendChild(img);
+// }
+
+// DetailPanel.prototype = Object.create(Panel.prototype);
+// DetailPanel.prototype.constructor = DetailPanel;
+
+
 /**
  * 
- * @param {string} title The track title
- * @param {string} image The image URL of the track
- * @param {string} file The file URL of the track
- * @param {string} url The URL of the track
+ * @param {string} title The item title
+ * @param {string} info The information about an item
+ * @param {string} image The image of the item
  */
-function TrackPlayer(title, image, file, url) {
+function DetailPanel(title, info, image) {
     Panel.call(this, title, 'section');
+
+    var p = document.createElement('p');
+    p.innerText = "Followers :" +info;
+    this.element.appendChild(p);
 
     var img = document.createElement('img');
     img.src = image;
-
     this.element.appendChild(img);
-
-    var audio = document.createElement('audio');
-    audio.controls = true;
-
-    var source = document.createElement('source');
-    source.src = file;
-    source.type = 'audio/mpeg';
-
-    audio.appendChild(source);
-
-    this.element.appendChild(audio);
-
-    var a = document.createElement('a');
-    a.href = url;
-    a.innerText = 'Open in original player';
-    a.target = '_blank';
-
-    this.element.appendChild(a);
 }
 
-TrackPlayer.prototype = Object.create(Panel.prototype);
-TrackPlayer.prototype.constructor = TrackPlayer;
 
-/**
- * 
- * @param {string} id The track id
- */
-function SpotifyPlayer(id) {
-    Component.call(this, 'section');
 
-    this.element.innerHTML = '<iframe src="https://open.spotify.com/embed?uri=spotify:track:'+ id +'" width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>';
-}
-
-SpotifyPlayer.prototype = Object.create(Component.prototype);
-SpotifyPlayer.prototype.constructor = SpotifyPlayer;
+DetailPanel.prototype = Object.create(Panel.prototype);
+DetailPanel.prototype.constructor = DetailPanel;
