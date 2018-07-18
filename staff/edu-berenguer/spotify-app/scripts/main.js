@@ -95,8 +95,14 @@ function DetailPanel(title, info,image ,link, url) {
 
     this.element.appendChild(a);
 
-    var song = document.createElement("audio");
-    song.href = url;
+    var song = document.createElement('audio');
+    song.controls = true;
+
+    var source = document.createElement('source');
+    source.src = url;
+    source.type = 'audio/mpeg';
+
+    song.appendChild(source);
 
     this.element.appendChild(song);
 }
@@ -156,7 +162,7 @@ resultsTrack.onItemClick(function (id) {
     logic.retrieveTrackById(id)
         .then(function(trackId){
             var infoTrack = new DetailPanel(trackId.name, trackId.popularity, trackId.album.images[0].url ? trackId.album.images[0].url : DEFAULT_IMAGE, trackId.album.external_urls.spotify, trackId.preview_url);
-            
+
             detailContainer.appendChild(infoTrack.element);
             });
             detailContainer.clear();
@@ -169,11 +175,11 @@ detailContainer.clear = function() {
 };
 
 //El element hace referencia a los elementos creados de su constructor
-document.body.appendChild(detailContainer);
 document.body.appendChild(search.element);
 document.body.appendChild(results.element);
 document.body.appendChild(resultsTracks.element);
 document.body.appendChild(resultsTrack.element);
+document.body.appendChild(detailContainer);
 
 
 
