@@ -88,8 +88,8 @@ resultsTracks.onItemClick(function (id) {
             this.innerHTML = '';
         };
 
-        $('body').append(search.element); 
-        $('body').append(resultsArtist.element); 
-        $('body').append(resultsAlbum.element); 
-        $('body').append(resultsTracks.element); 
-        $('body').append(detailContainer);
+        document.body.appendChild(search.element); 
+        document.body.appendChild(resultsArtist.element); 
+        document.body.appendChild(resultsAlbum.element); 
+        document.body.appendChild(resultsTracks.element); 
+        document.body.appendChild(detailContainer);
