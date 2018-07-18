@@ -65,9 +65,10 @@ ResultsList.prototype.onItemClick = function (callback) {
  * 
  * @param {string} title The item title
  * @param {string} info The information about an item
- * @param {string} imgSrc The image
+ * @param {string} imgSrc The image of the item
  */
 function DetailPanel(title, info, imgSrc) {
+    
     Panel.call(this, title, 'section');
 
     var p = document.createElement('p');
@@ -122,7 +123,8 @@ results.onItemClick(function (id, text) {
     
     logic.searchBeers(url).then(function(response) {    
         var beer = response;
-        var detail = new DetailPanel(beer.name, beer.id, beer.labels.medium);
+        var img = beer.labels? beer.labels.medium : 'https://st2.depositphotos.com/1495079/12116/v/950/depositphotos_121166384-stock-illustration-beer-sign-icon.jpg'
+        var detail = new DetailPanel(beer.name, beer.id, img);
     
         detailContainer.clear();
         detailContainer.appendChild(detail.element);
