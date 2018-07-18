@@ -1,6 +1,9 @@
+
+'use strict'
+
 var logic = {
-    token: 'NO-TOKEN',
-    //token: 'BQAHo6bDIpyJL6Ohc4-nqaI2oyb7NDRuhcSzdnaWIzE8Sxz8kdCsroSDz9oAfmhepiRAI9tSHBl8jNl3vhisDp_Cmil4qc9fRvuDcLbTsP-LfHldg55RV15o7nIr7-1dlMr6COAH-EvlZU5WDdoh3asdFG4vU7g',
+    //token: 'NO-TOKEN',
+    token: 'BQDs6ZT_4pycVnl5pNcm74U1GtEFS7ENooZHQHkHdfKk9wfBX1yrnbJzbaU9Buo_XySpThs3zGpxm-9DM43O2yEC2YC_vJiwaTDcX37sPjYRKJF_zqRST98s66VWZSjlVR8qoUOKwMfKQbWucMv_R8hNLHQszAY',
 
     _callApi: function (path) {
         return new Promise(function (resolve, reject) {
@@ -55,5 +58,20 @@ var logic = {
             .then(function(res){
                 return res;
             });
-    }
+    },
+
+    searchAlbumsByQuery: function (query) {
+        return this._callApi('/search?type=album&query=' + query)
+            .then(function(res) {
+                return res.albums.items;
+            });
+    },
+
+
+    retrieveAlbumsById(id) {
+        return this._callApi('/albums/' + id)
+            .then(function(res){
+                return res;
+            });
+    },
 };
