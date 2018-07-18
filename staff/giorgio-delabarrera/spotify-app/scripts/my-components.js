@@ -3,28 +3,26 @@
 function SearchPanel() {
     Component.call(this, 'form');
 
-    var $element = $(this.element);
-    
-    var $input = $('<input>')
-        .attr('type', 'search')
-        .attr('placeholder', 'Input a text...');
+    var input = document.createElement('input');
+    input.type = 'search';
+    input.placeholder = 'Input a text...';
 
-    var $button = $('<button></button>')
-        .attr('type', 'submit')
-        .text('Search');
+    var button = document.createElement('button');
+    button.type = 'submit';
+    button.innerHTML = 'Search';
 
-    $element.append($input);
-    $element.append($button);
+    this.element.appendChild(input);
+    this.element.appendChild(button);
 
     var _callback;
 
-    $element.on('submit', function(event) {
+    this.element.addEventListener('submit', function (event) {
         event.preventDefault();
 
-        var query = $input.val();
+        var query = input.value;
 
         if (query && _callback) _callback(query);
-    });
+    }.bind(this));
 
     this.onSearch = function (callback) {
         _callback = callback;
@@ -42,28 +40,22 @@ ResultsList.prototype = Object.create(Component.prototype);
 ResultsList.prototype.constructor = ResultsList;
 
 ResultsList.prototype.updateResults = function (results) { // => { id, text }
-    
-    var $element = $(this.element);
+    this.element.innerHTML = '';
 
-    $element.empty();
+    results.forEach(function (result) {
+        var li = document.createElement('li');
+        var a = document.createElement('a');
 
-    $.each(results, function(index, result) {
-
-        var $li = $('<li></li>');
-
-        var $a = $('<a></a>')
-            .attr('href', '#/' + result.id)
-            .html(result.text);
-
-        $a.on('click', function() {
+        a.href = '#/' + result.id;
+        a.innerHTML = result.text;
+        a.onclick = function () {
             if (this._callback) this._callback(result.id, result.text);
-        }.bind(this));
+        }.bind(this);
 
-        $li.append($a);
+        this.element.appendChild(li);
 
-        $element.append($li);
-
-    }.bind(this));
+        li.appendChild(a);
+    }, this);
 };
 
 ResultsList.prototype.onItemClick = function (callback) {
@@ -75,34 +67,35 @@ ResultsList.prototype.onItemClick = function (callback) {
  * @param {string} title The item title
  * @param {string} info The information about an item
  * @param {string} image The image of the item
- * @param {string} preview The image url to the item cover 
  */
 function DetailPanel(title, info, image, preview) {
     Panel.call(this, title, 'section');
 
-    var $element = $(this.element);
+    var p = document.createElement('p');
+    p.innerText = info;
 
-    var $p = $('<p></p>')
-        .text(info);
+    this.element.appendChild(p);
 
-    $element.append($p);
+    var img = document.createElement('img');
+    img.src = image;
 
-    var $img = $('<img>')
-        .attr('src', image);
+    // img.width = '512';
+    // img.height = '512';
+    // img.classList.add('test');
 
-    $element.append($img);
+    this.element.appendChild(img);
 
     if (preview) {
-        var $audio = $('<audio></audio>')
-            .prop('controls', true);
+        var audio = document.createElement('audio');
+        audio.controls = true
         
-        var $source = $('<source></source>')
-            .attr('src', preview)
-            .attr('type', 'audio/mpeg');
+        var source = document.createElement('source');
+        source.src = preview;
+        source.type = 'audio/mpeg';
 
-        $audio.append($source);
+        audio.appendChild(source);
 
-        $element.append($audio);
+        this.element.appendChild(audio);
     }
 }
 
@@ -110,5 +103,5 @@ DetailPanel.prototype = Object.create(Panel.prototype);
 DetailPanel.prototype.constructor = DetailPanel;
 
 DetailPanel.prototype.getAudio = function() {
-    return $(this.element).find('audio')[0];
+    return this.element.querySelector('audio');
 }

@@ -9,7 +9,7 @@ Container.prototype.empty = function() {
 
 // my presentation logic
 
-logic.token = 'BQDzDhEaitwIB7HjGuoCBcJ1IsCORLKotN9s7td-JMoubvlFcUEdmB6l-HRok2Irf1qCJp8Z6yKH-2hHzNY';
+logic.token = 'BQAgooGUBSTWLaJmqDjwXm19adkrRple1NmMFwNC3iPw3qYPJsvXE3G7Vrj6RA90z4MpnDZW8cUWQpYBDgI';
 
 var DEFAULT_COVER_IMAGE = 'https://media2.fishtank.my/app_themes/era/assets/images/default-album-art.png';
 var ERROR_MESSAGE = 'Sorry, we have temporary problem, try again later.';
@@ -24,15 +24,16 @@ var tracksList = new ResultsList();
 var listContainer = new Container();
 var detailContainer = new Container();
 
-document.body.appendChild(search.element);
-document.body.appendChild(listContainer.element);
-document.body.appendChild(detailContainer.element);
+$('body').append(search.element);
+$('body').append(listContainer.element);
+$('body').append(detailContainer.element);
 
 search.onSearch(function (query) {
 
     logic.searchArtists(query)
         .then(function (artists) {
-            listContainer.empty();
+
+            $(listContainer.element).empty();
             
             artistsList.updateResults(artists.map(function (artist) {
                 return {
@@ -41,7 +42,7 @@ search.onSearch(function (query) {
                 };
             }));
 
-            listContainer.element.appendChild(artistsList.element);
+            $(listContainer.element).append(artistsList.element);
         })
         .catch(function (error) {
             alert(ERROR_MESSAGE);
@@ -52,6 +53,7 @@ artistsList.onItemClick(function (artistId) {
 
     logic.retrieveAlbumsByArtistId(artistId)
         .then(function (albums) {
+            
             albumsList.updateResults(albums.map(function (album) {
                 return {
                     id: album.id,
@@ -59,7 +61,7 @@ artistsList.onItemClick(function (artistId) {
                 };
             }));
 
-            listContainer.element.appendChild(albumsList.element);
+            $(listContainer.element).append(albumsList.element);
         })
         .catch(function (error) {
             alert(ERROR_MESSAGE);
@@ -77,7 +79,7 @@ albumsList.onItemClick(function (albumId) {
                 };
             }));
 
-            listContainer.element.appendChild(tracksList.element);
+            $(listContainer.element).append(tracksList.element);
         })
         .catch(function (error) {
             alert(ERROR_MESSAGE);
@@ -95,8 +97,9 @@ tracksList.onItemClick(function (trackId) {
             
             var detail = new DetailPanel(track.name, description, image, track.preview_url);
 
-            detailContainer.empty();
-            detailContainer.element.appendChild(detail.element);
+            $(detailContainer.element).empty();
+
+            $(detailContainer.element).append(detail.element);
 
             var audio = detail.getAudio();
             if (audio) audio.play();
