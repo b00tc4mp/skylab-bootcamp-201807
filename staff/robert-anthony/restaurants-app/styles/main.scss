@@ -35,7 +35,7 @@ body {
   font-weight: 400;
 }
 
-.mainContainer {
+.main-container {
   margin-left: 20px;
   margin-top: 20px;
   -webkit-border-radius: 10px;
@@ -81,7 +81,7 @@ body {
   }
 }
 
-.searchPanel {
+.panel__search {
   grid-area: searchArea;
   h1 {
     @include h1-mix;
@@ -105,7 +105,7 @@ body {
   }
 }
 
-.resultsList {
+.artists-panel {
 
   grid-area: resultArea;
   font-weight: 300;
