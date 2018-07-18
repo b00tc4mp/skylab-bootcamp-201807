@@ -3,25 +3,23 @@
 function SearchPanel() {
     Component.call(this, 'form');
 
-    var $input = $('<input>');
-    $input.attr('type', 'text');
-    $input.attr('placeholder', 'Input a text...');
+    var input = document.createElement('input');
+    input.type = 'search';
+    input.placeholder = 'Input a text...';
 
-    // var $button = $('<button>');
-    // $button.attr('type', 'submit');
-    // $button.text('Search');
+    var button = document.createElement('button');
+    button.type = 'submit';
+    button.innerHTML = 'Search';
 
-    var $button = $('<button type="submit">Search</button>');
-
-    $(this.element).append($input);
-    $(this.element).append($button);
+    this.element.appendChild(input);
+    this.element.appendChild(button);
 
     var _callback;
 
-    $(this.element).submit(function (event) {
+    this.element.addEventListener('submit', function (event) {
         event.preventDefault();
 
-        var query = $input.val();
+        var query = input.value;
 
         if (query && _callback) _callback(query);
     }.bind(this));
@@ -42,21 +40,21 @@ ResultsList.prototype = Object.create(Component.prototype);
 ResultsList.prototype.constructor = ResultsList;
 
 ResultsList.prototype.updateResults = function (results) { // => { id, text }
-    $(this.element).text = '';
+    this.element.innerHTML = '';
 
     results.forEach(function (result) {
-        var $li = $('<li>');
-        var $a = $('<a>');
+        var li = document.createElement('li');
+        var a = document.createElement('a');
 
-        $a.href = '#/' + result.id;
-        $a.innerHTML = result.text;
-        $a.onclick = function () {
+        a.href = '#/' + result.id;
+        a.innerHTML = result.text;
+        a.onclick = function () {
             if (this._callback) this._callback(result.id, result.text);
         }.bind(this);
 
-        $(this.element).appendChild($li);
+        this.element.appendChild(li);
 
-        $($li).append($a);
+        li.appendChild(a);
     }, this);
 };
 

@@ -4,7 +4,7 @@
 // restaurants.splice(100);
 
 var search = new SearchPanel();
-logic.token = 'BQA5Uv_YrZ-k7kmNM75SWCckaC65PItjcg-_GK9pTnZRZDXKsBZmZtsIiDIDo-AtTBtxbwrK6pLIwIxik04g7SSWqI9b1z7vZmzT8rfNEeYuNIWUun9I6hFFfXCUwZcBdjBzbvA_HtsTC2D-whU3t8WGCetDisRATAKPQJxH1LB-T-OMy-U-P258AwE47ynXRBuajnNqxyJ7zIKfDw0OBTvl3A'
+logic.token = 'BQASnTNQ34wZW_Z_5v5S1By4BznWFxPEm1G9OdAQB0cRy07gGhY6qOKAH6KBdGCn6zwUbac0cl81H-Ctaa9KZGw2RO_AOGXUPxxZRlU0__b68BvdSWTtCARgP_HMDZK7jLkxlh_G8ksJWHhATiswOrRy3eH9ikKgbtoQouQYVJn9hlEanJ9ghm6mfovSFoPPl3z7kd1lW1rs6W80oVRCDsAgzQ'
 
 search.onSearch(function (query) {
     
@@ -17,7 +17,7 @@ search.onSearch(function (query) {
                 };
             }));
 
-            $detailContainer.empty();
+            detailContainer.clear();
         })
         .catch(function (error) {
             alert('Sorry, we have temporary problem, try again later.');
@@ -37,7 +37,7 @@ resultsArtist.onItemClick(function (id) {
                 };
             }));
 
-            $detailContainer.empty();
+            detailContainer.clear();
         })
         .catch(function (error) {
             alert('Sorry, we have temporary problem, try again later.');
@@ -58,7 +58,7 @@ resultsAlbum.onItemClick(function (id) {
                 };
             }));
 
-            $detailContainer.empty();
+            detailContainer.clear();
         })
         .catch(function (error) {
             alert('Sorry, we have temporary problem, try again later.');
@@ -71,8 +71,8 @@ resultsTracks.onItemClick(function (id) {
         .then(function (track) {
             var detail = new DetailPanel(track.name,track.image, track.preview_url,);
 
-            $detailContainer.empty();
-            $detailContainer.append(detail.element);
+            detailContainer.clear();
+            detailContainer.appendChild(detail.element);
         })
         .catch(function (error) {
             alert('Sorry, we have temporary problem, try again later.');
@@ -81,15 +81,15 @@ resultsTracks.onItemClick(function (id) {
 
 
 
-var $detailContainer = $('<div class="container"></div>'); ;
+var detailContainer = document.createElement('div');
 
-$detailContainer.clear = function () {
+detailContainer.clear = function () {
     this.innerHTML = '';
 };
 
-$('body').append(search.element);
-$('body').append(resultsArtist.element);
-$('body').append(resultsAlbum.element);
-$('body').append(resultsTracks.element);
-$('body').append($detailContainer);
+document.body.appendChild(search.element);
+document.body.appendChild(resultsArtist.element);
+document.body.appendChild(resultsAlbum.element);
+document.body.appendChild(resultsTracks.element);
+document.body.appendChild(detailContainer);
 
