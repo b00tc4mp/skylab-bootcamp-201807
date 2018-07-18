@@ -1,3 +1,5 @@
+'use strict';
+
 var logic = {
   token: 'NO-TOKEN',
 
