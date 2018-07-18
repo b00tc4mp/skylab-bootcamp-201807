@@ -3,15 +3,14 @@
 function SearchPanel() {
     Component.call(this, 'form');
 
-    var $input = $('<input>');
-    $input.attr('type', 'text');
-    $input.attr('placeholder', 'Input a text...');
+    var $input =$('<input>').attr('type','search');
+    
+    $input.attr('type','placeholder');
+    $input.text('Input a text...');
 
-    // var $button = $('<button>');
-    // $button.attr('type', 'submit');
-    // $button.text('Search');
-
-    var $button = $('<button type="submit">Search</button>');
+    var $button = $('<button>').attr('type','submit').text('Search');
+    
+   
 
     $(this.element).append($input);
     $(this.element).append($button);
@@ -42,21 +41,21 @@ ResultsList.prototype = Object.create(Component.prototype);
 ResultsList.prototype.constructor = ResultsList;
 
 ResultsList.prototype.updateResults = function (results) { // => { id, text }
-    $(this.element).text = '';
+   $(this.element).text = '';
 
     results.forEach(function (result) {
-        var $li = $('<li>');
-        var $a = $('<a>');
+        var li = $('<li>');
+        var a = $('<a>');
 
-        $a.href = '#/' + result.id;
-        $a.innerHTML = result.text;
-        $a.onclick = function () {
+        $(a).attr("href",'#/+ result.id');
+        $(a).text('result.text');
+        $(a).on('click', function () {
             if (this._callback) this._callback(result.id, result.text);
-        }.bind(this);
+        }.bind(this));
 
-        $(this.element).appendChild($li);
+        $(this.element).append(li);
 
-        $($li).append($a);
+        $(li).append(a);
     }, this);
 };
 

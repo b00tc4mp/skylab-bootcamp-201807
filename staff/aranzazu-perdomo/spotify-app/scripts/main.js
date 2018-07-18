@@ -4,7 +4,7 @@
 // restaurants.splice(100);
 
 var search = new SearchPanel();
-logic.token = 'BQA5Uv_YrZ-k7kmNM75SWCckaC65PItjcg-_GK9pTnZRZDXKsBZmZtsIiDIDo-AtTBtxbwrK6pLIwIxik04g7SSWqI9b1z7vZmzT8rfNEeYuNIWUun9I6hFFfXCUwZcBdjBzbvA_HtsTC2D-whU3t8WGCetDisRATAKPQJxH1LB-T-OMy-U-P258AwE47ynXRBuajnNqxyJ7zIKfDw0OBTvl3A'
+logic.token = 'BQDEETB0sRUe7s0LIEVeXLUJZPJiQEBcvUCserd3Q67BDVcSGKPed7F5TtRUc8302bghMJMasFc3cfXdtMOPdquJkn_FF0iSiFnzlV14kyumk9DA08S2_qnMoSkZG4oQIY1o0k7wZEkgPspmNhaqzljTAgjox9AN1G9xcgnqkau1uMNgq6JESi_Khyh73w3djyG2FM2Oaoy6Bt1CGlNTzoAHAw'
 
 search.onSearch(function (query) {
     
