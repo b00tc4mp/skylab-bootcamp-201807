@@ -23,8 +23,8 @@ search.onSearch(function (query) {
             alert('Sorry, we have temporary problem, try again later.');
         });
 });
-
-document.body.appendChild(search.element);
+$('body').append(search.element);
+//document.body.appendChild(search.element);
 
 var artistsList = new ResultsList();
 
@@ -46,7 +46,8 @@ artistsList.onItemClick(function (id) {
         });
 });
 
-document.body.appendChild(artistsList.element);
+$('body').append(artistsList.element);
+//document.body.appendChild(artistsList.element);
 
 var albumsList = new ResultsList();
 
@@ -64,7 +65,8 @@ albumsList.onItemClick(function (id) {
         });
 });
 
-document.body.appendChild(albumsList.element);
+$('body').append(albumsList.element);
+//document.body.appendChild(albumsList.element);
 
 var tracksList = new ResultsList();
 
@@ -80,7 +82,9 @@ tracksList.onItemClick(function (id) {
         });
 });
 
-document.body.appendChild(tracksList.element);
+$('body').append(tracksList.element);
+//document.body.appendChild(tracksList.element);
+
 
 var trackContainer = document.createElement('div');
 
@@ -88,5 +92,6 @@ trackContainer.clear = function () {
     this.innerHTML = '';
 };
 
-document.body.appendChild(trackContainer);
+$('body').append(trackContainer);
+//document.body.appendChild(trackContainer);
 
