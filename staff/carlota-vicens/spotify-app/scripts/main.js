@@ -70,20 +70,24 @@ var tracksResults = new ResultsList();
 
 
 tracksResults.onItemClick(function (id) {
-    logic.retrieveTrackById(id, function (tracks) {
-        
-        var detail = new DetailPanel(tracks.name, tracks.preview_url);
+    logic.retrieveTrackById(id)
+        .then(function (track) {
+            trackContainer.clear();
 
-        //detailContainer.clear();
-        //detailContainer.appendChild(detail.element);
-        var player= new DetailPanel(track.id);
+            // var player = new TrackPlayer(track.name, track.album.images[0].url, track.preview_url, track.external_urls.spotify);
+            var player = new SpotifyPlayer(track.id);
 
-        
-
-    });
-
-
+            trackContainer.appendChild(player.element);
+        });
 });
+
+document.body.appendChild(tracksList.element);
+
+var trackContainer = document.createElement('div');
+
+trackContainer.clear = function () {
+    this.innerHTML = '';
+};
 
 
 
