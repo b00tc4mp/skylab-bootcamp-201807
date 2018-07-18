@@ -25,8 +25,6 @@ search.onSearch(function (query) {
 
 var results = new ResultsList();
 
-//var DEFAULT_IMAGE = 'https://i.pinimg.com/originals/37/2a/2d/372a2d5e8a32991bb19982271d0762fe.jpg';
-
 results.onItemClick(function (id) {
     logic.retrieveAlbumsByArtistId(id)
         .then(function (albums) {
@@ -79,33 +77,20 @@ tracksResults.onItemClick(function (id) {
 
             trackContainer.appendChild(player.element);
         });
+        
 });
 
-document.body.appendChild(tracksList.element);
-
 var trackContainer = document.createElement('div');
 
 trackContainer.clear = function () {
     this.innerHTML = '';
 };
 
-
-document.body.appendChild(tracksList.element);
-
-var trackContainer = document.createElement('div');
-
-trackContainer.clear = function () {
-    this.innerHTML = '';
-};
-
-document.body.appendChild(trackContainer);
 
 
 
 document.body.appendChild(search.element);
 document.body.appendChild(results.element);
-document.body.appendChild(detailContainer);
 document.body.appendChild(albumsResults.element);
 document.body.appendChild(tracksResults.element);
-
-
+document.body.appendChild(trackContainer);
