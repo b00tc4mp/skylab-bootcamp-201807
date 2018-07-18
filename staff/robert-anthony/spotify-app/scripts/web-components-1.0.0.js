@@ -13,8 +13,10 @@
  * Constructs a component
  */
 function Component(tag) {
+
   var element = document.createElement(tag || 'div');
   this.element = element;
+  this.$element = $(this.element);
 
   // element.style.width = '100px';
   // element.style.height = '100px';

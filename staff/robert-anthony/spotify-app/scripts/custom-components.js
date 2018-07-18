@@ -7,41 +7,27 @@
 * */
 
 
-function ClassedComponent(cssClass, tag) {
-  Component.call(this, tag);
-  this.element.classList.add(cssClass);
-
-}
-
-ClassedComponent.prototype = Object.create(Component.prototype);
-ClassedComponent.prototype.constructor = ClassedComponent;
-
 function SearchPanel(title, cssClass, tag) {
   Panel.call(this, title, "form");
 
-  var searchInput = document.createElement('input');
-  searchInput.type = "search";
-  searchInput.placeholder = "Search term...";
-  searchInput.autofocus = true;
-  var searchButton = document.createElement('button');
-  searchButton.type = "submit";
-  searchButton.innerHTML = "Submit";
-  this.element.appendChild(searchInput);
-  this.element.appendChild(searchButton);
-  this.element.classList.add(cssClass);
+  this.$searchInput = $("<input type='search' autofocus placeholder='Search term' class='search-panel__input' >");
+  this.$element.append(this.$searchInput);
+  $("<button type='submit'>Submit</button>").appendTo(this.element);
+
+  this.$element.addClass(cssClass);
 
   this._onSearch = function () {
   };
 
-  searchButton.addEventListener('onfocus', function () {
-    searchInput.value = "";
+  $(this.element).find('button').on('focus', function () {
+    this.$searchInput.val("");
   }.bind(this));
 
-  this.element.addEventListener('submit', function (event) {
+  this.$element.on('submit', function (event) {
     event.preventDefault();
-    var query = searchInput.value;
+    var query = this.$searchInput.val();
     this._onSearch(query);
-    searchInput.value = "";
+    this.$searchInput.val("");
 
   }.bind(this));
 }
@@ -49,80 +35,22 @@ function SearchPanel(title, cssClass, tag) {
 SearchPanel.prototype = Object.create(Panel.prototype);
 SearchPanel.prototype.constructor = SearchPanel;
 SearchPanel.prototype.onSearch = function (callback) {
-  // this.element.children[2].addEventListener('click', callback);
   this._onSearch = callback;
-
 };
-
-
-/*
-*
-*
-*
-*
-* */
-/*
-
-function DetailPanel(title, cssClass) {
-  Panel.call(this, title, "ul");
-
-  this.element.classList.add(cssClass);
-  this.imageHolder = document.createElement("div");
-  this.element.appendChild(this.imageHolder);
-
-  this._elementClick = function () {
-  };
-
-  this.element.addEventListener('click', function (event) {
-    if (event.target === this.element) return null;
-
-    this._elementClick({id: event.target.getAttribute('data-id'), text: event.target.innerHTML});
-
-  }.bind(this));
-}
-
-DetailPanel.prototype = Object.create(Panel.prototype);
-DetailPanel.prototype.constructor = DetailPanel;
-DetailPanel.prototype.onShowLocation = function (callback) {
-  this._onShowLocation = callback;
-};
-DetailPanel.prototype.onElementClick = function (callback) {
-  this._elementClick = callback;
-};
-
-DetailPanel.prototype.setData = function (data) {
-  while (this.element.firstChild) {
-    this.element.removeChild(this.element.firstChild);
-  }
-  data.forEach(function (element, index) {
-    let li = document.createElement("li");
-    let a = document.createElement("a");
-    a.innerHTML = element.name;
-    a.href = "#/" + index;
-    a.setAttribute('data-id', element.id);
-    li.appendChild(a);
-
-    this.element.appendChild(li);
-  }.bind(this));
-};
-*/
-
 
 
 /**/
 function ResultsList(cssClass) {
 
   Panel.call(this, "", "ul");
-
-  this.element.classList.add(cssClass);
+  this.$element.addClass(cssClass);
 
   this._elementClick = function () {
 
   };
 
-  this.element.addEventListener('click', function (event) {
+  this.$element.on('click', function (event) {
     if (event.target === this.element) return null;
-
     this._elementClick({id: event.target.getAttribute('data-id'), text: event.target.innerHTML});
 
   }.bind(this))
@@ -135,24 +63,26 @@ ResultsList.prototype.onElementClick = function (callback) {
   this._elementClick = callback;
 };
 ResultsList.prototype.setData = function (data) {
-  while (this.element.firstChild) {
-    this.element.removeChild(this.element.firstChild);
-  }
-  data.forEach(function (element, index) {
-    let li = document.createElement("li");
-    let a = document.createElement("a");
-    a.innerHTML = element.name;
-    a.href = "#/" + index;
-    a.setAttribute('data-id', element.id);
-    li.appendChild(a);
+  this.$element.empty();
 
-    this.element.appendChild(li);
+  data.forEach(function (element, index) {
+    var $li = $("<li><a>" + element.name + "</a></li>" );
+    $li.find("a").attr("data-id",element.id).attr("href","#/" + index).addClass("detail-panel__link");
+    this.$element.append($li);
   }.bind(this));
 };
 
 
-function TrackDetailPanel(cssClass) {
-  ResultsList.call(this,  cssClass);
+function TrackDetailPanel(cssClass,linkToggle) {
+  ResultsList.call(this, cssClass);
+  this.$element.on('click', function (event) {
+    if (event.target === this.element) return null;
+    if (linkToggle) {
+      $(event.target).toggleClass(linkToggle);
+    }
+    this._elementClick({id: event.target.getAttribute('data-id'), text: event.target.innerHTML});
+
+  }.bind(this))
 }
 
 TrackDetailPanel.prototype = Object.create(ResultsList.prototype);
@@ -163,20 +93,15 @@ TrackDetailPanel.prototype.setData = function (title, data, imageSrc) {
   while (this.element.firstChild) {
     this.element.removeChild(this.element.firstChild);
   }
-  var h1 = document.createElement('h1');
-  h1.innerHTML = title;
-  this.element.appendChild(h1);
-  var img = document.createElement('img');
-  img.src = imageSrc;
-  this.element.appendChild(img);
+
+  this.$element.append($("<h1>" + title + "</h1>"));
+
+  var $img = $("<img>")
+  $img.attr("src",imageSrc);
+  this.$element.append($img);
   data.forEach(function (element, index) {
-    let li = document.createElement("li");
-    let a = document.createElement("a");
-    a.innerHTML = element.name;
-    a.href = "#/" + index;
-    a.setAttribute('data-id', element.id);
-    li.appendChild(a);
-    a = document.createElement("a");
-    this.element.appendChild(li);
+    var $li = $("<li><a>" + element.name + "</a></li>" );
+    $li.find("a").attr("data-id",element.id).attr("href","#/" + index).addClass("detail-panel__link");
+    this.$element.append($li);
   }.bind(this));
 };

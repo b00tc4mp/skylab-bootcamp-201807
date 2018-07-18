@@ -266,6 +266,8 @@ function ResultsList(dataArray, cssClass) {
 
   this.element.addEventListener('click', function (event) {
     if (event.target === this.element) return null;
+    $(event.target).addClass('detail-panel__link--selected');
+    log(event.target);
 
     this._elementClick({id: event.target.getAttribute('data-id'), text: event.target.innerHTML});
 

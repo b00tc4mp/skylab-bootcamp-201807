@@ -9,7 +9,7 @@ body {
   font-family: 'Lato', sans-serif;
   font-weight: 400; }
 
-.mainContainer {
+.main-container {
   margin-left: 20px;
   margin-top: 20px;
   -webkit-border-radius: 10px;
@@ -58,13 +58,13 @@ body {
     font-weight: 700;
     color: #ff7b00; }
 
-.searchPanel {
+.panel__search {
   grid-area: searchArea; }
-  .searchPanel h1 {
+  .panel__search h1 {
     font-weight: 900;
     color: #fffb00;
     letter-spacing: .2em; }
-  .searchPanel input {
+  .panel__search input {
     margin: 0 10px;
     border: darkgreen;
     -webkit-border-radius: 3px;
@@ -75,7 +75,7 @@ body {
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
     border-radius: 3px; }
-  .searchPanel button {
+  .panel__search button {
     margin: 0;
     padding: 4px;
     font-size: 1.2em;
@@ -85,22 +85,22 @@ body {
     -moz-border-radius: 10%;
     border-radius: 10%;
     cursor: pointer; }
-    .searchPanel button:hover {
+    .panel__search button:hover {
       color: #ff7b00; }
 
-.resultsList {
+.artists-panel {
   grid-area: resultArea;
   font-weight: 300;
   color: white;
   list-style-type: none;
   width: 100%; }
-  .resultsList li a {
+  .artists-panel li a {
     text-decoration: none;
     cursor: pointer;
     margin: 0;
     padding: 0;
     color: inherit; }
-    .resultsList li a:hover {
+    .artists-panel li a:hover {
       color: #ff7b00; }
 
 .radioButtons {

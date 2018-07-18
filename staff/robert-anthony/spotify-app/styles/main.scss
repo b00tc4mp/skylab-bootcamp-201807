@@ -1,6 +1,17 @@
 $yellowy: rgb(255, 251, 0);
 $orangey: rgb(255, 123, 0);
 
+@mixin link-styling {
+  text-decoration: none;
+  cursor: pointer;
+  margin: 0;
+  padding: 0;
+  color: inherit;
+  &:hover {
+    color: $orangey;
+  }
+}
+
 @mixin detailsMixin {
   height: min-content;
   width: 100%;
@@ -11,9 +22,7 @@ $orangey: rgb(255, 123, 0);
   border: 4px dotted white;
   list-style-type: none;
   visibility: hidden;
-  li a {
-    @include link-styling;
-  }
+
 
   button {
     @include button-mix;
@@ -56,16 +65,7 @@ $orangey: rgb(255, 123, 0);
   letter-spacing: .2em;
 }
 
-@mixin link-styling {
-  text-decoration: none;
-  cursor: pointer;
-  margin: 0;
-  padding: 0;
-  color: inherit;
-  &:hover {
-    color: $orangey;
-  }
-}
+
 
 * {
   -webkit-box-sizing: border-box;
@@ -80,7 +80,7 @@ body {
   font-weight: 400;
 }
 
-.mainContainer {
+.main-container {
   margin-left: 20px;
   margin-top: 20px;
   -webkit-border-radius: 10px;
@@ -97,23 +97,32 @@ body {
 
 }
 
-.albumsDetail {
+.detail-panel__link  {
+  @include link-styling;
+}
+
+.detail-panel__link--selected {
+  font-size: 1.5em;
+  color: $orangey;
+}
+
+.detail-panel-albums {
   grid-area: albumsDetail;
 @include detailsMixin;
 }
 
-.tracksDetail {
+.detail-panel-tracks {
   grid-area:tracksDetail;
   @include detailsMixin;
 
 }
-.trackInfoDetail {
+.detail-panel-trackInfo {
   grid-area:trackInfoDetail;
   @include detailsMixin;
 
 }
 
-.searchPanel {
+.search-panel {
   grid-area: searchArea;
   h1 {
     @include h1-mix;
@@ -137,7 +146,7 @@ body {
   }
 }
 
-.resultsList {
+.detail-panel-artists {
 
   grid-area: resultArea;
   font-weight: 300;
@@ -151,22 +160,3 @@ body {
  }
 }
 
-.radioButtons {
-  margin-top: 20px;
-  color: darkslategrey;
-  display: flex;
-  align-items: center;
-
-  label {
-    color: white;
-  }
-
-
-}
-.map {
-  margin: 0;
-  padding: 0;
-  height: 300px;
-  width:300px;
-
-}

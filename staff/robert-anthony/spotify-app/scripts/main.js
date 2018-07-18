@@ -13,29 +13,35 @@ function clearAudio() {
 }
 
 
+function ClassedComponent(cssClass, tag) {
+  Component.call(this, tag);
+  this.$element.addClass(cssClass);
+}
+
+ClassedComponent.prototype = Object.create(Component.prototype);
+ClassedComponent.prototype.constructor = ClassedComponent;
 
 
+var mainContainer = new ClassedComponent("main-container");
+$('body').append(mainContainer.element);
 
-var mainContainer = new ClassedComponent("mainContainer");
-document.body.appendChild(mainContainer.element);
 
-
-var searchPanel = new SearchPanel("Search for Artists", "searchPanel", "section");
-mainContainer.element.appendChild(searchPanel.element);
+var searchPanel = new SearchPanel("Search for Artists", "search-panel", "section");
+mainContainer.$element.append(searchPanel.element);
 searchPanel.onSearch(doArtistSearch);
 
 
-var resultsList = new ResultsList("resultsList");
-mainContainer.element.appendChild(resultsList.element);
+var resultsList = new ResultsList("detail-panel-artists");
+mainContainer.$element.append(resultsList.element);
 resultsList.onElementClick(showArtistAlbums);
 
-var albumsDetail = new ResultsList("albumsDetail");
-mainContainer.element.appendChild(albumsDetail.element);
+var albumsDetail = new ResultsList("detail-panel-albums");
+mainContainer.$element.append(albumsDetail.element);
 albumsDetail.onElementClick(showAlbumTracks);
 
 
-var tracksDetail = new TrackDetailPanel("tracksDetail");
-mainContainer.element.appendChild(tracksDetail.element);
+var tracksDetail = new TrackDetailPanel("detail-panel-tracks","detail-panel__link--selected");
+mainContainer.$element.append(tracksDetail.element);
 tracksDetail.onElementClick(showTrackInfo);
 
 
@@ -57,7 +63,6 @@ function showAlbumTracks(albumData) {
   clearAudio();
   var albumRetrieved;
   TweenMax.to(tracksDetail.element, 0.25, {autoAlpha: 0});
-  console.log(albumData);
   logic.retrieveAlbumById(albumData.id)
     .then(function (album) {
       albumRetrieved = album;
@@ -71,7 +76,9 @@ function showAlbumTracks(albumData) {
       });
       tracksDetail.setData(albumRetrieved.name, trackList, albumRetrieved.images[1].url);
       TweenMax.to(tracksDetail.element, 0.25, {autoAlpha: 1});
-    });
+    }).catch(function(err) {
+      console.log("There was a problem in retrieving the album's tracks",err);
+  });
 }
 
 function showArtistAlbums(artistData) {
@@ -100,5 +107,5 @@ function showTrackInfo(trackData) {
 
 }
 
-logic.token = "BQB7RV6HZCj0ur4FdKL4YVBjLKRvwypn1Gfcp5p6Yn680ujVhdEoE9ddhXRyxmCKHq3pkm_4_3WflEvJnjTE4W-N_oKZKetl71RMR-mjvZJo3yCqwaIKsxm73BTAIlPSiCReqzmck_xy";
+logic.token = "BQDpnaofHTM05kO6K5mrXWeX36itnfWWfxExzgeTuPZQa8c4VbRzwbrUPl1PlHnXRlR5TEvhKs7yzmPQfr5dIfjf8WDuzE0TuwCwPj4Uqc0KYLgHNne9Pd3Cq602fMJjF80aKxI-rwBe";
 
