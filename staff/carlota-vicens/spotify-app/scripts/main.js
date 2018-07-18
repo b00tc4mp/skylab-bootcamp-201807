@@ -90,13 +90,15 @@ trackContainer.clear = function () {
 };
 
 
+document.body.appendChild(tracksList.element);
 
+var trackContainer = document.createElement('div');
 
-var detailContainer = document.createElement('div');
-
-detailContainer.clear = function () {
+trackContainer.clear = function () {
     this.innerHTML = '';
 };
+
+document.body.appendChild(trackContainer);
 
 
 

@@ -1,0 +1,14 @@
+main 
+
+document.body.appendChild(tracksList.element);
+
+var trackContainer = document.createElement('div');
+
+trackContainer.clear = function () {
+    this.innerHTML = '';
+};
+
+document.body.appendChild(trackContainer);
+
+
+

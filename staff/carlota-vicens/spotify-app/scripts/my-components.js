@@ -64,26 +64,50 @@ ResultsList.prototype.onItemClick = function (callback) {
 
 /**
  * 
- * @param {string} title The item title
- * @param {string} info The information about an item
- * @param {string} image The image of the item
+ * @param {string} title The track title
+ * @param {string} image The image URL of the track
+ * @param {string} file The file URL of the track
+ * @param {string} url The URL of the track
  */
-function DetailPanel(title,preview, songLink) {
-    
-    this.element.innerHTML= '<iframe src="https://open.spotify.com/embed?uri=spotify:track:'+ id +'" width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>';
+function TrackPlayer(title, image, file, url) {
+    Panel.call(this, title, 'section');
 
-    Componnent.call(this, 'section');
+    var img = document.createElement('img');
+    img.src = image;
 
-    /*var iframe= document.createElement('iframe')
-    iframe.src= preview;
-    this.element.appendChild(p);
-*/
+    this.element.appendChild(img);
 
-   // var img = document.createElement('img');
-    //img.src = image;
+    var audio = document.createElement('audio');
+    audio.controls = true;
 
-    //this.element.appendChild(img);
+    var source = document.createElement('source');
+    source.src = file;
+    source.type = 'audio/mpeg';
+
+    audio.appendChild(source);
+
+    this.element.appendChild(audio);
+
+    var a = document.createElement('a');
+    a.href = url;
+    a.innerText = 'Open in original player';
+    a.target = '_blank';
+
+    this.element.appendChild(a);
 }
 
-DetailPanel.prototype = Object.create(Component.prototype);
-DetailPanel.prototype.constructor = DetailPanel;
+TrackPlayer.prototype = Object.create(Panel.prototype);
+TrackPlayer.prototype.constructor = TrackPlayer;
+
+/**
+ * 
+ * @param {string} id The track id
+ */
+function SpotifyPlayer(id) {
+    Component.call(this, 'section');
+
+    this.element.innerHTML = '<iframe src="https://open.spotify.com/embed?uri=spotify:track:'+ id +'" width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>';
+}
+
+SpotifyPlayer.prototype = Object.create(Component.prototype);
+SpotifyPlayer.prototype.constructor = SpotifyPlayer;
