@@ -1,5 +1,5 @@
 var logic = {
-    token: 'BQD78XpWbk3fG3OiBTjoJUNFYNK7J4kB41zbkVRcj2urolYqn9IkLv3tsfAeWXCLsUHorl6dX23TgTn4k1EZnAuSL_YD5BXKMqYrAH26HYW8BmVMpxS470CnuJfGUmiH1QqAKkCNqkDw91eCtoIDs2n5jLalO6ANVfbsvSTsgRV5',
+    token: 'BQCnAlvjcbiPd1TPHBKdbkE6f-sL3r2KdzSu9Mg8nVlx24j7iKros7Yr8Yu7EiQdVm2I5TbXGIbm2UbK2fhNx9CfPfixGyNurQg3K7AZmXJY0Cp4DnsJOcTcLs85hN5lDn6aIZUrn5sLppYAGcps04QmKEVwPcOb5tu7sEoYKWjd',
     _callApi: function (path) {
         return new Promise(function (resolve, reject) {
             var request = new XMLHttpRequest();
@@ -44,7 +44,6 @@ var logic = {
     retrieveTracksByAlbumId(id) {
         return this._callApi('/albums/' + id + '/tracks')
             .then(function(res) {
-                
                 return res.items;
                 
             });
@@ -53,7 +52,6 @@ var logic = {
     retrieveTrackById(id) {
         return this._callApi('/audio-features/' + id)
         .then(function(res) {
-            
             return res.items;
             
         });
