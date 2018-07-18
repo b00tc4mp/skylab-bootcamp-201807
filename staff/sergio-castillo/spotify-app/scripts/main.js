@@ -24,12 +24,48 @@ search.onSearch(function (query) {
 
 var results = new ResultsList();
 
-// var DEFAULT_IMAGE = 'https://i.pinimg.com/originals/37/2a/2d/372a2d5e8a32991bb19982271d0762fe.jpg';
+results.onItemClick (function (id){
+logic.retrieveAlbumsByArtistId(id)
+    .then(function (albums) {
+        resultsAlbums.updateResults(albums.map(function (album) {
+            return {
+                id: album.id,
+                text: album.name
+            };
+        }));
 
-results.onItemClick(function (id) {
-    logic.retrieveBeerById(id)
-        .then(function (beer) {
-            var detail = new DetailPanel(beer.name, beer.style.description, beer.labels ? beer.labels.medium : DEFAULT_IMAGE);
+        detailContainer.clear();
+    })
+    .catch(function (error) {
+        alert('Sorry, we have temporary problem, try again later.');
+    });
+});
+
+var resultsAlbums = new ResultsList();
+
+resultsAlbums.onItemClick (function (id){
+    logic.retrieveTracksByAlbumId(id)
+        .then(function (tracks) {
+            resultsTracks.updateResults(tracks.map(function (track) {
+                return {
+                    id: track.id,
+                    text: track.name
+                };
+            }));
+    
+            detailContainer.clear();
+        })
+        .catch(function (error) {
+            alert('Sorry, we have temporary problem, try again later.');
+        });
+    });
+    
+    var resultsTracks = new ResultsList();
+
+resultsTracks.onItemClick(function (id) {
+    logic.retrieveTrackById(id)
+        .then(function (track) {
+            var detail = new DetailPanel(track.name);
 
             detailContainer.clear();
             detailContainer.appendChild(detail.element);
@@ -47,5 +83,7 @@ detailContainer.clear = function () {
 
 document.body.appendChild(search.element);
 document.body.appendChild(results.element);
+document.body.appendChild(resultsAlbums.element);
+document.body.appendChild(resultsTracks.element);
 document.body.appendChild(detailContainer);
 
