@@ -1,7 +1,7 @@
 'use strict';
 
 describe('logic (spotify)', function () {
-    logic.token = 'BQDa46Ma7fZP0enduT7WEFQrhzUVzW4QITLecmCY5nrofszWd8zCOgkrEVbEjudvbkygfRNsiZNglvUIBYN2aNivte-p6VAI0cQp8pqqXS_FcGN3M1ThU9eiDxmaByzefvlC7Wq0ocDS';
+    logic.token = 'BQDeTDrIuN2_hLvFc7PSP-mrt8OIayeRozCIoE1NXbiTXem-Apma1ofetOT7kuqRpjmtebHVcTi-jEW_JktPXp6WpB2lWpaTkvpGuq7RLoWSmORgZE-P7n1GTyXJ9xmhp3i7uRAt97UheEZDqEa1qmrwdjQ';
     
     describe('search artists', function () {
         it('should find artists matching criteria', function () {
@@ -24,4 +24,20 @@ describe('logic (spotify)', function () {
                 });
         });
     });
+
+    describe("Retrieve tracks by album id", function (){
+        it('should retrieve tracks for given albums id', function () {
+           return logic.retrieveTracksByAlbumId('48duP4hfEqa6b3B9VeYfkI')
+           .then(function(tracks){
+               expect(tracks).toBeDefined();
+               expect(tracks.length).toBe(1);
+               expect(tracks[0].name).toBe("Jerusalem Is A Mountain - Original Mix");
+
+           })
+
+        })
+    })
+
+
+
 });
