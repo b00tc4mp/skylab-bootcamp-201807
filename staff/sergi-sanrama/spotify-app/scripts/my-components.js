@@ -1,3 +1,4 @@
+// my custom components
 
 function SearchPanel() {
     Component.call(this, 'form');
@@ -65,10 +66,9 @@ ResultsList.prototype.onItemClick = function (callback) {
  * 
  * @param {string} title The item title
  * @param {string} info The information about an item
- * @param {string} imgSrc The image of the item
+ * @param {string} image The image of the item
  */
-function DetailPanel(title, info, imgSrc) {
-    
+function DetailPanel(title, info, image) {
     Panel.call(this, title, 'section');
 
     var p = document.createElement('p');
@@ -77,70 +77,10 @@ function DetailPanel(title, info, imgSrc) {
     this.element.appendChild(p);
 
     var img = document.createElement('img');
-
-    img.src = imgSrc;
+    img.src = image;
 
     this.element.appendChild(img);
 }
 
 DetailPanel.prototype = Object.create(Panel.prototype);
 DetailPanel.prototype.constructor = DetailPanel;
-
-// my presentation logic
-
-// optional, reduce the size of the restaurants loaded in memory
-// restaurants.splice(100);
-
-var search = new SearchPanel();
-
-search.onSearch(function (query) {
-    //var matching = logic.find(query);
-
-    var matching;
-    var url = 'https://quiet-inlet-67115.herokuapp.com/api/search/all?q=' + query;
-
-    logic.searchBeers(url).then(function(response) {
-        matching = response;
-    
-        results.updateResults(matching.map(function (result) {
-            return {
-                id: result.id,
-                text: result.name + ' (' + result.type + ')'
-            };
-        }));
-        
-        detailContainer.clear();
-    }, function(error) {
-        console.error("Failed!", error);
-    })
-    
-});
-
-var results = new ResultsList();
-
-results.onItemClick(function (id, text) {
-    var url = 'https://quiet-inlet-67115.herokuapp.com/api/beer/' + id;
-    
-    logic.searchBeers(url).then(function(response) {    
-        var beer = response;
-        var img = beer.labels? beer.labels.medium : 'https://st2.depositphotos.com/1495079/12116/v/950/depositphotos_121166384-stock-illustration-beer-sign-icon.jpg'
-        var detail = new DetailPanel(beer.name, beer.id, img);
-    
-        detailContainer.clear();
-        detailContainer.appendChild(detail.element);
-    
-    }, function(error) {
-        console.error("Failed!", error);
-    })
-});
-
-var detailContainer = document.createElement('div');
-
-detailContainer.clear = function() {
-    this.innerHTML = '';
-};
-
-document.body.appendChild(search.element);
-document.body.appendChild(results.element);
-document.body.appendChild(detailContainer);
-

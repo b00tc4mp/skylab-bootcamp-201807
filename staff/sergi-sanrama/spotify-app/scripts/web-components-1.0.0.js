@@ -3,7 +3,7 @@
 /**
  * Web Components lib
  * 
- * @author manuelbarzi
+ * @author Sergi S.
  * @version 1.0.0
  */
 
@@ -21,7 +21,7 @@ function Component(tag) {
     // element.style.borderColor = 'black';
     // element.style.borderStyle = 'solid';
     // element.style.borderWidth = '1px';
-    element.style.backgroundColor = 'silver';
+    element.style.backgroundColor = 'lightgreen';
 
 }
 
@@ -135,6 +135,7 @@ function List(array) {
     // Array.prototype.forEach.call(array, function (item) {
     //     var li = document.createElement('li');
 
+    
     //     li.innerHTML = item;
 
     //     this.element.appendChild(li);
