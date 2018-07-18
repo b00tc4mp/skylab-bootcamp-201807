@@ -1,19 +1,26 @@
-'use strict'
+// my custom components
 
 function SearchPanel() {
     Component.call(this, 'form');
 
-    var $input = $('<input>').attr({'type': 'search', 'placeholder': 'Input a text...'});
-    $(this.element).append($input);
+    var input = document.createElement('input');
+    input.type = 'search';
+    input.placeholder = 'Input a text...';
 
-    var $button = $('<button>').attr('type', 'submit').text('Search');
-    $(this.element).append($button);
+    var button = document.createElement('button');
+    button.type = 'submit';
+    button.innerHTML = 'Search';
+
+    this.element.appendChild(input);
+    this.element.appendChild(button);
 
     var _callback;
 
-    $(this.element).on('submit', function (event) {
+    this.element.addEventListener('submit', function (event) {
         event.preventDefault();
-        var query = $input.val();
+
+        var query = input.value;
+
         if (query && _callback) _callback(query);
     }.bind(this));
 
@@ -33,21 +40,25 @@ ResultsList.prototype = Object.create(Component.prototype);
 ResultsList.prototype.constructor = ResultsList;
 
 ResultsList.prototype.updateResults = function (results) { // => { id, text }
-
-    $(this.element).empty();
+    this.element.innerHTML = '';
 
     results.forEach(function (result) {
+        var li = document.createElement('li');
+        var a = document.createElement('a');
 
-        var $li = $('<li>')//.attr('data-id', result.id);
-        $(this.element).append($li);
+        //Save id as dataset
+        li.dataset.id = result.id;
 
-        var $a = $('<a>').attr('href', '#/' + result.id).text(result.text);
-        $($li).append($a);
 
-        $a.click(function () {
+        a.href = '#/' + result.id;
+        a.innerHTML = result.text;
+        a.onclick = function () {
             if (this._callback) this._callback(result.id, result.text);
-        }.bind(this));
- 
+        }.bind(this);
+
+        this.element.appendChild(li);
+
+        li.appendChild(a);
     }, this);
 };
 

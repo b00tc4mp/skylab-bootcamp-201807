@@ -1,128 +1,73 @@
-// my presentation logic
+'use strict'
 
-// optional, reduce the size of the restaurants loaded in memory
-// restaurants.splice(100);
-
-
-//Create List of artists by query
-var search = new SearchPanel();
+//Create List of artists by query from the input search
+var search = new SearchPanel(),
+    resultsArtists = new ResultsList(),
+    resultsAlbums = new ResultsList(),
+    resultsTracks = new ResultsList(),
+    DEFAULT_IMAGE = 'https://i.pinimg.com/originals/37/2a/2d/372a2d5e8a32991bb19982271d0762fe.jpg';
 
 search.onSearch(function (query) {
-        logic.searchArtists(query)
-        .then(function (artists) {
-            resultsArtists.updateResults(artists.map(function (artist) {
-                return {
-                    id: artist.id,
-                    text: artist.name
-                };
-            }));
-
-            detailContainer.clear();
-        })
-        .catch(function (error) {
-            alert('Sorry, we have temporary problem, try again later.');
-        });
-
-
-        
+        $.when(logic.searchArtists(query))
+        .then(function (artists) { updateResultsByIdAndName(resultsArtists, artists); })
+        .catch(function (error) { alert('Sorry, we have temporary problem, try again later.'); });
 });
-var resultsArtists = new ResultsList();
 
 //Create List of artists by artist
-var DEFAULT_IMAGE = 'https://i.pinimg.com/originals/37/2a/2d/372a2d5e8a32991bb19982271d0762fe.jpg';
-
 resultsArtists.onItemClick(function (id) {
-    logic.retrieveAlbumsByArtistId(id)
-    .then(function (albums) {
-debugger;
-
-
-//res.items[0].images[1].url
-        resultsAlbums.updateResults(albums.map(function (album) {
-            return {
-                id: album.id,
-                text: album.name
-            };
-        }));
-
-        detailContainer.clear();
-    })
-    .catch(function (error) {
-        alert('Sorry, we have temporary problem, try again later.');
-    });
-
+    $.when(logic.retrieveAlbumsByArtistId(id))
+    .then(function (albums) { updateResultsByIdAndName(resultsAlbums, albums); })
+    .catch(function (error) { alert('Sorry, we have temporary problem, try again later.'); });
 });
-
-var resultsAlbums = new ResultsList();
 
 //Create List of tracks by albums
 resultsAlbums.onItemClick(function (id) {
+    // store the selected album id inside the albumsContainer, to show its image on the detailed info
+    $albumsContainer.attr('active-id', id); 
 
-    updateActiveAlbumById(id);
-
-    logic.retrieveTracksByAlbumId(id)
-    .then(function (tracks) {
-
-        resultsTracks.updateResults(tracks.map(function (track) {
-            return {
-                id: track.id,
-                text: track.name
-            };
-        }));
-
-        detailContainer.clear();
-
-    })
-    .catch(function (error) {
-        alert('Sorry, we have temporary problem, try again later.');
-    });
-
+    $.when(logic.retrieveTracksByAlbumId(id))
+    .then(function (tracks) { updateResultsByIdAndName(resultsTracks, tracks); })
+    .catch(function (error) { alert('Sorry, we have temporary problem, try again later.'); });
 });
-
-var resultsTracks = new ResultsList();
 
 
 //List detail of track
 resultsTracks.onItemClick(function (id) {
+    var activeAlbumId = $('#albumsContainer').attr('active-id'),
+        activeImg;
 
-    logic.retrieveTrackById(id)
-        .then(function (track) {
-            debugger;
-            //var detail = new DetailPanel(beer.name, beer.style.description, beer.labels ? beer.labels.medium : DEFAULT_IMAGE);
-            var detail = new DetailPanel(track.name, track.style.description, track.labels ? track.labels.medium : DEFAULT_IMAGE);
+    $.when(logic.retrieveAlbumsById(activeAlbumId))
+    .then(function(album) {
+        activeImg = album.images[1].url;
+        return logic.retrieveTrackById(id);
+    })
+    .then(function (track) {
+        var detail = new DetailPanel(track.name, track.external_urls.spotify, activeImg ? activeImg : DEFAULT_IMAGE);
 
-            detailContainer.clear();
-            detailContainer.appendChild(detail.element);
-        })
-        .catch(function (error) {
-            alert('Sorry, we have temporary problem, try again later.');
-        });
+        $detailContainer.empty();
+        $detailContainer.append($(detail.element));
+    })
+    .catch(function (error) { alert('Sorry, we have temporary problem, try again later.'); });
 });
 
-var detailContainer = document.createElement('div');
+function updateResultsByIdAndName(resultList, results) {
+    resultList.updateResults(results.map(function (result) {
+        return {
+            id: result.id,
+            text: result.name
+        };
+    }));
 
-detailContainer.clear = function () {
-    this.innerHTML = '';
-};
-
-function updateActiveAlbumById(id) {
-    var albumsContainer = document.getElementById('albumsContainer');
-    var prevActiveAlbum = albumsContainer.querySelectorAll('ul > li[data-active="true"]')[0];
-    prevActiveAlbum.setAttribute('ative', 'false');
-
-    var newActiveAlbum = document.querySelectorAll('albumsContainer');
-    newActiveAlbum.setAttribute('ative', 'true');
+    $($detailContainer).empty();
 }
 
-document.body.appendChild(search.element);
+var $detailContainer = $('<div>'),
+    $albumsContainer = $('<div>').attr('id', 'albumsContainer').append($(resultsAlbums.element));
 
-document.body.appendChild(resultsArtists.element);
-
-var albumsContainer = document.createElement('div');
-document.body.appendChild(albumsContainer);
-albumsContainer.id = 'albumsContainer';
-albumsContainer.appendChild(resultsAlbums.element);
-
-document.body.appendChild(resultsTracks.element);
-document.body.appendChild(detailContainer);
+$('body').append([$(search.element), 
+    $(resultsArtists.element), 
+    $albumsContainer, 
+    $(resultsTracks.element), 
+    $($detailContainer)]
+);
 
