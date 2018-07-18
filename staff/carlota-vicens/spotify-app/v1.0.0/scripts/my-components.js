@@ -40,7 +40,7 @@ ResultsList.prototype = Object.create(Component.prototype);
 ResultsList.prototype.constructor = ResultsList;
 
 ResultsList.prototype.updateResults = function (results) { // => { id, text }
-    this.clear();
+    this.element.innerHTML = '';
 
     results.forEach(function (result) {
         var li = document.createElement('li');
@@ -56,10 +56,6 @@ ResultsList.prototype.updateResults = function (results) { // => { id, text }
 
         li.appendChild(a);
     }, this);
-};
-
-ResultsList.prototype.clear = function() {
-    this.element.innerHTML = '';
 };
 
 ResultsList.prototype.onItemClick = function (callback) {

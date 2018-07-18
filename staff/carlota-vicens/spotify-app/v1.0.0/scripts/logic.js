@@ -1,5 +1,5 @@
 var logic = {
-    token: 'NO-TOKEN',
+    token: 'BQB-AUIdYY6v0onJH5fwc0mS_vr5ggVkAhOGyzxjLG2jwslKkLW1tYP4AwOprabD7Yxe-6-Yd91LfSj9UHJim3WLKtCCEuuKAtNCl4XBxpnmvrIznCcnD48nXEG3DuYeqXFCOZhpG_Q',
 
     _callApi: function (path) {
         return new Promise(function (resolve, reject) {
@@ -42,15 +42,18 @@ var logic = {
     },
 
     retrieveTracksByAlbumId(id) {
-        return this._callApi('/albums/' + id + '/tracks')
-            .then(function(res) {
+        // TODO
+        return this._callApi('/albums/' + id +'/tracks')
+        
+            .then(function (res){
                 return res.items;
             });
     },
 
     retrieveTrackById(id) {
+        // TODO
         return this._callApi('/tracks/' + id)
-            .then(function(res) {
+            .then (function(res){
                 return res;
             });
     }
