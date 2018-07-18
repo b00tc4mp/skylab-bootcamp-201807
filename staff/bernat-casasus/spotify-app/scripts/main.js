@@ -23,13 +23,48 @@ search.onSearch(function (query) {
 });
 
 var results = new ResultsList();
-
-var DEFAULT_IMAGE = 'https://i.pinimg.com/originals/37/2a/2d/372a2d5e8a32991bb19982271d0762fe.jpg';
+var resultsAlbumByArtistId = new ResultsList();
+var resultsTracksByAlbumId = new ResultsList();
 
 results.onItemClick(function (id) {
-    logic.retrieveBeerById(id)
-        .then(function (beer) {
-            var detail = new DetailPanel(beer.name, beer.style.description, beer.labels ? beer.labels.medium : DEFAULT_IMAGE);
+    logic.retrieveAlbumsByArtistId(id)
+        .then(function (album) {
+            resultsAlbumByArtistId.updateResults(album.map(function (album) {
+                return {
+                    id: album.id,
+                    text: album.name
+                };
+            }));
+
+            detailContainer.clear();
+        })
+        .catch(function (error) {
+            alert('Sorry, we have temporary problem, try again later.');
+        });
+});
+
+resultsAlbumByArtistId.onItemClick(function (id) {
+    logic.retrieveTracksByAlbumId(id)
+        .then(function (track) {
+            resultsTracksByAlbumId.updateResults(track.map(function (track) {
+                return {
+                    id: track.id,
+                    text: track.name
+                };
+            }));
+
+            detailContainer.clear();
+        })
+        .catch(function (error) {
+            alert('Sorry, we have temporary problem, try again later.');
+        });
+});
+var DEFAULT_IMAGE = 'https://i.imgur.com/WhSdQi7.png';
+
+resultsTracksByAlbumId.onItemClick(function (id) {
+    logic.retrieveTrackById(id)
+        .then(function (tracks) {
+            var detail = new DetailPanel(tracks.name,tracks.popularity, tracks.preview_url,DEFAULT_IMAGE);
 
             detailContainer.clear();
             detailContainer.appendChild(detail.element);
@@ -39,6 +74,8 @@ results.onItemClick(function (id) {
         });
 });
 
+
+
 var detailContainer = document.createElement('div');
 
 detailContainer.clear = function () {
@@ -47,5 +84,7 @@ detailContainer.clear = function () {
 
 document.body.appendChild(search.element);
 document.body.appendChild(results.element);
+document.body.appendChild(resultsAlbumByArtistId.element);
+document.body.appendChild(resultsTracksByAlbumId.element);
 document.body.appendChild(detailContainer);
 

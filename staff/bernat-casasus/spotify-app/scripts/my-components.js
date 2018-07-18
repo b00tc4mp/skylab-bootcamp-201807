@@ -68,18 +68,22 @@ ResultsList.prototype.onItemClick = function (callback) {
  * @param {string} info The information about an item
  * @param {string} image The image of the item
  */
-function DetailPanel(title, info, image) {
+function DetailPanel(title, info,preview,image) {
     Panel.call(this, title, 'section');
 
     var p = document.createElement('p');
     p.innerText = info;
 
-    this.element.appendChild(p);
+    var iframe = document.createElement('iframe');
+    iframe.src = preview;
 
+    
     var img = document.createElement('img');
     img.src = image;
 
     this.element.appendChild(img);
+    this.element.appendChild(iframe);
+    this.element.appendChild(p);
 }
 
 DetailPanel.prototype = Object.create(Panel.prototype);
