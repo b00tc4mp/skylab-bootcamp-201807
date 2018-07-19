@@ -1,92 +1,109 @@
+logic.token = 'BQC1SDEZhouJg7F1hsDF5H2c4uH9fzvIbdZ-aLP71cRR3uOMsG8QC6Wmb-580FltD10I9bqqZPeqdFStLR-j3Yc0sxdS_8aWcDsCLe7duNcLRH_Yk4cdeLzpwX-VI4IxXATk0tFrAGQ';
+// NOTE: to reset token via web => developer.spotify.com/console/get-search-item
+
 // my presentation logic
 
-// optional, reduce the size of the restaurants loaded in memory
-// restaurants.splice(100);
-
-//Search Panel of an artist, we'll show them in a list
 var search = new SearchPanel();
 
 search.onSearch(function (query) {
     logic.searchArtists(query)
         .then(function (artists) {
-            results.updateResults(artists.map(function (artists) {
+            results.updateResults(artists.map(function (artist) {
                 return {
-                    id: artists.id,
-                    text: artists.name
+                    id: artist.id,
+                    text: artist.name
                 };
             }));
+
+            albumResult.clear();
+            albumTrackResults.clear();
             detailContainer.clear();
         })
         .catch(function (error) {
             alert('Sorry, we have temporary problem, try again later.');
         });
 });
+
 
 var results = new ResultsList();
 
-var DEFAULT_URL = 'https://www.youtube.com/watch?v=bx1Bh8ZvH84';
-
-//We'll get the id of the artist and we'll show on a list the albums
 results.onItemClick(function (id) {
     logic.retrieveAlbumsByArtistId(id)
         .then(function (albums) {
-            albumResults.updateResults(albums.map(function (albums) {
+            albumResult.updateResults(albums.map(function (album) {
                 return {
-                    id: albums.id,
-                    text: albums.name
+                    id: album.id,
+                    text: album.name
                 };
             }));
+            
+            albumTrackResults.clear();
             detailContainer.clear();
         })
         .catch(function (error) {
             alert('Sorry, we have temporary problem, try again later.');
         });
-});
-
-var albumResults = new ResultsList();
-
-//We'll get the id of the artist and we'll show on a list the albums
-albumResults.onItemClick(function (id) {
-    logic.retrieveTracksByAlbumId(id)
-        .then(function (trackAlbum) {
-            albumTrackResults.updateResults(trackAlbum.map(function (trackAlbum) {
+    });
+    
+    
+    var albumResult = new ResultsList();
+    
+    albumResult.onItemClick(function (id) {
+        logic.retrieveTracksByAlbumId(id)
+        .then(function (tracks) {
+            albumTrackResults.updateResults(tracks.map(function (track) {
                 return {
-                    id: trackAlbum.id,
-                    text: trackAlbum.name
+                    id: track.id,
+                    text: track.name
                 };
             }));
+            
             detailContainer.clear();
-        })
-        .catch(function (error) {
-            alert('Sorry, we have temporary problem, try again later.');
         });
-});
-
-var albumTrackResults = new ResultsList();
-
-//We'll show the name of the track with a preview
-albumTrackResults.onItemClick(function (id) {
-    logic.retrieveTrackById(id)
+    });
+    
+    
+    var albumTrackResults = new ResultsList();
+    
+    albumTrackResults.onItemClick(function (id) {
+        logic.retrieveTrackById(id)
         .then(function (track) {
-            var detail = new DetailPanel(track.name, track.external_urls, track.preview_url ? track.preview_url: DEFAULT_URL);
-
             detailContainer.clear();
-            detailContainer.appendChild(detail.element);
-        })
-        .catch(function (error) {
-            alert('Sorry, we have temporary problem, try again later.');
+            
+            // var player = new TrackPlayer(track.name, track.album.images[0].url, track.preview_url, track.external_urls.spotify);
+            var player = new SpotifyPlayer(track.id);
+            
+            detailContainer.appendChild(player.element);
+
+            /*var $detailContainer = $('detailContainer');
+            $detailContainer.append('player.element');*/
         });
-})
+    });
+    
+    
+    var detailContainer = document.createElement('div');
+    
+    detailContainer.clear = function () {
+        this.innerHTML = '';
+    };
+    
+    //Declaring where we're going to put childs
+    var $body = $('body');
 
 
-var detailContainer = document.createElement('div');
+    //CHILDS
 
-detailContainer.clear = function () {
-    this.innerHTML = '';
-};
+    //document.body.appendChild(search.element);
+    $body.append(search.element);
+    
+    // document.body.appendChild(results.element);
+    $body.append(results.element);
 
-document.body.appendChild(search.element);
-document.body.appendChild(results.element);
-document.body.appendChild(albumResults.element);
-document.body.appendChild(albumTrackResults.element);
-document.body.appendChild(detailContainer);
+    // document.body.appendChild(albumResult.element);
+    $body.append(albumResult.element);
+
+    // document.body.appendChild(albumTrackResults.element);
+    $body.append(albumTrackResults.element);
+
+    // document.body.appendChild(detailContainer);
+    $body.append(detailContainer);

@@ -5,8 +5,10 @@
 
 //Search Panel of an artist, we'll show them in a list
 var search = new SearchPanel();
+logic.token = 'BQDLHQJ58AcJJfzVzwHQMfuYjg8TteEqi7mx5CjLxkwKCbK9mA6VAkWuvzciultd9JSiVn77Yf2nZc5-MTQpkXVQJbZ4BAwN8lamzRJLKGVYuOdSqCBgcZk_kKzaUZesE8089yt7V00';
 
 search.onSearch(function (query) {
+
     logic.searchArtists(query)
         .then(function (artists) {
             results.updateResults(artists.map(function (artists) {

@@ -76,7 +76,9 @@ function DetailPanel(title, preview, linkSong) {
     this.element.appendChild(iframe);
 
     var link = document.createElement('a');
-    a.src = linkSong;
+    link.href = linkSong;
+    link.setAttribute('target', '_blank');
+    link.innerHTML = 'Complete song'
     this.element.appendChild(a);
 }
 

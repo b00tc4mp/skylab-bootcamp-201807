@@ -19,7 +19,7 @@ var logic = {
 
             request.open('get', url);
 
-            request.setRequestHeader('Authorization', 'Bearer ' + 'BQBAX5rhQKLz4Ha_J9nVnBdx1dDFk28d0JoTHpALXxkCvCzBBV7ctVUOgkX7lX4-HZiDh70bYIyqMLRz5gpq4G-UIgutv5QkP6zayTnSRJm30xpTsPGebP98se6-sqoKzu4-IO2qrCA');
+            request.setRequestHeader('Authorization', 'Bearer ' + this.token);
 
 
             request.send();
@@ -42,17 +42,15 @@ var logic = {
     },
 
     retrieveTracksByAlbumId(id) {
-        // TODO
         return this._callApi('/albums/' + id + '/tracks')
-            .then(function(res){
+            .then(function(res) {
                 return res.items;
             });
     },
 
     retrieveTrackById(id) {
-        // TODO
         return this._callApi('/tracks/' + id)
-            .then(function(res){
+            .then(function(res) {
                 return res;
             });
     }
