@@ -1,11 +1,7 @@
-logic.token = 'BQDUaoMyx6PZAWkpR_RAG8vgJLdIsdmnK_Pg0VxXeG4c9vE96B7RVMRU0lXzjMyGHa3lzmxx9BXIYPpzM6kmNr7w04rM2dSijEqsxajHGNPJJwGkMSyoLE93VhwZm-i_9Ld5-Kka2hJC_c1NaTvPUk6wEvV_zlpP9eOIULmAGCD4fK_1CJXEB1HR5-_WRML7j8xxDQasoj8cDBQwTy0yLqV0BHP3lrL62CDiTnOAwQXDmhNIOHJN3MjM5N7-QGi1jcbkjV4xkew';
+logic.token = 'BQBYDuxnzZe1kEMkGyvJiSd3zKIjaJ2NiqRpJDQceNB1eZRsM3L3pwtuTAPcPklk8FJEVLhRu1Y46W9L32Y';
 // NOTE: to reset token via web => https://developer.spotify.com/console/get-search-item
 
 // my presentation logic
-
-var $body = $('body');
-
-var $container = $('<div class="container-flui">');
 
 var search = new SearchPanel();
 
@@ -28,7 +24,7 @@ search.onSearch(function (query) {
         });
 });
 
-
+var $body = $('body');
 
 $body.append(search.element);
 
