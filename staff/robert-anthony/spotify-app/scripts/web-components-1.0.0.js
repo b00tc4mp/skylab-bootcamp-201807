@@ -12,6 +12,8 @@
 /**
  * Constructs a component
  */
+
+
 function Component(tag) {
 
   var element = document.createElement(tag || 'div');

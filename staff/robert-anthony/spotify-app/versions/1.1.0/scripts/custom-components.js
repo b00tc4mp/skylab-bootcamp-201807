@@ -53,12 +53,15 @@ SearchPanel.prototype.onSearch = function (callback) {
 
 
 /**/
-function ResultsList(cssClass) {
+function ResultsList(cssClass,h1Text) {
 
   Panel.call(this, "", "ul");
   $(this.element).attr('style', '');
 
   $(this.element).addClass(cssClass);
+  if (h1Text) {
+    $(this.element.append("<h1>" + h1Text + "</h1>"));
+  }
 
   this._elementClick = function () {
 

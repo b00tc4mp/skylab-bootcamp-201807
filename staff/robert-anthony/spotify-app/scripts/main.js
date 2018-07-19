@@ -6,7 +6,7 @@ var _audio = null;
 
 
 function clearAudio() {
-  console.log("pausing audio?",_audio)
+  console.log("pausing audio?", _audio)
 
   if (_audio) {
     _audio.pause();
@@ -22,26 +22,31 @@ function clearLinks() {
 
 
 
-var mainContainer = new ClassedComponent("main-container");
-$('body').append(mainContainer.element);
 
 
 var searchPanel = new SearchPanel("Search for Artists", "search-panel", "section");
-$(mainContainer.element).append(searchPanel.element);
+$('body').append(searchPanel.element);
 searchPanel.onSearch(doArtistSearch);
 
+var mainContainer = new MainContainer("main-container");
+$('body').append(mainContainer.element);
 
-var resultsList = new ResultsList("detail-panel-artists");
-$(mainContainer.element).append(resultsList.element);
+var resultsList = new ResultsList("detail-panel-artists","Artists");
+//$(mainContainer.element).append(resultsList.element);
+mainContainer.addInto(resultsList.element,"artistResults");
 resultsList.onElementClick(showArtistAlbums);
 
-var albumsDetail = new ResultsList("detail-panel-albums");
-$(mainContainer.element).append(albumsDetail.element);
+var albumsDetail = new ResultsList("detail-panel-albums","Albums");
+// $(mainContainer.element).append(albumsDetail.element);
+mainContainer.addInto(albumsDetail.element,"albumResults");
+
 albumsDetail.onElementClick(showAlbumTracks);
 
 
-var tracksDetail = new TrackDetailPanel("detail-panel-tracks","detail-panel__link--selected");
-$(mainContainer.element).append(tracksDetail.element);
+var tracksDetail = new TrackDetailPanel("detail-panel-tracks", "detail-panel__link--selected");
+// $(mainContainer.element).append(tracksDetail.element);
+mainContainer.addInto(tracksDetail.element,"trackResults");
+
 tracksDetail.onElementClick(showTrackInfo);
 
 
@@ -78,8 +83,8 @@ function showAlbumTracks(albumData) {
       });
       tracksDetail.setData(albumRetrieved.name, trackList, albumRetrieved.images[1].url);
       TweenMax.to(tracksDetail.element, 0.25, {autoAlpha: 1});
-    }).catch(function(err) {
-      console.log("There was a problem in retrieving the album's tracks",err);
+    }).catch(function (err) {
+    console.log("There was a problem in retrieving the album's tracks", err);
   });
 }
 
@@ -111,5 +116,5 @@ function showTrackInfo(trackData) {
 
 }
 
-logic.token = "BQCHPUpfXWwmb5M_LTk9kBS2sh8Q361Auv5KUP97WIrEQ2aDfr42TqrIcEy7t56EpI0QJxVrCEnjwuT1m02mme9JFddko-jE0iOVFigFL9nyH2UA4E8a6OTdB1ejW2uxB1O1DaKg_Iac";
+logic.token = "BQApGKWoKgEP2mzUBFXvSM016lwAkNAgDCk2oZjZbNzDPIg3kI5se9uhpB5qFyHy-m3FxZhmxkiwk_1qih52mXJ_CnUNZPaqw1tiCJ7qEKL2KZxvC_QR8mO-XrjrXaghgD7oDetOiRzQ";
 
