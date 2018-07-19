@@ -6,20 +6,20 @@ var _audio = null;
 
 
 function clearAudio() {
+  console.log("pausing audio?",_audio)
+
   if (_audio) {
     _audio.pause();
     _audio = null;
   }
 }
 
+function clearLinks() {
+  $('tracksDetail .detail-panel__link--selected').removeClass('.detail-panel__link--selected');
 
-function ClassedComponent(cssClass, tag) {
-  Component.call(this, tag);
-  this.$element.addClass(cssClass);
 }
 
-ClassedComponent.prototype = Object.create(Component.prototype);
-ClassedComponent.prototype.constructor = ClassedComponent;
+
 
 
 var mainContainer = new ClassedComponent("main-container");
@@ -27,28 +27,29 @@ $('body').append(mainContainer.element);
 
 
 var searchPanel = new SearchPanel("Search for Artists", "search-panel", "section");
-mainContainer.$element.append(searchPanel.element);
+$(mainContainer.element).append(searchPanel.element);
 searchPanel.onSearch(doArtistSearch);
 
 
 var resultsList = new ResultsList("detail-panel-artists");
-mainContainer.$element.append(resultsList.element);
+$(mainContainer.element).append(resultsList.element);
 resultsList.onElementClick(showArtistAlbums);
 
 var albumsDetail = new ResultsList("detail-panel-albums");
-mainContainer.$element.append(albumsDetail.element);
+$(mainContainer.element).append(albumsDetail.element);
 albumsDetail.onElementClick(showAlbumTracks);
 
 
 var tracksDetail = new TrackDetailPanel("detail-panel-tracks","detail-panel__link--selected");
-mainContainer.$element.append(tracksDetail.element);
+$(mainContainer.element).append(tracksDetail.element);
 tracksDetail.onElementClick(showTrackInfo);
 
 
 function doArtistSearch(query) {
+  clearAudio();
+  clearLinks();
   TweenMax.to(albumsDetail.element, 0.25, {autoAlpha: 0});
   TweenMax.to(tracksDetail.element, 0.25, {autoAlpha: 0});
-  clearAudio();
 
   // var field = checkboxes.getField();
   logic.searchArtists(query).then(function (artists) {
@@ -61,6 +62,7 @@ function doArtistSearch(query) {
 
 function showAlbumTracks(albumData) {
   clearAudio();
+  clearLinks();
   var albumRetrieved;
   TweenMax.to(tracksDetail.element, 0.25, {autoAlpha: 0});
   logic.retrieveAlbumById(albumData.id)
@@ -82,8 +84,9 @@ function showAlbumTracks(albumData) {
 }
 
 function showArtistAlbums(artistData) {
-  TweenMax.to(tracksDetail.element, 0.25, {autoAlpha: 0});
   clearAudio();
+  clearLinks();
+  TweenMax.to(tracksDetail.element, 0.25, {autoAlpha: 0});
   logic.retrieveAlbumsByArtistId(artistData.id).then(function (albums) {
     var albumList = albums.map(function (album) {
       return {name: album.name, id: album.id};
@@ -96,8 +99,9 @@ function showArtistAlbums(artistData) {
 
 
 function showTrackInfo(trackData) {
+  clearAudio();
+  clearLinks();
   logic.retrieveTrackById(trackData.id).then(function (trackData) {
-    clearAudio();
 
     if (trackData && trackData.preview_url) {
       _audio = new Audio(trackData.preview_url);
@@ -107,5 +111,5 @@ function showTrackInfo(trackData) {
 
 }
 
-logic.token = "BQDpnaofHTM05kO6K5mrXWeX36itnfWWfxExzgeTuPZQa8c4VbRzwbrUPl1PlHnXRlR5TEvhKs7yzmPQfr5dIfjf8WDuzE0TuwCwPj4Uqc0KYLgHNne9Pd3Cq602fMJjF80aKxI-rwBe";
+logic.token = "BQCHPUpfXWwmb5M_LTk9kBS2sh8Q361Auv5KUP97WIrEQ2aDfr42TqrIcEy7t56EpI0QJxVrCEnjwuT1m02mme9JFddko-jE0iOVFigFL9nyH2UA4E8a6OTdB1ejW2uxB1O1DaKg_Iac";
 
