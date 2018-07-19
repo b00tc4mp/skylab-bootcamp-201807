@@ -1,7 +1,7 @@
 'use strict';
 
 describe('logic (spotify)', function () {
-    logic.token = 'BQB5E-cSm2NXdDZZckNZJ20CU-2dfMT-7cXoNMP6BCUNFOfpcPsmAvnVpQt0ZqBILy36KRvEaiQivqONg8JlvbY6QPlWjIBsy17MVZZZUQqnQBq3Zjum__N121LTgO_lgDlDi0VFSWzp';
+    logic.token = "BQBCqt-fBKY1U80-xWs2gbJ7THSp0Cpx2RVu8s2I-od8U9VLxGpd6J4gIzsEUS1huKMCmCpThYVxMWyCckdKg9dkj-NO-GckM6KmzBX-hE3bCD4ko5mk4tvDIHjD2K-L_PfkGHrDB-tI1VMeOyU";
     
     describe('search artists', function () {
         it('should find artists matching criteria', function () {
@@ -10,7 +10,6 @@ describe('logic (spotify)', function () {
                     expect(artists).toBeDefined();
                     expect(artists.length).toBe(20);
                     expect(artists[0].name).toBe('Madonna');
-                    expect(artists[0].type).toBe('artist');
                 });
         });
     });
@@ -22,7 +21,6 @@ describe('logic (spotify)', function () {
                     expect(albums).toBeDefined();
                     expect(albums.length).toBe(3);
                     expect(albums[0].name).toBe('Hunter');
-                    expect(albums[0].type).toBe('album');
                 });
         });
     });
@@ -32,20 +30,19 @@ describe('logic (spotify)', function () {
             return logic.retrieveTracksByAlbumId('7lnYU1xXbEiKPTZk3ltDE2')
                 .then(function (tracks) {
                     expect(tracks).toBeDefined();
-                    expect(tracks.length).toBe(1);
                     expect(tracks[0].name).toBe('Hunter');
-                    expect(tracks[0].type).toBe('track');
+                    expect(tracks.length).toBe(1);
                 });
         });
     });
 
-    describe('retrieve track by id', function () {
-        it('should retrieve track for given id', function () {
-            return logic.retrieveTrackById('4QxwXcPUm1VfkHksz6VuFi')
+    describe('retrieve tracks by track id', function () {
+        it('should retrieve tracks for given tracks id', function () {
+            return logic.retrieveTrackById('0e1kOIgSd8S7t2GMDvi8Lr')
                 .then(function (track) {
                     expect(track).toBeDefined();
-                    expect(track.name).toBe('Hunter');
-                    expect(track.type).toBe('track');
+                    expect(track.name).toBe("Hello And Goodbye");
+                    expect(track.album.name).toBe("Evita: The Complete Motion Picture Music Soundtrack");
                 });
         });
     });

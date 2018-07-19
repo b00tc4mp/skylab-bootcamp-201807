@@ -1,213 +1,97 @@
-// my custom components
-
-//Creamos la funcion constructora de SearchPanel
-function SearchPanel() {
-    Component.call(this, 'form');
-    //Llamamos al componente ubicado en (web-components....)
-    //Pasando el this(obligatorio para el call) y form que llegará 
-    //al componente como tag
-    // var input = document.createElement('input');
-    // input.type = 'search';
-    // input.placeholder = 'Input a text...';
-    // var button = document.createElement('button');
-    // button.type = 'submit';
-    // button.innerHTML = 'Search';
-    var $form = $(this.element);
-
-    var $input = $('<input type="search" placeholder="Input a text..."></a>');
-    var $button = $('<button type="submit">Search</button>');
-
-    //Añadimos a SearchPanel.form.appendChild(input)
-    $form.append($input);
-    $form.append($button);
-
-    //Declara una variable interna llamada callback
-    var _callback;
-
-    this.element.addEventListener('submit', function (event) {
-        //Para que no te redirija a otro sitio
-        event.preventDefault();
-
-        var query = $input.val();
-
-        if (query && _callback) _callback(query);
-        //Bind hace referencia a su scope. En este caso a SearchPanel 
-    }.bind(this));
-
-    //El this hace referencia al que hace la llamada ya que en este caso hay dos search(dos buscadores)
-    this.onSearch = function (callback) {
-        _callback = callback;
-    };
-}
-//Para herencia
-SearchPanel.prototype = Object.create(Component.prototype);
-
-//Para recalcar que tipo de objeto es
-SearchPanel.prototype.constructor = SearchPanel;
-
-function ResultsList() {
-    Component.call(this, 'ul');
-}
-
-ResultsList.prototype = Object.create(Component.prototype);
-ResultsList.prototype.constructor = ResultsList;
-
-ResultsList.prototype.updateResults = function (results) { // => { id, text }
-    this.element.innerHTML = '';
-    //$element = $(this,element).empty();
-
-    results.forEach(function (result) {
-        var li = document.createElement('li');
-        var a = document.createElement('a');
-
-        a.href = '#/' + result.id;
-        a.innerHTML = result.text;
-        a.onclick = function () {
-            if (this._callback) this._callback(result.id, result.text,);
-        }.bind(this);
-
-        this.element.appendChild(li);
-        //Este this hace referencia a la ResultList
-        li.appendChild(a);
-    }, this);
-};
-
-ResultsList.prototype.onItemClick = function (callback) {
-    this._callback = callback;
-};
-
-/**
- * 
- * @param {string} title The item title
- * @param {string} info The information about an item
- * @param {[number]} coords The geodesic coordinates for google maps
- */
-function DetailPanel(title, info,image ,link, url) {
-    Panel.call(this, title, 'section');
-
-    $element = $(this.element);
-
-    var $p = $('<p>' + info + '</p>');
-    $element.append($p);
-    // var p = document.createElement('p');
-    // p.innerText = info;
-    // this.element.appendChild(p);
-    
-    var $img = $('<img src="' + image + '">');
-    $element.append($img);
-    // var img = document.createElement("img");
-    // img.src = image;
-    // this.element.appendChild(img);
-
-    var $a = $('<a href="' + link + ' " target=_blank> "' + link + '"</a>');
-    $element.append($a);
-    // var a = document.createElement("a");
-    // a.href= link;
-    // a.target = '_blank';
-    // a.innerHTML = link;
-
-    var $song = $('<audio controls></audio>');
-    // var song = document.createElement('audio');
-    // song.controls = true;
-
-    // var source = document.createElement('source');
-    // source.src = url;
-    // source.type = 'audio/mpeg';
-    var $source = $('<source type="audio/mpeg" src="' + url + '"></source>');
-
-    $song.append($source);
-
-    //this.element.appendChild(song);
-    $element.append($song);
-}
-
-DetailPanel.prototype = Object.create(Panel.prototype);
-DetailPanel.prototype.constructor = DetailPanel;
+logic.token = 'BQDcTQhjFCczSZZbC9nLcCyK8GMiGB36k62uWtg7zW5ma5bcA2UN_IuV0Rrfm3mnGnZ-JqssH6CI2RVqYUnHWUlLuuZZfubnmU_c4I0dY__09qUDrwxR4XgW4vl7BvNbU9NH8JU9U1pU4FDR5yI';
+// NOTE: to reset token via web => https://developer.spotify.com/console/get-search-item
 
 // my presentation logic
+
+//var $container = $('<div class="container-flui">');
+var $body = $('body');
 var search = new SearchPanel();
- 
+
 search.onSearch(function (query) {
-        logic.searchArtists(query)
-            .then(function (info) {
-                results.updateResults(info.map(function(obj){
-                    return {
-                        id: obj.id,
-                        text: obj.name
-                    };
-                }));
-            });
-        $detailContainer.clear();
-    }); 
+    logic.searchArtists(query)
+        .then(function (artists) {
+            artistsList.updateResults(artists.map(function (artist) {
+                return {
+                    id: artist.id,
+                    text: artist.name
+                };
+            }));
 
-var results = new ResultsList();
+            albumsList.clear();
+            tracksList.clear();
+            $trackContainer.clear();
+        })
+        .catch(function (error) {
+            alert('Sorry, we have temporary problem, try again later.');
+        });
+});
 
-results.onItemClick(function (id) {
 
+
+$body.append(search.element);
+
+var artistsList = new ResultsList();
+
+artistsList.onItemClick(function (id) {
     logic.retrieveAlbumsByArtistId(id)
-        .then(function(info){
-            resultsTracks.updateResults(info.map(function(obj){
+        .then(function (albums) {
+            albumsList.updateResults(albums.map(function (album) {
                 return {
-                    id: obj.id,
-                    text: obj.name
+                    id: album.id,
+                    text: album.name
                 };
             }));
+
+            tracksList.clear();
+            $trackContainer.clear();
+        })
+        .catch(function (error) {
+            alert('Sorry, we have temporary problem, try again later.');
         });
 });
 
+// $body.append(artistsList.$element);
+$body.append(artistsList.element);
 
-var resultsTracks = new ResultsList();
+var albumsList = new ResultsList();
 
-resultsTracks.onItemClick(function (id) {
+albumsList.onItemClick(function (id) {
     logic.retrieveTracksByAlbumId(id)
-        .then(function(track){
-            resultsTrack.updateResults(track.map(function(obj){
+        .then(function (tracks) {
+            tracksList.updateResults(tracks.map(function (track) {
                 return {
-                    id: obj.id,
-                    text: obj.name
+                    id: track.id,
+                    text: track.name
                 };
             }));
+
+            $trackContainer.clear();
         });
 });
 
-var resultsTrack = new ResultsList();
-var DEFAULT_IMAGE = "https://www.google.es";
-resultsTrack.onItemClick(function (id) {
+$body.append(albumsList.element);
+
+var tracksList = new ResultsList();
+
+tracksList.onItemClick(function (id) {
     logic.retrieveTrackById(id)
-        .then(function(trackId){
-            var infoTrack = new DetailPanel(trackId.name, trackId.popularity, trackId.album.images[0].url ? trackId.album.images[0].url : DEFAULT_IMAGE, trackId.album.external_urls.spotify, trackId.preview_url);
+        .then(function (track) {
+            $trackContainer.clear();
 
-            //$detailContainer.appendChild(infoTrack.element);
-            $('div').append(infoTrack.element);
-            });
-            $detailContainer.clear();
+            //var player = new TrackPlayer(track.name, track.album.images[0].url, track.preview_url, track.external_urls.spotify);
+            var player = new SpotifyPlayer(track.id);
+
+            $trackContainer.append(player.element);
         });
+});
 
-// var detailContainer = document.createElement('div');
-$('body').append(search.element);
-$('body').append(results.element);
-$('body').append(resultsTracks.element);
-$('body').append(resultsTrack.element);
+$body.append(tracksList.element);
 
+var $trackContainer = $('<div>');
 
-var $detailContainer = $('body').append('<div>');
-
-$detailContainer.clear = function() {
-    this.innerHTML = '';
-    //$detailContainer.empty();
+$trackContainer.clear = function () {
+    this.empty();
 };
 
-$('body').append($detailContainer);
-
-//El element hace referencia a los elementos creados de su constructor
-// document.body.appendChild(search.element);
-// document.body.appendChild(results.element);
-// document.body.appendChild(resultsTracks.element);
-// document.body.appendChild(resultsTrack.element);
-// document.body.appendChild(detailContainer);
-
-
-
-
-
+$body.append($trackContainer);
 
