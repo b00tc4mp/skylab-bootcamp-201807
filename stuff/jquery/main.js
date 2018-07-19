@@ -21,6 +21,7 @@ $('form').on('submit', function(e) {
 });
 
 $('.num-list li').click(function() { $(this).toggleClass('active'); });
+$('div').click(function () { $(this).toggleClass('active');});
 
 // $('form').on('submit', function(e) {
 // 	e.preventDefault();

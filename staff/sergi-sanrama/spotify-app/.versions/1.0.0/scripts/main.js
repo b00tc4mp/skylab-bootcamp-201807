@@ -1,8 +1,8 @@
-'use strict'
 // my presentation logic
 
 // optional, reduce the size of the restaurants loaded in memory
 // restaurants.splice(100);
+'use strict'
 var search = new SearchPanel();
 
 search.onSearch(function (query) {
@@ -80,15 +80,13 @@ var detailsTrack = new DetailPanel();
 
 var detailContainer = document.createElement('div');
 
-
 detailContainer.clear = function () {
     this.innerHTML = '';
 };
-$('body').append(search.element)
-$('body').append(resultsArtists.element)
-$('body').append(resultsAlbums.element)
-$('body').append(resultsTracks.element)
-$('body').append(resultsFeatures.element)
-$('body').append(detailContainer.element)
 
-
+document.body.appendChild(search.element);
+document.body.appendChild(resultsArtists.element);
+document.body.appendChild(resultsAlbums.element);
+document.body.appendChild(resultsTracks.element);
+document.body.appendChild(resultsFeatures.element);
+document.body.appendChild(detailContainer);
