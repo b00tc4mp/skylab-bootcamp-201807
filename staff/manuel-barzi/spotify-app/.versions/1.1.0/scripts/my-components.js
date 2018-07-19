@@ -3,10 +3,6 @@
 function SearchPanel() {
     Component.call(this, 'form');
 
-    var $form = $(this.element);
-
-    $form.addClass('inline-form');
-
     // var $input = $('<input>');
     //$input.attr('type', 'search');
     //$input.attr('placeholder', 'Input a text...');
