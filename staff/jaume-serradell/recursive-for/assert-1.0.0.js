@@ -1,3 +1,5 @@
+'use strict'
+
 /**
  * Asserts a condition (is true)
  * 
