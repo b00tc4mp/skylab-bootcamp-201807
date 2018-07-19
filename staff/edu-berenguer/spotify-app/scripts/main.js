@@ -6,16 +6,20 @@ function SearchPanel() {
     //Llamamos al componente ubicado en (web-components....)
     //Pasando el this(obligatorio para el call) y form que llegará 
     //al componente como tag
-    var input = document.createElement('input');
-    input.type = 'search';
-    input.placeholder = 'Input a text...';
+    // var input = document.createElement('input');
+    // input.type = 'search';
+    // input.placeholder = 'Input a text...';
+    // var button = document.createElement('button');
+    // button.type = 'submit';
+    // button.innerHTML = 'Search';
+    var $form = $(this.element);
 
-    var button = document.createElement('button');
-    button.type = 'submit';
-    button.innerHTML = 'Search';
+    var $input = $('<input type="search" placeholder="Input a text..."></a>');
+    var $button = $('<button type="submit">Search</button>');
+
     //Añadimos a SearchPanel.form.appendChild(input)
-    this.element.appendChild(input);
-    this.element.appendChild(button);
+    $form.append($input);
+    $form.append($button);
 
     //Declara una variable interna llamada callback
     var _callback;
@@ -24,7 +28,7 @@ function SearchPanel() {
         //Para que no te redirija a otro sitio
         event.preventDefault();
 
-        var query = input.value;
+        var query = $input.val();
 
         if (query && _callback) _callback(query);
         //Bind hace referencia a su scope. En este caso a SearchPanel 
@@ -50,6 +54,7 @@ ResultsList.prototype.constructor = ResultsList;
 
 ResultsList.prototype.updateResults = function (results) { // => { id, text }
     this.element.innerHTML = '';
+    //$element = $(this,element).empty();
 
     results.forEach(function (result) {
         var li = document.createElement('li');
@@ -80,31 +85,40 @@ ResultsList.prototype.onItemClick = function (callback) {
 function DetailPanel(title, info,image ,link, url) {
     Panel.call(this, title, 'section');
 
-    var p = document.createElement('p');
-    p.innerText = info;
-    this.element.appendChild(p);
+    $element = $(this.element);
 
-    var img = document.createElement("img");
-    img.src = image;
-    this.element.appendChild(img);
+    var $p = $('<p>' + info + '</p>');
+    $element.append($p);
+    // var p = document.createElement('p');
+    // p.innerText = info;
+    // this.element.appendChild(p);
+    
+    var $img = $('<img src="' + image + '">');
+    $element.append($img);
+    // var img = document.createElement("img");
+    // img.src = image;
+    // this.element.appendChild(img);
 
-    var a = document.createElement("a");
-    a.href= link;
-    a.target = '_blank';
-    a.innerHTML = link;
+    var $a = $('<a href="' + link + ' " target=_blank> "' + link + '"</a>');
+    $element.append($a);
+    // var a = document.createElement("a");
+    // a.href= link;
+    // a.target = '_blank';
+    // a.innerHTML = link;
 
-    this.element.appendChild(a);
+    var $song = $('<audio controls></audio>');
+    // var song = document.createElement('audio');
+    // song.controls = true;
 
-    var song = document.createElement('audio');
-    song.controls = true;
+    // var source = document.createElement('source');
+    // source.src = url;
+    // source.type = 'audio/mpeg';
+    var $source = $('<source type="audio/mpeg" src="' + url + '"></source>');
 
-    var source = document.createElement('source');
-    source.src = url;
-    source.type = 'audio/mpeg';
+    $song.append($source);
 
-    song.appendChild(source);
-
-    this.element.appendChild(song);
+    //this.element.appendChild(song);
+    $element.append($song);
 }
 
 DetailPanel.prototype = Object.create(Panel.prototype);
@@ -123,7 +137,7 @@ search.onSearch(function (query) {
                     };
                 }));
             });
-        detailContainer.clear();
+        $detailContainer.clear();
     }); 
 
 var results = new ResultsList();
@@ -163,23 +177,37 @@ resultsTrack.onItemClick(function (id) {
         .then(function(trackId){
             var infoTrack = new DetailPanel(trackId.name, trackId.popularity, trackId.album.images[0].url ? trackId.album.images[0].url : DEFAULT_IMAGE, trackId.album.external_urls.spotify, trackId.preview_url);
 
-            detailContainer.appendChild(infoTrack.element);
+            //$detailContainer.appendChild(infoTrack.element);
+            $('div').append(infoTrack.element);
             });
-            detailContainer.clear();
+            $detailContainer.clear();
         });
 
-var detailContainer = document.createElement('div');
+// var detailContainer = document.createElement('div');
+$('body').append(search.element);
+$('body').append(results.element);
+$('body').append(resultsTracks.element);
+$('body').append(resultsTrack.element);
 
-detailContainer.clear = function() {
+
+var $detailContainer = $('body').append('<div>');
+
+$detailContainer.clear = function() {
     this.innerHTML = '';
+    //$detailContainer.empty();
 };
 
+$('body').append($detailContainer);
+
 //El element hace referencia a los elementos creados de su constructor
-document.body.appendChild(search.element);
-document.body.appendChild(results.element);
-document.body.appendChild(resultsTracks.element);
-document.body.appendChild(resultsTrack.element);
-document.body.appendChild(detailContainer);
+// document.body.appendChild(search.element);
+// document.body.appendChild(results.element);
+// document.body.appendChild(resultsTracks.element);
+// document.body.appendChild(resultsTrack.element);
+// document.body.appendChild(detailContainer);
+
+
+
 
 
 
