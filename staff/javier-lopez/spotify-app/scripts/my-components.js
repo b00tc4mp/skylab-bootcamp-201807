@@ -1,32 +1,33 @@
 // my custom components
 
 function SearchPanel() {
-    Component.call(this, 'form');
 
-    var $form = $(this.element);
+    //Creating nav
+    Component.call(this, 'nav');
+    var $nav = $(this.element);
+    $nav.removeAttr('style');
+    $nav.addClass('navbar navbar-light bg-dark');
 
-    $form.addClass('inline-form');
+    //Creating div
+    var $div = $('<div class="imageHeader">');
+    $nav.append($div);
 
-    // var $input = $('<input>');
-    //$input.attr('type', 'search');
-    //$input.attr('placeholder', 'Input a text...');
-    // $input.attr({
-    //     type: 'search',
-    //     placeholder: 'Input a text ...'
-    // });
-    var $input = $('<input type="search" placeholder="Input a text...">');
+    //Putting image inside imageHeader
+    var $img = $('<img src="https://image.flaticon.com/icons/png/512/174/174872.png" width="40" height="40" class="d-inline-block align-top">');
+    $div.append($img);
 
-    var $button = $('<button type="submit">Search</button>');
+    //Creating Form
+    var $form = $('<form class="form-inline my-2 my-lg-0">');
+    $nav.append($form);
 
-    var $element = $(this.element);
-
-    // $element.append($input);
-    // $element.append($button);
-    $element.append([$input, $button]);
+    //Putting input and button inside form
+    var $input = $('<input class="form-control mr-sm-2" type="search" placeholder="Input some artist" aria-label="Search">');
+    var $button = $('<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search!</button>');
+    $form.append([$input, $button]);
 
     var _callback;
 
-    $element.submit(function (event) {
+    $nav.submit(function (event) {
         event.preventDefault();
 
         var query = $input.val();
@@ -42,10 +43,16 @@ function SearchPanel() {
 SearchPanel.prototype = Object.create(Component.prototype);
 SearchPanel.prototype.constructor = SearchPanel;
 
-function ResultsList() {
-    Component.call(this, 'ul');
+function ResultsList(title) {
+    //Creating column cointainer
+    Component.call(this, 'div');
+    var $element = $(this.element);
+    $element.removeAttr('style');
+    $element.addClass('col columns');
 
-    this.$element = $(this.element);
+    //Creating result container
+    this.$list = $('<div class="list-group">');
+    $element.append(this.$list);
 }
 
 ResultsList.prototype = Object.create(Component.prototype);
@@ -54,24 +61,23 @@ ResultsList.prototype.constructor = ResultsList;
 ResultsList.prototype.updateResults = function (results) { // => { id, text }
     this.clear();
 
-    $.each(results, function (index, result) {
-        // results.forEach(function (result) {
-        var $li = $('<li>');
-        var $a = $('<a href="#/' + result.id + '">' + result.text + '</a>');
+    results.forEach(function (result) {
+        var $a = $('<a href="#/' + result.id + '" class="list-group-item list-group-item-action bg-success text-white text-center">' + result.text + '</a>');
 
         $a.click(function () {
-            if (this._callback) this._callback(result.id, result.text);
+            if (this._callback) {
+                this._callback(result.id, result.text);
+                this.$list.children('a').removeClass('active');
+                $a.addClass('active');
+            }
         }.bind(this));
 
-        $li.append($a);
-
-        this.$element.append($li);
-        // }, this);
-    }.bind(this));
+        this.$list.append($a);
+    }, this);
 };
 
 ResultsList.prototype.clear = function () {
-    this.$element.empty();
+    this.$list.empty();
 };
 
 ResultsList.prototype.onItemClick = function (callback) {
@@ -103,7 +109,7 @@ function TrackPlayer(title, image, file, url) {
     $element.append($a);
 }
 
-TrackPlayer.prototype = Object.create(Panel.prototype);
+TrackPlayer.prototype = Object.create(Component.prototype);
 TrackPlayer.prototype.constructor = TrackPlayer;
 
 /**
@@ -112,8 +118,12 @@ TrackPlayer.prototype.constructor = TrackPlayer;
  */
 function SpotifyPlayer(id) {
     Component.call(this, 'section');
+    
+    var $element = $(this.element);
 
-    $(this.element).append('<iframe src="https://open.spotify.com/embed?uri=spotify:track:' + id + '" width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>');
+    $element.removeAttr('style');
+
+    $element.append('<iframe src="https://open.spotify.com/embed?uri=spotify:track:' + id + '" width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>');
 }
 
 SpotifyPlayer.prototype = Object.create(Component.prototype);
