@@ -60,6 +60,8 @@ ResultsList.prototype.updateResults = function (results) { // => { id, text }
     }, this);
 };
 
+// 
+
 ResultsList.prototype.onItemClick = function (callback) {
     this._callback = callback;
 };
