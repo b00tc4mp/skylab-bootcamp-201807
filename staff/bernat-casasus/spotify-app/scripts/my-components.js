@@ -2,25 +2,19 @@
 
 function SearchPanel() {
     Component.call(this, 'form');
-
-    var input = document.createElement('input');
-    input.type = 'search';
-    input.placeholder = 'Input a text...';
-
-    var button = document.createElement('button');
-    button.type = 'submit';
-    button.innerHTML = 'Search';
-
-    this.element.appendChild(input);
-    this.element.appendChild(button);
+    
+    var $form = $(this.element);
+    $($form).append('<input type="search" placeholder="Input a text..." />');
+    $($form).append('<button type="submit">Search</button>');
 
     var _callback;
 
-    this.element.addEventListener('submit', function (event) {
+    $form.submit(function(){
         event.preventDefault();
 
-        var query = input.value;
-
+        // var query = input.value;
+        // var allInputs = $("input");
+        var query = $("input").val();
         if (query && _callback) _callback(query);
     }.bind(this));
 
@@ -68,7 +62,7 @@ ResultsList.prototype.onItemClick = function (callback) {
  * @param {string} info The information about an item
  * @param {string} image The image of the item
  */
-function DetailPanel(title, info,preview,image) {
+function DetailPanel(title, info, preview, image) {
     Panel.call(this, title, 'section');
 
     var p = document.createElement('p');
@@ -77,7 +71,7 @@ function DetailPanel(title, info,preview,image) {
     var iframe = document.createElement('iframe');
     iframe.src = preview;
 
-    
+
     var img = document.createElement('img');
     img.src = image;
 

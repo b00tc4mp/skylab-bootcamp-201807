@@ -15,7 +15,7 @@ search.onSearch(function (query) {
                 };
             }));
 
-            detailContainer.clear();
+            // detailContainer.clear();
         })
         .catch(function (error) {
             alert('Sorry, we have temporary problem, try again later.');
@@ -79,12 +79,15 @@ resultsTracksByAlbumId.onItemClick(function (id) {
 var detailContainer = document.createElement('div');
 
 detailContainer.clear = function () {
-    this.innerHTML = '';
+    var $this = this;
+    // this.innerHTML = '';
+    $($this).html('');
 };
 
-document.body.appendChild(search.element);
-document.body.appendChild(results.element);
-document.body.appendChild(resultsAlbumByArtistId.element);
-document.body.appendChild(resultsTracksByAlbumId.element);
-document.body.appendChild(detailContainer);
+$('body').append(search.element);
+$('body').append(results.element);
+$('body').append(resultsAlbumByArtistId.element);
+$('body').append(resultsTracksByAlbumId.element);
+$('body').append(detailContainer);
+
 
