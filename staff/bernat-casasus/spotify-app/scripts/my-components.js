@@ -11,9 +11,6 @@ function SearchPanel() {
 
     $form.submit(function(){
         event.preventDefault();
-
-        // var query = input.value;
-        // var allInputs = $("input");
         var query = $("input").val();
         if (query && _callback) _callback(query);
     }.bind(this));
@@ -34,22 +31,20 @@ ResultsList.prototype = Object.create(Component.prototype);
 ResultsList.prototype.constructor = ResultsList;
 
 ResultsList.prototype.updateResults = function (results) { // => { id, text }
-    this.element.innerHTML = '';
+    //this.element.innerHTML = "";
 
-    results.forEach(function (result) {
-        var li = document.createElement('li');
-        var a = document.createElement('a');
+    $.each(results,function (index, value) {
+        
+        var $li = $('<li>');
+        var $a = $('<a href="#/'+value.id+'>'+value.text+'</a>');
 
-        a.href = '#/' + result.id;
-        a.innerHTML = result.text;
-        a.onclick = function () {
-            if (this._callback) this._callback(result.id, result.text);
-        }.bind(this);
+        $a.click(function () {
+            if (this._callback) this._callback(value.id, value.text);
+        }.bind(this));
 
-        this.element.appendChild(li);
-
-        li.appendChild(a);
-    }, this);
+        $li.append($a);
+        this.$form.append($li);
+    }.bind(this));
 };
 
 ResultsList.prototype.onItemClick = function (callback) {
