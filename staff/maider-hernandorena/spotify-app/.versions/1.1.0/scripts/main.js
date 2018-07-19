@@ -1,10 +1,11 @@
-// my presentation logic
+'use strict'
 
+// my presentation logic
 
 var search = new SearchPanel();
 
 search.onSearch(function (query) {
-    logic.token = 'BQDt3Iz89nxC0KyiA98L3tJs1epqmv33HIX_7uV-JCcTPJowdaATomC4DFQ1XPJKLcXjgvSE10HQCebHkRXJW4n1Qqo0HasrqgksAXzNHZBFO-1xeI6f8GoCD8XOdmYl4BOojmmkeCR2Ww';
+    logic.token = 'BQCtMW97bKWGUJSqTPjDn-UK_RiEdJVRasW2UTm3k5I5qYQipHCqPew9-JUIgO6_5W1dLWOo_1wJ4J58VD0Qzb4di8STXpip3LJ5zSvDHJwmKXzE0ljD_lpjFFdC-wk_PRboHGNmIQMPYQ';
 
     logic.searchArtists(query)
         .then(function (artist) {
