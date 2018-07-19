@@ -8,13 +8,18 @@ var search = new SearchPanel(),
 
 //Create List of artists by query from the input search
 search.onSearch(function (query) {
-        $.when(logic.searchArtists(query))
-        .then(function (artists) { updateResultsByIdAndName(resultsArtists, artists); })
-        .catch(function (error) { alert('Sorry, we have temporary problem, try again later.'); });
+    $resultsContainer.empty().append($(resultsArtists.element));
+
+    $.when(logic.searchArtists(query))
+    .then(function (artists) { updateResultsByIdAndName(resultsArtists, artists); })
+    .catch(function (error) { alert('Sorry, we have temporary problem, try again later.'); });
 });
 
 //Create List of albums by artist
 resultsArtists.onItemClick(function (id) {
+    $(this).nextAll().empty();
+    $resultsContainer.append($albumsContainer);
+
     $.when(logic.retrieveAlbumsByArtistId(id))
     .then(function (albums) { updateResultsByIdAndName(resultsAlbums, albums); })
     .catch(function (error) { alert('Sorry, we have temporary problem, try again later.'); });
@@ -22,8 +27,10 @@ resultsArtists.onItemClick(function (id) {
 
 //Create List of tracks by albums
 resultsAlbums.onItemClick(function (id) {
+    $(this).nextAll().empty();
+    $resultsContainer.append($(resultsTracks.element));
     // store the selected album id inside the albumsContainer, to show its image on the detailed info
-    $albumsContainer.attr('active-id', id); 
+    $albumsContainer.attr('active-id', id);
 
     $.when(logic.retrieveTracksByAlbumId(id))
     .then(function (tracks) { updateResultsByIdAndName(resultsTracks, tracks); })
@@ -33,7 +40,10 @@ resultsAlbums.onItemClick(function (id) {
 
 //List detail of track
 resultsTracks.onItemClick(function (id) {
-    var activeAlbumId = $('#albumsContainer').attr('active-id'),
+    $(this).nextAll().empty();
+    $resultsContainer.append($detailContainer);
+
+    var activeAlbumId = $('#albums-container').attr('active-id'),
         activeImg;
 
     $.when(logic.retrieveAlbumsById(activeAlbumId))
@@ -44,8 +54,9 @@ resultsTracks.onItemClick(function (id) {
     .then(function (track) {
         var detail = new DetailPanel(track.name, track.external_urls.spotify, activeImg ? activeImg : DEFAULT_IMAGE);
 
-        $detailContainer.empty();
-        $detailContainer.append($(detail.element));
+        /*$detailContainer.empty();
+        $detailContainer.append($(detail.element));*/
+        $detailContainer.html($(detail.element));
     })
     .catch(function (error) { alert('Sorry, we have temporary problem, try again later.'); });
 });
@@ -58,16 +69,18 @@ function updateResultsByIdAndName(resultList, results) {
         };
     }));
 
-    $($detailContainer).empty();
+    //$($detailContainer).empty();
 }
 
-var $detailContainer = $('<div>'),
-    $albumsContainer = $('<div>').attr('id', 'albumsContainer').append($(resultsAlbums.element));
+var $resultsContainer = $('<div>').attr('id', 'results-container'),
+    $detailContainer = $('<div>'),
+    $albumsContainer = $('<div>').attr('id', 'albums-container').append($(resultsAlbums.element));
 
-$('body').append([$(search.element), 
-    $(resultsArtists.element),
+/*$resultsContainer.append([$(resultsArtists.element),
     $albumsContainer,
     $(resultsTracks.element),
     $($detailContainer)]
-);
+);*/
+
+$('body').append([$(search.element), $resultsContainer]);
 
