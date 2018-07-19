@@ -21,7 +21,7 @@ function Component(tag) {
     // element.style.borderColor = 'black';
     // element.style.borderStyle = 'solid';
     // element.style.borderWidth = '1px';
-    //element.style.backgroundColor = 'silver';
+    element.style.backgroundColor = 'silver';
 
 }
 

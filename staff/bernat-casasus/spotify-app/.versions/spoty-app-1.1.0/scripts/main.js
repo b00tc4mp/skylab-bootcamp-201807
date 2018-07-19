@@ -3,8 +3,6 @@
 // optional, reduce the size of the restaurants loaded in memory
 // restaurants.splice(100);
 
-var container = new Container();
-var imgLogo = new ImageHead();
 var search = new SearchPanel();
 
 search.onSearch(function (query) {
@@ -85,17 +83,13 @@ detailContainer.clear = function () {
     $($this).html('');
 };
 
+$('body').append(search.element);
+$('body').append(results.element);
+$('body').append(resultsAlbumByArtistId.element);
+//$('body').append(resultsTracksByAlbumId.element);
+//$('body').append(detailContainer);
+$('body').append(resultsTracksByAlbumId.element);
 
-
-
-$(container.element).append(imgLogo.element);
-$(container.element).append(search.element);
-$(container.element).append(results.element);
-$(container.element).append(resultsAlbumByArtistId.element);
-$(container.element).append(resultsTracksByAlbumId.element);
-
-
-$('body').append(container.element);
 
 var $trackContainer = $('<div>');
 
@@ -103,5 +97,4 @@ $trackContainer.clear = function () {
     this.empty();
 };
 
-//$('body').append($trackContainer);
-$(container.element).append($trackContainer);
+$('body').append($trackContainer);

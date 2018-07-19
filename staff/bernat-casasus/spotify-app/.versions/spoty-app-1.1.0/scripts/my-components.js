@@ -1,33 +1,11 @@
 // my custom components
-function Container(){
-    Component.call(this, 'div');
-    var $container = $(this.element);
-
-    $container.addClass('container');
-}
-Container.prototype = Object.create(Component.prototype);
-Container.prototype.constructor = Container;
-
-
-function ImageHead(){
-    Component.call(this, 'div');
-    var $container = $(this.element);
-
-    $container.addClass('d-flex justify-content-center mb-5 mt-5');
-    var $img = ('<img src="https://rocketdock.com/images/screenshots/Spotify.png"/>');
-
-    $container.append($img);
-}
-ImageHead.prototype = Object.create(Component.prototype);
-ImageHead.prototype.constructor = ImageHead;
 
 function SearchPanel() {
     Component.call(this, 'form');
     
     var $form = $(this.element);
-    $form.addClass('form-inline d-flex justify-content-center');
-    $($form).append('<input type="search" class="form-control mb-2 mr-sm-2 p-2 mb-2 col-10" id="inlineFormInputName2" placeholder="Input text to search...">');
-    $($form).append('<button type="submit" class="btn mb-2 p-2 mb-2 col">Submit</button>');
+    $($form).append('<input type="search" placeholder="Input a text..." />');
+    $($form).append('<button type="submit">Search</button>');
 
     var _callback;
 
@@ -46,9 +24,8 @@ SearchPanel.prototype = Object.create(Component.prototype);
 SearchPanel.prototype.constructor = SearchPanel;
 
 function ResultsList() {
-    Component.call(this, 'div');
+    Component.call(this, 'ul');
     this.$form = $(this.element);
-    this.$form.addClass('list-group mt-2');
 }
 
 ResultsList.prototype = Object.create(Component.prototype);
@@ -59,14 +36,16 @@ ResultsList.prototype.updateResults = function (results) { // => { id, text }
 
     $.each(results,function (index, result) {
         
-
-        var $a = $('<a class="list-group-item list-group-item-action" href="#/' + result.id + '">' + result.text + '</a>');
+        var $li = $('<li>');
+        var $a = $('<a href="#/' + result.id + '">' + result.text + '</a>');
 
         $a.click(function () {
             if (this._callback) this._callback(result.id, result.text);
         }.bind(this));
 
-        this.$form.append($a);
+        $li.append($a);
+
+        this.$form.append($li);
     }.bind(this));
 };
 
@@ -124,7 +103,7 @@ TrackPlayer.prototype.constructor = TrackPlayer;
 function SpotifyPlayer(id) {
     Component.call(this, 'section');
 
-    $(this.element).append('<iframe src="https://open.spotify.com/embed?uri=spotify:track:' + id + '" width="100%" height="100%" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>');
+    $(this.element).append('<iframe src="https://open.spotify.com/embed?uri=spotify:track:' + id + '" width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>');
 }
 
 SpotifyPlayer.prototype = Object.create(Component.prototype);
