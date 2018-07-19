@@ -3,11 +3,9 @@
 function SearchPanel() {
     Component.call(this, 'form');
 
-    var $input = $('<input>').attr({'type': 'search', 'placeholder': 'Input a text...'});
-    $(this.element).append($input);
-
-    var $button = $('<button>').attr('type', 'submit').text('Search');
-    $(this.element).append($button);
+    var $input = $('<input>').attr({'type': 'search', 'placeholder': 'Input a text...'}),
+        $button = $('<button>').attr('type', 'submit').text('Search');
+    $(this.element).append([$input, $button]);
 
     var _callback;
 
@@ -38,7 +36,7 @@ ResultsList.prototype.updateResults = function (results) { // => { id, text }
 
     results.forEach(function (result) {
 
-        var $li = $('<li>')//.attr('data-id', result.id);
+        var $li = $('<li>');
         $(this.element).append($li);
 
         var $a = $('<a>').attr('href', '#/' + result.id).text(result.text);
@@ -64,15 +62,10 @@ ResultsList.prototype.onItemClick = function (callback) {
 function DetailPanel(title, info, image) {
     Panel.call(this, title, 'section');
 
-    var p = document.createElement('p');
-    p.innerText = info;
+    var $p = $('<p>').text(info),
+        $img = $('<img>').attr('src', image);
 
-    this.element.appendChild(p);
-
-    var img = document.createElement('img');
-    img.src = image;
-
-    this.element.appendChild(img);
+    $(this.element).append([$p, $img]);
 }
 
 DetailPanel.prototype = Object.create(Panel.prototype);

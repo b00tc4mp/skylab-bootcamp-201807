@@ -1,19 +1,19 @@
 'use strict'
 
-//Create List of artists by query from the input search
 var search = new SearchPanel(),
     resultsArtists = new ResultsList(),
     resultsAlbums = new ResultsList(),
     resultsTracks = new ResultsList(),
     DEFAULT_IMAGE = 'https://i.pinimg.com/originals/37/2a/2d/372a2d5e8a32991bb19982271d0762fe.jpg';
 
+//Create List of artists by query from the input search
 search.onSearch(function (query) {
         $.when(logic.searchArtists(query))
         .then(function (artists) { updateResultsByIdAndName(resultsArtists, artists); })
         .catch(function (error) { alert('Sorry, we have temporary problem, try again later.'); });
 });
 
-//Create List of artists by artist
+//Create List of albums by artist
 resultsArtists.onItemClick(function (id) {
     $.when(logic.retrieveAlbumsByArtistId(id))
     .then(function (albums) { updateResultsByIdAndName(resultsAlbums, albums); })
@@ -65,9 +65,9 @@ var $detailContainer = $('<div>'),
     $albumsContainer = $('<div>').attr('id', 'albumsContainer').append($(resultsAlbums.element));
 
 $('body').append([$(search.element), 
-    $(resultsArtists.element), 
-    $albumsContainer, 
-    $(resultsTracks.element), 
+    $(resultsArtists.element),
+    $albumsContainer,
+    $(resultsTracks.element),
     $($detailContainer)]
 );
 
