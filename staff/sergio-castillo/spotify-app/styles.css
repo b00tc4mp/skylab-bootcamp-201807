@@ -1,0 +1,13 @@
+body{
+     background-image: url("https://www.google.es/url?sa=i&source=images&cd=&cad=rja&uact=8&ved=2ahUKEwjDkYDFsKvcAhVMZVAKHZsSCd8QjRx6BAgBEAU&url=https%3A%2F%2Ftecnonucleous.com%2F2018%2F04%2F13%2Fspotify-invita-a-la-prensa-para-el-evento-del-24-de-abril-puede-anunciar-el-primer-hardware-de-marca%2F&psig=AOvVaw3eRSeS3o04f7yEciVIyeDv&ust=1532097073799966");
+}
+.container{
+
+    margin-left: 0 auto;
+    width: 500px;
+    justify-content: center;
+}
+.list-group-item-action{
+    background-color: lightseagreen;
+    color: white;
+}

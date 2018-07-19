@@ -1,7 +1,5 @@
-'use strict';
-
-logic.token = 'BQA782jQ0wO0SSRJzE2YsWVPyJRrZ-AN8p7rMR8K2Gtp-mqTScUQEfsaVldBgV9ULA8IkOAatxW55M9WfpjFiszo3sDvRVQPQzD7rVk3apR3UTR9CIJC8bcxWBQoaQwbiQqNKOCG5TYtpg';
-// NOTE: to reset token via web => developer.spotify.com/console/get-search-item
+logic.token = 'BQBYDuxnzZe1kEMkGyvJiSd3zKIjaJ2NiqRpJDQceNB1eZRsM3L3pwtuTAPcPklk8FJEVLhRu1Y46W9L32Y';
+// NOTE: to reset token via web => https://developer.spotify.com/console/get-search-item
 
 // my presentation logic
 
@@ -19,14 +17,16 @@ search.onSearch(function (query) {
 
             albumsList.clear();
             tracksList.clear();
-            trackContainer.clear();
+            $trackContainer.clear();
         })
         .catch(function (error) {
             alert('Sorry, we have temporary problem, try again later.');
         });
 });
 
-document.body.appendChild(search.element);
+var $body = $('body');
+
+$body.append(search.element);
 
 var artistsList = new ResultsList();
 
@@ -41,14 +41,15 @@ artistsList.onItemClick(function (id) {
             }));
 
             tracksList.clear();
-            trackContainer.clear();
+            $trackContainer.clear();
         })
         .catch(function (error) {
             alert('Sorry, we have temporary problem, try again later.');
         });
 });
 
-document.body.appendChild(artistsList.element);
+// $body.append(artistsList.$element);
+$body.append(artistsList.element);
 
 var albumsList = new ResultsList();
 
@@ -62,33 +63,33 @@ albumsList.onItemClick(function (id) {
                 };
             }));
 
-            trackContainer.clear();
+            $trackContainer.clear();
         });
 });
 
-document.body.appendChild(albumsList.element);
+$body.append(albumsList.element);
 
 var tracksList = new ResultsList();
 
 tracksList.onItemClick(function (id) {
     logic.retrieveTrackById(id)
         .then(function (track) {
-            trackContainer.clear();
+            $trackContainer.clear();
 
             // var player = new TrackPlayer(track.name, track.album.images[0].url, track.preview_url, track.external_urls.spotify);
             var player = new SpotifyPlayer(track.id);
 
-            trackContainer.appendChild(player.element);
+            $trackContainer.append(player.element);
         });
 });
 
-document.body.appendChild(tracksList.element);
+$body.append(tracksList.element);
 
-var trackContainer = document.createElement('div');
+var $trackContainer = $('<div>');
 
-trackContainer.clear = function () {
-    this.innerHTML = '';
+$trackContainer.clear = function () {
+    this.empty();
 };
 
-document.body.appendChild(trackContainer);
+$body.append($trackContainer);
 

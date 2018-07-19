@@ -1,5 +1,5 @@
 var logic = {
-    token: 'BQAqoRGb8tOhQP2OZpSkTCovSAuHK-HbK4PszwwnJcwsSlyZGtIKfTf0MJwV8YqavTFtCr0JZgihCoNwJVpz-ee0hPDdI0RpEvlyFiAA6XnQlWEdhuUsflDHYggYpV8Zu4I4ELRa-4iiWg',
+    token: 'NO-TOKEN',
 
     _callApi: function (path) {
         return new Promise(function (resolve, reject) {
@@ -42,16 +42,16 @@ var logic = {
     },
 
     retrieveTracksByAlbumId(id) {
-        return this._callApi('/albums/'+id+'/tracks')
-            .then(function(res){
+        return this._callApi('/albums/' + id + '/tracks')
+            .then(function(res) {
                 return res.items;
             });
     },
 
     retrieveTrackById(id) {
-        return this._callApi('/tracks/'+id)
-            .then(function(res){
+        return this._callApi('/tracks/' + id)
+            .then(function(res) {
                 return res;
             });
     }
-}
+};
