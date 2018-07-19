@@ -3,8 +3,6 @@ logic.token = 'BQBYDuxnzZe1kEMkGyvJiSd3zKIjaJ2NiqRpJDQceNB1eZRsM3L3pwtuTAPcPklk8
 
 // my presentation logic
 
-var $container = $('<div class="container-flui">');
-
 var search = new SearchPanel();
 
 search.onSearch(function (query) {
@@ -26,7 +24,7 @@ search.onSearch(function (query) {
         });
 });
 
-
+var $body = $('body');
 
 $body.append(search.element);
 
