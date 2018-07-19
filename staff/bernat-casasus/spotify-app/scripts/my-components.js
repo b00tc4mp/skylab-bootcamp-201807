@@ -3,7 +3,7 @@ function Container(){
     Component.call(this, 'div');
     var $container = $(this.element);
 
-    $container.addClass('container');
+    $container.addClass('container col-4');
 }
 Container.prototype = Object.create(Component.prototype);
 Container.prototype.constructor = Container;
@@ -26,8 +26,8 @@ function SearchPanel() {
     
     var $form = $(this.element);
     $form.addClass('form-inline d-flex justify-content-center');
-    $($form).append('<input type="search" class="form-control mb-2 mr-sm-2 p-2 mb-2 col-10" id="inlineFormInputName2" placeholder="Input text to search...">');
-    $($form).append('<button type="submit" class="btn mb-2 p-2 mb-2 col">Submit</button>');
+    $($form).append('<input type="search" class="form-control mb-2 mr-sm-2 p-2 mb-2 col" id="inlineFormInputName2" placeholder="Input text to search...">');
+    $($form).append('<button type="submit" class="btn mb-2 p-2 mb-2 col-3">Submit</button>');
 
     var _callback;
 
