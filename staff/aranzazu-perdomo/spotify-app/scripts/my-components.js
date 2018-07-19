@@ -3,17 +3,14 @@
 function SearchPanel() {
     Component.call(this, 'form');
 
-    var $input =$('<input>').attr('type','search');
+    var $input =$('<input type="search" placeholder="Input a text">');
     
-    $input.attr('type','placeholder');
-    $input.text('Input a text...');
-
     var $button = $('<button>').attr('type','submit').text('Search');
     
-   
+    var $element= $(this.element);
 
-    $(this.element).append($input);
-    $(this.element).append($button);
+    $element.append([$input,$button]);
+   
 
     var _callback;
 
@@ -47,8 +44,8 @@ ResultsList.prototype.updateResults = function (results) { // => { id, text }
         var li = $('<li>');
         var a = $('<a>');
 
-        $(a).attr("href",'#/+ result.id');
-        $(a).text('result.text');
+        $(a).attr("href",'#/' + result.id).text(result.text);;
+       
         $(a).on('click', function () {
             if (this._callback) this._callback(result.id, result.text);
         }.bind(this));
@@ -72,19 +69,19 @@ ResultsList.prototype.onItemClick = function (callback) {
 function DetailPanel(title, info, image, preview_url) {
     Panel.call(this, title, 'section');
 
-    var p = document.createElement('p');
-    p.innerText = info;
+    var p = $('<p>').text(info);
+  
 
-    this.element.appendChild(p);
+    $(this.element).append(p);
 
-    var img = document.createElement('img');
-    img.src = image;
+    var img = $('<img src="image">');
     
-    var audio=document.createElement("audio");
-    var source=document.createElement("source");
+    
+    var audio=("<audio>");
+    var source=("source");
     source.src=preview_url;
-    audio.appendChild(source);
-    this.element.appendChild(img);
+    audio.append("source");
+    $(this.element).append("img");
 }
 
 DetailPanel.prototype = Object.create(Panel.prototype);
