@@ -3,23 +3,29 @@
 function SearchPanel() {
     Component.call(this, 'form');
 
-    var input = document.createElement('input');
-    input.type = 'search';
-    input.placeholder = 'Input a text...';
+    // var $input = $('<input>');
+    //$input.attr('type', 'search');
+    //$input.attr('placeholder', 'Input a text...');
+    // $input.attr({
+    //     type: 'search',
+    //     placeholder: 'Input a text ...'
+    // });
+    var $input = $('<input type="search" placeholder="Input a text...">');
 
-    var button = document.createElement('button');
-    button.type = 'submit';
-    button.innerHTML = 'Search';
+    var $button = $('<button type="submit">Search</button>');
 
-    this.element.appendChild(input);
-    this.element.appendChild(button);
+    var $element = $(this.element);
+
+    // $element.append($input);
+    // $element.append($button);
+    $element.append([$input, $button]);
 
     var _callback;
 
-    this.element.addEventListener('submit', function (event) {
+    $element.submit(function (event) {
         event.preventDefault();
 
-        var query = input.value;
+        var query = $input.val();
 
         if (query && _callback) _callback(query);
     }.bind(this));
@@ -34,6 +40,8 @@ SearchPanel.prototype.constructor = SearchPanel;
 
 function ResultsList() {
     Component.call(this, 'ul');
+
+    this.$element = $(this.element);
 }
 
 ResultsList.prototype = Object.create(Component.prototype);
@@ -42,24 +50,24 @@ ResultsList.prototype.constructor = ResultsList;
 ResultsList.prototype.updateResults = function (results) { // => { id, text }
     this.clear();
 
-    results.forEach(function (result) {
-        var li = document.createElement('li');
-        var a = document.createElement('a');
+    $.each(results, function (index, result) {
+        // results.forEach(function (result) {
+        var $li = $('<li>');
+        var $a = $('<a href="#/' + result.id + '">' + result.text + '</a>');
 
-        a.href = '#/' + result.id;
-        a.innerHTML = result.text;
-        a.onclick = function () {
+        $a.click(function () {
             if (this._callback) this._callback(result.id, result.text);
-        }.bind(this);
+        }.bind(this));
 
-        this.element.appendChild(li);
+        $li.append($a);
 
-        li.appendChild(a);
-    }, this);
+        this.$element.append($li);
+        // }, this);
+    }.bind(this));
 };
 
-ResultsList.prototype.clear = function() {
-    this.element.innerHTML = '';
+ResultsList.prototype.clear = function () {
+    this.$element.empty();
 };
 
 ResultsList.prototype.onItemClick = function (callback) {
@@ -76,28 +84,19 @@ ResultsList.prototype.onItemClick = function (callback) {
 function TrackPlayer(title, image, file, url) {
     Panel.call(this, title, 'section');
 
-    var img = document.createElement('img');
-    img.src = image;
+    var $element = $(this.element);
 
-    this.element.appendChild(img);
+    var $img = $('<img src="' + image + '">');
 
-    var audio = document.createElement('audio');
-    audio.controls = true;
+    $element.append($img);
 
-    var source = document.createElement('source');
-    source.src = file;
-    source.type = 'audio/mpeg';
+    var $audio = $('<audio controls><source src="' + file + '" type="audio/mpeg"></audio>');
 
-    audio.appendChild(source);
+    $element.append($audio);
 
-    this.element.appendChild(audio);
+    var $a = $('<a href="' + url  + '" target="_blank">Open in original player</a>');
 
-    var a = document.createElement('a');
-    a.href = url;
-    a.innerText = 'Open in original player';
-    a.target = '_blank';
-
-    this.element.appendChild(a);
+    $element.append($a);
 }
 
 TrackPlayer.prototype = Object.create(Panel.prototype);
@@ -110,7 +109,7 @@ TrackPlayer.prototype.constructor = TrackPlayer;
 function SpotifyPlayer(id) {
     Component.call(this, 'section');
 
-    this.element.innerHTML = '<iframe src="https://open.spotify.com/embed?uri=spotify:track:'+ id +'" width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>';
+    $(this.element).append('<iframe src="https://open.spotify.com/embed?uri=spotify:track:' + id + '" width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>');
 }
 
 SpotifyPlayer.prototype = Object.create(Component.prototype);

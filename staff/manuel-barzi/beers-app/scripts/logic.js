@@ -13,7 +13,7 @@ var logic = {
                 }
             };
 
-            var url = 'https://quiet-inlet-67115.herokuapp.com/api-' + path;
+            var url = 'https://quiet-inlet-67115.herokuapp.com/api' + path;
 
             request.open('get', url);
 
