@@ -1,6 +1,6 @@
 'use strict';
 
-logic.token = 'BQCso_fOPSi1Pr9vdG0halj8o67cNe9NXI0sQv7ywLW47_sEl3T6zCuDOHtCl4a8fEkMBAWhA6sixQc3DGkIrG0ar4OsYcOMeEBh8ul0YNHx2YRX339cjB8bThUD_-TW9aiwZ-T7L7ifbA';
+logic.token = 'BQA782jQ0wO0SSRJzE2YsWVPyJRrZ-AN8p7rMR8K2Gtp-mqTScUQEfsaVldBgV9ULA8IkOAatxW55M9WfpjFiszo3sDvRVQPQzD7rVk3apR3UTR9CIJC8bcxWBQoaQwbiQqNKOCG5TYtpg';
 // NOTE: to reset token via web => developer.spotify.com/console/get-search-item
 
 // my presentation logic
@@ -26,7 +26,7 @@ search.onSearch(function (query) {
         });
 });
 
-$('body').append(search.element);
+document.body.appendChild(search.element);
 
 var artistsList = new ResultsList();
 
@@ -48,7 +48,7 @@ artistsList.onItemClick(function (id) {
         });
 });
 
-$('body').append(artistsList.element);
+document.body.appendChild(artistsList.element);
 
 var albumsList = new ResultsList();
 
@@ -66,7 +66,7 @@ albumsList.onItemClick(function (id) {
         });
 });
 
-$('body').append(albumsList.element);
+document.body.appendChild(albumsList.element);
 
 var tracksList = new ResultsList();
 
@@ -82,7 +82,7 @@ tracksList.onItemClick(function (id) {
         });
 });
 
-$('body').append(tracksList.element);
+document.body.appendChild(tracksList.element);
 
 var trackContainer = document.createElement('div');
 
@@ -90,4 +90,5 @@ trackContainer.clear = function () {
     this.innerHTML = '';
 };
 
-$('body').append(trackContainer);
+document.body.appendChild(trackContainer);
+

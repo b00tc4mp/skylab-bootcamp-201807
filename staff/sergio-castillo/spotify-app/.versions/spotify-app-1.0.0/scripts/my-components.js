@@ -3,28 +3,23 @@
 function SearchPanel() {
     Component.call(this, 'form');
 
-    var $input = $('<input type="search" placeholder="Input a text...">');
-    // Existen otras dos formas pero utilizando var $input = $('<input>');
-    // $input.attr('type', 'search');
-    // $input.attr({
-    //  type: 'search',
-    //  placeholder: 'Input a text...'
-    // });
-    var $button = $('<button type="submit">Search</button>');
+    var input = document.createElement('input');
+    input.type = 'search';
+    input.placeholder = 'Input a text...';
 
-    var $element = $(this.element);
+    var button = document.createElement('button');
+    button.type = 'submit';
+    button.innerHTML = 'Search';
 
-    // $element.append ('$input');
-    // $element.append ('$button');
-    $element.append([$input, $button]);
-    
+    this.element.appendChild(input);
+    this.element.appendChild(button);
 
     var _callback;
 
     this.element.addEventListener('submit', function (event) {
         event.preventDefault();
 
-        var query = $input.val();
+        var query = input.value;
 
         if (query && _callback) _callback(query);
     }.bind(this));
@@ -39,8 +34,6 @@ SearchPanel.prototype.constructor = SearchPanel;
 
 function ResultsList() {
     Component.call(this, 'ul');
-
-    this.$element= $(this.element);
 }
 
 ResultsList.prototype = Object.create(Component.prototype);
@@ -49,19 +42,20 @@ ResultsList.prototype.constructor = ResultsList;
 ResultsList.prototype.updateResults = function (results) { // => { id, text }
     this.clear();
 
-    $each(results, function (index, result){
-    // results.forEach(function (result) {
-        var $li= $('<li>');
-        var $a= $('<a href="#/' + result.id+'">'+result.text+'</a>');
+    results.forEach(function (result) {
+        var li = document.createElement('li');
+        var a = document.createElement('a');
 
-        $a.click = function () {
+        a.href = '#/' + result.id;
+        a.innerHTML = result.text;
+        a.onclick = function () {
             if (this._callback) this._callback(result.id, result.text);
         }.bind(this);
 
-        $li.append($a);
-        this.$element.append($li);
+        this.element.appendChild(li);
 
-    }.bind(this));
+        li.appendChild(a);
+    }, this);
 };
 
 ResultsList.prototype.clear = function() {
