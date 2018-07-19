@@ -2,7 +2,17 @@ var logic = {
     token: 'NO-TOKEN',
 
     _callApi: function (path) {
-        return new Promise(function (resolve, reject) {
+        return $.ajax('https://api.spotify.com/v1' + path, {
+            header:{
+                authoritzation:'Bearer ' + this.token
+            }
+        })
+        .catch(function(err){
+            throw Error('request error, status' + err.status);
+        });
+
+        //JS
+        /*return new Promise(function (resolve, reject) {
             var request = new XMLHttpRequest();
 
             request.onreadystatechange = function () {
@@ -23,9 +33,10 @@ var logic = {
 
 
             request.send();
-        }.bind(this));
+        }.bind(this));*/
 
     },
+
 
     searchArtists: function (query) {
         return this._callApi('/search?type=artist&query=' + query)
