@@ -95,6 +95,6 @@ $trackContainer.clear= ( function(){
     this.innerHTML = '';
 };*/
 
-$('body').append(trackContainer);
+$('body').append($trackContainer);
 //document.body.appendChild(trackContainer);
 
