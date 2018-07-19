@@ -1,5 +1,15 @@
 // my custom components
 
+'use strict'
+ 
+
+// 
+
+$.ajax('./vendor/jquery/3.3.1/jquery-3.3.1.min.js')
+.then(console.log);
+.catch(Error '...');
+
+
 logic.token = 'BQCt6CcT6mB3cnNB_CAqL46X76CylC05AJ5x1wSeVvO5FdPXPZUItwXaE5cprHqXE_Rc1YVXgJ3BwpTWLw9kQg6MhlD8ppb-7sl7wsTW_DjfaFh2wuXk-Nsgtl71gHu27GwBLnfNCRk';
 
 function SearchPanel() {
