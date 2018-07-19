@@ -1,25 +1,34 @@
+
+
+
 // my custom components
 
 function SearchPanel() {
     Component.call(this, 'form');
 
-    var input = document.createElement('input');
-    input.type = 'search';
-    input.placeholder = 'Input a text...';
+    var $input = $('<input type="search" placeholder="Input a text...">');
+    $input.addClass("form-control mr-sm-2");
 
-    var button = document.createElement('button');
-    button.type = 'submit';
-    button.innerHTML = 'Search';
+    var $button = $('<button type="submit">Search</button>');
+    $button.addClass("btn btn-success");
 
-    this.element.appendChild(input);
-    this.element.appendChild(button);
+    var $element = $(this.element);
+    $element.addClass("form-inline mx-auto")
+
+    $element.append([$input, $button]);
+    
+
+    
+
+    
+    
 
     var _callback;
 
-    this.element.addEventListener('submit', function (event) {
+    $element.submit(function (event) {
         event.preventDefault();
 
-        var query = input.value;
+        var query = $input.val();
 
         if (query && _callback) _callback(query);
     }.bind(this));
@@ -34,29 +43,36 @@ SearchPanel.prototype.constructor = SearchPanel;
 
 function ResultsList() {
     Component.call(this, 'ul');
+
+    this.$element = $(this.element);
+    this.$element.addClass("list-group list-group-flush")
 }
 
 ResultsList.prototype = Object.create(Component.prototype);
 ResultsList.prototype.constructor = ResultsList;
 
 ResultsList.prototype.updateResults = function (results) { // => { id, text }
-    this.element.innerHTML = '';
+    this.clear();
 
-    results.forEach(function (result) {
-        var li = document.createElement('li');
-        var a = document.createElement('a');
+    $.each(results, function (index, result) {
+        // results.forEach(function (result) {
+        var $li = $('<li>');
+        var $a = $('<a style="text-align:center" href="#/' + result.id + '">' + result.text + '</a>');
+        $a.addClass("list-group-item mx-auto center");
 
-        a.className = result.class;
-        a.href = '#/' + result.id;
-        a.innerHTML = result.text;
-        a.onclick = function () {
-            if (this._callback) this._callback(result.id, result.text, result.class);
-        }.bind(this);
+        $a.click(function () {
+            if (this._callback) this._callback(result.id, result.text);
+        }.bind(this));
 
-        this.element.appendChild(li);
+        $li.append($a);
 
-        li.appendChild(a);
-    }, this);
+        this.$element.append($li);
+        // }, this);
+    }.bind(this));
+};
+
+ResultsList.prototype.clear = function () {
+    this.$element.empty();
 };
 
 ResultsList.prototype.onItemClick = function (callback) {
@@ -65,41 +81,45 @@ ResultsList.prototype.onItemClick = function (callback) {
 
 /**
  * 
- * @param {string} title The item title
- * @param {string} info The information about an item
- * @param {string} image The image of the item
+ * @param {string} title The track title
+ * @param {string} image The image URL of the track
+ * @param {string} file The file URL of the track
+ * @param {string} url The URL of the track
  */
-function DetailPanel(title, info, image) {
+function TrackPlayer(title, image, file, url) {
     Panel.call(this, title, 'section');
 
-    var p = document.createElement('p');
-    p.innerText = info;
+    var $element = $(this.element);
 
-    this.element.appendChild(p);
+    var $img = $('<img src="' + image + '">');
 
-    var img = document.createElement('img');
-    img.src = image;
+    $element.append($img);
 
-    this.element.appendChild(img);
+    var $audio = $('<audio controls><source src="' + file + '" type="audio/mpeg"></audio>');
+
+    $element.append($audio);
+
+    var $a = $('<a href="' + url  + '" target="_blank">Open in original player</a>');
+
+    $element.append($a);
 }
 
-DetailPanel.prototype = Object.create(Panel.prototype);
-DetailPanel.prototype.constructor = DetailPanel;
+TrackPlayer.prototype = Object.create(Panel.prototype);
+TrackPlayer.prototype.constructor = TrackPlayer;
 
 /**
  * 
- * @param {string} title The item title
- * @param {string} info The information about an item
- * @param {string} image The image of the item
+ * @param {string} id The track id
  */
-function DetailIframe(id, name) {
-    Panel.call(this, name);
+function SpotifyPlayer(id) {
+    Component.call(this, 'section');
 
-    var embed = document.createElement('div');
-    embed.innerHTML = '<iframe src="https://open.spotify.com/embed?uri=spotify:track:'+ id +'" width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>'
-
-    this.element.appendChild(embed);
+    $(this.element).append('<iframe src="https://open.spotify.com/embed?uri=spotify:track:' + id + '" width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>');
 }
 
-DetailIframe.prototype = Object.create(Panel.prototype);
-DetailIframe.prototype.constructor = DetailIframe;
+SpotifyPlayer.prototype = Object.create(Component.prototype);
+SpotifyPlayer.prototype.constructor = SpotifyPlayer;
+
+
+
+

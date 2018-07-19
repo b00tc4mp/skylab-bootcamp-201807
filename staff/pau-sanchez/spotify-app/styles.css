@@ -1,0 +1,11 @@
+.list-group .list-group-item li{
+    text-align: center;
+}
+
+li ul{
+    list-style-type: none;
+}
+
+a {
+    text-align: center;
+}

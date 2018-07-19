@@ -1,121 +1,102 @@
+logic.token = 'BQA0x0xZq3ucWdajs1fJeL_y1revc3gzHNGe28_NS9nTVsA1-OZ3PAOG8BT4eNsNlD_Seq0FtGHYxEzk24dpB5hffklH4M2yOtqo9Ysg3Ez_z04bWa-IrXOLbHUTZIuEhIMXYB9y0O1cDjiWFdf15FlvpQpi2ewsntgYVxBWL6g0QjH4';
+// NOTE: to reset token via web => https://developer.spotify.com/console/get-search-item
+
 // my presentation logic
 
-// optional, reduce the size of the restaurants loaded in memory
-// restaurants.splice(100);
-
 var search = new SearchPanel();
-/*
-search.onSearch(function (query) {
-    
-    logic.searchArtists(query, function (error, artists) {
-        console.log("hi");
-        if (error) alert('Sorry, we have temporary problem, try again later.');
-        else 
-             results.updateResults(artists.map(function (artist) {
-                    return {
-                        //id: artist.id,
-                        text: artist.name
-                    };
-                }));
-   });
-
-
-    detailContainer.clear();
-});
-*/
 
 search.onSearch(function (query) {
-    
     logic.searchArtists(query)
-        .then (function (artists) {
-            results.updateResults(artists.map(function (artist) {
-                    return {
-                        id: artist.id,
-                        text: artist.name,
-                        class: "artist"
-                    };
-                }));
-   });
+        .then(function (artists) {
+            artistsList.updateResults(artists.map(function (artist) {
+                return {
+                    id: artist.id,
+                    text: artist.name
+                };
+            }));
 
-
-    detailContainer.clear();
+            albumsList.clear();
+            tracksList.clear();
+            $trackContainer.clear();
+        })
+        .catch(function (error) {
+            alert('Sorry, we have temporary problem, try again later.');
+        });
 });
 
-var results = new ResultsList();
-
-//var DEFAULT_IMAGE = 'https://i.pinimg.com/originals/37/2a/2d/372a2d5e8a32991bb19982271d0762fe.jpg';
-
-//
+var $body = $('body');
 
 
-results.onItemClick(function (id,text,classe) {
-    
-    debugger;
-    if ( classe === "artist") {
 
-        logic.retrieveAlbumsByArtistId(id)
-         .then (function (albums){
-            results.updateResults(albums.map(function (album) {
+var $navigationBar = $('<nav>');
+$navigationBar.addClass("navbar navbar-expand-sm bg-dark navbar-dark");
+
+
+$body.append($navigationBar);
+$navigationBar.append(search.element);
+
+var artistsList = new ResultsList();
+
+artistsList.onItemClick(function (id) {
+    logic.retrieveAlbumsByArtistId(id)
+        .then(function (albums) {
+            albumsList.updateResults(albums.map(function (album) {
                 return {
                     id: album.id,
-                    text: album.name,
-                    class: "album"
+                    text: album.name
                 };
-         }))
-            
+            }));
+
+            tracksList.clear();
+            $trackContainer.clear();
         })
-
-    }else if (classe === "album"){
-
-        logic.retrieveTracksByAlbumId(id)
-        .then (function (tracks){
-           results.updateResults(tracks.map(function (track) {
-               return {
-                   id: track.id,
-                   text: track.name,
-                   class: "track"
-               };
-        }))
-           
-       })    
-    }else if (classe === "track"){
-        
-        
-            
-            var detail = new DetailIframe(id);
-
-            detailContainer.clear();
-            detailContainer.appendChild(detail.element);
-        
-    };
-            
-        
-        
-    
-    
-    
-
-    
-    });
-/*
-    results.onItemClick(function (id) {
-        logic.retrieveAlbumsByArtistId(id, function (artist) {
-            
-                var detail = new DetailPanel(artist.name);
-    
-                detailContainer.clear();
-                detailContainer.appendChild(detail.element);
-            })
+        .catch(function (error) {
+            alert('Sorry, we have temporary problem, try again later.');
         });
-*/   
+});
 
+// $body.append(artistsList.$element);
+$body.append(artistsList.element);
 
-var detailContainer = document.createElement('div');
+var albumsList = new ResultsList();
 
-detailContainer.clear = function () {
-    this.innerHTML = '';
+albumsList.onItemClick(function (id) {
+    logic.retrieveTracksByAlbumId(id)
+        .then(function (tracks) {
+            tracksList.updateResults(tracks.map(function (track) {
+                return {
+                    id: track.id,
+                    text: track.name
+                };
+            }));
+
+            $trackContainer.clear();
+        });
+});
+
+$body.append(albumsList.element);
+
+var tracksList = new ResultsList();
+
+tracksList.onItemClick(function (id) {
+    logic.retrieveTrackById(id)
+        .then(function (track) {
+            $trackContainer.clear();
+
+            // var player = new TrackPlayer(track.name, track.album.images[0].url, track.preview_url, track.external_urls.spotify);
+            var player = new SpotifyPlayer(track.id);
+
+            $trackContainer.append(player.element);
+        });
+});
+
+$body.append(tracksList.element);
+
+var $trackContainer = $('<div>');
+
+$trackContainer.clear = function () {
+    this.empty();
 };
 
-document.body.appendChild(search.element);
-document.body.appendChild(results.element);
-document.body.appendChild(detailContainer);
+$body.append($trackContainer);
+
