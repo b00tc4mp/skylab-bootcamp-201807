@@ -75,8 +75,8 @@ tracksList.onItemClick(function (id) {
         .then(function (track) {
             trackContainer.clear();
 
-            // var player = new TrackPlayer(track.name, track.album.images[0].url, track.preview_url, track.external_urls.spotify);
-            var player = new SpotifyPlayer(track.id);
+            var player = new TrackPlayer(track.name, track.album.images[0].url, track.preview_url, track.external_urls.spotify);
+            //var player = new SpotifyPlayer(track.id);
 
             trackContainer.appendChild(player.element);
         });
@@ -86,11 +86,14 @@ $('body').append(tracksList.element);
 //document.body.appendChild(tracksList.element);
 
 
-var trackContainer = document.createElement('div');
-
-trackContainer.clear = function () {
+var $trackContainer = $('<div>');
+$trackContainer.clear= ( function(){
+    this.empty();
+});
+//var trackContainer = document.createElement('div');
+/*trackContainer.clear = function () {
     this.innerHTML = '';
-};
+};*/
 
 $('body').append(trackContainer);
 //document.body.appendChild(trackContainer);
