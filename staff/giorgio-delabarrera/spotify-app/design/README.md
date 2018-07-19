@@ -1,6 +1,43 @@
 
 # Spotify App
 
+## Components
+
+- site-nav
+- recently-played
+- search
+- artist-list-item
+- artist-detail
+- album-list-item
+- album-detail
+- track-list-item
+- player
+
+## SASS Structure
+
+```
+sass/
+  base/
+    _reset.sass
+    _typography.sass
+  components/
+    _site-nav.sass
+    _recently-played.sass
+    _search.sass
+    _artist-list-item.sass
+    _artist-detail.sass
+    _album-list-item.sass
+    _album-detail.sass
+    _track-list-item.sass
+    _player.sass
+  helpers/
+    _helper.sass
+  layout/
+    _sidebar.sass
+    _footer.sass
+  main.sass
+```
+
 ## BEM
 
 - [site-nav](#site-nav)
