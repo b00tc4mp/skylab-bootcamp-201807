@@ -1,18 +1,8 @@
 var logic = {
-    token: 'NO-TOKEN',
+    token: 'BQB-AUIdYY6v0onJH5fwc0mS_vr5ggVkAhOGyzxjLG2jwslKkLW1tYP4AwOprabD7Yxe-6-Yd91LfSj9UHJim3WLKtCCEuuKAtNCl4XBxpnmvrIznCcnD48nXEG3DuYeqXFCOZhpG_Q',
 
     _callApi: function (path) {
-        return $.ajax('https://api.spotify.com/v1' + path, {
-            header:{
-                authoritzation:'Bearer ' + this.token
-            }
-        })
-        .catch(function(err){
-            throw Error('request error, status' + err.status);
-        });
-
-        //JS
-        /*return new Promise(function (resolve, reject) {
+        return new Promise(function (resolve, reject) {
             var request = new XMLHttpRequest();
 
             request.onreadystatechange = function () {
@@ -33,10 +23,9 @@ var logic = {
 
 
             request.send();
-        }.bind(this));*/
+        }.bind(this));
 
     },
-
 
     searchArtists: function (query) {
         return this._callApi('/search?type=artist&query=' + query)
@@ -53,15 +42,18 @@ var logic = {
     },
 
     retrieveTracksByAlbumId(id) {
-        return this._callApi('/albums/' + id + '/tracks')
-            .then(function(res) {
+        // TODO
+        return this._callApi('/albums/' + id +'/tracks')
+        
+            .then(function (res){
                 return res.items;
             });
     },
 
     retrieveTrackById(id) {
+        // TODO
         return this._callApi('/tracks/' + id)
-            .then(function(res) {
+            .then (function(res){
                 return res;
             });
     }

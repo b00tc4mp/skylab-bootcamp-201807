@@ -1,96 +1,100 @@
-// my presentation logic
+logic.token = 'BQD076kproF1O-qGisGVKzlFM0Ps4ZD7920q7K72QhSLRSMz1uVIZWZ8xra6ZGb8qCsNO3eXgVD-qPN8JtWKl3wdZLJxcap3n9IUZBmU7a03D8q3burtJQJx0SN9KZ5z5bUwnhQqIyX0';
+// NOTE: to reset token via web => developer.spotify.com/console/get-search-item
 
-// optional, reduce the size of the restaurants loaded in memory
-// restaurants.splice(100);
+// my presentation logic
 
 var search = new SearchPanel();
 
 search.onSearch(function (query) {
     logic.searchArtists(query)
         .then(function (artists) {
-            results.updateResults(artists.map(function (artist) {
+            artistsList.updateResults(artists.map(function (artist) {
                 return {
                     id: artist.id,
                     text: artist.name
                 };
             }));
 
-            detailContainer.clear();
+            albumsList.clear();
+            tracksList.clear();
+            trackContainer.clear();
         })
         .catch(function (error) {
             alert('Sorry, we have temporary problem, try again later.');
         });
-
 });
+$('body').append(search.element);
+//document.body.appendChild(search.element);
 
-var results = new ResultsList();
+var artistsList = new ResultsList();
 
-results.onItemClick(function (id) {
+artistsList.onItemClick(function (id) {
     logic.retrieveAlbumsByArtistId(id)
         .then(function (albums) {
-            albumsResults.updateResults(albums.map(function (album) {
+            albumsList.updateResults(albums.map(function (album) {
                 return {
                     id: album.id,
                     text: album.name
                 };
             }));
 
-            detailContainer.clear();
+            tracksList.clear();
+            trackContainer.clear();
         })
         .catch(function (error) {
             alert('Sorry, we have temporary problem, try again later.');
         });
-
 });
-var albumsResults = new ResultsList();
 
-albumsResults.onItemClick(function (id) {
+$('body').append(artistsList.element);
+//document.body.appendChild(artistsList.element);
+
+var albumsList = new ResultsList();
+
+albumsList.onItemClick(function (id) {
     logic.retrieveTracksByAlbumId(id)
         .then(function (tracks) {
-            tracksResults.updateResults(tracks.map(function (track) {
+            tracksList.updateResults(tracks.map(function (track) {
                 return {
                     id: track.id,
-                    text: track.name,
-                 
+                    text: track.name
                 };
             }));
 
-            detailContainer.clear();
-        })
-        .catch(function (error) {
-            alert('Sorry, we have temporary problem, try again later.');
+            trackContainer.clear();
         });
-
-
 });
 
-var tracksResults = new ResultsList();
+$('body').append(albumsList.element);
+//document.body.appendChild(albumsList.element);
 
+var tracksList = new ResultsList();
 
-tracksResults.onItemClick(function (id) {
+tracksList.onItemClick(function (id) {
     logic.retrieveTrackById(id)
         .then(function (track) {
             trackContainer.clear();
 
-            // var player = new TrackPlayer(track.name, track.album.images[0].url, track.preview_url, track.external_urls.spotify);
-            var player = new SpotifyPlayer(track.id);
+            var player = new TrackPlayer(track.name, track.album.images[0].url, track.preview_url, track.external_urls.spotify);
+            //var player = new SpotifyPlayer(track.id);
 
             trackContainer.appendChild(player.element);
         });
-        
 });
 
-var trackContainer = document.createElement('div');
+$('body').append(tracksList.element);
+//document.body.appendChild(tracksList.element);
 
-trackContainer.clear = function () {
+
+var $trackContainer = $('<div>');
+$trackContainer.clear= ( function(){
+    this.empty();
+});
+//var trackContainer = document.createElement('div');
+/*trackContainer.clear = function () {
     this.innerHTML = '';
-};
+};*/
 
+$('body').append(trackContainer);
+//document.body.appendChild(trackContainer);
 
-
-
-document.body.appendChild(search.element);
-document.body.appendChild(results.element);
-document.body.appendChild(albumsResults.element);
-document.body.appendChild(tracksResults.element);
-document.body.appendChild(trackContainer);
