@@ -1,8 +1,5 @@
 // my presentation logic
 
-// optional, reduce the size of the restaurants loaded in memory
-// restaurants.splice(100);
-
 var search = new SearchPanel();
 
 search.onSearch(function (query) {
