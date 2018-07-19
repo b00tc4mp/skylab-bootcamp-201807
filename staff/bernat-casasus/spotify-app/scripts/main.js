@@ -63,15 +63,14 @@ var DEFAULT_IMAGE = 'https://i.imgur.com/WhSdQi7.png';
 
 resultsTracksByAlbumId.onItemClick(function (id) {
     logic.retrieveTrackById(id)
-        .then(function (tracks) {
-            var detail = new DetailPanel(tracks.name,tracks.popularity, tracks.preview_url,DEFAULT_IMAGE);
+    .then(function (track) {
+        $trackContainer.clear();
 
-            detailContainer.clear();
-            detailContainer.appendChild(detail.element);
-        })
-        .catch(function (error) {
-            alert('Sorry, we have temporary problem, try again later.');
-        });
+        // var player = new TrackPlayer(track.name, track.album.images[0].url, track.preview_url, track.external_urls.spotify);
+        var player = new SpotifyPlayer(track.id);
+
+        $trackContainer.append(player.element);
+    });
 });
 
 
@@ -87,7 +86,15 @@ detailContainer.clear = function () {
 $('body').append(search.element);
 $('body').append(results.element);
 $('body').append(resultsAlbumByArtistId.element);
+//$('body').append(resultsTracksByAlbumId.element);
+//$('body').append(detailContainer);
 $('body').append(resultsTracksByAlbumId.element);
-$('body').append(detailContainer);
 
 
+var $trackContainer = $('<div>');
+
+$trackContainer.clear = function () {
+    this.empty();
+};
+
+$('body').append($trackContainer);
