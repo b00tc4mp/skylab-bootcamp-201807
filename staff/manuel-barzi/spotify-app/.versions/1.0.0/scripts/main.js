@@ -1,9 +1,7 @@
-logic.token = 'BQBYDuxnzZe1kEMkGyvJiSd3zKIjaJ2NiqRpJDQceNB1eZRsM3L3pwtuTAPcPklk8FJEVLhRu1Y46W9L32Y';
-// NOTE: to reset token via web => https://developer.spotify.com/console/get-search-item
+logic.token = 'BQD076kproF1O-qGisGVKzlFM0Ps4ZD7920q7K72QhSLRSMz1uVIZWZ8xra6ZGb8qCsNO3eXgVD-qPN8JtWKl3wdZLJxcap3n9IUZBmU7a03D8q3burtJQJx0SN9KZ5z5bUwnhQqIyX0';
+// NOTE: to reset token via web => developer.spotify.com/console/get-search-item
 
 // my presentation logic
-
-var $container = $('<div class="container-flui">');
 
 var search = new SearchPanel();
 
@@ -19,16 +17,14 @@ search.onSearch(function (query) {
 
             albumsList.clear();
             tracksList.clear();
-            $trackContainer.clear();
+            trackContainer.clear();
         })
         .catch(function (error) {
             alert('Sorry, we have temporary problem, try again later.');
         });
 });
 
-
-
-$body.append(search.element);
+document.body.appendChild(search.element);
 
 var artistsList = new ResultsList();
 
@@ -43,15 +39,14 @@ artistsList.onItemClick(function (id) {
             }));
 
             tracksList.clear();
-            $trackContainer.clear();
+            trackContainer.clear();
         })
         .catch(function (error) {
             alert('Sorry, we have temporary problem, try again later.');
         });
 });
 
-// $body.append(artistsList.$element);
-$body.append(artistsList.element);
+document.body.appendChild(artistsList.element);
 
 var albumsList = new ResultsList();
 
@@ -65,33 +60,33 @@ albumsList.onItemClick(function (id) {
                 };
             }));
 
-            $trackContainer.clear();
+            trackContainer.clear();
         });
 });
 
-$body.append(albumsList.element);
+document.body.appendChild(albumsList.element);
 
 var tracksList = new ResultsList();
 
 tracksList.onItemClick(function (id) {
     logic.retrieveTrackById(id)
         .then(function (track) {
-            $trackContainer.clear();
+            trackContainer.clear();
 
             // var player = new TrackPlayer(track.name, track.album.images[0].url, track.preview_url, track.external_urls.spotify);
             var player = new SpotifyPlayer(track.id);
 
-            $trackContainer.append(player.element);
+            trackContainer.appendChild(player.element);
         });
 });
 
-$body.append(tracksList.element);
+document.body.appendChild(tracksList.element);
 
-var $trackContainer = $('<div>');
+var trackContainer = document.createElement('div');
 
-$trackContainer.clear = function () {
-    this.empty();
+trackContainer.clear = function () {
+    this.innerHTML = '';
 };
 
-$body.append($trackContainer);
+document.body.appendChild(trackContainer);
 
