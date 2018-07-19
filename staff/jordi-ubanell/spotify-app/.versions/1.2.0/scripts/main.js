@@ -1,9 +1,7 @@
-logic.token = 'BQBYDuxnzZe1kEMkGyvJiSd3zKIjaJ2NiqRpJDQceNB1eZRsM3L3pwtuTAPcPklk8FJEVLhRu1Y46W9L32Y';
+logic.token = 'BQDw76lt9MKXehBA2eLYB2J1Q9Yem4x5WgmpbMVSvIh5ZR7USykU-zqKPNBfJt6CDbAqhIVMyx8m2UbNSE63F71vV5WT-Idm_JcIgjFiPr7tgkLB9nTihHLez345H3FAd7fL-bln3NY';
 // NOTE: to reset token via web => https://developer.spotify.com/console/get-search-item
 
 // my presentation logic
-
-var $container = $('<div class="container-flui">');
 
 var search = new SearchPanel();
 
@@ -26,7 +24,7 @@ search.onSearch(function (query) {
         });
 });
 
-
+var $body = $('body');
 
 $body.append(search.element);
 

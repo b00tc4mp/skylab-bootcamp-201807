@@ -1,7 +1,7 @@
 'use strict';
 
 describe('logic (spotify)', function () {
-    logic.token = 'BQB5E-cSm2NXdDZZckNZJ20CU-2dfMT-7cXoNMP6BCUNFOfpcPsmAvnVpQt0ZqBILy36KRvEaiQivqONg8JlvbY6QPlWjIBsy17MVZZZUQqnQBq3Zjum__N121LTgO_lgDlDi0VFSWzp';
+    logic.token = 'BQDw76lt9MKXehBA2eLYB2J1Q9Yem4x5WgmpbMVSvIh5ZR7USykU-zqKPNBfJt6CDbAqhIVMyx8m2UbNSE63F71vV5WT-Idm_JcIgjFiPr7tgkLB9nTihHLez345H3FAd7fL-bln3NY';
     
     describe('search artists', function () {
         it('should find artists matching criteria', function () {
