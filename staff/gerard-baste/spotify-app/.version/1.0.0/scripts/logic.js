@@ -23,7 +23,6 @@ var logic = {
 
 
             request.send();
-            
         }.bind(this));
 
     },
