@@ -10,9 +10,9 @@ function SearchPanel() {
     //     type: 'search',
     //     placeholder: 'Input a text ...'
     // });
-    var $input = $('<input type="search" placeholder="Input a text...">');
+    var $input = $('<input type="search" class="form-control mb-2 mr-sm-2" placeholder="Input a text...">');
 
-    var $button = $('<button type="submit">Search</button>');
+    var $button = $('<button type="submit" class="btn btn-primary mb-2">Buscar</button>');
 
     var $element = $(this.element);
 
