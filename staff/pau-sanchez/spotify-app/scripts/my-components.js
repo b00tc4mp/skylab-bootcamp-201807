@@ -45,7 +45,8 @@ function ResultsList() {
     Component.call(this, 'ul');
 
     this.$element = $(this.element);
-    this.$element.addClass("list-group list-group-flush")
+    this.$element.addClass("list-group list-group-flush");
+    
 }
 
 ResultsList.prototype = Object.create(Component.prototype);
@@ -53,6 +54,9 @@ ResultsList.prototype.constructor = ResultsList;
 
 ResultsList.prototype.updateResults = function (results) { // => { id, text }
     this.clear();
+
+    
+    
 
     $.each(results, function (index, result) {
         // results.forEach(function (result) {
@@ -77,6 +81,10 @@ ResultsList.prototype.clear = function () {
 
 ResultsList.prototype.onItemClick = function (callback) {
     this._callback = callback;
+
+    
+
+
 };
 
 /**
