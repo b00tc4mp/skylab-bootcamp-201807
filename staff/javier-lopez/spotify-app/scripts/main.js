@@ -1,4 +1,4 @@
-logic.token = 'BQDMOIuwunyoLXqyiftI9Me-kHV7iXhCjHfF80cKSQNUMYaB05GwcYR-u-vo7qNao0ZVH0JN7hyVoKp0vCbeR7f_iGab0Zdjqae5XogrftRZMjJlpxV7QgIqD82i7GvkXps2KSVNru0';
+logic.token = 'BQAxMQ5ZNISZW9qMSs7SNHDjOLdcS8YV-Mq_HWs7XBaqAUh4NOVwdmvczyE-I0K-ZAvGgkiAyzKxdqM0LRI1GUsp_8Y-PFV_69XA3Qtme_k10j7--L2CaEHnGea3HeDYMC2kbH-U7uY';
 // NOTE: to reset token via web => https://developer.spotify.com/console/get-search-item
 
 // my presentation logic
