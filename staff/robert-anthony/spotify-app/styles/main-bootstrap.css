@@ -7,9 +7,9 @@ body {
   cursor: pointer;
   margin: 0;
   padding: 0;
-  color: inherit; }
+  color: #0031ff; }
   .list-group .list-group-item .detail-panel__link:hover, .list-group .list-group-item .detail-panel__linkactive {
-    color: #ff7b00;
+    color: white;
     text-decoration: none; }
 
 nav {
@@ -40,5 +40,9 @@ nav {
 
 .audio-component {
   visibility: hidden; }
+
+.list-group-item.active {
+  background-color: #ff7b00;
+  border-color: #ff7b00; }
 
 /*# sourceMappingURL=main-bootstrap.css.map */

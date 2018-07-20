@@ -106,5 +106,5 @@ function showTrackInfo(trackData) {
 
 }
 
-logic.token = "BQDJuPGG1zptr2rWqMhfUW93psaxtIMjk50NZ4xGhQ1m8_9YTLr2CB-5dKvGI6nTj7ImeQFBYhO0dUkh3tEs14dTjZR8YZICXlNHiEQ3m1UMLJeo3ts05bbhmQX4rVsYKvUbcM0tCtui";
+logic.token = "BQDslmGcR4Zh809nzNkrkxbmXt-Aqx1zQHVk4Y2xnWoArHJv84HBBVuvIcQOwg-st04zdGISIYYON6E8lIwkXwmwTtlpNY-lZsKlBKfCwyQ_Dogxpvo6trFU7YsGyQt9fnM_WshUfK1Z";
 

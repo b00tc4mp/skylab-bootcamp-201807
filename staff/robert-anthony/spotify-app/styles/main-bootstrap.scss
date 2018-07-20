@@ -1,5 +1,6 @@
 $yellowy: rgb(255, 251, 0);
 $orangey: rgb(255, 123, 0);
+$bluey: rgb(0, 49, 255);
 
 body {
   font-family: 'Nunito', sans-serif;
@@ -12,9 +13,9 @@ body {
   cursor: pointer;
   margin: 0;
   padding: 0;
-  color: inherit;
+  color: $bluey;
   &:hover, &active {
-    color: $orangey;
+    color: white;
     text-decoration: none;
   }
 }
@@ -55,5 +56,10 @@ button {
 
 .audio-component {
   visibility: hidden;
+}
+
+.list-group-item.active {
+  background-color:$orangey;
+  border-color: $orangey;
 }
 
