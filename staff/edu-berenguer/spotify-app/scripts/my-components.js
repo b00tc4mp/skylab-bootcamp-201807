@@ -68,11 +68,11 @@ ResultsList.prototype.updateResults = function (results) { // => { id, text }
         var $a = $('<a href="#/' + result.id + '">' + result.text + '</a>');
 
         $a.click(function () {
+            $li.addClass('bg-success');
             if (this._callback) this._callback(result.id, result.text);
         }.bind(this));
 
         $li.append($a);
-
         this.$element.append($li);
         // }, this);
     }.bind(this));
@@ -88,6 +88,7 @@ ResultsList.prototype.clear = function () {
 ResultsList.prototype.onItemClick = function (callback) {
     this._callback = callback;
 };
+
 
 /**
  * 

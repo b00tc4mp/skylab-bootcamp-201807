@@ -1,4 +1,4 @@
-logic.token = 'BQC5GNy2yCScjOtAMBNRlkmhvNg7rYhfLAOJQk537In0juaxmJ9vOtA8Pq6QJ8luLLkxTloVm9xKkeMKDjD8-Fn2oopMd-x9n49EWbFI7jcuHuPcqG8Ou0AxUv6ImFoqqQptIJaDs026Po71ErU';
+logic.token = 'BQCjjeBht3OVUujblDlQ8x503hC5XipfEpRxda0AWIWkdcyOFko_rIKYgR24t55af39-Z6Vzvka14Gq7qZw7kKUKR2VogfotT4RcIOpbEssyfjPaYxIZgfn4QWKpdZYvXhLk2mEO9g1GqhmNZvg';
 // NOTE: to reset token via web => https://developer.spotify.com/console/get-search-item
 
 // my presentation logic
@@ -37,6 +37,7 @@ artistsList.onItemClick(function (id) {
         .then(function (albums) {
             albumsList.updateResults(albums.map(function (album) {
                 return {
+
                     id: album.id,
                     text: album.name
                 };
