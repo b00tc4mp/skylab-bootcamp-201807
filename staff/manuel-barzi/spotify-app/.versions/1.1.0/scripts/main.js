@@ -1,11 +1,7 @@
-logic.token = 'BQAgMd1YHqtI9oGbyEjcPArdpTyNhHQn8A__z4ewTGrXnyavIedyaPsJxry72PekBcUcybi2Et50iUkWngA';
+logic.token = 'BQBYDuxnzZe1kEMkGyvJiSd3zKIjaJ2NiqRpJDQceNB1eZRsM3L3pwtuTAPcPklk8FJEVLhRu1Y46W9L32Y';
 // NOTE: to reset token via web => https://developer.spotify.com/console/get-search-item
 
 // my presentation logic
-
-var $container = $('.container-fluid');
-
-$('body').append($container);
 
 var search = new SearchPanel();
 
@@ -28,9 +24,11 @@ search.onSearch(function (query) {
         });
 });
 
-$container.append(search.element);
+var $body = $('body');
 
-var artistsList = new ResultsList('Artists');
+$body.append(search.element);
+
+var artistsList = new ResultsList();
 
 artistsList.onItemClick(function (id) {
     logic.retrieveAlbumsByArtistId(id)
@@ -51,9 +49,9 @@ artistsList.onItemClick(function (id) {
 });
 
 // $body.append(artistsList.$element);
-$container.append(artistsList.element);
+$body.append(artistsList.element);
 
-var albumsList = new ResultsList('Albums');
+var albumsList = new ResultsList();
 
 albumsList.onItemClick(function (id) {
     logic.retrieveTracksByAlbumId(id)
@@ -69,23 +67,23 @@ albumsList.onItemClick(function (id) {
         });
 });
 
-$container.append(albumsList.element);
+$body.append(albumsList.element);
 
-var tracksList = new ResultsList('Tracks');
+var tracksList = new ResultsList();
 
 tracksList.onItemClick(function (id) {
     logic.retrieveTrackById(id)
         .then(function (track) {
             $trackContainer.clear();
 
-            var player = new TrackPlayer(track.name, track.album.images[0].url, track.preview_url, track.external_urls.spotify);
-            // var player = new SpotifyPlayer(track.id);
+            // var player = new TrackPlayer(track.name, track.album.images[0].url, track.preview_url, track.external_urls.spotify);
+            var player = new SpotifyPlayer(track.id);
 
             $trackContainer.append(player.element);
         });
 });
 
-$container.append(tracksList.element);
+$body.append(tracksList.element);
 
 var $trackContainer = $('<div>');
 
@@ -93,5 +91,5 @@ $trackContainer.clear = function () {
     this.empty();
 };
 
-$container.append($trackContainer);
+$body.append($trackContainer);
 
