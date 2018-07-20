@@ -3,57 +3,35 @@
 function SearchPanel() {
     Component.call(this, 'header');
 
-    var $input = $('<input type="search" placeholder="Input a text....">');
-    /*$input.attr({
-        //type: 'search';
-        placeholder: 'Input text...'
-    });*/
-    //JS  
-    //var input = document.createElement('input');
-    //input.type = 'search';
-    //input.placeholder = 'Input a text...';
-
+    // var $input = $('<input>');
+    //$input.attr('type', 'search');
+    //$input.attr('placeholder', 'Input a text...');
+    // $input.attr({
+    //     type: 'search',
+    //     placeholder: 'Input a text ...'
+    // });
+    var $input = $('<input type="search" placeholder="Input a text...">');
 
     var $button = $('<button type="submit">Search</button>');
-    //JS
-    //var button = document.createElement('button');
-    //button.type = 'submit';
-    //button.innerHTML = 'Search';
 
     var $element = $(this.element);
-    $element.append('<nav><form class="form-inline"> <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"><button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button></form></nav>');
 
-
+    // $element.append($input);
+    // $element.append($button);
     //$element.append([$input, $button]);
-    //$element.append($input)
-    //$element.append($button)
-    //JS
-    //this.element.appendChild(input);
-    //this.element.appendChild(button);
-    //$element.addClass('form-inline');
-    
-
-    //var $header=$('<header class="header-menu"><nav><form class="form-inline"> <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"><button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button></form></nav></header>');
+    $element.append('<nav><form class="form-inline"> <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"><button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button></form></nav>');
 
 
     var _callback;
 
-   var $form= $element.find("form").css("background-color", "black");
+    var $form= $element.find("form").css("background-color", "black");
     $form.submit(function (event) {
         event.preventDefault();
+
         var query = $input.val();
 
         if (query && _callback) _callback(query);
     }.bind(this));
-    //JS
-    /*this.element.addEventListener('submit', function (event) {
-        event.preventDefault();
-
-        var query = input.value;
-
-        if (query && _callback) _callback(query);
-    }.bind(this));*/
-
 
     this.onSearch = function (callback) {
         _callback = callback;
@@ -66,7 +44,7 @@ SearchPanel.prototype.constructor = SearchPanel;
 function ResultsList() {
     Component.call(this, 'ul');
 
-    this.$element = $(this.element)//
+    this.$element = $(this.element);
 }
 
 ResultsList.prototype = Object.create(Component.prototype);
@@ -74,42 +52,27 @@ ResultsList.prototype.constructor = ResultsList;
 
 ResultsList.prototype.updateResults = function (results) { // => { id, text }
     this.clear();
-
-
+    
     $.each(results, function (index, result) {
-        //results.forEach(function (result) {
-        var $li = $('<li>');  //o var $li=$('<li></li>');
+        // results.forEach(function (result) {
+        
+        var $li = $('<li>');
         var $a = $('<a href="#/' + result.id + '">' + result.text + '</a>');
-
-        //JS
-        /*var li = document.createElement('li');
-        var a = document.createElement('a');
-        a.href = '#/' + result.id;
-        a.innerHTML = result.text;*/
 
         $a.click(function () {
             if (this._callback) this._callback(result.id, result.text);
-        });
-        //JS
-        /* a.onclick = function () {
-             if (this._callback) this._callback(result.id, result.text);
-         }.bind(this);*/
+        }.bind(this));
 
         $li.append($a);
+
         this.$element.append($li);
-        //JS
-        //this.element.appendChild(li);
-        //li.appendChild(a);
-        //});
-    }.bind(), this);
+        // }, this);
+    }.bind(this));
+}; 
+
+ResultsList.prototype.clear = function () {
+    this.$element.empty();
 };
-
-
-
-//JS
-/*ResultsList.prototype.clear = function() {
-    this.element.innerHTML = '';
-};*/
 
 ResultsList.prototype.onItemClick = function (callback) {
     this._callback = callback;
@@ -125,38 +88,19 @@ ResultsList.prototype.onItemClick = function (callback) {
 function TrackPlayer(title, image, file, url) {
     Panel.call(this, title, 'section');
 
-    var $img = $('<img src="' + image + '">');
-    //JS
-    //var img = document.createElement('img');
-    //img.src = image;
-
     var $element = $(this.element);
-    $element.append(img);
-    //JS
-    //this.element.appendChild(img);
 
-    var $audio = $('<audio controls>');
-    //JS
-    //var audio = document.createElement('audio');
-    //audio.controls = true;
+    var $img = $('<img src="' + image + '">');
 
-    var $source = $('<source src="' + file + '" type="audio/mpeg">');
+    $element.append($img);
+
+    var $audio = $('<audio controls><source src="' + file + '" type="audio/mpeg"></audio>');
+
     $element.append($audio);
-    //JS
-    //var source = document.createElement('source');
-    //source.src = file;
-    //source.type = 'audio/mpeg';
-    //audio.appendChild(source);
-    //this.element.appendChild(audio);
 
-    var $a = $('<a href="' + url + '" target="_blank">Open in original player</a>');
+    var $a = $('<a href="' + url  + '" target="_blank">Open in original player</a>');
+
     $element.append($a);
-    //JS
-    //var a = document.createElement('a');
-    //a.href = url;
-    //a.innerText = 'Open in original player';
-    //a.target = '_blank';
-    //this.element.appendChild(a);
 }
 
 TrackPlayer.prototype = Object.create(Panel.prototype);
@@ -170,7 +114,6 @@ function SpotifyPlayer(id) {
     Component.call(this, 'section');
 
     $(this.element).append('<iframe src="https://open.spotify.com/embed?uri=spotify:track:' + id + '" width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>');
-    //this.element.innerHTML = '<iframe src="https://open.spotify.com/embed?uri=spotify:track:'+ id +'" width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>';
 }
 
 SpotifyPlayer.prototype = Object.create(Component.prototype);

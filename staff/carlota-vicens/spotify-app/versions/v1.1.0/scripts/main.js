@@ -1,4 +1,4 @@
-logic.token = 'BQD076kproF1O-qGisGVKzlFM0Ps4ZD7920q7K72QhSLRSMz1uVIZWZ8xra6ZGb8qCsNO3eXgVD-qPN8JtWKl3wdZLJxcap3n9IUZBmU7a03D8q3burtJQJx0SN9KZ5z5bUwnhQqIyX0';
+//logic.token = 'BQDcwKilDyk8hs38MdEM6HDo3uvJ8fh9FULkBGlbFvqfg24vO-qfqyDFvp3tf1IiS4QxBXhGFNWuN5C42Grs5QY4xhhv2Bp6aJBuFp5cHiRAl2lJ3wXHXQXfZluDGMcTqslErJtTWUo';
 // NOTE: to reset token via web => developer.spotify.com/console/get-search-item
 
 // my presentation logic
@@ -95,6 +95,6 @@ $trackContainer.clear= ( function(){
     this.innerHTML = '';
 };*/
 
-$('body').append(trackContainer);
+$('body').append($trackContainer);
 //document.body.appendChild(trackContainer);
 
