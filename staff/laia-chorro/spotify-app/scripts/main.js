@@ -1,10 +1,10 @@
 'use strict'
 
-var search = new SearchPanel(),
-    resultsArtists = new ResultsList(),
-    resultsAlbums = new ResultsList(),
-    resultsTracks = new ResultsList(),
-    DEFAULT_IMAGE = 'https://i.pinimg.com/originals/37/2a/2d/372a2d5e8a32991bb19982271d0762fe.jpg';
+var search = new SearchNavBar(),
+    resultsArtists = new ResultsList('artists-container', 'Artists'),
+    resultsAlbums = new ResultsList('albums-container', 'Albums'),
+    resultsTracks = new ResultsList('tracks-container', 'Tracks'),
+    ERROR_MSG = 'Sorry, we have temporary problem, try again later.';
 
 //Create List of artists by query from the input search
 search.onSearch(function (query) {
@@ -12,75 +12,62 @@ search.onSearch(function (query) {
 
     $.when(logic.searchArtists(query))
     .then(function (artists) { updateResultsByIdAndName(resultsArtists, artists); })
-    .catch(function (error) { alert('Sorry, we have temporary problem, try again later.'); });
+    .catch(function (error) { console.error(ERROR_MSG, error); });
 });
 
 //Create List of albums by artist
-resultsArtists.onItemClick(function (id) {
-    $(this).nextAll().empty();
-    $resultsContainer.append($albumsContainer);
+resultsArtists.onItemClick(function (id, text) {
+    var $h1 = $('<h1>').text(text),
+        $a = $('<a>').append($h1).attr({'href': '#/' + id, 'data-id': id});
+    $resultsContainer.empty().append([$a, $(resultsAlbums.element)]);
 
     $.when(logic.retrieveAlbumsByArtistId(id))
     .then(function (albums) { updateResultsByIdAndName(resultsAlbums, albums); })
-    .catch(function (error) { alert('Sorry, we have temporary problem, try again later.'); });
+    .catch(function (error) { console.error(ERROR_MSG, error); });
 });
 
+
 //Create List of tracks by albums
-resultsAlbums.onItemClick(function (id) {
-    $(this).nextAll().empty();
-    $resultsContainer.append($(resultsTracks.element));
-    // store the selected album id inside the albumsContainer, to show its image on the detailed info
-    $albumsContainer.attr('active-id', id);
+resultsAlbums.onItemClick(function (id, text) {
+    var $h1 = $('<h1>').text(text),
+        $a = $('<a>').append($h1).attr({'href': '#/' + id, 'data-id': id});
+    $resultsContainer.empty().append([$a, $(resultsTracks.element)]);
 
     $.when(logic.retrieveTracksByAlbumId(id))
     .then(function (tracks) { updateResultsByIdAndName(resultsTracks, tracks); })
-    .catch(function (error) { alert('Sorry, we have temporary problem, try again later.'); });
+    .catch(function (error) { console.error(ERROR_MSG, error); }); 
 });
 
-
 //List detail of track
-resultsTracks.onItemClick(function (id) {
-    $(this).nextAll().empty();
+resultsTracks.onItemClick(function (id, text, activeListItem) {
     $resultsContainer.append($detailContainer);
+    activateTrackWhenClick(activeListItem);
 
-    var activeAlbumId = $('#albums-container').attr('active-id'),
-        activeImg;
-
-    $.when(logic.retrieveAlbumsById(activeAlbumId))
-    .then(function(album) {
-        activeImg = album.images[1].url;
-        return logic.retrieveTrackById(id);
-    })
+    $.when(logic.retrieveTrackById(id))
     .then(function (track) {
-        var detail = new DetailPanel(track.name, track.external_urls.spotify, activeImg ? activeImg : DEFAULT_IMAGE);
-
-        /*$detailContainer.empty();
-        $detailContainer.append($(detail.element));*/
+        var detail = new EmbedPanel(track.name, track.id);
         $detailContainer.html($(detail.element));
     })
-    .catch(function (error) { alert('Sorry, we have temporary problem, try again later.'); });
+    .catch(function (error) { console.error(ERROR_MSG, error); });
 });
 
 function updateResultsByIdAndName(resultList, results) {
     resultList.updateResults(results.map(function (result) {
         return {
             id: result.id,
-            text: result.name
+            text: result.name,
+            img: result.images && result.images[1]? result.images[1].url : false,
         };
     }));
-
-    //$($detailContainer).empty();
 }
 
-var $resultsContainer = $('<div>').attr('id', 'results-container'),
-    $detailContainer = $('<div>'),
-    $albumsContainer = $('<div>').attr('id', 'albums-container').append($(resultsAlbums.element));
+function activateTrackWhenClick(activeListItem) {
+    $('.tracks-container li').removeClass('active');
+    $(activeListItem[0]).addClass('active');
+}
 
-/*$resultsContainer.append([$(resultsArtists.element),
-    $albumsContainer,
-    $(resultsTracks.element),
-    $($detailContainer)]
-);*/
+var $resultsContainer = $('<div>').attr('id', 'results-container').addClass('results-container'),
+    $detailContainer = $('<div>').addClass('detail-container');
 
 $('body').append([$(search.element), $resultsContainer]);
 

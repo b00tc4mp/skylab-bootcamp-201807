@@ -1,11 +1,24 @@
 'use strict'
 
-function SearchPanel() {
-    Component.call(this, 'form');
+function NavBarLogo() {
+    Component.call(this, 'nav');
 
-    var $input = $('<input>').attr({'type': 'search', 'placeholder': 'Input a text...'}),
-        $button = $('<button>').attr('type', 'submit').text('Search');
-    $(this.element).append([$input, $button]);
+    var imgLogo = './images/spotifyLogo.png',
+        $img = $('<img>').addClass('navbar-brand').attr('src', imgLogo);
+
+    $(this.element).append($img).addClass('navbar navbar-dark');
+}
+NavBarLogo.prototype = Object.create(Component.prototype);
+NavBarLogo.prototype.constructor = NavBarLogo;
+
+function SearchNavBar() {
+    NavBarLogo.call(this);
+
+    var $form = $('<form>').addClass('form-inline'),
+        $input = $('<input>').attr({'type': 'search', 'placeholder': 'Search...'}).addClass('form-control mb-2 mr-sm-2'),
+        $button = $('<button>').attr('type', 'submit').text('Search').addClass('btn btn-outline-info mb-2');
+    $form.append([$input, $button]);
+    $(this.element).append($form);
 
     var _callback;
 
@@ -20,30 +33,40 @@ function SearchPanel() {
     };
 }
 
-SearchPanel.prototype = Object.create(Component.prototype);
-SearchPanel.prototype.constructor = SearchPanel;
+SearchNavBar.prototype = Object.create(Component.prototype);
+SearchNavBar.prototype.constructor = SearchNavBar;
 
-function ResultsList() {
-    Component.call(this, 'ul');
+
+
+function ResultsList(idContainer, title) {
+    Component.call(this, 'div');
+    var $h1 = $('<h2>').text(title).addClass('list-title'),
+        $ul = $('<ul>').addClass('list-group');
+
+    $(this.element).attr('id', idContainer).append([$h1, $ul]).addClass(idContainer);
 }
 
 ResultsList.prototype = Object.create(Component.prototype);
 ResultsList.prototype.constructor = ResultsList;
 
-ResultsList.prototype.updateResults = function (results) { // => { id, text }
+ResultsList.prototype.updateResults = function (results) { // => { id, text, img }
 
-    $(this.element).empty();
+    var $ul = $(this.element).find('ul');
+    $ul.empty();
 
     results.forEach(function (result) {
+        var $li = $('<li>').addClass('list-group-item list-group-item-action');
+        $ul.append($li);
 
-        var $li = $('<li>');
-        $(this.element).append($li);
+        var $span = $('<span>').text(result.text).addClass('result-text'),
+            $img = result.img? $('<img>').attr('src', result.img) : $('<div>').addClass('empty-img'),
+            $a = $('<a>').attr('href', '#/' + result.id);
 
-        var $a = $('<a>').attr('href', '#/' + result.id).text(result.text);
+        $($a).append([$img, $span]);
         $($li).append($a);
 
         $a.click(function () {
-            if (this._callback) this._callback(result.id, result.text);
+            if (this._callback) this._callback(result.id, result.text, $li);
         }.bind(this));
  
     }, this);
@@ -53,20 +76,31 @@ ResultsList.prototype.onItemClick = function (callback) {
     this._callback = callback;
 };
 
+/*function TitleList(title, id) {
+    ResultsList.call(this, idContainer, titleContainer);
+    var $h1 = $('<h1>').text(text),
+        $a = $('<a>').append($h1).attr({'href': '#/' + id, 'data-id': id});
+
+    $resultsContainer.empty().append([$a, $(resultsAlbums.element)]);
+}
+
+TitleList.prototype = Object.create(ResultsList.prototype);
+TitleList.prototype.constructor = TitleList;*/
+
+
+
 /**
  * 
  * @param {string} title The item title
- * @param {string} info The information about an item
- * @param {string} image The image of the item
+ * @param {string} id The id of the track
  */
-function DetailPanel(title, info, image) {
-    Panel.call(this, title, 'section');
+function EmbedPanel(title, id) {
+    Component.call(this, 'div');
 
-    var $p = $('<p>').text(info),
-        $img = $('<img>').attr('src', image);
-
-    $(this.element).append([$p, $img]);
+    var $iframe = $(this.element).html('<iframe src="https://open.spotify.com/embed?uri=spotify:track:'+ id +
+            '" width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>');
 }
 
-DetailPanel.prototype = Object.create(Panel.prototype);
-DetailPanel.prototype.constructor = DetailPanel;
+EmbedPanel.prototype = Object.create(Component.prototype);
+EmbedPanel.prototype.constructor = EmbedPanel;
+

@@ -14,7 +14,15 @@ function Component(tag) {
     var element = document.createElement(tag || 'div');
     this.element = element;
 
+    // element.style.width = '100px';
+    // element.style.height = '100px';
     this.size('auto', 'auto');
+
+    // element.style.borderColor = 'black';
+    // element.style.borderStyle = 'solid';
+    // element.style.borderWidth = '1px';
+    element.style.backgroundColor = 'silver';
+
 }
 
 Component.prototype.backgroundColor = function (color) {
