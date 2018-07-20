@@ -2,7 +2,7 @@ var logic = {
     token: 'NO-TOKEN',
 
     _callApi: function (path) {
-        return $.ajax('https://api.spotify.com/v1-' + path, {
+        return $.ajax('https://api.spotify.com/v1' + path, {
             headers: {
                 authorization: 'Bearer ' + this.token
             }
