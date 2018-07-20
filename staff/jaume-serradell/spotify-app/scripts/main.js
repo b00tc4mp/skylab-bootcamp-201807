@@ -1,12 +1,10 @@
-logic.token = 'BQDUaoMyx6PZAWkpR_RAG8vgJLdIsdmnK_Pg0VxXeG4c9vE96B7RVMRU0lXzjMyGHa3lzmxx9BXIYPpzM6kmNr7w04rM2dSijEqsxajHGNPJJwGkMSyoLE93VhwZm-i_9Ld5-Kka2hJC_c1NaTvPUk6wEvV_zlpP9eOIULmAGCD4fK_1CJXEB1HR5-_WRML7j8xxDQasoj8cDBQwTy0yLqV0BHP3lrL62CDiTnOAwQXDmhNIOHJN3MjM5N7-QGi1jcbkjV4xkew';
+logic.token = 'BQBzQQ-wFziNFtvr-RBDKvum8LzqjoGCo1rft2_JXJqEeRz-AdBp9Mu6fr-aJ4EQ4_QKx1GMFOELoEZaPDBtut1U7HQ8U_aU5CpyxgGJc5tEOAi5AadE-kLZLX2SqV2X4px944rhap-GxaAK1aM58-LURUOG4q2KP7KXtjlNZrw7R2NodoGZy_Xm7mOOCGnGkIM4-ITWdrHQ5HaBqcjmAzzuRZCAeAXIjatLZSAtT08ie4TwIYu5TP0Jm78hd7Hz8XUFnxNb4gI';
 // NOTE: to reset token via web => https://developer.spotify.com/console/get-search-item
 
 // my presentation logic
 
+//var $container = $('<div class="container-flui">');
 var $body = $('body');
-
-var $container = $('<div class="container-flui">');
-
 var search = new SearchPanel();
 
 search.onSearch(function (query) {
@@ -80,8 +78,8 @@ tracksList.onItemClick(function (id) {
         .then(function (track) {
             $trackContainer.clear();
 
-            // var player = new TrackPlayer(track.name, track.album.images[0].url, track.preview_url, track.external_urls.spotify);
-            var player = new SpotifyPlayer(track.id);
+            var player = new TrackPlayer(track.name, track.album.images[0].url, track.preview_url, track.external_urls.spotify);
+            // var player = new SpotifyPlayer(track.id);
 
             $trackContainer.append(player.element);
         });
