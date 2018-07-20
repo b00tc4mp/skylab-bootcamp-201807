@@ -3,7 +3,7 @@ logic.token = 'BQBJTnUCLyeVUnPs7pGXY7HqxXO_ibfeyw992oV5qqnULHRUv8J5-UFlWleTYQ547
 
 // my presentation logic
 
-var $container = $('<div class="container-flui">');
+var $container = $('<div class="container">');
 
 var search = new SearchPanel();
 

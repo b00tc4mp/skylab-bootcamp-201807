@@ -2,7 +2,7 @@ var logic = {
     token: 'BQBJTnUCLyeVUnPs7pGXY7HqxXO_ibfeyw992oV5qqnULHRUv8J5-UFlWleTYQ547ZbV4snSGkiiOHMsYL3Xq7HYnKqqJ-z1E0Qx-_5dxfIFOrG1T-qhrhAjTVO92Te5lGGnsR2G19BpFg',
 
     _callApi: function (path) {
-        return $.ajax('https://api.spotify.com/v1-' + path, {
+        return $.ajax('https://api.spotify.com/v1' + path, {
             headers: {
                 authorization: 'Bearer ' + this.token
             }

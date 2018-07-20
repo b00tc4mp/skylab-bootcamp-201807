@@ -14,15 +14,18 @@ function SearchPanel() {
     //     type: 'search',
     //     placeholder: 'Input a text ...'
     // });
-    var $input = $('<input type="search" placeholder="Input a text...">');
+    var $div = $('<div class="form-inline text-success my-2"></div>');
 
-    var $button = $('<button type="submit">Search</button>');
+    var $input = $('<input type="text" class="form-control" id="searchArtist" aria-describedby="artistHelp" placeholder="Enter artist">');
+
+    var $button = $('<button type="submit" class="btn btn-primary">Submit</button>');
 
     var $element = $(this.element);
 
     // $element.append($input);
     // $element.append($button);
-    $element.append([$input, $button]);
+    $element.append($div);
+    $div.append([$input, $button]);
 
     var _callback;
 
