@@ -1,8 +1,8 @@
 var logic = {
-    token: 'NO-TOKEN',
+   // token: 'BQD83u9rvdmsQ_uYfNAT7AmHQfy1Ykg5Jv1iBnJpYQttTZWUW8O2DH2T4fT70t8mDpCo55oNzjCKzmXaEKlKkZ3LClLk4tSxw998d29Q9_gtN8abOCJK_8A37aXo9CW626YQINNTr1v5JtAJJRgE5Xd',
 
     _callApi: function (path) {
-        return $.ajax('https://api.spotify.com/v1-' + path, {
+        return $.ajax('https://api.spotify.com/v1' + path, {
             headers: {
                 authorization: 'Bearer ' + this.token
             }
