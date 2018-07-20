@@ -23,7 +23,7 @@ function SearchPanel() {
         var query = $input.val();
 
         if (query && _callback) _callback(query);
-    }.bind(this));
+    });
 
     this.onSearch = function (callback) {
         _callback = callback;
