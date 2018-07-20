@@ -1,4 +1,4 @@
-logic.token = 'BQDcTQhjFCczSZZbC9nLcCyK8GMiGB36k62uWtg7zW5ma5bcA2UN_IuV0Rrfm3mnGnZ-JqssH6CI2RVqYUnHWUlLuuZZfubnmU_c4I0dY__09qUDrwxR4XgW4vl7BvNbU9NH8JU9U1pU4FDR5yI';
+logic.token = 'BQC5GNy2yCScjOtAMBNRlkmhvNg7rYhfLAOJQk537In0juaxmJ9vOtA8Pq6QJ8luLLkxTloVm9xKkeMKDjD8-Fn2oopMd-x9n49EWbFI7jcuHuPcqG8Ou0AxUv6ImFoqqQptIJaDs026Po71ErU';
 // NOTE: to reset token via web => https://developer.spotify.com/console/get-search-item
 
 // my presentation logic
@@ -78,8 +78,8 @@ tracksList.onItemClick(function (id) {
         .then(function (track) {
             $trackContainer.clear();
 
-            //var player = new TrackPlayer(track.name, track.album.images[0].url, track.preview_url, track.external_urls.spotify);
-            var player = new SpotifyPlayer(track.id);
+            var player = new TrackPlayer(track.name, track.album.images[0].url, track.preview_url, track.external_urls.spotify);
+            // var player = new SpotifyPlayer(track.id);
 
             $trackContainer.append(player.element);
         });

@@ -1,11 +1,16 @@
 // my custom components
 
 function SearchPanel() {
-    Component.call(this, 'form');
-
-    var $form = $(this.element);
-
-    $form.addClass('inline-form');
+    Component.call(this, 'nav');
+    var $nav = $(this.element);
+    $nav.addClass('navbar navbar-light bg-dark');
+    var $imageNav = $('<img src="https://cdn.elgrupoinformatico.com/img/w720/Noticias/2015/06/spotify-190615.png"/>');
+    var $h1 = $('<h1>Sporifay</h1>').addClass('display-3 text-success');
+    var $form = $('<form>').addClass('form-inline');
+    
+    //$nav.append($h1);
+    $nav.append([$imageNav, $h1, $form]);
+    //$form.addClass('inline-form');
 
     // var $input = $('<input>');
     //$input.attr('type', 'search');
@@ -14,19 +19,20 @@ function SearchPanel() {
     //     type: 'search',
     //     placeholder: 'Input a text ...'
     // });
-    var $input = $('<input type="search" placeholder="Input a text...">');
+    var $input = $('<input type="search" placeholder="Input a text...">').addClass('form-control mr-sm-2');
 
-    var $button = $('<button type="submit">Search</button>');
+    var $button = $('<button type="submit">Search</button>').addClass('btn btn-outline-success my-2');
 
-    var $element = $(this.element);
+    //var $element = $(this.element);
 
     // $element.append($input);
     // $element.append($button);
-    $element.append([$input, $button]);
+    //$element.append([$input, $button]);
+    $form.append([$input, $button]);
 
     var _callback;
 
-    $element.submit(function (event) {
+    $nav.submit(function (event) {
         event.preventDefault();
 
         var query = $input.val();
@@ -45,7 +51,8 @@ SearchPanel.prototype.constructor = SearchPanel;
 function ResultsList() {
     Component.call(this, 'ul');
 
-    this.$element = $(this.element);
+    this.$element = $(this.element).addClass('list-group');
+
 }
 
 ResultsList.prototype = Object.create(Component.prototype);
@@ -54,9 +61,10 @@ ResultsList.prototype.constructor = ResultsList;
 ResultsList.prototype.updateResults = function (results) { // => { id, text }
     this.clear();
 
+    //var $divList = $('<div>').addClass('list-group mt-3');
     $.each(results, function (index, result) {
         // results.forEach(function (result) {
-        var $li = $('<li>');
+        var $li = $('<li>').addClass("list-group-item list-group-item-action");
         var $a = $('<a href="#/' + result.id + '">' + result.text + '</a>');
 
         $a.click(function () {
@@ -68,6 +76,9 @@ ResultsList.prototype.updateResults = function (results) { // => { id, text }
         this.$element.append($li);
         // }, this);
     }.bind(this));
+    $('ul li:first-child').addClass('mt-3');
+    $('ul li').addClass('border-top border-dark');
+
 };
 
 ResultsList.prototype.clear = function () {
@@ -86,11 +97,11 @@ ResultsList.prototype.onItemClick = function (callback) {
  * @param {string} url The URL of the track
  */
 function TrackPlayer(title, image, file, url) {
-    Panel.call(this, title, 'section');
+    Panel.call(this, title, 'div');
 
-    var $element = $(this.element);
+    var $element = $(this.element).addClass('card mt-3');
 
-    var $img = $('<img src="' + image + '">');
+    var $img = $('<img src="' + image + '">').addClass('card-img-top');
 
     $element.append($img);
 
@@ -98,7 +109,7 @@ function TrackPlayer(title, image, file, url) {
 
     $element.append($audio);
 
-    var $a = $('<a href="' + url  + '" target="_blank">Open in original player</a>');
+    var $a = $('<a class="badge badge-secondary" href="' + url  + '" target="_blank">Open in original player</a>');
 
     $element.append($a);
 }
