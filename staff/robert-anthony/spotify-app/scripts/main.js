@@ -2,17 +2,7 @@
 
 var log = console.log.bind(console);
 
-var _audio = null;
 
-
-function clearAudio() {
-  console.log("pausing audio?", _audio)
-
-  if (_audio) {
-    _audio.pause();
-    _audio = null;
-  }
-}
 
 function clearLinks() {
   $('tracksDetail .detail-panel__link--selected').removeClass('.detail-panel__link--selected');
@@ -48,11 +38,13 @@ var tracksDetail = new TrackDetailPanel("detail-panel-tracks", "detail-panel__li
 mainContainer.addInto(tracksDetail.element,"trackResults");
 
 tracksDetail.onElementClick(showTrackInfo);
+var audioComponent = new AudioComponent('audio-component');
+tracksDetail.$element.append(audioComponent);
 
 
 function doArtistSearch(query) {
-  clearAudio();
-  clearLinks();
+  audioComponent.clear();
+clearLinks();
   TweenMax.to(albumsDetail.element, 0.25, {autoAlpha: 0});
   TweenMax.to(tracksDetail.element, 0.25, {autoAlpha: 0});
 
@@ -66,7 +58,7 @@ function doArtistSearch(query) {
 
 
 function showAlbumTracks(albumData) {
-  clearAudio();
+  audioComponent.clear();
   clearLinks();
   var albumRetrieved;
   TweenMax.to(tracksDetail.element, 0.25, {autoAlpha: 0});
@@ -89,7 +81,7 @@ function showAlbumTracks(albumData) {
 }
 
 function showArtistAlbums(artistData) {
-  clearAudio();
+  audioComponent.clear();
   clearLinks();
   TweenMax.to(tracksDetail.element, 0.25, {autoAlpha: 0});
   logic.retrieveAlbumsByArtistId(artistData.id).then(function (albums) {
@@ -104,17 +96,15 @@ function showArtistAlbums(artistData) {
 
 
 function showTrackInfo(trackData) {
-  clearAudio();
+  audioComponent.clear();
   clearLinks();
   logic.retrieveTrackById(trackData.id).then(function (trackData) {
-
-    if (trackData && trackData.preview_url) {
-      _audio = new Audio(trackData.preview_url);
-      _audio.play();
+    if (trackData && trackData.preview_url ) {
+     audioComponent.setSourceAndPlay(trackData.preview_url);
     }
   });
 
 }
 
-logic.token = "BQApGKWoKgEP2mzUBFXvSM016lwAkNAgDCk2oZjZbNzDPIg3kI5se9uhpB5qFyHy-m3FxZhmxkiwk_1qih52mXJ_CnUNZPaqw1tiCJ7qEKL2KZxvC_QR8mO-XrjrXaghgD7oDetOiRzQ";
+logic.token = "BQDJuPGG1zptr2rWqMhfUW93psaxtIMjk50NZ4xGhQ1m8_9YTLr2CB-5dKvGI6nTj7ImeQFBYhO0dUkh3tEs14dTjZR8YZICXlNHiEQ3m1UMLJeo3ts05bbhmQX4rVsYKvUbcM0tCtui";
 

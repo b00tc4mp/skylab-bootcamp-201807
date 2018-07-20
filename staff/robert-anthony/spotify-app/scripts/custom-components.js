@@ -17,6 +17,35 @@ function ClassedComponent(cssClass, tag) {
 ClassedComponent.prototype = Object.create(Component.prototype);
 ClassedComponent.prototype.constructor = ClassedComponent;
 
+function AudioComponent(cssClass) {
+  ClassedComponent.call(this, cssClass);
+  this.$element = $(this.element);
+
+  this._audio = new Audio;
+
+
+}
+
+AudioComponent.prototype = Object.create(ClassedComponent.prototype);
+AudioComponent.prototype.constructor = AudioComponent;
+AudioComponent.prototype.clear = function () {
+  if (this._audio) {
+    this._audio.pause();
+  }
+};
+
+AudioComponent.prototype.play = function () {
+  if (this._audio) this._audio.play();
+
+};
+AudioComponent.prototype.setSourceAndPlay = function(src) {
+  if (this._audio) {
+    this._audio.src = src;
+    this._audio.play()
+  }
+}
+
+
 function NavBarWithSearch() {
   Component.call(this, 'nav');
   $(this.element).attr('style', '');
@@ -88,7 +117,7 @@ SearchPanel.prototype.onSearch = function (callback) {
 
 
 /**/
-function ResultsList(cssClass,h1Text) {
+function ResultsList(cssClass, h1Text) {
 
   Panel.call(this, "", "ul");
   $(this.element).attr('style', '');
@@ -96,9 +125,9 @@ function ResultsList(cssClass,h1Text) {
   $(this.element).addClass(cssClass);
   $(this.element).addClass('list-group');
 
-/*
-  if (h1Text) $(this.element).append("<h1>" + h1Text + "</h1>");
-*/
+  /*
+    if (h1Text) $(this.element).append("<h1>" + h1Text + "</h1>");
+  */
 
   this._elementClick = function () {
 
@@ -106,11 +135,17 @@ function ResultsList(cssClass,h1Text) {
 
   $(this.element).on('click', function (event) {
     if (event.target === this.element) return null;
-    log( $(event.target).closest('.list-group').find('li'));
-    $(event.target).closest('.list-group').find('li').removeClass('active');
-$(event.target).parent().addClass('active') ;
+    var $target = $(event.target);
+    $target.closest('.list-group').find('li').removeClass('active');
+    if ($target.is('a')) {
+      $target.parent().addClass('active');
+      this._elementClick({id: $target.attr('data-id'), text: $target.html});
+    } else {
+      $target.addClass('active');
+      var $a = $target.find('a');
+      this._elementClick({id: $a.attr('data-id'), text: $a.html});
+    }
 
-this._elementClick({id: event.target.getAttribute('data-id'), text: event.target.innerHTML});
 
   }.bind(this))
 }
@@ -134,6 +169,7 @@ ResultsList.prototype.setData = function (data) {
 
 function TrackDetailPanel(cssClass, linkToggle) {
   ResultsList.call(this, cssClass);
+  this.$element = $(this.element);
   $(this.element).on('click', function (event) {
     if (event.target === this.element) return null;
     if (linkToggle) {

@@ -38,4 +38,7 @@ nav {
       nav form.form-inline button:hover {
         background: darkblue; }
 
+.audio-component {
+  visibility: hidden; }
+
 /*# sourceMappingURL=main-bootstrap.css.map */
