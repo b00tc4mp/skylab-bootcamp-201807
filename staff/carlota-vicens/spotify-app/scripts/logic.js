@@ -1,3 +1,5 @@
+"use strict";
+
 var logic = {
     token: 'BQAzTK0dGYUH8s7-lPZY21eWa9eQcdRCI1D5mgEKzDAR83LOF0HP8BWs6Fk4-Dlbtr2RiGTYtNyBqhzqr6Q9ZTSqF6VAs4R2RSan0t0sbXX815to0f3L7bKcY-BnE88xWH4CGqwhb9A',
 

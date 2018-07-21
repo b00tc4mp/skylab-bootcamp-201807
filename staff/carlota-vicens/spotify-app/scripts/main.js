@@ -1,3 +1,5 @@
+"use strict";
+
 logic.token = 'BQBYDuxnzZe1kEMkGyvJiSd3zKIjaJ2NiqRpJDQceNB1eZRsM3L3pwtuTAPcPklk8FJEVLhRu1Y46W9L32Y';
 // NOTE: to reset token via web => https://developer.spotify.com/console/get-search-item
 

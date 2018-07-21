@@ -47,7 +47,7 @@ console.log('A continuación le mostramos los vuelos:')
 	});
 }
 
-listOfFlights(flights)
+listOfFlights(flights);
 
 //calculamos precio medio
 
@@ -80,7 +80,7 @@ function flightsWithScale(myObject){
 	
 }
 
-flightsWithScale(flights)
+flightsWithScale(flights);
 
 //Creamos una funcion que imprima los ultimos 5 vuelos del dia
 
@@ -92,7 +92,7 @@ function lastFlights(flights){
 	}
 }
 
-lastFlights(flights)
+lastFlights(flights);
 
 }
 

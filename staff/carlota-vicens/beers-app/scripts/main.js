@@ -1,5 +1,5 @@
 // my custom components
-
+"use strict";
 
 function SearchPanel() {
     Component.call(this, 'form');

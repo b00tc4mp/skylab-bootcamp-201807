@@ -2,6 +2,8 @@
 // NOTE: to reset token via web => developer.spotify.com/console/get-search-item
 
 // my presentation logic
+"use strict";
+
 
 var search = new SearchPanel();
 
