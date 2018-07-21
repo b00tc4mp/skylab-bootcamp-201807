@@ -68,6 +68,7 @@ ResultsList.prototype.updateResults = function (results) { // => { id, text }
         var $a = $('<a href="#/' + result.id + '">' + result.text + '</a>');
 
         $a.click(function () {
+            $('li').removeClass('bg-success');
             $li.addClass('bg-success');
             if (this._callback) this._callback(result.id, result.text);
         }.bind(this));
