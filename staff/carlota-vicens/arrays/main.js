@@ -5,7 +5,7 @@
 //console.log(addElements([1,2,3])===6); // true
 
 function addElements(array){
-    res=0;
+    var res=0;
     for (var i=0; i<array.length; i++ ){
         res +=array[i];
     }
