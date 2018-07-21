@@ -1,9 +1,9 @@
-"use strict";
-
-logic.token = 'BQBYDuxnzZe1kEMkGyvJiSd3zKIjaJ2NiqRpJDQceNB1eZRsM3L3pwtuTAPcPklk8FJEVLhRu1Y46W9L32Y';
-// NOTE: to reset token via web => https://developer.spotify.com/console/get-search-item
+//logic.token = 'BQDcwKilDyk8hs38MdEM6HDo3uvJ8fh9FULkBGlbFvqfg24vO-qfqyDFvp3tf1IiS4QxBXhGFNWuN5C42Grs5QY4xhhv2Bp6aJBuFp5cHiRAl2lJ3wXHXQXfZluDGMcTqslErJtTWUo';
+// NOTE: to reset token via web => developer.spotify.com/console/get-search-item
 
 // my presentation logic
+"use strict";
+
 
 var search = new SearchPanel();
 
@@ -19,16 +19,14 @@ search.onSearch(function (query) {
 
             albumsList.clear();
             tracksList.clear();
-            $trackContainer.clear();
+            trackContainer.clear();
         })
         .catch(function (error) {
             alert('Sorry, we have temporary problem, try again later.');
         });
 });
-
-var $body = $('body');
-
-$body.append(search.element);
+$('body').append(search.element);
+//document.body.appendChild(search.element);
 
 var artistsList = new ResultsList();
 
@@ -43,15 +41,15 @@ artistsList.onItemClick(function (id) {
             }));
 
             tracksList.clear();
-            $trackContainer.clear();
+            trackContainer.clear();
         })
         .catch(function (error) {
             alert('Sorry, we have temporary problem, try again later.');
         });
 });
 
-// $body.append(artistsList.$element);
-$body.append(artistsList.element);
+$('body').append(artistsList.element);
+//document.body.appendChild(artistsList.element);
 
 var albumsList = new ResultsList();
 
@@ -65,33 +63,40 @@ albumsList.onItemClick(function (id) {
                 };
             }));
 
-            $trackContainer.clear();
+            trackContainer.clear();
         });
 });
 
-$body.append(albumsList.element);
+$('body').append(albumsList.element);
+//document.body.appendChild(albumsList.element);
 
 var tracksList = new ResultsList();
 
 tracksList.onItemClick(function (id) {
     logic.retrieveTrackById(id)
         .then(function (track) {
-            $trackContainer.clear();
+            trackContainer.clear();
 
-            // var player = new TrackPlayer(track.name, track.album.images[0].url, track.preview_url, track.external_urls.spotify);
-            var player = new SpotifyPlayer(track.id);
+            var player = new TrackPlayer(track.name, track.album.images[0].url, track.preview_url, track.external_urls.spotify);
+            //var player = new SpotifyPlayer(track.id);
 
-            $trackContainer.append(player.element);
+            trackContainer.appendChild(player.element);
         });
 });
 
-$body.append(tracksList.element);
+$('body').append(tracksList.element);
+//document.body.appendChild(tracksList.element);
+
 
 var $trackContainer = $('<div>');
-
-$trackContainer.clear = function () {
+$trackContainer.clear= ( function(){
     this.empty();
-};
+});
+//var trackContainer = document.createElement('div');
+/*trackContainer.clear = function () {
+    this.innerHTML = '';
+};*/
 
-$body.append($trackContainer);
+$('body').append($trackContainer);
+//document.body.appendChild(trackContainer);
 

@@ -1,3 +1,5 @@
+"use strict";
+
 var logic = {
     searchBeers: function(query, callback) {
         var request = new XMLHttpRequest();

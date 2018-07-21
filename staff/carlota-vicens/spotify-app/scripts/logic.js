@@ -1,42 +1,18 @@
+"use strict";
+
 var logic = {
-    token: 'NO-TOKEN',
+    token: 'BQAzTK0dGYUH8s7-lPZY21eWa9eQcdRCI1D5mgEKzDAR83LOF0HP8BWs6Fk4-Dlbtr2RiGTYtNyBqhzqr6Q9ZTSqF6VAs4R2RSan0t0sbXX815to0f3L7bKcY-BnE88xWH4CGqwhb9A',
 
     _callApi: function (path) {
-        return $.ajax('https://api.spotify.com/v1' + path, {
-            header:{
-                authoritzation:'Bearer ' + this.token
+        return $.ajax('https://api.spotify.com/v1-' + path, {
+            headers: {
+                authorization: 'Bearer ' + this.token
             }
         })
-        .catch(function(err){
-            throw Error('request error, status' + err.status);
+        .catch(function(err) {
+            throw Error('request error, status ' + err.status);
         });
-
-        //JS
-        /*return new Promise(function (resolve, reject) {
-            var request = new XMLHttpRequest();
-
-            request.onreadystatechange = function () {
-                if (request.readyState === 4) {
-                    if (request.status === 200) {
-                        var res = JSON.parse(request.responseText);
-
-                        resolve(res);
-                    } else reject(Error('request error, status ' + request.status));
-                }
-            };
-
-            var url = 'https://api.spotify.com/v1' + path;
-
-            request.open('get', url);
-
-            request.setRequestHeader('Authorization', 'Bearer ' + this.token);
-
-
-            request.send();
-        }.bind(this));*/
-
     },
-
 
     searchArtists: function (query) {
         return this._callApi('/search?type=artist&query=' + query)
