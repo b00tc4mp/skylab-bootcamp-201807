@@ -43,8 +43,10 @@ sass/
 - [site-nav](#site-nav)
 - [recently-played](#recently-played)
 - [search](#search)
+- [artist-list](#artist-list)
 - [artist-list-item](#artist-list-item)
 - [artist-detail](#artist-detail)
+- [album-list](#album-list)
 - [album-list-item](#album-list-item)
 - [album-detail](#album-detail)
 - [track-list-item](#track-list-item)
@@ -87,6 +89,12 @@ __Elements__
 - search__label
 - search__input
 
+### Artist List
+
+__Block__
+
+- artist-list
+
 ### Artist List Item
 
 __Block__
@@ -107,6 +115,16 @@ __Block__
 __Elements__
 
 - artist-detail__title
+
+### Album List
+
+__Block__
+
+- album-list
+
+__Elements__
+
+- album-list__title
 
 ### Album List Item
 
@@ -133,6 +151,7 @@ __Elements__
 - album-detail__artist
 - album-detail__year
 - album-detail__number-songs
+- album-detail__tracks
 
 ### Track List Item
 
