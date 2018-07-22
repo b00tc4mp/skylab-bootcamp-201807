@@ -1,32 +1,38 @@
 // my custom components
 
 function SearchPanel() {
-    Component.call(this, 'form');
+    Component.call(this, 'div');
 
-    var $form = $(this.element);
+    var $div = $(this.element);
+    $div.addClass('container-fluid');
 
+    var $nav = $('<nav>')
+    $nav.addClass('navbar navbar-light bg-light justify-content-between');
+
+    var $a = $('<a href="index.html">')
+    $a.addClass('navbar-brand');
+
+    var $img = $('<img src="spotify.png">');
+
+    var $form = $('<form>');
     $form.addClass('inline-form');
 
-    // var $input = $('<input>');
-    //$input.attr('type', 'search');
-    //$input.attr('placeholder', 'Input a text...');
-    // $input.attr({
-    //     type: 'search',
-    //     placeholder: 'Input a text ...'
-    // });
     var $input = $('<input type="search" placeholder="Input a text...">');
+    $input.addClass('form-control mr-sm-2');
 
     var $button = $('<button type="submit">Search</button>');
+    $button.addClass('btn btn-outline-success my-2 my-sm-0');
 
     var $element = $(this.element);
 
-    // $element.append($input);
-    // $element.append($button);
-    $element.append([$input, $button]);
+    $element.append($nav);
+    $nav.append([$a, $form]);
+    $a.append($img);
+    $form.append([$input, $button]);
 
     var _callback;
 
-    $element.submit(function (event) {
+    $form.submit(function (event) {
         event.preventDefault();
 
         var query = $input.val();
@@ -42,10 +48,24 @@ function SearchPanel() {
 SearchPanel.prototype = Object.create(Component.prototype);
 SearchPanel.prototype.constructor = SearchPanel;
 
-function ResultsList() {
-    Component.call(this, 'ul');
 
-    this.$element = $(this.element);
+function ResultsList() {
+    Component.call(this, 'div');
+
+    this.$element = $(this.element).addClass('grid');
+/* 
+    var $divGrid = $('<div>').addClass('grid');
+    this.$element.append($divGrid); */
+
+    var $section = $('<section>').addClass('grid grid-template');
+    this.$element.append($section);
+
+    var $h2 = $('<h2>').addClass('section-title');
+    $section.append($h2);
+
+    var $ul = $('<ul>').addClass('list-group');
+    $section.append($ul);
+    
 }
 
 ResultsList.prototype = Object.create(Component.prototype);
@@ -54,18 +74,19 @@ ResultsList.prototype.constructor = ResultsList;
 ResultsList.prototype.updateResults = function (results) { // => { id, text }
     this.clear();
 
-    $.each(results, function (index, result) {
+    $ul.each(results, function (index, result) {
         // results.forEach(function (result) {
-        var $li = $('<li>');
+
+        var $li = $('<li>').addClass('list-group-item list-group-item-action');
         var $a = $('<a href="#/' + result.id + '">' + result.text + '</a>');
 
         $a.click(function () {
             if (this._callback) this._callback(result.id, result.text);
         }.bind(this));
 
-        $li.append($a);
-
         this.$element.append($li);
+        $li.append($a);
+        
         // }, this);
     }.bind(this));
 };

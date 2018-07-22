@@ -9,6 +9,10 @@ body {
     width: 150px;
 }
 
+form.inline-form {
+    display: flex;
+}
+
 .bg-light {
     padding: 0;
     padding-bottom: 5%;

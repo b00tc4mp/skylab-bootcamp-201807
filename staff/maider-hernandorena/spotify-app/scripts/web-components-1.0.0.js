@@ -16,12 +16,12 @@ function Component(tag) {
 
     // element.style.width = '100px';
     // element.style.height = '100px';
-    this.size('auto', 'auto');
+    //this.size('auto', 'auto');
 
     // element.style.borderColor = 'black';
     // element.style.borderStyle = 'solid';
     // element.style.borderWidth = '1px';
-    element.style.backgroundColor = 'silver';
+    //element.style.backgroundColor = 'silver';
 
 }
 
