@@ -105,3 +105,210 @@ DetailPanel.prototype.constructor = DetailPanel;
 DetailPanel.prototype.getAudio = function() {
     return this.element.querySelector('audio');
 }
+
+
+
+
+
+
+Component.prototype.empty = function() {
+    this.element.innerHTML = '';
+}
+
+/**
+ * 
+ */
+function SiteNav() {
+    Component.call(this, 'nav');
+
+    this.blockName = 'site-nav';
+
+    this.element.classList.add(this.blockName);
+
+    this.element.innerHTML = ' \
+        <ul class="site-nav__list"> \
+            <li class="site-nav__list-item"> \
+                <a href="index.html" class="site-nav__link"> \
+                    <i class="site-nav__link-icon fas fa-home fa-lg"></i> \
+                    <span class="site-nav__link-text">Home</span> \
+                </a> \
+            </li> \
+        </ul> \
+    ';
+}
+
+SiteNav.prototype = Object.create(Component.prototype);
+SiteNav.prototype.constructor = SiteNav;
+
+/**
+ * 
+ */
+function RecentlyPlayed() {
+    Component.call(this, 'section');
+
+    this.blockName = 'recently-played';
+
+    this.element.classList.add(this.blockName);
+
+    // title
+
+    var title = document.createElement('h2');
+    title.classList.add(this.blockName + '__title');
+    title.innerText = 'Recently played';
+
+    this.element.appendChild(title);
+
+    // list
+    
+    var list = document.createElement('ul');
+    list.classList.add(this.blockName + '__list');
+
+    this.element.appendChild(list);
+}
+
+RecentlyPlayed.prototype = Object.create(Component.prototype);
+RecentlyPlayed.prototype.constructor = RecentlyPlayed;
+
+RecentlyPlayed.prototype.addItem = function(item) {     // => { id, title, artist }
+    
+    var li = document.createElement('li');
+    li.classList.add(this.blockName + '__list-item');
+    
+    var a = document.createElement('a');
+    a.href = '#';
+    a.innerText = item.title + ' - ' + item.artist;
+
+    li.appendChild(a);
+
+    this.element.insertBefore(li, this.element.firstChild);
+}
+
+/**
+ * 
+ */
+function Search() {
+    Component.call(this, 'section');
+
+    this.blockName = 'search';
+    
+    this.element.classList.add(this.blockName);
+
+    var form = document.createElement('form');
+
+    var label = document.createElement('label');
+    label.classList.add(this.blockName + '__label');
+    label.innerText = 'Search artists';
+
+    form.appendChild(label);
+
+    var input = document.createElement('input');
+    input.classList.add(this.blockName + '__input');
+    input.type = 'text';
+    input.placeholder = 'Input...'
+
+    form.appendChild(input);    
+
+    this.element.appendChild(form);
+
+    this._onSearch = function() {};
+
+    form.addEventListener('submit', function(event) {
+
+        event.preventDefault();
+
+        var query = input.value;
+
+        if (query && this._onSearch) this._onSearch(query);
+    }.bind(this));
+}
+
+Search.prototype = Object.create(Component.prototype);
+Search.prototype.constructor = Search;
+
+Search.prototype.onSearch = function(callback) {
+    this._onSearch = callback;
+}
+
+/**
+ * 
+ */
+function ArtistList() {
+    Component.call(this, 'section');
+
+    this.blockName = 'artist-list';
+
+    this.element.classList.add(this.blockName);
+}
+
+ArtistList.prototype = Object.create(Component.prototype);
+ArtistList.prototype.constructor = ArtistList;
+
+ArtistList.prototype.updateResults = function(artistsListItem) {
+
+    this.empty();
+
+    artistsListItem.forEach(function(artistListItem) {
+        this.element.appendChild(artistListItem.element);
+    }, this);
+}
+
+/**
+ * 
+ */
+function ArtistListItem(props) {
+
+    Component.call(this, 'div');
+
+    this.blockName = 'artist-list-item';
+
+    this.element.classList.add(this.blockName);
+
+    // image
+
+    var imgAnchor = document.createElement('a');
+    imgAnchor.href = '#/' + props.id;
+
+    var img = document.createElement('img');
+    img.classList.add(this.blockName + '__image');
+    img.src = props.imageSource;
+    img.alt = props.title;
+
+    imgAnchor.appendChild(img);
+
+    this.element.appendChild(imgAnchor);
+
+    // title
+
+    var h3 = document.createElement('h3');
+    h3.classList.add(this.blockName + '__title');
+    
+    var titleAnchor = document.createElement('a');
+    titleAnchor.href = '#/' + props.id;
+    titleAnchor.innerText = props.title;
+
+    h3.appendChild(titleAnchor);
+
+    this.element.appendChild(h3);
+
+    // onClick
+    
+    this._onClick = function() {};
+
+    var handleClick = function(event) {
+
+        event.preventDefault();
+
+        if (this._onClick) this._onClick(props.id);
+
+    }.bind(this);
+
+    imgAnchor.addEventListener('click', handleClick);
+    titleAnchor.addEventListener('click', handleClick);
+}
+
+ArtistListItem.prototype = Object.create(Component.prototype);
+ArtistListItem.prototype.constructor = ArtistListItem;
+
+ArtistListItem.prototype.onClick = function(callback) {
+    this._onClick = callback;
+}
