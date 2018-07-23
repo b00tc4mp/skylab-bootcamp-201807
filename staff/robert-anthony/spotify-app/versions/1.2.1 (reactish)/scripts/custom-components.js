@@ -23,6 +23,7 @@ function AudioComponent(cssClass) {
 
   this._audio = new Audio;
 
+
 }
 
 AudioComponent.prototype = Object.create(ClassedComponent.prototype);

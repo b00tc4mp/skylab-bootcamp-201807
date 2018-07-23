@@ -1,11 +1,4 @@
 "use strict"
-// my custom components
-/*
-*
-*
-*
-* */
-
 
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -14,61 +7,109 @@ import './index.css';
 
 var log = console.log.bind(console);
 
-/**/
-
-class App extends ReactComponent {
-  constructor() {
-    super(props)
-    const testObj = {name:"Doug",id:1}
-    this.list = [testObj,testObj,testObj]
-  }
-
-  render() {
-
-    return <ResultsList cssClass="someClass" data={this.list} handleClick={this.handleClick}/>
-
-  }
 
 
-  handleClick(event) {
-    console.log(event.target);
-  }
+function clearLinks() {
+  $('tracksDetail .detail-panel__link--selected').removeClass('.detail-panel__link--selected');
 
 }
 
-class ListElement extends ReactComponent {
-  constructor() {
-    super(props);
-  }
 
-  render() {
-    return (<li onClick={() => this.props.handleClick)} name={this.props.name}
-                id={this.props.id}>{this.props.name}</li>);
-  }
+
+
+
+
+var searchPanel = new SearchPanel("Search for Artists", "search-panel", "section");
+$('body').append(searchPanel.element);
+searchPanel.onSearch(doArtistSearch);
+
+var mainContainer = new MainContainer("main-container");
+$('body').append(mainContainer.element);
+
+var resultsList = new ResultsList("detail-panel-artists","Artists");
+//$(mainContainer.element).append(resultsList.element);
+mainContainer.addInto(resultsList.element,"artistResults");
+resultsList.onElementClick(showArtistAlbums);
+
+var albumsDetail = new ResultsList("detail-panel-albums","Albums");
+// $(mainContainer.element).append(albumsDetail.element);
+mainContainer.addInto(albumsDetail.element,"albumResults");
+
+albumsDetail.onElementClick(showAlbumTracks);
+
+
+var tracksDetail = new TrackDetailPanel("detail-panel-tracks", "detail-panel__link--selected");
+// $(mainContainer.element).append(tracksDetail.element);
+mainContainer.addInto(tracksDetail.element,"trackResults");
+
+tracksDetail.onElementClick(showTrackInfo);
+var audioComponent = new AudioComponent('audio-component');
+tracksDetail.$element.append(audioComponent);
+
+
+function doArtistSearch(query) {
+  audioComponent.clear();
+clearLinks();
+  TweenMax.to(albumsDetail.element, 0.25, {autoAlpha: 0});
+  TweenMax.to(tracksDetail.element, 0.25, {autoAlpha: 0});
+
+  // var field = checkboxes.getField();
+  logic.searchArtists(query).then(function (artists) {
+    if (artists) {
+      resultsList.setData(artists);
+    }
+  });
 }
 
 
+function showAlbumTracks(albumData) {
+  audioComponent.clear();
+  clearLinks();
+  var albumRetrieved;
+  TweenMax.to(tracksDetail.element, 0.25, {autoAlpha: 0});
+  logic.retrieveAlbumById(albumData.id)
+    .then(function (album) {
+      albumRetrieved = album;
+    })
+    .then(function () {
+      return logic.retrieveTracksByAlbumId(albumData.id)
+    })
+    .then(function (tracks) {
+      var trackList = tracks.map(function (track) {
+        return {name: track.name, id: track.id};
+      });
+      tracksDetail.setData(albumRetrieved.name, trackList, albumRetrieved.images[1].url);
+      TweenMax.to(tracksDetail.element, 0.25, {autoAlpha: 1});
+    }).catch(function (err) {
+    console.log("There was a problem in retrieving the album's tracks", err);
+  });
+}
 
-class ResultsList extends React.Component {
-  constructor() {
-    super(props);
-  }
-
-
-  render() {
-    const elementClasses = this.props.cssClass + " list-group";
-
-    const listElements = this.props.data.map((element) => {
-      return (<ListElement handleClick={this.props.handleClick} name={element.name} id={element.id}/>)
+function showArtistAlbums(artistData) {
+  audioComponent.clear();
+  clearLinks();
+  TweenMax.to(tracksDetail.element, 0.25, {autoAlpha: 0});
+  logic.retrieveAlbumsByArtistId(artistData.id).then(function (albums) {
+    var albumList = albums.map(function (album) {
+      return {name: album.name, id: album.id};
     });
-
-    return (<ul className={elementClasses}>
-      {listElements}
-    </ul>);
-
-  }
+    albumsDetail.setData(albumList);
+    TweenMax.to(albumsDetail.element, 0.25, {autoAlpha: 1});
+  });
 
 }
 
-ReactDOM.render(App,  document.querySelector('#appContainer'));
+
+function showTrackInfo(trackData) {
+  audioComponent.clear();
+  clearLinks();
+  logic.retrieveTrackById(trackData.id).then(function (trackData) {
+    if (trackData && trackData.preview_url ) {
+     audioComponent.setSourceAndPlay(trackData.preview_url);
+    }
+  });
+
+}
+
+logic.token = "BQDslmGcR4Zh809nzNkrkxbmXt-Aqx1zQHVk4Y2xnWoArHJv84HBBVuvIcQOwg-st04zdGISIYYON6E8lIwkXwmwTtlpNY-lZsKlBKfCwyQ_Dogxpvo6trFU7YsGyQt9fnM_WshUfK1Z";
 
