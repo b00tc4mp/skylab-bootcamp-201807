@@ -5,28 +5,48 @@ function MyButton(title) {
 
     button.innerText = title
 
-    // demo 1
+    // 0
+
+    // button.addEventListener('click', function() {
+    // 	this._callback()
+    // })
+
+    // 1
+
+    // var handler = function() {
+    // 	this._callback()
+    // }.bind(this)
+
+    // button.addEventListener('click', handler)
+
+    // 2
 
     // button.addEventListener('click', function() {
     // 	this._callback()
     // }.bind(this))
-
-    // button.addEventListener('click', () => this._callback())
-
-    // demo 2
+        
+    // 3
 
     // var self = this
+
     // button.addEventListener('click', function () {
     //     self._callback()
 
-    //     this.style.backgroundColor = 'red'
+    //     // this.style.backgroundColor = 'red'
     // })
+
+    // 4
+
+    // button.addEventListener('click', () => this._callback())
+
+    // 5
 
     button.addEventListener('click', () => {
         this._callback()
 
         button.style.backgroundColor = 'red'
     })
+
 
     this.element = button
 }
