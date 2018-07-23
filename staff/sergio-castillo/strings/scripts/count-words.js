@@ -1,4 +1,34 @@
-function countWords(string) {
+function countWords(string){
+    
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*function countWords(string) {
     var blankBefore = true;
     var count=0;
     for (var i=0;i<string.length;i++){
@@ -14,3 +44,4 @@ function countWords(string) {
     }
     return count;
 }
+*/
