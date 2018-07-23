@@ -1,13 +1,14 @@
-logic.token = 'BQDtSBsOWX7hPg1bnWizYaFxMxeCzK_JAvCA-snXO3M2e-J5MmQWa7I6QR7xP7Dv1o5mLdNl67phVxp7hPIi9LWVLJTL8kSNomchIZP_p_o29PcYT0zZ5Pf7XPBWuQ1jNSjbReIvLrI';
+logic.token = 'BQD8qg4TEwSIhwk5hYoQH3ojohjx_GLqIsD5dnasj2HM7hPFfMgpz6KCQ3FOHnLssPtkVAq3_YVERFfL4lo9qQr_PZM6vaIS7e5D_8tCMlbRSFh-QKjYam6y4PHMdVsrc8TATZgMbpQ';
 // NOTE: to reset token via web => https://developer.spotify.com/console/get-search-item
 
 // my presentation logic
 
-var $container = $('.container-fluid');
+var $container = $('.container-fluid.marginDiv');
 
 $('body').append($container);
 
 var search = new SearchPanel();
+
 
 search.onSearch(function (query) {
     logic.searchArtists(query)
