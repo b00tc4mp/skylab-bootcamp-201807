@@ -14,15 +14,15 @@ class SearchPanel extends Component{
         )
     }
 
-    onSearch = event =>{
+    onSearch2 = event =>{
         event.preventDefault()
-        this.props.onSearch(this.state.query);
+        this.props.onSearch3(this.state.query);
 
     }
 
     render(){
         return (
-            <form onSubmit={this.onSearch}>
+            <form onSubmit={this.onSearch2}>
                 <input type="text" onChange={this.keepQuery} />
                 <button type="submit">Search</button>
             </form>

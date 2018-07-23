@@ -27,7 +27,10 @@ class App extends Component {
               text: artist.name
             }
             
-          })
+          }),
+          albums: [],
+          tracks: [],
+          track: undefined
       })
     })
       .catch(console.error);
@@ -43,7 +46,9 @@ class App extends Component {
               text: album.name
             }
             
-          })
+          }),
+          tracks: [],
+          track: undefined
       })
     })
       .catch(console.error);
@@ -59,7 +64,8 @@ class App extends Component {
               track.id, 
               text: track.name}
             
-          })
+          }),
+          track: undefined
           
       })
     })
@@ -91,7 +97,7 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">Welcome to Spotify App</h1>
         </header>
-        <SearchPanel onSearch={this.onSearch} />
+        <SearchPanel onSearch3={this.onSearch} />
 
         <ResultList results={this.state.artists} onItemClick={this.onArtistClick}/>
         <ResultList results={this.state.albums} onItemClick={this.onAlbumClick}/>
