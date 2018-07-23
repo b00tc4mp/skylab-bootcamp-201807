@@ -20,9 +20,9 @@ describe('Array.prototype.join', function () {
         var result3 = elements.join('-');
         // expected output: Fire-Wind-Rain
         
-        expect(result).toBe('Fire,Wind,Rain')
-        expect(result2).toBe('FireWindRain')
-        expect(result3).toBe('Fire-Wind-Rain')
+        expect(result).toBe('Fire,Wind,Rain');
+        expect(result2).toBe('FireWindRain');
+        expect(result3).toBe('Fire-Wind-Rain');
 
     });
 });
