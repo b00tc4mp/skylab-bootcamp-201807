@@ -1,10 +1,5 @@
 "use strict"
 
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-
-
 var log = console.log.bind(console);
 
 
