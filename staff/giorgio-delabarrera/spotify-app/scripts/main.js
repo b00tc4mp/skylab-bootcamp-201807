@@ -29,7 +29,7 @@ function Footer() {
 }
 
 
-logic.token = 'BQDpxwu9AARpy8x0ReQnhVxPO_VFD2G14QSNkyI96IIvaj62VOQE12kn-BdKBLa0wgQeBoE9JQuY8wt765E';
+logic.token = 'BQCvVI0YaFtAZd3Zyfq-VrBbow16601P6XMzQmnCwKNQUDrACBy_BnEwjz62blg_821dt9Ytn4KRof6gLGk';
 
 var ERROR_MESSAGE = 'Sorry, we have temporary problem, try again later.';
 var DEFAULT_ARTIST_IMG = 'assets/img/default-artist.png';
