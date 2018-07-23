@@ -32,8 +32,5 @@ var total = reduce(cart, function(accum, product) {
     return accum + product.price;
 }, 0);
 
-<<<<<<< HEAD
 console.log(total === 60);
-=======
-console.log(total === 60);
->>>>>>> feature/arrays
+
