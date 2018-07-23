@@ -1,11 +1,11 @@
 'use strict';
 
 describe('logic (spotify)', function () {
-  logic.token = 'BQBYBsrDk2VG1kxOCys68AT4mTOA5xN8uZiS3POoir87oyxYRJDJ0Qr3f8DchOn0SgTuQgNeo64S4LAOEes7dmGicNtqIKw22e_MSnJTFTPeTGodNrki1hv8l3IRSTqVdKH_KPTIcxxc';
+  index.token = 'BQBYmERNRoxF6ZtF0iu8N6RDBMytpPoNDwNRGj2gZ2uYHp5Z1eozoAikOzp3aplJ0pJ_vP2naFidkk0T4OVgjI3jWGHbMWI1ckR6jAt8vWguCLIV1cYFosvd3Rbt9VWFgHaCuaFrZ7MC';
 
   describe('search artists', function () {
     it('should find artists matching criteria', function () {
-      return logic.searchArtists('sisters of mercy')
+      return index.searchArtists('sisters of mercy')
         .then(function (artists) {
 
           expect(artists).toBeDefined();
@@ -19,7 +19,7 @@ describe('logic (spotify)', function () {
 
   describe('retrieve albums by artist id', function () {
     it('should retrieve albums for given artist id', function () {
-      return logic.retrieveAlbumsByArtistId("4HxBVyHaUa60eCSsJWxwWR")
+      return index.retrieveAlbumsByArtistId("4HxBVyHaUa60eCSsJWxwWR")
         .then(function (albums) {
           expect(albums).toBeDefined();
           expect(albums.length).toBe(20);
@@ -32,7 +32,7 @@ describe('logic (spotify)', function () {
 
   describe('retrieve tracks by album id', function () {
     it('should retrieve tracks for given album id', function () {
-      return logic.retrieveTracksByAlbumId("2wOuYERNvxVipFb2JlwvwA")
+      return index.retrieveTracksByAlbumId("2wOuYERNvxVipFb2JlwvwA")
         .then(function (tracks) {
           expect(tracks).toBeDefined();
           expect(tracks.length).toBe(10);
@@ -46,7 +46,7 @@ describe('logic (spotify)', function () {
 
   describe('retrieve track by id', function () {
     it('should retrieve a specific track for a given id', function () {
-      return logic.retrieveTrackById("7o3wwWcDjjzY4T5YJdQ7Al")
+      return index.retrieveTrackById("7o3wwWcDjjzY4T5YJdQ7Al")
         .then(function (track) {
           expect(track).toBeDefined();
           expect(track.duration_ms).toBe(204186);
@@ -60,7 +60,7 @@ describe('logic (spotify)', function () {
 
   describe('retrieve album by id', function () {
     it('should retrieve a specific album for a given id', function () {
-      return logic.retrieveAlbumById("71t6hGJmP26g2aAoFnTY4G")
+      return index.retrieveAlbumById("71t6hGJmP26g2aAoFnTY4G")
         .then(function (album) {
           expect(album).toBeDefined();
           expect(album.name).toBe("Rock 'N' Roll Saviors - The Early Years (Live)");

@@ -344,14 +344,14 @@ function doRestaurantSearch(term) {
   TweenMax.to(detailsPanel.element, 0.25, {autoAlpha: 0})
   var field = checkboxes.getField();
 
-  var results = logic.find(term, field);
+  var results = index.find(term, field);
   if (results) resultsList.setData(results);
 }
 
 
 function showRestaurantDetails(restaurantData) {
   if (!restaurantData) return;
-  var restaurantDetail = logic.requestByID(restaurantData.id);
+  var restaurantDetail = index.requestByID(restaurantData.id);
   detailsPanel.setData(restaurantDetail);
   TweenMax.to(detailsPanel.element, 0.25, {autoAlpha: 1});
 

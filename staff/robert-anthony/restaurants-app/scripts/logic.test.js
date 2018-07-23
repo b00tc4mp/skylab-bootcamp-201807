@@ -1,6 +1,6 @@
 'use strict';
 
-var results = logic.find('cream');
+var results = index.find('cream');
 
 assert('should results length be 104', results.length === 104);
 

@@ -1,7 +1,8 @@
 'use strict';
 
 describe('logic (spotify)', function () {
-  index.token = 'BQBYBsrDk2VG1kxOCys68AT4mTOA5xN8uZiS3POoir87oyxYRJDJ0Qr3f8DchOn0SgTuQgNeo64S4LAOEes7dmGicNtqIKw22e_MSnJTFTPeTGodNrki1hv8l3IRSTqVdKH_KPTIcxxc';
+  index.token = 'BQBYmERNRoxF6ZtF0iu8N6RDBMytpPoNDwNRGj2gZ2uYHp5Z1eozoAikOzp3aplJ0pJ_vP2naFidkk0T4OVgjI3jWGHbMWI1ckR6jAt8vWguCLIV1cYFosvd3Rbt9VWFgHaCuaFrZ7MC';
+// TO GET TOKEN: https://developer.spotify.com/console/get-search-item/
 
   describe('search artists', function () {
     it('should find artists matching criteria', function () {

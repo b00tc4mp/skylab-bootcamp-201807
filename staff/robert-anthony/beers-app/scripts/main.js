@@ -325,7 +325,7 @@ function doBeerSearch(term) {
   TweenMax.to(detailsPanel.element, 0.25, {autoAlpha: 0})
   // var field = checkboxes.getField();
 
-  logic.searchBeers(term, function showResults(results) {
+  index.searchBeers(term, function showResults(results) {
     if (results) {
       resultsList.setData(results);
     }
@@ -335,7 +335,7 @@ function doBeerSearch(term) {
 
 function showBeerDetails(restaurantData) {
   if (!restaurantData) return;
-  logic.retrieveBeerById(restaurantData.id, function (restaurantDetail) {
+  index.retrieveBeerById(restaurantData.id, function (restaurantDetail) {
     detailsPanel.setData(restaurantDetail);
     TweenMax.to(detailsPanel.element, 0.25, {autoAlpha: 1});
   });

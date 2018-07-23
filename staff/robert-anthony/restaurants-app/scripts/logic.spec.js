@@ -5,8 +5,8 @@ describe('logic', function () {
     var results, resultsTest, results2, resultsTest2;
 
     beforeEach(function () {
-      results = logic.find('special', 'name');
-      results2 = logic.find('iranian', 'cuisine');
+      results = index.find('special', 'name');
+      results2 = index.find('iranian', 'cuisine');
       resultsTest = [{id: "40898366", text: "Ashby'S Specialty"}, {
         id: "41042881",
         text: "Special Attention"
@@ -47,7 +47,7 @@ describe('logic', function () {
     var resultsTest;
 
     beforeEach(function () {
-      results = logic.requestByID("40372831");
+      results = index.requestByID("40372831");
 
       resultsTest = ["<span>Name:</span> Chen'S Chinese", "<span>Address:</span> 1434 Richmond Road, Staten Island, 10304", "<span>Cuisine:</span> Chinese", "<span>Grade:</span> A"];
     });
