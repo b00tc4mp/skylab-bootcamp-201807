@@ -1,3 +1,5 @@
+'use strict';
+
 var logic = {
     _callApi: function (path) {
         return new Promise(function (resolve, reject) {

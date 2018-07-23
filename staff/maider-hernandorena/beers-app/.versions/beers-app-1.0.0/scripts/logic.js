@@ -1,3 +1,5 @@
+'use strict';
+
 var logic = {
     _callApi: function(path, callback) {
         var request = new XMLHttpRequest();

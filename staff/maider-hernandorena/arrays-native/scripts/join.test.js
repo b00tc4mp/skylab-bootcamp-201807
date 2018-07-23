@@ -1,13 +1,13 @@
 'use strict';
 
-describe('Array.prototype.join', function () {
-    var array ;
+describe('Array.prototype.join', function() {
+    var array;
 
-    beforeEach(function () {
+    beforeEach(function() {
     array = [1, 2, 3, 4, 5];
     });
 
-    it('Joins arrays element in a string', function () {
+    it('Joins arrays element in a string', function() {
 
         expect(array.join()).toBe('1,2,3,4,5');
         expect(array.join(',')).toBe('1,2,3,4,5');

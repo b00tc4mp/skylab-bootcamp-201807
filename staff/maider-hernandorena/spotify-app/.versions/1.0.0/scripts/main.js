@@ -1,3 +1,5 @@
+'use strict';
+
 // my presentation logic
 
 

@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 // the search panel, search-bar, button and function
 function SearchPanel() {

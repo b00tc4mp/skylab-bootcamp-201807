@@ -1,3 +1,5 @@
+'use strict';
+
 // Panel del buscador
 function SearchPanel() {
     Component.call(this, 'form');

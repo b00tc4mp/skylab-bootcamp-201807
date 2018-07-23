@@ -27,7 +27,7 @@ describe('Array.prototype.concat', function () {
     expect(arrayLetters[4]).toBe('e');
 
 
-    expect(result).toEqual([1, 2, 3, 4, 5, 'a', 'b', 'c', 'd', 'e'])
+    expect(result).toEqual([1, 2, 3, 4, 5, 'a', 'b', 'c', 'd', 'e']);
 
   });
 });
