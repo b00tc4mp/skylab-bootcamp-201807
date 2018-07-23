@@ -4,9 +4,10 @@ import './App.css';
 import SearchPanel from './components/SearchPanel';
 import ResultList from './components/ResultList';
 import logic from './logic'
-logic.token = 'BQAI4WG5Rqp83cGznCC4mRdtasmar5rxZGMmi0EL7Gtw90kFtC6B2VD_LGaJhR1zHeVlWZd1UOEhuJGot_6d2tcvfay8WAMJoQ3fg9Z2wcKvldzz25qSwVh3jAF89p5Rj5rSnsS_tM0z78F399loGnLxbnuaZIWBejQ'
+logic.token = 'BQDa50ZLyAIiu5HPvW5-vqmmqfO7deePp6lrDW1v57EU2CJ2uCaXj5Np3TINOZyzldw-A6Kw6Yj13SoT0ueeZqekDpuwWwH2L-dd1zKlcq2SrSTt-jRjHpQCkelKWUIcMxjcHn39u3MkT6f_C6RFQDp2W2sb0TK_I70'
 class App extends Component {
-  state = { artists: [] }
+
+  state = { artists: [], albums: [] }
   onSearch = query => {
     logic.searchArtists(query)
       .then(artists => {
@@ -21,7 +22,14 @@ class App extends Component {
 
   onArtistClick = (id) =>{
     //TODO search albums from artist id
-    console.log(id)
+    logic.retrieveAlbumsByArtistId(id)
+      .then(albums =>{
+          this.setState({
+            albums: albums.map(album =>{
+              return {id: album.id, text: album.name}
+            })
+          })
+      })
   }
   render() {
     return (
