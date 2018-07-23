@@ -1,4 +1,7 @@
-'use strict';
+logic.token = 'BQBzQQ-wFziNFtvr-RBDKvum8LzqjoGCo1rft2_JXJqEeRz-AdBp9Mu6fr-aJ4EQ4_QKx1GMFOELoEZaPDBtut1U7HQ8U_aU5CpyxgGJc5tEOAi5AadE-kLZLX2SqV2X4px944rhap-GxaAK1aM58-LURUOG4q2KP7KXtjlNZrw7R2NodoGZy_Xm7mOOCGnGkIM4-ITWdrHQ5HaBqcjmAzzuRZCAeAXIjatLZSAtT08ie4TwIYu5TP0Jm78hd7Hz8XUFnxNb4gI';
+// NOTE: to reset token via web => https://developer.spotify.com/console/get-search-item
+
+// my presentation logic
 
 //var $container = $('<div class="container-flui">');
 var $body = $('body');

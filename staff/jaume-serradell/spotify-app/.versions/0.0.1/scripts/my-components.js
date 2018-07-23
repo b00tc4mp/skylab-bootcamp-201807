@@ -1,4 +1,3 @@
-'use strict';
 // my custom components
 
 function SearchPanel() {
