@@ -3,9 +3,10 @@ import logo from './logo.svg';
 import './App.css';
 import SearchPanel from './components/SearchPanel';
 import ResultList from './components/ResultList';
+import TrackList from './components/TrackList';
 import logic from './logic'
 
-logic.token = 'BQDWpUhNvTCZ8an-Xy4zzQaEOZSfkYdwKztiIvLg_XaDbZjWJhzwq2197QSYMLrrymJEyuOPiItBQq4c0fpPgtw2I4vtQhLo7eSGQS7fdw115qvUUIj7OUsvdQ_LWp-rv43zC8G0drOGXel-faJ9NBS4bkul1vNXuZPR9TqEjp32wuALdrfukaVzzn1BJh9GkyYo6Bdtj31wA7GVOEbDnQ04Ftq-Nd7244kNTr34eP3lyGA6LdSyTONzHWS0iC09wzsEwafLUO8';
+logic.token = 'BQDA9zh_7FyCYinVZCccFND7tfLDvYxMmiwqtDK6xebGsTQUZu92IeQDd1jKj1YF_vYo64kYa63hKon98RJ6SRJvhbtU66ydor2U-H3aimcVYN7bE6SxRiH0VoZHYm_ZnVAFH_5p000fjC38qs5Vbyk0aD3ecCbvtcgZyrYTu5McI8unO2mos444CIG1xXj0QA2k64IADa8esnGKPLV9GW12GC2lbiuTTFIaj1SKSDBZokkLU-GX1pUgG2ebgsNGXAppUlq-XPE';
 
 class App extends Component {
   state = { 
@@ -27,11 +28,12 @@ class App extends Component {
       .catch(console.error)
   }
 
+  //Método onArtistClick
   onArtistClick = id => {
     logic.retrieveAlbumsByArtistId(id)
       .then(albums => {
         this.setState({
-          albums: album.map(album => {
+          albums: albums.map(album => {
             return { id: album.id, text: album.name }
           })
         })
@@ -39,15 +41,32 @@ class App extends Component {
       .catch(console.error)
   }
 
+  //Método onAlbumClick
   onAlbumClick = id => {
     logic.retrieveTracksByAlbumId(id)
       .then(tracks => {
         this.setState({
-          tracks: track.map(track => {
+          tracks: tracks.map(track => {
             return { id: track.id, text: track.name }
           })
         })
       })
+      .catch(console.error)
+  }
+
+  onTrackClick = id => {
+    logic.retrieveTrackById(id)
+      .then(track => {
+        this.setState({
+          track: {
+            title: track.name,
+            image: track.album.images[0].url,
+            file: track.preview_url,
+            link: track.external_urls.spotify
+          }
+        }) 
+      })
+      .catch(console.error)
   }
   
   render() {
@@ -58,9 +77,16 @@ class App extends Component {
           <h1 className="App-title">Spotify App</h1>
         </header>
         
+        {/* Componente SearchPanel con su propiedad onSearch */}
         <SearchPanel onSearch={this.onSearch} />
 
-        <ResultList results={this.state.artists} />
+        <ResultList results={this.state.artists} onItemClick={this.onArtistClick} />
+
+        <ResultList results={this.state.albums} onItemClick={this.onAlbumClick} />
+
+        <ResultList results={this.state.tracks} onItemClick={this.onTrackClick} />
+
+        {this.state.track && <TrackList results={this.state.track}/>}
         
       </div>
     );
