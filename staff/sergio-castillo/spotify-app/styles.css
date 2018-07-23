@@ -1,0 +1,13 @@
+body{
+    background-color: #333 !important;
+}
+.container{
+    
+    margin: 0 auto;
+    width: 1200px;
+    justify-content: center;
+}
+.list-group-item-action{
+    background-color: lightblue;
+    color: whitesmoke;
+}
