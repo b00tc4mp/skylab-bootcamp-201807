@@ -8,8 +8,10 @@ var logic = {
             }
         })
             .then(function (res) { return res.json() })
-            .catch(function (err) {
-                throw Error('request error, status ' + err.status);
+            .then(function (res) {
+                if (res.error) throw Error('request error, status ' + res.error.status);
+
+                return res;
             });
     },
 
