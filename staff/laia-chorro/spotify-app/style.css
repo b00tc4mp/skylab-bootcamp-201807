@@ -41,14 +41,13 @@ body {
     font-size: 80px;
 }
 
-.results-container ul{
+.results-container > div{
     grid-column: 1 / 7;
 }
 
 .list-title, .results-container h1 {
     color: #ffffff;
     margin: 20px 0 10px 40px;
-    text-transform: capitalize;
 }
 
 .list-group-item-action a{

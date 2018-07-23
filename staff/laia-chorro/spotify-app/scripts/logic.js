@@ -3,7 +3,7 @@
 
 var logic = {
     //token: 'NO-TOKEN',
-    token: 'BQDSX65qn1CYf_Tv4FoNiMw7Rh0LQuv0N-hoIz4LMqMWJ_de4UDNUxeXbNByHxAH9GnVF4SMtxYAqUGcwAzEaDeMpJTxTXGcSsdDGxYrF11LD0GJlAQywXMG3KNnGCxis2BICp2ojrVQIiNjAqsIT_L48Qa2hYY',
+    token: 'BQDpR74mRWOgWY_O5yzbknw-uKWiX6Gr-f1oiMu79Dzfd-qfC7DNPAktnb0NYadD6x9i_mYaoayvSZJ_fYWkRsThIlo5K5f_yQg1693wV0NVjQ6TdPNTHhY0GzATrLxTLJhX7i6-mokeDhwoTgwpyXVid5UNkOg',
 
     _callApi: function (path) {
         var url = 'https://api.spotify.com/v1' + path;
