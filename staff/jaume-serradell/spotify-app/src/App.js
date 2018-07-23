@@ -3,9 +3,10 @@ import logo from './logo.svg';
 import './App.css';
 import SearchPanel from './components/SearchPanel';
 import ResultList from './components/ResultList';
+import TrackList from './components/TrackList';
 import logic from './logic'
 
-logic.token = 'BQDWpUhNvTCZ8an-Xy4zzQaEOZSfkYdwKztiIvLg_XaDbZjWJhzwq2197QSYMLrrymJEyuOPiItBQq4c0fpPgtw2I4vtQhLo7eSGQS7fdw115qvUUIj7OUsvdQ_LWp-rv43zC8G0drOGXel-faJ9NBS4bkul1vNXuZPR9TqEjp32wuALdrfukaVzzn1BJh9GkyYo6Bdtj31wA7GVOEbDnQ04Ftq-Nd7244kNTr34eP3lyGA6LdSyTONzHWS0iC09wzsEwafLUO8';
+logic.token = 'BQAmR1cYvx_lVrs7-NFbWAIoGCdmp-xItk0InfiHv-5v_AzxWnvzhmQn5t4cB_etxGvfUmfQe6S9O858p-q8heVPHPjTcwLqfqxxPAf6n8PNUfYJYUAD8H5iVqVW2CLv6-fIwbNsH8zYXN-Jd9MdhV6pTcHX4u1n5oESGp8o7U6hJaNOwC8OAtyMbx-oN5TcdTcVwqqquoqvGC6bwFsVpD2diskaBIfm4nuI931PscRAmAJbboFfag81o4fy8RxObRGdfAgkFwg';
 
 class App extends Component {
   state = { 
@@ -19,35 +20,53 @@ class App extends Component {
     logic.searchArtists(query)
       .then(artists => {
         this.setState({ 
-          artists: artists.map(artist => {
-            return { id: artist.id, text: artist.name }
-          })
+          artists: artists.map(({ id, name:text }) => ({ id, text })),
+          albums: [],
+          tracks: [],
+          track: undefined
         })
       })
       .catch(console.error)
   }
 
+  //Método onArtistClick
   onArtistClick = id => {
     logic.retrieveAlbumsByArtistId(id)
       .then(albums => {
         this.setState({
-          albums: album.map(album => {
-            return { id: album.id, text: album.name }
-          })
+          albums: albums.map(({ id, name: text }) => ({ id, text })),
+          tracks: [],
+          track: undefined
         })
       })
       .catch(console.error)
   }
 
+  //Método onAlbumClick
   onAlbumClick = id => {
     logic.retrieveTracksByAlbumId(id)
       .then(tracks => {
         this.setState({
-          tracks: track.map(track => {
-            return { id: track.id, text: track.name }
-          })
+          tracks: tracks.map(({ id, name:text }) => ({ id, text })),
+          track: undefined
         })
       })
+      .catch(console.error)
+  }
+
+  onTrackClick = id => {
+    logic.retrieveTrackById(id)
+      .then(track => {
+        this.setState({
+          track: {
+            title: track.name,
+            image: track.album.images[0].url,
+            file: track.preview_url,
+            link: track.external_urls.spotify
+          }
+        }) 
+      })
+      .catch(console.error)
   }
   
   render() {
@@ -58,9 +77,16 @@ class App extends Component {
           <h1 className="App-title">Spotify App</h1>
         </header>
         
+        {/* Componente SearchPanel con su propiedad onSearch */}
         <SearchPanel onSearch={this.onSearch} />
 
-        <ResultList results={this.state.artists} />
+        <ResultList results={this.state.artists} onItemClick={this.onArtistClick} />
+
+        <ResultList results={this.state.albums} onItemClick={this.onAlbumClick} />
+
+        <ResultList results={this.state.tracks} onItemClick={this.onTrackClick} />
+
+        {this.state.track && <TrackList results={this.state.track}/>}
         
       </div>
     );
