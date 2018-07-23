@@ -6,7 +6,7 @@ import ResultList from './components/ResultList';
 import TrackList from './components/TrackList';
 import logic from './logic'
 
-logic.token = 'BQDA9zh_7FyCYinVZCccFND7tfLDvYxMmiwqtDK6xebGsTQUZu92IeQDd1jKj1YF_vYo64kYa63hKon98RJ6SRJvhbtU66ydor2U-H3aimcVYN7bE6SxRiH0VoZHYm_ZnVAFH_5p000fjC38qs5Vbyk0aD3ecCbvtcgZyrYTu5McI8unO2mos444CIG1xXj0QA2k64IADa8esnGKPLV9GW12GC2lbiuTTFIaj1SKSDBZokkLU-GX1pUgG2ebgsNGXAppUlq-XPE';
+logic.token = 'BQAmR1cYvx_lVrs7-NFbWAIoGCdmp-xItk0InfiHv-5v_AzxWnvzhmQn5t4cB_etxGvfUmfQe6S9O858p-q8heVPHPjTcwLqfqxxPAf6n8PNUfYJYUAD8H5iVqVW2CLv6-fIwbNsH8zYXN-Jd9MdhV6pTcHX4u1n5oESGp8o7U6hJaNOwC8OAtyMbx-oN5TcdTcVwqqquoqvGC6bwFsVpD2diskaBIfm4nuI931PscRAmAJbboFfag81o4fy8RxObRGdfAgkFwg';
 
 class App extends Component {
   state = { 
@@ -20,9 +20,10 @@ class App extends Component {
     logic.searchArtists(query)
       .then(artists => {
         this.setState({ 
-          artists: artists.map(artist => {
-            return { id: artist.id, text: artist.name }
-          })
+          artists: artists.map(({ id, name:text }) => ({ id, text })),
+          albums: [],
+          tracks: [],
+          track: undefined
         })
       })
       .catch(console.error)
@@ -33,9 +34,9 @@ class App extends Component {
     logic.retrieveAlbumsByArtistId(id)
       .then(albums => {
         this.setState({
-          albums: albums.map(album => {
-            return { id: album.id, text: album.name }
-          })
+          albums: albums.map(({ id, name: text }) => ({ id, text })),
+          tracks: [],
+          track: undefined
         })
       })
       .catch(console.error)
@@ -46,9 +47,8 @@ class App extends Component {
     logic.retrieveTracksByAlbumId(id)
       .then(tracks => {
         this.setState({
-          tracks: tracks.map(track => {
-            return { id: track.id, text: track.name }
-          })
+          tracks: tracks.map(({ id, name:text }) => ({ id, text })),
+          track: undefined
         })
       })
       .catch(console.error)
