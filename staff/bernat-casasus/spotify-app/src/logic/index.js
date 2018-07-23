@@ -1,5 +1,5 @@
 var logic = {
-    token: 'BQAc1croyFKkNn0OU2h-qv2GNKhVktUAhibj5ed7dItnMLz3tgYHRSKmst01YzgKi6LIcmTIXKt0DOCmT2BS-LqPpR35VI90s-YSoS7AeWGmGdRIzY06UQWg8AeIW2fTvTrfuknU8NRYtanPb-oMeyM6Tsn8CIDyXIA',
+    token: 'BQAI4WG5Rqp83cGznCC4mRdtasmar5rxZGMmi0EL7Gtw90kFtC6B2VD_LGaJhR1zHeVlWZd1UOEhuJGot_6d2tcvfay8WAMJoQ3fg9Z2wcKvldzz25qSwVh3jAF89p5Rj5rSnsS_tM0z78F399loGnLxbnuaZIWBejQ',
 
     _callApi: function (path) {
 
