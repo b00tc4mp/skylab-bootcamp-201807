@@ -63,11 +63,7 @@ class App extends Component {
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-<<<<<<< HEAD
-          <h1 className="App-title">Welcome to My App</h1>
-=======
           <h1 className="App-title">Welcome to Spotify App</h1>
->>>>>>> feature/spotify
         </header>
         <SearchPanel onSearch={this.onSearch} />
 
