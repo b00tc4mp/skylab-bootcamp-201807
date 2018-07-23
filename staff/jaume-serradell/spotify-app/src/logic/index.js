@@ -2,29 +2,15 @@ var logic = {
     token: 'NO-TOKEN',
 
     _callApi: function (path) {
-        return new Promise(function (resolve, reject) {
-            var request = new XMLHttpRequest();
-
-            request.onreadystatechange = function () {
-                if (request.readyState === 4) {
-                    if (request.status === 200) {
-                        var res = JSON.parse(request.responseText);
-
-                        resolve(res);
-                    } else reject(Error('request error, status ' + request.status));
-                }
-            };
-
-            var url = 'https://api.spotify.com/v1' + path;
-
-            request.open('get', url);
-
-            request.setRequestHeader('Authorization', 'Bearer ' + this.token);
-
-
-            request.send();
-        }.bind(this));
-
+        return fetch('https://api.spotify.com/v1' + path, {
+            headers: {
+                authorization: 'Bearer ' + this.token
+            }
+        })
+        .then(function (res) { return res.json()})
+        .catch(function(err) {
+            throw Error('request error, status ' + err.status);
+        });
     },
 
     searchArtists: function (query) {
@@ -55,3 +41,8 @@ var logic = {
             });
     }
 };
+
+
+// export default logic
+
+if (typeof module !== 'undefined') module.exports = logic
