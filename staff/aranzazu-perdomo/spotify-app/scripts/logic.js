@@ -1,3 +1,5 @@
+'use strict';
+
 var logic = {
     token: 'NO-TOKEN',
 
@@ -16,12 +18,8 @@ var logic = {
             };
 
             var url = 'https://api.spotify.com/v1' + path;
-
             request.open('get', url);
-
             request.setRequestHeader('Authorization', 'Bearer ' + this.token);
-
-
             request.send();
         }.bind(this));
 

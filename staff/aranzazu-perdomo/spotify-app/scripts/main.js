@@ -45,6 +45,7 @@ resultsArtist.onItemClick(function (id) {
 });
 
 var resultsAlbum = new ResultsList();
+
 var resultsTracks=new ResultsList();
 
 resultsAlbum.onItemClick(function (id) {
