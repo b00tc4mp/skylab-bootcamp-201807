@@ -1,7 +1,4 @@
-// my presentation logic
-
-// optional, reduce the size of the restaurants loaded in memory
-// restaurants.splice(100);
+'use strict';
 
 var search = new SearchPanel();
 
