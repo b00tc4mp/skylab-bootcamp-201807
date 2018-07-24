@@ -6,4 +6,3 @@ function toCamelCase(string) {
         words[1] = words[i][0].toUpperCase() + words[1].slice(1);
     }
     return words.join("");
-}
