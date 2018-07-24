@@ -9,11 +9,13 @@ logic.token = 'BQDlWTEwHUxqa1Ba90EnDZk_yPv_SyhhV8gRgcm2RH6X5ZhzvTU6NwCntbsel90pk
 class App extends Component {
 
   state = { artists: [], albums: [], tracks: [], track: {} }
+  
   onSearch = query => {
     logic.searchArtists(query)
       .then(artists => {
         this.setState({
-          artists: artists.map(({id, name:text}) => ({ id, text })), albums:[],tracks:[],track:[]
+          artists: artists.map(({id, name:text}) => ({ id, text }))
+          , albums:[],tracks:[],track:[]
         })
       })
       .catch(console.error)
@@ -23,7 +25,8 @@ class App extends Component {
     logic.retrieveAlbumsByArtistId(id)
       .then(albums =>{
           this.setState({
-            albums: albums.map(({id, name:text}) =>({id, text})),tracks:[],track:[]
+            albums: albums.map(({id, name:text}) =>({id, text}))
+            ,tracks:[],track:[]
           })
       })
       .catch(console.error)
@@ -33,7 +36,8 @@ class App extends Component {
     logic.retrieveTracksByAlbumId(id)
       .then(tracks =>{
         this.setState({
-          tracks: tracks.map(({id, name:text}) => ({id, text})),track:[]
+          tracks: tracks.map(({id, name:text}) => ({id, text}))
+          ,track:[]
         })
       })
       .catch(console.error)
