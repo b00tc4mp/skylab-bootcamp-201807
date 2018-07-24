@@ -52,7 +52,7 @@ function doArtistSearch(query) {
   TweenMax.to(tracksDetail.element, 0.25, {autoAlpha: 0});
 
   // var field = checkboxes.getField();
-  logic.searchArtists(query).then(function (artists) {
+  index.searchArtists(query).then(function (artists) {
     if (artists) {
       resultsList.setData(artists);
     }
@@ -65,12 +65,12 @@ function showAlbumTracks(albumData) {
   clearLinks();
   var albumRetrieved;
   TweenMax.to(tracksDetail.element, 0.25, {autoAlpha: 0});
-  logic.retrieveAlbumById(albumData.id)
+  index.retrieveAlbumById(albumData.id)
     .then(function (album) {
       albumRetrieved = album;
     })
     .then(function () {
-      return logic.retrieveTracksByAlbumId(albumData.id)
+      return index.retrieveTracksByAlbumId(albumData.id)
     })
     .then(function (tracks) {
       var trackList = tracks.map(function (track) {
@@ -87,7 +87,7 @@ function showArtistAlbums(artistData) {
   clearAudio();
   clearLinks();
   TweenMax.to(tracksDetail.element, 0.25, {autoAlpha: 0});
-  logic.retrieveAlbumsByArtistId(artistData.id).then(function (albums) {
+  index.retrieveAlbumsByArtistId(artistData.id).then(function (albums) {
     var albumList = albums.map(function (album) {
       return {name: album.name, id: album.id};
     });
@@ -101,7 +101,7 @@ function showArtistAlbums(artistData) {
 function showTrackInfo(trackData) {
   clearAudio();
   clearLinks();
-  logic.retrieveTrackById(trackData.id).then(function (trackData) {
+  index.retrieveTrackById(trackData.id).then(function (trackData) {
 
     if (trackData && trackData.preview_url) {
       _audio = new Audio(trackData.preview_url);
@@ -111,5 +111,5 @@ function showTrackInfo(trackData) {
 
 }
 
-logic.token = "BQCHPUpfXWwmb5M_LTk9kBS2sh8Q361Auv5KUP97WIrEQ2aDfr42TqrIcEy7t56EpI0QJxVrCEnjwuT1m02mme9JFddko-jE0iOVFigFL9nyH2UA4E8a6OTdB1ejW2uxB1O1DaKg_Iac";
+index.token = "BQCHPUpfXWwmb5M_LTk9kBS2sh8Q361Auv5KUP97WIrEQ2aDfr42TqrIcEy7t56EpI0QJxVrCEnjwuT1m02mme9JFddko-jE0iOVFigFL9nyH2UA4E8a6OTdB1ejW2uxB1O1DaKg_Iac";
 
