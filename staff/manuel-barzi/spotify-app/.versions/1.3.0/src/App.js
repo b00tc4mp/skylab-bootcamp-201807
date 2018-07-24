@@ -7,7 +7,7 @@ import ResultList from './components/ResultList'
 import SpotifyPlayer from './components/SpotifyPlayer';
 import logic from './logic'
 
-logic.spotifyToken = 'BQCTOhL540Rw05bADhq_IKdv0eE4l--5PlllsqHcV9HfkTyuhyfNCif31tQu_tfP1vaTKzJCcZKAwusoPq4Q2trFFR3Yh_Jm7X5txi7HQsfNdiETlScZ8oamsjYHOVwaEbL0iVOcllbh'
+logic.token = 'BQCTOhL540Rw05bADhq_IKdv0eE4l--5PlllsqHcV9HfkTyuhyfNCif31tQu_tfP1vaTKzJCcZKAwusoPq4Q2trFFR3Yh_Jm7X5txi7HQsfNdiETlScZ8oamsjYHOVwaEbL0iVOcllbh'
 
 class App extends Component {
   state = {
