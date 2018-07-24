@@ -1,7 +1,7 @@
 'use strict';
 
 describe('logic (spotify)', function () {
-  index.spotifyToken = 'BQBYmERNRoxF6ZtF0iu8N6RDBMytpPoNDwNRGj2gZ2uYHp5Z1eozoAikOzp3aplJ0pJ_vP2naFidkk0T4OVgjI3jWGHbMWI1ckR6jAt8vWguCLIV1cYFosvd3Rbt9VWFgHaCuaFrZ7MC';
+  index.token = 'BQBYmERNRoxF6ZtF0iu8N6RDBMytpPoNDwNRGj2gZ2uYHp5Z1eozoAikOzp3aplJ0pJ_vP2naFidkk0T4OVgjI3jWGHbMWI1ckR6jAt8vWguCLIV1cYFosvd3Rbt9VWFgHaCuaFrZ7MC';
 // TO GET TOKEN: https://developer.spotify.com/console/get-search-item/
 
   describe('search artists', function () {

@@ -87,7 +87,7 @@ function SearchPanel() {
 
   this.$form.append($('<label htmlFor="artistSearchInput" class="col-sm-4 col-form-label ">Search For Artist</label>'));
 
-  this.$searchInput = $("<input id='artistSearchInput' type='search' autofocus placeholder='Search term' class='form-control mr-sm-2' >");
+    this.$searchInput = $("<input id=' ' type='search' autofocus placeholder='Search term' class='form-control mr-sm-2' >");
   this.$form.append(this.$searchInput);
   this.$button = $("<button class='btn btn-outline-success my-2 my-sm-0' type='submit'>Submit</button>");
   this.$form.append(this.$button);

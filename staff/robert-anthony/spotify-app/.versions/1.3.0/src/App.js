@@ -6,7 +6,7 @@ import ResultList from "./components/ResultsList";
 import TrackPlayer from "./components/TrackPlayer";
 import logic from "./logic/"
 
-logic.spotifyToken = "BQAePkMCleE54oLLNo47WXe3gRc0nB1vDJQnjsR4cZ8Wx_SQdG2XoBdwH28PWsimLr-d-pTlatBKBOFMrQo7tW8knYmIlYmMw1pNcJwLNV5ITatKq7sgyU4S2grxSK-ljzhqLYQbzR8o";
+logic.token = "BQAePkMCleE54oLLNo47WXe3gRc0nB1vDJQnjsR4cZ8Wx_SQdG2XoBdwH28PWsimLr-d-pTlatBKBOFMrQo7tW8knYmIlYmMw1pNcJwLNV5ITatKq7sgyU4S2grxSK-ljzhqLYQbzR8o";
 
 class App extends Component {
   constructor(props) {

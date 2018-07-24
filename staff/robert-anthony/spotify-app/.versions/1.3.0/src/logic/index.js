@@ -1,52 +1,16 @@
 'use strict';
 
 var index = {
-    spotifyToken: null,
-    userToken: null,
-  userId: null,
+    token: 'NO-TOKEN',
 
-// users
-  _callUsersApi: function (path) {
-
-    var myURL = 'https://api.spotify.com/v1' + path;
-
-    return fetch(myURL,{
-      type: 'GET',
-      headers: {
-        "Authorization": "Bearer " + this.spotifyToken
-      }
-    }).then(function (data) {
-      return data.json();
-    }).then(function (res) {
-      if (res.statis === "KO") throw Error('request error, status ' + res.error.status);
-      else return res;
-    });
-
-  },
-
-  registerUser(username,password) {
-
-
-  },
-
-  loginUser(username, password) {
-
-  },
-
-  unregisterUser(id,username,password) {
-
-  },
-
-// spotify
-
-  _callSpotifyApi: function (path) {
+    _callApi: function (path) {
 
       var myURL = 'https://api.spotify.com/v1' + path;
 
       return fetch(myURL,{
         type: 'GET',
         headers: {
-          "Authorization": "Bearer " + this.spotifyToken
+          "Authorization": "Bearer " + this.token
         }
       }).then(function (data) {
         return data.json();
@@ -60,7 +24,7 @@ var index = {
 
     searchArtists: function (query) {
       console.log("searchArtists called with ", query)
-      return this._callSpotifyApi('/search?type=artist&query=' + query)
+      return this._callApi('/search?type=artist&query=' + query)
         .then(function (res) {
           return res.artists.items;
         }).catch(function (error) {
@@ -69,7 +33,7 @@ var index = {
     },
 
     retrieveAlbumsByArtistId(id) {
-      return this._callSpotifyApi('/artists/' + id + '/albums')
+      return this._callApi('/artists/' + id + '/albums')
         .then(function (res) {
           return res.items;
         }).catch(function (error) {
@@ -78,7 +42,7 @@ var index = {
     },
 
     retrieveTracksByAlbumId(id) {
-      return this._callSpotifyApi('/albums/' + id + '/tracks')
+      return this._callApi('/albums/' + id + '/tracks')
         .then(function (results) {
           return results.items;
         }).catch(function (error) {
@@ -87,7 +51,7 @@ var index = {
     },
 
     retrieveAlbumById(id) {
-      return this._callSpotifyApi('/albums/' + id)
+      return this._callApi('/albums/' + id)
         .then(function (results) {
           return results;
         }).catch(function (error) {
@@ -97,7 +61,7 @@ var index = {
     ,
 
     retrieveTrackById(id) {
-      return this._callSpotifyApi('/tracks/' + id)
+      return this._callApi('/tracks/' + id)
         .then(function (results) {
           debugger;
           return results;
