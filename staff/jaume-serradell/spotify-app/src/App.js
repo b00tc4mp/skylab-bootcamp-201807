@@ -6,7 +6,7 @@ import ResultList from './components/ResultList';
 import TrackList from './components/TrackList';
 import logic from './logic'
 
-logic.token = 'BQAmR1cYvx_lVrs7-NFbWAIoGCdmp-xItk0InfiHv-5v_AzxWnvzhmQn5t4cB_etxGvfUmfQe6S9O858p-q8heVPHPjTcwLqfqxxPAf6n8PNUfYJYUAD8H5iVqVW2CLv6-fIwbNsH8zYXN-Jd9MdhV6pTcHX4u1n5oESGp8o7U6hJaNOwC8OAtyMbx-oN5TcdTcVwqqquoqvGC6bwFsVpD2diskaBIfm4nuI931PscRAmAJbboFfag81o4fy8RxObRGdfAgkFwg';
+logic.token = 'BQC8O9Ks6Er16GrtNnswBciN_TxuSNwA7l4l5fvQo3j1tOwgj-1CTyqVWJE5Dq4h2RE3ADIfqVp70gO2y3EUi-ULUNV5S8EsCvo4wdjnDJFrY7roKa6vNzyVPx2mi5v1UdM-a06OWhGhZnGmxBhG3Dgxe0PIcjQRepz5a_ro9tRDRkyAuMRpTTjWNirvVzkng4C5CUB681wao3qyjQbaAyBZQMlck3e747luVJ5SVuo3zLfWkuyP-CpRVlz7GPlrdCn_6Rf3bxE';
 
 class App extends Component {
   state = { 
