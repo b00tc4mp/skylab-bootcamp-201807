@@ -4,21 +4,30 @@ const logic = {
     userUsername: null,
     spotifyToken: null,
 
-    _callUsersApi(path, method = 'get', body) {
-        return fetch('https://skylabcoders.herokuapp.com/api' + path, {
-            method,
-            headers: {
-                //authorization: 'Bearer ' + this.userToken
-                'content-type': 'application/json'
-            },
-            body: JSON.stringify(body)
-        })
+    _callUsersApi(path, method = 'get', body, useToken) {
+        const config = {
+            method
+        }
+
+        const methodNotGet = method !== 'get'
+
+        if (methodNotGet || useToken) {
+            config.headers = {}
+
+            if (methodNotGet) config.headers['content-type'] = 'application/json'
+
+            if (useToken) config.headers.authorization = 'Bearer ' + this.userToken
+        }
+
+        if (body) config.body = JSON.stringify(body)
+
+        return fetch('https://skylabcoders.herokuapp.com/api' + path, config)
             .then(res => res.json())
             .then(res => {
-                if (res.status === 'KO') throw Error('request error, status ' + res.status);
+                if (res.status === 'KO') throw Error(res.error)
 
                 return res;
-            });
+            })
     },
 
     _callSpotifyApi(path) {
@@ -43,11 +52,32 @@ const logic = {
     },
 
     loginUser(username, password) {
-        // TODO call api to auth user, and the keep user id, token and username in local context
+        return this._callUsersApi('/auth', 'post', { username, password })
+            .then(({ data: { id, token } }) => {
+                this.userId = id
+                this.userToken = token
+                this.userUsername = username
+
+                return true
+            })
     },
 
     unregisterUser(password) {
-        // TODO call api to delete user, and for that use the id, token and username from local context
+        return this._callUsersApi(`/user/${this.userId}`, 'delete', {
+            username: this.userUsername,
+            password
+        }, true)
+            .then(() => true)
+    },
+
+    logout() {
+        this.userId = null
+        this.userToken = null
+        this.userUsername = null
+    },
+
+    updateUser(password, newUsername, newPassword) {
+        // TODO
     },
 
     // spotify's
