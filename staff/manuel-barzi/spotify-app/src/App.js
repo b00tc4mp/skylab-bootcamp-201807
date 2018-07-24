@@ -1,114 +1,41 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
-import SearchPanel from './components/SearchPanel'
-import ResultList from './components/ResultList'
-// import TrackPlayer from './components/TrackPlayer'
-import SpotifyPlayer from './components/SpotifyPlayer';
+import React, { Component } from 'react'
+import logo from './logo.svg'
+import './App.css'
 import logic from './logic'
+import Landing from './components/Landing'
+import Register from './components/Register'
+import Login from './components/Login'
+import GoToLogin from './components/GoToLogin'
+import Main from './components/Main'
 
-logic.spotifyToken = 'BQCTOhL540Rw05bADhq_IKdv0eE4l--5PlllsqHcV9HfkTyuhyfNCif31tQu_tfP1vaTKzJCcZKAwusoPq4Q2trFFR3Yh_Jm7X5txi7HQsfNdiETlScZ8oamsjYHOVwaEbL0iVOcllbh'
+logic.spotifyToken = 'BQCkQAeHFF1hzC2tSLNMhuR-CXZY4wx-MeVhk3ez7tTmplS4-cnabDXy9ehws1TeupAoyHnBIof3NJizm9eFe_K9fnXlEdVe84Y3xwi_8BIEEZsRUWDoNRu0FfG1DZiFAYHhuvdK-XVr'
 
 class App extends Component {
   state = {
-    artists: [],
-    albums: [],
-    tracks: [],
-    track: undefined // { title, image, file, url }
+    registerActive: false,
+    loginActive: false,
+    goToLoginActive: false,
+    loggedIn: false
   }
 
-  onSearch = query => {
-    logic.searchArtists(query)
-      .then(artists => {
-        this.setState({
-          // artists: artists.map(function (artist) {
-          //   return {
-          //     id: artist.id,
-          //     text: artist.name
-          //   }
-          // }),
+  goToRegister = () => this.setState({ registerActive: true })
 
-          // artists: artists.map(artist => {
-          //   return {
-          //     id: artist.id,
-          //     text: artist.name
-          //   }
-          // }),
+  goToLogin = () => this.setState({ loginActive: true })
 
-          // artists: artists.map(({ id, name }) => {
-          //   return {
-          //     id,
-          //     text: name
-          //   }
-          // }),
-
-          // artists: artists.map(({ id, name }) => ({ id, text: name })),
-
-          artists: artists.map(({ id, name: text }) => ({ id, text })),
-          albums: [],
-          tracks: [],
-          track: undefined
-        })
-      })
+  registerUser = (username, password) =>
+    logic.registerUser(username, password)
+      .then(() => this.setState({ goToLoginActive: true, registerActive: false }))
       .catch(console.error)
-  }
 
-  onArtistClick = id => {
-    logic.retrieveAlbumsByArtistId(id)
-      .then(albums => {
-        this.setState({
-          albums: albums.map(({ id, name: text }) => ({ id, text })),
-          tracks: [],
-          track: undefined
-        })
-      })
+  loginUser = (username, password) =>
+    logic.loginUser(username, password)
+      .then(() => this.setState({ loggedIn: true, loginActive: false }))
       .catch(console.error)
-  }
 
-  onAlbumClick = id => {
-    logic.retrieveTracksByAlbumId(id)
-      .then(tracks => {
-        this.setState({
-          tracks: tracks.map(({ id, name: text }) => ({ id, text })),
-          track: undefined
-        })
-      })
-      .catch(console.error)
-  }
-
-  onTrackClick = id => {
-    logic.retrieveTrackById(id)
-      .then(track => {
-        this.setState({
-          track: {
-            id: track.id,
-            title: track.name
-            // image: track.album.images[0].url,
-            // file: track.preview_url,
-            // url: track.external_urls.spotify
-          }
-        })
-      })
-      // WARN! do not abuse of destructuring if its projection is not very reusable
-      // .then(({ id, name: title, album: { images: [{ url: image }] }, preview_url: file, external_urls: { spotify: url } }) => {
-      //   this.setState({
-      //     track: {
-      //       id,
-      //       title,
-      //       // image: track.album.images[0].url,
-      //       image,
-      //       // file: track.preview_url,
-      //       file,
-      //       // url: track.external_urls.spotify
-      //       url
-      //     }
-      //   })
-      // })
-      .catch(console.error)
-  }
+  goToLogin = () => this.setState({ loginActive: true, goToLoginActive: false })
 
   render() {
-    const { state: { artists, albums, tracks, track }, onSearch, onArtistClick, onAlbumClick, onTrackClick } = this
+    const { state: { registerActive, loginActive, goToLoginActive, loggedIn } } = this
 
     return (
       <div className="App">
@@ -117,25 +44,18 @@ class App extends Component {
           <h1 className="App-title">Spotify App</h1>
         </header>
 
-        <h2>Search</h2>
+        {!(registerActive || loginActive || goToLoginActive || loggedIn) && <Landing onRegister={this.goToRegister} onLogin={this.goToLogin} />}
 
-        <SearchPanel onSearch={onSearch} />
+        {registerActive && <Register onRegister={this.registerUser} />}
 
-        {/* {artists.length > 0 && <h2>Artists</h2>}
+        {loginActive && <Login onLogin={this.loginUser} />}
 
-        {artists.length > 0 && <ResultList results={artists} onItemClick={onArtistClick} />} */}
+        {goToLoginActive && <GoToLogin onLogin={this.goToLogin} />}
 
-        {artists.length > 0 && <section><h2>Artists</h2><ResultList results={artists} onItemClick={onArtistClick} /></section>}
-
-        {albums.length > 0 && <section><h2>Albums</h2><ResultList results={albums} onItemClick={onAlbumClick} /></section>}
-
-        {tracks.length > 0 && <section><h2>Tracks</h2><ResultList results={tracks} onItemClick={onTrackClick} /></section>}
-
-        {/* {track && <section><h2>Track</h2><TrackPlayer track={track} /></section>} */}
-        {track && <section><h2>Track</h2><SpotifyPlayer track={track} /></section>}
+        {loggedIn && <Main />}
       </div>
-    );
+    )
   }
 }
 
-export default App;
+export default App
