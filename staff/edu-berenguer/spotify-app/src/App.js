@@ -6,7 +6,7 @@ import logic from './logic';
 import ResultList from './components/ResultList';
 import Player from './components/Player';
 
-logic.token = 'BQDLKtsDpTzB_KOzEuKGAUElBrLxDkNSgkzudEM3vcaXZ_Coc3Z8TjQZqdgL4tPAOOTAGlhl51HmDoJZczzjPkoZWhT_ns1rFYjGB698zt9pJY9cxsUPAhDyVQdGuaytLU3j1q28Wp7nSkJc21A';
+logic.token = 'BQAke1jUFDayl4wh8oQd7nEqwdU9PJxkPVuzKHn_ETYEd211cZqb0pM0MhAj5QgZo-WOp1wtRZSlVXOacstLrIDjimb5Vq20qUdfVxT4QtkldFQHv3t_wBjZztV4z5yOk05AU8iJL8Xn8y_umNc';
 
 class App extends Component {
 
