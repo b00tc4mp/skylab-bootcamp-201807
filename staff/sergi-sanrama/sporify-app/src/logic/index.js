@@ -1,13 +1,32 @@
-var logic = {
-   // token: 'BQD83u9rvdmsQ_uYfNAT7AmHQfy1Ykg5Jv1iBnJpYQttTZWUW8O2DH2T4fT70t8mDpCo55oNzjCKzmXaEKlKkZ3LClLk4tSxw998d29Q9_gtN8abOCJK_8A37aXo9CW626YQINNTr1v5JtAJJRgE5Xd',
+const logic = {
+   userId: null,
+   userToken: null,
+   userUsername: null,
+   spotifyToken: null,
 
-    _callSpotifyApi: function (path) {
+   _callUsersApi(path, method = 'get', body) {
+        return fetch('skylabcoders.herokuapp.com/api' + path, {
+            method,
+            headers: {
+                // authorization: 'Bearer ' + this.userToken
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(body)
+        })
+        .then(res => res.json())
+        .catch(res => {
+            if (res.status === 'KO') throw Error('request error, status ' + res.status)
+            return res;
+        });
+    },
+
+    _callSpotifyApi(path) {
         return fetch('https://api.spotify.com/v1' + path, {
             headers: {
-                authorization: 'Bearer ' + this.token
+                authorization: 'Bearer ' + this.spotifyToken
             }
         })
-        .then(function(res ) { return res.json() })
+        .then(res => res.json())
         .catch(function(err) {
             throw Error('request error, status ' + err.status);
         });
@@ -23,23 +42,16 @@ var logic = {
 
     retrieveAlbumsByArtistId(id) {
         return this._callSpotifyApi('/artists/' + id + '/albums')
-            .then(function(res) {
-                return res.items;
-            });
+            .then(res => res.items);
     },
 
     retrieveTracksByAlbumId(id) {
         return this._callSpotifyApi('/albums/' + id + '/tracks')
-            .then(function(res) {
-                return res.items;
-            });
+            .then(res => res.items);
     },
 
     retrieveTrackById(id) {
         return this._callSpotifyApi('/tracks/' + id)
-            .then(function(res) {
-                return res;
-            });
     }
 };
 
