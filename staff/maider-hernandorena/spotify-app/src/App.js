@@ -6,7 +6,7 @@ import ResultList from './components/ResultList'
 import TrackPlayer from './components/TrackPlayer'
 import logic from './logic'
 
-logic.token = 'BQBW4tMwfhIAzqSDfE1KAo_zGG0pPluW1LR_8dr88RTATIu6LbNV0GNiOdDqANC5aENfLeGbX1T7YIZzVxTVCFX-U3kEX0ENrPJgtkytqpd9mJQaWZNd_Nx8Q4pPZZqi3dwkjlxnwif_BQ';
+logic.token = 'BQD8wCzfw8D2KBQVdXA-L-zu1XSlC2RYmP7-aV_iGDVOaamZNsUTkoVbT9KgrL9H9dLyRdVyHF7mKgYznWGzopUDvUoIBKFmMJ3rJNr3s8VwZFBNjpB1KVfbSQo24QEEaZ_1xiCkcfCdIQ';
 
 class App extends Component {
 
@@ -18,7 +18,10 @@ class App extends Component {
         this.setState({ 
           artists: artists.map(artist => {
             return { id: artist.id, text: artist.name }
-          }) 
+          }), 
+          albums: [],
+          tracks: [],
+          track: undefined
         })
       })
       .catch(console.error)
@@ -30,7 +33,9 @@ class App extends Component {
         this.setState({ 
           albums: albums.map(album => {
             return { id: album.id, text: album.name }
-          }) 
+          }) , 
+          tracks: [],
+          track: undefined
         })
       })
       .catch(console.error)
@@ -42,7 +47,8 @@ class App extends Component {
         this.setState({ 
           tracks: tracks.map(track => {
             return { id: track.id, text: track.name }
-          }) 
+          }) ,
+          track: undefined
         })
       })
       .catch(console.error)
