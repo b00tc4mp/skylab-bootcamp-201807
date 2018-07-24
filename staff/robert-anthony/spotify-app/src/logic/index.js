@@ -1,111 +1,137 @@
-'use strict';
-
-var index = {
-    spotifyToken: null,
-    userToken: null,
+const logic = {
   userId: null,
+  userToken: null,
+  userUsername: null,
+  spotifyToken: null,
 
-// users
-  _callUsersApi: function (path) {
+  _callUsersApi(path, method = 'get', body, useToken) {
+    const config = {
+      method
+    }
 
-    var myURL = 'https://api.spotify.com/v1' + path;
+    const methodNotGet = method !== 'get'
 
-    return fetch(myURL,{
-      type: 'GET',
-      headers: {
-        "Authorization": "Bearer " + this.spotifyToken
-      }
-    }).then(function (data) {
-      return data.json();
-    }).then(function (res) {
-      if (res.statis === "KO") throw Error('request error, status ' + res.error.status);
-      else return res;
-    });
+    if (methodNotGet || useToken) {
+      config.headers = {}
 
+      if (methodNotGet) config.headers['content-type'] = 'application/json'
+
+      if (useToken) config.headers.authorization = 'Bearer ' + this.userToken
+    }
+
+    if (body) config.body = JSON.stringify(body)
+
+    return fetch('https://skylabcoders.herokuapp.com/api' + path, config)
+      .then(res => res.json())
+      .then(res => {
+
+        if (res.status === 'KO') throw Error(res.error)
+
+        return res;
+      })
   },
 
-  registerUser(username,password) {
+  _callSpotifyApi(path) {
+    return fetch('https://api.spotify.com/v1' + path, {
+      headers: {
+        authorization: 'Bearer ' + this.spotifyToken
+      }
+    })
+      .then(res => res.json())
+      .then(res => {
+        if (res.error) throw Error('request error, status ' + res.error.status);
 
+        return res;
+      });
+  },
 
+  // user's
+
+storeUserData( password, fieldName, data) {
+  return this._callUsersApi(`/user/${this.userId}`, 'put', {
+    username: this.userUsername,
+    password:password,
+    [fieldName]: data,
+  }, true)
+    .then(() => {
+      return true
+    }).catch(console.log)
+} ,
+
+  retrieveUserData(password,fieldName) {
+    return this._callUsersApi(`/user/${this.userId}`, 'get', null, true)
+      .then((res) => {
+        return res.data[fieldName];
+      })
+  },
+
+  registerUser(username, password) {
+    return this._callUsersApi('/user', 'post', {username, password})
+      .then(res => res.data.id)
   },
 
   loginUser(username, password) {
+    return this._callUsersApi('/auth', 'post', {username, password})
+      .then(({data: {id, token}}) => {
+        this.userId = id;
+        this.userToken = token;
+        this.userUsername = username;
+
+        return true
+      })
+  },
+
+  unregisterUser(password) {
+    return this._callUsersApi(`/user/${this.userId}`, 'delete', {
+      username: this.userUsername,
+      password
+    }, true)
+      .then(() => true)
+  },
+
+  logout() {
+    this.userId = null
+    this.userToken = null
+    this.userUsername = null
+  },
+
+  updateUser(password, newUsername, newPassword) {
+    return this._callUsersApi(`/user/${this.userId}`, 'put', {
+      username: this.userUsername,
+      password:password,
+      newUsername: newUsername,
+      newPassword: newPassword
+    }, true)
+      .then(() => {
+        this.userUsername = newUsername;
+
+        return true
+      }).catch(console.log)
 
   },
 
-  unregisterUser(id,username,password) {
 
+  // spotify's
+
+  searchArtists: function (query) {
+    return this._callSpotifyApi('/search?type=artist&query=' + query)
+      .then(res => res.artists.items)
   },
 
-// spotify
+  retrieveAlbumsByArtistId(id) {
+    return this._callSpotifyApi('/artists/' + id + '/albums')
+      .then(res => res.items)
+  },
 
-  _callSpotifyApi: function (path) {
+  retrieveTracksByAlbumId(id) {
+    return this._callSpotifyApi('/albums/' + id + '/tracks')
+      .then(res => res.items)
+  },
 
-      var myURL = 'https://api.spotify.com/v1' + path;
-
-      return fetch(myURL,{
-        type: 'GET',
-        headers: {
-          "Authorization": "Bearer " + this.spotifyToken
-        }
-      }).then(function (data) {
-        return data.json();
-      }).then(function (res) {
-       if (res.error) throw Error('request error, status ' + res.error.status);
-       else return res;
-      });
-
-    },
-
-
-    searchArtists: function (query) {
-      console.log("searchArtists called with ", query)
-      return this._callSpotifyApi('/search?type=artist&query=' + query)
-        .then(function (res) {
-          return res.artists.items;
-        }).catch(function (error) {
-          console.log("Error on searching artists", error);
-        });
-    },
-
-    retrieveAlbumsByArtistId(id) {
-      return this._callSpotifyApi('/artists/' + id + '/albums')
-        .then(function (res) {
-          return res.items;
-        }).catch(function (error) {
-          console.log("Error on retrieving albums", error);
-        });
-    },
-
-    retrieveTracksByAlbumId(id) {
-      return this._callSpotifyApi('/albums/' + id + '/tracks')
-        .then(function (results) {
-          return results.items;
-        }).catch(function (error) {
-          console.log("Error on retrieving tracks by albums id", error);
-        });
-    },
-
-    retrieveAlbumById(id) {
-      return this._callSpotifyApi('/albums/' + id)
-        .then(function (results) {
-          return results;
-        }).catch(function (error) {
-          console.log("Error on retrieving album by id", error);
-        });
-    }
-    ,
-
-    retrieveTrackById(id) {
-      return this._callSpotifyApi('/tracks/' + id)
-        .then(function (results) {
-          debugger;
-          return results;
-        }).catch(function (error) {
-          console.log("Error on retrieving track info", error);
-        });
-    }
+  retrieveTrackById(id) {
+    return this._callSpotifyApi('/tracks/' + id)
   }
+};
 
-  // export default logic;
-if (typeof module !== "undefined") module.exports = index;
+//export default logic;
+if (typeof module !== 'undefined') module.exports = logic;

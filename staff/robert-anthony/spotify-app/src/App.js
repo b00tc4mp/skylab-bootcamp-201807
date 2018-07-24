@@ -1,90 +1,61 @@
-import React, {Component} from 'react';
-import logo from './logo.svg';
-import './App.css';
-import SearchPanel from "./components/SearchPanel";
-import ResultList from "./components/ResultsList";
-import TrackPlayer from "./components/TrackPlayer";
-import logic from "./logic/"
+import React, { Component } from 'react'
+import logo from './logo.svg'
+import './App.css'
+import logic from './logic'
+import Landing from './components/Landing'
+import Register from './components/Register'
+import Login from './components/Login'
+import GoToLogin from './components/GoToLogin'
+import Main from './components/Main'
 
-logic.spotifyToken = "BQAePkMCleE54oLLNo47WXe3gRc0nB1vDJQnjsR4cZ8Wx_SQdG2XoBdwH28PWsimLr-d-pTlatBKBOFMrQo7tW8knYmIlYmMw1pNcJwLNV5ITatKq7sgyU4S2grxSK-ljzhqLYQbzR8o";
+logic.spotifyToken = 'BQDx2aI411JXqbjQlLQdGEucFwuU-YbmzNkcU6iaZLoTCr8iUGa_ceysrPbJEfMtUCK3B4S46ho4azyR3iM8VWm4ULRULKMB6NcuqQo-vpy1X5F---gjX16M4GrfJCaYlal2lNFsC6uD';
 
 class App extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {artists: [],albums:[],tracks:[],
-      track: undefined /* */};
+  state = {
+    registerActive: false,
+    loginActive: false,
+    goToLoginActive: false,
+    loggedIn: false
   }
 
-  onSearch = (query) => {
-    // console.log("in app",query);
-    logic.searchArtists(query)
-      .then(artists => {
+  goToRegister = () => this.setState({ registerActive: true })
 
-        this.setState({
-        /*  artists: artists.map(artist => {
-            return {id: artist.id, text: artist.name}
-          })*/
-          artists: artists.map(({id,name:text}) => ({id,text})),
-          albums:[],
-          tracks:[],
-          track:undefined
-        })
-      })
+  goToLogin = () => this.setState({ loginActive: true })
+
+  registerUser = (username, password) =>
+    logic.registerUser(username, password)
+      .then(() => this.setState({ goToLoginActive: true, registerActive: false }))
       .catch(console.error)
-  };
 
-  onArtistClick = (id)=> {
-    logic.retrieveAlbumsByArtistId(id)
-      .then(albums => {
-        this.setState({
-          albums: albums.map(({id,name:text}) => ({id,text})),
-          tracks:[],
-          track:undefined
-        })
-      })
+  loginUser = (username, password) =>
+    logic.loginUser(username, password)
+      .then(() => this.setState({ loggedIn: true, loginActive: false }))
       .catch(console.error)
-  };
 
-
-
-  onAlbumClick = (id)=> {
-    logic.retrieveTracksByAlbumId(id)
-      .then(tracks => {
-        this.setState({
-          tracks: tracks.map(({id,name:text}) => ({id,text})),
-          track:undefined
-        })
-      })
-      .catch(console.error)
-  };
-
-
-  onTrackClick = (id)=> {
-    logic.retrieveTrackById(id)
-      .then(track => {
-        this.setState({
-          track: {
-            title: track.name,
-            image: track.album.images[0].url,
-            file: track.preview_url,
-            url: track.external_urls.spotify
-          }
-        })
-      })
-      .catch(console.error)
-  };
+  goToLogin = () => this.setState({ loginActive: true, goToLoginActive: false })
 
   render() {
+    const { state: { registerActive, loginActive, goToLoginActive, loggedIn } } = this
+
     return (
       <div className="App">
-        <SearchPanel onSearch={this.onSearch}/>
-        {this.state.artists && <ResultList results={this.state.artists} onItemClick={this.onArtistClick}/>}
-        { this.state.albums &&<ResultList results={this.state.albums} onItemClick={this.onAlbumClick}/>}
-       { this.state.tracks && <ResultList results={this.state.tracks} onItemClick={this.onTrackClick} />}
-        {this.state.track && <TrackPlayer track={this.state.track} />}
+        <header className="App-header">
+          <img src={logo} className="App-logo" alt="logo" />
+          <h1 className="App-title">Spotify App</h1>
+        </header>
+
+        {!(registerActive || loginActive || goToLoginActive || loggedIn) && <Landing onRegister={this.goToRegister} onLogin={this.goToLogin} />}
+
+        {registerActive && <Register onRegister={this.registerUser} />}
+
+        {loginActive && <Login onLogin={this.loginUser} />}
+
+        {goToLoginActive && <GoToLogin onLogin={this.goToLogin} />}
+
+        {loggedIn && <Main />}
       </div>
-    );
+    )
   }
 }
 
-export default App;
+export default App

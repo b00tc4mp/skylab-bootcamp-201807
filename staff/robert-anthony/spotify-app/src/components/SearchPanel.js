@@ -1,33 +1,26 @@
-import React, {Component} from "react";
-import PropTypes from 'prop-types';
+import React, { Component } from 'react'
 
 class SearchPanel extends Component {
+    state = { query: '' }
 
+    keepQuery = event => {
+        var query = event.target.value
 
-  render() {
-    return <form onSubmit={this.onSearch}>
-      <input onChange={this.keepQuery} type="text"/>
-      <button type="submit">Search</button>
-    </form>
+        this.setState({ query })
+    }
 
+    onSearch = event => {
+        event.preventDefault()
+        
+        this.props.onSearch(this.state.query)
+    }
 
-  }
-
-  onSearch = (e) => {
-    e.preventDefault();
-    console.log("search submitted", this.state.query)
-    this.props.onSearch(this.state.query)
-  };
-
-  keepQuery = (e) => {
-    const query = e.target.value;
-    this.setState({query});
+    render() {
+        return <form onSubmit={this.onSearch}>
+            <input type="text" onChange={this.keepQuery} />
+            <button type="submit">Search</button>
+        </form>
+    }
 }
 
-
-
-
-}
-
-
-export default SearchPanel;
+export default SearchPanel
