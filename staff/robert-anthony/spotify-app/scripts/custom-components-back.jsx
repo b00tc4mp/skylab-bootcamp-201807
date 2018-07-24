@@ -116,37 +116,38 @@ SearchPanel.prototype.onSearch = function (callback) {
 
 
 /**/
-function ResultsList(cssClass, h1Text) {
+class ResultsList() extends React.Component {
+   constructor() {
+    super(props);
+  }
 
-  Panel.call(this, "", "ul");
-  $(this.element).attr('style', '');
+ // Panel.call(this, "", "ul");
+  //$(this.element).attr('style', '');
+  // const elementClasses = classNames({
+  //   'main-class': true,
+  //   'activeClass': self.state.focused === index
+  // });
+  render() {
+    const elementClasses = this.props.cssClass + " list-group";
 
-  $(this.element).addClass(cssClass);
-  $(this.element).addClass('list-group');
+    return <ul className ={elementClasses}
+               {this.props.data.map(function(element){
+                 return <li onClick={()=>this.handleClick.bind(this,element.name,element.id)} name={element.name} id={element.id}>{elemment.name}</li>;
+               })
+        >
 
-  /*
-    if (h1Text) $(this.element).append("<h1>" + h1Text + "</h1>");
-  */
 
-  this._elementClick = function () {
+    </ul>
 
-  };
+  }
 
-  $(this.element).on('click', function (event) {
-    if (event.target === this.element) return null;
-    var $target = $(event.target);
-    $target.closest('.list-group').find('li').removeClass('active');
-    if ($target.is('a')) {
-      $target.parent().addClass('active');
-      this._elementClick({id: $target.attr('data-id'), text: $target.html});
-    } else {
-      $target.addClass('active');
-      var $a = $target.find('a');
-      this._elementClick({id: $a.attr('data-id'), text: $a.html});
+  handleClick(name,id, event) {
+
+      this.props.clickHandler({id: $a.attr('data-id'), text: $a.html});
     }
 
+  }
 
-  }.bind(this))
 }
 
 

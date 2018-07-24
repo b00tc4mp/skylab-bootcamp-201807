@@ -7,27 +7,20 @@
 * */
 
 
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-
-
-var log = console.log.bind(console);
-
 /**/
 
 class App extends ReactComponent {
-  constructor() {
-    super(props)
-    const testObj = {name:"Doug",id:1}
-    this.list = [testObj,testObj,testObj]
-  }
+   constructor() {
+     super(props)
+     const testObj = {name:"Doug",id:1}
+     this.list = [testObj,testObj,testObj]
+   }
 
-  render() {
+   render() {
 
     return <ResultsList cssClass="someClass" data={this.list} handleClick={this.handleClick}/>
 
-  }
+   }
 
 
   handleClick(event) {
@@ -43,7 +36,7 @@ class ListElement extends ReactComponent {
 
   render() {
     return (<li onClick={() => this.props.handleClick)} name={this.props.name}
-                id={this.props.id}>{this.props.name}</li>);
+               id={this.props.id}>{this.props.name}</li>);
   }
 }
 
