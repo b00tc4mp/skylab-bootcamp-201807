@@ -5,7 +5,7 @@ import SearchPanel from './components/SearchPanel';
 import ResultList from './components/ResultList';
 import TrackPanel from './components/TrackPanel';
 import logic from './logic'
-logic.token = 'BQDJVfA66YsdwTzw7zX1yORP3i4VGsuaQfwbvv8SxA3Wa8-xDCIv1lemOjLx-E5ywYPd0VW5LRfifBnv1TosKswvmgrDdmJqu34Acu4rKij_T_QMtXafj5K70QzRfBIri0n7ue4JMlJm-Ft5U6M36FbGACDLuNm7g7Y'
+logic.token = 'BQDlWTEwHUxqa1Ba90EnDZk_yPv_SyhhV8gRgcm2RH6X5ZhzvTU6NwCntbsel90pkTbMmq_I9VMXsEQQqCyAG1WBYLPJe59fytXG9KHPHltfGYOQGh-fJNF3QNRqE8IbSQZJxBNtay9ZPlV39HYlVqAIpB5eJiXi41o'
 class App extends Component {
 
   state = { artists: [], albums: [], tracks: [], track: {} }
@@ -13,35 +13,30 @@ class App extends Component {
     logic.searchArtists(query)
       .then(artists => {
         this.setState({
-          artists: artists.map(artist => {
-            return { id: artist.id, text: artist.name }
-          }), albums:[],tracks:[],track:[]
+          artists: artists.map(({id, name:text}) => ({ id, text })), albums:[],tracks:[],track:[]
         })
       })
       .catch(console.error)
   }
 
   onArtistClick = (id) =>{
-    //TODO search albums from artist id
     logic.retrieveAlbumsByArtistId(id)
       .then(albums =>{
           this.setState({
-            albums: albums.map(album =>{
-              return {id: album.id, text: album.name}
-            }),tracks:[],track:[]
+            albums: albums.map(({id, name:text}) =>({id, text})),tracks:[],track:[]
           })
       })
+      .catch(console.error)
   }
 
   onAlbumClick = (id) =>{
     logic.retrieveTracksByAlbumId(id)
       .then(tracks =>{
         this.setState({
-          tracks: tracks.map(track => {
-            return {id: track.id, text: track.name}
-          }),track:[]
+          tracks: tracks.map(({id, name:text}) => ({id, text})),track:[]
         })
       })
+      .catch(console.error)
   }
 
   onTrackClick = (id) => {
@@ -51,21 +46,21 @@ class App extends Component {
             track: {id: track.id, text: track.name, preview_url: track.preview_url}
           })
         })
-    
+        .catch(console.error)
   }
 
   render() {
-    const {artists, albums, tracks, track} = this.state
+    const {state: {artists, albums, tracks, track},onAlbumClick,onArtistClick,onSearch,onTrackClick} = this
     return (
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">Spotify App</h1>
         </header>
-        <SearchPanel onSearch={this.onSearch} />
-        <ResultList results={artists} onItemClick={this.onArtistClick} />
-        <ResultList results={albums} onItemClick={this.onAlbumClick} />
-        <ResultList results={tracks} onItemClick={this.onTrackClick} />
+        <SearchPanel onSearch={onSearch} />
+        <ResultList results={artists} onItemClick={onArtistClick} />
+        <ResultList results={albums} onItemClick={onAlbumClick} />
+        <ResultList results={tracks} onItemClick={onTrackClick} />
         <TrackPanel result={track} />
       </div>
     );
