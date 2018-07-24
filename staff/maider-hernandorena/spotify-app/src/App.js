@@ -3,10 +3,11 @@ import logo from './logo.svg'
 import './App.css'
 import SearchPanel from './components/SearchPanel'
 import ResultList from './components/ResultList'
-import TrackPlayer from './components/TrackPlayer'
+// import TrackPlayer from './components/TrackPlayer'
+import SpotifyPlayer from './components/SpotifyPlayer'
 import logic from './logic'
 
-logic.token = 'BQD8wCzfw8D2KBQVdXA-L-zu1XSlC2RYmP7-aV_iGDVOaamZNsUTkoVbT9KgrL9H9dLyRdVyHF7mKgYznWGzopUDvUoIBKFmMJ3rJNr3s8VwZFBNjpB1KVfbSQo24QEEaZ_1xiCkcfCdIQ';
+logic.token = 'BQDv1TM46_ZJIXE_MwEuBzFIpuhfwaEjrEUP_0EKSWX-VI7VeDX9jIB4WT11QCuoEpP0R2ziLTeIZow87rNJdVitELDFZkaGAEMW9-YiBxed0xocnUVh0TXgifCHrpou3T8ByZJZU-zUXw';
 
 class App extends Component {
 
@@ -58,28 +59,35 @@ class App extends Component {
     logic.retrieveTrackById(id)
       .then(track => {
         this.setState({
-          track: {title: track.name, image: track.album.images[0].url, file: track.preview_url, url: track.external_urls.spotify}
+          track: {id: track.id, title: track.name}
+          // track: {title: track.name, image: track.album.images[0].url, file: track.preview_url, url: track.external_urls.spotify}
         })
       })
       .catch(console.error)
   }
 
   render() {
+
+    const {state: {artists, albums, tracks, track}, onArtistClick, onAlbumClick, onTrackClick} = this
+
     return (
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">Welcome to Spotify App</h1>
         </header>
+
+        <h2>Search by Artist:</h2>
         <SearchPanel onSearch={this.onSearch} />
 
-        <ResultList results={this.state.artists} clickItem={this.onArtistClick} />
+        {artists.length > 0 && <section><h2>Artists:</h2><ResultList results={artists} clickItem={onArtistClick}/></section>}
 
-        <ResultList results={this.state.albums} clickItem={this.onAlbumClick} />
-
-        <ResultList results={this.state.tracks} clickItem={this.onTrackClick} />
-
-        {this.state.track && <TrackPlayer track={this.state.track}/>}
+        {albums.length > 0 && <section><h2>Albums:</h2><ResultList results={albums} clickItem={onAlbumClick}/></section> }
+        
+        {tracks.length > 0 && <section><h2>Tracks:</h2><ResultList results={tracks} clickItem={onTrackClick}/></section> }
+        
+        {/* {track && <TrackPlayer track={track}/>} */}
+        {track && <SpotifyPlayer track={track}/>}
         
       </div>
     );
