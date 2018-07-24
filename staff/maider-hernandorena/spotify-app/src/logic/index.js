@@ -4,16 +4,18 @@ const logic = {
     userUsername: null,
     spotifyToken: null,
 
-    _callUsersApi(path, method = 'get', body, userToken) {
+    _callUsersApi(path, method = 'get', body, useToken) {
         const config = {
-            method,
+            method
         }
-        config.body = JSON.stringify(body)
-        const noGetMethod = congif.method='get'
-        if (noGetMethod || userToken) {
-            config.headers 
-                if (noGetMethod) config.headers.['content-type'] = 'application/json'
-                if (userToken) config.headers.authorization = 'Bearer ' + this.userToken
+
+        if (body) config.body = JSON.stringify(body)
+
+        const noGetMethod = method !== 'get'
+        if (noGetMethod || useToken) {
+            config.headers = {}
+                if (noGetMethod) config.headers['content-type'] = 'application/json'
+                if (useToken) config.headers.authorization = 'Bearer ' + this.userToken
         }
 
         return fetch('https://skylabcoders.herokuapp.com/api' + path, config )
@@ -39,6 +41,7 @@ const logic = {
             });
     },
 
+    
     // user's
 
     registerUser(username, password) {
@@ -61,11 +64,22 @@ const logic = {
             .then(() => true)
     },
 
-    // logOut() {
-    //     userId: null
-    //     userToken: null
-    //     userUsername: null
-    // },
+    logOut() {
+        this.userId = null
+        this.userToken = null
+        this.userUsername = null
+    },
+
+    updateUser(password, newUsername, newPassword) {
+        // TODO
+        return this._callUsersApi(`/user/${this.userId}`, 'put', { username: this.userUsername, password }, true)
+            .then(() => {
+                this.userUsername = newUsername,
+                password = newPassword
+                return true
+            })
+    },
+
 
     // spotify's
 
@@ -89,5 +103,4 @@ const logic = {
     }
 };
 
-//export default logic;
 if (typeof module !== 'undefined') module.exports = logic;

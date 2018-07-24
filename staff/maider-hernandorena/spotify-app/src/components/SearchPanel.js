@@ -1,17 +1,16 @@
-import React, { Component } from 'react'
+import React, {Component} from 'react'
 
 class SearchPanel extends Component {
-    state = { query: '' }
 
+    state = { query: '' }
+    
     keepQuery = event => {
         var query = event.target.value
-
         this.setState({ query })
     }
 
     onSearch = event => {
         event.preventDefault()
-        
         this.props.onSearch(this.state.query)
     }
 

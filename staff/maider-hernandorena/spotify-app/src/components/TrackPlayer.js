@@ -1,13 +1,13 @@
 import React from 'react'
 
-function TrackPlayer({ track: { title, image, file, url } }) {
+function TrackPlayer(props) {
     return <section>
-        <h2>{title}</h2>
-        <img src={image} alt={title} />
+        <h2>{props.track.title}</h2>
+        <img src={props.track.image} alt="props.track.image" />
         <audio controls>
-            <source src={file} type="audio/mpeg" />
+            <source src={props.track.file} type="audio/mpeg" />
         </audio>
-        <a href={url} target="_blank">Open in original player</a>
+        <a href={props.track.url} target="_blank">Open in Spotify</a>
     </section>
 }
 

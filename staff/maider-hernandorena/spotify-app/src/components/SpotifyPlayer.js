@@ -1,8 +1,8 @@
 import React from 'react'
 
-function SpotifyPlayer({ track: { id, name } }) {
+function SpotifyPlayer(props) {
     return <section>
-        <iframe title={name} src={`https://open.spotify.com/embed?uri=spotify:track:${id}`} width="300" height="380" frameBorder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+        <iframe title={props.track.title} src={`https://open.spotify.com/embed?uri=spotify:track:${props.track.id}`} width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
     </section>
 }
 
