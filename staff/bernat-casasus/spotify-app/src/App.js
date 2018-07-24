@@ -55,6 +55,7 @@ class App extends Component {
   }
 
   render() {
+    const {artists, albums, tracks, track} = this.state
     return (
       <div className="App">
         <header className="App-header">
@@ -62,10 +63,10 @@ class App extends Component {
           <h1 className="App-title">Spotify App</h1>
         </header>
         <SearchPanel onSearch={this.onSearch} />
-        <ResultList results={this.state.artists} onItemClick={this.onArtistClick} />
-        <ResultList results={this.state.albums} onItemClick={this.onAlbumClick} />
-        <ResultList results={this.state.tracks} onItemClick={this.onTrackClick} />
-        <TrackPanel result={this.state.track} />
+        <ResultList results={artists} onItemClick={this.onArtistClick} />
+        <ResultList results={albums} onItemClick={this.onAlbumClick} />
+        <ResultList results={tracks} onItemClick={this.onTrackClick} />
+        <TrackPanel result={track} />
       </div>
     );
   }
