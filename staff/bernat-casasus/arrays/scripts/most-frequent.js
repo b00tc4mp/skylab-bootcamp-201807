@@ -1,6 +1,5 @@
 function mostFrequent(array) {
     // returns and array with the most frequent elements
-
     var numbers = [];
     var count = 0;
     for(var i = 0; i < array.length; i++){
