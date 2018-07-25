@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import swal from 'sweetalert2'
 import logo from './logo.svg'
 import './App.css'
 import logic from './logic'
@@ -10,6 +11,7 @@ import Main from './components/Main'
 import Profile from './components/Profile'
 import UpdateUser from './components/UpdateUser';
 logic.spotifyToken = 'BQAl8S7DWlpqe4HZgbfQazhTWwypewdKrMtYGA7yDqg2deldLKYW91EhpJO3FJuSXxZLaas3p1NB81OT9WtPfKADxaouqpHKyJmB8A-MnF1McMPa5nYf5c5KqZ2D5QGT-JB3zHMcyMD7'
+
 
 class App extends Component {
   state = {
@@ -36,7 +38,21 @@ class App extends Component {
 
   loginUser = (username, password) =>
     logic.loginUser(username, password)
-      .then(() => this.setState({ loggedIn: true, loginActive: false, goToMain: true }))
+      .then(() => {
+        this.setState({ loggedIn: true, loginActive: false, goToMain: true })
+        swal({
+          title: 'Cool! Login Succesful!',
+          width: 600,
+          padding: '3em',
+          background: '#fff url(/images/trees.png)',
+          backdrop: `
+            rgba(0,0,123,0.4)
+            url("https://i.pinimg.com/originals/62/1a/15/621a15c85432d566db70ebbc524dbb79.jpg")
+            center left
+            no-repeat
+          `
+        })
+      })
       .catch(({ message }) => this.setState({ errorLogin: message }))
 
   goToLogin = () => this.setState({ loginActive: true, goToLoginActive: false, error: null, registerActive: false })
@@ -53,7 +69,23 @@ class App extends Component {
 
   onUpdateSettings = (newUsername, password, newPassword) => {
     logic.updateUser(newUsername, password, newPassword)
-        .then(()=> this.setState({errorUpdate: null}))
+        .then(()=> {
+          
+          this.setState({errorUpdate: null})
+          swal({
+            title: 'Cool! Your settings have been saved!',
+            width: 600,
+            padding: '3em',
+            background: '#fff url(/images/trees.png)',
+            backdrop: `
+              rgba(0,0,123,0.4)
+              url("https://vignette.wikia.nocookie.net/nyancat/images/e/e7/Nyancat.gif/revision/latest?cb=20130808073427")
+              center left
+              no-repeat
+            `
+          })
+        
+        })
         .catch(({ message }) => this.setState({ errorUpdate: message }))
   }
 

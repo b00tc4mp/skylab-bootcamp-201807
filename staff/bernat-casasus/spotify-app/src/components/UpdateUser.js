@@ -28,12 +28,6 @@ class UpdateUser extends Component{
                 <button type="submit">Guardar Cambios</button>
             </form>
             {this.props.error && <Feedback message={this.props.error} />}
-            {swal({
-  title: 'Error!',
-  text: 'Do you want to continue',
-  type: 'error',
-  confirmButtonText: 'Cool'
-})}
         </section>
     }
 }
