@@ -55,7 +55,7 @@ class App extends Component {
 
         {registerActive && <Register onRegister={this.registerUser} />}
 
-        {loginActive && <Login  goToLogOut={}  onLogin={this.loginUser} />}
+        {loginActive && <Login  onLogin={this.loginUser} />}
 
         {goToLoginActive && <GoToLogin onLogin={this.goToLogin} />}
 
