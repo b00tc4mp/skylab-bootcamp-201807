@@ -1,9 +1,11 @@
 import React, { Component } from 'react'
 
-class SearchPanel extends Component {
-    state = { query: '' }
 
-    keepQuery = event => {
+
+class SearchPanel extends Component {
+    state = {query: ''}
+
+    keepQuery = (event) => {
         var query = event.target.value
 
         this.setState({ query })
@@ -11,15 +13,16 @@ class SearchPanel extends Component {
 
     onSearch = event => {
         event.preventDefault()
-        
+
         this.props.onSearch(this.state.query)
+
     }
 
     render() {
-        return <form onSubmit={this.onSearch}>
+        return (<form onSubmit = {this.onSearch}>
             <input type="text" onChange={this.keepQuery} />
             <button type="submit">Search</button>
-        </form>
+        </form>)
     }
 }
 
