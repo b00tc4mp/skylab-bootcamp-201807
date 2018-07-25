@@ -6,7 +6,9 @@ import Landing from './components/Landing'
 import Register from './components/Register'
 import Login from './components/Login'
 import GoToLogin from './components/GoToLogin'
+import Logout from './components/Logout'
 import Main from './components/Main'
+import AlertError from './components/AlertError';
 
 logic.spotifyToken = 'BQCX1Sgb2R-wqiZpWwL555uhHLBgSelTOkFHdGm_NgjAnltOcvXQ53ORf10EFlnH2lnOY0Ukxc7descjJ1TBCukqpHxiSaVnHs4W_gfVAASx_U38Ufcfgtv0UHXinf8HFDPRnkUaZVaw'
 
@@ -15,7 +17,8 @@ class App extends Component {
     registerActive: false,
     loginActive: false,
     goToLoginActive: false,
-    loggedIn: logic.loggedIn
+    loggedIn: logic.loggedIn,
+    error: false
   }
 
   goToRegister = () => this.setState({ registerActive: true })
@@ -24,18 +27,27 @@ class App extends Component {
 
   registerUser = (username, password) =>
     logic.registerUser(username, password)
-      .then(() => this.setState({ goToLoginActive: true, registerActive: false }))
-      .catch(console.error)
+      .then(() => this.setState({ goToLoginActive: true, registerActive: false,error:false }))
+      .catch((err)=>{
+        this.setState({error: err.message})
+    })
 
   loginUser = (username, password) =>
     logic.loginUser(username, password)
-      .then(() => this.setState({ loggedIn: true, loginActive: false }))
-      .catch(console.error)
+      .then(() => this.setState({ loggedIn: true, loginActive: false, error:false }))
+      .catch((err)=>{
+          this.setState({error: err.message})
+      })
 
   goToLogin = () => this.setState({ loginActive: true, goToLoginActive: false })
 
+  logoutUser = () => {
+    this.setState({loggedIn:false})
+    logic.logout()
+  }
+
   render() {
-    const { state: { registerActive, loginActive, goToLoginActive, loggedIn } } = this
+    const { state: { registerActive, loginActive, goToLoginActive, loggedIn,error } } = this
 
     return (
       <div className="App">
@@ -50,9 +62,11 @@ class App extends Component {
 
         {loginActive && <Login onLogin={this.loginUser} />}
 
+        {error && <AlertError Alert={error}/>}
+
         {goToLoginActive && <GoToLogin onLogin={this.goToLogin} />}
 
-        {loggedIn && <Main />}
+        {loggedIn && <Main onLogoutUser = {this.logoutUser}/>}
       </div>
     )
   }

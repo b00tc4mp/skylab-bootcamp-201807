@@ -4,6 +4,7 @@ import SearchPanel from './SearchPanel'
 import ResultList from './ResultList'
 // import TrackPlayer from './TrackPlayer'
 import SpotifyPlayer from './SpotifyPlayer'
+import Logout from './Logout';
 
 class Main extends Component {
     state = {
@@ -65,6 +66,7 @@ class Main extends Component {
         const { state: { artists, albums, tracks, track }, onSearch, onArtistClick, onAlbumClick, onTrackClick } = this
 
         return <section>
+            <Logout onLogout ={this.props.onLogoutUser}/>
             <h2>Search</h2>
 
             <SearchPanel onSearch={onSearch} />
