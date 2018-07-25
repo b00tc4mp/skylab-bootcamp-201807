@@ -1,7 +1,8 @@
 const logic = {
-    userId: null,
-    userToken: null,
-    userUsername: null,
+    // _userId: null,
+    // _userToken: null,
+    // _userUsername: null,
+
     spotifyToken: null,
 
     _callUsersApi(path, method = 'get', body, useToken) {
@@ -16,7 +17,12 @@ const logic = {
 
             if (methodNotGet) config.headers['content-type'] = 'application/json'
 
-            if (useToken) config.headers.authorization = 'Bearer ' + this.userToken
+            //if (useToken) config.headers.authorization = 'Bearer ' + this._userToken
+            if (useToken) {
+                const userToken = sessionStorage.getItem('userToken')
+
+                config.headers.authorization = 'Bearer ' + userToken
+            }
         }
 
         if (body) config.body = JSON.stringify(body)
@@ -54,30 +60,47 @@ const logic = {
     loginUser(username, password) {
         return this._callUsersApi('/auth', 'post', { username, password })
             .then(({ data: { id, token } }) => {
-                this.userId = id
-                this.userToken = token
-                this.userUsername = username
+                // this._userId = id
+                // this._userToken = token
+                // this._userUsername = username
+                sessionStorage.setItem('userId', id)
+                sessionStorage.setItem('userToken', token)
+                sessionStorage.setItem('userUsername', username)
 
                 return true
             })
     },
 
-    unregisterUser(password) {
-        return this._callUsersApi(`/user/${this.userId}`, 'delete', {
-            username: this.userUsername,
-            password
-        }, true)
-            .then(() => true)
+    logout() {
+        // this._userId = null
+        // this._userToken = null
+        // this._userUsername = null
+        sessionStorage.clear()
     },
 
-    logout() {
-        this.userId = null
-        this.userToken = null
-        this.userUsername = null
+    get loggedIn() {
+        const userId = sessionStorage.getItem('userId')
+        const userToken = sessionStorage.getItem('userToken')
+        const userUsername = sessionStorage.getItem('userUsername')
+
+        return userId && userToken && userUsername
     },
 
     updateUser(password, newUsername, newPassword) {
         // TODO
+    },
+
+    unregisterUser(password) {
+        //return this._callUsersApi(`/user/${this._userId}`, 'delete', {
+        const userId = sessionStorage.getItem('userId')
+        const userUsername = sessionStorage.getItem('userUsername')
+
+        return this._callUsersApi(`/user/${userId}`, 'delete', {
+            //username: this._userUsername,
+            username: userUsername,
+            password
+        }, true)
+            .then(() => true)
     },
 
     // spotify's
