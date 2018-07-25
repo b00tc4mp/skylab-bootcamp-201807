@@ -1,12 +1,15 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import logic from '../logic'
-
 import SearchPanel from './SearchPanel'
 import ResultList from './ResultList'
-// import TrackPlayer from './TrackPlayer'
+import TrackPlayer from './TrackPlayer'
+import styled, { css } from 'styled-components'
+
+/*
 import SpotifyPlayer from './SpotifyPlayer'
-import styled from "styled-components";
-import ErrorPanel from "./ErrorPanel";
+*/
+
+const ERROR_HOUSTON = 'We have a problem, Houston! Sorry, try again later.'
 
 class Main extends Component {
   state = {
@@ -14,88 +17,140 @@ class Main extends Component {
     albums: [],
     tracks: [],
     track: undefined, // { title, image, file, url }
-    completeTrackInfo: undefined,
-    error: null,
+    searchError: null,
+    artistError: null,
+    albumError: null,
+    trackError: null
   }
-
-  Section = styled.section` 
-    background:lightgrey;
-    `
 
   onSearch = query =>
     logic.searchArtists(query)
       .then(artists =>
         this.setState({
-          artists: artists.map(({id, name: text}) => ({id, text})),
+          artists: artists.map(({ id, name: text }) => ({ id, text })),
           albums: [],
           tracks: [],
-          track: undefined
+          track: undefined,
+          searchError: null,
+          artistError: null,
+          albumError: null,
+          trackError: null
         })
       )
-      .catch(this.errorCaught)
+      .catch(() => this.setState({ searchError: ERROR_HOUSTON }))
 
   onArtistClick = id =>
     logic.retrieveAlbumsByArtistId(id)
       .then(albums =>
         this.setState({
-          albums: albums.map(({id, name: text}) => ({id, text})),
+          albums: albums.map(({ id, name: text }) => ({ id, text })),
           tracks: [],
-          track: undefined
+          track: undefined,
+          searchError: null,
+          artistError: null,
+          albumError: null,
+          trackError: null
         })
       )
-      .catch(this.errorCaught)
+      .catch(() => this.setState({ artistError: ERROR_HOUSTON }))
 
   onAlbumClick = id =>
     logic.retrieveTracksByAlbumId(id)
       .then(tracks =>
         this.setState({
-          tracks: tracks.map(({id, name: text}) => ({id, text})),
-          track: undefined
+          tracks: tracks.map(({ id, name: text }) => ({ id, text })),
+          track: undefined,
+          searchError: null,
+          artistError: null,
+          albumError: null,
+          trackError: null
         })
       )
-      .catch(this.errorCaught)
+      .catch(() => this.setState({ albumError: ERROR_HOUSTON }))
 
   onTrackClick = id =>
     logic.retrieveTrackById(id)
       .then(track =>
         this.setState({
-          completeTrackInfo: track,
           track: {
             id: track.id,
-            title: track.name,
-            image: track.album.images[0].url,
-            file: track.preview_url,
-            url: track.external_urls.spotify
-          }
+            title: track.name
+            // image: track.album.images[0].url,
+            // file: track.preview_url,
+            // url: track.external_urls.spotify
+          },
+          searchError: null,
+          artistError: null,
+          albumError: null,
+          trackError: null
         })
       )
+      .catch(() => this.setState({ trackError: ERROR_HOUSTON }))
+
+  /*
+  componentDidMount() {
+    logic.retrieveUserData('favorites')
+      .then(res => {
+        if (res && res.length) {
+          this.setState({currentFavorites: new Set(res)})
+        }
+      })
       .catch(this.errorCaught)
+  }
 
-errorCaught = msg => this.setState({error:msg.toString()})
+  _favorites = null;*/
 
+  Section = styled.section` 
+    background:lightgrey;
+    `
 
-  errorCleared = () => this.setState({error:null})
+  favoriteSelected = id => {
+    if (this.state.track && this.state.currentFavorites) {
+      const setCopy = new Set(this.state.currentFavorites);
+      this.setState({currentFavorites:setCopy})
+    }
 
+  }
+
+  /*
+
+     addFavorite(fav) {
+      if (_favorites) {
+        _favorites = _favorites.add(fav);
+        const arr = Array.from(_favorites)
+        logic.storeUserData('favorites',this._favorites)
+      }
+    }
+
+     favoriteTracks() {
+      logic.retrieveUserData('favorites')
+        .then(res => {
+          if (res && res.length) {
+            _favorites = new Set(res);
+          }
+        })
+    }
+  */
 
   render() {
-    const {state: {artists, albums, tracks, track}, onSearch, onArtistClick, onAlbumClick, onTrackClick} = this
+    const { state: { artists, albums, tracks, track, searchError, artistError, albumError, trackError }, onSearch, onArtistClick, onAlbumClick, onTrackClick } = this
 
-    return <this.Section>
+    return <section>
       <h2>Search</h2>
-      {this.state.error && <ErrorPanel onDismiss={this.errorCleared} message={this.state.error}/>}
 
-      <SearchPanel onSearch={onSearch}/>
+      <SearchPanel onSearch={onSearch} error={searchError} />
 
-      {artists.length > 0 &&
-      <section><h2>Artists</h2><ResultList results={artists} onItemClick={onArtistClick}/></section>}
+      {artists.length > 0 && <section><h2>Artists</h2><ResultList results={artists} onItemClick={onArtistClick} error={artistError} /></section>}
 
-      {albums.length > 0 && <section><h2>Albums</h2><ResultList results={albums} onItemClick={onAlbumClick}/></section>}
+      {albums.length > 0 && <section><h2>Albums</h2><ResultList results={albums} onItemClick={onAlbumClick} error={albumError} /></section>}
 
-      {tracks.length > 0 && <section><h2>Tracks</h2><ResultList results={tracks} onItemClick={onTrackClick}/></section>}
+      {tracks.length > 0 && <section><h2>Tracks</h2><ResultList results={tracks} onItemClick={onTrackClick} error={trackError} /></section>}
 
-      {track && <section><h2>Track</h2><SpotifyPlayer track={track}/></section>}
-      {/* {track && <section><h2>Track</h2><TrackPlayer track={track} /></section>} */}
-    </this.Section>
+{/*
+      {track && <section><h2>Track</h2><SpotifyPlayer track={track} /></section>}
+*/}
+      { track && <section><h2>Track</h2><TrackPlayer track={track} /></section> }
+    </section>
   }
 }
 

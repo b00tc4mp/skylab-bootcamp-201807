@@ -81,6 +81,7 @@ describe('logic (spotify-app)', () => {
         beforeEach(() => {
           return logic.registerUser(username, password)
             .then(() => logic.loginUser(username, password))
+            .catch(console.error)
         })
 
         it('should update correctly', () => {
@@ -113,17 +114,18 @@ describe('logic (spotify-app)', () => {
       username = 'robert-anthony-' + Math.random()
       return logic.registerUser(username, password)
         .then(() => logic.loginUser(username, password))
+        .catch(console.error)
     })
 
     it('should store an array of data correctly', () => {
       expect(logic._userId).toBeDefined()
       expect(logic._userToken).toBeDefined()
       expect(logic._userUsername).toBeDefined()
-      return logic.storeUserData(password,dataFieldName,dataArray)
+      return logic.storeUserData(dataFieldName,dataArray)
         .then((res) => {
           expect(res).toBeTruthy();
         }).then(()=> {
-          return logic.retrieveUserData(password,dataFieldName)
+          return logic.retrieveUserData(dataFieldName)
             .then((res) => {
               expect(res).toEqual(dataArray)
             });
@@ -135,11 +137,11 @@ describe('logic (spotify-app)', () => {
       expect(logic._userId).toBeDefined()
       expect(logic._userToken).toBeDefined()
       expect(logic._userUsername).toBeDefined()
-      return logic.storeUserData(password,dataFieldName,dataObj)
+      return logic.storeUserData(dataFieldName,dataObj)
         .then((res) => {
           expect(res).toBeTruthy();
         }).then(()=> {
-          return logic.retrieveUserData(password,dataFieldName)
+          return logic.retrieveUserData(dataFieldName)
             .then((res) => {
               expect(res).toEqual(dataObj)
             });
@@ -161,18 +163,19 @@ describe('logic (spotify-app)', () => {
       return logic.registerUser(username, password)
         .then(() => logic.loginUser(username, password))
         .then(() => {
-          return logic.storeUserData(password,dataFieldNameArray,dataArray)
+          return logic.storeUserData(dataFieldNameArray,dataArray)
         })
         .then(() => {
-          return logic.storeUserData(password,dataFieldNameObject,dataObj)
+          return logic.storeUserData(dataFieldNameObject,dataObj)
         })
+        .catch(console.error)
     })
 
     it('should retrieve an array of data correctly', () => {
       expect(logic._userId).toBeDefined()
       expect(logic._userToken).toBeDefined()
       expect(logic._userUsername).toBeDefined()
-      return logic.retrieveUserData(password,dataFieldNameArray)
+      return logic.retrieveUserData(dataFieldNameArray)
         .then((res) => {
           expect(res).toEqual(dataArray);
         })
@@ -185,7 +188,7 @@ describe('logic (spotify-app)', () => {
       expect(logic._userId).toBeDefined()
       expect(logic._userToken).toBeDefined()
       expect(logic._userUsername).toBeDefined()
-      return logic.retrieveUserData(password,dataFieldNameObject)
+      return logic.retrieveUserData(dataFieldNameObject)
         .then((res) => {
           expect(res).toEqual(dataObj);
         })
@@ -199,7 +202,7 @@ describe('logic (spotify-app)', () => {
 })
 
     describe('spotify\'s', () => {
-        logic.spotifyToken = 'BQDx2aI411JXqbjQlLQdGEucFwuU-YbmzNkcU6iaZLoTCr8iUGa_ceysrPbJEfMtUCK3B4S46ho4azyR3iM8VWm4ULRULKMB6NcuqQo-vpy1X5F---gjX16M4GrfJCaYlal2lNFsC6uD';
+        logic.spotifyToken = 'BQAxdPvRAW0BQoQJN4U8Zu1Vxo6dE58IyzyexBcvjooS9EZpLIcgmMULcYAJ8LfhViobRQyGhIdSMvhSq0cGoe4ZcCRFAbY8HAsbAUhpj4x6ydq7gSFEmd67a_cEBwDznVHGTU54VRz3'
 
         describe('search artists', () => {
             it('should find artists matching criteria', () => {

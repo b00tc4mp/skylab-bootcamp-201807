@@ -1,6 +1,4 @@
-import React, { Component } from 'react'
-import styled, { css } from 'styled-components'
-
+import React, {Component} from 'react'
 import logo from './logo.svg'
 import './App.css'
 import logic from './logic'
@@ -9,74 +7,88 @@ import Register from './components/Register'
 import Login from './components/Login'
 import GoToLogin from './components/GoToLogin'
 import Main from './components/Main'
-import NavBarPanel from "./components/NavBarPanel";
+import UpdateUserData from "./components/UpdateUserData";
 
-logic.spotifyToken = 'BQCmdn6BnOw_CIfcGYEFOHz5AInnW94wYvyaqqn6JE1jprTjeZce2bnBDcR0-DPfhogQcoEGA0nC_qImIFusEuD8nDlTj1aEqdofmKkOxT6eOSLs_3gtDRhnO3gg5QIbKvZhlQHYSQIq'
+logic.spotifyToken = 'BQBXV-oQNa-K7OwZBCZfvH9ZZrqZFcRMS_8wIb5EAQGiYy6jRrouRFE0sepGTVB4z6JQCzPZJRpjKUwsZD6BSQPptduCx9ox0VMdOOj-vFpbMspyoRPFesArx7KTJc4nGg2VN7Dm31Y_'
 
 class App extends Component {
   state = {
     registerActive: false,
     loginActive: false,
     goToLoginActive: false,
-    loggedIn: logic.loggedIn
+    updateUserActive: false,
+    loggedIn: logic.loggedIn,
+    errorLogin: null,
+    errorRegister: null,
+    errorUpdateUserData: null
   }
 
-  // componentDidMount() {
-  //   if (logic.checkLogin()){
-  //     this.setState(
-  //       {loggedIn:true}
-  //     )
-  //
-  //   }
-  // }
+  goToRegister = () => this.setState({registerActive: true, loginActive: false})
 
-  goToRegister = () => this.setState({ registerActive: true })
-
-  goToLogin = () => this.setState({ loginActive: true })
 
   registerUser = (username, password) =>
     logic.registerUser(username, password)
-      .then(() => this.setState({ goToLoginActive: true, registerActive: false }))
-      .catch(console.error)
+      .then(() => this.setState({goToLoginActive: true, registerActive: false}))
+      .catch(({message}) => this.setState({errorRegister: message}))
 
   loginUser = (username, password) =>
     logic.loginUser(username, password)
-      .then(() => this.setState({ loggedIn: true, loginActive: false }))
-      .catch(console.error)
+      .then(() => this.setState({loggedIn: true, loginActive: false}))
+      .catch(({message}) => this.setState({errorLogin: message}))
 
-  goToLogin = () => this.setState({ loginActive: true, goToLoginActive: false })
+  goToLogin = () => this.setState({loginActive: true, goToLoginActive: false, error: null, registerActive: false})
 
-  storeUserInfo = (userInfo) => {
-    console.log(userInfo)
+  logoutUser = () => {
+    logic.logout()
+
+    this.setState({loggedIn: false})
   }
 
-  doLogout = () => {
-    console.log("logging out")
-    this.setState({loggedIn:false})
-    logic.logout();
+  doUpdateUserData = (password,newUsername,newPassword) => {
+    this.setState({updateUserActive: true})
+    logic.updateUser(password,newUsername,newPassword)
+      .then((res) => {
+        if (res)
+        {
+          this.setState({ updateUserActive: false,errorUpdateUserData:null})
+        }
+        })
+      .catch(({message}) => this.setState({errorUpdateUserData: message}))
   }
+
+  cancelUpdateUserData = () => {
+    this.setState({updateUserActive: false,errorUpdateUserData:null})
+
+  }
+
+  showUpdateUserData = () => this.setState({updateUserActive:true})
+
+
 
   render() {
-    const { state: { registerActive, loginActive, goToLoginActive, loggedIn } } = this
-
+    const {state: {registerActive, loginActive, goToLoginActive, loggedIn, errorRegister, errorLogin, updateUserActive, errorUpdateUserData}, cancelUpdateUserData,showUpdateUserData,doUpdateUserData, goToRegister, goToLogin, registerUser, loginUser, logoutUser} = this
 
     return (
       <div className="App">
-     {/*   <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-        </header>*/}
+        <header className="App-header">
+          <img src={logo} className="App-logo" alt="logo"/>
+          <h1 className="App-title">Spotify App</h1>
+          {(loggedIn && !updateUserActive) && <button onClick={logoutUser}>Logout</button>}
+          {(loggedIn && !updateUserActive) && <button onClick={showUpdateUserData}>Update User Data</button>}
+        </header>
 
-        <NavBarPanel loggedIn={this.state.loggedIn} onLogout={this.doLogout}/>
+        {!(registerActive || loginActive || goToLoginActive || loggedIn) &&
+        <Landing onRegister={goToRegister} onLogin={goToLogin}/>}
 
-        {!(registerActive || loginActive || goToLoginActive || loggedIn) && <Landing onRegister={this.goToRegister} onLogin={this.goToLogin} />}
+        {registerActive && <Register onRegister={registerUser} onGoToLogin={goToLogin} error={errorRegister}/>}
 
-        {registerActive && <Register onRegister={this.registerUser} />}
+        {loginActive && <Login onLogin={loginUser} onGoToRegister={goToRegister} error={errorLogin}/>}
 
-        {loginActive && <Login onLogin={this.loginUser} />}
+        {goToLoginActive && <GoToLogin onLogin={goToLogin}/>}
 
-        {goToLoginActive && <GoToLogin onLogin={this.goToLogin} />}
+        {updateUserActive && <UpdateUserData onChangeUserData={doUpdateUserData} onCancel={cancelUpdateUserData} error={errorUpdateUserData}/>}
 
-        {loggedIn && <Main onStoreTrackInfo={this.storeTrackInfo}/>}
+        {(loggedIn && !updateUserActive) && <Main/>}
       </div>
     )
   }

@@ -5,30 +5,35 @@ const logic = {
   _userToken: null,
   _userUsername: null,*/
 
+  USER_TOKEN: "userTToken",
+  USER_ID: "userId",
+  USER_NAME:"userUsername",
+  USER_PASSWORD:"password",
+
   get _userId() {
-    return sessionStorage.getItem('userId');
+    return sessionStorage.getItem(this.USER_ID);
   },
   get _userToken() {
-    return sessionStorage.getItem('userToken')
+    return sessionStorage.getItem(this.USER_TOKEN)
   },
   get _userUsername() {
-    return sessionStorage.getItem('userUsername')
+    return sessionStorage.getItem(this.USER_NAME)
   },
   get _userPassword() {
-    return sessionStorage.getItem('password')
+    return sessionStorage.getItem(this.USER_PASSWORD)
   },
   set _userId(id) {
-    sessionStorage.setItem('userId', id);
+    sessionStorage.setItem(this.USER_ID, id);
   },
   set _userToken(token) {
-    sessionStorage.setItem('userToken', token);
+    sessionStorage.setItem(this.USER_TOKEN, token);
   },
   set _userUsername(name) {
-    sessionStorage.setItem('userUsername', name);
+    sessionStorage.setItem(this.USER_NAME, name);
 
   },
   set _userPassword(pwd) {
-    sessionStorage.setItem('password', pwd);
+    sessionStorage.setItem(this.USER_PASSWORD, pwd);
 
   },
 
@@ -91,7 +96,7 @@ const logic = {
     }, true)
       .then(() => {
         return true
-      }).catch(console.log)
+      })
   },
 
   retrieveUserData( fieldName) {
@@ -143,7 +148,7 @@ const logic = {
         this._userUsername = newUsername;
 
         return true
-      }).catch(console.log)
+      })
 
   },
 
