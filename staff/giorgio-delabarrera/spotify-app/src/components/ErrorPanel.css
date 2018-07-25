@@ -7,3 +7,8 @@
   background-color: antiquewhite;
   margin: 0 auto;
 }
+
+.ErrorPanel .ErrorPanel__list {
+  list-style: none;
+  padding: 0;
+}

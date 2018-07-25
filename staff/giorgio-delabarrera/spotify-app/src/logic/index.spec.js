@@ -71,6 +71,19 @@ describe('logic (spotify-app)', () => {
                 expect(logic._userUsername).toBeNull()
             })
         })
+
+        // describe('update user', () => {
+        //     const username = 'manuel-barzi-' + Math.random(), password = '123'
+
+        //     beforeEach(() => {
+        //         return logic.registerUser(username, password)
+        //             .then(() => logic.updateUser(username, password))
+        //     })
+
+        //     it('should update correctly', () => {
+
+        //     })
+        // })
     })
 
     describe('spotify\'s', () => {

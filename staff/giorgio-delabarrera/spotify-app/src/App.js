@@ -18,7 +18,7 @@ class App extends Component {
     loginActive: false,
     goToLoginActive: false,
     loggedIn: logic.loggedIn,
-    errorMessage: ''
+    errorMessages: []
   }
 
   goToRegister = () => this.setState({ registerActive: true })
@@ -33,9 +33,15 @@ class App extends Component {
   loginUser = (username, password) =>
     logic.loginUser(username, password)
       .then(() => {
-        this.setState({ loggedIn: true, loginActive: false, errorMessage: '' })
+        this.setState({ loggedIn: true, loginActive: false, errorMessages: [] })
       })
-      .catch(({ message: errorMessage }) => this.setState({ errorMessage }))
+      .catch(({ message: errorMessage }) => {
+        const errorMessages = this.state.errorMessages
+        errorMessages.push(errorMessage)
+        this.setState({ 
+          errorMessages: errorMessages
+        })
+      })
 
   goToLogin = () => this.setState({ loginActive: true, goToLoginActive: false })
 
@@ -55,7 +61,7 @@ class App extends Component {
           {loggedIn && <ButtonLogout onClick={this.logout}/>}
         </header>
 
-        {this.state.errorMessage && <ErrorPanel message={this.state.errorMessage}/>}
+        {this.state.errorMessages.length > 0 && <ErrorPanel messages={this.state.errorMessages}/>}
 
         {!(registerActive || loginActive || goToLoginActive || loggedIn) && <Landing onRegister={this.goToRegister} onLogin={this.goToLogin} />}
 
