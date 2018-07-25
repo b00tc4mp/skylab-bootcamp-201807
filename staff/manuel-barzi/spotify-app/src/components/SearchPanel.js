@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import ErrorPanel from './ErrorPanel'
+import Feedback from './Feedback'
 
 class SearchPanel extends Component {
     state = { query: '' }
@@ -22,7 +22,7 @@ class SearchPanel extends Component {
                 <input type="text" onChange={this.keepQuery} />
                 <button type="submit">Search</button>
             </form>
-            {this.props.error && <ErrorPanel message={this.props.error} />}
+            {this.props.error && <Feedback message={this.props.error} />}
         </section>
     }
 }

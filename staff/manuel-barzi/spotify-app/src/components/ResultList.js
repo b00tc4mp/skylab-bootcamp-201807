@@ -1,5 +1,5 @@
 import React from 'react'
-import ErrorPanel from './ErrorPanel'
+import Feedback from './Feedback'
 
 function ResultList(props) { // { results: [...{id, text}...], onItemClick: () => { ... } }
     return <section>
@@ -21,7 +21,7 @@ function ResultList(props) { // { results: [...{id, text}...], onItemClick: () =
             {/* {props.results.map(({ id, text }) => <li key={id}><a href="#/" onClick={() => props.onItemClick(id)}>{text}</a></li>)} */}
         </ul>
 
-        {props.error && <ErrorPanel message={props.error} />}
+        {props.error && <Feedback message={props.error} />}
     </section>
 }
 

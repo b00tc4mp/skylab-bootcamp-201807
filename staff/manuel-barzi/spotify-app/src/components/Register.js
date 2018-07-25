@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import ErrorPanel from './ErrorPanel'
+import Feedback from './Feedback'
 
 class Register extends Component {
     state = { username: null, password: null }
@@ -23,7 +23,7 @@ class Register extends Component {
                 <input type="password" onChange={this.keepPassword} />
                 <button type="submit">Register</button>
             </form>
-            {this.props.error && <ErrorPanel message={this.props.error} />}
+            {this.props.error && <Feedback message={this.props.error} />}
             <p>
                 Go to <a href="/#" onClick={this.props.onGoToLogin}>Login</a>
             </p>

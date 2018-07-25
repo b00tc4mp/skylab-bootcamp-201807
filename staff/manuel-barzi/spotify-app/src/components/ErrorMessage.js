@@ -1,8 +1,8 @@
 import React from 'react'
-import './ErrorPanel.css'
+import './Feedback.css'
 
-function ErrorPanel(props) {
+function Feedback(props) {
     return <h4 className="error">{props.message}</h4>
 }
 
-export default ErrorPanel
+export default Feedback
