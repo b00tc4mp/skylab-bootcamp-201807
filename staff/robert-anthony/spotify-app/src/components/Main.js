@@ -20,7 +20,9 @@ class Main extends Component {
     searchError: null,
     artistError: null,
     albumError: null,
-    trackError: null
+    trackError: null,
+    favoriteError:null,
+    mountError:null
   }
 
   onSearch = query =>
@@ -34,8 +36,9 @@ class Main extends Component {
           searchError: null,
           artistError: null,
           albumError: null,
-          trackError: null
-        })
+          trackError: null,
+          favoriteError:null,
+          mountError:null        })
       )
       .catch(() => this.setState({ searchError: ERROR_HOUSTON }))
 
@@ -49,8 +52,9 @@ class Main extends Component {
           searchError: null,
           artistError: null,
           albumError: null,
-          trackError: null
-        })
+          trackError: null,
+          favoriteError:null,
+          mountError:null        })
       )
       .catch(() => this.setState({ artistError: ERROR_HOUSTON }))
 
@@ -63,8 +67,9 @@ class Main extends Component {
           searchError: null,
           artistError: null,
           albumError: null,
-          trackError: null
-        })
+          trackError: null,
+          favoriteError:null,
+          mountError:null        })
       )
       .catch(() => this.setState({ albumError: ERROR_HOUSTON }))
 
@@ -82,46 +87,44 @@ class Main extends Component {
           searchError: null,
           artistError: null,
           albumError: null,
-          trackError: null
-        })
+          trackError: null,
+          favoriteError:null,
+          mountError:null        })
       )
       .catch(() => this.setState({ trackError: ERROR_HOUSTON }))
 
-  /*
+
+  _favoritesSet = null;
+
+
   componentDidMount() {
+    debugger
     logic.retrieveUserData('favorites')
       .then(res => {
         if (res && res.length) {
-          this.setState({currentFavorites: new Set(res)})
-        }
+          this._favoritesSet = new Set(res);
+        } else this._favoritesSet = new Set();
       })
-      .catch(this.errorCaught)
+      .catch((err) => this.setState({ mountError: ERROR_HOUSTON }))
   }
 
-  _favorites = null;*/
 
   Section = styled.section` 
     background:lightgrey;
     `
 
-  favoriteSelected = id => {
-    if (this.state.track && this.state.currentFavorites) {
-      const setCopy = new Set(this.state.currentFavorites);
-      this.setState({currentFavorites:setCopy})
+
+
+     onFavorite = id => {
+        const arr = Array.from(this._favoritesSet.add(id));
+        logic.storeUserData('favorites',arr)
+          .then(res => {
+            if (res) console.log("added successfully")
+          })
+          .catch(() => this.setState({ favoriteError: ERROR_HOUSTON }))
+
     }
-
-  }
-
-  /*
-
-     addFavorite(fav) {
-      if (_favorites) {
-        _favorites = _favorites.add(fav);
-        const arr = Array.from(_favorites)
-        logic.storeUserData('favorites',this._favorites)
-      }
-    }
-
+/*
      favoriteTracks() {
       logic.retrieveUserData('favorites')
         .then(res => {
@@ -129,11 +132,11 @@ class Main extends Component {
             _favorites = new Set(res);
           }
         })
-    }
-  */
+    }*/
+
 
   render() {
-    const { state: { artists, albums, tracks, track, searchError, artistError, albumError, trackError }, onSearch, onArtistClick, onAlbumClick, onTrackClick } = this
+    const { state: { favoriteError,artists, albums, tracks, track, searchError, artistError, albumError, trackError }, onSearch, onArtistClick, onAlbumClick, onTrackClick } = this
 
     return <section>
       <h2>Search</h2>
@@ -149,7 +152,7 @@ class Main extends Component {
 {/*
       {track && <section><h2>Track</h2><SpotifyPlayer track={track} /></section>}
 */}
-      { track && <section><h2>Track</h2><TrackPlayer track={track} /></section> }
+      { track && <section><h2>Track</h2><TrackPlayer error={favoriteError} onFavorite={this.onFavorite} track={track} /></section> }
     </section>
   }
 }
