@@ -1,21 +1,47 @@
 const logic = {
-    userId: null,
-    userToken: null,
-    userUsername: null,
+    // userId: null,
+    // userToken: null,
+    // userUsername: null,
+    
+    //Getters and setters of userId
+    set _userId(userId) {
+        sessionStorage.setItem('userId', userId)
+    },
+    
+    get _userId(){
+        return sessionStorage.getItem('userId')
+    },
+    
+    set _userToken(userToken){
+        sessionStorage.setItem('userToken', userToken)
+    },
+    
+    get _userToken(){
+        sessionStorage.getItem('userToken')
+    },
+    
+    set _userUsername(_userUsername){
+        sessionStorage.setItem('userUsername', userToken)
+    },
+    
+    get _userToken(){
+        sessionStorage.getItem('userUsername')
+    },
+    
     spotifyToken: null,
-
+    
     _callUsersApi(path, method = 'get', body, useToken) {
         const config = {
             method
         }
-
+        
         const methodNotGet = method !== 'get'
-
+        
         if (methodNotGet || useToken) {
             config.headers = {}
-
+            
             if (methodNotGet) config.headers['content-type'] = 'application/json'
-
+            
             if (useToken) config.headers.authorization = 'Bearer ' + this.userToken
         }
 
@@ -62,18 +88,18 @@ const logic = {
             })
     },
 
-    unregisterUser(password) {
-        return this._callUsersApi(`/user/${this.userId}`, 'delete', {
-            username: this.userUsername,
-            password
-        }, true)
-            .then(() => true)
-    },
-
     logout() {
         this.userId = null
         this.userToken = null
         this.userUsername = null
+    },
+
+    get loggedIn(){
+        const userId = sessionStorage.getItem('userId')
+        const userToken = sessionStorage.getItem('userToken')
+        const userUsername = sessionStorage.getItem('userUsername')
+
+        return userId && userToken && userUsername
     },
 
     updateUser(password, newUsername, newPassword) {
@@ -85,15 +111,21 @@ const logic = {
                 this.userUsername = newUsername,
                 password = newPassword
             })
-
-        // return this._callSpotifyApi(`/user/${this.userId}`, 'put', {
-        //     username: this.userUsername,
-        //     password,
-        //     newUsername,
-        //     newPassword
-        // }, true)
-        //     .then(() => true)
     },
+
+    unregisterUser(password) {
+        //return this._callUsersApi(`/user/${this._userId}`, 'delete', {
+        const userId = sessionStorage.getItem('userId')
+        const userUsername = sessionStorage.getItem('userUsername')
+
+        return this._callUsersApi(`/user/${userId}`, 'delete', {
+            //username: this._userUsername,
+            username: userUsername,
+            password
+        }, true)
+            .then(() => true)
+    },
+
 
     // spotify's
 
