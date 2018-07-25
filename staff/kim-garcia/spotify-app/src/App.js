@@ -1,101 +1,71 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import SearchPanel from'./components/SearchPanel';
-import ResultList from './components/ResultList';
-import TrackPlayer from'./components/TrackPlayer';
 import logic from './logic'
+import Landing from './components/Landing'
+import Register from './components/Register'
+import Login from './components/Login'
+import GoToLogin from './components/GoToLogin'
+import Main from './components/Main'
 
-logic.token = 'BQAAeL52bnx00XEwssrppyx_zvnQXlaX4t1NlkoVnjVsoTB_cStsdLErbSM-08SzCi_ARlYHjRxipHIVKa6gQYK9u30k9De7-EQzyphywp3RSyCMtu_7clDYcbmEu99BqEIuDKf14nAGfkoVKpnnZuF4IWo'
+logic.to = 'BQCI3EtKDakVB3OJGnbpgO35JZHmoMHVNUyWkv18HME4gsykv2g44D_-0bkrVCnQXqCEPEnJhjBYtvM3Kl1HGRh97Y3Y-JLoUJyCgvFJrs_c5mB_YFGQv6IGCp6Cxcn8KneyQK_L-DeJqizwwG3kRYJdnGc'
 // class componenete listo/ stateful porque tienen estado (state). este hace la logica d pedir los datos y hacer cosas
 class App extends Component {
-
-  //Se crean arrays vacios para cuando se ejecuta el codigo de cero o para resetear las busquedas
   // guarda los datos de su componente
-  state = { 
-    artists: [], 
-    albums: [],
-    tracks: [],
-    track: undefined // { title, image, file, url }
-  
-  }  
+  state = {
+    registerActive: false,
+    loginActive: false,
+    goToLoginActive: false,
+    loggedIn: false
+  }
 
-  onSearch = query => { 
-    logic.searchArtists(query)
-      .then(artists => {
-        this.setState({
-          artists: artists.map(({id, name: text})=>  ({ id, text})),
-          albums: [],
-          tracks: [],
-          track: undefined
-      })
-    })
+  goToRegister = () => this.setState({ registerActive: true })
+
+  goToLogin = () => this.setState({ loginActive: true })
+
+  registerUser = (username, password) =>
+    logic.registerUser(username, password)
+      .then(() => this.setState({ goToLoginActive: true, registerActive: false }))
       .catch(console.error)
-  }
 
-  onArtistClick = id => {
-    logic.retrieveAlbumsByArtistId(id)
-      .then(albums => {
-        this.setState({
-          albums: albums.map(({id, name:text}) => ({id, text})),
-          tracks: [],
-          track: undefined
-        })
-      })
-      .catch(console.error) 
-  }
-
-  onAlbumClick = id =>{
-    logic.retrieveTracksByAlbumId(id)
-      .then(tracks => {
-        this.setState({
-          tracks: tracks.map(({id, name:text}) => ({id, text})),
-          track: undefined
-        })
-      })
-      .catch(console.error)     
-  }
-
-  onTrackClick = id => {
-    logic.retrieveTrackById(id)
-      .then(track => {
-        this.setState({
-          track: {
-            title: track.name,
-            image: track.album.images[0].url,
-            file: track.preview_url,
-            url: track.external_urls.spotify
-          }
-        })
-      })
+  loginUser = (username, password) =>
+    logic.loginUser(username, password)
+      .then(() => this.setState({ loggedIn: true, loginActive: false }))
       .catch(console.error)
-  }
 
+  goToLogin = () => this.setState({ loginActive: true, goToLoginActive: false })
 
-//es un metodo de class. Cada vez que hay un cambio de stado viene al render i actualiza
   render() {
+
+    const { state: {
+      registerActive,
+      loginActive,
+      goToLoginActive,
+      loggedIn
+    } } = this
+
     return (
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Spotify</h1>
+          <h1 className="App-title">SPOTIFY</h1>
         </header>
-        
-        <SearchPanel onSearch = {this.onSearch}/>  {/**instancia. A un componente hijo le pasamos cosas a traves de props*/}
-        
-        <ResultList results = {this.state.artists} onItemClick={this.onArtistClick}/>
 
-        <ResultList results = {this.state.albums} onItemClick= {this.onAlbumClick} />
+        {!(registerActive || loginActive || goToLoginActive || loggedIn) && <Landing onRegister={this.goToRegister} onLogin={this.goToLogin} />}
 
-        <ResultList results = {this.state.tracks} onItemClick = {this.onTrackClick} />
+        {registerActive && <Register onRegister={this.registerUser} />}
 
-        {this.state.track && <TrackPlayer track={this.state.track} /> }
-        {/* Si lo de la izquierda es treu ejecuta lo de la derecha */}
-        {/*Si es undefined es false*/}
-            
+        {loginActive && <Login onLogin={this.loginUser} />}
+
+        {goToLoginActive && <GoToLogin onLogin={this.goToLogin} />}
+
+        {loggedIn && <Main />}
+
+
       </div>
-    );
+
+    )
   }
 }
 
-export default App;
+export default App
