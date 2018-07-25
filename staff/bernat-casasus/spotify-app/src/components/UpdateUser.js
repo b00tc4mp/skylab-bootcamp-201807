@@ -1,5 +1,6 @@
 import React ,{Component} from 'react'
 import Feedback from './Feedback'
+import swal from 'sweetalert2'
 
 class UpdateUser extends Component{
     state = { newUsername: null, password: null, newPassword: null }
@@ -27,6 +28,12 @@ class UpdateUser extends Component{
                 <button type="submit">Guardar Cambios</button>
             </form>
             {this.props.error && <Feedback message={this.props.error} />}
+            {swal({
+  title: 'Error!',
+  text: 'Do you want to continue',
+  type: 'error',
+  confirmButtonText: 'Cool'
+})}
         </section>
     }
 }
