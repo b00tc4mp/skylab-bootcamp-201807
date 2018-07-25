@@ -1,7 +1,21 @@
 var logic = {
-    token: 'NO-TOKEN',
+    spotifyToken: 'NO-TOKEN',
 
-    _callApi: function (path) {
+    
+    _callUserApi: function (path) {
+        return fetch('https://api.spotify.com/v1' + path, {
+            headers: {
+                authorization: 'Bearer ' + this.token
+            }
+        })
+            .then(function (res) { return res.json() })
+            .catch(function (err) {
+                throw Error('request error, status ' + err.status);
+            });
+    },
+
+
+    _callSpotifyApi: function (path) {
         return fetch('https://api.spotify.com/v1' + path, {
             headers: {
                 authorization: 'Bearer ' + this.token
