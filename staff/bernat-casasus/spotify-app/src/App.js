@@ -6,11 +6,9 @@ import Landing from './components/Landing'
 import Register from './components/Register'
 import Login from './components/Login'
 import GoToLogin from './components/GoToLogin'
-import Logout from './components/Logout'
 import Main from './components/Main'
-import AlertError from './components/AlertError';
 
-logic.spotifyToken = 'BQCX1Sgb2R-wqiZpWwL555uhHLBgSelTOkFHdGm_NgjAnltOcvXQ53ORf10EFlnH2lnOY0Ukxc7descjJ1TBCukqpHxiSaVnHs4W_gfVAASx_U38Ufcfgtv0UHXinf8HFDPRnkUaZVaw'
+logic.spotifyToken = 'BQAl8S7DWlpqe4HZgbfQazhTWwypewdKrMtYGA7yDqg2deldLKYW91EhpJO3FJuSXxZLaas3p1NB81OT9WtPfKADxaouqpHKyJmB8A-MnF1McMPa5nYf5c5KqZ2D5QGT-JB3zHMcyMD7'
 
 class App extends Component {
   state = {
@@ -18,55 +16,52 @@ class App extends Component {
     loginActive: false,
     goToLoginActive: false,
     loggedIn: logic.loggedIn,
-    error: false
+    errorLogin: null,
+    errorRegister: null
   }
 
-  goToRegister = () => this.setState({ registerActive: true })
+  goToRegister = () => this.setState({ registerActive: true, loginActive: false })
 
   goToLogin = () => this.setState({ loginActive: true })
 
   registerUser = (username, password) =>
     logic.registerUser(username, password)
-      .then(() => this.setState({ goToLoginActive: true, registerActive: false,error:false }))
-      .catch((err)=>{
-        this.setState({error: err.message})
-    })
+      .then(() => this.setState({ goToLoginActive: true, registerActive: false }))
+      .catch(({ message }) => this.setState({ errorRegister: message }))
 
   loginUser = (username, password) =>
     logic.loginUser(username, password)
-      .then(() => this.setState({ loggedIn: true, loginActive: false, error:false }))
-      .catch((err)=>{
-          this.setState({error: err.message})
-      })
+      .then(() => this.setState({ loggedIn: true, loginActive: false }))
+      .catch(({ message }) => this.setState({ errorLogin: message }))
 
-  goToLogin = () => this.setState({ loginActive: true, goToLoginActive: false })
+  goToLogin = () => this.setState({ loginActive: true, goToLoginActive: false, error: null, registerActive: false })
 
   logoutUser = () => {
-    this.setState({loggedIn:false})
     logic.logout()
+
+    this.setState({ loggedIn: false })
   }
 
   render() {
-    const { state: { registerActive, loginActive, goToLoginActive, loggedIn,error } } = this
+    const { state: { registerActive, loginActive, goToLoginActive, loggedIn, errorRegister, errorLogin }, goToRegister, goToLogin, registerUser, loginUser, logoutUser } = this
 
     return (
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">Spotify App</h1>
+          {loggedIn && <button onClick={logoutUser}>Logout</button>}
         </header>
 
-        {!(registerActive || loginActive || goToLoginActive || loggedIn) && <Landing onRegister={this.goToRegister} onLogin={this.goToLogin} />}
+        {!(registerActive || loginActive || goToLoginActive || loggedIn) && <Landing onRegister={goToRegister} onLogin={goToLogin} />}
 
-        {registerActive && <Register onRegister={this.registerUser} />}
+        {registerActive && <Register onRegister={registerUser} onGoToLogin={goToLogin} error={errorRegister} />}
 
-        {loginActive && <Login onLogin={this.loginUser} />}
+        {loginActive && <Login onLogin={loginUser} onGoToRegister={goToRegister} error={errorLogin} />}
 
-        {error && <AlertError Alert={error}/>}
+        {goToLoginActive && <GoToLogin onLogin={goToLogin} />}
 
-        {goToLoginActive && <GoToLogin onLogin={this.goToLogin} />}
-
-        {loggedIn && <Main onLogoutUser = {this.logoutUser}/>}
+        {loggedIn && <Main />}
       </div>
     )
   }

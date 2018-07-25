@@ -99,7 +99,13 @@ const logic = {
     },
 
     updateUser(password, newUsername, newPassword) {
-        // TODO
+
+        const username = this._userUsername
+        return this._callUsersApi(`/user/${this._userId}`,'put',{username,newUsername,password,newPassword },true)
+            .then( ()=> {
+                this._userUsername = newUsername
+                return true
+            })
     },
 
     unregisterUser(password) {

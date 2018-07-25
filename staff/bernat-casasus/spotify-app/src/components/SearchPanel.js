@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import Feedback from './Feedback'
 
 class SearchPanel extends Component {
     state = { query: '' }
@@ -11,15 +12,18 @@ class SearchPanel extends Component {
 
     onSearch = event => {
         event.preventDefault()
-        
+
         this.props.onSearch(this.state.query)
     }
 
     render() {
-        return <form onSubmit={this.onSearch}>
-            <input type="text" onChange={this.keepQuery} />
-            <button type="submit">Search</button>
-        </form>
+        return <section>
+            <form onSubmit={this.onSearch}>
+                <input type="text" onChange={this.keepQuery} />
+                <button type="submit">Search</button>
+            </form>
+            {this.props.error && <Feedback message={this.props.error} />}
+        </section>
     }
 }
 

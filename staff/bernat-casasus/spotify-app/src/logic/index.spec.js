@@ -4,7 +4,7 @@ describe('logic (spotify-app)', () => {
     describe('user\'s', () => {
 
         describe('register user', () => {
-            const username = 'manuel-barzi-' + Math.random(), password = '123'
+            const username = 'bernat-casasus-' + Math.random(), password = '123'
 
             it('should register on correct data', () => {
                 return logic.registerUser(username, password)
@@ -15,7 +15,7 @@ describe('logic (spotify-app)', () => {
         })
 
         describe('login user', () => {
-            const username = 'manuel-barzi-' + Math.random(), password = '123'
+            const username = 'bernat-casasus-' + Math.random(), password = '123'
             let userId
 
             beforeEach(() => {
@@ -36,7 +36,7 @@ describe('logic (spotify-app)', () => {
         })
 
         describe('unregister user', () => {
-            const username = 'manuel-barzi-' + Math.random(), password = '123'
+            const username = 'bernat-casasus-' + Math.random(), password = '123'
 
             beforeEach(() => {
                 return logic.registerUser(username, password)
@@ -52,7 +52,7 @@ describe('logic (spotify-app)', () => {
         })
 
         describe('logout user', () => {
-            const username = 'manuel-barzi-' + Math.random(), password = '123'
+            const username = 'bernat-casasus-' + Math.random(), password = '123'
 
             beforeEach(() => {
                 return logic.registerUser(username, password)
@@ -71,7 +71,34 @@ describe('logic (spotify-app)', () => {
                 expect(logic._userUsername).toBeNull()
             })
         })
+
+        describe('update user', () => {
+            const username = 'bernat-casasus-' + Math.random(), password = '123',newUsername = 'bernat-casasus-'+Math.random(), newPassword = '321'
+    
+            beforeEach(() => {
+                return logic.registerUser(username, password)
+                    .then(() => logic.loginUser(username, password))
+            })
+    
+            it('should update correctly', () => {
+                expect(logic._userId).toBeDefined()
+                expect(logic._userToken).toBeDefined()
+                expect(logic._userUsername).toBeDefined()
+    
+                // logic.updateUser(password, newUsername, newPassword)
+    
+                // expect(logic.updateUser(password, newUsername, newPassword)).toBeTruthy()
+            })
+
+            it('should unregister on correct data', () => {
+                return logic.updateUser(password, newUsername, newPassword)
+                    .then(res => {
+                        expect(res).toBeTruthy()
+                    })
+            })
+        })
     })
+
 
     describe('spotify\'s', () => {
         logic.spotifyToken = 'BQBaWwVn9Zv9LJIvoBicx0MZ20v58rY_f-UizuPpAeFzpfOn2i369TmdpmbdZZCauxsX2yqr00Gxyhjulp7USPW_HgxUT2gK16YTmAvi2-d7m-hGcZYz8m7ngpMPLGIq4ADZg1hAZpxC'
