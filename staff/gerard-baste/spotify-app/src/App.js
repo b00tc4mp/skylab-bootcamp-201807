@@ -7,11 +7,8 @@ import Register from './components/Register'
 import Login from './components/Login'
 import GoToLogin from './components/GoToLogin'
 import Main from './components/Main'
-import LoginError from './components/LoginError'
-import RegisterError from './components/RegisterError'
-import LogOut from './components/LogOut'
 
-logic.spotifyToken = 'BQCkQAeHFF1hzC2tSLNMhuR-CXZY4wx-MeVhk3ez7tTmplS4-cnabDXy9ehws1TeupAoyHnBIof3NJizm9eFe_K9fnXlEdVe84Y3xwi_8BIEEZsRUWDoNRu0FfG1DZiFAYHhuvdK-XVr'
+logic.spotifyToken = 'BQAl8S7DWlpqe4HZgbfQazhTWwypewdKrMtYGA7yDqg2deldLKYW91EhpJO3FJuSXxZLaas3p1NB81OT9WtPfKADxaouqpHKyJmB8A-MnF1McMPa5nYf5c5KqZ2D5QGT-JB3zHMcyMD7'
 
 class App extends Component {
   state = {
@@ -19,68 +16,52 @@ class App extends Component {
     loginActive: false,
     goToLoginActive: false,
     loggedIn: logic.loggedIn,
-    errorLogin: false,
-    errorRegister: false
+    errorLogin: null,
+    errorRegister: null
   }
 
-  goToRegister = () => this.setState({ registerActive: true })
+  goToRegister = () => this.setState({ registerActive: true, loginActive: false })
 
   goToLogin = () => this.setState({ loginActive: true })
 
   registerUser = (username, password) =>
     logic.registerUser(username, password)
-      .then(() => this.setState({ goToLoginActive: true, registerActive: false, errorRegister: false, }))
-      .catch(() => {
-        this.showErrorRegister()
-      })
+      .then(() => this.setState({ goToLoginActive: true, registerActive: false }))
+      .catch(({ message }) => this.setState({ errorRegister: message }))
 
   loginUser = (username, password) =>
     logic.loginUser(username, password)
-      .then(() => this.setState({ loggedOut:true, loggedIn: true, loginActive: false, errorLogin: false, errorRegister: false}))
-      .catch(() => {
-        // alert('Wrong Credentials')
-        this.showError()
-       
-      })
+      .then(() => this.setState({ loggedIn: true, loginActive: false }))
+      .catch(({ message }) => this.setState({ errorLogin: message }))
 
-  goToLogin = () => this.setState({ loginActive: true, goToLoginActive: false })
+  goToLogin = () => this.setState({ loginActive: true, goToLoginActive: false, error: null, registerActive: false })
 
-  showError = () => this.setState ({ errorLogin: true})
+  logoutUser = () => {
+    logic.logout()
 
-  showErrorRegister = () => this.setState ({ errorRegister: true})
-
-  userLogedOut = () => {logic.logout()
-  this.setState({loggedIn: false})
+    this.setState({ loggedIn: false })
   }
 
   render() {
-    const { state: { registerActive, loginActive, goToLoginActive, loggedIn, loggedOut, errorLogin, errorRegister } } = this
+    const { state: { registerActive, loginActive, goToLoginActive, loggedIn, errorRegister, errorLogin }, goToRegister, goToLogin, registerUser, loginUser, logoutUser } = this
 
     return (
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">Spotify App</h1>
-          {loggedIn && <LogOut  userLogedOut={this.userLogedOut}/>}
+          {loggedIn && <button onClick={logoutUser}>Logout</button>}
         </header>
 
-        {!(registerActive || loginActive || goToLoginActive || loggedIn || errorLogin || errorRegister) && <Landing onRegister={this.goToRegister} onLogin={this.goToLogin} />}
+        {!(registerActive || loginActive || goToLoginActive || loggedIn) && <Landing onRegister={goToRegister} onLogin={goToLogin} />}
 
+        {registerActive && <Register onRegister={registerUser} onGoToLogin={goToLogin} error={errorRegister} />}
 
-        {registerActive && <Register onRegister={this.registerUser} />}
+        {loginActive && <Login onLogin={loginUser} onGoToRegister={goToRegister} error={errorLogin} />}
 
-        {loginActive && <Login onLogin={this.loginUser} />}
-
-        {goToLoginActive && <GoToLogin onLogin={this.goToLogin} />}
-
-        {errorLogin && <LoginError  />}
-
-        {errorRegister && <RegisterError  />}
+        {goToLoginActive && <GoToLogin onLogin={goToLogin} />}
 
         {loggedIn && <Main />}
-
-        {/* {loggedOut && <LogOut  />} */}
-        
       </div>
     )
   }
