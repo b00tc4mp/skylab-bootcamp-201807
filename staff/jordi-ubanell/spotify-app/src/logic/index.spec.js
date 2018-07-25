@@ -2,9 +2,10 @@
 
 describe('logic (spotify-app)', () => {
     describe('user\'s', () => {
-        const username = 'manuel-barzi-10', password = '123'
 
         describe('register user', () => {
+            const username = 'manuel-barzi-' + Math.random(), password = '123'
+
             it('should register on correct data', () => {
                 return logic.registerUser(username, password)
                     .then(id => {
@@ -14,15 +15,34 @@ describe('logic (spotify-app)', () => {
         })
 
         describe('login user', () => {
+            const username = 'manuel-barzi-' + Math.random(), password = '123'
+            let userId
+
+            beforeEach(() => {
+                return logic.registerUser(username, password)
+                    .then(id => userId = id)
+            })
+
             it('should login on correct data', () => {
                 return logic.loginUser(username, password)
                     .then(res => {
                         expect(res).toBeTruthy()
+
+                        expect(logic.userId).toBe(userId)
+                        expect(logic.userToken).toBeDefined()
+                        expect(logic.userUsername).toBe(username)
                     })
             })
         })
 
         describe('unregister user', () => {
+            const username = 'manuel-barzi-' + Math.random(), password = '123'
+
+            beforeEach(() => {
+                return logic.registerUser(username, password)
+                    .then(() => logic.loginUser(username, password))
+            })
+
             it('should unregister on correct data', () => {
                 return logic.unregisterUser(password)
                     .then(res => {
@@ -30,10 +50,31 @@ describe('logic (spotify-app)', () => {
                     })
             })
         })
+
+        describe('logout user', () => {
+            const username = 'manuel-barzi-' + Math.random(), password = '123'
+
+            beforeEach(() => {
+                return logic.registerUser(username, password)
+                    .then(() => logic.loginUser(username, password))
+            })
+
+            it('should logout correctly', () => {
+                expect(logic.userId).toBeDefined()
+                expect(logic.userToken).toBeDefined()
+                expect(logic.userUsername).toBeDefined()
+
+                logic.logout()
+
+                expect(logic.userId).toBeNull()
+                expect(logic.userToken).toBeNull()
+                expect(logic.userUsername).toBeNull()
+            })
+        })
     })
 
     describe('spotify\'s', () => {
-        logic.spotifyToken = 'BQDd6bHMWkaTdd3mbZtSeJfB0cRwDEvGiCnRisUIM26SwJKoO8p8lWwY4kF2I3CjdVWG8AyX6PJXhW_VdkpU5LjAkZPn12B1c7g55hwcu3BIicrK_WNL9OmJK_bW-TCe3__kFZhzeJ0'
+        logic.spotifyToken = 'BQAbW26zbbcWckHAnwvF14aGPvYBK115x0oJnuW9ZIcMFNwn6N3rIpZbEOD-zWGwlLnCto9_P4cWuKZX_coPU5iOrRF9l473QvFwlmzL2iHtMe44RWGUNlnU5nXIkJ4mg3YPBEKVaLU'
 
         describe('search artists', () => {
             it('should find artists matching criteria', () => {
