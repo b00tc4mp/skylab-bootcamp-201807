@@ -8,7 +8,7 @@ import Login from './components/Login'
 import GoToLogin from './components/GoToLogin'
 import Main from './components/Main'
 
-logic.spotifyToken = 'BQDx2aI411JXqbjQlLQdGEucFwuU-YbmzNkcU6iaZLoTCr8iUGa_ceysrPbJEfMtUCK3B4S46ho4azyR3iM8VWm4ULRULKMB6NcuqQo-vpy1X5F---gjX16M4GrfJCaYlal2lNFsC6uD';
+logic.spotifyToken = 'BQCmdn6BnOw_CIfcGYEFOHz5AInnW94wYvyaqqn6JE1jprTjeZce2bnBDcR0-DPfhogQcoEGA0nC_qImIFusEuD8nDlTj1aEqdofmKkOxT6eOSLs_3gtDRhnO3gg5QIbKvZhlQHYSQIq'
 
 class App extends Component {
   state = {
@@ -34,6 +34,10 @@ class App extends Component {
 
   goToLogin = () => this.setState({ loginActive: true, goToLoginActive: false })
 
+  storeUserInfo = (userInfo) => {
+    console.log(userInfo)
+  }
+
   render() {
     const { state: { registerActive, loginActive, goToLoginActive, loggedIn } } = this
 
@@ -52,7 +56,7 @@ class App extends Component {
 
         {goToLoginActive && <GoToLogin onLogin={this.goToLogin} />}
 
-        {loggedIn && <Main />}
+        {loggedIn && <Main onStoreTrackInfo={this.storeTrackInfo}/>}
       </div>
     )
   }

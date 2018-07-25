@@ -10,7 +10,8 @@ class Main extends Component {
         artists: [],
         albums: [],
         tracks: [],
-        track: undefined // { title, image, file, url }
+        track: undefined, // { title, image, file, url }
+        completeTrackInfo:undefined
     }
 
     onSearch = query =>
@@ -50,16 +51,19 @@ class Main extends Component {
         logic.retrieveTrackById(id)
             .then(track =>
                 this.setState({
+                   completeTrackInfo:track,
                     track: {
                         id: track.id,
-                        title: track.name
-                        // image: track.album.images[0].url,
-                        // file: track.preview_url,
-                        // url: track.external_urls.spotify
+                        title: track.name,
+                         image: track.album.images[0].url,
+                         file: track.preview_url,
+                        url: track.external_urls.spotify
                     }
                 })
             )
             .catch(console.error)
+
+
 
     render() {
         const { state: { artists, albums, tracks, track }, onSearch, onArtistClick, onAlbumClick, onTrackClick } = this
@@ -75,7 +79,7 @@ class Main extends Component {
 
             {tracks.length > 0 && <section><h2>Tracks</h2><ResultList results={tracks} onItemClick={onTrackClick} /></section>}
 
-            {track && <section><h2>Track</h2><SpotifyPlayer track={track} /></section>}
+            {track && <section><h2>Track</h2><SpotifyPlayer   track={track} /></section>}
             {/* {track && <section><h2>Track</h2><TrackPlayer track={track} /></section>} */}
         </section>
     }
