@@ -16,15 +16,23 @@ class Register extends Component {
     }
 
     render() {
-        return (
-            <div>
-                <form className="signup-form">
-                    <input className="signup-form__input" placeholder="username" onChange={this.keepUsername}></input>
-                    <input className="signup-form__input" placeholder="password" onChange={this.keepPassword}></input>
-                    <button className="signup-form__button" type="submit" onClick={this.handleSubmit}>Sign Up</button>
-                </form>
-            </div>
-        )
+        if(this.props.fail)
+            return (
+                <div>
+                    <h1> Registration Failed ! </h1>
+                    <h2> Try again </h2>
+                </div>
+            )
+        else
+            return (
+                <div>
+                    <form className="signup-form">
+                        <input className="signup-form__input" placeholder="username" onChange={this.keepUsername}></input>
+                        <input className="signup-form__input" placeholder="password" onChange={this.keepPassword}></input>
+                        <button className="signup-form__button" type="submit" onClick={this.handleSubmit}>Sign Up</button>
+                    </form>
+                </div>
+            )
     }
 }
 

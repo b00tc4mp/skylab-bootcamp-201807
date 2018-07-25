@@ -36,8 +36,9 @@ class Profile extends Component {
         console.log(password, newPassword)
     }
     deleteUser = password => {
-        logic.unregisterUser(password)
-        this.setState({deleteActive: false})
+        if(this.props.deleteStatus != 0)
+            this.setState({deleteActive: false})
+        this.props.onDelete(password)
     }
 
     render() {
@@ -49,7 +50,7 @@ class Profile extends Component {
                 <button onClick={this.handleDelete}>Delete Account</button>
                 {updateUsernameActive && <UpdateUser onUpdate={this.updateUser} />}
                 {updatePasswordActive && <UpdatePassword onUpdate={this.updatePassword} />}
-                {deleteActive && <DeleteUser onUpdate={this.deleteUser} />}
+                {deleteActive && <DeleteUser onDelete={this.deleteUser} deleteStatus={this.props.deleteStatus}/>}
             </div>
         )
     }
