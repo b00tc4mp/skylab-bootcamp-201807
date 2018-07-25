@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import styled, { css } from 'styled-components'
+
 import logo from './logo.svg'
 import './App.css'
 import logic from './logic'
@@ -7,6 +9,7 @@ import Register from './components/Register'
 import Login from './components/Login'
 import GoToLogin from './components/GoToLogin'
 import Main from './components/Main'
+import NavBarPanel from "./components/NavBarPanel";
 
 logic.spotifyToken = 'BQCmdn6BnOw_CIfcGYEFOHz5AInnW94wYvyaqqn6JE1jprTjeZce2bnBDcR0-DPfhogQcoEGA0nC_qImIFusEuD8nDlTj1aEqdofmKkOxT6eOSLs_3gtDRhnO3gg5QIbKvZhlQHYSQIq'
 
@@ -15,8 +18,17 @@ class App extends Component {
     registerActive: false,
     loginActive: false,
     goToLoginActive: false,
-    loggedIn: false
+    loggedIn: logic.loggedIn
   }
+
+  // componentDidMount() {
+  //   if (logic.checkLogin()){
+  //     this.setState(
+  //       {loggedIn:true}
+  //     )
+  //
+  //   }
+  // }
 
   goToRegister = () => this.setState({ registerActive: true })
 
@@ -38,15 +50,23 @@ class App extends Component {
     console.log(userInfo)
   }
 
+  doLogout = () => {
+    console.log("logging out")
+    this.setState({loggedIn:false})
+    logic.logout();
+  }
+
   render() {
     const { state: { registerActive, loginActive, goToLoginActive, loggedIn } } = this
 
+
     return (
       <div className="App">
-        <header className="App-header">
+     {/*   <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Spotify App</h1>
-        </header>
+        </header>*/}
+
+        <NavBarPanel loggedIn={this.state.loggedIn} onLogout={this.doLogout}/>
 
         {!(registerActive || loginActive || goToLoginActive || loggedIn) && <Landing onRegister={this.goToRegister} onLogin={this.goToLogin} />}
 

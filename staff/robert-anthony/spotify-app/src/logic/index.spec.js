@@ -28,9 +28,9 @@ describe('logic (spotify-app)', () => {
                     .then(res => {
                         expect(res).toBeTruthy()
 
-                        expect(logic.userId).toBe(userId)
-                        expect(logic.userToken).toBeDefined()
-                        expect(logic.userUsername).toBe(username)
+                        expect(logic._userId).toBe(userId)
+                        expect(logic._userToken).toBeDefined()
+                        expect(logic._userUsername).toBe(username)
                     })
             })
         })
@@ -60,15 +60,15 @@ describe('logic (spotify-app)', () => {
             })
 
             it('should logout correctly', () => {
-                expect(logic.userId).toBeDefined()
-                expect(logic.userToken).toBeDefined()
-                expect(logic.userUsername).toBeDefined()
+                expect(logic._userId).toBeDefined()
+                expect(logic._userToken).toBeDefined()
+                expect(logic._userUsername).toBeDefined()
 
                 logic.logout()
 
-                expect(logic.userId).toBeNull()
-                expect(logic.userToken).toBeNull()
-                expect(logic.userUsername).toBeNull()
+                expect(logic._userId).toBeNull()
+                expect(logic._userToken).toBeNull()
+                expect(logic._userUsername).toBeNull()
             })
         })
 
@@ -84,13 +84,13 @@ describe('logic (spotify-app)', () => {
         })
 
         it('should update correctly', () => {
-          expect(logic.userId).toBeDefined()
-          expect(logic.userToken).toBeDefined()
-          expect(logic.userUsername).toBeDefined()
+          expect(logic._userId).toBeDefined()
+          expect(logic._userToken).toBeDefined()
+          expect(logic._userUsername).toBeDefined()
          return logic.updateUser(password,newUsername,newPassword)
            .then((res) => {
              expect(res).toBeTruthy();
-             expect(logic.userUsername).toBe(newUsername);
+             expect(logic._userUsername).toBe(newUsername);
            }).then(()=> {
              return logic.loginUser(newUsername,newPassword)
                .then((res) => {
@@ -116,9 +116,9 @@ describe('logic (spotify-app)', () => {
     })
 
     it('should store an array of data correctly', () => {
-      expect(logic.userId).toBeDefined()
-      expect(logic.userToken).toBeDefined()
-      expect(logic.userUsername).toBeDefined()
+      expect(logic._userId).toBeDefined()
+      expect(logic._userToken).toBeDefined()
+      expect(logic._userUsername).toBeDefined()
       return logic.storeUserData(password,dataFieldName,dataArray)
         .then((res) => {
           expect(res).toBeTruthy();
@@ -132,9 +132,9 @@ describe('logic (spotify-app)', () => {
     })
 
     it('should store object data correctly', () => {
-      expect(logic.userId).toBeDefined()
-      expect(logic.userToken).toBeDefined()
-      expect(logic.userUsername).toBeDefined()
+      expect(logic._userId).toBeDefined()
+      expect(logic._userToken).toBeDefined()
+      expect(logic._userUsername).toBeDefined()
       return logic.storeUserData(password,dataFieldName,dataObj)
         .then((res) => {
           expect(res).toBeTruthy();
@@ -169,9 +169,9 @@ describe('logic (spotify-app)', () => {
     })
 
     it('should retrieve an array of data correctly', () => {
-      expect(logic.userId).toBeDefined()
-      expect(logic.userToken).toBeDefined()
-      expect(logic.userUsername).toBeDefined()
+      expect(logic._userId).toBeDefined()
+      expect(logic._userToken).toBeDefined()
+      expect(logic._userUsername).toBeDefined()
       return logic.retrieveUserData(password,dataFieldNameArray)
         .then((res) => {
           expect(res).toEqual(dataArray);
@@ -182,9 +182,9 @@ describe('logic (spotify-app)', () => {
 
 
     it('should retrieve object data correctly', () => {
-      expect(logic.userId).toBeDefined()
-      expect(logic.userToken).toBeDefined()
-      expect(logic.userUsername).toBeDefined()
+      expect(logic._userId).toBeDefined()
+      expect(logic._userToken).toBeDefined()
+      expect(logic._userUsername).toBeDefined()
       return logic.retrieveUserData(password,dataFieldNameObject)
         .then((res) => {
           expect(res).toEqual(dataObj);

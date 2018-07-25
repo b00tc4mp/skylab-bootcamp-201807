@@ -1,7 +1,38 @@
 const logic = {
-  userId: null,
-  userToken: null,
-  userUsername: null,
+  LOCAL_STORAGE_LOGIN: "app_login",
+
+  /*_userId: null,
+  _userToken: null,
+  _userUsername: null,*/
+
+  get _userId() {
+    return sessionStorage.getItem('userId');
+  },
+  get _userToken() {
+    return sessionStorage.getItem('userToken')
+  },
+  get _userUsername() {
+    return sessionStorage.getItem('userUsername')
+  },
+  get _userPassword() {
+    return sessionStorage.getItem('password')
+  },
+  set _userId(id) {
+    sessionStorage.setItem('userId', id);
+  },
+  set _userToken(token) {
+    sessionStorage.setItem('userToken', token);
+  },
+  set _userUsername(name) {
+    sessionStorage.setItem('userUsername', name);
+
+  },
+  set _userPassword(pwd) {
+    sessionStorage.setItem('password', pwd);
+
+  },
+
+
   spotifyToken: null,
 
   _callUsersApi(path, method = 'get', body, useToken) {
@@ -16,7 +47,7 @@ const logic = {
 
       if (methodNotGet) config.headers['content-type'] = 'application/json'
 
-      if (useToken) config.headers.authorization = 'Bearer ' + this.userToken
+      if (useToken) config.headers.authorization = 'Bearer ' + this._userToken
     }
 
     if (body) config.body = JSON.stringify(body)
@@ -47,19 +78,24 @@ const logic = {
 
   // user's
 
-storeUserData( password, fieldName, data) {
-  return this._callUsersApi(`/user/${this.userId}`, 'put', {
-    username: this.userUsername,
-    password:password,
-    [fieldName]: data,
-  }, true)
-    .then(() => {
-      return true
-    }).catch(console.log)
-} ,
+  get loggedIn() {
+    console.log(this._userUsername && this._userId && this._userToken)
+    return this._userUsername && this._userId && this._userToken;
+  },
 
-  retrieveUserData(password,fieldName) {
-    return this._callUsersApi(`/user/${this.userId}`, 'get', null, true)
+  storeUserData( fieldName, data) {
+    return this._callUsersApi(`/user/${this._userId}`, 'put', {
+      username: this._userUsername,
+      password: this._userPassword,
+      [fieldName]: data,
+    }, true)
+      .then(() => {
+        return true
+      }).catch(console.log)
+  },
+
+  retrieveUserData( fieldName) {
+    return this._callUsersApi(`/user/${this._userId}`, 'get', null, true)
       .then((res) => {
         return res.data[fieldName];
       })
@@ -73,37 +109,38 @@ storeUserData( password, fieldName, data) {
   loginUser(username, password) {
     return this._callUsersApi('/auth', 'post', {username, password})
       .then(({data: {id, token}}) => {
-        this.userId = id;
-        this.userToken = token;
-        this.userUsername = username;
-
+        this._userId = id;
+        this._userToken = token;
+        this._userUsername = username;
+        this._userPassword = password;
         return true
       })
   },
 
   unregisterUser(password) {
-    return this._callUsersApi(`/user/${this.userId}`, 'delete', {
-      username: this.userUsername,
+    return this._callUsersApi(`/user/${this._userId}`, 'delete', {
+      username: this._userUsername,
       password
     }, true)
       .then(() => true)
   },
 
   logout() {
-    this.userId = null
-    this.userToken = null
-    this.userUsername = null
+    this._userId = null
+    this._userToken = null
+    this._userUsername = null
+    if (sessionStorage) sessionStorage.clear();
   },
 
   updateUser(password, newUsername, newPassword) {
-    return this._callUsersApi(`/user/${this.userId}`, 'put', {
-      username: this.userUsername,
-      password:password,
+    return this._callUsersApi(`/user/${this._userId}`, 'put', {
+      username: this._userUsername,
+      password: password,
       newUsername: newUsername,
       newPassword: newPassword
     }, true)
       .then(() => {
-        this.userUsername = newUsername;
+        this._userUsername = newUsername;
 
         return true
       }).catch(console.log)
