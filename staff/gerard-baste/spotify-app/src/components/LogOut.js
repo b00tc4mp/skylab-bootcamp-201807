@@ -1,17 +1,8 @@
-import React, { Component } from 'react'
+import React from 'react'
 
-class LogOut extends Component {
-    
-    // resetCredentials = (props) => {
-    //     props
-    // }
+function LogOut(props) {
 
-
-    render() {
-        // return <button onClick={this.resetCredentials}>LogOut</button>
-        return <button onClick={this.props.onLogOut}>LogOut</button>
-    }
-
+        return <button onClick={props.userLogedOut}>LogOut</button>
 }
 
 export default LogOut 

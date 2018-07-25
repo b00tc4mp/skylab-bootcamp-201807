@@ -12,7 +12,7 @@ class Register extends Component {
 
         const { username, password } = this.state
 
-        this.props.onRegister1(username, password)
+        this.props.onRegister(username, password)
     }
 
     render() {

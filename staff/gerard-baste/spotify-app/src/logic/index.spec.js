@@ -85,8 +85,6 @@ describe('logic (spotify-app)', () => {
     
             })
         })
-
-
     })
 
     describe('spotify\'s', () => {
