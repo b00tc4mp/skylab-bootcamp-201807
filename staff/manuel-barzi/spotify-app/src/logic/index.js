@@ -1,24 +1,39 @@
 const logic = {
-    userId: null,
-    userToken: null,
-    userUsername: null,
+    // _userId: null,
+    // _userToken: null,
+    // _userUsername: null,
+
     spotifyToken: null,
 
-    _callUsersApi(path, method = 'get', body) {
-        return fetch('https://skylabcoders.herokuapp.com/api' + path, {
-            method,
-            headers: {
-                //authorization: 'Bearer ' + this.userToken
-                'content-type': 'application/json'
-            },
-            body: JSON.stringify(body)
-        })
+    _callUsersApi(path, method = 'get', body, useToken) {
+        const config = {
+            method
+        }
+
+        const methodNotGet = method !== 'get'
+
+        if (methodNotGet || useToken) {
+            config.headers = {}
+
+            if (methodNotGet) config.headers['content-type'] = 'application/json'
+
+            //if (useToken) config.headers.authorization = 'Bearer ' + this._userToken
+            if (useToken) {
+                const userToken = sessionStorage.getItem('userToken')
+
+                config.headers.authorization = 'Bearer ' + userToken
+            }
+        }
+
+        if (body) config.body = JSON.stringify(body)
+
+        return fetch('https://skylabcoders.herokuapp.com/api' + path, config)
             .then(res => res.json())
             .then(res => {
-                if (res.status === 'KO') throw Error('request error, status ' + res.status);
+                if (res.status === 'KO') throw Error(res.error)
 
                 return res;
-            });
+            })
     },
 
     _callSpotifyApi(path) {
@@ -43,11 +58,49 @@ const logic = {
     },
 
     loginUser(username, password) {
-        // TODO call api to auth user, and the keep user id, token and username in local context
+        return this._callUsersApi('/auth', 'post', { username, password })
+            .then(({ data: { id, token } }) => {
+                // this._userId = id
+                // this._userToken = token
+                // this._userUsername = username
+                sessionStorage.setItem('userId', id)
+                sessionStorage.setItem('userToken', token)
+                sessionStorage.setItem('userUsername', username)
+
+                return true
+            })
+    },
+
+    logout() {
+        // this._userId = null
+        // this._userToken = null
+        // this._userUsername = null
+        sessionStorage.clear()
+    },
+
+    get loggedIn() {
+        const userId = sessionStorage.getItem('userId')
+        const userToken = sessionStorage.getItem('userToken')
+        const userUsername = sessionStorage.getItem('userUsername')
+
+        return userId && userToken && userUsername
+    },
+
+    updateUser(password, newUsername, newPassword) {
+        // TODO
     },
 
     unregisterUser(password) {
-        // TODO call api to delete user, and for that use the id, token and username from local context
+        //return this._callUsersApi(`/user/${this._userId}`, 'delete', {
+        const userId = sessionStorage.getItem('userId')
+        const userUsername = sessionStorage.getItem('userUsername')
+
+        return this._callUsersApi(`/user/${userId}`, 'delete', {
+            //username: this._userUsername,
+            username: userUsername,
+            password
+        }, true)
+            .then(() => true)
     },
 
     // spotify's

@@ -2,9 +2,10 @@
 
 describe('logic (spotify-app)', () => {
     describe('user\'s', () => {
-        const username = 'manuel-barzi-10', password = '123'
 
         describe('register user', () => {
+            const username = 'manuel-barzi-' + Math.random(), password = '123'
+
             it('should register on correct data', () => {
                 return logic.registerUser(username, password)
                     .then(id => {
@@ -14,20 +15,60 @@ describe('logic (spotify-app)', () => {
         })
 
         describe('login user', () => {
+            const username = 'manuel-barzi-' + Math.random(), password = '123'
+            let userId
+
+            beforeEach(() => {
+                return logic.registerUser(username, password)
+                    .then(id => userId = id)
+            })
+
             it('should login on correct data', () => {
                 return logic.loginUser(username, password)
+                    .then(res => {
+                        expect(res).toBeTruthy()
+
+                        expect(sessionStorage.getItem('userId')).toBe(userId)
+                        expect(sessionStorage.getItem('userToken')).toBeDefined()
+                        expect(sessionStorage.getItem('userUsername')).toBe(username)
+                    })
+            })
+        })
+
+        describe('unregister user', () => {
+            const username = 'manuel-barzi-' + Math.random(), password = '123'
+
+            beforeEach(() => {
+                return logic.registerUser(username, password)
+                    .then(() => logic.loginUser(username, password))
+            })
+
+            it('should unregister on correct data', () => {
+                return logic.unregisterUser(password)
                     .then(res => {
                         expect(res).toBeTruthy()
                     })
             })
         })
 
-        describe('unregister user', () => {
-            it('should unregister on correct data', () => {
-                return logic.unregisterUser(password)
-                    .then(res => {
-                        expect(res).toBeTruthy()
-                    })
+        describe('logout user', () => {
+            const username = 'manuel-barzi-' + Math.random(), password = '123'
+
+            beforeEach(() => {
+                return logic.registerUser(username, password)
+                    .then(() => logic.loginUser(username, password))
+            })
+
+            it('should logout correctly', () => {
+                expect(sessionStorage.getItem('userId')).toBeDefined()
+                expect(sessionStorage.getItem('userToken')).toBeDefined()
+                expect(sessionStorage.getItem('userUsername')).toBeDefined()
+
+                logic.logout()
+
+                expect(sessionStorage.getItem('userId')).toBeNull()
+                expect(sessionStorage.getItem('userToken')).toBeNull()
+                expect(sessionStorage.getItem('userUsername')).toBeNull()
             })
         })
     })
