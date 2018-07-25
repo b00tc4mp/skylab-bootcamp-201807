@@ -8,14 +8,14 @@ import Login from './components/Login'
 import GoToLogin from './components/GoToLogin'
 import Main from './components/Main'
 
-logic.spotifyToken = 'BQCkQAeHFF1hzC2tSLNMhuR-CXZY4wx-MeVhk3ez7tTmplS4-cnabDXy9ehws1TeupAoyHnBIof3NJizm9eFe_K9fnXlEdVe84Y3xwi_8BIEEZsRUWDoNRu0FfG1DZiFAYHhuvdK-XVr'
+logic.spotifyToken = 'BQCX1Sgb2R-wqiZpWwL555uhHLBgSelTOkFHdGm_NgjAnltOcvXQ53ORf10EFlnH2lnOY0Ukxc7descjJ1TBCukqpHxiSaVnHs4W_gfVAASx_U38Ufcfgtv0UHXinf8HFDPRnkUaZVaw'
 
 class App extends Component {
   state = {
     registerActive: false,
     loginActive: false,
     goToLoginActive: false,
-    loggedIn: false
+    loggedIn: logic.loggedIn
   }
 
   goToRegister = () => this.setState({ registerActive: true })
