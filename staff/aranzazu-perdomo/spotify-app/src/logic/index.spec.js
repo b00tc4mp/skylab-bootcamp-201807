@@ -4,7 +4,7 @@ describe('logic (spotify-app)', () => {
     describe('user\'s', () => {
 
         describe('register user', () => {
-            const username = 'manuel-barzi-' + Math.random(), password = '123'
+            const username = 'aranzazu-perdomo-' + Math.random(), password = '123'
 
             it('should register on correct data', () => {
                 return logic.registerUser(username, password)
@@ -15,7 +15,7 @@ describe('logic (spotify-app)', () => {
         })
 
         describe('login user', () => {
-            const username = 'manuel-barzi-' + Math.random(), password = '123'
+            const username = 'aranzazu-perdomo-' + Math.random(), password = '123'
             let userId
 
             beforeEach(() => {
@@ -36,7 +36,7 @@ describe('logic (spotify-app)', () => {
         })
 
         describe('unregister user', () => {
-            const username = 'manuel-barzi-' + Math.random(), password = '123'
+            const username = 'aranzazu-perdomo-' + Math.random(), password = '123'
 
             beforeEach(() => {
                 return logic.registerUser(username, password)
@@ -52,7 +52,7 @@ describe('logic (spotify-app)', () => {
         })
 
         describe('logout user', () => {
-            const username = 'manuel-barzi-' + Math.random(), password = '123'
+            const username = 'aranzazu-perdomo-' + Math.random(), password = '123'
 
             beforeEach(() => {
                 return logic.registerUser(username, password)
@@ -71,6 +71,40 @@ describe('logic (spotify-app)', () => {
                 expect(logic.userUsername).toBeNull()
             })
         })
+
+        describe('update user', ()=> {
+            const username = 'aranzazu-perdomo-' + Math.random(), password = '123'
+            const newUsername= 'ar-pc'
+            const newPassword = '456'
+
+            beforeEach(() => {
+                return logic.registerUser(username, password)
+                    .then(() => logic.updateUser(password, newUsername, newPassword))
+            })
+
+            it('should update correctly', () =>{
+                expect(logic.userUsername).toBe(username)
+                expect(newPassword).toBe('456')
+            })
+
+        }
+    
+    
+    
+    
+    
+    
+    
+    
+    )
+
+
+
+
+
+
+
+
     })
 
     describe('spotify\'s', () => {

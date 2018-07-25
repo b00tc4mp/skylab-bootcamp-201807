@@ -77,7 +77,13 @@ const logic = {
     },
 
     updateUser(password, newUsername, newPassword) {
-        // TODO
+       return this._callUsersApi(`/user/${this.userId}`, 'put', {
+        username:this.userUsername,    
+        password,
+        newPassword,
+        newUsername
+       },true)
+       .then(() => true)
     },
 
     // spotify's
