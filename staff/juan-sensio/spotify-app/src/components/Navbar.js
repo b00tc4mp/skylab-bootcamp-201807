@@ -1,14 +1,23 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
+
 import './Navbar.css'
+
 class Navbar extends Component {
+
     render() {
+        const {
+            props: {
+                profile,
+                search
+            }
+        } = this
         return (
-            <div className="navbar">
-                <a className="navbar__link" href="#" onClick={this.props.profile}>profile</a>
-                <a className="navbar__link" href="#" onClick={this.props.logout}>log out</a>
-            </div>
+            <footer className="navbar">
+                <button className="navbar__btn" onClick={profile}> Profile </button>
+                <button className="navbar__btn" onClick={search}> Search </button>
+            </footer>
         )
     }
 }
-export default Navbar
 
+export default Navbar

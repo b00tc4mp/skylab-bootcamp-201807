@@ -14,7 +14,7 @@ class DeleteUser extends Component {
 
     render() {
         let status = this.props.deleteStatus;
-        if (status == 0)
+        if (status === 0)
             return (
                 <div>
                     <form className="signup-form">
@@ -23,11 +23,11 @@ class DeleteUser extends Component {
                     </form>
                 </div>
             )
-        else if (status == 1)
+        else if (status === 1)
             return (
                 <h1> ERROR, try again </h1>
             )
-        else if (status == 2)
+        else if (status === 2)
             return (
                 <h1> Good Bye </h1> 
             )

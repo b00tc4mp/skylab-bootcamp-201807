@@ -1,93 +1,89 @@
 import React, { Component } from 'react';
 
-import './App.css'
-
-import logic from "./logic"
+import logic from './logic'
 
 import Landing from './components/Landing'
 import Register from './components/Register'
 import Login from './components/Login'
-import Profile from './components/Profile'
-import Navbar from './components/Navbar'
 import Main from './components/Main'
 
 class App extends Component {
   state = {
+    landingActive: !logic.loggedIn,
     registerActive: false,
     loginActive: false,
-    landingActive: !logic.loggedIn,
-    profileActive: false,
-    registerFailed: false,
-    loginFailed: false,
-    deleteStatus: 0
+    registerFail: null,
+    loginFail: null,
+    appActive: logic.loggedIn
   }
 
-  toggleRegister = () => this.setState({ landingActive: false, registerActive: this.state.registerActive ? false : true })
-  toggleLogin = () => this.setState({ landingActive: false, loginActive: this.state.loginActive ? false : true })
-  toggleProfile = () => this.setState({ profileActive: false, profileActive: this.state.profileActive ? false : true })
+  onRegister = () => this.setState({
+    landingActive: false,
+    registerActive: true,
+    loginActive: false
+  })
+
+  onLogin = () => this.setState({
+    landingActive: false,
+    loginActive: true,
+    registerActive: false
+  })
 
   registerUser = (username, password) => {
     logic.registerUser(username, password)
-      .then(() => {
-        this.toggleRegister()
-        this.toggleLogin()
-      })
-      .catch(() => {
-        console.log("bad register")
-        this.setState({ registerFailed: true })
-        setTimeout(() => {
-          this.setState({ registerFailed: false, registerActive: false, landingActive: true })
-        }, 2000)
-      })
+    .then(() => {
+      this.onLogin()
+      this.setState({registerFail: null})
+    })
+    .catch((err) => {
+      this.setState({registerFail: err.message})
+    })
   }
+
   loginUser = (username, password) => {
     logic.loginUser(username, password)
-      .then(() => this.toggleLogin())
-      .catch(() => {
-        console.log("bad login")
-        this.setState({ loginFailed: true })
-        setTimeout(() => {
-          this.setState({ loginFailed: false, registerActive: false, landingActive: true, loginActive: false })
-        }, 2000)
-      })
+    .then(() => {
+      this.setState({loginFail: null})
+      this.goToApp()
+    })
+    .catch((err) => {
+      this.setState({loginFail: err.message})
+    })
   }
-  deleteUser = (password) => {
-    logic.unregisterUser(password)
-      .then(() => {
-        console.log("delete ok")
-        this.setState({deleteStatus: 2})
-        setTimeout(()=>this.setState({deleteStatus: 0, profileActive: false, landingActive: true}),2000)
-      })
-      .catch(() => {
-        console.log("bad delete")
-        this.setState({deleteStatus: 1})
-        setTimeout(()=>this.setState({deleteStatus: 0}),2000)
-      })
+
+  goToApp = () => {
+    this.setState({loginActive: false, appActive: true})
   }
-  logOut = () => {
+
+  logout = () => {
     logic.logout()
-    this.setState({landingActive: true, profileActive: false})
-  }
-  updateUser = (password, newUsername, newPassword) => {
-    logic.updateUser(password, newUsername, newPassword)
-    this.setState({landingActive: true, profileActive: false})
+    this.setState({landingActive: true, appActive: false})
   }
 
   render() {
-    const { state: { registerActive, loginActive, landingActive, profileActive } } = this
+
+    const {
+      state: {
+        landingActive,
+        registerActive,
+        loginActive,
+        registerFail,
+        loginFail,
+        appActive
+      },
+      onRegister,
+      onLogin,
+      registerUser,
+      loginUser,
+      logout
+    } = this
+
     return (
-      <div className="app">
-        <header className="header">
-          <h1 className="header__title">
-            Spotify App
-          </h1>
-        </header>
-        {!(landingActive || (registerActive || loginActive)) && <Navbar profile={this.toggleProfile} logout={this.logOut} />}
-        {landingActive && <Landing onRegister={this.toggleRegister} onLogin={this.toggleLogin} />}
-        {registerActive && <Register onRegister={this.registerUser} fail={this.state.registerFailed} />}
-        {loginActive && <Login onLogin={this.loginUser} fail={this.state.loginFailed} />}
-        {profileActive && <Profile onUpdate={this.updateUser} onDelete={this.deleteUser} deleteStatus={this.state.deleteStatus}/>}
-        {!(landingActive || (registerActive || loginActive)) && <Main />}
+      <div>
+        {landingActive && <Landing onRegister={onRegister} onLogin={onLogin}/>}
+        {registerActive && <Register onRegister={registerUser} fail={registerFail}/>}
+        {loginActive && <Login onLogin={loginUser} fail={loginFail}/>}
+        {appActive && <Main onLogout={logout}/>}
       </div>
     );
   }

@@ -1,4 +1,5 @@
-import React, { Component } from 'react'
+import React, {Component} from 'react'
+
 import './Login.css'
 
 class Login extends Component {
@@ -7,31 +8,38 @@ class Login extends Component {
         password: null
     }
 
-    keepUsername = event => this.setState({ username: event.target.value })
-    keepPassword = event => this.setState({ password: event.target.value })
-    handleSubmit = event => {
-        event.preventDefault()
-        this.props.onLogin(this.state.username, this.state.password);
+    keepPassword = event => this.setState({password: event.target.value})
+    keepUsername = event => this.setState({username: event.target.value})
+    loginUser = () => {
+        const {state: {username, password}} = this
+        this.props.onLogin(username, password)
     }
-
     render() {
-        if (this.props.fail)
-            return (
-                <div>
-                    <h1> Login Failed ! </h1>
-                    <h2> Try again </h2>
+        const {
+            props: {
+                fail
+            },
+            keepPassword,
+            keepUsername,
+            loginUser
+        } = this
+        return(
+            <div className="login">
+                <h1 className="login__title"> Log in </h1>
+                <div className="login__group">
+                    <h3 className="login__text"> Username </h3>
+                    <input className="login__input" onChange={keepUsername}></input>
                 </div>
-            )
-        else
-            return (
-                <div>
-                    <form className="login-form">
-                        <input className="login-form__input" placeholder="username" onChange={this.keepUsername}></input>
-                        <input className="login-form__input" placeholder="password" onChange={this.keepPassword}></input>
-                        <button className="login-form__button" type="submit" onClick={this.handleSubmit}>Log In</button>
-                    </form>
+                <div className="login__group">
+                    <h3 className="login__text"> Password </h3>
+                    <input className="login__input" onChange={keepPassword}></input>
                 </div>
-            )
+                <div>
+                    {fail && <p className="login__error">{fail}</p>}
+                </div>
+                <button className="login__btn" onClick={loginUser}> Log in </button>
+            </div>
+        )
     }
 }
 

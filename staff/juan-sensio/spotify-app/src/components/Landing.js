@@ -1,14 +1,25 @@
-import React from 'react'
+import React, {Component} from 'react'
+
 import './Landing.css'
 
-function Landing(props) {
-    return (
-        <div className="btn-group">
-            <button className="btn" onClick={props.onRegister}>Sign Up</button>
-            <p className="btn-group__text"> or </p>
-            <button className="btn" onClick={props.onLogin}>Log In</button>
-        </div>
-    );
+class Landing extends Component {
+    render() {
+        const {
+            props: {
+                onRegister,
+                onLogin
+            }
+        } = this
+        return(
+            <div className="landing">
+                <h1 className="landing__title"> SpotiJuan </h1>
+                <div className="landing__buttons">
+                    <button onClick={onRegister} className="landing__btn landing__btn--register"> Register </button>
+                    <button onClick={onLogin} className="landing__btn landing__btn--login"> Login </button>
+                </div>
+            </div>
+        )
+    }
 }
 
 export default Landing

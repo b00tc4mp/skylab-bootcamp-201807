@@ -1,61 +1,53 @@
 import React, { Component } from 'react'
 
-import logic from "../logic"
+import './Main.css'
 
-import SearchPanel from './SearchPanel'
-import ResultList from './ResultList'
-import SpotifyPlayer from './SpotifyPlayer'
+import Profile from './Profile'
+import Navbar from './Navbar'
+import Search from './Search'
 
-logic.spotifyToken = 'BQBo7vHc5gW11txoL8znEpB5qKd65TXi0wMpzajN8HkeXoOLzzH2kDhufb4AV3fPDOffmMyCADKW27x_uL43sjZF8R3OG31-9ncRf-hj_1V6CmLf4vs0uJmh0IWntS-BsllD1dnenndURQBjzQ';
+import logic from '../logic'
 
 class Main extends Component {
     state = {
-        artists: [],
-        albums: [],
-        tracks: [],
-        track: undefined
+        searchActive: true,
+        profileActive: false
     }
-    
-    onSearch = query => {
-        this.setState({ albums: [], tracks: [], track: undefined })
-        logic.searchArtists(query)
-            .then(artists => this.setState({
-                artists: artists.map(({ id, name }) => ({ id, name }))
-            }))
-            .catch(console.log)
+
+    onProfile = () => this.setState({ searchActive: false, profileActive: true })
+    onSearch = () => this.setState({ searchActive: true, profileActive: false })
+    logout = () => {
+        this.setState({ profileActive: false })
+        this.props.onLogout()
     }
-    onClickArtist = id => {
-        this.setState({ tracks: [], track: undefined })
-        logic.retrieveAlbumsByArtistId(id)
-            .then(albums => this.setState({
-                albums: albums.map(({ id, name }) => ({ id, name }))
-            }))
-            .catch(console.log)
+    updateUser = (password, newUsername, newPassword) => {
+        return logic.updateUser(password, newUsername, newPassword)
     }
-    onClickAlbum = id => {
-        this.setState({ track: undefined })
-        logic.retrieveTracksByAlbumId(id)
-            .then(tracks => this.setState({
-                tracks: tracks.map(({ id, name }) => ({ id, name }))
-            }))
-            .catch(console.log)
-    }
-    onClickTrack = id => {
-        this.setState({ track: id })
+    deleteUser = (password) => {
+        return logic.unregisterUser(password)
+            .then(() => {
+                this.logout()
+            })
     }
 
     render() {
+        const {
+            state: {
+                profileActive,
+                searchActive
+            },
+            onProfile,
+            onSearch,
+            logout,
+            updateUser,
+            deleteUser,
+        } = this
+
         return (
-            <div>
-                <h1> SEARCH </h1>
-                <SearchPanel onSearch={this.onSearch} />
-                {this.state.artists.length > 0 && <h2> Artists </h2>}
-                <ResultList items={this.state.artists} onClick={this.onClickArtist} />
-                {this.state.albums.length > 0 && <h2> Albums </h2>}
-                <ResultList items={this.state.albums} onClick={this.onClickAlbum} />
-                {this.state.tracks.length > 0 && <h2> Tracks </h2>}
-                <ResultList items={this.state.tracks} onClick={this.onClickTrack} />
-                {this.state.track && <SpotifyPlayer track={this.state.track} />}
+            <div className="main">
+                {searchActive && <Search />}
+                {profileActive && <Profile onLogout={logout} updateUser={updateUser} deleteUser={deleteUser}/>}
+                <Navbar profile={onProfile} search={onSearch} />
             </div>
         )
     }

@@ -1,16 +1,33 @@
-.btn-group {
-  display: flex;
-  align-content: center;
-  justify-content: center;
-  border: 1px solid black;
+.landing {
+  color: white;
+  height: 100vh;
+  width: 100%;
+  background: url(../pics/landing.jpg);
+  display: grid;
+  grid-template: 50% 50%/1fr;
+  align-items: center;
+  justify-items: center;
 }
-.btn {
-  width: 100px;
+.landing__title {
+  font-size: 60px;
+}
+.landing__buttons {
+  display: grid;
+  grid-gap: 30px;
+  width: 100%;
+  justify-items: center;
+}
+.landing__btn {
+  background-color: white;
+  width: 70%;
   height: 50px;
-  border-radius: 0.3rem;
-  margin: 20px 10px;
-  font-size: 20px;
+  border: none;
+  border-radius: 30px;
+  text-transform: uppercase;
 }
-.btn-group__text {
-  margin-top: 35px;
+.landing__btn--register {
+  background-color: green;
+  color: white;
 }
+
+/*# sourceMappingURL=Landing.css.map */
