@@ -1,33 +1,37 @@
 import React, {Component} from 'react'
+import IfWrong from './IfWrong'
+import './css/update.css'
 
 class UpdatePanel extends Component {
 
     state = { 
         password: null,
         newUsername: null,
-        newPassword: null
+        newPassword: null,
+        updateActive: null
     }
 
     keepPassword = event => this.setState({ password: event.target.value })
     keepNewUsername = event => this.setState({ newUsername: event.target.value })
     keepNewPassword = event => this.setState({ newPassword: event.target.value })
 
-    onUpdate = event => {
+    onUpdatePanel = event => {
         event.preventDefault()
         const { password, newUsername, newPassword } = this.state
         this.props.onUpdate( password, newUsername, newPassword )
     }
 
-
     render() {
-
         return (
-            <form  onSubmit={this.onUpdate}>
-                <input type="password" onChange={this.keepPassword} placeholder="enter your old password" />
-                <input type="text" onChange={this.keepNewUsername} placeholder="enter your new username"/> {/* NewUsername */}
-                <input type="password" onChange={this.keepNewPassword} placeholder="enter your new password" /> {/* NewPassword */}
-                <button type="submit" >Change</button>
-            </form>
+            <section className="all">
+                <form className="all__form" onSubmit={this.onUpdatePanel}>
+                    <input className="all__form__space" type="password" onChange={this.keepPassword} placeholder="enter your old password" />
+                    <input className="all__form__space" type="text" onChange={this.keepNewUsername} placeholder="enter your new username"/> {/* NewUsername */}
+                    <input className="all__form__space" type="password" onChange={this.keepNewPassword} placeholder="enter your new password" /> {/* NewPassword */}
+                    <button className="all__form__button" type="submit" onClick={() => this.props.updated} >Change</button>
+                </form>
+                {this.props.error && <IfWrong message={this.props.error} />}
+            </section>
         )
     }
 }

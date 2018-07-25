@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AAAA,OAAO;EACH,gBAAgB,EAAE,OAAO;EACzB,MAAM,EAAE,IAAI;EAEZ,YAAM;IACF,UAAU,EAAE,qBAAqB",
+"sources": ["../scss/player.sass"],
+"names": [],
+"file": "player.css"
+}

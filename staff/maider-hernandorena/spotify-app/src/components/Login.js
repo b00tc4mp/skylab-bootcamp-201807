@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import IfWrong from './IfWrong'
+import './css/login-register.css'
 
 class Login extends Component {
 
@@ -17,11 +19,15 @@ class Login extends Component {
     }
 
     render() {
-        return <form onSubmit={this.onLogin}>
-                    <input type="text" onChange={this.keepUsername} placeholder="enter your username" />
-                    <input type="password" onChange={this.keepPassword} placeholder="enter your password" />
-                    <button type="submit">Login</button>
-                </form>
+        return <section className="all">
+                    <form className="all__form" onSubmit={this.onLogin}>
+                        <input className="all__form__space" type="text" onChange={this.keepUsername} placeholder="enter your username" />
+                        <input className="all__form__space" type="password" onChange={this.keepPassword} placeholder="enter your password" />
+                        <button className="all__form__button" type="submit">Login</button>
+                    </form>
+                    {this.props.error && <IfWrong message={this.props.error} />}
+                    <p className="all__text">Go to <a className="all__text__link" href="/#" onClick={this.props.linkToRegister}>Register</a></p>
+                </section>
     }
 }
 

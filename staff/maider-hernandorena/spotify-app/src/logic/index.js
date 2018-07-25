@@ -28,7 +28,7 @@ const logic = {
         return fetch('https://skylabcoders.herokuapp.com/api' + path, config )
             .then(res => res.json())
             .then(res => {
-                if (res.status === 'KO') throw Error('request error, status ' + res.status);
+                if (res.status === 'KO') throw Error('There is an error: ' + res.error);
 
                 return res;
             });
@@ -42,7 +42,7 @@ const logic = {
         })
             .then(res => res.json())
             .then(res => {
-                if (res.error) throw Error('request error, status ' + res.error.status);
+                if (res.error) throw Error('Sorry there is an error. Try it later!');
 
                 return res;
             });

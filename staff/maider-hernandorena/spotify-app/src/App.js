@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import logo from './spotify.png'
-import './App.css'
+import './app.css'
 import logic from './logic'
 import Landing from './components/Landing'
 import Register from './components/Register'
@@ -8,35 +8,33 @@ import Login from './components/Login'
 import GoToLogin from './components/GoToLogin'
 import Main from './components/Main'
 
-logic.spotifyToken = 'BQC2ifAEVTSv5SW-HF6t04fWIxhjzlxj7mUqPDnSvLbBcCZa3SPoKgtL7qhYZ1UbCYMwClZvU_tfSgxryFg9YbmWzxSftfgvQxkYFxyaE3W0-_j0KUEX6ifQv0bTz_k4FJGUut-pSuGPVA'
+logic.spotifyToken = 'BQBstulcPzGgHxJCL173oWWfc6KIpu8tMdbftX9Fbmmt806NYY6DfA0Y-5CaKfW9vVSwy1LV1WeaFagyBmUSk0Po5CX__EsFG-ak8CL7zlskitbkieAYB2Sz-4EJDwc_cPoHEK3w8nshuA'
 
 class App extends Component {
   state = {
     registerActive: false,
     loginActive: false,
     goToLoginActive: false,
-    loggedIn: logic.loggedIn
+    loggedIn: logic.loggedIn,
+    loginWrong: null,
+    registerWrong: null
   }
 
-  goToRegister = () => this.setState({ registerActive: true })
+  goToRegister = () => this.setState({ registerActive: true, loginActive: false })
 
   goToLogin = () => this.setState({ loginActive: true })
 
   registerUser = (username, password) =>
     logic.registerUser(username, password)
       .then(() => this.setState({ goToLoginActive: true, registerActive: false }))
-      .catch(() => {
-        alert ('The username: ' + username + ', or the password: ' + password + ' you entered are not balid.')
-      })
+      .catch(({ message }) => this.setState({ registerWrong: message }))
 
   loginUser = (username, password) =>
     logic.loginUser(username, password)
       .then(() => this.setState({ loggedIn: true, loginActive: false }))
-      .catch(() => {
-        alert ('Your username: ' + username + ', or your password: ' + password + ', is incorrect.')
-      })
+      .catch(({ message }) => this.setState({ loginWrong: message }))
 
-  goToLogin = () => this.setState({ loginActive: true, goToLoginActive: false })
+  goToLogin = () => this.setState({ loginActive: true, goToLoginActive: false, registerActive: false, error: null })
 
   goToLogout = () => {
     this.setState({loggedIn: false})
@@ -55,24 +53,24 @@ class App extends Component {
 
 
   render() {
-    const { state: { registerActive, loginActive, goToLoginActive, loggedIn } } = this
+    const { state: { registerActive, loginActive, goToLoginActive, loggedIn, registerWrong, loginWrong }, goToRegister, goToLogin, goToLogout, goToDelete, goToUpdate, loginUser, registerUser } = this
 
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Spotify App</h1>
+        <header className="App__header">
+          <img src={logo} className="App__header__logo" alt="logo" />
+          <h1 className="App__header__title">Spotify App</h1>
         </header>
 
-        {!(registerActive || loginActive || goToLoginActive || loggedIn) && <Landing onRegister={this.goToRegister} onLogin={this.goToLogin} />}
+        {!(registerActive || loginActive || goToLoginActive || loggedIn) && <Landing onRegister={goToRegister} onLogin={goToLogin} />}
 
-        {registerActive && <Register onRegister={this.registerUser} />}
+        {registerActive && <Register onRegister={registerUser} error={registerWrong} linkToLogin={goToLogin}/>}
 
-        {loginActive && <Login onLogin={this.loginUser} />}
+        {loginActive && <Login onLogin={loginUser} error={loginWrong} linkToRegister={goToRegister} />}
 
-        {goToLoginActive && <GoToLogin onLogin={this.goToLogin} />}
+        {goToLoginActive && <GoToLogin onLogin={goToLogin} />}
 
-        {loggedIn && <Main onLogout={this.goToLogout} onUpdate={this.goToUpdate} onDelete={this.goToDelete}/>}
+        {loggedIn && <Main onLogout={goToLogout} onUpdate={goToUpdate} onDelete={goToDelete}/>}
 
       </div>
     )

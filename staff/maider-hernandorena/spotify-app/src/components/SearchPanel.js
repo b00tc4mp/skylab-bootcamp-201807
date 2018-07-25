@@ -1,4 +1,6 @@
 import React, {Component} from 'react'
+import IfWrong from './IfWrong'
+import './css/search.css'
 
 class SearchPanel extends Component {
 
@@ -15,10 +17,13 @@ class SearchPanel extends Component {
     }
 
     render() {
-        return <form onSubmit={this.onSearch}>
-            <input type="text" onChange={this.keepQuery} placeholder="Type to search..."/>
-            <button type="submit">Search</button>
-        </form>
+        return <section className="search-bar">
+                    <form className="search-bar__form" onSubmit={this.onSearch}>
+                        <input className="search-bar__form__space" type="text" onChange={this.keepQuery} placeholder="Type to search..."/>
+                        <button className="search-bar__form__button" type="submit">Search</button>
+                    </form>
+                    {this.props.error && <IfWrong message={this.props.error} />}
+                </section>
     }
 }
 
