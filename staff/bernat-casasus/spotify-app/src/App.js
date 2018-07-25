@@ -7,7 +7,8 @@ import Register from './components/Register'
 import Login from './components/Login'
 import GoToLogin from './components/GoToLogin'
 import Main from './components/Main'
-
+import Profile from './components/Profile'
+import UpdateUser from './components/UpdateUser';
 logic.spotifyToken = 'BQAl8S7DWlpqe4HZgbfQazhTWwypewdKrMtYGA7yDqg2deldLKYW91EhpJO3FJuSXxZLaas3p1NB81OT9WtPfKADxaouqpHKyJmB8A-MnF1McMPa5nYf5c5KqZ2D5QGT-JB3zHMcyMD7'
 
 class App extends Component {
@@ -17,7 +18,11 @@ class App extends Component {
     goToLoginActive: false,
     loggedIn: logic.loggedIn,
     errorLogin: null,
-    errorRegister: null
+    errorRegister: null,
+    errorUpdate: null,
+    goToMain: true,
+    goToProfile: null,
+    goToUpdateSettings: null
   }
 
   goToRegister = () => this.setState({ registerActive: true, loginActive: false })
@@ -31,7 +36,7 @@ class App extends Component {
 
   loginUser = (username, password) =>
     logic.loginUser(username, password)
-      .then(() => this.setState({ loggedIn: true, loginActive: false }))
+      .then(() => this.setState({ loggedIn: true, loginActive: false, goToMain: true }))
       .catch(({ message }) => this.setState({ errorLogin: message }))
 
   goToLogin = () => this.setState({ loginActive: true, goToLoginActive: false, error: null, registerActive: false })
@@ -39,18 +44,31 @@ class App extends Component {
   logoutUser = () => {
     logic.logout()
 
-    this.setState({ loggedIn: false })
+    this.setState({ loggedIn: false, goToProfile: false, goToUpdateSettings: false })
   }
 
+  goProfile = () => this.setState({goToMain: false, goToProfile: true, goToUpdateSettings: false, errorUpdate: null})
+
+  onClickUpdateSettings = () => this.setState({goToProfile: false, goToUpdateSettings: true})
+
+  onUpdateSettings = (newUsername, password, newPassword) => {
+    logic.updateUser(newUsername, password, newPassword)
+        .then(()=> this.setState({errorUpdate: null}))
+        .catch(({ message }) => this.setState({ errorUpdate: message }))
+  }
+
+  goMain = ()=> this.setState({goToMain:true, goToProfile:false, goToUpdateSettings:false})
   render() {
-    const { state: { registerActive, loginActive, goToLoginActive, loggedIn, errorRegister, errorLogin }, goToRegister, goToLogin, registerUser, loginUser, logoutUser } = this
+    const { state: { registerActive, loginActive, goToLoginActive, loggedIn, errorRegister, errorLogin,goToMain, goToProfile, goToUpdateSettings,errorUpdate }, goToRegister, goToLogin, registerUser, loginUser, logoutUser ,goProfile,onClickUpdateSettings, onUpdateSettings,goMain} = this
 
     return (
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">Spotify App</h1>
+          {loggedIn && <button onClick={goMain}>Home</button>}
           {loggedIn && <button onClick={logoutUser}>Logout</button>}
+          {loggedIn && <button onClick={goProfile}>Profile</button>}
         </header>
 
         {!(registerActive || loginActive || goToLoginActive || loggedIn) && <Landing onRegister={goToRegister} onLogin={goToLogin} />}
@@ -61,7 +79,10 @@ class App extends Component {
 
         {goToLoginActive && <GoToLogin onLogin={goToLogin} />}
 
-        {loggedIn && <Main />}
+        {loggedIn && goToProfile && <Profile userName = {logic._userUsername} onClickUpdate = {onClickUpdateSettings}/>}
+        {loggedIn && goToUpdateSettings && <UpdateUser onClickSave={onUpdateSettings} error={errorUpdate}/>}
+
+        {loggedIn && goToMain && <Main />}
       </div>
     )
   }

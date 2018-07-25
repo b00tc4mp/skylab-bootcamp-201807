@@ -98,7 +98,7 @@ const logic = {
         return this._userId && this._userToken && this._userUsername
     },
 
-    updateUser(password, newUsername, newPassword) {
+    updateUser(newUsername,password, newPassword) {
 
         const username = this._userUsername
         return this._callUsersApi(`/user/${this._userId}`,'put',{username,newUsername,password,newPassword },true)
