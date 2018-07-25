@@ -8,14 +8,13 @@ import Landing from './components/Landing'
 import Register from './components/Register'
 import Login from './components/Login'
 import Profile from './components/Profile'
-import Navbar from './components/Navbar'
 import Main from './components/Main'
 
 class App extends Component {
   state = {
     registerActive: false,
     loginActive: false,
-    landingActive: !logic.loggedIn,
+    landingActive: true,
     profileActive: false,
     registerFailed: false,
     loginFailed: false,
@@ -64,14 +63,6 @@ class App extends Component {
         setTimeout(()=>this.setState({deleteStatus: 0}),2000)
       })
   }
-  logOut = () => {
-    logic.logout()
-    this.setState({landingActive: true, profileActive: false})
-  }
-  updateUser = (password, newUsername, newPassword) => {
-    logic.updateUser(password, newUsername, newPassword)
-    this.setState({landingActive: true, profileActive: false})
-  }
 
   render() {
     const { state: { registerActive, loginActive, landingActive, profileActive } } = this
@@ -82,11 +73,11 @@ class App extends Component {
             Spotify App
           </h1>
         </header>
-        {!(landingActive || (registerActive || loginActive)) && <Navbar profile={this.toggleProfile} logout={this.logOut} />}
+        {!(landingActive || (registerActive || loginActive)) && <a href="#" onClick={this.toggleProfile}>profile</a>}
         {landingActive && <Landing onRegister={this.toggleRegister} onLogin={this.toggleLogin} />}
         {registerActive && <Register onRegister={this.registerUser} fail={this.state.registerFailed} />}
         {loginActive && <Login onLogin={this.loginUser} fail={this.state.loginFailed} />}
-        {profileActive && <Profile onUpdate={this.updateUser} onDelete={this.deleteUser} deleteStatus={this.state.deleteStatus}/>}
+        {profileActive && <Profile onDelete={this.deleteUser} deleteStatus={this.state.deleteStatus}/>}
         {!(landingActive || (registerActive || loginActive)) && <Main />}
       </div>
     );

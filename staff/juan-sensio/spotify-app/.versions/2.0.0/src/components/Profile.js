@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import './Profile.css' 
+
+import logic from '../logic'
 
 import UpdateUser from './UpdateUser'
 import UpdatePassword from './UpdatePassword'
@@ -28,11 +29,11 @@ class Profile extends Component {
         deleteActive: this.state.deleteActive ? false : true
     })
 
-    updateUser = (newUsername, password) => {
-        this.props.onUpdate(password, newUsername, password)
+    updateUser(newUsername, password) {
+        console.log(newUsername, password)
     }
-    updatePassword = (password, newPassword) => {
-        this.props.onUpdate(password, '', newPassword)
+    updatePassword(password, newPassword) {
+        console.log(password, newPassword)
     }
     deleteUser = password => {
         if(this.props.deleteStatus != 0)
@@ -43,10 +44,10 @@ class Profile extends Component {
     render() {
         const { state: { updateUsernameActive, updatePasswordActive, deleteActive } } = this
         return (
-            <div className="profile">
-                <button className="profile__btn" onClick={this.handleUpdateUsername}>Update Username</button>
-                <button className="profile__btn" onClick={this.handleUpdatePassword}>Update Password</button>
-                <button className="profile__btn" onClick={this.handleDelete}>Delete Account</button>
+            <div>
+                <button onClick={this.handleUpdateUsername}>Update Username</button>
+                <button onClick={this.handleUpdatePassword}>Update Password</button>
+                <button onClick={this.handleDelete}>Delete Account</button>
                 {updateUsernameActive && <UpdateUser onUpdate={this.updateUser} />}
                 {updatePasswordActive && <UpdatePassword onUpdate={this.updatePassword} />}
                 {deleteActive && <DeleteUser onDelete={this.deleteUser} deleteStatus={this.props.deleteStatus}/>}

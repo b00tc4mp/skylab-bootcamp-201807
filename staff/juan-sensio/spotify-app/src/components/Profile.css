@@ -1,0 +1,14 @@
+.profile {
+    height: 100%;
+    border: 1px solid black;
+}
+.profile__btn{
+    height: 30px;
+    padding: 0 10px;
+    background: none;
+    border: none;
+}
+.profile__btn:hover{
+    background-color: aliceblue;
+    color: red;
+}

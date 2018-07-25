@@ -6,7 +6,7 @@ import SearchPanel from './SearchPanel'
 import ResultList from './ResultList'
 import SpotifyPlayer from './SpotifyPlayer'
 
-logic.spotifyToken = 'BQBo7vHc5gW11txoL8znEpB5qKd65TXi0wMpzajN8HkeXoOLzzH2kDhufb4AV3fPDOffmMyCADKW27x_uL43sjZF8R3OG31-9ncRf-hj_1V6CmLf4vs0uJmh0IWntS-BsllD1dnenndURQBjzQ';
+logic.spotifyToken = 'BQBJhptn3A7sqC9eOxE3hnO7Z8roi55mlhhBZ4hjiU6CtzX52StYIEB4-Y0LGemRrBL_z6kWz9M1ApChdYOuGQIKoNv5e1Hi-hBVJQjP1bzoA70zCxf4m8FGXEHs1uyW1kPjoX5FVbID2eMxgQ';
 
 class Main extends Component {
     state = {

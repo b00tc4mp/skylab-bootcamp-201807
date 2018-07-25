@@ -1,65 +1,45 @@
 'use strict'
 
 describe('logic (spotify-app)', () => {
+    
     describe('user\'s', () => {
-
+        
         describe('register user', () => {
-            const username = 'js-' + Math.random(), password = '123'
-
+            const username = 'juan-sensio-1', password = '123'
             it('should register on correct data', () => {
                 return logic.registerUser(username, password)
                     .then(id => {
                         expect(id).toBeDefined()
                     })
             })
+            afterEach(() => {
+                return logic.loginUser(username,password)
+                    .then( () => logic.unregisterUser(password)) 
+            })
         })
 
         describe('login user', () => {
-            const username = 'js-' + Math.random(), password = '123'
-            let userId
-
+            const username = 'juan-sensio-1', password = '123'
             beforeEach(() => {
                 return logic.registerUser(username, password)
-                    .then(id => userId = id)
             })
-
             it('should login on correct data', () => {
                 return logic.loginUser(username, password)
                     .then(res => {
                         expect(res).toBeTruthy()
-
-                        expect(logic._userId).toBe(userId)
-                        expect(logic._userToken).toBeDefined()
-                        expect(logic._userUsername).toBe(username)
                     })
             })
-        })
-
-
-        describe('update username', () => {
-            const username = 'js-' + Math.random(), password = '123'
-            const newUsername = 'jss' + username
-            beforeEach(() => {
-                return logic.registerUser(username, password)
-                    .then(() => logic.loginUser(username, password))
-            })
-            it('should update the user username', () => {
-                return logic.updateUser(password, newUsername, password)
-                    .then(res => {
-                        expect(res).toBeTruthy()
-                        expect(logic._userUsername).toBe(newUsername)
-                    })
+            afterEach(() => {
+                return logic.unregisterUser(password) 
             })
         })
 
         describe('unregister user', () => {
-            const username = 'js-' + Math.random(), password = '123'
-
+            const username = 'juan-sensio-1', password = '123'
             beforeEach(() => {
                 return logic.registerUser(username, password)
-                    .then(() => logic.loginUser(username, password))
+                    .then(() => logic.loginUser(username,password))
             })
-
             it('should unregister on correct data', () => {
                 return logic.unregisterUser(password)
                     .then(res => {
@@ -68,30 +48,10 @@ describe('logic (spotify-app)', () => {
             })
         })
 
-        describe('logout user', () => {
-            const username = 'js-' + Math.random(), password = '123'
-
-            beforeEach(() => {
-                return logic.registerUser(username, password)
-                    .then(() => logic.loginUser(username, password))
-            })
-
-            it('should logout correctly', () => {
-                expect(logic._userId).toBeDefined()
-                expect(logic._userToken).toBeDefined()
-                expect(logic._userUsername).toBeDefined()
-
-                logic.logout()
-
-                expect(logic._userId).toBeNull()
-                expect(logic._userToken).toBeNull()
-                expect(logic._userUsername).toBeNull()
-            })
-        })
     })
 
     describe('spotify\'s', () => {
-        logic.spotifyToken = 'BQBaWwVn9Zv9LJIvoBicx0MZ20v58rY_f-UizuPpAeFzpfOn2i369TmdpmbdZZCauxsX2yqr00Gxyhjulp7USPW_HgxUT2gK16YTmAvi2-d7m-hGcZYz8m7ngpMPLGIq4ADZg1hAZpxC'
+        logic.spotifyToken = 'BQDzAIspNX406qMI5t9WHsdzrZ7_RDNBin2KE4Gd76qDZFHAIhBwSlbM-h1NMsu6fXUMWVx6OaxPO1khCKDtV-SCBCHNMHZT5hwCVdEXIMwnjx9D3vUKkB1n3sLpqtZCjrjUATbNTza47qrYzQ'
 
         describe('search artists', () => {
             it('should find artists matching criteria', () => {
@@ -140,4 +100,5 @@ describe('logic (spotify-app)', () => {
             })
         })
     })
+    
 })
