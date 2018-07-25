@@ -2,6 +2,29 @@ const logic = {
     // _userId: null,
     // _userToken: null,
     // _userUsername: null,
+    set _userId(userId) {
+        sessionStorage.setItem('userId', userId)
+    },
+
+    get _userId() {
+        return sessionStorage.getItem('userId')
+    },
+
+    set _userToken(userToken) {
+        sessionStorage.setItem('userToken', userToken)
+    },
+
+    get _userToken() {
+        return sessionStorage.getItem('userToken')
+    },
+
+    set _userUsername(userUsername) {
+        sessionStorage.setItem('userUsername', userUsername)
+    },
+
+    get _userUsername() {
+        return sessionStorage.getItem('userUsername')
+    },
 
     spotifyToken: null,
 
@@ -17,12 +40,7 @@ const logic = {
 
             if (methodNotGet) config.headers['content-type'] = 'application/json'
 
-            //if (useToken) config.headers.authorization = 'Bearer ' + this._userToken
-            if (useToken) {
-                const userToken = sessionStorage.getItem('userToken')
-
-                config.headers.authorization = 'Bearer ' + userToken
-            }
+            if (useToken) config.headers.authorization = 'Bearer ' + this._userToken
         }
 
         if (body) config.body = JSON.stringify(body)
@@ -60,21 +78,19 @@ const logic = {
     loginUser(username, password) {
         return this._callUsersApi('/auth', 'post', { username, password })
             .then(({ data: { id, token } }) => {
-                // this._userId = id
-                // this._userToken = token
-                // this._userUsername = username
-                sessionStorage.setItem('userId', id)
-                sessionStorage.setItem('userToken', token)
-                sessionStorage.setItem('userUsername', username)
+                this._userId = id
+                this._userToken = token
+                this._userUsername = username
 
                 return true
             })
     },
 
     logout() {
-        // this._userId = null
-        // this._userToken = null
-        // this._userUsername = null
+        this._userId = null
+        this._userToken = null
+        this._userUsername = null
+        
         sessionStorage.clear()
     },
 
