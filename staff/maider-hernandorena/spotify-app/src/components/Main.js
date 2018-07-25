@@ -4,14 +4,12 @@ import ResultList from './ResultList'
 // import TrackPlayer from './TrackPlayer'
 import SpotifyPlayer from './SpotifyPlayer'
 import logic from '../logic'
-import LogoutPlace from './Logout-place';
-import Logout from './Logout';
-// import GoToLogout from './GoToLogout';
-
+import Admin from './Admin'
+import UpdatePanel from './UpdatePanel';
 
 class Main extends Component {
 
-  state = { artists: [], albums: [], tracks: [], track: undefined }
+  state = { artists: [], albums: [], tracks: [], track: undefined, updatingActive: false }
 
   onSearch = query => {
     logic.searchArtists(query)
@@ -74,10 +72,7 @@ class Main extends Component {
       })
   }
 
-  GoToLogout = id => {
-    logic.logOut(id)
-
-  }
+  onclicking = () => this.setState({ updatingActive: true })
 
   render() {
 
@@ -86,7 +81,8 @@ class Main extends Component {
     return (
       <section>
 
-        <LogoutPlace clickItem={this.GoToLogout} />
+        <Admin clickLogOut={this.props.onLogout} clickUpdate={this.onclicking} clickDelete={this.props.onDelete} />
+        { this.updatingActive && <UpdatePanel onUpdate={this.onclicking}/>}
 
         <h2>Search by Artist:</h2>
         <SearchPanel onSearch={onSearch} />

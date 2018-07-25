@@ -16,7 +16,7 @@ class SearchPanel extends Component {
 
     render() {
         return <form onSubmit={this.onSearch}>
-            <input type="text" onChange={this.keepQuery} />
+            <input type="text" onChange={this.keepQuery} placeholder="Type to search..."/>
             <button type="submit">Search</button>
         </form>
     }

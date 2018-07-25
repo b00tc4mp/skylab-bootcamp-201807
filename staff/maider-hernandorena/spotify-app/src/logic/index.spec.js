@@ -67,24 +67,28 @@ describe('logic (spotify-app)', () => {
         })
 
         describe('update user', () => {
-            // const username = 'maider-hernandorena-' + Math.random(), password = '123'
-            // beforeEach( () => {
-            //     return logic.registerUser(username, password)
-            //         .then(id => userId = id)
-            // })
+            const username = 'maider-hernandorena-' + Math.random(), password = '123'
+            const newUsername ='maider-hernan-' + Math.random(), newPassword = '456'
+
+            beforeEach(() => {
+                return logic.registerUser(username, password)
+                    .then(() => logic.loginUser(username, password))
+            })
+
             it('should update data correctly', () => {
                 return logic.updateUser(password, newUsername, newPassword)
                     .then(() => {
-                        // expect(newPassword).toBeDefined()
+                        expect(logic.updateUser).toBeDefined()
+                        expect(newPassword).toBeDefined()
+                        expect(newUsername).toBeDefined()
                         expect(logic.userUsername).toBe(newUsername)
-                        expect(password).toBe(newPassword)
                     })
             })
         })
     })
 
     describe('spotify\'s', () => {
-        logic.spotifyToken = 'BQB5DNIpRKZbUZOodxY65cvXXFKfRr_hKFaqn5IdDLRBQOUvMTUwEo0HK4GpkayfhyvuP3LgKEkOsvfZNkF59m3JX35Zz1qH7r2ewqzcSbOuzCcQyVVy_4ngDO5IJ7ZQrS1wP_hT1sos1g'
+        logic.spotifyToken = 'BQBxctX5GW77I8ws-BGxzBP3NS3ZfEbHiK_d8wYjfEvUlHB-ufDpaqYb6u4nwzthqsi9FS1khICYidaKYCisZ3lqDD6P2qXP7osJfHOTrR166a08s2QtK1sy3-sftKaC8oT-AabylVx0zw'
 
         describe('search artists', () => {
             it('should find artists matching criteria', () => {

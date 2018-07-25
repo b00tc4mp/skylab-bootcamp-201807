@@ -1,7 +1,14 @@
 const logic = {
-    userId: null,
-    userToken: null,
-    userUsername: null,
+    
+    set _userId(userId) { sessionStorage.setItem('userId', userId) },
+    get _userId() { return sessionStorage.getItem('userId') },
+
+    set _userToken(userToken) { sessionStorage.setItem('userToken', userToken) },
+    get _userToken() { return sessionStorage.getItem('userToken') },
+
+    set _userUsername(userUsername) { sessionStorage.setItem('userUsername', userUsername) },
+    get _userUsername() { return sessionStorage.getItem('userUsername') },
+
     spotifyToken: null,
 
     _callUsersApi(path, method = 'get', body, useToken) {
@@ -15,7 +22,7 @@ const logic = {
         if (noGetMethod || useToken) {
             config.headers = {}
                 if (noGetMethod) config.headers['content-type'] = 'application/json'
-                if (useToken) config.headers.authorization = 'Bearer ' + this.userToken
+                if (useToken) config.headers.authorization = 'Bearer ' + this._userToken
         }
 
         return fetch('https://skylabcoders.herokuapp.com/api' + path, config )
@@ -52,32 +59,38 @@ const logic = {
     loginUser(username, password) {
         return this._callUsersApi('/auth', 'post', { username, password })
             .then(res => {
-                this.userId = res.data.id,
-                this.userToken = res.data.token,
-                this.userUsername = username
+                this._userId = res.data.id
+                this._userToken = res.data.token
+                this._userUsername = username
                 return true
             })
     },
 
     unregisterUser(password) {
-        return this._callUsersApi(`/user/${this.userId}`, 'delete', { username: this.userUsername, password }, true)
+        return this._callUsersApi(`/user/${this._userId}`, 'delete', { username: this._userUsername, password }, true)
+            .then(() => {
+                sessionStorage.clear()
+            })    
             .then(() => true)
+                
     },
 
     logOut() {
-        this.userId = null
-        this.userToken = null
-        this.userUsername = null
+        this._userId = null
+        this._userToken = null
+        this._userUsername = null
     },
 
     updateUser(password, newUsername, newPassword) {
-        // TODO
-        return this._callUsersApi(`/user/${this.userId}`, 'put', { username: this.userUsername, password }, true)
+        return this._callUsersApi(`/user/${this._userId}`, 'put', { username: this._userUsername, password }, true)
             .then(() => {
-                this.userUsername = newUsername,
+                this._userUsername = newUsername
                 password = newPassword
-                return true
             })
+    },
+
+    get loggedIn() {
+        return this._userId && this._userToken && this._userUsername
     },
 
 

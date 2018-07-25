@@ -8,14 +8,14 @@ import Login from './components/Login'
 import GoToLogin from './components/GoToLogin'
 import Main from './components/Main'
 
-logic.spotifyToken = 'BQApHgTrYRrTW8PrNUQdIxIiJyTRwkCZwHKLBJ0pgF8yKWzCjeWjVOZqwQKAm5auu8aRsH2Rmr5blWFwyu1flqKaSRy5OOnxjS4DTT0KzROwpo55wH0fWGrq4n6x-slxKNROZXfQBcFeWg'
+logic.spotifyToken = 'BQC2ifAEVTSv5SW-HF6t04fWIxhjzlxj7mUqPDnSvLbBcCZa3SPoKgtL7qhYZ1UbCYMwClZvU_tfSgxryFg9YbmWzxSftfgvQxkYFxyaE3W0-_j0KUEX6ifQv0bTz_k4FJGUut-pSuGPVA'
 
 class App extends Component {
   state = {
     registerActive: false,
     loginActive: false,
     goToLoginActive: false,
-    loggedIn: false
+    loggedIn: logic.loggedIn
   }
 
   goToRegister = () => this.setState({ registerActive: true })
@@ -38,6 +38,22 @@ class App extends Component {
 
   goToLogin = () => this.setState({ loginActive: true, goToLoginActive: false })
 
+  goToLogout = () => {
+    this.setState({loggedIn: false})
+    logic.logOut()
+  }
+
+  goToUpdate = (password, newUsername, newPassword) => {
+    logic.updateUser(password, newUsername, newPassword)
+  }
+
+  goToDelete = () => {
+    this.setState({loggedIn: false})
+    const password = prompt('Enter password: ')
+    logic.unregisterUser(password)
+  }
+
+
   render() {
     const { state: { registerActive, loginActive, goToLoginActive, loggedIn } } = this
 
@@ -56,7 +72,8 @@ class App extends Component {
 
         {goToLoginActive && <GoToLogin onLogin={this.goToLogin} />}
 
-        {loggedIn && <Main />}
+        {loggedIn && <Main onLogout={this.goToLogout} onUpdate={this.goToUpdate} onDelete={this.goToDelete}/>}
+
       </div>
     )
   }
