@@ -28,9 +28,9 @@ describe('logic (spotify-app)', () => {
                     .then(res => {
                         expect(res).toBeTruthy()
 
-                        expect(sessionStorage.getItem('userId')).toBe(userId)
-                        expect(sessionStorage.getItem('userToken')).toBeDefined()
-                        expect(sessionStorage.getItem('userUsername')).toBe(username)
+                        expect(logic._userId).toBe(userId)
+                        expect(logic._userToken).toBeDefined()
+                        expect(logic._userUsername).toBe(username)
                     })
             })
         })
@@ -60,15 +60,15 @@ describe('logic (spotify-app)', () => {
             })
 
             it('should logout correctly', () => {
-                expect(sessionStorage.getItem('userId')).toBeDefined()
-                expect(sessionStorage.getItem('userToken')).toBeDefined()
-                expect(sessionStorage.getItem('userUsername')).toBeDefined()
+                expect(logic._userId).toBeDefined()
+                expect(logic._userToken).toBeDefined()
+                expect(logic._userUsername).toBeDefined()
 
                 logic.logout()
 
-                expect(sessionStorage.getItem('userId')).toBeNull()
-                expect(sessionStorage.getItem('userToken')).toBeNull()
-                expect(sessionStorage.getItem('userUsername')).toBeNull()
+                expect(logic._userId).toBeNull()
+                expect(logic._userToken).toBeNull()
+                expect(logic._userUsername).toBeNull()
             })
         })
     })
