@@ -90,30 +90,27 @@ const logic = {
         this._userId = null
         this._userToken = null
         this._userUsername = null
-        
+
         sessionStorage.clear()
     },
 
     get loggedIn() {
-        const userId = sessionStorage.getItem('userId')
-        const userToken = sessionStorage.getItem('userToken')
-        const userUsername = sessionStorage.getItem('userUsername')
-
-        return userId && userToken && userUsername
+        return this._userId && this._userToken && this._userUsername
     },
 
     updateUser(password, newUsername, newPassword) {
-        // TODO
+        return this._callUsersApi(`/user/${this._userId}`, 'put', {
+            password,
+            username: this._userUsername,
+            newUsername,
+            newPassword
+        }, true)
+            .then(() => true)
     },
 
     unregisterUser(password) {
-        //return this._callUsersApi(`/user/${this._userId}`, 'delete', {
-        const userId = sessionStorage.getItem('userId')
-        const userUsername = sessionStorage.getItem('userUsername')
-
-        return this._callUsersApi(`/user/${userId}`, 'delete', {
-            //username: this._userUsername,
-            username: userUsername,
+        return this._callUsersApi(`/user/${this._userId}`, 'delete', {
+            username: this._userUsername,
             password
         }, true)
             .then(() => true)
@@ -121,7 +118,7 @@ const logic = {
 
     // spotify's
 
-    searchArtists: function (query) {
+    searchArtists(query) {
         return this._callSpotifyApi('/search?type=artist&query=' + query)
             .then(res => res.artists.items)
     },
