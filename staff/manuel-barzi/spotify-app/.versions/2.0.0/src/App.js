@@ -8,9 +8,8 @@ import Login from './components/Login'
 import GoToLogin from './components/GoToLogin'
 import Main from './components/Main'
 import Profile from './components/Profile'
-import SpotifyPlayer from './components/SpotifyPlayer';
 
-logic.spotifyToken = 'BQB4sPWlhsPsNaZHklon7zm4BzZcFETO_m4pwefHWJyGA_H0NIpFa06LB60fW2Va5-QcO_hyhCJda-cYGVCjydG89uCCCK-ypPbRZ4jb8kN1vo-s88tE6kE44tpxvCkuJ97WlfaenqJT'
+logic.spotifyToken = 'BQAl8S7DWlpqe4HZgbfQazhTWwypewdKrMtYGA7yDqg2deldLKYW91EhpJO3FJuSXxZLaas3p1NB81OT9WtPfKADxaouqpHKyJmB8A-MnF1McMPa5nYf5c5KqZ2D5QGT-JB3zHMcyMD7'
 
 const PROFILE_UPDATE_OK = 'Profile updated correctly'
 
@@ -86,8 +85,6 @@ class App extends Component {
         {loggedIn && mainActive && !profileActive && <Main />}
 
         {loggedIn && profileActive && <Profile username={logic.userUsername} onUpdate={updateProfile} error={errorUpdateProfile} success={successUpdateProfile} />}
-
-        {/* <SpotifyPlayer track={{ id: '4QxwXcPUm1VfkHksz6VuFi', title: 'whatever' }} /> */}
       </div>
     )
   }

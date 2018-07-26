@@ -121,64 +121,6 @@ describe('logic (spotify-app)', () => {
                     .then(res => expect(res).toBeTruthy())
             })
         })
-
-        // describe('retrieve user', () => {
-        //     const username = 'manuel-barzi-' + Math.random(), password = '123'
-
-        //     beforeEach(() => {
-        //         return logic.registerUser(username, password)
-        //             .then(() => logic.loginUser(username, password))
-        //     })
-
-        //     it('should retrieve user data', () => {
-        //         return logic.retrieveUser()
-        //             .then(data => {
-        //                 expect(data.username).toBe(logic.userUsername)
-        //             })
-        //     })
-        // })
-
-        describe('favorites', () => {
-            let username
-            const password = '123'
-
-            beforeEach(() => {
-                username = 'manuel-barzi-' + Math.random()
-
-                return logic.registerUser(username, password)
-                    .then(() => logic.loginUser(username, password))
-            })
-
-            it('should toggle track to favorites', () => {
-                const trackId = '4QxwXcPUm1VfkHksz6VuFi'
-
-                return logic.toggleTrackFavorite(trackId)
-                    .then(res => {
-                        expect(res).toBeTruthy()
-                        expect(logic._userFavorites.includes(trackId)).toBeTruthy()
-
-                        return logic.toggleTrackFavorite(trackId)
-                    })
-                    .then(res => {
-                        expect(res).toBeTruthy()
-                        expect(logic._userFavorites.includes(trackId)).toBeFalsy()
-                    })
-            })
-
-            it('should check is favorite', () => {
-                const trackId = '6ozp33PI3p9AdddB6ZL3xQ'
-
-                return logic.toggleTrackFavorite(trackId)
-                    .then(() => {
-                        expect(logic.isFavorite(trackId)).toBeTruthy()
-
-                        return logic.toggleTrackFavorite(trackId)
-                    })
-                    .then(() => {
-                        expect(logic.isFavorite(trackId)).toBeFalsy()
-                    })
-            })
-        })
     })
 
     describe('spotify\'s', () => {
