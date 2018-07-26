@@ -15,7 +15,7 @@ class App extends Component {
     registerActive: false,
     loginActive: false,
     goToLoginActive: false,
-    loggedIn: false
+    loggedIn: logic.loggedIn
   }
 
   goToRegister = () => this.setState({ registerActive: true })
