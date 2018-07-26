@@ -8,7 +8,6 @@ class UpdatePanel extends Component {
         password: null,
         newUsername: null,
         newPassword: null,
-        updateActive: null
     }
 
     keepPassword = event => this.setState({ password: event.target.value })
@@ -31,6 +30,7 @@ class UpdatePanel extends Component {
                     <button className="all__form__button" type="submit" onClick={() => this.props.updated} >Change</button>
                 </form>
                 {this.props.error && <IfWrong message={this.props.error} />}
+                <a className="all__link" href="#/" onClick={this.props.onBack} >Go Back</a>
             </section>
         )
     }

@@ -82,10 +82,10 @@ const logic = {
     },
 
     updateUser(password, newUsername, newPassword) {
-        return this._callUsersApi(`/user/${this._userId}`, 'put', { username: this._userUsername, password }, true)
+        return this._callUsersApi(`/user/${this._userId}`, 'put', { username: this._userUsername, password, newUsername, newPassword }, true)
             .then(() => {
-                this._userUsername = newUsername
-                password = newPassword
+                if (newUsername !== null) this._userUsername = newUsername
+                return true 
             })
     },
 

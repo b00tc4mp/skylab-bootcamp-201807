@@ -15,11 +15,10 @@ class Main extends Component {
     albums: [], 
     tracks: [], 
     track: undefined, 
-    updatingActive: false, 
     searchWrong: null,
     artistWrong: null,
     albumWrong: null,
-    trackWrong: null 
+    trackWrong: null,
   }
 
   onSearch = query => {
@@ -35,7 +34,7 @@ class Main extends Component {
           searchWrong: null,
           artistWrong: null,
           albumWrong: null,
-          trackWrong: null 
+          trackWrong: null
         })
       })
       .catch(({message}) => this.setState({ searchWrong: message }))
@@ -53,7 +52,8 @@ class Main extends Component {
           searchWrong: null,
           artistWrong: null,
           albumWrong: null,
-          trackWrong: null 
+          trackWrong: null,
+           
         })
       })
       .catch(({message}) => this.setState({ artistWrong: message }))
@@ -85,37 +85,51 @@ class Main extends Component {
           searchWrong: null,
           artistWrong: null,
           albumWrong: null,
-          trackWrong: null 
+          trackWrong: null,
         })
       })
       .catch(({message}) => this.setState({ trackWrong: message }))
   }
 
-  onclicking = () => this.setState({ updatingActive: true })
+  onclicking = () => {
+    this.props.onUpdating()
+    
+  }
+
+  back = () => {
+    this.props.gobackUpdate()
+  }
+
+  
+
+  // onUpdating = () => this.setState({ mainActive: false })
 
   render() {
 
-    const {state: {artists, albums, tracks, track, updatingActive, searchWrong, artistWrong, albumWrong, trackWrong }, onSearch, onArtistClick, onAlbumClick, onTrackClick} = this
+    const {state: {artists, albums, tracks, track, searchWrong, artistWrong, albumWrong, trackWrong}, onSearch, onArtistClick, onAlbumClick, onTrackClick} = this
 
     return (
       <section className="main">
 
         <Admin clickLogOut={this.props.onLogout} clickUpdate={this.onclicking} clickDelete={this.props.onDelete} />
-        {updatingActive && <UpdatePanel onUpdate={this.props.updated}/>}
+        {this.props.updateActive && <UpdatePanel onUpdate={this.props.onUpdate} onBack={this.props.back} />}
 
-        <h2 className="main__searchtitle" >Search by Artist:</h2>
-        <SearchPanel onSearch={onSearch} error={searchWrong}/>
+        {this.props.goToMain && <div>
+          <h2 className="main__searchtitle" >Search by Artist:</h2>
+          <SearchPanel onSearch={onSearch} error={searchWrong}/>
 
-        <section className="main__grid">
-        {artists.length > 0 && <section className="main__grid__list"><h2 className="main__grid__list__titles">Artists:</h2><ResultList results={artists} clickItem={onArtistClick} error={artistWrong} /></section>}
+          <section className="main__grid">
+          {artists.length > 0 && <section className="main__grid__list"><h2 className="main__grid__list__titles">Artists:</h2><ResultList results={artists} clickItem={onArtistClick} error={artistWrong} /></section>}
 
-        {albums.length > 0 && <section className="main__grid__list"><h2 className="main__grid__list__titles">Albums:</h2><ResultList results={albums} clickItem={onAlbumClick} error={albumWrong} /></section> }
-        
-        {tracks.length > 0 && <section className="main__grid__list"><h2 className="main__grid__list__titles">Tracks:</h2><ResultList results={tracks} clickItem={onTrackClick} error={trackWrong} /></section> }
-        </section>
+          {albums.length > 0 && <section className="main__grid__list"><h2 className="main__grid__list__titles">Albums:</h2><ResultList results={albums} clickItem={onAlbumClick} error={albumWrong} /></section> }
+          
+          {tracks.length > 0 && <section className="main__grid__list"><h2 className="main__grid__list__titles">Tracks:</h2><ResultList results={tracks} clickItem={onTrackClick} error={trackWrong} /></section> }
+          </section>
 
-        {/* {track && <TrackPlayer track={track}/>} */}
-        {track && <SpotifyPlayer className="main__track" track={track}/>}
+          {/* {track && <TrackPlayer track={track}/>} */}
+          {track && <SpotifyPlayer className="main__track" track={track}/>}
+        </div> 
+        }
         
       </section>
     );

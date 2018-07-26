@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import logo from './spotify.png'
-import './app.css'
+import './App.css'
 import logic from './logic'
 import Landing from './components/Landing'
 import Register from './components/Register'
@@ -8,7 +8,9 @@ import Login from './components/Login'
 import GoToLogin from './components/GoToLogin'
 import Main from './components/Main'
 
-logic.spotifyToken = 'BQBstulcPzGgHxJCL173oWWfc6KIpu8tMdbftX9Fbmmt806NYY6DfA0Y-5CaKfW9vVSwy1LV1WeaFagyBmUSk0Po5CX__EsFG-ak8CL7zlskitbkieAYB2Sz-4EJDwc_cPoHEK3w8nshuA'
+logic.spotifyToken = 'BQC4NI_H8Qo990XombvN347xK2YY4J66E6DhRLnF_Ul9X7_mQpzUtuc4H2ErxWKYphXKvSpDBaC2oIWyfWW330c_0VwjHdjdFJGUhTq7tO4MIBHuAT1UWUBmDVER6ZQo5ROoFtwggLiSjA'
+
+const profileUpdated = 'Profile updated correctly'
 
 class App extends Component {
   state = {
@@ -17,7 +19,11 @@ class App extends Component {
     goToLoginActive: false,
     loggedIn: logic.loggedIn,
     loginWrong: null,
-    registerWrong: null
+    registerWrong: null,
+    goToMain: true,
+    updateActive: null,
+    updateWrong: null,
+    updateOk: null
   }
 
   goToRegister = () => this.setState({ registerActive: true, loginActive: false })
@@ -31,7 +37,7 @@ class App extends Component {
 
   loginUser = (username, password) =>
     logic.loginUser(username, password)
-      .then(() => this.setState({ loggedIn: true, loginActive: false }))
+      .then(() => this.setState({ loggedIn: true, goToMain: true, updateActive: false, loginActive: false }))
       .catch(({ message }) => this.setState({ loginWrong: message }))
 
   goToLogin = () => this.setState({ loginActive: true, goToLoginActive: false, registerActive: false, error: null })
@@ -43,7 +49,14 @@ class App extends Component {
 
   goToUpdate = (password, newUsername, newPassword) => {
     logic.updateUser(password, newUsername, newPassword)
+      .then(() => this.setState({ updateOk: profileUpdated }))
+      .then(() => this.goToLogin())
+      .catch(({ message }) => this.setState({ updateWrong: message }))
   }
+
+  goingToUpdate = () =>  this.setState({ goToMain: false, updateActive: true })
+  
+  gobackUpdate = () => {this.setState({goToMain: true})}
 
   goToDelete = () => {
     this.setState({loggedIn: false})
@@ -70,7 +83,7 @@ class App extends Component {
 
         {goToLoginActive && <GoToLogin onLogin={goToLogin} />}
 
-        {loggedIn && <Main onLogout={goToLogout} onUpdate={goToUpdate} onDelete={goToDelete}/>}
+        {loggedIn && <Main onLogout={goToLogout} onUpdate={goToUpdate} goToMain={this.state.goToMain} gobackUpdate={this.gobackUpdate} updateActive={this.state.updateActive} onDelete={goToDelete} onUpdating={this.goingToUpdate}/>}
 
       </div>
     )

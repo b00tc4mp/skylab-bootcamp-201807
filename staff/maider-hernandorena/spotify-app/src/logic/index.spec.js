@@ -24,9 +24,9 @@ describe('logic (spotify-app)', () => {
                 return logic.loginUser(username, password)
                     .then(res => {
                         expect(res).toBeTruthy()
-                        expect(logic.userId).toBe(userId)
-                        expect(logic.userToken).toBeDefined()
-                        expect(logic.userUsername).toBe(username)
+                        expect(logic._userId).toBe(userId)
+                        expect(logic._userToken).toBeDefined()
+                        expect(logic._userUsername).toBe(username)
                     })
             })
         })
@@ -54,15 +54,15 @@ describe('logic (spotify-app)', () => {
             })
 
             it('should logout correctly', () => {
-                expect(logic.userId).toBeDefined()
-                expect(logic.userToken).toBeDefined()
-                expect(logic.userUsername).toBeDefined()
+                expect(logic._userId).toBeDefined()
+                expect(logic._userToken).toBeDefined()
+                expect(logic._userUsername).toBeDefined()
 
                 logic.logOut()
 
-                expect(logic.userId).toBeNull()
-                expect(logic.userToken).toBeNull()
-                expect(logic.userUsername).toBeNull()
+                expect(logic._userId).toBe('null')
+                expect(logic._userToken).toBe('null')
+                expect(logic._userUsername).toBe('null')
             })
         })
 
@@ -81,14 +81,14 @@ describe('logic (spotify-app)', () => {
                         expect(logic.updateUser).toBeDefined()
                         expect(newPassword).toBeDefined()
                         expect(newUsername).toBeDefined()
-                        expect(logic.userUsername).toBe(newUsername)
+                        expect(logic._userUsername).toBe(newUsername)
                     })
             })
         })
     })
 
     describe('spotify\'s', () => {
-        logic.spotifyToken = 'BQBxctX5GW77I8ws-BGxzBP3NS3ZfEbHiK_d8wYjfEvUlHB-ufDpaqYb6u4nwzthqsi9FS1khICYidaKYCisZ3lqDD6P2qXP7osJfHOTrR166a08s2QtK1sy3-sftKaC8oT-AabylVx0zw'
+        logic.spotifyToken = 'BQC4NI_H8Qo990XombvN347xK2YY4J66E6DhRLnF_Ul9X7_mQpzUtuc4H2ErxWKYphXKvSpDBaC2oIWyfWW330c_0VwjHdjdFJGUhTq7tO4MIBHuAT1UWUBmDVER6ZQo5ROoFtwggLiSjA'
 
         describe('search artists', () => {
             it('should find artists matching criteria', () => {
