@@ -22,7 +22,7 @@ const logic = {
         sessionStorage.setItem('userUsername', userUsername)
     },
 
-    get _userUsername() {
+    get userUsername() {
         return sessionStorage.getItem('userUsername')
     },
 
@@ -95,16 +95,30 @@ const logic = {
     },
 
     get loggedIn() {
-        return this._userId && this._userToken && this._userUsername
+        return this._userId && this._userToken && this.userUsername
     },
 
     updateUser(password, newUsername, newPassword) {
-        // TODO
+        const data =  {
+            username: this.userUsername,
+            password
+        }
+
+        if (newUsername) data.newUsername = newUsername
+
+        if (newPassword) data.newPassword = newPassword
+
+        return this._callUsersApi(`/user/${this._userId}`, 'put', data, true)
+            .then(()  => {
+                if (newUsername) this._userUsername = newUsername
+
+                return true
+            })
     },
 
     unregisterUser(password) {
         return this._callUsersApi(`/user/${this._userId}`, 'delete', {
-            username: this._userUsername,
+            username: this.userUsername,
             password
         }, true)
             .then(() => true)
