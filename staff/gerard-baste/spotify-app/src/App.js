@@ -7,6 +7,9 @@ import Register from './components/Register'
 import Login from './components/Login'
 import GoToLogin from './components/GoToLogin'
 import Main from './components/Main'
+import UpdateUser from './components/UpdateUser'
+import swal from 'sweetalert'
+
 
 logic.spotifyToken = 'BQAl8S7DWlpqe4HZgbfQazhTWwypewdKrMtYGA7yDqg2deldLKYW91EhpJO3FJuSXxZLaas3p1NB81OT9WtPfKADxaouqpHKyJmB8A-MnF1McMPa5nYf5c5KqZ2D5QGT-JB3zHMcyMD7'
 
@@ -17,7 +20,8 @@ class App extends Component {
     goToLoginActive: false,
     loggedIn: logic.loggedIn,
     errorLogin: null,
-    errorRegister: null
+    errorRegister: null,
+    updateInformation: false
   }
 
   goToRegister = () => this.setState({ registerActive: true, loginActive: false })
@@ -36,6 +40,14 @@ class App extends Component {
 
   goToLogin = () => this.setState({ loginActive: true, goToLoginActive: false, error: null, registerActive: false })
 
+  goToUpdate = () => this.setState({updateInformation: true})
+
+  onUpdate = (password, newUsername, newPassword) =>
+    logic.updateUser(password, newUsername, newPassword)
+      .then(() => {
+        this.setState({ updateInformation: false })
+        swal("Information Update!", "You clicked the button!", "success")})
+
   logoutUser = () => {
     logic.logout()
 
@@ -43,7 +55,7 @@ class App extends Component {
   }
 
   render() {
-    const { state: { registerActive, loginActive, goToLoginActive, loggedIn, errorRegister, errorLogin }, goToRegister, goToLogin, registerUser, loginUser, logoutUser } = this
+    const { state: { registerActive, loginActive, goToLoginActive, loggedIn, errorRegister, errorLogin,updateInformation}, goToRegister, goToLogin, registerUser, loginUser, logoutUser, goToUpdate  } = this
 
     return (
       <div className="App">
@@ -51,17 +63,20 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">Spotify App</h1>
           {loggedIn && <button onClick={logoutUser}>Logout</button>}
+          {loggedIn && <button onClick={goToUpdate}>{logic._userUsername} Profile</button>}
         </header>
 
-        {!(registerActive || loginActive || goToLoginActive || loggedIn) && <Landing onRegister={goToRegister} onLogin={goToLogin} />}
+        {!(registerActive || loginActive || goToLoginActive || loggedIn || updateInformation ) && <Landing onRegister={goToRegister} onLogin={goToLogin} />}
 
         {registerActive && <Register onRegister={registerUser} onGoToLogin={goToLogin} error={errorRegister} />}
 
         {loginActive && <Login onLogin={loginUser} onGoToRegister={goToRegister} error={errorLogin} />}
 
+        {updateInformation  && <UpdateUser onUpdate={this.onUpdate} />}
+
         {goToLoginActive && <GoToLogin onLogin={goToLogin} />}
 
-        {loggedIn && <Main />}
+        {loggedIn && !updateInformation && <Main />}
       </div>
     )
   }
