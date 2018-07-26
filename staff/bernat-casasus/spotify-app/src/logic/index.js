@@ -99,11 +99,11 @@ const logic = {
     },
 
     updateUser(newUsername,password, newPassword) {
-
+        if(!newUsername)newUsername = this._userUsername
+        if(!newPassword)newPassword = password
         const username = this._userUsername
         return this._callUsersApi(`/user/${this._userId}`,'put',{username,newUsername,password,newPassword },true)
             .then( ()=> {
-                this._userUsername = newUsername
                 return true
             })
     },

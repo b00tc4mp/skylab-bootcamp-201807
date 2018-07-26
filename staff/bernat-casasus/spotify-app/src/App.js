@@ -41,12 +41,12 @@ class App extends Component {
       .then(() => {
         this.setState({ loggedIn: true, loginActive: false, goToMain: true })
         swal({
-          title: 'Cool! Login Succesful!',
+          title: 'Login Succesful!',
           width: 600,
           padding: '3em',
-          background: '#fff url(/images/trees.png)',
+          background: '#fff url(https://78.media.tumblr.com/155fff0a8c45f385c6861c71e446536f/tumblr_nix7fraY4V1qf8w0bo1_1280.gif)',
           backdrop: `
-            rgba(0,0,123,0.4)
+            rgba(253,245,230,0.4)
             url("https://i.pinimg.com/originals/62/1a/15/621a15c85432d566db70ebbc524dbb79.jpg")
             center left
             no-repeat
@@ -76,7 +76,7 @@ class App extends Component {
             title: 'Cool! Your settings have been saved!',
             width: 600,
             padding: '3em',
-            background: '#fff url(/images/trees.png)',
+            background: '#fff url(https://78.media.tumblr.com/155fff0a8c45f385c6861c71e446536f/tumblr_nix7fraY4V1qf8w0bo1_1280.gif)',
             backdrop: `
               rgba(0,0,123,0.4)
               url("https://vignette.wikia.nocookie.net/nyancat/images/e/e7/Nyancat.gif/revision/latest?cb=20130808073427")
