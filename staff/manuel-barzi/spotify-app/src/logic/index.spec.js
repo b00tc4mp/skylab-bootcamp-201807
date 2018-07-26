@@ -121,6 +121,22 @@ describe('logic (spotify-app)', () => {
                     .then(res => expect(res).toBeTruthy())
             })
         })
+
+        describe('retrieve user', () => {
+            const username = 'manuel-barzi-' + Math.random(), password = '123'
+
+            beforeEach(() => {
+                return logic.registerUser(username, password)
+                    .then(() => logic.loginUser(username, password))
+            })
+
+            it('should retrieve user data', () => {
+                return logic.retrieveUser()
+                    .then(data => {
+                        expect(data.username).toBe(logic.userUsername)
+                    })
+            })
+        })
     })
 
     describe('spotify\'s', () => {
@@ -172,5 +188,17 @@ describe('logic (spotify-app)', () => {
                     })
             })
         })
+
+        // describe('favorites', ()  => {
+        //     it('should add track to favorites', () => {
+        //         return logic.markTrackFavorite('4QxwXcPUm1VfkHksz6VuFi')
+        //             .then(res => expect(res).toBeTruthy())
+        //     })
+
+        //     it('should remove track from favorites', () => {
+        //         return logic.unmarkTrackFavorite('4QxwXcPUm1VfkHksz6VuFi')
+        //             .then(res => expect(res).toBeTruthy())
+        //     })
+        // })
     })
 })

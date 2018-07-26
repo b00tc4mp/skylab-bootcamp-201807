@@ -99,7 +99,7 @@ const logic = {
     },
 
     updateUser(password, newUsername, newPassword) {
-        const data =  {
+        const data = {
             username: this.userUsername,
             password
         }
@@ -109,7 +109,7 @@ const logic = {
         if (newPassword) data.newPassword = newPassword
 
         return this._callUsersApi(`/user/${this._userId}`, 'put', data, true)
-            .then(()  => {
+            .then(() => {
                 if (newUsername) this._userUsername = newUsername
 
                 return true
@@ -122,6 +122,11 @@ const logic = {
             password
         }, true)
             .then(() => true)
+    },
+
+    retrieveUser() {
+        return this._callUsersApi(`/user/${this._userId}`, 'get', undefined, true)
+            .then(({ data }) => data)
     },
 
     // spotify's
@@ -143,6 +148,11 @@ const logic = {
 
     retrieveTrackById(id) {
         return this._callSpotifyApi('/tracks/' + id)
+    },
+
+    markTrackFavorite(trackId) {
+        return this._callUsersApi(`/user/${this._userId}`, 'put', data, true)
+            .then(() => true)
     }
 };
 
