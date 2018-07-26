@@ -9,7 +9,7 @@ import GoToLogin from './components/GoToLogin'
 import Main from './components/Main'
 import UpdateUserData from "./components/UpdateUserData";
 
-logic.spotifyToken = 'BQB15eQ2ULYb3EJjjsZivSKmEtfPei7kLms42lqd9mlVUxfBAWuVmb4O40oc36supuVOaVwwHrVwmrPj9-hVKhLe4F8t0RT_qwj3dtgeIj-PahsaVsjhKCAzgRNExn5qgL3LovFc_zQd'
+logic.spotifyToken = 'BQD4-bYbhnV0CzcGZaNEmNOfaLaCDSAVdMA1rb7lhyTKMEBU8kRle4ybywZnrZ0jtyhQDuccrIo7PPgkzV_9r9Pet_JUHNBXvByhj7Lp9huTIpBXaSPBYtxNQ6lgSOYQ3L4KDN5jPoZt'
 
 class App extends Component {
   state = {

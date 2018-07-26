@@ -64,7 +64,9 @@ const logic = {
         if (res.status === 'KO') throw Error(res.error)
 
         return res;
-      })
+      })/*
+      .catch(err => console.error)*/
+
   },
 
   _callSpotifyApi(path) {
@@ -102,8 +104,10 @@ const logic = {
   retrieveUserData( fieldName) {
     return this._callUsersApi(`/user/${this._userId}`, 'get', null, true)
       .then((res) => {
-        return res.data[fieldName];
+        if (res && res.data && res.data[fieldName]) return res.data[fieldName];
+        else return null;
       })
+     /* .catch(err => console.error)*/
   },
 
   registerUser(username, password) {
