@@ -8,7 +8,7 @@ import Login from './components/Login'
 import GoToLogin from './components/GoToLogin'
 import Main from './components/Main'
 
-logic.spotifyToken = 'BQC4NI_H8Qo990XombvN347xK2YY4J66E6DhRLnF_Ul9X7_mQpzUtuc4H2ErxWKYphXKvSpDBaC2oIWyfWW330c_0VwjHdjdFJGUhTq7tO4MIBHuAT1UWUBmDVER6ZQo5ROoFtwggLiSjA'
+logic.spotifyToken = 'BQC0nHFGw5irtZp7xxhHEnPzPmvgQqvTMoOUa64z1OMFNlIp3bMA21Py7lhhIQx3cKuV-PAx4Mu5IPM-nms0D1TTrqYLQxJHteySBwYRCgaE320coKfAmYLS_DmedtwCu9oZ9DhIiDVAQA'
 
 const profileUpdated = 'Profile updated correctly'
 
@@ -51,6 +51,7 @@ class App extends Component {
     logic.updateUser(password, newUsername, newPassword)
       .then(() => this.setState({ updateOk: profileUpdated }))
       .then(() => this.goToLogin())
+      .then(() => this.setState({ updateActive: false }))
       .catch(({ message }) => this.setState({ updateWrong: message }))
   }
 
