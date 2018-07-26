@@ -108,8 +108,7 @@ class Main extends Component {
 
     const {state: {artists, albums, tracks, track, searchWrong, artistWrong, albumWrong, trackWrong}, onSearch, onArtistClick, onAlbumClick, onTrackClick} = this
 
-    return (
-      <section className="main">
+    return ( <section className="main">
 
         <Admin clickLogOut={this.props.onLogout} clickUpdate={this.onclicking} clickDelete={this.props.onDelete} />
         {this.props.updateActive && <UpdatePanel onUpdate={this.props.onUpdate} onBack={this.props.back} />}

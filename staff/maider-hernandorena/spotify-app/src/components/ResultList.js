@@ -5,7 +5,7 @@ import './css/list.css'
 function ResultList(props) {
     return  <section className="list">
                 <ul className="list__items">
-                    {props.results.map( ({id, text}) => <li className="list__items__each" key={id}><a className="list__items__each__link" href="#/" onClick={() => props.clickItem(id)}>{text}</a></li>)}
+                    {props.results.map( ({id, text}) => <a className="list__items__link list__items__link-action" href="#/" onClick={() => props.clickItem(id)}><li className="list__items__link__each" key={id}>{text}</li></a>)}
                 </ul>
                 {props.error && <IfWrong message={props.error} />}
             </section>
