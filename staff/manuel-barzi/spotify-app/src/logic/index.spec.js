@@ -30,7 +30,7 @@ describe('logic (spotify-app)', () => {
 
                         expect(logic._userId).toBe(userId)
                         expect(logic._userToken).toBeDefined()
-                        expect(logic._userUsername).toBe(username)
+                        expect(logic.userUsername).toBe(username)
                     })
             })
         })
@@ -62,13 +62,63 @@ describe('logic (spotify-app)', () => {
             it('should logout correctly', () => {
                 expect(logic._userId).toBeDefined()
                 expect(logic._userToken).toBeDefined()
-                expect(logic._userUsername).toBeDefined()
+                expect(logic.userUsername).toBeDefined()
 
                 logic.logout()
 
                 expect(logic._userId).toBeNull()
                 expect(logic._userToken).toBeNull()
-                expect(logic._userUsername).toBeNull()
+                expect(logic.userUsername).toBeNull()
+            })
+        })
+
+        describe('update user', () => {
+            let username
+            const password = '123'
+
+            beforeEach(() => {
+                username = 'manuel-barzi-' + Math.random()
+
+                return logic.registerUser(username, password)
+                    .then(() => logic.loginUser(username, password))
+            })
+
+            it('should update username and password correctly', () => {
+                const newUsername = username + '-' + Math.random()
+                const newPassword = password + '-' + Math.random()
+
+                return logic.updateUser(password, newUsername, newPassword)
+                    // .then(res => expect(res).toBeTruthy())
+                    .then(res => {
+                        expect(res).toBeTruthy()
+
+                        return logic.loginUser(newUsername, newPassword)
+                    })
+                    .then(res => expect(res).toBeTruthy())
+            })
+
+            it('should update username correctly', () => {
+                const newUsername = username + '-' + Math.random()
+
+                return logic.updateUser(password, newUsername)
+                    .then(res => {
+                        expect(res).toBeTruthy()
+
+                        return logic.loginUser(newUsername, password)
+                    })
+                    .then(res => expect(res).toBeTruthy())
+            })
+
+            it('should update password correctly', () => {
+                const newPassword = password + '-' + Math.random()
+
+                return logic.updateUser(password, undefined, newPassword)
+                    .then(res => {
+                        expect(res).toBeTruthy()
+
+                        return logic.loginUser(username, newPassword)
+                    })
+                    .then(res => expect(res).toBeTruthy())
             })
         })
     })
