@@ -1,5 +1,5 @@
 # staff
 
 - Jaume [GitHub](https://github.com/jaumeserr)
-- Laia
+- Laia [GitHub](https://github.com/laia89)
 - Pau
