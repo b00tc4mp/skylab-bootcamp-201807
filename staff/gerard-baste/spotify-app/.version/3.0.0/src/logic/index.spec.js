@@ -4,7 +4,7 @@ describe('logic (spotify-app)', () => {
     describe('user\'s', () => {
 
         describe('register user', () => {
-            const username = 'manuel-barzi-' + Math.random(), password = '123'
+            const username = 'gerard-baste-' + Math.random(), password = '123'
 
             it('should register on correct data', () => {
                 return logic.registerUser(username, password)
@@ -15,7 +15,7 @@ describe('logic (spotify-app)', () => {
         })
 
         describe('login user', () => {
-            const username = 'manuel-barzi-' + Math.random(), password = '123'
+            const username = 'gerard-baste-' + Math.random(), password = '123'
             let userId
 
             beforeEach(() => {
@@ -30,13 +30,13 @@ describe('logic (spotify-app)', () => {
 
                         expect(logic._userId).toBe(userId)
                         expect(logic._userToken).toBeDefined()
-                        expect(logic.userUsername).toBe(username)
+                        expect(logic._userUsername).toBe(username)
                     })
             })
         })
 
         describe('unregister user', () => {
-            const username = 'manuel-barzi-' + Math.random(), password = '123'
+            const username = 'gerard-baste-' + Math.random(), password = '123'
 
             beforeEach(() => {
                 return logic.registerUser(username, password)
@@ -52,7 +52,7 @@ describe('logic (spotify-app)', () => {
         })
 
         describe('logout user', () => {
-            const username = 'manuel-barzi-' + Math.random(), password = '123'
+            const username = 'gerard-baste-' + Math.random(), password = '123'
 
             beforeEach(() => {
                 return logic.registerUser(username, password)
@@ -62,120 +62,34 @@ describe('logic (spotify-app)', () => {
             it('should logout correctly', () => {
                 expect(logic._userId).toBeDefined()
                 expect(logic._userToken).toBeDefined()
-                expect(logic.userUsername).toBeDefined()
+                expect(logic._userUsername).toBeDefined()
 
                 logic.logout()
 
                 expect(logic._userId).toBeNull()
                 expect(logic._userToken).toBeNull()
-                expect(logic.userUsername).toBeNull()
+                expect(logic._userUsername).toBeNull()
             })
         })
 
         describe('update user', () => {
-            let username
-            const password = '123'
+            const username = 'gerard-baste-' + Math.random(), password = '123', newPassword = '456', newUsername = 'gerard-baste-' + Math.random()
 
             beforeEach(() => {
-                username = 'manuel-barzi-' + Math.random()
-
                 return logic.registerUser(username, password)
                     .then(() => logic.loginUser(username, password))
             })
 
-            it('should update username and password correctly', () => {
-                const newUsername = username + '-' + Math.random()
-                const newPassword = password + '-' + Math.random()
+            it('should update correctly', () => {
+                expect(logic._userId).toBeDefined()
+                expect(logic._userToken).toBeDefined()
+                expect(logic._userUsername).toBeDefined()
 
+            })
+            it('should unregister on correct data', () => {
                 return logic.updateUser(password, newUsername, newPassword)
-                    // .then(res => expect(res).toBeTruthy())
                     .then(res => {
                         expect(res).toBeTruthy()
-
-                        return logic.loginUser(newUsername, newPassword)
-                    })
-                    .then(res => expect(res).toBeTruthy())
-            })
-
-            it('should update username correctly', () => {
-                const newUsername = username + '-' + Math.random()
-
-                return logic.updateUser(password, newUsername)
-                    .then(res => {
-                        expect(res).toBeTruthy()
-
-                        return logic.loginUser(newUsername, password)
-                    })
-                    .then(res => expect(res).toBeTruthy())
-            })
-
-            it('should update password correctly', () => {
-                const newPassword = password + '-' + Math.random()
-
-                return logic.updateUser(password, undefined, newPassword)
-                    .then(res => {
-                        expect(res).toBeTruthy()
-
-                        return logic.loginUser(username, newPassword)
-                    })
-                    .then(res => expect(res).toBeTruthy())
-            })
-        })
-
-        // describe('retrieve user', () => {
-        //     const username = 'manuel-barzi-' + Math.random(), password = '123'
-
-        //     beforeEach(() => {
-        //         return logic.registerUser(username, password)
-        //             .then(() => logic.loginUser(username, password))
-        //     })
-
-        //     it('should retrieve user data', () => {
-        //         return logic.retrieveUser()
-        //             .then(data => {
-        //                 expect(data.username).toBe(logic.userUsername)
-        //             })
-        //     })
-        // })
-
-        describe('favorites', () => {
-            let username
-            const password = '123'
-
-            beforeEach(() => {
-                username = 'manuel-barzi-' + Math.random()
-
-                return logic.registerUser(username, password)
-                    .then(() => logic.loginUser(username, password))
-            })
-
-            it('should toggle track to favorites', () => {
-                const trackId = '4QxwXcPUm1VfkHksz6VuFi'
-
-                return logic.toggleTrackFavorite(trackId)
-                    .then(res => {
-                        expect(res).toBeTruthy()
-                        expect(logic._userFavorites.includes(trackId)).toBeTruthy()
-
-                        return logic.toggleTrackFavorite(trackId)
-                    })
-                    .then(res => {
-                        expect(res).toBeTruthy()
-                        expect(logic._userFavorites.includes(trackId)).toBeFalsy()
-                    })
-            })
-
-            it('should check is favorite', () => {
-                const trackId = '6ozp33PI3p9AdddB6ZL3xQ'
-
-                return logic.toggleTrackFavorite(trackId)
-                    .then(() => {
-                        expect(logic.isFavorite(trackId)).toBeTruthy()
-
-                        return logic.toggleTrackFavorite(trackId)
-                    })
-                    .then(() => {
-                        expect(logic.isFavorite(trackId)).toBeFalsy()
                     })
             })
         })

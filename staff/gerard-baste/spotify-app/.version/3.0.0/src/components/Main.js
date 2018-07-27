@@ -12,7 +12,7 @@ class Main extends Component {
         artists: [],
         albums: [],
         tracks: [],
-        track: undefined, // { title, image, file, url } for TrackPlayer or { id, title } for SpotifyPlayer
+        track: undefined, // { title, image, file, url }
         searchError: null,
         artistError: null,
         albumError: null,

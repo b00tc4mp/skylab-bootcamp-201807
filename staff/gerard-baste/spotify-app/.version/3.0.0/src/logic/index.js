@@ -22,24 +22,8 @@ const logic = {
         sessionStorage.setItem('userUsername', userUsername)
     },
 
-    get userUsername() {
+    get _userUsername() {
         return sessionStorage.getItem('userUsername')
-    },
-
-    set _userPassword(userPassword) {
-        sessionStorage.setItem('userPassword', userPassword)
-    },
-
-    get _userPassword() {
-        return sessionStorage.getItem('userPassword')
-    },
-
-    set _userFavorites(userFavorites) {
-        sessionStorage.setItem('userFavorites', JSON.stringify(userFavorites))
-    },
-
-    get _userFavorites() {
-        return JSON.parse(sessionStorage.getItem('userFavorites')) || []
     },
 
     spotifyToken: null,
@@ -97,13 +81,6 @@ const logic = {
                 this._userId = id
                 this._userToken = token
                 this._userUsername = username
-                this._userPassword = password // IDEAL encrypt it!
-
-                // return true
-                return this._callUsersApi(`/user/${this._userId}`, 'get', undefined, true)
-            })
-            .then(({ data }) => {
-                this._userFavorites = data.favorites || []
 
                 return true
             })
@@ -118,67 +95,25 @@ const logic = {
     },
 
     get loggedIn() {
-        return this._userId && this._userToken && this.userUsername
+        return this._userId && this._userToken && this._userUsername
     },
 
     updateUser(password, newUsername, newPassword) {
-        const data = {
-            username: this.userUsername,
-            password
-        }
 
-        if (newUsername) data.newUsername = newUsername
-
-        if (newPassword) data.newPassword = newPassword
-
-        return this._callUsersApi(`/user/${this._userId}`, 'put', data, true)
-            .then(() => {
-                if (newUsername) this._userUsername = newUsername
-
+        const username = this._userUsername
+        return this._callUsersApi(`/user/${this._userId}`,'put',{username,newUsername,password,newPassword },true)
+            .then( ()=> {
+                if(newUsername !== null) this._userUsername(newUsername)
                 return true
             })
     },
 
     unregisterUser(password) {
         return this._callUsersApi(`/user/${this._userId}`, 'delete', {
-            username: this.userUsername,
+            username: this._userUsername,
             password
         }, true)
             .then(() => true)
-    },
-
-    // retrieveUser() {
-    //     return this._callUsersApi(`/user/${this._userId}`, 'get', undefined, true)
-    //         .then(({ data }) => data)
-    // },
-
-    toggleTrackFavorite(trackId) {
-        const favorites = this._userFavorites
-        
-        const index = favorites.indexOf(trackId)
-
-        if (index > -1) {
-            favorites.splice(index, 1)
-        } else {
-            favorites.push(trackId)
-        }
-
-        const data = {
-            username: this.userUsername,
-            password: this._userPassword,
-            favorites
-        }
-
-        return this._callUsersApi(`/user/${this._userId}`, 'put', data, true)
-            .then(() => {
-                this._userFavorites = favorites
-                
-                return true
-            })
-    },
-
-    isFavorite(trackId) {
-        return this._userFavorites.includes(trackId)
     },
 
     // spotify's
