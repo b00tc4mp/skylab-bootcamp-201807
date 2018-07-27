@@ -2,4 +2,5 @@
 
 - Carlota
 - Juan (juansensio)
-- Sergi
+- Sergi (sergisanrama)
+
