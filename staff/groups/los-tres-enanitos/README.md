@@ -1,5 +1,5 @@
 # staff
 
-- Edu
 - Kim (kimbali)
+- Edu (eduberenguer)
 - Gio
