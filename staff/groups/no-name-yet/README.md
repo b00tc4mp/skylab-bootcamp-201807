@@ -1,5 +1,5 @@
 # staff
 
-- Carlota
+- Carlota (carlotavicens)
 - Juan
 - Sergi
