@@ -2,4 +2,4 @@
 
 - Maider (maiderhernandorena)
 - Jordi (jordiubanell)
-- Sergio
+- Sergio (SergioCastilloSorribes)
