@@ -1,6 +1,5 @@
 # staff
 
-- Carlota
+- Carlota (carlotavicens)
 - Juan (juansensio)
 - Sergi (sergisanrama)
-
