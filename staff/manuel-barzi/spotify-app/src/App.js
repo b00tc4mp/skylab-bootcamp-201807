@@ -10,7 +10,7 @@ import Main from './components/Main'
 import Profile from './components/Profile'
 import SpotifyPlayer from './components/SpotifyPlayer';
 
-logic.spotifyToken = 'BQB4sPWlhsPsNaZHklon7zm4BzZcFETO_m4pwefHWJyGA_H0NIpFa06LB60fW2Va5-QcO_hyhCJda-cYGVCjydG89uCCCK-ypPbRZ4jb8kN1vo-s88tE6kE44tpxvCkuJ97WlfaenqJT'
+logic.spotifyToken = 'BQDEBYOwOYpsc5UlSpCAVLy9e1_zx0clcKnEIHFYgtQKuC2a7VCURm76V6WpBs7VZrsLRfORUzZrVDTduQWh-qITeGPHYR1x6V-5h0zHBZNOFUkVpgC07h9swEFYJKVq-8Un8bZzLZks'
 
 const PROFILE_UPDATE_OK = 'Profile updated correctly'
 

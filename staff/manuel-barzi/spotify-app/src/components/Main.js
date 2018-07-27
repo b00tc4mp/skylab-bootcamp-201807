@@ -84,6 +84,8 @@ class Main extends Component {
             .catch(() => this.setState({ trackError: ERROR_HOUSTON }))
 
     render() {
+        console.log('Main', 'render')
+        
         const { state: { artists, albums, tracks, track, searchError, artistError, albumError, trackError }, onSearch, onArtistClick, onAlbumClick, onTrackClick } = this
 
         return <section>

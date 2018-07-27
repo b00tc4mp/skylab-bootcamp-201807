@@ -4,12 +4,46 @@ import logic from '../logic'
 import Feedback from './Feedback';
 
 class SpotifyPlayer extends Component {
-    state = {
-        error: '',
-        favorite: logic.isFavorite(this.props.track.id)
+    constructor(props) {
+        super(props)
+
+        console.log('SpotifyPlayer', 'init')
+
+        this.state = {
+            error: '',
+            favorite: logic.isFavorite(this.props.track.id)
+        }
+    }
+
+    // ES.NEXT (babel)
+    // state = {
+    //     error: '',
+    //     favorite: logic.isFavorite(this.props.track.id)
+    // }
+
+    componentWillMount() {
+        console.log('SpotifyPlayer', 'will mount')
+    }
+
+    componentDidMount() {
+        console.log('SpotifyPlayer', 'did mount')
+    }
+
+    componentWillUnmount() {
+        console.log('SpotifyPlayer', 'will unmount')
+    }
+
+    componentWillUpdate() {
+        console.log('SpotifyPlayer', 'will update')
+    }
+
+    componentDidUpdate() {
+        console.log('SpotifyPlayer', 'did update')
     }
 
     componentWillReceiveProps(newProps) {
+        console.log('SpotifyPlayer', 'will receive props')
+
         this.refreshFavorite(newProps)
     }
 
@@ -26,10 +60,12 @@ class SpotifyPlayer extends Component {
     }
 
     refreshFavorite(props) {
-        this.setState({ favorite: logic.isFavorite(props.track.id) }) 
-    } 
+        this.setState({ favorite: logic.isFavorite(props.track.id) })
+    }
 
     render() {
+        console.log('SpotifyPlayer', 'render')
+
         const { track: { id, name } } = this.props
         const { error, favorite } = this.state
 
