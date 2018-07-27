@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import Feedback from './Feedback'
 
 class Login extends Component {
     state = { username: null, password: null }
@@ -15,12 +16,24 @@ class Login extends Component {
         this.props.onLogin(username, password)
     }
 
+    onGoToRegister = event => {
+        event.preventDefault()
+
+        this.props.onGoToRegister()
+    }
+
     render() {
-        return <form onSubmit={this.onLogin}>
-            <input type="text" onChange={this.keepUsername} />
-            <input type="password" onChange={this.keepPassword} />
-            <button type="submit">Login</button>
-        </form>
+        return <section>
+            <form onSubmit={this.onLogin}>
+                <input type="text" onChange={this.keepUsername} />
+                <input type="password" onChange={this.keepPassword} />
+                <button type="submit">Login</button>
+            </form>
+            {this.props.error && <Feedback message={this.props.error} />}
+            <p>
+                Go to <a href="/#" onClick={this.onGoToRegister}>Register</a>
+            </p>
+        </section>
     }
 }
 
