@@ -36,6 +36,7 @@ class App extends Component {
         this.setState({ loggedIn: true, loginActive: false, errorMessages: [] })
       })
       .catch(({ message: errorMessage }) => {
+        this.setState({ errorMessages: [] })
         const errorMessages = this.state.errorMessages
         errorMessages.push(errorMessage)
         this.setState({ 
@@ -61,13 +62,11 @@ class App extends Component {
           {loggedIn && <ButtonLogout onClick={this.logout}/>}
         </header>
 
-        {this.state.errorMessages.length > 0 && <ErrorPanel messages={this.state.errorMessages}/>}
-
         {!(registerActive || loginActive || goToLoginActive || loggedIn) && <Landing onRegister={this.goToRegister} onLogin={this.goToLogin} />}
 
         {registerActive && <Register onRegister={this.registerUser} />}
 
-        {loginActive && <Login onLogin={this.loginUser} />}
+        {loginActive && <Login onLogin={this.loginUser} errors={this.state.errorMessages}/>}
 
         {goToLoginActive && <GoToLogin onLogin={this.goToLogin} />}
 

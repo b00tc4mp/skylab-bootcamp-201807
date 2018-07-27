@@ -8,7 +8,7 @@ import ArtistDetail from './components/ArtistDetail';
 import AlbumDetail from './components/AlbumDetail';
 import Player from './components/Player';
 
-logic.token = 'BQA4FZGRkO2Tm9DqgdunNWfSI4O4CpPsgM6gGg1MbYMOCp3u4U4El7sCD2UlG3frgeZL9x7AlDVPEflG6Jo';
+logic.token = 'BQAAdt9887WjshA69kIY4Ecvs581n3E0cowoiu6bL8yIf15_XLjo60pMMUG0ipzkziIK3qs_BQfjJ3ivPDw';
 
 const DEFAULT_ARTIST_IMG = 'http://assets.sk-static.com/images//default_images/col4/default-artist.png'
 const DEFAULT_ALBUM_IMG = 'http://cdn.last.fm/flatness/responsive/2/noimage/default_album_300_g4.png'
@@ -55,8 +55,8 @@ class App extends Component {
     logic.searchArtists(query)
       .then(artists => {
         this.setState({
-          artists: artists.map(artist => { 
-            return { 
+          artists: artists.map(artist => {
+            return {
               id: artist.id,
               name: artist.name,
               image: artist.images && artist.images[1] ? artist.images[1].url : DEFAULT_ARTIST_IMG
@@ -166,19 +166,19 @@ class App extends Component {
       <div className="App">
         <section>
           <header id="sidebar">
-            <img src="assets/img/logo.png" alt="Spotify" id="logo"/>
-            <SiteNav/>
+            <img src="assets/img/logo.png" alt="Spotify" id="logo" />
+            <SiteNav />
             <RecentlyPlayed />
           </header>
           <main>
             <div id="home">
-              <SearchPanel onSearch={this.onSearch}/>
-              <ArtistList artists={this.state.artists} onArtistClick={this.onArtistClick}/>
+              <SearchPanel onSearch={this.onSearch} />
+              <ArtistList artists={this.state.artists} onArtistClick={this.onArtistClick} />
             </div>
-            <div id="artist-detail" style={{display: 'none'}}>
+            <div id="artist-detail" style={{ display: 'none' }}>
               {this.state.artist && <ArtistDetail artist={this.state.artist} onAlbumClick={this.onAlbumClick} />}
             </div>
-            <div id="album-detail" style={{display: 'none'}}>
+            <div id="album-detail" style={{ display: 'none' }}>
               {this.state.album && <AlbumDetail album={this.state.album} onTrackClick={this.onTrackClick} />}
             </div>
           </main>

@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import ErrorPanel from './ErrorPanel';
 
 class Login extends Component {
     state = { username: null, password: null }
@@ -16,11 +17,16 @@ class Login extends Component {
     }
 
     render() {
-        return <form onSubmit={this.onLogin}>
-            <input type="text" onChange={this.keepUsername} />
-            <input type="password" onChange={this.keepPassword} />
-            <button type="submit">Login</button>
-        </form>
+        return (
+            <div>
+                <form onSubmit={this.onLogin}>
+                    <input type="text" onChange={this.keepUsername} />
+                    <input type="password" onChange={this.keepPassword} />
+                    <button type="submit">Login</button>
+                </form>
+                {this.props.errors.length > 0 && <ErrorPanel messages={this.props.errors}/>}
+            </div>
+        )
     }
 }
 
