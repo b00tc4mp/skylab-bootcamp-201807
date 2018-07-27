@@ -16,6 +16,12 @@ class Register extends Component {
         this.props.onRegister(username, password)
     }
 
+    onGoToLogin = event => {
+        event.preventDefault()
+
+        this.props.onGoToLogin()
+    }
+
     render() {
         return <section>
             <form onSubmit={this.onRegister}>
@@ -25,7 +31,7 @@ class Register extends Component {
             </form>
             {this.props.error && <Feedback message={this.props.error} />}
             <p>
-                Go to <a href="/#" onClick={this.props.onGoToLogin}>Login</a>
+                Go to <a href="#" onClick={this.onGoToLogin}>Login</a>
             </p>
         </section>
     }
