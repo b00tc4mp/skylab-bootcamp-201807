@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import logic from './logic'
 
+import { Route, withRouter, Redirect } from 'react-router-dom'
 import Landing from './components/Landing'
 import Register from './components/Register'
 import Login from './components/Login'
@@ -9,67 +10,48 @@ import Main from './components/Main'
 
 class App extends Component {
   state = {
-    landingActive: !logic.loggedIn,
-    registerActive: false,
-    loginActive: false,
     registerFail: null,
     loginFail: null,
-    appActive: logic.loggedIn
+    loggedIn: logic.loggedIn
   }
 
-  onRegister = () => this.setState({
-    landingActive: false,
-    registerActive: true,
-    loginActive: false
-  })
-
-  onLogin = () => this.setState({
-    landingActive: false,
-    loginActive: true,
-    registerActive: false
-  })
+  onRegister = () => this.props.history.push("/register")
+  onLogin = () => this.props.history.push("/login")
 
   registerUser = (username, password) => {
     logic.registerUser(username, password)
-    .then(() => {
-      this.onLogin()
-      this.setState({registerFail: null})
-    })
-    .catch((err) => {
-      this.setState({registerFail: err.message})
-    })
+      .then(() => {
+        this.onLogin()
+        this.setState({ registerFail: null })
+      })
+      .catch((err) => {
+        this.setState({ registerFail: err.message })
+      })
   }
-
   loginUser = (username, password) => {
     logic.loginUser(username, password)
-    .then(() => {
-      this.setState({loginFail: null})
-      this.goToApp()
-    })
-    .catch((err) => {
-      this.setState({loginFail: err.message})
-    })
+      .then(() => {
+        this.setState({ loginFail: null, loggedIn: true })
+        this.goToApp()
+      })
+      .catch((err) => {
+        this.setState({ loginFail: err.message })
+      })
   }
-
-  goToApp = () => {
-    this.setState({loginActive: false, appActive: true})
-  }
-
+  goToApp = () => this.props.history.push("/home")
   logout = () => {
     logic.logout()
-    this.setState({landingActive: true, appActive: false})
+    this.setState({ loggedIn: false })
+    this.props.history.push("/")
   }
 
   render() {
 
     const {
       state: {
-        landingActive,
-        registerActive,
-        loginActive,
         registerFail,
         loginFail,
-        appActive
+        loggedIn
       },
       onRegister,
       onLogin,
@@ -80,13 +62,13 @@ class App extends Component {
 
     return (
       <div>
-        {landingActive && <Landing onRegister={onRegister} onLogin={onLogin}/>}
-        {registerActive && <Register onRegister={registerUser} fail={registerFail} onLogin={onLogin}/>}
-        {loginActive && <Login onLogin={loginUser} fail={loginFail} onRegister={onRegister}/>}
-        {appActive && <Main onLogout={logout}/>}
+        <Route exact path="/" render={() => !loggedIn ? <Landing onRegister={onRegister} onLogin={onLogin} /> : <Redirect to="/home" />} />
+        <Route path="/register" render={() => !loggedIn ? <Register onRegister={registerUser} fail={registerFail} onLogin={onLogin} /> : <Redirect to="/home" />} />
+        <Route path="/login" render={() => !loggedIn ? <Login onLogin={loginUser} fail={loginFail} onRegister={onRegister} /> : <Redirect to="/home" />} />
+        <Route path="/home" render={() => loggedIn ? <Main onLogout={logout} /> : <Redirect to="/" />} />
       </div>
-    );
+    )
   }
 }
 
-export default App;
+export default withRouter(App);
