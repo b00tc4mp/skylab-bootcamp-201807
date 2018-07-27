@@ -2,4 +2,4 @@
 
 - Edu
 - Kim
-- Gio
+- Gio (giodelabarrera)
