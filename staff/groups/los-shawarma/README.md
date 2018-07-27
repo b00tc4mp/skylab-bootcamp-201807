@@ -2,4 +2,4 @@
 
 - Jaume
 - Laia
-- Pau
+- Pau [Github](https://github.com/pausanchez)
