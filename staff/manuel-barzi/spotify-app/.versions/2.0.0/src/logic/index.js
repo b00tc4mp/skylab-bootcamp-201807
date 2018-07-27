@@ -26,22 +26,6 @@ const logic = {
         return sessionStorage.getItem('userUsername')
     },
 
-    set _userPassword(userPassword) {
-        sessionStorage.setItem('userPassword', userPassword)
-    },
-
-    get _userPassword() {
-        return sessionStorage.getItem('userPassword')
-    },
-
-    set _userFavorites(userFavorites) {
-        sessionStorage.setItem('userFavorites', JSON.stringify(userFavorites))
-    },
-
-    get _userFavorites() {
-        return JSON.parse(sessionStorage.getItem('userFavorites')) || []
-    },
-
     spotifyToken: null,
 
     _callUsersApi(path, method = 'get', body, useToken) {
@@ -97,13 +81,6 @@ const logic = {
                 this._userId = id
                 this._userToken = token
                 this._userUsername = username
-                this._userPassword = password // IDEAL encrypt it!
-
-                // return true
-                return this._callUsersApi(`/user/${this._userId}`, 'get', undefined, true)
-            })
-            .then(({ data }) => {
-                this._userFavorites = data.favorites || []
 
                 return true
             })
@@ -122,7 +99,7 @@ const logic = {
     },
 
     updateUser(password, newUsername, newPassword) {
-        const data = {
+        const data =  {
             username: this.userUsername,
             password
         }
@@ -132,7 +109,7 @@ const logic = {
         if (newPassword) data.newPassword = newPassword
 
         return this._callUsersApi(`/user/${this._userId}`, 'put', data, true)
-            .then(() => {
+            .then(()  => {
                 if (newUsername) this._userUsername = newUsername
 
                 return true
@@ -145,40 +122,6 @@ const logic = {
             password
         }, true)
             .then(() => true)
-    },
-
-    // retrieveUser() {
-    //     return this._callUsersApi(`/user/${this._userId}`, 'get', undefined, true)
-    //         .then(({ data }) => data)
-    // },
-
-    toggleTrackFavorite(trackId) {
-        const favorites = this._userFavorites
-        
-        const index = favorites.indexOf(trackId)
-
-        if (index > -1) {
-            favorites.splice(index, 1)
-        } else {
-            favorites.push(trackId)
-        }
-
-        const data = {
-            username: this.userUsername,
-            password: this._userPassword,
-            favorites
-        }
-
-        return this._callUsersApi(`/user/${this._userId}`, 'put', data, true)
-            .then(() => {
-                this._userFavorites = favorites
-                
-                return true
-            })
-    },
-
-    isFavorite(trackId) {
-        return this._userFavorites.includes(trackId)
     },
 
     // spotify's
