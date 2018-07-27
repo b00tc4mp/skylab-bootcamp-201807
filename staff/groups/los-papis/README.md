@@ -1,5 +1,5 @@
 # staff
 
-- Javi
+- Javi (Javier1177)
 - Alejandro (alejaa03)
-- Aranzazu
+- Aranzazu (aranzazu0611)
