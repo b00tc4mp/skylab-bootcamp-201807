@@ -4,7 +4,7 @@ describe('logic (spotify-app)', () => {
     describe('user\'s', () => {
 
         describe('register user', () => {
-            const username = 'javier-lopez-' + Math.random(), password = '123'
+            const username = 'manuel-barzi-' + Math.random(), password = '123'
 
             it('should register on correct data', () => {
                 return logic.registerUser(username, password)
@@ -15,7 +15,7 @@ describe('logic (spotify-app)', () => {
         })
 
         describe('login user', () => {
-            const username = 'javier-lopez-' + Math.random(), password = '123'
+            const username = 'manuel-barzi-' + Math.random(), password = '123'
             let userId
 
             beforeEach(() => {
@@ -28,15 +28,15 @@ describe('logic (spotify-app)', () => {
                     .then(res => {
                         expect(res).toBeTruthy()
 
-                        expect(logic.userId).toBe(userId)
-                        expect(logic.userToken).toBeDefined()
-                        expect(logic.userUsername).toBe(username)
+                        expect(logic._userId).toBe(userId)
+                        expect(logic._userToken).toBeDefined()
+                        expect(logic._userUsername).toBe(username)
                     })
             })
         })
 
         describe('unregister user', () => {
-            const username = 'javier-lopez-' + Math.random(), password = '123'
+            const username = 'manuel-barzi-' + Math.random(), password = '123'
 
             beforeEach(() => {
                 return logic.registerUser(username, password)
@@ -52,7 +52,7 @@ describe('logic (spotify-app)', () => {
         })
 
         describe('logout user', () => {
-            const username = 'javier-lopez-' + Math.random(), password = '123'
+            const username = 'manuel-barzi-' + Math.random(), password = '123'
 
             beforeEach(() => {
                 return logic.registerUser(username, password)
@@ -60,41 +60,21 @@ describe('logic (spotify-app)', () => {
             })
 
             it('should logout correctly', () => {
-                expect(logic.userId).toBeDefined()
-                expect(logic.userToken).toBeDefined()
-                expect(logic.userUsername).toBeDefined()
+                expect(logic._userId).toBeDefined()
+                expect(logic._userToken).toBeDefined()
+                expect(logic._userUsername).toBeDefined()
 
                 logic.logout()
 
-                expect(logic.userId).toBeNull()
-                expect(logic.userToken).toBeNull()
-                expect(logic.userUsername).toBeNull()
-            })
-        })
-
-        describe('update user', () => {
-            const username = 'javier-lopez-' + Math.random(), password = '123'
-
-            beforeEach(() => {
-                return logic.registerUser(username, password)
-                    .then(() => logic.loginUser(username, password))
-            })
-
-            it('should update the user', () => {
-            const newUsername = 'javier-lopez-' + Math.random(), newPassword = '456'
-            return logic.updateUser(password, newUsername, newPassword)
-                    .then(() => {
-                        expect(logic.updateUser).toBeDefined()
-                        expect(newPassword).toBeDefined()
-                        expect(newUsername).toBeDefined()
-                    })
-
+                expect(logic._userId).toBeNull()
+                expect(logic._userToken).toBeNull()
+                expect(logic._userUsername).toBeNull()
             })
         })
     })
 
     describe('spotify\'s', () => {
-        logic.spotifyToken = 'BQAedMY2EFOlLViUY-Vndt0LVzy-AhgYPVthDVCu5IsH6FNFBBFI2bjIID6Yse7DOnDkeFmRd9WIJRBQC1YvhdH2tdkZG11Gz0xLqVfUj8oGgN8jbJ1X-z-Rx0vwh5_KKfgMmXS0Keo'
+        logic.spotifyToken = 'BQBaWwVn9Zv9LJIvoBicx0MZ20v58rY_f-UizuPpAeFzpfOn2i369TmdpmbdZZCauxsX2yqr00Gxyhjulp7USPW_HgxUT2gK16YTmAvi2-d7m-hGcZYz8m7ngpMPLGIq4ADZg1hAZpxC'
 
         describe('search artists', () => {
             it('should find artists matching criteria', () => {
