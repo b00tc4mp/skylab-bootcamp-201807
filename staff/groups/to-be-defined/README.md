@@ -2,4 +2,6 @@
 
 - Bernat (bcasasus)
 - Robert (robert-barcelona)
-- Gerard
+- Gerard (gbaste)
+
+
