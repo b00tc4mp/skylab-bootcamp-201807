@@ -1,5 +1,5 @@
 # staff
 
-- Robert
+- Robert (robert-barcelona)
 - Bernat
 - Gerard
