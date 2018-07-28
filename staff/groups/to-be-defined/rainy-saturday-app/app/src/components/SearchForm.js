@@ -2,9 +2,11 @@ import React, {Component} from 'react-dom';
 import PropTypes from 'prop-types';
 
 
-default export class SearchForm extends Component {
+class SearchForm extends Component {
 
 
 
 
 }
+
+export default SerachForm
