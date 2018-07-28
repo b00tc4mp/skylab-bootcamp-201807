@@ -1,17 +1,46 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
+import {Container, Row, Col, FormText,Button,Form, Input, Label, FormGroup} from 'reactstrap';
 
 
 class SearchForm extends Component {
 
+  static propTypes = {
+    onSearch: PropTypes.func.isRequired,
+  }
 
-  render(){
-    return (<h2>SearchForm</h2>)
+  state = {searchTerm: ""}
+
+  handleSearchTermChange = event => this.setState({searchTerm: event.target.value})
+
+  onDoSearch = evt => {
+    evt.preventDefault()
+    const searchTerm = this.state.searchTerm
+    this.props.onSearch(searchTerm);
+    this.setState({searchTerm:""})
+
+
   }
 
 
+  render() {
+    return <Container>
+    <Row>
+      <Form onSubmit={this.onDoSearch}>
+        <FormGroup>
+         {/* <Label for="com.rainysaturday.SearchForm.searchTermInput">Enter Search Term</Label>*/}
+          <Input value={this.state.searchTerm} autoFocus type="text" name="searchTermInput" onChange={this.handleSearchTermChange}
+                 id="com.rainysaturday.searchTermInput" placeholder="Enter artist, Genre, Type of work, keyword..."/>
+          <FormText color="muted">
+           You may enter any search term that occurs to you: "Rembrandt", "sky", "print" or a combination, e.g. "Rembrandt sky print"
+          </FormText></FormGroup>
+        <Button>Submit</Button>
+      </Form>
+    </Row>
+    </Container>
 
 
+  }
 }
 
-export default SerachForm
+export default SearchForm
