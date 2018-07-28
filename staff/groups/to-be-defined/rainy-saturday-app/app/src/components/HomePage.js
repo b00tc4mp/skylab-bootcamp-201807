@@ -1,9 +1,13 @@
-import React, {Component} from 'react-dom';
+import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
 
-class HomePage extends AppPage {
+class HomePage extends Component {
 
+
+  render(){
+    return (<h2>HomePage</h2>)
+  }
 
 
 

@@ -1,8 +1,12 @@
-import React, {Component} from 'react-dom'
+import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 
 
-class SearchPage extends AppPage {
+class SearchPage extends Component {
+
+render(){
+  return (<h2>SearchPage</h2>)
+}
 
 
 

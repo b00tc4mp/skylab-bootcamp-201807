@@ -1,9 +1,14 @@
-import React, {Component} from 'react-dom';
+import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
 
 class NavBar extends Component {
 
+
+
+  render(){
+    return (<h2>NavBar</h2>)
+  }
 
 
 
