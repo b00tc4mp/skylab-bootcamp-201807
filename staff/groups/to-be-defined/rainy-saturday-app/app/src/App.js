@@ -6,6 +6,7 @@ import NavBar from "./components/NavBar";
 import HomePage from "./components/HomePage";
 import SearchPage from "./components/SearchPage"
 import UserPage from "./components/UserPage"
+import { Button } from 'reactstrap';
 
 class App extends Component {
 
