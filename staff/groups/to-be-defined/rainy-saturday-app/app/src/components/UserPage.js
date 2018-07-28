@@ -1,8 +1,13 @@
-import React, {Component} from 'react-dom';
+import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
 
-class UserPage extends AppPage {
+class UserPage extends Component {
+
+  render(){
+    return (<h2>UserPage</h2>)
+  }
+
 
 
 
