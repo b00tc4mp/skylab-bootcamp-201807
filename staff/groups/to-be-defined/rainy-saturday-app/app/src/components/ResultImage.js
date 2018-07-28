@@ -2,11 +2,11 @@ import React, {Component} from 'react-dom';
 import PropTypes from 'prop-types';
 
 
-class UserPage extends AppPage {
+class ResultImage extends Component {
 
 
 
 
 }
 
-export default UserPage
+export default ResultImage
