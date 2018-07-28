@@ -1,10 +1,10 @@
 'use strict'
 
-describe('logic (spotify-app)', () => {
+describe('logic (Museum-App)', () => {
     describe('user\'s', () => {
 
         describe('register user', () => {
-            const username = 'manuel-barzi-' + Math.random(), password = '123'
+            const username = 'someone-' + Math.random(), password = '123'
 
             it('should register on correct data', () => {
                 return logic.registerUser(username, password)
@@ -15,7 +15,7 @@ describe('logic (spotify-app)', () => {
         })
 
         describe('login user', () => {
-            const username = 'manuel-barzi-' + Math.random(), password = '123'
+            const username = 'someone-' + Math.random(), password = '123'
             let userId
 
             beforeEach(() => {
@@ -36,7 +36,7 @@ describe('logic (spotify-app)', () => {
         })
 
         describe('unregister user', () => {
-            const username = 'manuel-barzi-' + Math.random(), password = '123'
+            const username = 'someone-' + Math.random(), password = '123'
 
             beforeEach(() => {
                 return logic.registerUser(username, password)
@@ -52,7 +52,7 @@ describe('logic (spotify-app)', () => {
         })
 
         describe('logout user', () => {
-            const username = 'manuel-barzi-' + Math.random(), password = '123'
+            const username = 'someone-' + Math.random(), password = '123'
 
             beforeEach(() => {
                 return logic.registerUser(username, password)
@@ -77,7 +77,7 @@ describe('logic (spotify-app)', () => {
             const password = '123'
 
             beforeEach(() => {
-                username = 'manuel-barzi-' + Math.random()
+                username = 'someone-' + Math.random()
 
                 return logic.registerUser(username, password)
                     .then(() => logic.loginUser(username, password))
@@ -182,14 +182,14 @@ describe('logic (spotify-app)', () => {
         // })
 
         describe('store user data', () => {
-            let username = 'robert-anthony-' + Math.random()
+            let username = 'someone-' + Math.random()
             const password = '123'
             const dataArray = [{a:"b",c:"d",obj:{something:"else"}}]
             const dataObj = {something:{is:"different"}}
             const dataFieldName = "favorites"
         
             beforeEach(() => {
-              username = 'robert-anthony-' + Math.random()
+              username = 'someone-' + Math.random()
               return logic.registerUser(username, password)
                 .then(() => logic.loginUser(username, password))
                 .catch(console.error)
@@ -246,15 +246,36 @@ describe('logic (spotify-app)', () => {
     
 
 
-        describe('general query search', () => {
+        describe('general filtered query search', () => {
             it('should find results matching criteria', () => {
-                return logic._callRijksmuseumApi('?q=Rembrandt&key=ROQio02r&ps=100&principalMaker=Rembrandt+van+Rijn')
+                return logic._callRijksmuseumApi('Rembrandt&principalMaker=Rembrandt+van+Rijn')
                     .then(results => {
                    const     ourObject = results.artObjects[0];
 
                         expect(results).toBeDefined()
-                        expect(ourObject.id).toBe("en-SK-C-6")
-                        expect(ourObject.longTitle).toBe('The Wardens of the Amsterdam Drapers’ Guild, Known as ‘The Syndics’, Rembrandt van Rijn, 1662')
+                        expect(ourObject.id).toBe("en-SK-A-4691")
+                        expect(ourObject.longTitle).toBe('Self-portrait, Rembrandt van Rijn, c. 1628')
+                        expect(ourObject.webImage.url).toBe('https://lh3.googleusercontent.com/7qzT0pbclLB7y3fdS1GxzMnV7m3gD3gWnhlquhFaJSn6gNOvMmTUAX3wVlTzhMXIs8kM9IH8AsjHNVTs8em3XQI6uMY')
+                    })
+            })
+        })
+
+        describe('basic query search', () => {
+            it('should find query matching criteria with only one word', () => {
+                return logic.searchMuseum('Rembrandt')
+                    .then(results => {
+                        expect(results).toBeDefined()
+                        expect(results.length).toBe(100)
+                        expect(results[0].id).toBe('en-SK-A-4691')
+                    })
+            })
+
+            it('should find artists matching criteria with two words', () => {
+                return logic.searchMuseum('dog Rembrandt')
+                    .then(results => {
+                        expect(results).toBeDefined()
+                        expect(results.length).toBe(100)
+                        expect(results[0].id).toBe('en-SK-C-5')
                     })
             })
         })

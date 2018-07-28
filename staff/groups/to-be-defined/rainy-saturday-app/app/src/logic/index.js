@@ -189,9 +189,9 @@ const logic = {
       museumKey: 'ROQio02r',
 
 
-      _callRijksmuseumApi(path) {
-          const searchString = "https://www.rijksmuseum.nl/api/en/collection?"  + this.museumKey + path;
-          console.log(searchString)
+      _callRijksmuseumApi(query) {
+          const searchString = `https://www.rijksmuseum.nl/api/en/collection?key=${this.museumKey}&q=${query}&ps=100`;
+          console.log("search string",searchString)
         return fetch(searchString)
             .then(res => res.json())
             .then(res => {
@@ -203,10 +203,10 @@ const logic = {
 
 
     searchMuseum: function (query) {
-        return this._callRijksmuseumApi(`&q=${query}&ps=100`)
+        return this._callRijksmuseumApi(query)
             .then(res => {
                 console.log(res.artObjects)
-                return res
+                return res.artObjects
             })
     },
 
