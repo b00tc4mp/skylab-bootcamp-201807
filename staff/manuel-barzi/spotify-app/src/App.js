@@ -7,64 +7,96 @@ import Register from './components/Register'
 import Login from './components/Login'
 import GoToLogin from './components/GoToLogin'
 import Main from './components/Main'
+import Profile from './components/Profile'
+import { Route, withRouter, Link, Redirect } from 'react-router-dom'
 
-logic.spotifyToken = 'BQAl8S7DWlpqe4HZgbfQazhTWwypewdKrMtYGA7yDqg2deldLKYW91EhpJO3FJuSXxZLaas3p1NB81OT9WtPfKADxaouqpHKyJmB8A-MnF1McMPa5nYf5c5KqZ2D5QGT-JB3zHMcyMD7'
+logic.spotifyToken = 'BQCGT5G8bMVjag5KSDhqsTOkXlMqu_MkSkVnm9QMCz0CZYVX58ieRRrSpBBreILMlEvOWvdw2hxcpQXZ4O07IAaasLnMUHWrKB_Pqto-aSvWXvNyPxQ7CNeXD8Gez4IKTAwBfenbovqF'
+
+const PROFILE_UPDATE_OK = 'Profile updated correctly'
 
 class App extends Component {
   state = {
-    registerActive: false,
-    loginActive: false,
-    goToLoginActive: false,
     loggedIn: logic.loggedIn,
+    justRegistered: false,
     errorLogin: null,
-    errorRegister: null
+    errorRegister: null,
+    errorUpdateProfile: null,
+    successUpdateProfile: null
   }
 
-  goToRegister = () => this.setState({ registerActive: true, loginActive: false })
+  goToRegister = () => this.props.history.push('/register')
 
-  goToLogin = () => this.setState({ loginActive: true })
+  goToLogin = () => {
+    this.setState({ justRegistered: false })
+    
+    this.props.history.push('/login')
+  }
 
   registerUser = (username, password) =>
     logic.registerUser(username, password)
-      .then(() => this.setState({ goToLoginActive: true, registerActive: false }))
+      .then(() => {
+        this.setState({ justRegistered: true })
+
+        this.props.history.push('/registered')
+      })
       .catch(({ message }) => this.setState({ errorRegister: message }))
 
   loginUser = (username, password) =>
     logic.loginUser(username, password)
-      .then(() => this.setState({ loggedIn: true, loginActive: false }))
+      .then(() => {
+        this.setState({ loggedIn: true })
+
+        this.props.history.push('/home')
+      })
       .catch(({ message }) => this.setState({ errorLogin: message }))
 
-  goToLogin = () => this.setState({ loginActive: true, goToLoginActive: false, error: null, registerActive: false })
+  logoutUser = event => {
+    event.preventDefault()
 
-  logoutUser = () => {
     logic.logout()
 
     this.setState({ loggedIn: false })
+
+    this.props.history.push('/')
+  }
+
+  updateProfile = (password, newUsername, newPassword) => {
+    logic.updateUser(password, newUsername, newPassword)
+      .then(() => this.setState({ successUpdateProfile: PROFILE_UPDATE_OK, errorUpdateProfile: null }))
+      .catch(({ message }) => this.setState({ errorUpdateProfile: message, successUpdateProfile: null }))
   }
 
   render() {
-    const { state: { registerActive, loginActive, goToLoginActive, loggedIn, errorRegister, errorLogin }, goToRegister, goToLogin, registerUser, loginUser, logoutUser } = this
+    const { state: { loggedIn, errorRegister, errorLogin, errorUpdateProfile, successUpdateProfile, justRegistered }, goToRegister, goToLogin, registerUser, loginUser, logoutUser, updateProfile } = this
 
     return (
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">Spotify App</h1>
-          {loggedIn && <button onClick={logoutUser}>Logout</button>}
+          <Route path="/(home|profile)" render={() => <nav>
+            <Link to="/home">Main</Link>
+            &nbsp;
+              <Link to="/profile">Profile</Link>
+            &nbsp;
+              <a href="#/" onClick={logoutUser}>Logout</a>
+          </nav>} />
         </header>
 
-        {!(registerActive || loginActive || goToLoginActive || loggedIn) && <Landing onRegister={goToRegister} onLogin={goToLogin} />}
+        <Route exact path="/" render={() => loggedIn ? <Redirect to="/home" /> : <Landing onRegister={goToRegister} onLogin={goToLogin} />} />
 
-        {registerActive && <Register onRegister={registerUser} onGoToLogin={goToLogin} error={errorRegister} />}
+        <Route path="/register" render={() => loggedIn ? <Redirect to="/home" /> : <Register onRegister={registerUser} onGoToLogin={goToLogin} error={errorRegister} />} />
 
-        {loginActive && <Login onLogin={loginUser} onGoToRegister={goToRegister} error={errorLogin} />}
+        <Route path="/login" render={() => loggedIn ? <Redirect to="/home" /> : <Login onLogin={loginUser} onGoToRegister={goToRegister} error={errorLogin} />} />
 
-        {goToLoginActive && <GoToLogin onLogin={goToLogin} />}
+        <Route path="/registered" render={() => justRegistered ? <GoToLogin onLogin={goToLogin} /> : <Redirect to="/" />} />
 
-        {loggedIn && <Main />}
+        <Route path="/home" render={() => loggedIn ? <Main /> : <Redirect to="/" />} />
+
+        <Route path="/profile" render={() => loggedIn ? <Profile username={logic.userUsername} onUpdate={updateProfile} error={errorUpdateProfile} success={successUpdateProfile} /> : <Redirect to="/" />} />
       </div>
     )
   }
 }
 
-export default App
+export default withRouter(App)
