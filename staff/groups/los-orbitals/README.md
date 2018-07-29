@@ -1,0 +1,5 @@
+# staff
+
+- Maider
+- Jordi
+- Sergio
