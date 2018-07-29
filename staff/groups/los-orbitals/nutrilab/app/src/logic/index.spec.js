@@ -2,21 +2,20 @@
 
 // login api testing
 
-describe("registrer of the user", () => {
+describe("register of the user", () => {
 
     const username = "pepe-" + Math.random(), password = "123"
   
-    it("register name and password of the user ", () => {
+    it("should register the name and password of the user correctly", () => {
 
         logic.register(username, password) 
         .then ((id) => {
 
             expect(id).toBeDefined()
-
         })
     })
 
-  })
+})
 
 
 describe("login of the user", () => {
@@ -32,7 +31,7 @@ describe("login of the user", () => {
         })
     })
   
-    it("should return the id and the username & password the same as registered", () => {
+    it("should compare the id, username & password to be the same as registered", () => {
 
         logic.login(username, password) 
         .then ((result) => {
@@ -41,31 +40,30 @@ describe("login of the user", () => {
             expect(logic._userPassword).toBe(password)
             expect(logic._userId).toBe(id)
             expect(logic._userToken).toBeDefined()
-
         })
     })
 })
 
-    describe("logout of the user", () => {
+describe("logout of the user", () => {
 
-        const username = "pepe-" + Math.random(), password = "123"
-     
-        beforeEach (() => {
-            logic.register(username, password)
-            .then(() => logic.login(username, password))  
-       })
-        it ("should logout correctly", () => {
+    const username = "pepe-" + Math.random(), password = "123"
 
-            expect(logic._userUsername).toBeDefined()
-            expect(logic._userPassword).toBeDefined()
-            expect(logic._userId).toBeDefined()
-            expect(logic._userToken).toBeDefined()
+    beforeEach (() => {
+        logic.register(username, password)
+        .then(() => logic.login(username, password))  
+    })
+    it ("should logout correctly", () => {
 
-            logic.logout()
+        expect(logic._userUsername).toBeDefined()
+        expect(logic._userPassword).toBeDefined()
+        expect(logic._userId).toBeDefined()
+        expect(logic._userToken).toBeDefined()
 
-            expect(logic._userUsername).toBeNull()
-            expect(logic._userPassword).toBeNull()
-            expect(logic._userId).toBeNull()
-            expect(logic._userToken).toBeNull()
-        }) 
-     })
+        logic.logout()
+
+        expect(logic._userUsername).toBeNull()
+        expect(logic._userPassword).toBeNull()
+        expect(logic._userId).toBeNull()
+        expect(logic._userToken).toBeNull()
+    }) 
+})
