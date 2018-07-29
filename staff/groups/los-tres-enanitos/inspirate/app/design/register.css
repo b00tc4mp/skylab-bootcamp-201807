@@ -1,0 +1,73 @@
+body {
+  background-image: url("https://cdn.pixabay.com/photo/2018/07/06/23/31/bike-3521373_1280.jpg");
+  padding: 30px;
+}
+
+.form-container {
+  background-color: white;
+  margin: 0 auto;
+  height: 25em;
+  width: 25em;
+  border-radius: 2%;
+}
+.form-container__register {
+  padding: 1em;
+  text-align: center;
+}
+.form-container__register__title {
+  color: #3888CD;
+  margin-top: 1em;
+}
+.form-container__register__title__in-register {
+  text-decoration: none;
+  color: #3888CD;
+  border-bottom: solid 1px #3888CD;
+  font-size: 0.8em;
+}
+.form-container__register__title__in-login {
+  text-decoration: none;
+  color: grey;
+  font-size: 0.8em;
+}
+.form-container__register__title__in-login:hover {
+  color: #3888CD;
+  border-bottom: solid 1px #3888CD;
+}
+.form-container__register__name {
+  padding: 12px 10px 11px;
+  width: 90%;
+  font-size: 1.5em;
+  margin-bottom: 0.5em;
+}
+.form-container__register__pass {
+  padding: 12px 10px 11px;
+  width: 90%;
+  font-size: 1.5em;
+}
+.form-container__register__submit {
+  background-color: #5DA966;
+  color: white;
+  font-size: 1em;
+  border-radius: 4px;
+  padding: 12px 10px 11px;
+  width: 97%;
+  margin-bottom: 2em;
+  margin-top: 2em;
+}
+.form-container__register__submit:hover {
+  background-color: #59A161;
+  cursor: pointer;
+}
+.form-container__terms {
+  text-align: center;
+  background-color: #F7F7F7;
+  padding: 1.2em;
+  border-radius: 8px;
+  font-size: 0.8em;
+}
+.form-container__terms__span {
+  color: blue;
+  text-decoration: none;
+}
+
+/*# sourceMappingURL=register.css.map */
