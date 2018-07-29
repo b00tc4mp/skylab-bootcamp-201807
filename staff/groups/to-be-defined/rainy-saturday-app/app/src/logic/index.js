@@ -217,7 +217,8 @@ const logic = {
           return {
             id: element.id,
             imageurl: element.webImage.url,
-            title: element.longTitle,
+            title: element.title,
+            longTitle: element.longTitle,
             maker: element.principalOrFirstMaker
           }
         })
