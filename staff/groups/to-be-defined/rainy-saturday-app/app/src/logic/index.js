@@ -210,7 +210,7 @@ const logic = {
   },
 
   getMuseumImagesForSearchTerm(query) {
-    console.log(query)
+    console.log("search string",query)
     return this._callRijksmuseumApi(query.trim().replace(/ /g,"%20"))
       .then(res => {
         return res.artObjects.filter(element => element.hasImage).map(element => {

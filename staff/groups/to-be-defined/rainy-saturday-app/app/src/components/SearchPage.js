@@ -6,9 +6,11 @@ import ImageDisplayer from "./ImageDisplayer"
 import {Container, Row, Col, FormText, Button, Form, Input, Label, FormGroup} from 'reactstrap';
 import SearchFormFilterList from "./SearchFormFilterList"
 
-const defaultPeriodData = ["13", "14", "15", "16", "17", "18", "19", "20", "21"]
+const defaultPeriodData = ["13th century", "14th century", "15th century", "16th century", "17th century", "18th century", "19th century", "20th century", "21st century"]
 const defaultMaterialData = ["oil+paint+(paint)", "paper", "canvas", "watercolor+(paint)", "photographic+paper", "ink", "wood+(plant+material)", "bronze+(metal)", "pencil"]
+const periodMap = new Map();
 
+defaultPeriodData.forEach(element => periodMap.set(element,element.substr(0,2)));
 
 let makerFilter = ""
 let periodFilter = ""
@@ -47,8 +49,7 @@ class SearchPage extends Component {
 
     logic.getMuseumImagesForSearchTerm(searchTerm)
       .then(results => {
-        const makerData = makerFilter ? this.state.makerData : results.map(element => element.maker);
-
+        const makerData = makerFilter ? this.state.makerData : this.sortMakerFilterData(results.map(element => element.maker));
         const periodData = periodFilter ? this.state.periodData : defaultPeriodData;
         const materialData = materialFilter ? this.state.materialData : defaultMaterialData;
         this.setState({
@@ -62,6 +63,27 @@ class SearchPage extends Component {
       })
       .catch(console.error)
   }
+
+  sortMakerFilterData = data => {
+      const arr = [];
+
+      data.forEach(element=>{
+        const obj = arr.find(element1 =>{
+          return (element1.text === element)
+        })
+        if (obj) obj.count++
+        else arr.push({text:element,count:1})
+      })
+
+    return arr.sort((element1,element2) =>  element2.count - element1.count).map(element => element.text).slice(0,10);
+  }
+
+ /* filterAbort = () => {
+    this.clearMakerFilter(false)
+    this.clearPeriodFilter(false)
+    this.clearMaterialFilter(false)
+    this.doFilteredSearch()
+  }*/
 
   doFilteredSearch = () => {
     let { searchTerm} = this.state;
@@ -86,7 +108,7 @@ class SearchPage extends Component {
   setPeriodFilter = (filter, id) => {
     const data = this.state.periodData.slice(id, id + 1);
     this.setState({periodData: data,periodSelected:true})
-    periodFilter = filter;
+    periodFilter = periodMap.get(filter);
     this.doFilteredSearch()
   }
 
@@ -98,22 +120,22 @@ class SearchPage extends Component {
   }
 
 
-  clearMakerFilter = () => {
+  clearMakerFilter = (doSearch=true) => {
     this.setState({makerSelected: false, makerData: []});
     makerFilter = ""
-    this.doFilteredSearch()
+   if (doSearch) this.doFilteredSearch()
   }
 
-  clearPeriodFilter = () => {
+  clearPeriodFilter = (doSearch=true) => {
     this.setState({periodSelected: false, periodData: []});
     periodFilter = ""
-    this.doFilteredSearch()
+    if (doSearch) this.doFilteredSearch()
   }
 
-  clearMaterialFilter = () => {
+  clearMaterialFilter = (doSearch=true) => {
     this.setState({materialSelected:false, materialData: []})
     materialFilter = ""
-    this.doFilteredSearch()
+    if (doSearch) this.doFilteredSearch()
   }
 
 
@@ -124,17 +146,17 @@ class SearchPage extends Component {
         Row><h2>SearchPage</h2></Row>
         <Row> <SearchForm onSearch={this.doNewSearch}/></Row>
         {showFilters && <Row>
-          <Col className="col-sm-4"><SearchFormFilterList searchFilterTitle="Filter by Maker"
+          <Col className="col-sm-4"><SearchFormFilterList title="Filter by Maker"
                                                           currentlySelected={makerSelected}
                                                           onClearFilter={this.clearMakerFilter}
                                                           onSelectFilter={this.setMakerFilter}
                                                           data={makerData}/></Col>
-          <Col className="col-sm-4"><SearchFormFilterList searchFilterTitle="Filter by Period"
+          <Col className="col-sm-4"><SearchFormFilterList title="Filter by Period"
                                                           currentlySelected={periodSelected}
                                                           onClearFilter={this.clearPeriodFilter}
                                                           onSelectFilter={this.setPeriodFilter}
                                                           data={periodData}/></Col>
-          <Col className="col-sm-4"><SearchFormFilterList searchFilterTitle="Filter by Material"
+          <Col className="col-sm-4"><SearchFormFilterList title="Filter by Material"
                                                           currentlySelected={materialSelected}
                                                           onClearFilter={this.clearMaterialFilter}
                                                           onSelectFilter={this.setMaterialFilter}

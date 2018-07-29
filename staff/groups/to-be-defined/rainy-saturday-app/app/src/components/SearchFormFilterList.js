@@ -14,7 +14,7 @@ class SearchFormFilterList extends Component {
       onSelectFilter: PropTypes.func,
       onClearFilter: PropTypes.func,
       currentlySelected: PropTypes.bool,
-
+      title:PropTypes.string,
     }
 
 
@@ -25,11 +25,14 @@ class SearchFormFilterList extends Component {
 
   render() {
     const selected = this.props.currentlySelected;
-
-    return <ListGroup>
-      {this.props.data.map((element,index) =>  <ListGroupItem key={element + index.toString()} className={"justify-content-between " + (selected  ? "disabled" : "")} onClick={() => this.onItemClick(element, index)} tag="a" href="#">{element} { selected && <Badge onClick={this.props.onClearFilter}pill>clear</Badge>}</ListGroupItem>)}
+    const {data,title} = this.props;
+    return <section>
+      <h4>{title}</h4>
+    <ListGroup>
+      {(data.length > 0)  && this.props.data.map((element,index) =>  <ListGroupItem key={element + index.toString()} className={"justify-content-between " + (selected  ? "disabled" : "")} onClick={() => this.onItemClick(element, index)} tag="a" href="#">{element} { selected && <Badge onClick={this.props.onClearFilter}pill>clear</Badge>}</ListGroupItem>)}
+      {(data.length === 0)  && <span>No results. Perhaps clear the other filters...</span>}
     </ListGroup>
-
+    </section>
 
   }
 
