@@ -9,7 +9,12 @@ justify-content: center;
 
 }
 
-.comRainySaturdayUserRegisterAndLoginBorder{
+.comRainySaturdayUserRegisterAndLoginBorderFail{
 
-    border: 1px solid red !important;
+    border: 2px solid red !important;
+}
+
+.comRainySaturdayUserRegisterAndLoginBorderOk{
+
+    border: 2px solid green !important;
 }
