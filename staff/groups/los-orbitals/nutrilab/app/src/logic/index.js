@@ -4,7 +4,7 @@ const logic = {
         sessionStorage.setItem('userUsername', userUsername)
     },
 
-    get _userUsername(){ 
+    get userUsername(){ 
         return sessionStorage.getItem('userUsername')
         
     },
@@ -37,76 +37,119 @@ const logic = {
     },
 
 
-    _callApiUser(path, method = "get", body, token) {
+    _callApiUser(path, method = 'get', body, token) {
 
         const config = {
             method 
         }
 
-        const noGet = method !== "get"
-        if (noGet) {
+        const noGet = method !== 'get'
+        if (noGet || token) {
             config.headers = {} 
-        
-            if (noGet) {
-                config.headers["content-type"]= "application/json"
-            }
-
-            if (token) {
-                config.headers.authorization = "Bearer" + this.token
-            }
+            if (noGet) config.headers['content-type']= 'application/json'
+            if (token) config.headers.authorization = 'Bearer ' + this._userToken   
         }
 
         if (body) config.body = JSON.stringify(body)
 
-        return fetch('https://skylabcoders.herokuapp.com/api/' + path, config)
-            .then(function (res) {
-                return (res.json())
-            })
+        return fetch('https://skylabcoders.herokuapp.com/api' + path, config)
+            .then(res => res.json())
 
-            .then(function (res) {
-                console.log(res)
+            .then(res => {
+                if (res.status === 'KO') throw Error(res.error)
+                return res;
             })
-
-            .catch(function (error) {
-                console.log(error.error)
-            })
-
     },
 
     register(username, password) {
 
-       return this._callApiUser("user/", "post", { username, password })
-            .then(data => data.id)
-
-            .catch(error => error)
-
-
+       return this._callApiUser('/user', 'post', { username, password })
+            .then(res => res.data.id)
     },
 
     login(username, password) {
 
-        return this._callApiUser('auth/', 'post', { username, password })
-        .then(({data:{id, token}}) => {
-            this._userUsername = username
-            this._userPassword = password
-            this._userToken = token
-            this._userId = id
-        })  
-        .catch(function(err){
-            return (err.error)
-        })
+        return this._callApiUser('/auth', 'post', { username, password })
+            .then(({data: { id, token}}) => {
+                this._userUsername = username
+                this._userPassword = password
+                this._userToken = token
+                this._userId = id
 
+                return true
+                //return this._callApiUser(`user/${this._userId}`, 'get', undefined, true)
+            })  
+    },
+
+    update(password, newUsername, newPassword) {
+        const data = {
+            username: this.userUsername,
+            password
+        }
+        if (newPassword) data.newPassword = newPassword
+        if (newUsername) data.newUsername = newUsername
+        
+        return this._callApiUser(`/user/${this._userId}`, 'put', data, true )
+        .then(() => {
+        
+            if (newUsername) this._userUsername = newUsername
+            return true
+        })
+    },
+
+    delete(password) {
+
+        return this._callApiUser(`/user/${this._userId}`, 'delete', { username: this.userUsername, password }, true)
+
+        .then(() => true)
     },
 
     logout() {
 
          this._userUsername = null
-         this._userPassword = null
          this._userToken = null
          this._userId = null
 
          sessionStorage.clear()
+    },
 
-        }
+    get loggedIn (){
+
+        return this._userUsername && this._userToken && this._userId
+    },
+
+
+    // API NUTRITIONIX
+
+    _callApiNutrition (path, method = 'get'){
+        const config = {
+            method
+        } 
+        config.headers = {}
+        config.headers['content-type'] = 'application/json'
+        config.headers['x-app-id'] = '9a5a7f22'
+        config.headers['x-app-key'] = '420560ecc26327c6ca2e1f211054ac48'
+        
+        return fetch('https://trackapi.nutritionix.com/v2/' + path, config)
+        .then((res) => res.json())
+        .then(res => {
+            if (res.message) throw Error("api connection failed")
+            return res;
+        })
+    },
+
+    searchIngredients (query) {
+
+        return this._callApiNutrition('search/instant?query=' + query)
+            .then((res) => res)
+    },
+
+    ingredientInfo (id) {
+
+        return this._callApiNutrition('search/item?nix_item_id=' + id)
+            .then((res) => res)
+    }
 
 }
+
+if (typeof module !== 'undefined') module.exports = logic;
