@@ -1,0 +1,10 @@
+
+.profile-container {
+    height: 300px;
+    margin: 0;
+    font-family:"Lato", sans-serif;
+    line-height: 1.8em;
+    background-color: white;
+    display:flex;
+    align-items: center;
+}
