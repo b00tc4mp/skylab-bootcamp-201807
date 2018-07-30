@@ -32,37 +32,36 @@
             <div class="main-cards">
                 <div class="card">
                     <h1 class="card__title">Card 1</h1>
-                    <form class="card__form">
+                    <form class="card__form" onsubmit="logic.getFlights(event)">
                         <label class="card__label">Origin</label>
-                        <input class="card__input" type="text">
+                        <select class="airports">
+                        </select>
                         <label class="card__label">Destination</label>
-                        <input class="card__input" type="text">
-                        <label class="card__label">Date Origin</label>
+                        <select class="airports"></select>
+                        <!-- <label class="card__label">Date Origin</label>
                         <input class="card__input" type="date">
                         <label class="card__label">Date Destinatio</label>
-                        <input class="card__input" type="date">
-                        <button class="card__button">Search</button>
+                        <input class="card__input" type="date"> -->
+                        <button type="submit" class="card__button">Search</button>
                     </form>
                 </div>
-                <div class="card">
+                <div class="card" style="background-color: grey; color: white; width: 20%">
                     <h1 class="card__title">Card 2</h1>
                     <section>
-                        <p class="card__price">100€</p>
-                        <br>
-                        <p class="card__dateOri">20/02/20</p>
-                        <p class="card__timeOri">11:50</p>
-                        <p class="card__routeFrom">BCN - MAD</p>
-                        <a href="#" class="card link">Link to route</a>
-                        <br>
-                        <p class="card__dateDest">23/02/20</p>
-                        <p class="card__timeDest">20:50</p>
-                        <p class="card__routeTo">MAD - BCN</p>
-                        <a href="#" class="card__link">Link to route</a>
-                        <br>
-                        <div class="card__pagination">1/20</div>
+                        <img src="#" id="flightAirlines">
+                        <p class="card__price" id="flightPriceFrom"></p>
+                        <!-- <p class="card__dateOri">20/02/20</p>
+                        <p class="card__timeOri">11:50</p> -->
+                        <p class="card__routeFrom" id="routeFrom"></p>
+                        <!-- <a href="#" class="card link">Link to route</a> -->
+                        <!-- <p class="card__dateDest">23/02/20</p>
+                        <p class="card__timeDest">20:50</p> -->
+                        <p class="card__routeTo" id="routeTo"></p>
+                        <!-- <a href="#" class="card__link">Link to route</a> -->
+                        <!-- <div class="card__pagination">1/20</div> -->
                     </section>
                 </div>
-                <div class="card">
+                <!-- <div class="card">
                     <h1 class="card__title">Card 3</h1>
                     <section>
                         <p class="card__odds">100€</p>
@@ -81,7 +80,7 @@
                         <br>
                         <p class="card__copy">Yiha</p>
                     </section>
-                </div>
+                </div> -->
             </div>
         </div>
         <div class="footer">
@@ -89,6 +88,7 @@
         </div>
     </div>
 
+    <script src="template.js"></script>
     
 </body>
 </html>
