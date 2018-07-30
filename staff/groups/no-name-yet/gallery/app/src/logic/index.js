@@ -1,4 +1,5 @@
 const logic = {
+
     set _userId(userId) {
         sessionStorage.setItem('userId', userId)
     },
@@ -31,16 +32,6 @@ const logic = {
         return sessionStorage.getItem('userPassword')
     },
 
-    /*set _userFavorites(userFavorites) {
-        sessionStorage.setItem('userFavorites', JSON.stringify(userFavorites))
-    },
-
-    get _userFavorites() {
-        return JSON.parse(sessionStorage.getItem('userFavorites')) || []
-    },
-
-    galleryToken,*/
-
     _callUsersApi(path, method = 'get', body, useToken) {
         const config = {
             method
@@ -71,22 +62,6 @@ const logic = {
             })
     },
 
-   /* 
-    _callGaleryApi(path) {
-        return fetch('https://api.cloudinary.com/v1_1' + path, {
-            headers: {
-                authorization: 'Bearer ' + this.galleryToken
-            }
-        })
-            .then(res => res.json())
-            .then(res => {
-                if (res.error)
-                    throw Error('request error, status ' + res.error.status);
-
-                return res;
-            });
-    }, 
-*/
     // user's
 
     registerUser(username, password) {
@@ -103,10 +78,10 @@ const logic = {
                 this._userPassword = password // IDEAL encrypt it!
 
                 // return true
-                return this._callUsersApi(`/user/${this._userId}`, 'get', undefined, true)
+                return this.retrieveImages()
             })
-            .then(({ data }) => {
-                //this._userFavorites = data.favorites || []
+            .then( images => {
+                this._userImages = images || []
 
                 return true
             })
@@ -140,7 +115,7 @@ const logic = {
             .then(() => {
                 if (newUsername)
                     this._userUsername = newUsername
-                if(newPassword)
+                if (newPassword)
                     this._userPassword = newPassword
 
                 return true
@@ -154,38 +129,62 @@ const logic = {
         }, true)
             .then(() => true)
     },
-/*
-    togglePhotoGallery(photoId) {
-        const gallery = this._userGallery
 
-        const index = favorites.indexOf(photoId)
+    // cloudinary api
 
-        if (index > -1) {
-            gallery.splice(index, 1)
-        } else {
-            favorites.push(photoId)
-        }
-
-        const data = {
-            username: this.userUsername,
-            password: this._userPassword,
-            gallery
-        }
-
-        return this._callUsersApi(`/user/${this._userId}`, 'put', data, true)
-            .then(() => {
-                this._userGallery = gallery
-
-                return true
-            })
+    set _userImages(userImages) {
+        sessionStorage.setItem('userImages', JSON.stringify(userImages))
     },
 
-    isGallery(photoId) {
-        return this._userGallery.includes(photoId)
-    }*/
-};
+    get _userImages() {
+        return JSON.parse(sessionStorage.getItem('userImages')) || []
+    },
 
 
-//export default logic;
-if (typeof module !== 'undefined')
-    module.exports = logic;
+    API_KEY: '311749718863248',
+
+    API_SECRET: 'C_067ivTpTUyXOLV5kt1D1MPdfQ',
+
+    CLOUD_NAME: 'galleryapp',
+
+    PRESET: 'zbhkr9id',
+
+    _callCloudinaryApi(path, method, img = undefined) {
+        const myUrl = `https://api.cloudinary.com/v1_1/${this.CLOUD_NAME}${path}`
+
+        if (method === 'put') {
+            let formData = new FormData()
+            formData.append('file', img)
+            formData.append('upload_preset', this.PRESET)
+            formData.append('folder', this.userUsername)
+            return fetch(`https://skylabcoders.herokuapp.com/proxy?url=${myUrl}`, {
+                method,
+                body: formData
+            })
+                .then(() => true)
+                .catch(err => err.message)
+
+        } else if (method === 'get') {
+            const myUrl = `https://${this.API_KEY}:${this.API_SECRET}@api.cloudinary.com/v1_1/${this.CLOUD_NAME}${path}`
+            return fetch(`https://skylabcoders.herokuapp.com/proxy?url=${myUrl}`, {
+                method
+            })
+                .then(res => res.json())
+                .then(res => res.resources)
+                .then(res => res.map( item => item.url))
+                .catch(err => console.error(err.message))
+        }
+
+    },
+
+    addImage(img) {
+        return this._callCloudinaryApi('/upload', 'post', img)
+    },
+
+    retrieveImages() {
+        return this._callCloudinaryApi(`/resources/image/upload/?prefix=${this.userUsername}`, 'get')
+    }
+
+}
+
+if (typeof module !== 'undefined') module.exports = logic;
