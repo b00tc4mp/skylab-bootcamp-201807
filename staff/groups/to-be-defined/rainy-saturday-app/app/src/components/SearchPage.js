@@ -5,10 +5,11 @@ import logic from '../logic'
 import ImageDisplayer from "./ImageDisplayer"
 import {Container, Row, Col, FormText, Button, Form, Input, Label, FormGroup} from 'reactstrap';
 import SearchFormFilterList from "./SearchFormFilterList"
+import SearchFormFilterListWithCount from "./SearchFormFilterListWithCount"
 
 
 const FILTER_LIMIT = 10
-const OBJECT_LIMIT = 40
+const OBJECT_LIMIT = 100
 
 
 let makerFilter = ""
@@ -22,6 +23,7 @@ class SearchPage extends Component {
     searchTerm: "",
     hasData: false,
     data: [],
+    originalData: [],
     makerData: null,
     periodData: null,
     materialData: null,
@@ -39,6 +41,7 @@ class SearchPage extends Component {
       searchTerm: searchTerm,
       hasData: false,
       data: [],
+      originalData: [],
       materialData: [],
       periodData: [],
       makerData: [],
@@ -58,7 +61,7 @@ class SearchPage extends Component {
         results = results.slice(0, OBJECT_LIMIT)
         this.getDetailsFromArtObjects(results.map(element => element.objectNumber))
           .then(()=> {
-            const makerData = makerFilter ? this.state.makerData : this.sortAndCondenseFilterData(results.map(element => element.maker));
+            const makerData = makerFilter ? this.state.makerData : this.sortCountAndCondenseFilterData(results.map(element => element.maker));
 
             this.setState({
               makerData: makerData,
@@ -66,6 +69,7 @@ class SearchPage extends Component {
                  materialData: materialData,*/
               hasData: results.length > 0,
               data: results,
+              originalData:results,
               showFilters: true,
             })
           })
@@ -75,7 +79,7 @@ class SearchPage extends Component {
       .catch(this.handleError)
   }
 
-  sortAndCondenseFilterData = data => {
+  sortCountAndCondenseFilterData = data => {
     const arr = [];
 
     data.forEach(element => {
@@ -85,7 +89,8 @@ class SearchPage extends Component {
       if (obj) obj.count++
       else arr.push({text: element, count: 1})
     })
-    return arr.sort((element1, element2) => element2.count - element1.count).map(element => element.text).slice(0, FILTER_LIMIT);
+
+    return arr.sort((element1, element2) => element2.count - element1.count).slice(0, FILTER_LIMIT);
   }
 
   getDetailsFromArtObjects = (objectNumbers) => {
@@ -112,8 +117,8 @@ class SearchPage extends Component {
       period.push(element.period)
     })
 
-    period = this.sortAndCondenseFilterData(period)
-    material = this.sortAndCondenseFilterData(material)
+    period = this.sortCountAndCondenseFilterData(period)
+    material = this.sortCountAndCondenseFilterData(material)
 
     const periodData = periodFilter ? this.state.periodData : period;
     const materialData = materialFilter ? this.state.materialData : material;
@@ -131,7 +136,7 @@ class SearchPage extends Component {
     const periodTerm = periodFilter ? `&f.dating.period=${periodFilter}` : "";
     const materialTerm = materialFilter ? `&material=${materialFilter.replace(/ /g, "%20")}` : "";
 
-    this.doSearch(searchTerm + makerTerm + periodTerm + materialTerm);
+   // this.doSearch(searchTerm + makerTerm + periodTerm + materialTerm);
 
   }
 
@@ -184,17 +189,17 @@ class SearchPage extends Component {
         Row><h2>SearchPage</h2></Row>
         <Row> <SearchForm onSearch={this.doNewSearch}/></Row>
         {showFilters && <Row>
-          <Col className="col-sm-4"><SearchFormFilterList title="Filter by Maker"
+          <Col className="col-sm-4"><SearchFormFilterListWithCount title="Filter by Maker"
                                                           currentlySelected={makerSelected}
                                                           onClearFilter={this.clearMakerFilter}
                                                           onSelectFilter={this.setMakerFilter}
                                                           data={makerData}/></Col>
-          <Col className="col-sm-4"><SearchFormFilterList title="Filter by Period"
+          <Col className="col-sm-4"><SearchFormFilterListWithCount title="Filter by Period"
                                                           currentlySelected={periodSelected}
                                                           onClearFilter={this.clearPeriodFilter}
                                                           onSelectFilter={this.setPeriodFilter}
                                                           data={periodData}/></Col>
-          <Col className="col-sm-4"><SearchFormFilterList title="Filter by Material"
+          <Col className="col-sm-4"><SearchFormFilterListWithCount title="Filter by Material"
                                                           currentlySelected={materialSelected}
                                                           onClearFilter={this.clearMaterialFilter}
                                                           onSelectFilter={this.setMaterialFilter}
