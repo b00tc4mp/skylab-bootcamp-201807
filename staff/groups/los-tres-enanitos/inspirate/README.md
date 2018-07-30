@@ -1,2 +1,0 @@
-
-# Inspirate App
