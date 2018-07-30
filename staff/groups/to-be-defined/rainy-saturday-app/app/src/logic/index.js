@@ -244,8 +244,8 @@ const logic = {
   getMuseumDetailsForObjectNumber(objectNumber) {
     return this._callRijksmuseumApiObjectDetail(objectNumber)
       .then(res => {
-      const {principalMaker,colors,description,materials,physicalMedium} = res.artObject
-     return {colors,description,materials,physicalMedium,principalMaker}
+      const {dating:{period:period}, principalMaker,colors,description,materials,physicalMedium} = res.artObject
+     return {colors, period, description,materials,physicalMedium,principalMaker}
 
       })
   }
