@@ -61,7 +61,7 @@ const logic = {
                 return res;
             })
     },
-/*
+
 
     // user's
 
@@ -81,7 +81,7 @@ const logic = {
                 // return true
                 return this.retrieveImages()
             })
-            .then( images => {
+            .then(images => {
                 this._userImages = images || []
 
                 return true
@@ -172,11 +172,13 @@ const logic = {
             })
                 .then(res => res.json())
                 .then(res => res.resources)
-                .then(res => res.map( item => item.url))
+                .then(res => res.map(item => item.url))
                 .catch(err => console.error(err.message))
         }
 
     },
+
+    
 
     addImage(img) {
         return this._callCloudinaryApi('/upload', 'post', img)
@@ -186,6 +188,10 @@ const logic = {
         return this._callCloudinaryApi(`/resources/image/upload/?prefix=${this.userUsername}`, 'get')
     }
 
+    
+
 }
+
+
 
 if (typeof module !== 'undefined') module.exports = logic;
