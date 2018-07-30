@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import './UserRegisterAndLogin.css';
 import PropTypes from 'prop-types';
 import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import logic from '../logic'
 
 
 
@@ -31,7 +32,8 @@ export default class UserRegister extends Component {
 
     handleSubmit = event => {
         event.preventDefault()
-        console.log(this.state)
+        const {state: {name, lastname, username, email, password }} = this
+        logic.registerUser(name, lastname, username, email, password)
         this.setState({
         name: "",
         lastname: "",

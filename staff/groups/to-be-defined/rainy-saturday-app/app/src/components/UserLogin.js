@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 import PropTypes from 'prop-types';
 import "./UserRegisterAndLogin.css"
+import logic from '../logic'
 
 export default class UserLogin extends Component {
   
@@ -16,7 +17,8 @@ keepPassword = event => this.setState({ password: event.target.value })
 
 handleLogin = event => {
     event.preventDefault()
-    console.log(this.state)
+    const {state: {username, password}} = this
+    this.props.onLogin(username, password)
     this.setState({
     username: "",
     password: "",

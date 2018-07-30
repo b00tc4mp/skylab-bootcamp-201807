@@ -71,8 +71,8 @@ const logic = {
 
   // user's
 
-  registerUser(username, password) {
-    return this._callUsersApi('/user', 'post', {username, password})
+  registerUser(name, lastname, username, email, password) {
+    return this._callUsersApi('/user', 'post', {username, password, name, lastname, email, })
       .then(res => res.data.id)
   },
 
