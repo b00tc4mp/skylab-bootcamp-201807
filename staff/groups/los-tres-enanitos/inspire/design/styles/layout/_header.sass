@@ -1,69 +1,85 @@
-.head-in
+.head-loggedin
     height: 15%
     width: 100%
     background-color: white
-    padding: 1em
+    display: inline-grid
+    grid-template-columns: 10% 60% 30%
+    align-items: center
+    
 
-.logo
+.logo-loggedin
 
-    &__photo
-        width: 5em
-        height: 5em
-        float: left
+    &__photo-loggedin
+        width: 3.5em
+        height: 3.5em
+        margin-left: 1.5em
 
-.nav-in
+.nav-loggedin
 
     &__login-button
         font-size: 1em
         padding: 0.8em
-        text-decoration: none
         background-color: transparent
-        margin-right: 0.2em
-
+        
     &__join-button
         font-size: 1em
         padding: 0.8em
         background-color: #59A56C
-        border-radius: 0px 8px 8px 0px
+        border-radius: 8px
+        margin-right: 1.5em
 
-    &__in-login
+    &__login
         color: grey
+        margin-right: 1.5em
+        font-size: 1.2em
 
-    &__in-join
+    &__join
         color: white
 
-.list-button-in
+.list-button-loggedin
     display: flex
     flex-direction: row
     justify-content: flex-end
+    align-items: center
 
-.head-out
+.head-logout
     height: 15%
     width: 100%
     background-color: white
     padding: 1em
+    display: inline-grid
+    grid-template-columns: 9% 61% 29%
+    align-items: center
 
-.nav-out
+.logo-logout
+
+    &__photo-logout
+        width: 3.5em
+        height: 3.5em
+        margin-left: 0.5em
+
+.nav-logout
     &__logout-button
         font-size: 1em
         padding: 0.8em
-        text-decoration: none
-        background-color: #C82A1E
+        background-color: black
         margin-right: 1em
-        border-radius: 10px
-
+        border-radius: 8px
+        
     &__logout
         color: white
 
     &__image
         width: 2.8em
         height: 2.8em
+        border-radius: 50%
       
 
-.list-button-out
+.list-button-logout
     display: flex
     flex-direction: row
     justify-content: flex-end
+    align-items: center
 
 
 
