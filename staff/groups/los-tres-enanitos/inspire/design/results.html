@@ -8,28 +8,43 @@
   <link rel="stylesheet" href="./styles/pages/results.css">
 </head>
 <body>
-  <header>
+  <header class="head-in">
     <div class="logo">
-      <img src="assets/img/logo.png" alt="">
+      <img src="./images/logo.png" alt="" class="logo__photo">
     </div>
     <div>
-      <div class="search"></div>
+      <form class="search">
+        <input type="text" placeholder="Insert a word to inspire your mind..." class="search__query">
+    </form>
     </div>
-    <div>
-      <nav>
-        <ul>
-          <li><a href="">Home</a></li>
-          <li><a href="">Collections</a></li>
-        </ul>
-      </nav>
-    </div>
-    <div>
-      <ul>
-        <li><a href="">Login</a></li>
-        <li><a href="">Join free</a></li>
+    <div class="nav-in">
+      <ul class="list-button-in">
+        <li><button class="nav-in__login-button"><a href="" class="nav-in__in-login">Login</a></button></li>
+        <li><button class="nav-in__join-button"><a href="" class="nav-in__in-join">Join free</a></button></li>
       </ul>
     </div>
   </header>
+
+  <header class="head-out">
+    <div class="logo">
+     <img src="./images/logo.png" alt="" class="logo__photo">
+    </div>
+    <div>
+      <form class="search">
+        <input type="text" placeholder="Insert a word to inspire your mind..." class="search__query">
+    </form>
+    </div>
+    <div class="nav-out">
+      <ul class="list-button-out">
+        <li><button class="nav-out__logout-button"><a href="" class="nav-out__logout">Logout</a></button></li>
+        <a href="#"><img src="https://e02-elmundo.uecdn.es/social/ugc/avatars/003/661/xlarge_3661664.png" alt="" class="nav-out__image"></a>
+      </ul>
+    </div>
+  </header>
+
+
+
+
   <main></main>
   <footer></footer>
 </body>
