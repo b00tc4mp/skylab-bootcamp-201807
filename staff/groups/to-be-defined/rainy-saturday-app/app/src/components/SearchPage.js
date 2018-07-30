@@ -41,6 +41,9 @@ class SearchPage extends Component {
       makerSelected:false,
       periodSelected:false,
       materialSelected:false,
+      periodFilter:false,
+      makerFilter:false,
+      materialFilter:false
     })
     this.doSearch(searchTerm);
   }
@@ -49,7 +52,6 @@ class SearchPage extends Component {
 
     logic.getMuseumImagesForSearchTerm(searchTerm)
       .then(results => {
-        console.log(results)
         const makerData = makerFilter ? this.state.makerData : this.sortMakerFilterData(results.map(element => element.maker));
         const periodData = periodFilter ? this.state.periodData : defaultPeriodData;
         const materialData = materialFilter ? this.state.materialData : defaultMaterialData;

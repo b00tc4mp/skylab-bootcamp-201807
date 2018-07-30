@@ -248,7 +248,7 @@ describe('logic (Museum-App)', () => {
 
         describe('general filtered query search', () => {
             it('should find results matching criteria', () => {
-                return logic._callRijksmuseumApi('Rembrandt&principalMaker=Rembrandt+van+Rijn')
+                return logic._callRijksmuseumApiQuery('Rembrandt&principalMaker=Rembrandt+van+Rijn')
                     .then(results => {
                    const     ourObject = results.artObjects[0];
 
@@ -279,6 +279,33 @@ describe('logic (Museum-App)', () => {
                     })
             })
         })
+
+
+      describe('get object details', () => {
+        it('should return correct details for objectNumber', () => {
+          return logic.getMuseumDetailsForObjectNumber('SK-C-211')
+            .then(results => {
+              console.log(results)
+
+              expect(results.colors).toEqual([
+                "#65563B",
+                " #77705A",
+                " #898D83",
+                " #231E12",
+                " #3C3828",
+                " #A7A58F",
+                " #988561"
+              ])
+              expect(results.principalMaker).toBe("Jacob Isaacksz. van Ruisdael")
+              expect(results.materials).toEqual([
+                "canvas",
+                "oil paint (paint)"
+              ])
+            })
+            .catch(console.error)
+        })
+
+      })
 
         // describe('retrieve albums by artist id', () => {
         //     it('should retrieve albums for given artist id', () => {
