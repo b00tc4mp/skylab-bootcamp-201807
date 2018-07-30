@@ -3,23 +3,28 @@ import PropTypes from 'prop-types';
 import ResultImage from './ResultImage';
 import './ImageDisplayer.css'
 
+
 class ImageDisplayer extends Component {
 
-render(){
+  onImageClicked = () => {
+    console.log("hola")
+  }
 
-  let ExtractData = this.props.data.map(imageurl => {
+  render() {
+    let incKey = 0
+    // const that = this
+    let ExtractData = this.props.data.map(imageurl => {
+      return (
+        <ResultImage image={imageurl} key={imageurl.id} onImageClick={this.onImageClicked} />
+
+      )
+    })
     return (
-      <ResultImage image={imageurl} />
-  
+      <div className="flex-container">
+        {ExtractData}
+      </div>
     )
-  })
-
-  return (
-    <div class="flex-container">
-      {ExtractData}
-    </div>
-  )
-}
+  }
 
 
 
