@@ -7,6 +7,10 @@ import HomePage from "./components/HomePage";
 import SearchPage from "./components/SearchPage"
 import UserPage from "./components/UserPage"
 import { Button } from 'reactstrap';
+import UserRegister from './components/UserRegister';
+import ImageDisplayer from './components/ImageDisplayer';
+import UserLogin from './components/UserLogin';
+
 
 class App extends Component {
 
@@ -17,7 +21,10 @@ class App extends Component {
         <NavBar/>
         <HomePage/>
         <SearchPage/>
+        <ImageDisplayer/>
         <UserPage/>
+        <UserRegister/>
+        <UserLogin/>
 
 
 

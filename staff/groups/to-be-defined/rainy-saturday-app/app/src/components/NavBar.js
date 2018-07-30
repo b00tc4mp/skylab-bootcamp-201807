@@ -39,7 +39,10 @@ export default class NavBar extends React.Component {
                 <NavLink id="comRainysaturdayNavBarFontSize" href="/components/">Home</NavLink>
               </NavItem>
               <NavItem>
-                <NavLink id="comRainysaturdayNavBarFontSize" href="https://github.com/reactstrap/reactstrap">Search</NavLink>
+                <NavLink id="comRainysaturdayNavBarFontSize" href="/components/">Search</NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink id="comRainysaturdayNavBarFontSize" href="/components/">Favourites</NavLink>
               </NavItem>
               <NavItem>
                 <NavLink id="comRainysaturdayNavBarFontSize" href="/component/">Register</NavLink>
@@ -49,19 +52,15 @@ export default class NavBar extends React.Component {
               </NavItem>
               <UncontrolledDropdown nav inNavbar>
                 <DropdownToggle nav caret>
-                <img src={'http://www.mas40.com/app/mobileimg/icos/ico-perfil.png'} style={{width:70, marginTop: -15}} /> 
+                <img src={'http://www.mas40.com/app/mobileimg/icos/ico-perfil.png'} alt="User profile" style={{width:70, marginTop: -15}} /> 
                 </DropdownToggle>
                 <DropdownMenu right>
                   <DropdownItem>
                     Profile
                   </DropdownItem>
                   <DropdownItem>
-                    Settings
+                    Logout
                   </DropdownItem>
-                  <DropdownItem>
-                    LogOut
-                  </DropdownItem>
-                  <DropdownItem divider />
                 </DropdownMenu>
               </UncontrolledDropdown>
               {/* {/* <NavItem>
