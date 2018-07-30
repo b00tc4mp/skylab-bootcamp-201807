@@ -129,9 +129,11 @@ describe('logic (gallery-app)', () => {
 
         beforeEach(() => {
             username = 'galleryapp-' + Math.random()
-            image = new File()
-            image.name = '../pics/landing.jpg'
-            image.type = 'image/jpg'
+            img = new Image()
+            img.src = 'src/pics/landing.jpg'
+            const canvas = document.createElement('canvas')
+            canvas.getContext('2d').drawImage(img, 100, 100)
+            image = canvas.toDataURL('image/webp').replace(/^data:image\/(png|jpg);base64,/, '');
             return logic.registerUser(username, password)
                 .then(() => logic.loginUser(username, password))
         })
@@ -140,6 +142,23 @@ describe('logic (gallery-app)', () => {
             return logic.addImage(image)
                 .then(res => expect(res).toBeTruthy())
         })
+
+        it('should delete image from gallery', () => {
+            // TODO
+        })
+
+        it('should retrieve images from gallery', () => {
+            // TODO
+        })
+
+        it('should delete all images from a user gallery', () => {
+            // TODO
+        })
+
+        it('should delete user folder (on unregister)', () => {
+            // TODO
+        })
+        
 
     })
 
