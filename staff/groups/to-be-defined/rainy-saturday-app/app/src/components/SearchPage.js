@@ -41,6 +41,9 @@ class SearchPage extends Component {
       makerSelected:false,
       periodSelected:false,
       materialSelected:false,
+      periodFilter:false,
+      makerFilter:false,
+      materialFilter:false
     })
     this.doSearch(searchTerm);
   }
