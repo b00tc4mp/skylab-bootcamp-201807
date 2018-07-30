@@ -1,5 +1,10 @@
 import React from 'react';
 import './NavBar.css';
+import '../logic'
+import PropTypes from 'prop-types';
+import {Link} from 'react-router-dom'
+
+
 import {
   Collapse,
   Navbar,
@@ -14,6 +19,13 @@ import {
   DropdownItem } from 'reactstrap';
 
 export default class NavBar extends React.Component {
+
+  static propTypes = {
+    isLoggedIn: PropTypes.bool.isRequired,
+
+  }
+
+
   constructor(props) {
     super(props);
 
@@ -22,11 +34,17 @@ export default class NavBar extends React.Component {
       isOpen: false
     };
   }
+
+  doLogout = () => {
+    console.log("need to implement logout")
+  }
+
   toggle() {
     this.setState({
       isOpen: !this.state.isOpen
     });
   }
+
   render() {
     return (
       <div>
@@ -36,19 +54,19 @@ export default class NavBar extends React.Component {
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
               <NavItem>
-                <NavLink id="comRainysaturdayNavBarFontSize" href="/components/">Home</NavLink>
+               <NavLink  tag={Link} to="/home">Home</NavLink>
               </NavItem>
               <NavItem>
-                <NavLink id="comRainysaturdayNavBarFontSize" href="/components/">Search</NavLink>
+              <NavLink  tag={Link}  to="/search">Search</NavLink>
               </NavItem>
               <NavItem>
-                <NavLink id="comRainysaturdayNavBarFontSize" href="/components/">Favourites</NavLink>
+             <NavLink  tag={Link}  to="/favourites">Favourites</NavLink>
               </NavItem>
               <NavItem>
-                <NavLink id="comRainysaturdayNavBarFontSize" href="/component/">Register</NavLink>
+               <NavLink  tag={Link}  to="/register">Register</NavLink>
               </NavItem>
               <NavItem>
-                <NavLink id="comRainysaturdayNavBarFontSize" href="/components/">Login</NavLink>
+               <NavLink  tag={Link}  to="/login">Login</NavLink>
               </NavItem>
               <UncontrolledDropdown nav inNavbar>
                 <DropdownToggle nav caret>
@@ -56,10 +74,10 @@ export default class NavBar extends React.Component {
                 </DropdownToggle>
                 <DropdownMenu right>
                   <DropdownItem>
-                    Profile
+                    <Link  to="/user">Profile</Link>
                   </DropdownItem>
                   <DropdownItem>
-                    Logout
+                   Logout
                   </DropdownItem>
                 </DropdownMenu>
               </UncontrolledDropdown>

@@ -49,6 +49,7 @@ class SearchPage extends Component {
 
     logic.getMuseumImagesForSearchTerm(searchTerm)
       .then(results => {
+        console.log(results)
         const makerData = makerFilter ? this.state.makerData : this.sortMakerFilterData(results.map(element => element.maker));
         const periodData = periodFilter ? this.state.periodData : defaultPeriodData;
         const materialData = materialFilter ? this.state.materialData : defaultMaterialData;
@@ -74,7 +75,6 @@ class SearchPage extends Component {
         if (obj) obj.count++
         else arr.push({text:element,count:1})
       })
-
     return arr.sort((element1,element2) =>  element2.count - element1.count).map(element => element.text).slice(0,10);
   }
 
