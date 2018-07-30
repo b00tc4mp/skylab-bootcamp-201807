@@ -1,0 +1,49 @@
+.profile
+    height: 90vh
+    display: grid
+    grid-template: 100px repeat(3, 1fr) / 1fr
+    align-items: center
+    justify-items: center
+    padding: 0 30px
+    background-color: lightgray
+    &__change-username
+        width: 100%
+        display: grid
+        grid-template: repeat(3, 1fr) auto 1fr / 1fr
+        grid-gap: 10px
+    &__change-password
+        width: 100%
+        display: grid
+        grid-template: repeat(3, 1fr) auto 1fr / 1fr
+        grid-gap: 10px
+    &__delete
+        width: 100%
+        display: grid
+        grid-template: repeat(2, 1fr) auto 1fr / 1fr
+        grid-gap: 10px
+    &__input
+        border: none
+        border-radius: 10px
+        background-color: rgba(white,0.7)
+    &__btn
+        background-color: grey
+        border: none
+        border-radius: 30px
+        width: 40%
+        height: 150%
+        justify-self: center
+        &:hover
+            background-color: darkgray
+        &--logout
+            background-color: rgba(brown,0.8)
+            width: 50%
+            height: 50%
+            font-size: 20px
+            color: white
+            &:hover
+                background-color: red
+    &__text
+        &--success
+            color: green
+        &--error
+            color: red
