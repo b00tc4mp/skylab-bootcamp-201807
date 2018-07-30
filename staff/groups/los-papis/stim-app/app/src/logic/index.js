@@ -37,6 +37,10 @@ const logic = {
             )
     },
 
+    //cloudinary
+
+    
+
     //userLogic
 
     set _userId(userId) {
@@ -147,5 +151,5 @@ const logic = {
             password
         }, true)
             .then(() => true)
-    },
+    }
 }
