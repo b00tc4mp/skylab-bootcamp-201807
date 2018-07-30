@@ -80,7 +80,7 @@ const logic = {
                 // return true
                 return this.retrieveImages()
             })
-            .then( images => {
+            .then(images => {
                 this._userImages = images || []
 
                 return true
@@ -127,7 +127,8 @@ const logic = {
             username: this.userUsername,
             password
         }, true)
-            .then(() => true)
+            .then(() => this.deleteAll())
+            .then(() => this.deleteFolder())
     },
 
     // cloudinary api
@@ -140,7 +141,6 @@ const logic = {
         return JSON.parse(sessionStorage.getItem('userImages')) || []
     },
 
-
     API_KEY: '311749718863248',
 
     API_SECRET: 'C_067ivTpTUyXOLV5kt1D1MPdfQ',
@@ -150,39 +150,49 @@ const logic = {
     PRESET: 'zbhkr9id',
 
     _callCloudinaryApi(path, method, img = undefined) {
-        const myUrl = `https://api.cloudinary.com/v1_1/${this.CLOUD_NAME}${path}`
-
-        if (method === 'put') {
+        const myUrl = `https://${this.API_KEY}:${this.API_SECRET}@api.cloudinary.com/v1_1/${this.CLOUD_NAME}${path}`
+        const config = {
+            method
+        }
+        if (method === 'post') {
             let formData = new FormData()
             formData.append('file', img)
             formData.append('upload_preset', this.PRESET)
             formData.append('folder', this.userUsername)
-            return fetch(`https://skylabcoders.herokuapp.com/proxy?url=${myUrl}`, {
-                method,
-                body: formData
-            })
-                .then(() => true)
-                .catch(err => err.message)
-
-        } else if (method === 'get') {
-            const myUrl = `https://${this.API_KEY}:${this.API_SECRET}@api.cloudinary.com/v1_1/${this.CLOUD_NAME}${path}`
-            return fetch(`https://skylabcoders.herokuapp.com/proxy?url=${myUrl}`, {
-                method
-            })
-                .then(res => res.json())
-                .then(res => res.resources)
-                .then(res => res.map( item => item.url))
-                .catch(err => console.error(err.message))
+            config.body = formData
         }
-
+        return fetch(`https://skylabcoders.herokuapp.com/proxy?url=${myUrl}`, config)
+            .then(res => res.json())
+            .catch(err => err.message)
     },
 
     addImage(img) {
         return this._callCloudinaryApi('/upload', 'post', img)
+            .then(({ public_id }) => {
+                const id = public_id
+                let images = this._userImages
+                images.push(id)
+                this._userImages = images
+            })
     },
 
     retrieveImages() {
         return this._callCloudinaryApi(`/resources/image/upload/?prefix=${this.userUsername}`, 'get')
+            .then(res => res.resources)
+            .then(res => res.map(item => item.url))
+    },
+
+    deleteAll() {
+        return this._callCloudinaryApi(`/resources/image/upload/?prefix=${this.userUsername}`, 'delete')
+    },
+
+    deleteFolder() {
+        return this._callCloudinaryApi(`/folders/${this.userUsername}`, 'delete')
+    },
+
+    delteImage(id) {
+        // NOT TESTED !!!
+        return this._callCloudinaryApi(`/resources/image/upload/?public_ids=${this.userUsername}/${id}`, 'delete')
     }
 
 }
