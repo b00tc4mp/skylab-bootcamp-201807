@@ -6,22 +6,22 @@ class Register extends Component {
 
     state = {
         username: null,
-        password: null
+        password: null,
+        error: null
     }
 
-    keepPassword = event => this.setState({password: event.target.value})
-    keepUsername = event => this.setState({username: event.target.value})
+    keepPassword = event => this.setState({ password: event.target.value })
+    keepUsername = event => this.setState({ username: event.target.value })
     registerUser = () => {
-        const {state: {username, password}} = this
+        const { state: { username, password } } = this
         this.props.onRegister(username, password)
+            .catch(err => this.setState({ error: err.message }))
     }
 
     render() {
         const {
-            props: {
-                fail,
-                onLogin
-            },
+            state: { error },
+            props: { onLogin },
             keepPassword,
             keepUsername,
             registerUser
@@ -38,7 +38,7 @@ class Register extends Component {
                     <input className="register__input" onChange={keepPassword}></input>
                 </div>
                 <div>
-                    {fail && <p className="register__error">{fail}</p>}
+                    {error && <p className="register__error">{error}</p>}
                 </div>
                 <button className="register__btn" onClick={registerUser}> Register </button>
                 <button className="register__btn register__btn--secondary" onClick={onLogin}> Log in </button>

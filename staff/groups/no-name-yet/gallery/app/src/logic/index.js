@@ -106,7 +106,7 @@ const logic = {
                 return this._callUsersApi(`/user/${this._userId}`, 'get', undefined, true)
             })
             .then(({ data }) => {
-                this._userFavorites = data.favorites || []
+                //this._userFavorites = data.favorites || []
 
                 return true
             })
@@ -140,6 +140,8 @@ const logic = {
             .then(() => {
                 if (newUsername)
                     this._userUsername = newUsername
+                if(newPassword)
+                    this._userPassword = newPassword
 
                 return true
             })
@@ -152,7 +154,7 @@ const logic = {
         }, true)
             .then(() => true)
     },
-
+/*
     togglePhotoGallery(photoId) {
         const gallery = this._userGallery
 
@@ -177,7 +179,7 @@ const logic = {
                 return true
             })
     },
-/*
+
     isGallery(photoId) {
         return this._userGallery.includes(photoId)
     }*/
