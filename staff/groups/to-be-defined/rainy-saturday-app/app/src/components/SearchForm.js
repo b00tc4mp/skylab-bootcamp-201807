@@ -30,7 +30,7 @@ class SearchForm extends Component {
         <FormGroup>
          {/* <Label for="com.rainysaturday.SearchForm.searchTermInput">Enter Search Term</Label>*/}
           <Input value={this.state.searchTerm} autoFocus type="text" name="searchTermInput" onChange={this.handleSearchTermChange}
-                 id="com.rainysaturday.searchTermInput" placeholder="Enter artist, Genre, Type of work, keyword..."/>
+                 id="com.rainysaturday.searchTermInput" placeholder="Enter artist, Genre, Type of work, keyword..." required/>
           <FormText color="muted">
            You may enter any search term that occurs to you: "Rembrandt", "sky", "print" or a combination, e.g. "Rembrandt sky print"
           </FormText></FormGroup>

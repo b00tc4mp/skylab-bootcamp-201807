@@ -1,0 +1,15 @@
+/* #comRainySaturdayUserRegisterForm {
+width: 50%;
+
+} */
+
+#comRainySaturdayUserRegisterAndLogin {
+display: flex;
+justify-content: center;
+
+}
+
+.comRainySaturdayUserRegisterAndLoginBorder{
+
+    border: 1px solid red !important;
+}
