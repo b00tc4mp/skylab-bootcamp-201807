@@ -1,0 +1,31 @@
+body {
+    height: 100%;
+    margin: 0;
+    font-family:"Lato", sans-serif;
+    line-height: 1.8em;
+}
+
+
+main {
+    position: relative;
+    opacity: 0.80;
+    background-position: center;
+    background-size:cover;
+    background-attachment:fixed;
+    background-image: url('./img/man.jpg');
+    min-height: 100%;
+}
+
+.showcase {
+    margin: 0 auto;
+    width: 600px;
+    color: #ffffff;
+    padding: 200px;
+}
+
+footer {
+    color:#888E8E;
+    text-align: center;
+    font-size: 12px;
+    height: 5px;
+}
