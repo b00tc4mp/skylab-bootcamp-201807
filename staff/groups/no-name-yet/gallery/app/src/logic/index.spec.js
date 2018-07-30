@@ -1,4 +1,4 @@
-'use strict'
+
 
 describe('logic (gallery-app)', () => {
     describe('user\'s', () => {
@@ -18,7 +18,7 @@ describe('logic (gallery-app)', () => {
             const username = 'carlota-' + Math.random(), password = '123'
             let userId
 
-            beforeEach(() => {
+          beforeEach(() => {
                 return logic.registerUser(username, password)
                     .then(id => userId = id)
             })
@@ -35,7 +35,7 @@ describe('logic (gallery-app)', () => {
             })
         })
 
-        describe('unregister user', () => {
+       describe('unregister user', () => {
             const username = 'carlota-' + Math.random(), password = '123'
 
             beforeEach(() => {
@@ -121,8 +121,8 @@ describe('logic (gallery-app)', () => {
                     .then(res => expect(res).toBeTruthy())
             })
         })
-
-        describe('gallery', () => {
+/*
+      describe('gallery', () => {
             let username
             const password = '123'
 
@@ -165,7 +165,10 @@ describe('logic (gallery-app)', () => {
             
           
         })
+        */
     })
 
    
 })
+
+
