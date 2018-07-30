@@ -74,7 +74,6 @@ class SearchPage extends Component {
         if (obj) obj.count++
         else arr.push({text:element,count:1})
       })
-
     return arr.sort((element1,element2) =>  element2.count - element1.count).map(element => element.text).slice(0,10);
   }
 
