@@ -7,14 +7,12 @@ import classNames from 'classnames/bind';
 
 class SearchFormFilterList extends Component {
 
-
     static propTypes = {
-      data: PropTypes.array,
-      searchFilterTitle: PropTypes.string,
-      onSelectFilter: PropTypes.func,
-      onClearFilter: PropTypes.func,
-      currentlySelected: PropTypes.bool,
-      title:PropTypes.string,
+      data: PropTypes.array.isRequired,
+      onSelectFilter: PropTypes.func.isRequired,
+      onClearFilter: PropTypes.func.isRequired,
+      currentlySelected: PropTypes.bool.isRequired,
+      title:PropTypes.string.isRequired,
     }
 
 
