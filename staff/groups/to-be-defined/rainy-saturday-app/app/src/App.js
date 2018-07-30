@@ -16,12 +16,17 @@ class App extends Component {
 
   render() {
 
+    state = {
+      loggedIn:false;
+    }
+
     return(
       <div>
-        <NavBar/>
-        <HomePage/>
+        <NavBar  />
+        <Route exact path="/" render={() =>  <HomePage  />} />
+        <Route  path="/search" render={() => loggedIn ? <Redirect to="/home" /> : <SearchPage onRegister={goToRegister} onLogin={goToLogin} />} />
+
         <SearchPage/>
-        <ImageDisplayer/>
         <UserPage/>
         <UserRegister/>
         <UserLogin/>
