@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Route, withRouter, Redirect } from 'react-router-dom'
+import logic from './logic'
 
 import Landing from './components/Landing'
 import Register from './components/Register'
@@ -11,49 +12,35 @@ import Navbar from './components/Navbar'
 
 class App extends Component {
   state = {
-    // loggedIn: logic.loggedIn
-    loggedIn: false
+    loggedIn: logic.loggedIn
   }
 
   onRegister = () => this.props.history.push("/register")
   onLogin = () => this.props.history.push("/login")
-  goToApp = () => this.props.history.push("/home")
-  
-  // return promise and handle error inside each component
+  goToHome = () => this.props.history.push("/home")
+  goToProfile = () => this.props.history.push("/profile")
+  goToGallery = () => this.props.history.push("/gallery")
+
   registerUser = (username, password) => {
-    // logic.registerUser(username, password)
-    //   .then(() => {
-    //     this.onLogin()
-    //     this.setState({ registerFail: null })
-    //   })
-    //   .catch((err) => {
-    //     this.setState({ registerFail: err.message })
-    //   })
-    this.onLogin()
+    return logic.registerUser(username, password)
+      .then(() => this.onLogin())
   }
   loginUser = (username, password) => {
-    // logic.loginUser(username, password)
-    //   .then(() => {
-    //     this.setState({ loginFail: null, loggedIn: true })
-    //     this.goToApp()
-    //   })
-    //   .catch((err) => {
-    //     this.setState({ loginFail: err.message })
-    //   })
-    this.setState({loggedIn: true})
-    this.goToApp()
+    return logic.loginUser(username, password)
+      .then(() => {
+        this.setState({ loggedIn: true })
+        this.goToHome()
+      })
   }
   updateUser = (password, newUsername, newPassword) => {
-    // return logic.updateUser(password, newUsername, newPassword)
+    return logic.updateUser(password, newUsername, newPassword)
   }
   deleteUser = (password) => {
-    // return logic.unregisterUser(password)
-    //   .then(() => {
-    //     this.logout()
-    //   })
+    return logic.unregisterUser(password)
+      .then(() => this.logout())
   }
   logout = () => {
-    // logic.logout()
+    logic.logout()
     this.setState({ loggedIn: false })
     this.props.history.push("/")
   }
@@ -69,7 +56,10 @@ class App extends Component {
       loginUser,
       logout,
       updateUser,
-      deleteUser
+      deleteUser,
+      goToHome,
+      goToProfile,
+      goToGallery
     } = this
     return (
       <div className="App">
@@ -79,7 +69,7 @@ class App extends Component {
         <Route path="/home" render={() => loggedIn ? <Main onLogout={logout} /> : <Redirect to="/" />} />
         <Route path="/profile" render={() => loggedIn ? <Profile onLogout={logout} updateUser={updateUser} deleteUser={deleteUser} /> : <Redirect to="/" />} />
         <Route path="/gallery" render={() => loggedIn ? <Gallery /> : <Redirect to="/" />} />
-        {loggedIn && <Navbar />}
+        {loggedIn && <Navbar profile={goToProfile} home={goToHome} gallery={goToGallery} />}
       </div>
     );
   }
