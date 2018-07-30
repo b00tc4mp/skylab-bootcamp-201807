@@ -21,7 +21,6 @@ class App extends Component {
         <NavBar/>
         <HomePage/>
         <SearchPage/>
-        <ImageDisplayer/>
         <UserPage/>
         <UserRegister/>
         <UserLogin/>

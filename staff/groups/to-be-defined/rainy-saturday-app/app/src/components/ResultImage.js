@@ -1,17 +1,18 @@
-import React, {Component} from 'react';
-import PropTypes from 'prop-types';
 
+import React, { Component } from 'react'
+import { CardImg, Card } from 'reactstrap'
 
 class ResultImage extends Component {
 
+  render() {
+    return (
+      <div>
+        <img src={this.props.image.imageurl} alt="test" />
+      </div>
+    )
 
-  render(){
-    return (<h2>ResultImage</h2>)
+
   }
-
-
-
-
 }
 
 export default ResultImage

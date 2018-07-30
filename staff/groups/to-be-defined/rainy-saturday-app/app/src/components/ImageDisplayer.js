@@ -1,14 +1,25 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-
+import ResultImage from './ResultImage';
+import './ImageDisplayer.css'
 
 class ImageDisplayer extends Component {
 
+render(){
 
+  let ExtractData = this.props.data.map(imageurl => {
+    return (
+      <ResultImage image={imageurl} />
+  
+    )
+  })
 
-  render(){
-    return (<h2>ImageDisplayer</h2>)
-  }
+  return (
+    <div class="flex-container">
+      {ExtractData}
+    </div>
+  )
+}
 
 
 
