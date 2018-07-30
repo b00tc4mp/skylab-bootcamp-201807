@@ -1,10 +1,9 @@
-
-
 describe('logic (gallery-app)', () => {
+/*
     describe('user\'s', () => {
 
         describe('register user', () => {
-            const username = 'carlota-' + Math.random(), password = '123'
+            const username = 'galleryapp-' + Math.random(), password = '123'
 
             it('should register on correct data', () => {
                 return logic.registerUser(username, password)
@@ -15,10 +14,10 @@ describe('logic (gallery-app)', () => {
         })
 
         describe('login user', () => {
-            const username = 'carlota-' + Math.random(), password = '123'
+            const username = 'galleryapp-' + Math.random(), password = '123'
             let userId
 
-          beforeEach(() => {
+            beforeEach(() => {
                 return logic.registerUser(username, password)
                     .then(id => userId = id)
             })
@@ -35,8 +34,8 @@ describe('logic (gallery-app)', () => {
             })
         })
 
-       describe('unregister user', () => {
-            const username = 'carlota-' + Math.random(), password = '123'
+        describe('unregister user', () => {
+            const username = 'galleryapp-' + Math.random(), password = '123'
 
             beforeEach(() => {
                 return logic.registerUser(username, password)
@@ -52,7 +51,7 @@ describe('logic (gallery-app)', () => {
         })
 
         describe('logout user', () => {
-            const username = 'carlota-' + Math.random(), password = '123'
+            const username = 'galleryapp-' + Math.random(), password = '123'
 
             beforeEach(() => {
                 return logic.registerUser(username, password)
@@ -77,7 +76,7 @@ describe('logic (gallery-app)', () => {
             const password = '123'
 
             beforeEach(() => {
-                username = 'carlota-' + Math.random()
+                username = 'galleryapp-' + Math.random()
 
                 return logic.registerUser(username, password)
                     .then(() => logic.loginUser(username, password))
@@ -88,7 +87,6 @@ describe('logic (gallery-app)', () => {
                 const newPassword = password + '-' + Math.random()
 
                 return logic.updateUser(password, newUsername, newPassword)
-                    // .then(res => expect(res).toBeTruthy())
                     .then(res => {
                         expect(res).toBeTruthy()
 
@@ -121,54 +119,28 @@ describe('logic (gallery-app)', () => {
                     .then(res => expect(res).toBeTruthy())
             })
         })
-/*
-      describe('gallery', () => {
-            let username
-            const password = '123'
 
-            beforeEach(() => {
-                username = 'carlota-' + Math.random()
+    })
+*/
 
-                return logic.registerUser(username, password)
-                    .then(() => logic.loginUser(username, password))
-            })
+    describe('gallery', () => {
+        let username, image
+        const password = '123'
 
-            it('should toggle photo to gallery', () => {
-                const photoId = '4QxwXcPUm1VfkHksz6VuFi'
-
-                return logic.togglePhotoGallery(photoId)
-                    .then(res => {
-                        expect(res).toBeTruthy()
-                        expect(logic._userGallery.includes(photoId)).toBeTruthy()
-
-                        return logic.togglePhotoGallery(photoId)
-                    })
-                    .then(res => {
-                        expect(res).toBeTruthy()
-                        expect(logic._userGallery.includes(photoId)).toBeFalsy()
-                    })
-            })
-
-            it('should check is gallery', () => {
-                const photoId = '6ozp33PI3p9AdddB6ZL3xQ'
-
-                return logic.togglephotoGallery(photoId)
-                    .then(() => {
-                        expect(logic.isGallery(photoId)).toBeTruthy()
-
-                        return logic.togglephotoGallery(photoId)
-                    })
-                    .then(() => {
-                        expect(logic.isGallery(photoId)).toBeFalsy()
-                    })
-            })
-            
-          
+        beforeEach(() => {
+            username = 'galleryapp-' + Math.random()
+            image = new File()
+            image.name = '../pics/landing.jpg'
+            image.type = 'image/jpg'
+            return logic.registerUser(username, password)
+                .then(() => logic.loginUser(username, password))
         })
-        */
+
+        it('should add image to gallery', () => {
+            return logic.addImage(image)
+                .then(res => expect(res).toBeTruthy())
+        })
+
     })
 
-   
 })
-
-
