@@ -6,6 +6,10 @@ import './styles/Main.css'
 
 class Main extends Component {
 
+  state = {
+    image: null
+  }
+
   startWebcam() {
     const video = document.getElementById("webcam")
     navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
@@ -21,21 +25,24 @@ class Main extends Component {
     });
   }
 
-  capture() {
+  capture = () => {
     const canvas = document.getElementById('canvas')
     const video = document.getElementById("webcam")
-    const img = document.getElementById('image')
+    // const img = document.getElementById('image')
     canvas.width = video.width
     canvas.height = video.height
     canvas.getContext('2d').drawImage(video, 0, 0);
-    img.src = canvas.toDataURL('image/webp');
-    logic.addImage(img)
+    this.setState({ image: canvas.toDataURL('image/webp').replace(/^data:image\/(png|jpg);base64,/, '')})
+    video.pause()
   }
 
   upload = event => {
     const file = event.target.files[0]
-    logic.addImage(file)
+    this.setState({image: file})
   }
+  
+  saveImage = () => logic.addImage(this.state.image)
+  
 
   render() {
 
@@ -50,6 +57,7 @@ class Main extends Component {
           <video autoPlay playsInline muted id="webcam" width="224" height="224"></video>
           <canvas id="canvas" style={{ display: "none" }}></canvas>
           <button onClick={this.capture}>Capture</button>
+          <button onClick={this.saveImage}>Save Image</button>
           <img id="image" src="" />
         </div>
       </div>

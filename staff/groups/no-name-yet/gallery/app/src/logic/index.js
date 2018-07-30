@@ -163,7 +163,7 @@ const logic = {
         }
         return fetch(`https://skylabcoders.herokuapp.com/proxy?url=${myUrl}`, config)
             .then(res => res.json())
-            .catch(err => err.message)
+            .catch(err => console.error(err.message))
     },
 
     addImage(img) {
@@ -173,6 +173,7 @@ const logic = {
                 let images = this._userImages
                 images.push(id)
                 this._userImages = images
+                return true
             })
     },
 
