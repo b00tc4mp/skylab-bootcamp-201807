@@ -1,0 +1,13 @@
+.terms {
+  text-align: center;
+  background-color: #F7F7F7;
+  padding: 1em;
+  border-radius: 8px;
+  font-size: 0.8em;
+}
+.terms__span {
+  color: blue;
+  text-decoration: none;
+}
+
+/*# sourceMappingURL=terms.css.map */

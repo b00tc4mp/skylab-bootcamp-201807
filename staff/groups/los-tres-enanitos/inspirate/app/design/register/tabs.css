@@ -1,0 +1,22 @@
+.title {
+  color: #3888CD;
+  margin-top: 1em;
+  padding: 0.7em;
+}
+.title__in-register {
+  text-decoration: none;
+  color: #3888CD;
+  border-bottom: solid 1px #3888CD;
+  font-size: 0.8em;
+}
+.title__in-login {
+  text-decoration: none;
+  color: grey;
+  font-size: 0.8em;
+}
+.title__in-login:hover {
+  color: #3888CD;
+  border-bottom: solid 1px #3888CD;
+}
+
+/*# sourceMappingURL=tabs.css.map */
