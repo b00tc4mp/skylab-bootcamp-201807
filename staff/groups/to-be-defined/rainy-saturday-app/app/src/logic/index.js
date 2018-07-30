@@ -189,9 +189,22 @@ const logic = {
   museumKey: 'ROQio02r',
 
 
-  _callRijksmuseumApi(query) {
+  _callRijksmuseumApiQuery(query) {
     const searchString = `https://www.rijksmuseum.nl/api/en/collection?key=${this.museumKey}&q=${query}&ps=100`;
-    console.log("search string", searchString)
+    return fetch(searchString)
+      .then(res => res.json())
+      .then(res => {
+        if (res.error) throw Error('request error, status ' + res.error.status);
+
+        return res;
+      });
+  },
+/*
+  https://www.rijksmuseum.nl/api/nl/collection/SK-C-5?key=[API_KEY]&format=json
+*/
+
+  _callRijksmuseumApiObjectDetail(objectNumber) {
+    const searchString = `https://www.rijksmuseum.nl/api/en/collection/${objectNumber}?key=${this.museumKey}&format=json`;
     return fetch(searchString)
       .then(res => res.json())
       .then(res => {
@@ -203,18 +216,19 @@ const logic = {
 
 
   searchMuseum: function (query) {
-    return this._callRijksmuseumApi(query)
+    return this._callRijksmuseumApiQuery(query)
       .then(res => {
         return res.artObjects
       })
   },
 
   getMuseumImagesForSearchTerm(query) {
-    console.log("search string",query)
-    return this._callRijksmuseumApi(query.trim().replace(/ /g,"%20"))
+    return this._callRijksmuseumApiQuery(query.trim().replace(/ /g,"%20"))
       .then(res => {
+        console.log(res)
         return res.artObjects.filter(element => element.hasImage).map(element => {
           return {
+            objectNumber:element.objectNumber,
             id: element.id,
             imageurl: element.webImage.url,
             title: element.title,
@@ -222,6 +236,16 @@ const logic = {
             maker: element.principalOrFirstMaker
           }
         })
+
+      })
+  },
+
+
+  getMuseumDetailsForObjectNumber(objectNumber) {
+    return this._callRijksmuseumApiObjectDetail(objectNumber)
+      .then(res => {
+      const {principalMaker,colors,description,materials,physicalMedium} = res.artObject
+     return {colors,description,materials,physicalMedium,principalMaker}
 
       })
   }
