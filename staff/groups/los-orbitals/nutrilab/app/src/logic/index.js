@@ -1,42 +1,155 @@
 const logic = {
-    _CallUSerApi (path, method='get',body, useToken){
+
+    set _userUsername(userUsername){ 
+        sessionStorage.setItem('userUsername', userUsername)
+    },
+
+    get userUsername(){ 
+        return sessionStorage.getItem('userUsername')
+        
+    },
+
+    set _userPassword(userPassword){ 
+        sessionStorage.setItem('userPassword', userPassword)
+    },
+
+    get _userPassword(){ 
+        return sessionStorage.getItem('userPassword')
+        
+    },
+
+    set _userId(userId){ 
+        sessionStorage.setItem('userId', userId)
+    },
+
+    get _userId(){ 
+        return sessionStorage.getItem('userId')
+        
+    },
+
+    set _userToken(userToken){ 
+        sessionStorage.setItem('userToken', userToken)
+    },
+
+    get _userToken(){ 
+        return sessionStorage.getItem('userToken')
+        
+    },
+
+
+    _callApiUser(path, method = 'get', body, token) {
+
         const config = {
-            method
+            method 
         }
-        const notMethodIncluded = method !== 'get'
-        if (notMethodIncluded || useToken) {
-            config.headers = {}
 
-            if (notMethodIncluded) config.headers['content-type'] = 'application/json'
-
-            if (useToken) config.headers.authorization = 'Bearer ' + this._userToken
+        const noGet = method !== 'get'
+        if (noGet || token) {
+            config.headers = {} 
+            if (noGet) config.headers['content-type']= 'application/json'
+            if (token) config.headers.authorization = 'Bearer ' + this._userToken   
         }
-        if (body) config.body=JSON.stringify(body)
+
+        if (body) config.body = JSON.stringify(body)
 
         return fetch('https://skylabcoders.herokuapp.com/api' + path, config)
             .then(res => res.json())
+
             .then(res => {
                 if (res.status === 'KO') throw Error(res.error)
                 return res;
             })
     },
 
-    registerUser (username, password) {
-        return this._CallUSerApi(username, password)
-            .then()
+    register(username, password) {
 
+       return this._callApiUser('/user', 'post', { username, password })
+            .then(res => res.data.id)
     },
 
-    _callNutritionApi(path) {
-        return fetch('https://api.nutritionix.com/v1_1/' + path, {
-            headers: {
-                authorization: 'Bearer ' + this.spotifyToken
-            }
+    login(username, password) {
+
+        return this._callApiUser('/auth', 'post', { username, password })
+            .then(({data: { id, token}}) => {
+                this._userUsername = username
+                this._userPassword = password
+                this._userToken = token
+                this._userId = id
+
+                return true
+                //return this._callApiUser(`user/${this._userId}`, 'get', undefined, true)
+            })  
+    },
+
+    update(password, newUsername, newPassword) {
+        const data = {
+            username: this.userUsername,
+            password
+        }
+        if (newPassword) data.newPassword = newPassword
+        if (newUsername) data.newUsername = newUsername
+        
+        return this._callApiUser(`/user/${this._userId}`, 'put', data, true )
+        .then(() => {
+        
+            if (newUsername) this._userUsername = newUsername
+            return true
         })
-            .then(res => res.json())
-            .then(res => {
-                if (res.error) throw Error('request error, status ' + res.error.status);
-                return res;
-            });
     },
+
+    delete(password) {
+
+        return this._callApiUser(`/user/${this._userId}`, 'delete', { username: this.userUsername, password }, true)
+
+        .then(() => true)
+    },
+
+    logout() {
+
+         this._userUsername = null
+         this._userToken = null
+         this._userId = null
+
+         sessionStorage.clear()
+    },
+
+    get loggedIn (){
+
+        return this._userUsername && this._userToken && this._userId
+    },
+
+
+    // API NUTRITIONIX
+
+    _callApiNutrition (path, method = 'get'){
+        const config = {
+            method
+        } 
+        config.headers = {}
+        config.headers['content-type'] = 'application/json'
+        config.headers['x-app-id'] = '9a5a7f22'
+        config.headers['x-app-key'] = '420560ecc26327c6ca2e1f211054ac48'
+        
+        return fetch('https://trackapi.nutritionix.com/v2/' + path, config)
+        .then((res) => res.json())
+        .then(res => {
+            if (res.message) throw Error("api connection failed")
+            return res;
+        })
+    },
+
+    searchIngredients (query) {
+
+        return this._callApiNutrition('search/instant?query=' + query)
+            .then((res) => res)
+    },
+
+    ingredientInfo (id) {
+
+        return this._callApiNutrition('search/item?nix_item_id=' + id)
+            .then((res) => res)
+    }
+
 }
+
+if (typeof module !== 'undefined') module.exports = logic;
