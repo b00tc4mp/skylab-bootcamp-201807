@@ -31,15 +31,13 @@ const logic = {
         return sessionStorage.getItem('userPassword')
     },
 
-    /*set _userFavorites(userFavorites) {
+    set _userFavorites(userFavorites) {
         sessionStorage.setItem('userFavorites', JSON.stringify(userFavorites))
     },
 
     get _userFavorites() {
         return JSON.parse(sessionStorage.getItem('userFavorites')) || []
     },
-
-    galleryToken,*/
 
     _callUsersApi(path, method = 'get', body, useToken) {
         const config = {
@@ -70,14 +68,11 @@ const logic = {
                 return res;
             })
     },
+/*
 
-   /* 
     _callGaleryApi(path) {
-        return fetch('https://api.cloudinary.com/v1_1' + path, {
-            headers: {
-                authorization: 'Bearer ' + this.galleryToken
-            }
-        })
+        const myUrl = `https://${API_KEY}:${API_SECRET}@api.cloudinary.com/v1_1/${CLOUD_NAME}`
+        return fetch(`https://skylabcoders.herokuapp.com/proxy?url=${myUrl}/${path}`)
             .then(res => res.json())
             .then(res => {
                 if (res.error)
@@ -85,8 +80,8 @@ const logic = {
 
                 return res;
             });
-    }, 
-*/
+    },*/
+
     // user's
 
     registerUser(username, password) {
@@ -140,6 +135,8 @@ const logic = {
             .then(() => {
                 if (newUsername)
                     this._userUsername = newUsername
+                if (newPassword)
+                    this._userPassword = newPassword
 
                 return true
             })
@@ -154,33 +151,33 @@ const logic = {
     },
 /*
     togglePhotoGallery(photoId) {
-        const gallery = this._userGallery
+        // const gallery = this._userGallery
 
-        const index = favorites.indexOf(photoId)
+        const index = gallery.indexOf(photoId)
 
         if (index > -1) {
             gallery.splice(index, 1)
         } else {
-            favorites.push(photoId)
+            gallery.push(photoId)
         }
 
         const data = {
-            username: this.userUsername,
-            password: this._userPassword,
-            gallery
+            API_KEY = '311749718863248',
+            API_SECRET = 'C_067ivTpTUyXOLV5kt1D1MPdfQ',
+            CLOUD_NAME = 'galleryapp'
         }
 
-        return this._callUsersApi(`/user/${this._userId}`, 'put', data, true)
+        return this._callUsersApi(`/user/${this._userId}`, 'post', data, true)
             .then(() => {
                 this._userGallery = gallery
 
                 return true
             })
     },
-
-    isGallery(photoId) {
-        return this._userGallery.includes(photoId)
-    }*/
+    
+        isGallery(photoId) {
+            return this._userGallery.includes(photoId)
+        }*/
 };
 
 
