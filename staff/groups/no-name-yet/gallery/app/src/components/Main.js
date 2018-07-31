@@ -4,13 +4,19 @@ import logic from '../logic'
 
 import './styles/Main.css'
 
+import ml5 from 'ml5'
+
 class Main extends Component {
 
   state = {
-    image: null
+    image: null,
+    webcamOn: false,
+    result: null,
+    probability: null,
+    style: ml5.styleTransfer('models/wave', ()=>console.log("ready transfer"))
   }
 
-  startWebcam() {
+  startWebcam = () => {
     const video = document.getElementById("webcam")
     navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
     var facingMode = "environment";
@@ -25,10 +31,11 @@ class Main extends Component {
         video.srcObject = stream
         video.addEventListener('loadeddata', () => {
           const ar = video.videoHeight / video.videoWidth
-          video.width = 240
-          video.height = 240*ar
+          video.width = window.innerWidth
+          video.height = video.width * ar
         })
       })
+    this.setState({ image: null, webcamOn: true })
   }
 
   capture = () => {
@@ -37,34 +44,59 @@ class Main extends Component {
     canvas.width = video.videoWidth
     canvas.height = video.videoHeight
     canvas.getContext('2d').drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
-    this.setState({ image: canvas.toDataURL('image/png') })
     video.pause()
-
+    document.getElementById("image").src = canvas.toDataURL('image/png')
+    this.setState({ image: canvas.toDataURL('image/png'), webcamOn: false })
   }
 
   upload = event => {
     const file = event.target.files[0]
-    this.setState({ image: file })
+    const url = URL.createObjectURL(file)
+    document.getElementById("image").src = url
+    this.setState({ image: file, webcamOn: false })
   }
 
-  saveImage = () => logic.addImage(this.state.image)
+  saveImage = () => {
+    logic.addImage(this.state.image)
+    this.setState({ image: null })
+  }
 
+  classify = () => {
+    const image = document.getElementById('image');
+    const classifier = ml5.imageClassifier('MobileNet', function() {
+      console.log('Model Loaded!');
+    })
+    classifier.predict(image, (err, results) => {
+      this.setState({ result: results[0].className, probability: results[0].probability.toFixed(4)})
+    })
+  }
+
+  transfer = () => {
+    const image = document.getElementById('image');
+    this.state.style.transfer(image, function(err, result) {
+      image.src = result.src
+    });
+  }
 
   render() {
-
+    const { webcamOn, image, result, probability } = this.state
     return (
       <div className="main">
-        <div className="main__buttons">
-          <button onClick={this.startWebcam}> Take a picture </button>
-          <input type="file" id="fileinput" onChange={this.upload} />
+        <canvas id="canvas" style={{ display: "none" }}></canvas>
+        <div className="main__upload">
+          <button onClick={this.startWebcam}> <i className="fas fa-camera-retro fa-3x"></i> </button>
+          <label for="fileinput" class="custom-file-upload fa-3x">
+            <i class="far fa-folder-open"></i>
+          </label>
+          <input id="fileinput" type="file" onChange={this.upload}/>
         </div>
-        <div>
-          <video autoPlay playsInline muted id="webcam" width="240" height="240"></video>
-          <canvas id="canvas" style={{ display: "none" }}></canvas>
-          <button onClick={this.capture}>Capture</button>
-          <button onClick={this.saveImage}>Save Image</button>
-          <img id="image" src="" alt="" />
-        </div>
+        <video className={webcamOn ? "webcam" : "webcam--hidden"} autoPlay playsInline muted id="webcam"></video>
+        <img className={image ? "image" : "image--hidden"} id="image" src="" alt="" />
+        {webcamOn && <button onClick={this.capture} className="capture"> </button>}
+        {image && <button onClick={this.saveImage} className="save">Save Image</button>}
+        {image && <button onClick={this.classify}>Classify</button>}
+        {/* {image && <button onClick={this.transfer}>Transfer</button>} */}
+        {result && <p>{result}, {probability}</p>}
       </div>
     )
   }
