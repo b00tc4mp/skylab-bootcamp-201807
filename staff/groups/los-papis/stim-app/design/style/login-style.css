@@ -2,16 +2,16 @@ body{ background-image:url("collage.jpg"); background-repeat:no-repeat; backgrou
 
 
 
-.form-heading { color:#fff; font-size:23px;}
-.panel h2{ color:#444444; font-size:18px; margin:0 0 8px 0;}
-.panel p { color:#777777; font-size:14px; margin-bottom:30px; line-height:24px;}
+.form-heading { color:#fff; font-size:2.3vh;}
+.panel h2{ color:#444444; font-size:10vh; margin:0 0 0.8vw 0;}
+.panel p { color:black; font-size:5vh; margin-bottom:3vh; line-height:2.4 vh;}
 .login-form .form-control {
   background: #f7f7f7 none repeat scroll 0 0;
   border: 1px solid #d4d4d4;
   border-radius: 4px;
-  font-size: 14px;
-  height: 50px;
-  line-height: 50px;
+  font-size: 2vh;
+  height: 5vh;
+  line-height: 5vh;
 }
 .main-div {
   background: #ffffff none repeat scroll 0 0;
@@ -27,14 +27,14 @@ body{ background-image:url("collage.jpg"); background-repeat:no-repeat; backgrou
 .login-form{ text-align:center;}
 .forgot a {
   color: #777777;
-  font-size: 14px;
+  font-size: 1.4vh;
   text-decoration: underline;
 }
 .login-form  .btn.btn-primary {
   background: black none repeat scroll 0 0;
   border-color: black;
   color: #ffffff;
-  font-size: 14px;
+  font-size: 3vh;
   width: 15vw;
   height: 50%;
   line-height: 50px;
@@ -44,7 +44,7 @@ body{ background-image:url("collage.jpg"); background-repeat:no-repeat; backgrou
 
 .botto-text {
   color: #ffffff;
-  font-size: 14px;
+  font-size: 3vh;
   margin: auto;
   width: 20%;
 }
@@ -71,10 +71,12 @@ input{
 
 .btn.btn-primary {
     width: 12vw;
+    font-size: 5vh;
 }
 
 .btn.btn-primary:hover{
   border: 0.5vw solid grey;
+
 }
 img{
 margin-top: -15%;
