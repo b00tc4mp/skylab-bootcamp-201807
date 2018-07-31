@@ -3,10 +3,11 @@ import './UserRegisterAndLogin.css';
 import PropTypes from 'prop-types';
 import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 import logic from '../logic'
+import {withRouter} from 'react-router-dom'
 
 
 
-export default class UserRegister extends Component {
+class UserRegister extends Component {
 
     state = {
         name: "",
@@ -15,7 +16,8 @@ export default class UserRegister extends Component {
         email: "",
         password: "",
         profileimage: "",
-        passwordvalid: true
+        passwordvalid: true,
+        errorRegister: null
 }
 
     keepName = event => this.setState({ name: event.target.value })
@@ -34,8 +36,12 @@ export default class UserRegister extends Component {
         event.preventDefault()
         const {state: {name, lastname, username, email, password }} = this
         logic.registerUser(name, lastname, username, email, password)
-        // .then()
-        // .catch()
+        .then(() => 
+        
+        {this.setState({errorRegister: false})
+        this.props.history.push('/login')
+      })
+        .catch()
 
         this.setState({
         name: "",
@@ -116,6 +122,6 @@ export default class UserRegister extends Component {
 
 
 
-
+export default withRouter(UserRegister)
 
 
