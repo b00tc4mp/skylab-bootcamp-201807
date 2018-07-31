@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import './UserRegisterAndLogin.css';
 import PropTypes from 'prop-types';
 import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import logic from '../logic'
 
 
 
@@ -31,7 +32,11 @@ export default class UserRegister extends Component {
 
     handleSubmit = event => {
         event.preventDefault()
-        console.log(this.state)
+        const {state: {name, lastname, username, email, password }} = this
+        logic.registerUser(name, lastname, username, email, password)
+        // .then()
+        // .catch()
+
         this.setState({
         name: "",
         lastname: "",
@@ -94,6 +99,7 @@ export default class UserRegister extends Component {
           Must contain at least one number and one uppercase and lowercase letter, and at least 6 to 15 characters
           </FormText>
         </FormGroup>
+        {/* { && <ErrorPanel message={}/>} */}
         <FormGroup>
           <Label for="exampleFile">Profile Photo</Label>
           <Input type="file" name="Profile Photo"/>

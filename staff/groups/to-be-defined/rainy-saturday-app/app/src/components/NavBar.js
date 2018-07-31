@@ -1,6 +1,6 @@
 import React from 'react';
 import './NavBar.css';
-import '../logic'
+import logic from '../logic'
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom'
 
@@ -36,7 +36,7 @@ export default class NavBar extends React.Component {
   }
 
   doLogout = () => {
-    console.log("need to implement logout")
+    this.props.onLogout()
   }
 
   toggle() {
@@ -54,35 +54,33 @@ export default class NavBar extends React.Component {
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
               <NavItem>
-               <NavLink  tag={Link} to="/home">Home</NavLink>
+               <NavLink  className="navLinks" tag={Link} to="/home">Home</NavLink>
               </NavItem>
               <NavItem>
-              <NavLink  tag={Link}  to="/search">Search</NavLink>
+              {this.props.isLoggedIn && <NavLink className="navLinks"  tag={Link}  to="/search">Search</NavLink>}
               </NavItem>
               <NavItem>
-             <NavLink  tag={Link}  to="/favourites">Favourites</NavLink>
+              {this.props.isLoggedIn && <NavLink className="navLinks" tag={Link}  to="/favourites">Favourites</NavLink>}
               </NavItem>
               <NavItem>
-               <NavLink  tag={Link}  to="/register">Register</NavLink>
+               {!this.props.isLoggedIn && <NavLink className="navLinks" tag={Link}  to="/register">Register</NavLink>}
               </NavItem>
               <NavItem>
-               <NavLink  tag={Link}  to="/login">Login</NavLink>
+               {!this.props.isLoggedIn && <NavLink className="navLinks" tag={Link}  to="/login">Login</NavLink>}
               </NavItem>
               <UncontrolledDropdown nav inNavbar>
-                <DropdownToggle nav caret>
-                <img src={'http://www.mas40.com/app/mobileimg/icos/ico-perfil.png'} alt="User profile" style={{width:70, marginTop: -15}} /> 
-                </DropdownToggle>
+              {this.props.isLoggedIn && <DropdownToggle nav caret>
+                <img src={'http://www.mas40.com/app/mobileimg/icos/ico-perfil.png'} alt="User profile" className="imageProfile" /> 
+                </DropdownToggle>}
                 <DropdownMenu right>
                   <DropdownItem>
                     <Link  to="/user">Profile</Link>
                   </DropdownItem>
-                  <DropdownItem>
+                  <DropdownItem onClick={this.doLogout}>
                    Logout
                   </DropdownItem>
                 </DropdownMenu>
               </UncontrolledDropdown>
-              {/* {/* <NavItem>
-              <img src={'http://www.mas40.com/app/mobileimg/icos/ico-perfil.png'} style={{width:50, marginTop: -7}} /> </NavItem> */}
             </Nav>
           </Collapse>
         </Navbar>

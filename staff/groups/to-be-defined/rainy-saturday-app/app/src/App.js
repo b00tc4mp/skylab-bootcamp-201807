@@ -11,30 +11,44 @@ import { Button } from 'reactstrap';
 import UserRegister from './components/UserRegister';
 import ImageDisplayer from './components/ImageDisplayer';
 import UserLogin from './components/UserLogin';
+import logic from './logic'
 
 
 class App extends Component {
+
+
+
   state = {
-    loggedIn:true
+    loggedIn: logic.loggedIn,
+    errorLogin: null
   }
 
-  goToRegister = () => {}
-  goToLogin = () => {}
+
+  onLogin = (username, password) => {
+    logic.loginUser(username, password)
+    .then(() => this.setState({loggedIn: true, errorLogin: null}))
+    .catch(({message}) => this.setState({errorLogin: message}))
+  }
+
+  onLogout = event => {
+    logic.logout()
+    this.setState({loggedIn: false})
+  }
 
   render() {
 
-    const {loggedIn} = this.state;
+    const {state :{loggedIn}, onLogout }= this
 
     return(
       <div>
-        <NavBar isLoggedIn={loggedIn}  />
+        <NavBar isLoggedIn={loggedIn}  onLogout={onLogout}/>
         <Route exact path="/" component={HomePage}/>
         <Route  path="/home" component={HomePage} />
-        <Route  path="/search" component={SearchPage  } />
+        <Route  path="/search" render = {() => loggedIn ? <SearchPage/> : <Redirect to="/home" /> } />
         <Route  path="/user" render={() => loggedIn ? <UserPage/> : <Redirect to="/home" /> } />
-        <Route  path="/register" render={() => loggedIn ? <Redirect to="/user" /> : <UserRegister/>} />
+        <Route  path="/register" render={() => loggedIn ? <Redirect to="/home" /> : <UserRegister/>} />
         <Route  path="/favourites" render={() => loggedIn ?  <FavouritesPage/> : <Redirect to="/user" /> } />
-        <Route  path="/login" render={() => loggedIn ? <Redirect to="/user" /> : <UserLogin/>} />
+        <Route  path="/login" render={() => loggedIn ? <Redirect to="/home" /> : <UserLogin errorLogin={this.state.errorLogin} onLogin={this.onLogin}/>} />
 
 
 
