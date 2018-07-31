@@ -47,6 +47,14 @@ const logic = {
         return JSON.parse(sessionStorage.getItem('userLikes')) || []
     },
 
+    set _userCollections(userCollections) {
+        sessionStorage.setItem('userCollections', JSON.stringify(userCollections))
+    },
+
+    get _userCollections() {
+        return JSON.parse(sessionStorage.getItem('userCollections')) || []
+    },
+
     _callUsersApi(path, method = 'get', body = null, useToken = false) {
         const config = {
             method
@@ -86,7 +94,13 @@ const logic = {
                 this._userId = data.id
                 this._userToken = data.token
                 this._userUsername = username
-                this._userPassword = password // IDEAL encrypt it!
+                this._userPassword = password // TODO: IDEAL encrypt it!
+
+                return logic.retrieveUserById(this._userId)
+            })
+            .then(data => {
+                this._userLikes = data.likes || []
+                this._userCollections = data.collections || []
 
                 return true
             })
@@ -142,6 +156,141 @@ const logic = {
 
     isLiked(photoId) {
         return this._userLikes.includes(photoId)
+    },
+    
+    _generateRandomId() {
+        let text = ''
+        const possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+
+        for (let i = 0; i < 11; i++) {
+            text += possible.charAt(Math.floor(Math.random() * possible.length))
+        }
+
+        return text
+    },
+
+    _generateNewCollectionId() {
+        let found, newId
+        const collections = this._userCollections
+        do {
+            found = false
+            newId = this._generateRandomId()
+
+            for (let i = 0; i < collections.length; i++) {
+                const id = collections[i].id;
+                if (id === newId) {
+                    found = true
+                    break
+                }
+            }
+        } while(found === true)
+
+        return newId
+    },
+
+    createNewCollection(name, description = '') {
+
+        const collections = this._userCollections
+
+        const collection = {
+            id: this._generateNewCollectionId(),
+            name,
+            description,
+            photos: []
+        }
+
+        collections.push(collection)
+
+        return this.updateUser(this._userPassword, { collections })
+            .then(() => {
+                this._userCollections = collections
+                return collection.id
+            })
+    },
+
+    editCollection(collectionId, fields = {}) {
+        
+        const collections = this._userCollections
+
+        for (let i = 0; i < collections.length; i++) {
+            let collection = collections[i]
+            if (collection.id === collectionId) {
+                if (fields.hasOwnProperty('name')) {
+                    collections[i].name = fields.name
+                }
+                if (fields.hasOwnProperty('description')) {
+                    collections[i].description = fields.description
+                }
+            }
+        }
+
+        return this.updateUser(this._userPassword, { collections })
+            .then(() => {
+                this._userCollections = collections
+                return true
+            })
+    },
+
+    deleteCollection(collectionId) {
+
+        const collections = this._userCollections
+
+        for (let i = 0; i < collections.length; i++) {
+            let collection = collections[i]
+            if (collection.id === collectionId) {
+                collections.splice(i, 1)
+            }
+        }
+
+        return this.updateUser(this._userPassword, { collections })
+            .then(() => {
+                this._userCollections = collections
+                return true
+            })
+    },
+
+    togglePhotoCollection(photoId, collectionId) {
+
+        const collections = this._userCollections
+
+        for (let i = 0; i < collections.length; i++) {
+            let collection = collections[i]
+            if (collection.id === collectionId) {
+                
+                const photos = collection.photos
+                const index = photos.indexOf(photoId)
+
+                if (index > -1) {
+                    photos.splice(index, 1)
+                } else {
+                    photos.push(photoId)
+                }
+
+                collections[i].photos = photos
+            }
+        }
+
+        return this.updateUser(this._userPassword, { collections })
+            .then(() => {
+                this._userCollections = collections
+                return true
+            })
+    },
+
+    isInCollection(photoId, collectionId) {
+
+        const collections = this._userCollections
+        let found = false
+
+        for (let i = 0; i < collections.length; i++) {
+            let collection = collections[i]
+            if (collection.id === collectionId) {
+                found = collection.photos.includes(photoId)
+                if (found) break
+            }
+        }
+
+        return found
     },
 
     // unsplash
