@@ -150,6 +150,48 @@ describe('logic (unsplash-app)', () => {
             })
         })
 
+        describe('likes', () => {
+            let username
+            const password = '123'
+
+            beforeEach(() => {
+                username = 'unsplash-user-' + Math.random()
+
+                return logic.registerUser(username, password)
+                    .then(() => logic.loginUser(username, password))
+            })
+
+            it('should toggle photo to likes', () => {
+                const photoId = 'U6nlG0Y5sfs'
+
+                return logic.togglePhotoLike(photoId)
+                    .then(res => {
+                        expect(res).toBeTruthy()
+                        expect(logic._userLikes.includes(photoId)).toBeTruthy()
+
+                        return logic.togglePhotoLike(photoId)
+                    })
+                    .then(res => {
+                        expect(res).toBeTruthy()
+                        expect(logic._userLikes.includes(photoId)).toBeFalsy()
+                    })
+            })
+
+            it('should check is favorite', () => {
+                const photoId = 'U6nlG0Y5sfs'
+
+                return logic.togglePhotoLike(photoId)
+                    .then(() => {
+                        expect(logic.isLiked(photoId)).toBeTruthy()
+
+                        return logic.togglePhotoLike(photoId)
+                    })
+                    .then(() => {
+                        expect(logic.isLiked(photoId)).toBeFalsy()
+                    })
+            })
+        })
+
     })
 
     // describe('unsplash\'s', () => {

@@ -39,6 +39,14 @@ const logic = {
         return this._userId && this._userToken && this.userUsername
     },
 
+    set _userLikes(userLikes) {
+        sessionStorage.setItem('userLikes', JSON.stringify(userLikes))
+    },
+
+    get _userLikes() {
+        return JSON.parse(sessionStorage.getItem('userLikes')) || []
+    },
+
     _callUsersApi(path, method = 'get', body = null, useToken = false) {
         const config = {
             method
@@ -113,6 +121,28 @@ const logic = {
 
     // TODO: to kim
     // unregisterUser(password) {}
+
+    togglePhotoLike(photoId) {
+        const likes = this._userLikes
+        
+        const index = likes.indexOf(photoId)
+
+        if (index > -1) {
+            likes.splice(index, 1)
+        } else {
+            likes.push(photoId)
+        }
+
+        return this.updateUser(this._userPassword, { likes })
+            .then(() => {
+                this._userLikes = likes
+                return true
+            })
+    },
+
+    isLiked(photoId) {
+        return this._userLikes.includes(photoId)
+    },
 
     // unsplash
 
