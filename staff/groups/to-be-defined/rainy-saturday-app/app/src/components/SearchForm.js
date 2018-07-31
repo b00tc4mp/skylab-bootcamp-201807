@@ -5,8 +5,8 @@ import {Container, Row, Col, FormText,Button,Form, Input, Label, FormGroup} from
 class SearchForm extends Component {
 
   static propTypes = {
-    onSearch: PropTypes.func.required,
-    disabled: PropTypes.bool.required,
+    onSearch: PropTypes.func.isRequired,
+    disabled: PropTypes.bool.isRequired,
   }
 
   state = {searchTerm: ""}

@@ -46,6 +46,7 @@ export default class NavBar extends React.Component {
   }
 
   render() {
+    console.log("logged in here is",logic.loggedIn,this.props.isLoggedIn)
     return (
       <div>
         <Navbar color="light" light expand="md">

@@ -11,40 +11,59 @@ class SearchFormFilterListWithCount extends Component {
     data: PropTypes.array.isRequired,
     onSelectFilter: PropTypes.func.isRequired,
     onClearFilter: PropTypes.func.isRequired,
-    currentlySelected: PropTypes.bool.isRequired,
     title: PropTypes.string.isRequired,
   }
 
+  state = {
+    currentFilterText: "",
+    selected:false
+  }
 
-  onItemClick = (title, index) => {
+  onClear = () => {
+    this.setState({currentFilterText:"" ,
+      selected:false})
+    this.props.onClearFilter();
+  }
 
-    if (!this.props.currentlySelected) this.props.onSelectFilter(title, index);
+
+  onItemClick = (listItemText) => {
+
+    if (!this.state.selected && listItemText !== "") {
+      this.setState({currentFilterText: listItemText,selected:true})
+      this.props.onSelectFilter(listItemText);
+    }
   }
 
 
   render() {
-    const selected = this.props.currentlySelected;
+    const {selected,currentFilterText} = this.state;
+
     const {data, title} = this.props;
+
+    const listItems = this.props.data.map((element, index) => {
+      const {text, count} = element
+      return <ListGroupItem key={text + index.toString()}  className="justify-content-between " onClick={(e) => {
+          e.preventDefault();
+          this.onItemClick(text)
+      }} tag="a" href="#">{text} {count &&  <Badge color="info">{count}</Badge>}</ListGroupItem>
+    })
+
 
     return <section>
       <h4>{title}</h4>
       <ListGroup>
-        {(data.length > 0) && this.props.data.map((element, index) => {
-          const {text, count} = element
-          return <ListGroupItem key={text + index.toString()}
-                                className={"justify-content-between " + (selected ? "disabled" : "")} onClick={(e) => {
-            e.preventDefault();
-            this.onItemClick(text, index)
-          }} tag="a" href="#">{text} {count && !selected && <Badge color="info">{count}</Badge>}{selected &&
-          <Badge color="warning" onClick={this.props.onClearFilter}>clear</Badge>}</ListGroupItem>
-        })}
+        {(data.length > 0 && !selected) && listItems}
+        {selected  && <ListGroupItem key={currentFilterText }  onClick={(e) => {
+          e.preventDefault();
+          this.onClear();
+        }} className="justify-content-between  disabled"  tag="a" href="#">{currentFilterText} { <Badge color="warning" onClick={e=> {e.preventDefault();this.onClear}}>clear</Badge>}</ListGroupItem>}
         {(data.length === 0) && <span>No results. Perhaps clear the other filters...</span>}
-      </ListGroup>
-    </section>
+        </ListGroup>
+          </section>
 
-  }
+        }
 
 
-}
+        }
 
-export default SearchFormFilterListWithCount
+        export default SearchFormFilterListWithCount
