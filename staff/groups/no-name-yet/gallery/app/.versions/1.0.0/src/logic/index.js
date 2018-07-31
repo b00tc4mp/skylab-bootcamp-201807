@@ -62,7 +62,6 @@ const logic = {
             })
     },
 
-
     // user's
 
     registerUser(username, password) {
@@ -160,8 +159,6 @@ const logic = {
             .catch(err => console.error(err.message))
     },
 
-    
-
     addImage(img) {
         return this._callCloudinaryApi('/upload', 'post', img)
             .then(({ public_id, url }) => {
@@ -185,18 +182,10 @@ const logic = {
 
     deleteAll() {
         return this._callCloudinaryApi(`/resources/image/upload/?prefix=${this.userUsername}`, 'delete')
-        .then(() => {
-            this._userImages = []
-            return true
-        })
     },
 
     deleteFolder() {
         return this._callCloudinaryApi(`/folders/${this.userUsername}`, 'delete')
-        .then(res => {
-            this.userImages = res
-            return true
-        })
     },
 
     deleteImage(id) {
@@ -212,10 +201,6 @@ const logic = {
             })
     }
 
-    
-
 }
-
-
 
 if (typeof module !== 'undefined') module.exports = logic;

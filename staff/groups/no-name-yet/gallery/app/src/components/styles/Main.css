@@ -1,3 +1,62 @@
+.main {
+  display: grid;
+  grid-gap: 20px;
+  align-items: center;
+  justify-items: center;
+}
+.main button {
+  background: nonde;
+}
+.main i {
+  color: rgba(0, 0, 0, 0.7);
+}
+.main i:hover {
+  color: rgba(255, 0, 0, 0.8);
+}
+.main input {
+  display: none;
+}
+.main__upload {
+  width: 100%;
+  display: grid;
+  grid-template: 1fr/1fr 1fr;
+  grid-gap: 70%;
+}
+.main__upload button {
+  border: none;
+  background: none;
+}
 
+.webcam--hidden {
+  display: none;
+}
+
+.image {
+  width: 100%;
+}
+.image--hidden {
+  display: none;
+}
+
+.capture {
+  width: 100px;
+  height: 100px;
+  background-color: rgba(165, 42, 42, 0.4);
+  border-radius: 50%;
+}
+.capture:hover {
+  background-color: rgba(255, 0, 0, 0.6);
+}
+
+.save {
+  font-size: 20px;
+  background-color: rgba(165, 42, 42, 0.4);
+  border-radius: 30px;
+  width: 150px;
+  height: 70px;
+}
+.save:hover {
+  background-color: rgba(255, 0, 0, 0.6);
+}
 
 /*# sourceMappingURL=Main.css.map */
