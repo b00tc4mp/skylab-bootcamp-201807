@@ -21,8 +21,8 @@ class App extends Component {
         <Route exact path="/" render={() => this.state.isLoggedIn ? <Home/> : <Landing/>} />
         <Route  path="/home" render={() => this.state.isLoggedIn ? <Home/> : <Redirect to="/" />} />
         <Route  path="/profile" render={() => this.state.isLoggedIn ? <UserProfile/> : <Redirect to="/" /> } />
-        <Route  path="/register" render={() => this.state.isLoggedIn ? <Redirect to="/home" /> : <Landing modal={true} />} />
-        <Route  path="/login" render={() => this.state.isLoggedIn ? <Redirect to="/home" /> : <Landing modalLogin={true}/>} />
+        <Route  path="/register" render={() => this.state.isLoggedIn ? <Redirect to="/home" /> :  <Redirect to="/"/> }/>
+        <Route  path="/login" render={() => this.state.isLoggedIn ? <Redirect to="/home" /> : <Redirect to ="/"/>} />
         <Route  component = {Error404} />
         </Switch>
 
