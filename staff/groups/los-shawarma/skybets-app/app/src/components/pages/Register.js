@@ -1,12 +1,15 @@
 import React, {Component} from 'react';
 import { Link } from 'react-router-dom';
+import Message from '../sections/Message';
 
 
 class Register extends Component {
     state = {
         username: null,
-        password: null
+        password: null,
     }
+
+
 
     keepUsername = e => this.setState({username: e.target.value})
 
@@ -20,7 +23,8 @@ class Register extends Component {
     }
 
     render () {
-        const {submitRegistration, keepUsername, keepPassword} = this
+        const {submitRegistration, keepUsername, keepPassword } = this
+
         return (
             <section>
                 <h1> Register </h1>
@@ -31,8 +35,8 @@ class Register extends Component {
                     <input type="password" placeholder="type password" onChange={keepPassword}/>
                     <button type="submit" >Register</button>
                 </form>
-                <Link to="/login">Login</Link>
-                <Link to="/">Home</Link> 
+                {this.props.errorMsg && <Message success={false} text={this.props.errorMsg}/>}
+                {this.props.successMsg && <Message success={true} text={'Your registration was successful'}/>}
             </section>
         )
     }
