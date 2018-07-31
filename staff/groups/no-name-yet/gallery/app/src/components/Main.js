@@ -13,7 +13,7 @@ class Main extends Component {
     webcamOn: false,
     result: null,
     probability: null,
-    style: ml5.styleTransfer('models/wave', ()=>console.log("ready transfer"))
+    style: ml5.styleTransfer('models/wave', () => console.log("ready transfer"))
   }
 
   startWebcam = () => {
@@ -31,7 +31,7 @@ class Main extends Component {
         video.srcObject = stream
         video.addEventListener('loadeddata', () => {
           const ar = video.videoHeight / video.videoWidth
-          video.width = window.innerWidth
+          video.width = Math.min(window.innerWidth, 500)
           video.height = video.width * ar
         })
       })
@@ -45,15 +45,26 @@ class Main extends Component {
     canvas.height = video.videoHeight
     canvas.getContext('2d').drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
     video.pause()
-    document.getElementById("image").src = canvas.toDataURL('image/png')
+    const image = document.getElementById("image")
+    image.src = canvas.toDataURL('image/png')
+    image.width = video.width
+    image.height = video.height
+
     this.setState({ image: canvas.toDataURL('image/png'), webcamOn: false })
   }
 
   upload = event => {
     const file = event.target.files[0]
     const url = URL.createObjectURL(file)
-    document.getElementById("image").src = url
-    this.setState({ image: file, webcamOn: false })
+    const image = document.getElementById("image")
+    image.src = url
+    image.addEventListener('load',  () => {
+      const ar = image.height / image.width
+      image.width = Math.min(window.innerWidth, 500)
+      image.height = image.width * ar
+
+      this.setState({ image: file, webcamOn: false })
+    })
   }
 
   saveImage = () => {
@@ -63,17 +74,18 @@ class Main extends Component {
 
   classify = () => {
     const image = document.getElementById('image');
-    const classifier = ml5.imageClassifier('MobileNet', function() {
+    const classifier = ml5.imageClassifier('MobileNet', function () {
       console.log('Model Loaded!');
     })
     classifier.predict(image, (err, results) => {
-      this.setState({ result: results[0].className, probability: results[0].probability.toFixed(4)})
+
+      this.setState({ result: results[0].className, probability: results[0].probability.toFixed(4) })
     })
   }
 
   transfer = () => {
     const image = document.getElementById('image');
-    this.state.style.transfer(image, function(err, result) {
+    this.state.style.transfer(image, function (err, result) {
       image.src = result.src
     });
   }
@@ -88,7 +100,7 @@ class Main extends Component {
           <label for="fileinput" class="custom-file-upload fa-3x">
             <i class="far fa-folder-open"></i>
           </label>
-          <input id="fileinput" type="file" onChange={this.upload}/>
+          <input id="fileinput" type="file" onChange={this.upload} />
         </div>
         <video className={webcamOn ? "webcam" : "webcam--hidden"} autoPlay playsInline muted id="webcam"></video>
         <img className={image ? "image" : "image--hidden"} id="image" src="" alt="" />

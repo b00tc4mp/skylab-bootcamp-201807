@@ -1,14 +1,18 @@
+@import 'Common'
+
 .main
     display: grid
     grid-gap: 20px
-    align-items: center
+    align-items: start
     justify-items: center
+    background-color: $color-app-white
+    height: $app-height
     & button
-        background: nonde
+        background: none
     & i
         color: rgba(black, 0.7)
         &:hover
-            color: rgba(red, 0.8)
+            color: rgba($color-app-darkpink, $opacity-strong)
     & input
         display: none
     &__upload
@@ -25,7 +29,6 @@
         display: none
 
 .image
-    width: 100%
     &--hidden
         display: none
 
@@ -45,6 +48,8 @@
     height: 70px
     &:hover
        background-color: rgba(red, 0.6) 
-    
-.far .fas
-    
+
+    .far
+        
+    .fas
+       
