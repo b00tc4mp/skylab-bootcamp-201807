@@ -20,14 +20,14 @@ class App extends Component {
 
   state = {
     loggedIn: logic.loggedIn,
+    errorLogin: null
   }
 
-  goToRegister = () => {}
-  goToLogin = () => {}
+
   onLogin = (username, password) => {
     logic.loginUser(username, password)
-    .then(() => this.setState({loggedIn: true}))
-    .catch(console.error)
+    .then(() => this.setState({loggedIn: true, errorLogin: null}))
+    .catch(({message}) => this.setState({errorLogin: message}))
   }
 
   onLogout = event => {
@@ -48,7 +48,7 @@ class App extends Component {
         <Route  path="/user" render={() => loggedIn ? <UserPage/> : <Redirect to="/home" /> } />
         <Route  path="/register" render={() => loggedIn ? <Redirect to="/home" /> : <UserRegister/>} />
         <Route  path="/favourites" render={() => loggedIn ?  <FavouritesPage/> : <Redirect to="/user" /> } />
-        <Route  path="/login" render={() => loggedIn ? <Redirect to="/home" /> : <UserLogin onLogin={this.onLogin}/>} />
+        <Route  path="/login" render={() => loggedIn ? <Redirect to="/home" /> : <UserLogin errorLogin={this.state.errorLogin} onLogin={this.onLogin}/>} />
 
 
 

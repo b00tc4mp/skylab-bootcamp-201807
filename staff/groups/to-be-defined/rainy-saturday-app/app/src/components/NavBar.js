@@ -54,23 +54,23 @@ export default class NavBar extends React.Component {
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
               <NavItem>
-               <NavLink  tag={Link} to="/home">Home</NavLink>
+               <NavLink  className="navLinks" tag={Link} to="/home">Home</NavLink>
               </NavItem>
               <NavItem>
-              {this.props.isLoggedIn && <NavLink  tag={Link}  to="/search">Search</NavLink>}
+              {this.props.isLoggedIn && <NavLink className="navLinks"  tag={Link}  to="/search">Search</NavLink>}
               </NavItem>
               <NavItem>
-              {this.props.isLoggedIn && <NavLink  tag={Link}  to="/favourites">Favourites</NavLink>}
+              {this.props.isLoggedIn && <NavLink className="navLinks" tag={Link}  to="/favourites">Favourites</NavLink>}
               </NavItem>
               <NavItem>
-               {!this.props.isLoggedIn && <NavLink  tag={Link}  to="/register">Register</NavLink>}
+               {!this.props.isLoggedIn && <NavLink className="navLinks" tag={Link}  to="/register">Register</NavLink>}
               </NavItem>
               <NavItem>
-               {!this.props.isLoggedIn && <NavLink  tag={Link}  to="/login">Login</NavLink>}
+               {!this.props.isLoggedIn && <NavLink className="navLinks" tag={Link}  to="/login">Login</NavLink>}
               </NavItem>
               <UncontrolledDropdown nav inNavbar>
               {this.props.isLoggedIn && <DropdownToggle nav caret>
-                <img src={'http://www.mas40.com/app/mobileimg/icos/ico-perfil.png'} alt="User profile" style={{width:70, marginTop: -15}} /> 
+                <img src={'http://www.mas40.com/app/mobileimg/icos/ico-perfil.png'} alt="User profile" className="imageProfile" /> 
                 </DropdownToggle>}
                 <DropdownMenu right>
                   <DropdownItem>

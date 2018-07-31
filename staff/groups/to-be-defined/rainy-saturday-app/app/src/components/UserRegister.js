@@ -34,6 +34,9 @@ export default class UserRegister extends Component {
         event.preventDefault()
         const {state: {name, lastname, username, email, password }} = this
         logic.registerUser(name, lastname, username, email, password)
+        // .then()
+        // .catch()
+
         this.setState({
         name: "",
         lastname: "",
@@ -96,6 +99,7 @@ export default class UserRegister extends Component {
           Must contain at least one number and one uppercase and lowercase letter, and at least 6 to 15 characters
           </FormText>
         </FormGroup>
+        {/* { && <ErrorPanel message={}/>} */}
         <FormGroup>
           <Label for="exampleFile">Profile Photo</Label>
           <Input type="file" name="Profile Photo"/>

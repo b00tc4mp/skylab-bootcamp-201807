@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import './UserRegisterAndLogin.css';
 import PropTypes from 'prop-types';
 import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import logic from '../logic'
 
 
 
@@ -35,7 +36,8 @@ export default class UserPage extends Component {
 
     handleSubmit = event => {
         event.preventDefault()
-        console.log(this.state)
+        const {state: {password, newusername, newpassword, newemail }} = this
+        logic.updateUser(password, newusername, newpassword, newemail)
         this.setState({
         username: "",
         newusername: "",
@@ -44,8 +46,6 @@ export default class UserPage extends Component {
         password: "",
         newpassword: "",
         profileimage: "",
-        
-    
     })
     }
        
