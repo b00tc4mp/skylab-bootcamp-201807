@@ -1,5 +1,6 @@
 .navbar {
   background-color: #424141;
+  background: none;
   height: 10vh;
   width: 100%;
   position: fixed;
@@ -15,8 +16,11 @@
   height: 100%;
   font-size: 20px;
 }
-.navbar__btn:hover {
-  background-color: grey;
+.navbar i {
+  color: rgba(128, 128, 128, 0.8);
+}
+.navbar i:hover {
+  color: rgba(255, 0, 0, 0.6);
 }
 
 /*# sourceMappingURL=Navbar.css.map */
