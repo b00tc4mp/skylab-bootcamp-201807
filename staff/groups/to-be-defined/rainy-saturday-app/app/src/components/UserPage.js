@@ -32,6 +32,21 @@ export default class UserPage extends Component {
 
     keepNewPassword = event => this.checkPwd(event.target.value)
 
+    componentDidMount(){
+      logic.retrieveUserData("email").then(res => {
+        this.setState({
+            email: res
+        })
+      })
+      logic.retrieveUserData("username").then(res => {
+        this.setState({
+            username: res
+        })
+      })
+
+
+    }
+
 
 
     handleSubmit = event => {
