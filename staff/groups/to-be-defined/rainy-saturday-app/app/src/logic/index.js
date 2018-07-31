@@ -82,7 +82,7 @@ const logic = {
         this._userId = id
         this._userToken = token
         this._userUsername = username
-        this._userPassword = password // IDEAL encrypt it!
+        // this._userPassword = password // IDEAL encrypt it!
 
         // return true
         return this._callUsersApi(`/user/${this._userId}`, 'get', undefined, true)
@@ -106,13 +106,15 @@ const logic = {
     return this._userId && this._userToken && this.userUsername
   },
 
-  updateUser(password, newUsername, newPassword) {
+  updateUser(password, newUsername, newPassword, newEmail) {
     const data = {
       username: this.userUsername,
       password
     }
 
     if (newUsername) data.newUsername = newUsername
+
+    if (newEmail) data.email = newEmail
 
     if (newPassword) data.newPassword = newPassword
 
