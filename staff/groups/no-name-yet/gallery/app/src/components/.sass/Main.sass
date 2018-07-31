@@ -1,17 +1,50 @@
 .main
-    border: 4px dotted blue
-    height: 50%
-    width: 50%
-    position: absolute
-    padding: 50px 50px 50px
-    
-    &__buttons
-        display: grid
-        grid-gap: 50px
-        text-align: center
-        padding:20px 
-        color: blue
-       
-
-    &__hide
+    display: grid
+    grid-gap: 20px
+    align-items: center
+    justify-items: center
+    & button
+        background: nonde
+    & i
+        color: rgba(black, 0.7)
+        &:hover
+            color: rgba(red, 0.8)
+    & input
         display: none
+    &__upload
+        width: 100%
+        display: grid
+        grid-template: 1fr / 1fr 1fr
+        grid-gap: 70%
+        & button
+            border: none 
+            background: none
+
+.webcam
+    &--hidden
+        display: none
+
+.image
+    width: 100%
+    &--hidden
+        display: none
+
+.capture
+    width: 100px
+    height: 100px
+    background-color: rgba(brown, 0.4)
+    border-radius: 50%
+    &:hover
+       background-color: rgba(red, 0.6)  
+
+.save
+    font-size: 20px
+    background-color: rgba(brown, 0.4)
+    border-radius: 30px
+    width: 150px
+    height: 70px
+    &:hover
+       background-color: rgba(red, 0.6) 
+    
+.far .fas
+    
