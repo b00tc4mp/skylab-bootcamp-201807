@@ -62,6 +62,7 @@ const logic = {
             })
     },
 
+
     // user's
 
     registerUser(username, password) {
@@ -159,6 +160,8 @@ const logic = {
             .catch(err => console.error(err.message))
     },
 
+    
+
     addImage(img) {
         return this._callCloudinaryApi('/upload', 'post', img)
             .then(({ public_id, url }) => {
@@ -201,6 +204,10 @@ const logic = {
             })
     }
 
+    
+
 }
+
+
 
 if (typeof module !== 'undefined') module.exports = logic;

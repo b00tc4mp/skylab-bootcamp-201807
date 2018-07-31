@@ -53,10 +53,9 @@ class Main extends Component {
   render() {
 
     return (
-      <div>
-        <div>
+      <div className="main">
+        <div className="main__buttons">
           <button onClick={this.startWebcam}> Take a picture </button>
-          <p> or </p>
           <input type="file" id="fileinput" onChange={this.upload} />
         </div>
         <div>
