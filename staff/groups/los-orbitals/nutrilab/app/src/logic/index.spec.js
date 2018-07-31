@@ -136,3 +136,48 @@ describe("logout of the user", () => {
         expect(logic._userToken).toBeNull()
     }) 
 })
+
+describe ('CRUD for Api\'s Nutrition', ()=>{
+
+    describe('Search ingredients with a query',()=> {
+
+        const query = 'big mac'
+        const path = `search/instant?query=${query}`
+        const method = 'get'
+        const config = {
+            method
+        } 
+        config.headers = {}
+        config.headers['content-type'] = 'application/json'
+        config.headers['x-app-id'] = '9a5a7f22'
+        config.headers['x-app-key'] = '420560ecc26327c6ca2e1f211054ac48'
+
+        return logic.searchIngredients (path, config)
+            .then (result => expect(result).toBeTruthy())
+
+    })
+
+    describe('Look up the nutrition information for any branded food item',()=> {
+
+        const ingredientId = '599e7ab83f4a58a961487b4c'
+        const path = `search/item?nix_item_id=${ingredientId}`
+        const method = 'get'
+        const config = {
+            method
+        } 
+        config.headers = {}
+        config.headers['content-type'] = 'application/json'
+        config.headers['x-app-id'] = '9a5a7f22'
+        config.headers['x-app-key'] = '420560ecc26327c6ca2e1f211054ac48'
+
+        return logic.searchIngredients (path,config)
+            .then (result => {
+                expect(result).toBeTruthy()
+                expect(result.food_name).toBe('Pecan Clusters, Milk Chocolate Caramel')
+                
+            })
+
+    })
+
+
+})
