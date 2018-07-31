@@ -1,89 +1,54 @@
-.head-loggedin
-    height: 15%
-    width: 100%
-    background-color: white
-    display: inline-grid
-    grid-template-columns: 10% 60% 30%
+
+.header
+    height: 60px
+    display: grid
+    grid-template-columns: 75px 2fr 2fr
     align-items: center
-    
 
-.logo-loggedin
+.logo-container
+    text-align: center
 
-    &__photo-loggedin
-        width: 3.5em
-        height: 3.5em
-        margin-left: 1.5em
+.logo
+    width: 40px
+    vertical-align: middle
 
-.nav-loggedin
+.site-nav
+    padding: 0 15px
 
-    &__login-button
-        font-size: 1em
-        padding: 0.8em
-        background-color: transparent
-        
-    &__join-button
-        font-size: 1em
-        padding: 0.8em
-        background-color: #59A56C
-        border-radius: 8px
-        margin-right: 1.5em
+.site-nav__item
+    margin-left: 1.5em
 
-    &__login
-        color: grey
-        margin-right: 1.5em
-        font-size: 1.2em
+.site-nav__login
+    color: grey
+    font-size: 14px
 
-    &__join
-        color: white
+    &:hover
+        color: #000000
 
-.list-button-loggedin
+.site-nav__register
+    color: white
+    font-size: 1em
+    padding: 0.8em
+    background-color: #59A56C
+    border-radius: 5px
+    font-size: 14px
+
+.site-nav__list
     display: flex
     flex-direction: row
     justify-content: flex-end
     align-items: center
 
-.head-logout
-    height: 15%
-    width: 100%
-    background-color: white
-    padding: 1em
-    display: inline-grid
-    grid-template-columns: 9% 61% 29%
-    align-items: center
+.site-nav__logout
+    font-size: 1em
+    padding: 0.8em
+    background-color: black
+    border-radius: 5px
+    font-size: 14px
+    color: white
 
-.logo-logout
-
-    &__photo-logout
-        width: 3.5em
-        height: 3.5em
-        margin-left: 0.5em
-
-.nav-logout
-    &__logout-button
-        font-size: 1em
-        padding: 0.8em
-        background-color: black
-        margin-right: 1em
-        border-radius: 8px
-        
-    &__logout
-        color: white
-
-    &__image
-        width: 2.8em
-        height: 2.8em
-        border-radius: 50%
-      
-
-.list-button-logout
-    display: flex
-    flex-direction: row
-    justify-content: flex-end
-    align-items: center
-
-
-
-    
-
-
-
+.site-nav__profile-image
+    width: 2.8em
+    height: 2.8em
+    border-radius: 50%
+    vertical-align: middle
