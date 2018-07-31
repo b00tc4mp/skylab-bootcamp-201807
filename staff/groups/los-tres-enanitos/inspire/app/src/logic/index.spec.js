@@ -150,6 +150,22 @@ describe('logic (unsplash-app)', () => {
             })
         })
 
+        describe('unregister user', () => {
+            const username = 'unsplash-user-' + Math.random(), password = '123'
+
+            beforeEach(() => {
+                return logic.registerUser(username, password)
+                    .then(() => logic.loginUser(username, password))
+            })
+
+            it('should unregister on correct data', () => {
+                return logic.unregisterUser(password)
+                    .then(res => {
+                        expect(res).toBeTruthy()
+                    })
+            })
+        })
+
         describe('likes', () => {
             let username
             const password = '123'
