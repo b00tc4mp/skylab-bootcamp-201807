@@ -254,7 +254,7 @@ class SearchPage extends Component {
                                                                    onClearFilter={this.clearMakerFilter}
                                                                    onSelectFilter={this.setMakerFilter}
                                                                    data={makerData}/></Col>
-          <Col className="col-sm-4"><SearchFormFilterListWithCount title="Filter by Period"
+          <Col className="col-sm-4"><SearchFormFilterListWithCount title="Filter by Century"
                                                                    onClearFilter={this.clearPeriodFilter}
                                                                    onSelectFilter={this.setPeriodFilter}
                                                                    data={periodData}/></Col>
