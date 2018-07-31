@@ -16,7 +16,7 @@ class SearchForm extends Component {
     evt.preventDefault()
     const searchTerm = this.state.searchTerm
     this.props.onSearch(searchTerm);
-    this.setState({searchTerm:""})
+  //  this.setState({searchTerm:""})
 
 
   }

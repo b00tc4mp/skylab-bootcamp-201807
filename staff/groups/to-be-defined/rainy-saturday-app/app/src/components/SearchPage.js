@@ -118,7 +118,6 @@ class SearchPage extends Component {
       }
     })
     localData.forEach(element => {
-      console.log("retrieving image",element.objectNumber,imageMap.get(element.objectNumber))
       element.imageurl = imageMap.get(element.objectNumber);
     })
 
@@ -236,7 +235,7 @@ class SearchPage extends Component {
     return (<Container><
         Row><h2>Search</h2></Row>
         <Row> <SearchForm onSearch={this.doNewSearch}/></Row>
-        { (data.length > 0) && <Row><h3>You searched for <em>{searchTerm}</em></h3></Row>}
+        { (data.length === 0) && <Row><ErrorP</Row>}
 
         {showFilters && <Row>
           <Col className="col-sm-4"><SearchFormFilterListWithCount title="Filter by Maker"
