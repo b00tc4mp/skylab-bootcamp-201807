@@ -12,8 +12,7 @@ class Main extends Component {
     image: null,
     webcamOn: false,
     result: null,
-    probability: null,
-    style: ml5.styleTransfer('models/wave', ()=>console.log("ready transfer"))
+    probability: null
   }
 
   startWebcam = () => {
@@ -63,19 +62,25 @@ class Main extends Component {
 
   classify = () => {
     const image = document.getElementById('image');
-    const classifier = ml5.imageClassifier('MobileNet', function() {
+    const classifier = ml5.imageClassifier('MobileNet', function () {
       console.log('Model Loaded!');
     })
     classifier.predict(image, (err, results) => {
-      this.setState({ result: results[0].className, probability: results[0].probability.toFixed(4)})
+      this.setState({ result: results[0].className, probability: results[0].probability.toFixed(4) })
     })
   }
 
   transfer = () => {
-    const image = document.getElementById('image');
-    this.state.style.transfer(image, function(err, result) {
-      image.src = result.src
-    });
+    // Create a new Style Transfer Instance
+    const model = 'https://skylabcoders.herokuapp.com/proxy?url=https://github.com/ml5js/ml5-data-and-models/tree/master/models/style-transfer/udnie'
+    const style = ml5.styleTransfer(model, function() {
+      console.log('Model Loaded!');
+      // Grab a img element and generate a new image. 
+      // let img = document.getElementById('img')
+      // style.transfer(img, function (err, resultImg) {
+      //   img.src = resultImg.src;
+      // });
+    })
   }
 
   render() {
@@ -85,17 +90,17 @@ class Main extends Component {
         <canvas id="canvas" style={{ display: "none" }}></canvas>
         <div className="main__upload">
           <button onClick={this.startWebcam}> <i className="fas fa-camera-retro fa-3x"></i> </button>
-          <label for="fileinput" class="custom-file-upload fa-3x">
-            <i class="far fa-folder-open"></i>
+          <label htmlFor="fileinput" className="custom-file-upload fa-3x">
+            <i className="far fa-folder-open"></i>
           </label>
-          <input id="fileinput" type="file" onChange={this.upload}/>
+          <input id="fileinput" type="file" onChange={this.upload} />
         </div>
         <video className={webcamOn ? "webcam" : "webcam--hidden"} autoPlay playsInline muted id="webcam"></video>
         <img className={image ? "image" : "image--hidden"} id="image" src="" alt="" />
         {webcamOn && <button onClick={this.capture} className="capture"> </button>}
         {image && <button onClick={this.saveImage} className="save">Save Image</button>}
         {image && <button onClick={this.classify}>Classify</button>}
-        {/* {image && <button onClick={this.transfer}>Transfer</button>} */}
+        {image && <button onClick={this.transfer}>Transfer</button>}
         {result && <p>{result}, {probability}</p>}
       </div>
     )
