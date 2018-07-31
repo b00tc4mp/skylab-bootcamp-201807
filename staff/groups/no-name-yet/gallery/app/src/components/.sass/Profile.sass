@@ -1,11 +1,11 @@
 .profile
-    height: 90vh
+    height: 100vh
     display: grid
-    grid-template: 100px repeat(3, 1fr) / 1fr
+    grid-template: repeat(4, 150px) / 1fr
     align-items: center
     justify-items: center
     padding: 0 30px
-    background-color: lightgray
+    background-color: rgba(lightgray,0.6)
     &__change-username
         width: 100%
         display: grid
@@ -38,8 +38,9 @@
             background-color: rgba(brown,0.8)
             width: 50%
             height: 50%
-            font-size: 20px
+            font-size: 30px
             color: white
+            border-radius: 50px
             &:hover
                 background-color: red
     &__text
