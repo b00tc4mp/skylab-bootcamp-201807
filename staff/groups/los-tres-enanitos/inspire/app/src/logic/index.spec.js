@@ -192,73 +192,182 @@ describe('logic (unsplash-app)', () => {
             })
         })
 
+        describe('collections', () => {
+            let username
+            const password = '123'
+
+            beforeEach(() => {
+                username = 'unsplash-user-' + Math.random()
+
+                return logic.registerUser(username, password)
+                    .then(() => logic.loginUser(username, password))
+            })
+
+            it('should create new collection', () => {
+                
+                const name = 'Animals'
+                const description = 'My favorite animals'
+
+                return logic.createNewCollection(name, description)
+                    .then(collectionId => {
+                        expect(collectionId).toBeDefined()
+
+                        expect(logic._userCollections).toBeDefined()
+                        expect(logic._userCollections.length).toBe(1)
+
+                        expect(logic._userCollections[0].name).toBe(name)
+                        expect(logic._userCollections[0].description).toBe(description)
+                    })
+            })
+
+            it('should edit a collection', () => {
+                
+                const name = 'Animals'
+                const description = 'My favorite animals'
+                const newName = 'Cars'
+                const newDescription = 'My favorite cars'
+
+                return logic.createNewCollection(name, description)  
+                    .then(collectionId => logic.editCollection(collectionId, { name: newName, description:newDescription }))
+                    .then(res => {
+                        expect(res).toBeTruthy()
+
+                        expect(logic._userCollections[0].name).toBe(newName)
+                        expect(logic._userCollections[0].description).toBe(newDescription)
+                    })
+            })
+
+            it('should delete a collection', () => {
+                
+                const name = 'Animals'
+                const description = 'My favorite animals'
+
+                return logic.createNewCollection(name, description)  
+                    .then(collectionId => logic.deleteCollection(collectionId))
+                    .then(res => {
+                        expect(res).toBeTruthy()
+
+                        expect(logic._userCollections.length).toBe(0)
+                    })
+            })
+        })
+
+        describe('photos collection', () => {
+            let username
+            const password = '123'
+            const collectionName = 'Animals'
+            const collectionDescription = 'My favorite animals'
+            let collectionId
+
+            beforeEach(() => {
+                username = 'unsplash-user-' + Math.random()
+
+                return logic.registerUser(username, password)
+                    .then(() => logic.loginUser(username, password))
+                    .then(() => logic.createNewCollection(collectionName, collectionDescription))
+                    .then(id => collectionId = id)
+            })
+
+            it('should toggle photo to collections', () => {
+                const photoId = 'U6nlG0Y5sfs'
+
+                return logic.togglePhotoCollection(photoId, collectionId)
+                    .then(res => {
+                        expect(res).toBeTruthy()
+
+                        expect(logic._userCollections[0].photos.includes(photoId)).toBeTruthy()
+
+                        return logic.togglePhotoCollection(photoId, collectionId)
+                    })
+                    .then(res => {
+                        expect(res).toBeTruthy()
+
+                        expect(logic._userCollections[0].photos.includes(photoId)).toBeFalsy()
+                    })
+            })
+
+            it('should check if photo is in collection', () => {
+                const photoId = 'U6nlG0Y5sfs'
+
+                return logic.togglePhotoCollection(photoId, collectionId)
+                    .then(() => {
+                        expect(logic.isInCollection(photoId, collectionId)).toBeTruthy()
+
+                        return logic.togglePhotoCollection(photoId, collectionId)
+                    })
+                    .then(() => {
+                        expect(logic.isInCollection(photoId, collectionId)).toBeFalsy()
+                    })
+            })
+        })
+
     })
 
-    // describe('unsplash\'s', () => {
-    //     logic.unsplashAccessKey = '1cb96dfdb0925fb516e37123f0c906d5fbaadf2669fb3b9c5f0f833539476627'
+    describe('unsplash\'s', () => {
+        logic.unsplashAccessKey = '1cb96dfdb0925fb516e37123f0c906d5fbaadf2669fb3b9c5f0f833539476627'
 
-    //     describe('search', () => {
-    //         it('should find results matching criteria', () => {
-    //             return logic.searchPhotos('tiger')
-    //                 .then(res => {
-    //                     expect(res).toBeDefined()
-    //                     expect(res.total).toBeGreaterThan(0)
-    //                     expect(res.results.length).toBeGreaterThan(0)
-    //                 })
-    //         })
+        describe('search', () => {
+            it('should find results matching criteria', () => {
+                return logic.searchPhotos('tiger')
+                    .then(res => {
+                        expect(res).toBeDefined()
+                        expect(res.total).toBeGreaterThan(0)
+                        expect(res.results.length).toBeGreaterThan(0)
+                    })
+            })
 
-    //         it('should find results matching criteria and page', () => {
-    //             return logic.searchPhotos('tiger', 2)
-    //                 .then(res => {
-    //                     expect(res.results.length).toBe(10)
-    //                 })
-    //         })
-    //     })
+            it('should find results matching criteria and page', () => {
+                return logic.searchPhotos('tiger', 2)
+                    .then(res => {
+                        expect(res.results.length).toBe(10)
+                    })
+            })
+        })
 
-    //     describe('retrieve photo by id', () => {
-    //         it('should retrieve photo for given id', () => {
-    //             return logic.retrievePhotoById('U6nlG0Y5sfs')
-    //                 .then(photo => {
-    //                     expect(photo).toBeDefined()
-    //                     expect(photo.user).toBeDefined()
-    //                     expect(photo.user.id).toBe('QtJK-x-mbY0')
-    //                     expect(photo.user.username).toBe('hannah15198')
-    //                 })
-    //         })
-    //     })
+        describe('retrieve photo by id', () => {
+            it('should retrieve photo for given id', () => {
+                return logic.retrievePhotoById('U6nlG0Y5sfs')
+                    .then(photo => {
+                        expect(photo).toBeDefined()
+                        expect(photo.user).toBeDefined()
+                        expect(photo.user.id).toBe('QtJK-x-mbY0')
+                        expect(photo.user.username).toBe('hannah15198')
+                    })
+            })
+        })
 
-    //     describe('related photos', () => {
-    //         const tags = ['lion', 'yawn', 'mouth', 'tongue', 'dark']
+        describe('related photos', () => {
+            const tags = ['lion', 'yawn', 'mouth', 'tongue', 'dark']
 
-    //         it('should find related photos by photo tags', () => {
-    //             return logic.retrieveRelatedPhotosByPhotoTags(tags)
-    //                 .then(res => {
-    //                     expect(res).toBeDefined()
-    //                     expect(res.total).toBeGreaterThan(0)
-    //                     expect(res.results.length).toBeGreaterThan(0)
+            it('should find related photos by photo tags', () => {
+                return logic.retrieveRelatedPhotosByPhotoTags(tags)
+                    .then(res => {
+                        expect(res).toBeDefined()
+                        expect(res.total).toBeGreaterThan(0)
+                        expect(res.results.length).toBeGreaterThan(0)
                         
-    //                     const photo = res.results[0]
-    //                     expect(photo.photo_tags).toBeDefined()
-    //                 })
-    //         })
-    //     })
+                        const photo = res.results[0]
+                        expect(photo.photo_tags).toBeDefined()
+                    })
+            })
+        })
 
-    //     describe('popular photos', () => {
+        describe('popular photos', () => {
             
-    //         it('should retrieve popular photos', () => {
-    //             return logic.retrievePopularPhotos()
-    //                 .then(res => {
-    //                     expect(res).toBeDefined()
-    //                     expect(res.length).toBeGreaterThan(0)
-    //                 })
-    //         })
+            it('should retrieve popular photos', () => {
+                return logic.retrievePopularPhotos()
+                    .then(res => {
+                        expect(res).toBeDefined()
+                        expect(res.length).toBeGreaterThan(0)
+                    })
+            })
 
-    //         it('should find results matching criteria and page', () => {
-    //             return logic.retrievePopularPhotos(2)
-    //                 .then(res => {
-    //                     expect(res.length).toBe(10)
-    //                 })
-    //         })
-    //     })
-    // })
+            it('should find results matching criteria and page', () => {
+                return logic.retrievePopularPhotos(2)
+                    .then(res => {
+                        expect(res.length).toBe(10)
+                    })
+            })
+        })
+    })
 })
