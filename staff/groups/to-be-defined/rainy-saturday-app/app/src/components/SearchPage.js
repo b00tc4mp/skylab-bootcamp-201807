@@ -8,7 +8,7 @@ import SearchFormFilterListWithCount from "./SearchFormFilterListWithCount"
 
 
 const FILTER_LIMIT = 10
-const OBJECT_LIMIT = 30
+const OBJECT_LIMIT = 40
 
 
 let makerFilterIndex = null
@@ -49,7 +49,7 @@ class SearchPage extends Component {
     originalData = originalPeriodData = originalMaterialData = originalMakerData = null
     imageMap.clear()
     this.setState({
-      searchTerm: searchTerm,
+      searchTerm,
       data: [],
       materialData: [],
       periodData: [],
@@ -231,11 +231,13 @@ class SearchPage extends Component {
 
 
   render() {
-    const {showFilters, data, makerData, makerSelected, periodData, periodSelected, materialData, materialSelected} = this.state
+    const {showFilters, data, makerData, makerSelected, periodData, periodSelected, materialData, materialSelected,searchTerm} = this.state
 
     return (<Container><
-        Row><h2>SearchPage</h2></Row>
+        Row><h2>Search</h2></Row>
         <Row> <SearchForm onSearch={this.doNewSearch}/></Row>
+        { (data.length > 0) && <Row><h3>You searched for <em>{searchTerm}</em></h3></Row>}
+
         {showFilters && <Row>
           <Col className="col-sm-4"><SearchFormFilterListWithCount title="Filter by Maker"
                                                                    currentlySelected={makerSelected}
