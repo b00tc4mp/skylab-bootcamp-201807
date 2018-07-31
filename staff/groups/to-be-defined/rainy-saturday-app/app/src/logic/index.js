@@ -200,6 +200,7 @@ const logic = {
 
   museumKey: 'ROQio02r',
 
+// TODO TESTING
 
   _callRijksmuseumApiQuery(query) {
     const searchString = `https://www.rijksmuseum.nl/api/en/collection?key=${this.museumKey}&q=${query}&ps=100`;
@@ -212,6 +213,7 @@ const logic = {
       });
   },
 
+// TODO TESTING
 
   _callRijksmuseumApiObjectDetail(objectNumber) {
     const searchString = `https://www.rijksmuseum.nl/api/en/collection/${objectNumber}?key=${this.museumKey}&format=json`;
@@ -262,6 +264,7 @@ const logic = {
       })
   },
 
+/*
   getFilteredSearchTerm(searchTerm, filters) {
 
     const makerFilter = filters[this.MUSEUM_MAKER_FILTER]
@@ -274,6 +277,7 @@ const logic = {
 
     return searchTerm + makerTerm + periodTerm + materialTerm
   }
+*/
 
   // spotify's
 

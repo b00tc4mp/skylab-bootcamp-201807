@@ -5,10 +5,10 @@ import logic from '../logic'
 import ImageDisplayer from "./ImageDisplayer"
 import {Container, Row, Col, FormText, Button, Form, Input, Label, FormGroup} from 'reactstrap';
 import SearchFormFilterListWithCount from "./SearchFormFilterListWithCount"
-
+import ErrorPanel from './ErrorPanel'
 
 const FILTER_LIMIT = 10
-const OBJECT_LIMIT = 30
+const OBJECT_LIMIT = 40
 
 
 let makerFilterIndex = null
@@ -24,6 +24,7 @@ let originalMaterialData = null
 let imageMap = new Map();
 
 
+
 class SearchPage extends Component {
 
   state = {
@@ -36,20 +37,41 @@ class SearchPage extends Component {
     makerSelected: false,
     periodSelected: false,
     materialSelected: false,
+    errorMessage: "",
+    badSearchMessage:"",
+    isProcessing:false,
   }
 
+
+
+  _processing = false;
+
+
+  get processing() {
+    return this._processing
+  }
+
+  set processing(val) {
+    this._processing = val
+    this.setState({isProcessing:val})
+  }
+
+
   handleError = (error) => {
-    //TODO
-    console.error(error)
+  this.processing = false;
+    this.setState({errorMessage:"There was a server error. Please try again"})
   }
 
 
   doNewSearch = searchTerm => {
+    if (this.processing) return;
+
+    this.processing = true;
     makerFilterIndex = periodFilterIndex = materialFilterIndex = null
     originalData = originalPeriodData = originalMaterialData = originalMakerData = null
     imageMap.clear()
     this.setState({
-      searchTerm: searchTerm,
+      searchTerm,
       data: [],
       materialData: [],
       periodData: [],
@@ -58,11 +80,13 @@ class SearchPage extends Component {
       makerSelected: false,
       periodSelected: false,
       materialSelected: false,
+      badSearchMessage:"",
+      errorMessage:"",
     })
 
     logic.getMuseumImagesForSearchTerm(searchTerm)
       .then(results => {
-
+        if (results.length === 0) this.setState({badSearchMessage:"Your search returned no results.  Please try again"})
         results = results.slice(0, OBJECT_LIMIT)
         results.forEach(result => {
           imageMap.set(result.objectNumber,result.imageurl);
@@ -74,6 +98,7 @@ class SearchPage extends Component {
       })
       .then(res => {
         this.buildDataAfterNewSearch(res)
+        this.processing = false;
       })
       .catch(this.handleError)
   }
@@ -118,7 +143,6 @@ class SearchPage extends Component {
       }
     })
     localData.forEach(element => {
-      console.log("retrieving image",element.objectNumber,imageMap.get(element.objectNumber))
       element.imageurl = imageMap.get(element.objectNumber);
     })
 
@@ -231,12 +255,16 @@ class SearchPage extends Component {
 
 
   render() {
-    const {showFilters, data, makerData, makerSelected, periodData, periodSelected, materialData, materialSelected} = this.state
+    const {isProcessing,showFilters,badSearchMessage,errorMessage, data, makerData, makerSelected, periodData, periodSelected, materialData, materialSelected,searchTerm} = this.state
 
     return (<Container><
-        Row><h2>SearchPage</h2></Row>
-        <Row> <SearchForm onSearch={this.doNewSearch}/></Row>
-        {showFilters && <Row>
+        Row><h2>Search</h2></Row>
+        <Row> <SearchForm disabled={isProcessing} onSearch={this.doNewSearch}/></Row>
+        { badSearchMessage && <Row><ErrorPanel color="warning" message={badSearchMessage}/></Row>}
+        { errorMessage && <Row><ErrorPanel color="danger" message={errorMessage}/></Row>}
+        { isProcessing && <Row><ErrorPanel color="info" message="Processing request..."/></Row>}
+
+        {showFilters && (data.length > 0) && <Row>
           <Col className="col-sm-4"><SearchFormFilterListWithCount title="Filter by Maker"
                                                                    currentlySelected={makerSelected}
                                                                    onClearFilter={this.clearMakerFilter}
