@@ -42,6 +42,16 @@ const logic = {
     return JSON.parse(sessionStorage.getItem('userFavorites')) || []
   },
 
+  get MUSEUM_MAKER_FILTER() {
+    return "maker"
+  },
+  get MUSEUM_MATERIAL_FILTER() {
+    return "material"
+  },
+  get MUSEUM_PERIOD_FILTER() {
+    return "period"
+  },
+
 
   _callUsersApi(path, method = 'get', body, useToken) {
     const config = {
@@ -199,9 +209,7 @@ const logic = {
         return res;
       });
   },
-/*
-  https://www.rijksmuseum.nl/api/nl/collection/SK-C-5?key=[API_KEY]&format=json
-*/
+
 
   _callRijksmuseumApiObjectDetail(objectNumber) {
     const searchString = `https://www.rijksmuseum.nl/api/en/collection/${objectNumber}?key=${this.museumKey}&format=json`;
@@ -223,12 +231,12 @@ const logic = {
   },
 
   getMuseumImagesForSearchTerm(query) {
-    return this._callRijksmuseumApiQuery(query.trim().replace(/ /g,"%20"))
+    return this._callRijksmuseumApiQuery(query.trim().replace(/ /g, "%20"))
       .then(res => {
         console.log(res)
         return res.artObjects.filter(element => element.hasImage).map(element => {
           return {
-            objectNumber:element.objectNumber,
+            objectNumber: element.objectNumber,
             id: element.id,
             imageurl: element.webImage.url,
             title: element.title,
@@ -240,17 +248,32 @@ const logic = {
       })
   },
 
-
+// TODO TESTING
   getMuseumDetailsForObjectNumber(objectNumber) {
     return this._callRijksmuseumApiObjectDetail(objectNumber)
       .then(res => {
-      const {dating:{period:period}, principalMaker,colors,description,materials,physicalMedium} = res.artObject
-     return {colors, period, description,materials,physicalMedium,principalMaker}
-
+        if (!res.artObject.webImage || res.artObject.webImage.url === "") return null;
+        else {
+          const {dating: {period}, webImage: {url} ,objectNumber,title, longTitle, principalMaker: maker, colors, description, materials, physicalMedium} = res.artObject
+          return {colors, period, imageurl: url, title, objectNumber, longTitle, maker, description, materials, physicalMedium}
+        }
       })
+  },
+
+  getFilteredSearchTerm(searchTerm, filters) {
+
+    const makerFilter = filters[this.MUSEUM_MAKER_FILTER]
+    const periodFilter = filters[this.MUSEUM_PERIOD_FILTER]
+    const materialFilter = filters[this.MUSEUM_MATERIAL_FILTER]
+
+    const makerTerm = makerFilter ? `&principalMaker=${makerFilter.replace(/ /g, "%20")}` : "";
+    const periodTerm = periodFilter ? `&f.dating.period=${periodFilter}` : "";
+    const materialTerm = materialFilter ? `&material=${materialFilter.replace(/ /g, "%20")}` : "";
+
+    return searchTerm + makerTerm + periodTerm + materialTerm
   }
 
-    // spotify's
+  // spotify's
 
 //     searchArtists: function (query) {
 //         return this._callSpotifyApi('/search?type=artist&query=' + query)
@@ -270,7 +293,7 @@ const logic = {
 //     retrieveTrackById(id) {
 //         return this._callSpotifyApi('/tracks/' + id)
 //     }
-  };
+};
 
 //export default logic;
 if (typeof module !== 'undefined') module.exports = logic;
