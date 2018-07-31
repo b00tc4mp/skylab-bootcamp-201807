@@ -66,7 +66,7 @@ export default class UserPage extends Component {
       <Form id="updateForm" onSubmit={this.handleSubmit}>
         <FormGroup>
           <Label for="Username">Username</Label>
-          <Input value={this.state.username} type="text" name="Username" onChange = {this.keepUsername} placeholder="Username"/>
+          <Input value={this.state.username} type="text" name="Username" onChange = {this.keepUsername} placeholder="Username" disabled="true"/>
         </FormGroup>
         <FormGroup>
           <Label for="NewUsername">New Username</Label>
@@ -74,7 +74,7 @@ export default class UserPage extends Component {
         </FormGroup>
         <FormGroup>
           <Label for="exampleEmail">Email</Label>
-          <Input value={this.state.email} type="email" name="email" onChange = {this.keepEmail} placeholder="Email" />
+          <Input value={this.state.email} type="email" name="email" onChange = {this.keepEmail} placeholder="Email" disabled="true"/>
         </FormGroup>
         <FormGroup>
           <Label for="exampleEmail">New Email</Label>
