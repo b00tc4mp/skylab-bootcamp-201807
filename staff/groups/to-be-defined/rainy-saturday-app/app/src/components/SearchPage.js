@@ -4,44 +4,53 @@ import SearchForm from './SearchForm'
 import logic from '../logic'
 import ImageDisplayer from "./ImageDisplayer"
 import {Container, Row, Col, FormText, Button, Form, Input, Label, FormGroup} from 'reactstrap';
-import SearchFormFilterList from "./SearchFormFilterList"
 import SearchFormFilterListWithCount from "./SearchFormFilterListWithCount"
 
 
 const FILTER_LIMIT = 10
-const OBJECT_LIMIT = 100
+const OBJECT_LIMIT = 30
 
 
-let makerFilter = ""
-let periodFilter = ""
-let materialFilter = "";
+let makerFilterIndex = null
+let periodFilterIndex = null
+let materialFilterIndex = null
+let makerFilterText = ""
+let periodFilterText = ""
+let materialFilterText = ""
+let originalData = null
+let originalPeriodData = null
+let originalMakerData = null
+let originalMaterialData = null
+let imageMap = new Map();
 
 
 class SearchPage extends Component {
 
   state = {
     searchTerm: "",
-    hasData: false,
     data: [],
-    originalData: [],
     makerData: null,
     periodData: null,
     materialData: null,
     showFilters: false,
-
+    makerSelected: false,
+    periodSelected: false,
+    materialSelected: false,
   }
 
   handleError = (error) => {
     //TODO
+    console.error(error)
   }
 
+
   doNewSearch = searchTerm => {
-    makerFilter = periodFilter = materialFilter = "";
+    makerFilterIndex = periodFilterIndex = materialFilterIndex = null
+    originalData = originalPeriodData = originalMaterialData = originalMakerData = null
+    imageMap.clear()
     this.setState({
       searchTerm: searchTerm,
-      hasData: false,
       data: [],
-      originalData: [],
       materialData: [],
       periodData: [],
       makerData: [],
@@ -49,33 +58,23 @@ class SearchPage extends Component {
       makerSelected: false,
       periodSelected: false,
       materialSelected: false,
-
     })
-    this.doSearch(searchTerm);
-  }
-
-  doSearch = searchTerm => {
 
     logic.getMuseumImagesForSearchTerm(searchTerm)
       .then(results => {
+
         results = results.slice(0, OBJECT_LIMIT)
-        this.getDetailsFromArtObjects(results.map(element => element.objectNumber))
-          .then(()=> {
-            const makerData = makerFilter ? this.state.makerData : this.sortCountAndCondenseFilterData(results.map(element => element.maker));
-
-            this.setState({
-              makerData: makerData,
-              /*   periodData: periodData,
-                 materialData: materialData,*/
-              hasData: results.length > 0,
-              data: results,
-              originalData:results,
-              showFilters: true,
-            })
-          })
-
+        results.forEach(result => {
+          imageMap.set(result.objectNumber,result.imageurl);
+        })
+        return results.map(element => element.objectNumber)
       })
-
+      .then(res => {
+        return this.getDetailsFromArtObjects(res)
+      })
+      .then(res => {
+        this.buildDataAfterNewSearch(res)
+      })
       .catch(this.handleError)
   }
 
@@ -94,7 +93,6 @@ class SearchPage extends Component {
   }
 
   getDetailsFromArtObjects = (objectNumbers) => {
-
     const promises = []
 
     objectNumbers.forEach(objectNumber => {
@@ -105,107 +103,157 @@ class SearchPage extends Component {
         ))
     })
     return Promise.all(promises)
-      .then(res => this.buildFilterDatas(res))
-      .catch(this.handleError)
+
   }
 
-  buildFilterDatas = data => {
-    let period = [], material = []
+  buildDataAfterNewSearch = (arrayOfObjectsData) => {
+    let period = [], material = [], maker = [], localData = []
 
-    data.forEach(element => {
-      material = material.concat(element.materials);
-      period.push(element.period)
+    arrayOfObjectsData.forEach(element => {
+      if (element) {
+        localData.push(element)
+        material = material.concat(element.materials);
+        period.push(element.period)
+        maker.push(element.maker)
+      }
+    })
+    localData.forEach(element => {
+      console.log("retrieving image",element.objectNumber,imageMap.get(element.objectNumber))
+      element.imageurl = imageMap.get(element.objectNumber);
     })
 
     period = this.sortCountAndCondenseFilterData(period)
     material = this.sortCountAndCondenseFilterData(material)
+    maker = this.sortCountAndCondenseFilterData(maker)
+    originalData = localData
+    originalMakerData = maker
+    originalMaterialData = material
+    originalPeriodData = period
 
-    const periodData = periodFilter ? this.state.periodData : period;
-    const materialData = materialFilter ? this.state.materialData : material;
     this.setState({
-      periodData,
-      materialData
+      data: localData,
+      periodData: period,
+      materialData: material,
+      makerData: maker,
+      showFilters: true,
     })
-  }
 
+
+  }
 
   doFilteredSearch = () => {
-    let {searchTerm} = this.state;
+    let material = [], period = [], maker = []
 
-    const makerTerm = makerFilter ? `&principalMaker=${makerFilter.replace(/ /g, "%20")}` : "";
-    const periodTerm = periodFilter ? `&f.dating.period=${periodFilter}` : "";
-    const materialTerm = materialFilter ? `&material=${materialFilter.replace(/ /g, "%20")}` : "";
+    let data = originalData
 
-   // this.doSearch(searchTerm + makerTerm + periodTerm + materialTerm);
+    if (materialFilterIndex !== null) data = data.filter(element => element.materials.includes(materialFilterText));
+    if (periodFilterIndex !== null) data = data.filter(element => element.period === periodFilterText);
+    if (makerFilterIndex !== null) data = data.filter(element => element.maker === makerFilterText);
 
+    data.forEach(element => {
+      material = material.concat(element.materials);
+      period.push(element.period)
+      maker.push(element.maker)
+    })
+    material = this.sortCountAndCondenseFilterData(material)
+    period = this.sortCountAndCondenseFilterData(period)
+    maker = this.sortCountAndCondenseFilterData(maker)
+    material = materialFilterIndex !== null ? originalMaterialData.slice(materialFilterIndex, materialFilterIndex + 1) : material;
+    maker = makerFilterIndex !== null ? originalMakerData.slice(makerFilterIndex, makerFilterIndex + 1) : maker;
+    period = periodFilterIndex !== null ? originalPeriodData.slice(periodFilterIndex, periodFilterIndex + 1) : period;
+    this.setState({data: data, periodData: period, makerData: maker, materialData: material})
   }
 
+  /*  doFilteredSearch = () => {
+      let {searchTerm} = this.state;
 
-  setMakerFilter = (filter, id) => {
-    const data = this.state.makerData.slice(id, id + 1);
-    this.setState({makerData: data, makerSelected: true})
-    makerFilter = filter;
+      searchTerm = logic.getFilteredSearchTerm(searchTerm, {
+        [logic.MUSEUM_MAKER_FILTER]: makerFilterIndex,
+        [logic.MUSEUM_PERIOD_FILTER]: periodFilterIndex,
+        [logic.MUSEUM_MATERIAL_FILTER]: materialFilterIndex
+      })
+      this.doSearch(searchTerm);
+    }*/
+  /*
+        doFilteredSearch = () => {
+          let {searchTerm} = this.state;
 
+          const makerTerm = makerFilterIndex ? `&principalMaker=${makerFilterIndex.replace(/ /g, "%20")}` : "";
+          const periodTerm = periodFilterIndex ? `&f.dating.period=${periodFilterIndex}` : "";
+          const materialTerm = materialFilterIndex ? `&material=${materialFilterIndex.replace(/ /g, "%20")}` : "";
+
+          this.doSearch(searchTerm + makerTerm + periodTerm + materialTerm);
+
+        }*/
+
+
+  setMakerFilter = (filter, index) => {
+    this.setState({makerSelected: true})
+    makerFilterIndex = index;
+    makerFilterText = filter
     this.doFilteredSearch()
   }
-  setPeriodFilter = (filter, id) => {
-    const data = this.state.periodData.slice(id, id + 1);
-    this.setState({periodData: data, periodSelected: true})
-    periodFilter = filter;
+  setPeriodFilter = (filter, index) => {
+    this.setState({periodSelected: true})
+    periodFilterIndex = index
+    periodFilterText = filter
     this.doFilteredSearch()
   }
 
-  setMaterialFilter = (filter, id) => {
-    const data = this.state.materialData.slice(id, id + 1);
-    this.setState({materialSelected: true, materialData: data})
-    materialFilter = filter
+  setMaterialFilter = (filter, index) => {
+    this.setState({materialSelected: true})
+    materialFilterIndex = index
+    materialFilterText = filter
     this.doFilteredSearch()
   }
 
 
-  clearMakerFilter = (doSearch = true) => {
+  clearMakerFilter = () => {
     this.setState({makerSelected: false, makerData: []});
-    makerFilter = ""
-    if (doSearch) this.doFilteredSearch()
+    makerFilterIndex = null
+    makerFilterText = ""
+    this.doFilteredSearch()
   }
 
-  clearPeriodFilter = (doSearch = true) => {
+  clearPeriodFilter = () => {
     this.setState({periodSelected: false, periodData: []});
-    periodFilter = ""
-    if (doSearch) this.doFilteredSearch()
+    periodFilterIndex = null
+    periodFilterText = ""
+    this.doFilteredSearch()
   }
 
-  clearMaterialFilter = (doSearch = true) => {
+  clearMaterialFilter = () => {
     this.setState({materialSelected: false, materialData: []})
-    materialFilter = ""
-    if (doSearch) this.doFilteredSearch()
+    materialFilterIndex = null
+    materialFilterText = ""
+    this.doFilteredSearch()
   }
 
 
   render() {
-    const {hasData, showFilters, data, makerData, makerSelected, periodData, periodSelected, materialData, materialSelected} = this.state
+    const {showFilters, data, makerData, makerSelected, periodData, periodSelected, materialData, materialSelected} = this.state
 
     return (<Container><
         Row><h2>SearchPage</h2></Row>
         <Row> <SearchForm onSearch={this.doNewSearch}/></Row>
         {showFilters && <Row>
           <Col className="col-sm-4"><SearchFormFilterListWithCount title="Filter by Maker"
-                                                          currentlySelected={makerSelected}
-                                                          onClearFilter={this.clearMakerFilter}
-                                                          onSelectFilter={this.setMakerFilter}
-                                                          data={makerData}/></Col>
+                                                                   currentlySelected={makerSelected}
+                                                                   onClearFilter={this.clearMakerFilter}
+                                                                   onSelectFilter={this.setMakerFilter}
+                                                                   data={makerData}/></Col>
           <Col className="col-sm-4"><SearchFormFilterListWithCount title="Filter by Period"
-                                                          currentlySelected={periodSelected}
-                                                          onClearFilter={this.clearPeriodFilter}
-                                                          onSelectFilter={this.setPeriodFilter}
-                                                          data={periodData}/></Col>
+                                                                   currentlySelected={periodSelected}
+                                                                   onClearFilter={this.clearPeriodFilter}
+                                                                   onSelectFilter={this.setPeriodFilter}
+                                                                   data={periodData}/></Col>
           <Col className="col-sm-4"><SearchFormFilterListWithCount title="Filter by Material"
-                                                          currentlySelected={materialSelected}
-                                                          onClearFilter={this.clearMaterialFilter}
-                                                          onSelectFilter={this.setMaterialFilter}
-                                                          data={materialData}/></Col>
+                                                                   currentlySelected={materialSelected}
+                                                                   onClearFilter={this.clearMaterialFilter}
+                                                                   onSelectFilter={this.setMaterialFilter}
+                                                                   data={materialData}/></Col>
         </Row>}
-        <Row> {hasData && <ImageDisplayer data={data}/>}</Row>
+        <Row> {(data.length > 0) && <ImageDisplayer data={data}/>}</Row>
       </Container>
 
 

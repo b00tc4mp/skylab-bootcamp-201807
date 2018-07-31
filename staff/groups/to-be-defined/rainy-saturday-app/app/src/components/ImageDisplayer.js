@@ -6,6 +6,12 @@ import './ImageDisplayer.css'
 
 class ImageDisplayer extends Component {
 
+
+  static propTypes = {
+    data: PropTypes.array.isRequired
+  }
+
+
   onImageClicked = () => {
     console.log("hola")
   }
@@ -13,6 +19,8 @@ class ImageDisplayer extends Component {
   render() {
     let incKey = 0
     // const that = this
+    console.log("image displayer this.props.data",this.props.data)
+
     let ExtractData = this.props.data.map(imageurl => {
       return (
         <ResultImage image={imageurl} key={imageurl.id} onImageClick={this.onImageClicked} />
