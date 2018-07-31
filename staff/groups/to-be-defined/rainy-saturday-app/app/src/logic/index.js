@@ -113,7 +113,7 @@ const logic = {
   },
 
   get loggedIn() {
-    return ((this._userId && this._userToken && this.userUsername) === true)
+    return !!(this._userId && this._userToken && this.userUsername)
   },
 
   updateUser(password, newUsername, newPassword, newEmail) {
