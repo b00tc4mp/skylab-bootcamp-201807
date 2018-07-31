@@ -15,7 +15,7 @@ const logic = {
         return logic.mostPlayedGames()
             .then(res => {
                 let results =[] 
-                for(game in res) {
+                for(let game in res) {
                     results.push(logic.newsForApp(res[game].appid))
                 }
                return Promise.all(results)
@@ -133,7 +133,7 @@ const logic = {
     },
 
     get loggedIn() {
-        return this._userId && this._userToken && this.userUsername
+        return !!(this._userId && this._userToken && this._userUsername)
     },
 
     updateUser(password, newUsername, newPassword) {
@@ -153,3 +153,5 @@ const logic = {
             .then(() => true)
     }
 }
+
+export default logic;

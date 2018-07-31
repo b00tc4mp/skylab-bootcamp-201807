@@ -1,66 +1,145 @@
 import React, { Component } from "react";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
-import { Link,Redirect } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
+import swal from 'sweetalert2'
+import logic from "../logic";
 
 class Landing extends Component {
   state = {
-    modal: false || this.props.registerModal,
-    modalLogin: false || this.props.modalLogin
+    modal: false,
+    modalLogin: false,
+    username: "",
+    password: ""
   };
 
   toggle = () => {
     this.setState({
-      modal: !this.state.modal
+      modal: !this.state.modal,
+      username: "",
+      password: ""
     });
   };
 
   loginToggle = () => {
     this.setState({
-      modalLogin: !this.state.modalLogin
+      modalLogin: !this.state.modalLogin,
+      username: "",
+      password: ""
+
     });
   };
+
+  keepUsername = (e) => {
+
+    this.setState({
+      username: e.target.value
+    })
+
+  }
+
+  keepPassword = (e) => {
+    this.setState({
+      password: e.target.value
+    })
+  }
+
+  handleRegisterSubmit = (username,password) => {
+      return logic.registerUser(username,password)
+      .then(() => swal({
+        title: 'Success!',
+        text: 'Register Sucessful',
+        type: 'success',
+        confirmButtonText: 'Cool'
+      }))
+      .catch((err) => swal({
+        title: 'Failed!',
+        text: err,
+        type: 'error',
+        confirmButtonText: 'Try again'
+      }))
+
+  }
+
+  handleLoginSubmit = (username,password) =>{
+    logic.loginUser(username,password)
+    .then(() => swal({
+      title: 'Success!',
+      text: 'Register Sucessful',
+      type: 'success',
+      confirmButtonText: 'Cool'
+    }))
+    .then(res => this.props.updateLoggedIn())
+    .catch((err) => swal({
+      title: 'Failed!',
+      text: err,
+      type: 'error',
+      confirmButtonText: 'Try again'
+    }))
+
+
+  }
 
   render() {
     console.log("RENDER");
     return (
       <div>
         <Button color="danger" onClick={this.toggle}>
-          {this.props.buttonLabel}
+          Register
         </Button>
         <Modal
           isOpen={this.state.modal}
           toggle={this.toggle}
-          className={this.props.className}
         >
           <ModalHeader toggle={this.toggle}>Modal title</ModalHeader>
-          <ModalBody>estoy en el register</ModalBody>
+          <form onSubmit={(e) => { 
+            e.preventDefault()
+            this.handleRegisterSubmit(this.state.username,this.state.password)}}>
+          <ModalBody >
+              <input type="text" placeholder="User name" value={this.state.username} onChange={this.keepUsername} />
+              <input type="password" placeholder="Password" value={this.state.password} onChange={this.keepPassword} />
+          </ModalBody>
           <ModalFooter>
-            <Button color="primary" onClick={this.toggle}>
-              Do Something
+            <Button color="primary">
+              Submit
             </Button>{" "}
             <Button color="secondary" onClick={this.toggle}>
               Cancel
             </Button>
           </ModalFooter>
+          </form>
         </Modal>
         <Button color="danger" onClick={this.loginToggle}>
-          {this.props.buttonLabel}
+          Log In
         </Button>
         <Modal
           isOpen={this.state.modalLogin}
           toggle={this.loginToggle}
-          className={this.props.className}
         >
           <ModalHeader toggle={this.loginToggle}>Modal title</ModalHeader>
-          <ModalBody>Estoy en el login</ModalBody>
+          <form onSubmit={(e)=>{
+            e.preventDefault()
+            this.handleLoginSubmit(this.state.username, this.state.password)}
+            }>
+          <ModalBody >
+           
+
+              <input type="text" placeholder="User name" value={this.state.username} onChange={this.keepUsername} />
+              <input type="password" placeholder="Password" value={this.state.password} onChange={this.keepPassword} />
+
+           
+
+
+
+          </ModalBody>
           <ModalFooter>
-            <Button color="primary" onClick={this.loginToggle}>
-              Do Something
+            <Button color="primary" type="submit" >
+              Submit
             </Button>{" "}
             <Button color="secondary" onClick={this.loginToggle}>
               Cancel
             </Button>
           </ModalFooter>
+          </form>
         </Modal>
       </div>
     );
