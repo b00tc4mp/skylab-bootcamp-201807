@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import Search from './Search'
 import logic from '../logic'
 import List from './List'
-import Productpanel from './Productpanel'
+// import Productpanel from './Productpanel'
 
 class Home extends Component{
 
@@ -32,16 +32,16 @@ class Home extends Component{
 
     }
 
-    onItemClick = (query) => {
+    // onItemClick = (query) => {
 
-        logic.ingredientInfo(query)
-        .then(({foods}) => {
-            this.setState.ingredientInfo = {name: foods[0].food_name}  
-            })
+    //     logic.ingredientInfo(query)
+    //     .then(({foods}) => {
+    //         this.setState.ingredientInfo = {name: foods[0].food_name}  
+    //         })
         
-        .catch(() => 
-        console.log('hola, soy un error de la ficha')) 
-    }
+    //     .catch(() => 
+    //     console.log('hola, soy un error de la ficha')) 
+    // }
 
     render () {
 
@@ -49,7 +49,7 @@ class Home extends Component{
 
             <Search onSearch = {this.onSearch} />
             <List ingredients = {this.state.ingredients} onItemClick = {this.onItemClick}/>
-            <Productpanel name = {this.state.ingredientInfo}/>
+            {/* <Productpanel name = {this.state.ingredientInfo}/> */}
             </section>
         )
         }

@@ -93,6 +93,7 @@ const logic = {
         .then(() => {
         
             if (newUsername) this._userUsername = newUsername
+            if (newPassword) this._userPassword = newPassword
             return true
         })
     },
@@ -100,8 +101,10 @@ const logic = {
     delete(password) {
 
         return this._callApiUser(`/user/${this._userId}`, 'delete', { username: this.userUsername, password }, true)
-
-        .then(() => true)
+        .then(() => {
+            sessionStorage.clear()
+            return true
+        })
     },
 
     logout() {
