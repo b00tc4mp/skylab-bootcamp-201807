@@ -76,14 +76,7 @@ const logic = {
                 this._userToken = token
                 this._userUsername = username
                 this._userPassword = password // IDEAL encrypt it!
-
-                // return true
                 return this.retrieveImages()
-            })
-            .then(images => {
-                this._userImages = images || []
-
-                return true
             })
     },
 
@@ -168,10 +161,10 @@ const logic = {
 
     addImage(img) {
         return this._callCloudinaryApi('/upload', 'post', img)
-            .then(({ public_id }) => {
+            .then(({ public_id, url }) => {
                 const id = public_id
                 let images = this._userImages
-                images.push(id)
+                images.push({ id, url })
                 this._userImages = images
                 return true
             })
@@ -180,20 +173,40 @@ const logic = {
     retrieveImages() {
         return this._callCloudinaryApi(`/resources/image/upload/?prefix=${this.userUsername}`, 'get')
             .then(res => res.resources)
-            .then(res => res.map(item => item.url))
+            .then(res => res.map(item => ({ url: item.url, id: item.public_id })))
+            .then(res => {
+                this._userImages = res
+                return true
+            })
     },
 
     deleteAll() {
         return this._callCloudinaryApi(`/resources/image/upload/?prefix=${this.userUsername}`, 'delete')
+        .then(() => {
+            this._userImages = []
+            return true
+        })
     },
 
     deleteFolder() {
         return this._callCloudinaryApi(`/folders/${this.userUsername}`, 'delete')
+        .then(res => {
+            this.userImages = res
+            return true
+        })
     },
 
-    delteImage(id) {
-        // NOT TESTED !!!
-        return this._callCloudinaryApi(`/resources/image/upload/?public_ids=${this.userUsername}/${id}`, 'delete')
+    deleteImage(id) {
+        return this._callCloudinaryApi(`/resources/image/upload/?public_ids=${id}`, 'delete')
+            .then(() => {
+                let images = this._userImages
+                const ids = images.map( ({id}) => id)
+                let index = ids.indexOf(id)
+                if(index === -1) throw new Error('image not found in deletion')
+                images.splice(index, 1)
+                this._userImages = images
+                return true
+            })
     }
 
 }
