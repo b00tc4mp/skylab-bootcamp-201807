@@ -40,7 +40,7 @@ class Landing extends Component {
             </Button>{" "}
             <Button color="secondary" onClick={this.toggle}>
               Cancel
-            </Button>
+            </Button>n
           </ModalFooter>
         </Modal>
         <Button color="danger" onClick={this.loginToggle}>
