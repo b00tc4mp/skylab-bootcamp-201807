@@ -5,7 +5,6 @@ import logic from './logic'
 import Home from './components/pages/Home'
 import Login from './components/pages/Login'
 import MyFavs from './components/pages/MyFavs'
-import Profile from './components/pages/Profile'
 import Register from './components/pages/Register'
 import Update from './components/pages/Update'
 import Nav from './components/sections/Nav'
@@ -35,10 +34,17 @@ class App extends Component {
     })
   }
 
+  onUpdate = (password, newUsername, newPassword) => {
+    logic.updateUser(password, newUsername, newPassword)
+    .catch(({message}) => {
+      console.log(message)
+    })
+  }
+
 
   render() {
     const {loggedIn} =  this.state
-    const {onRegister, onLogin} = this
+    const {onRegister, onLogin, onUpdate} = this
     //const { state: {onRegister}, onRegister} = this
 
     return (
@@ -48,9 +54,8 @@ class App extends Component {
         <Route path="/" exact render={() => <Home loggedIn={loggedIn} />} />
         <Route path="/login" exact render={() => <Login onLoginProp={onLogin} />} />
         <Route path="/myfavs" exact component={MyFavs} />
-        <Route path="/profile" exact component={Profile} />
         <Route path="/register" exact render={() => <Register onRegisterProp={onRegister} />} />
-        <Route path="/update" exact component={Update} />
+        <Route path="/update" exact render={() => <Update onUpdateProp={onUpdate} username={logic.userUsername}/>} />
 
         <Footer />
       </div>
