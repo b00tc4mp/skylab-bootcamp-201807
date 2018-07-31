@@ -128,7 +128,7 @@ describe('logic (gallery-app)', () => {
         const password = '123'
 
         beforeEach(() => {
-            username = 'galleryapp-' + Math.random()
+            username = 'galleryapp-test'
             img = new Image()
             img.src = 'src/pics/landing.jpg'
             const canvas = document.createElement('canvas')
