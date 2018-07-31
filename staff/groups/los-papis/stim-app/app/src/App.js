@@ -1,21 +1,38 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React,{Component} from 'react';
+import { Route,Redirect,Switch } from 'react-router'
+import UserProfile from './components/UserProfile'
+import Home from './components/Home'
+import Landing from './components/Landing'
+import NavBar from './components/NavBar'
+import Error404 from './components/Error404'
 
 class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
-    );
+  state = {
+    isLoggedIn : false
   }
+
+  render() {
+    return(
+      <div>
+        <NavBar isLoggedIn={this.state.isLoggedIn}  />
+
+
+        <Switch>
+        <Route exact path="/" render={() => this.state.isLoggedIn ? <Home/> : <Landing/>} />
+        <Route  path="/home" render={() => this.state.isLoggedIn ? <Home/> : <Redirect to="/" />} />
+        <Route  path="/profile" render={() => this.state.isLoggedIn ? <UserProfile/> : <Redirect to="/" /> } />
+        <Route  path="/register" render={() => this.state.isLoggedIn ? <Redirect to="/home" /> :  <Redirect to="/"/> }/>
+        <Route  path="/login" render={() => this.state.isLoggedIn ? <Redirect to="/home" /> : <Redirect to ="/"/>} />
+        <Route  component = {Error404} />
+        </Switch>
+
+
+
+      </div>
+      
+    )
+  }
+
 }
 
 export default App;
