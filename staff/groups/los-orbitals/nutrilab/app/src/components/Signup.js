@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import Feedback from './Feedback'
 
 class Signup extends Component{
 
@@ -22,16 +23,27 @@ class Signup extends Component{
 
     }
 
+    linkToLogin = (event) => {
+
+        event.preventDefault()
+        this.props.linkToLogin()
+    }
+
     render() {
 
-        return ( <form onSubmit = {this.signup}> 
-            <input type = "text" placeholder = "Enter username" onChange = {this.saveUsername}>
-            </input>
-            <input type = "password" placeholder = "Enter password" onChange = {this.savePassword}>
-            </input>
-        <button type="submit">Sign up
-        </button>
-    </form>
+        return ( 
+        <section>
+            {this.props.feedback && <Feedback message = {this.props.feedback}/>} 
+            <form onSubmit = {this.signup}> 
+                <input type = "text" placeholder = "Enter username" onChange = {this.saveUsername}>
+                </input>
+                <input type = "password" placeholder = "Enter password" onChange = {this.savePassword}>
+                </input>
+                <button type="submit">Sign up
+                </button>
+            </form>
+                 <p>Go to <a href="/#" onClick={this.linkToLogin}>Login</a></p>
+        </section> 
     )
     }
 }

@@ -115,13 +115,13 @@ const logic = {
 
     get loggedIn (){
 
-        return this._userUsername && this._userToken && this._userId
+        return this.userUsername && this._userToken && this._userId
     },
 
 
     // API NUTRITIONIX
 
-    _callApiNutrition (path, method = 'get'){
+    _callApiNutrition (path, method = 'get', body){
         const config = {
             method
         } 
@@ -130,6 +130,8 @@ const logic = {
         config.headers['x-app-id'] = '9a5a7f22'
         config.headers['x-app-key'] = '420560ecc26327c6ca2e1f211054ac48'
         
+        if (body) config.body = JSON.stringify({query:body})
+
         return fetch('https://trackapi.nutritionix.com/v2/' + path, config)
         .then((res) => res.json())
         .then(res => {
@@ -144,9 +146,9 @@ const logic = {
             .then((res) => res)
     },
 
-    ingredientInfo (id) {
+    ingredientInfo (query) {
 
-        return this._callApiNutrition('search/item?nix_item_id=' + id)
+        return this._callApiNutrition('natural/nutrients/', 'post', query)
             .then((res) => res)
     }
 
