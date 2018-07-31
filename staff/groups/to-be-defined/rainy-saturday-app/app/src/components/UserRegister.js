@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 import logic from '../logic'
 import {withRouter} from 'react-router-dom'
+import ErrorPanel from './ErrorPanel'
 
 
 
@@ -15,9 +16,12 @@ class UserRegister extends Component {
         username: "",
         email: "",
         password: "",
+        confirmpassword: "",
         profileimage: "",
         passwordvalid: true,
-        errorRegister: null
+        comparepassword: null,
+        errorRegister: null,
+        finalcomparepassword: true,
 }
 
     keepName = event => this.setState({ name: event.target.value })
@@ -30,36 +34,58 @@ class UserRegister extends Component {
 
     keepPassword = event => this.checkPwd(event.target.value)
 
+    keepConfirmpassword = event => this.comparePassword(event.target.value)
+
 
 
     handleSubmit = event => {
         event.preventDefault()
         const {state: {name, lastname, username, email, password }} = this
         logic.registerUser(name, lastname, username, email, password)
-        .then(() => 
-        
-        {this.setState({errorRegister: false})
+        .then(() =>   
+        {
         this.props.history.push('/login')
-      })
-        .catch()
-
         this.setState({
-        name: "",
-        lastname: "",
-        username: "",
-        email: "",
-        password: "",
-        profileimage: "",
+          name: "",
+          lastname: "",
+          username: "",
+          email: "",
+          password: "",
+          profileimage: "",
+          errorRegister: false
+      })
+      })
+        .catch(({message}) => {
+          this.setState({
+            errorRegister: message,
+            username: "",
+            password: "",
+            confirmpassword: ""
+          })
+
+      })
+
         
-    
-    })
     }
        
+    comparePassword = confirmpassword => {
+      if ((confirmpassword === this.state.password) ) {
+        this.setState({comparepassword: true, finalcomparepassword: false })     
+  } else {
+      this.setState({comparepassword: false, finalcomparepassword: true})
+  }
+  this.setState({confirmpassword});
+  }
+    
+
+
     checkPwd = str => {
       if ((str.length < 6) || (str.length > 15) || (str.search(/\d/) === -1) || (str.search(/[a-zA-Z]/) === -1) || (str.search(/[^a-zA-Z0-9\!\@\#\$\%\^\&\*\(\)\_\+]/) !== -1)) {
-        this.setState({passwordvalid: true})     
+        this.setState({passwordvalid: true, finalcomparepassword: true})     
+  } else if (str === this.state.confirmpassword){
+    this.setState({passwordvalid: false, finalcomparepassword: false })
   } else {
-      this.setState({passwordvalid: false})
+    this.setState({passwordvalid: false})
   }
   return(this.setState({password: str}));
   }
@@ -105,7 +131,14 @@ class UserRegister extends Component {
           Must contain at least one number and one uppercase and lowercase letter, and at least 6 to 15 characters
           </FormText>
         </FormGroup>
-        {/* { && <ErrorPanel message={}/>} */}
+        <FormGroup>
+          <Label for="examplePassword">Confirm Password</Label>
+          <Input className={this.state.confirmpassword ? (this.state.comparepassword ? "comRainySaturdayUserRegisterAndLoginBorderOk" : "comRainySaturdayUserRegisterAndLoginBorderFail") : ""} value={this.state.confirmpassword} type="password" name="password" onChange = {this.keepConfirmpassword} placeholder="Confirm Password" required />
+          <FormText color="muted">
+          Must contain at least one number and one uppercase and lowercase letter, and at least 6 to 15 characters
+          </FormText>
+        </FormGroup>
+        { this.state.errorRegister && <ErrorPanel message={this.state.errorRegister}/>}
         <FormGroup>
           <Label for="exampleFile">Profile Photo</Label>
           <Input type="file" name="Profile Photo"/>
@@ -113,7 +146,7 @@ class UserRegister extends Component {
             Add your profile photo.
           </FormText>
         </FormGroup>
-        <Button className="testButton" disabled={this.state.passwordvalid}>Submit</Button>
+        <Button className="testButton" disabled={this.state.finalcomparepassword}>Submit</Button>
       </Form>
      </div>
     );
