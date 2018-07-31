@@ -1,6 +1,121 @@
 
 const logic = {
 
+    // user
+
+    set _userId(userId) {
+        sessionStorage.setItem('userId', userId)
+    },
+
+    get _userId() {
+        return sessionStorage.getItem('userId')
+    },
+
+    set _userToken(userToken) {
+        sessionStorage.setItem('userToken', userToken)
+    },
+
+    get _userToken() {
+        return sessionStorage.getItem('userToken')
+    },
+
+    set _userUsername(userUsername) {
+        sessionStorage.setItem('userUsername', userUsername)
+    },
+
+    get userUsername() {
+        return sessionStorage.getItem('userUsername')
+    },
+
+    set _userPassword(userPassword) {
+        sessionStorage.setItem('userPassword', userPassword)
+    },
+
+    get _userPassword() {
+        return sessionStorage.getItem('userPassword')
+    },
+
+    get loggedIn() {
+        return this._userId && this._userToken && this.userUsername
+    },
+
+    _callUsersApi(path, method = 'get', body = null, useToken = false) {
+        const config = {
+            method
+        }
+
+        const methodNotGet = method !== 'get'
+
+        if (methodNotGet || useToken) {
+            config.headers = {}
+
+            if (methodNotGet) config.headers['content-type'] = 'application/json'
+
+            if (useToken) config.headers.authorization = 'Bearer ' + this._userToken
+        }
+
+        if (body) config.body = JSON.stringify(body)
+
+        return fetch('https://skylabcoders.herokuapp.com/api' + path, config)
+            .then(res => res.json())
+            .then(res => {
+                if (res.status === 'KO') throw Error(res.error)
+
+                return res;
+            })
+    },
+
+    registerUser(username, password, fields = {}) {
+        return this._callUsersApi('/user', 'post', { username, password, ...fields })
+            .then(res => res.data.id)
+    },
+
+    loginUser(username, password) {
+        return this._callUsersApi('/auth', 'post', { username, password })
+            .then(res => {
+                const data = res.data
+
+                this._userId = data.id
+                this._userToken = data.token
+                this._userUsername = username
+                this._userPassword = password // IDEAL encrypt it!
+
+                return true
+            })
+    },
+
+    retrieveUserById(id) {
+        return this._callUsersApi(`/user/${id}`, 'get', null, true)
+            .then(res => res.data)
+    },
+
+    updateUser(password, fields = {}) {
+        const data = {
+            username: this.userUsername,
+            password,
+            ...fields
+        }
+
+        return this._callUsersApi(`/user/${this._userId}`, 'put', data, true)
+            .then(() => {
+
+                if (data.hasOwnProperty('newUsername')) this._userUsername = data.newUsername
+
+                if (data.hasOwnProperty('newPassword')) this._userPassword = data.newPassword
+
+                return true
+            })
+    },
+
+    logout() {
+        sessionStorage.clear()
+    },
+
+    // TODO: to kim
+    // unregisterUser(password) {}
+
+    // unsplash
+
     unsplashAccessKey: null,
 
     _callUnsplashApi(path) {
@@ -16,8 +131,6 @@ const logic = {
                 return res;
             });
     },
-
-    // unsplash
 
     searchPhotos(query, page = 1) {
         return this._callUnsplashApi(`/search/photos?query=${query}&page=${page}`)
@@ -38,15 +151,6 @@ const logic = {
         return this._callUnsplashApi(`/photos?order_by=popular&page=${page}`)
             .then(res => res)
     }
-
-    // retrieveAlbumsByArtistId(id) {
-    //     return this._callSpotifyApi('/artists/' + id + '/albums')
-    //         .then(res => res.items)
-    // },
-
-    // retrieveTrackById(id) {
-    //     return this._callSpotifyApi('/tracks/' + id)
-    // }
 };
 
 //export default logic;
