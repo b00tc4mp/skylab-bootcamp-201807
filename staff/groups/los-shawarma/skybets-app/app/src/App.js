@@ -42,16 +42,22 @@ class App extends Component {
   }
 
 
+  onLogout = () => {
+    logic.logout();
+
+    this.setState({loggedIn: false});
+  }
+
   render() {
     const {loggedIn} =  this.state
-    const {onRegister, onLogin, onUpdate} = this
+    const {onRegister, onLogin, onUpdate, onLogout} = this
     //const { state: {onRegister}, onRegister} = this
 
     return (
       <div className="App">
-        <Nav />
+        <Nav onLogoutProp={onLogout}/>
 
-        <Route path="/" exact render={() => <Home loggedIn={loggedIn} />} />
+        <Route path="/" exact render={() => <Home />} />
         <Route path="/login" exact render={() => <Login onLoginProp={onLogin} />} />
         <Route path="/myfavs" exact component={MyFavs} />
         <Route path="/register" exact render={() => <Register onRegisterProp={onRegister} />} />

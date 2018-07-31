@@ -15,8 +15,9 @@ class Nav extends Component {
                 <li><Link to='/login'>LogIn</Link></li>
                 <li><Link to='/register'>Register</Link></li>
                 <li><Link to='/update'>Update</Link></li>
+                <button onClick={this.props.onLogoutProp}>LogOut</button>  
             </ul>
-        </nav>);
+        </nav>)
     }
 
 }
