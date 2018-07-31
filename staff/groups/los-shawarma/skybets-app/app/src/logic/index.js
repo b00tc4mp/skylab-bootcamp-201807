@@ -86,6 +86,7 @@ const logic = {
     },
 
     registerUser(username, password) {
+        debugger;
         return this._callUsersApi('/user', 'post', { username, password })
             .then(res => res.data.id)
     },
@@ -146,3 +147,6 @@ const logic = {
             .then(() => true)
     },
 }
+
+//export default logic;
+if (typeof module !== 'undefined') module.exports = logic;

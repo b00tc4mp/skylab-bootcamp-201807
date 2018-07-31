@@ -1,13 +1,13 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react'
+import Nav from '../sections/Nav'
 
-const Home = () => (
-    <main>
-        <h1>Home Page</h1>
-        <Link to="/login">Login</Link>
-        <Link to="/register">Register</Link>
-        <Link to="/myfavs">My Favourites</Link>
-    </main>    
-);
+const Home = () => {
 
-export default Home;
+    return(
+        <main>
+            <h1>Home Page</h1>
+        </main>
+    )
+}
+
+export default Home
