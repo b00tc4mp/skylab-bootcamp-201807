@@ -8,11 +8,11 @@ class Register extends Component {
         password: null
     }
 
-    keepUsername = (e) => this.setState({username: e.target.value})
+    keepUsername = e => this.setState({username: e.target.value})
 
-    keepPassword = (e) => this.setState({password: e.target.value})
+    keepPassword = e => this.setState({password: e.target.value})
 
-    submitRegistration = (e) => {
+    submitRegistration = e => {
         e.preventDefault()
 
         const {username, password} = this.state
