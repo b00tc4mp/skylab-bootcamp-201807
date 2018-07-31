@@ -21,9 +21,9 @@ class ImageDisplayer extends Component {
     // const that = this
     console.log("image displayer this.props.data",this.props.data)
 
-    let ExtractData = this.props.data.map(imageData => {
+    let ExtractData = this.props.data.map(imageurl => {
       return (
-        <ResultImage image={imageData} key={imageData.longTitle + imageData.id} onImageClick={this.onImageClicked} />
+        <ResultImage image={imageurl} key={imageurl.id} onImageClick={this.onImageClicked} />
 
       )
     })
