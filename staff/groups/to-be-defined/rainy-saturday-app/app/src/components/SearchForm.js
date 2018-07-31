@@ -5,7 +5,8 @@ import {Container, Row, Col, FormText,Button,Form, Input, Label, FormGroup} from
 class SearchForm extends Component {
 
   static propTypes = {
-    onSearch: PropTypes.func,
+    onSearch: PropTypes.func.required,
+    disabled: PropTypes.bool.required,
   }
 
   state = {searchTerm: ""}
@@ -29,7 +30,7 @@ class SearchForm extends Component {
       <Form onSubmit={this.onDoSearch}>
         <FormGroup>
          {/* <Label for="com.rainysaturday.SearchForm.searchTermInput">Enter Search Term</Label>*/}
-          <Input value={this.state.searchTerm} autoFocus type="text" name="searchTermInput" onChange={this.handleSearchTermChange}
+          <Input disabled={this.props.disabled} value={this.state.searchTerm} autoFocus type="text" name="searchTermInput" onChange={this.handleSearchTermChange}
                  id="rainysaturday-searchTermInput" placeholder="Enter artist, Genre, Type of work, keyword..." required />
           <FormText color="muted">
            You may enter any search term that occurs to you: "Rembrandt", "sky", "print" or a combination, e.g. "Rembrandt sky print"
