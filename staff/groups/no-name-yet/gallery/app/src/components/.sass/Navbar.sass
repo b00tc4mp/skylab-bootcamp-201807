@@ -1,9 +1,8 @@
-$bg-color: #424141
+@import 'Common'
 
 .navbar
-    background-color: $bg-color
-    background: none
-    height: 10vh
+    background-color: $color-app-grey
+    height: $nav-height
     width: 100%
     position: fixed
     bottom: 0
@@ -17,6 +16,6 @@ $bg-color: #424141
         height: 100%
         font-size: 20px
     i 
-        color: rgba(grey,0.8)
+        color: rgba(white,0.8)
         &:hover
-            color: rgba(red,0.6)
+            color: rgba($color-app-darkpink, $opacity-strong)
