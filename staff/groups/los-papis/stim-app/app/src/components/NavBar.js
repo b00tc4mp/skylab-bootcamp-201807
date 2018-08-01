@@ -26,6 +26,7 @@ class NavBar extends Component {
     });
   }
 
+<<<<<<< HEAD
   render() {
     return <div>
       <Navbar color="light" light expand="md">
@@ -33,6 +34,17 @@ class NavBar extends Component {
         {this.props.isLoggedIn ? <div  class="row"><NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
+=======
+    render() {
+        return  <Navbar color="light" light expand="md">
+          {this.props.isLoggedIn ? <div><NavbarBrand to="/home" tag={Link} > Home</NavbarBrand> </div> : <NavbarBrand to="/" tag={Link} > Home</NavbarBrand> }
+          {this.props.isLoggedIn ? <div><NavbarToggler onClick={this.toggle} />
+          <Collapse isOpen={this.state.isOpen} navbar>
+            <Nav className="mr-8" navbar>
+            <NavItem>
+                <NavLink tag={Link} to="/search">Search Games</NavLink>
+              </NavItem>
+>>>>>>> develop
               <NavItem>
                 <NavLink tag={Link} to="/top">Top played games</NavLink>
               </NavItem>
@@ -50,10 +62,16 @@ class NavBar extends Component {
                 </DropdownMenu>
               </UncontrolledDropdown>
             </Nav>
+<<<<<<< HEAD
           </Collapse> </div> : ""}
       </Navbar>
     </div>
   }
+=======
+          </Collapse> </div>: ""}
+        </Navbar>
+    } 
+>>>>>>> develop
 }
 
 export default NavBar
