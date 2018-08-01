@@ -11,7 +11,8 @@ class Home extends Component{
         ingredients:[],
         ingredientInfo:[],
         panelActive: false,
-        listActive: false
+        listActive: false,
+        showFeedback: false
     }
 
     onClose = () => this.setState({panelActive: false, listActive: true })
@@ -32,8 +33,8 @@ class Home extends Component{
             }) 
         })
 
-        .catch(() => {
-        console.log('hola, soy un error del listado')
+        .catch(({message}) => {
+            this.setState({showFeedback: message})
           })
 
     }
@@ -65,15 +66,17 @@ class Home extends Component{
             })
 
         })
-        .catch(() => console.log('hola, soy un error de la ficha'))
+        .catch(({message}) => {
+            this.setState({showFeedback: message})
+          })
     }
 
     render () {
 
         return <section>
-                <Search onSearch = {this.onSearch} />
-                {this.state.listActive && <List ingredients = {this.state.ingredients} onItemClick = {this.onItemClick}/>}
-                {this.state.panelActive && <Productpanel ingredient = {this.state.ingredientInfo} close = {this.onClose}/>}
+                <Search onSearch = {this.onSearch} feedback={this.state.showFeedback}/>
+                {this.state.listActive && <List ingredients = {this.state.ingredients} onItemClick = {this.onItemClick} feedback={this.state.showFeedback}/> }
+                {this.state.panelActive && <Productpanel ingredient = {this.state.ingredientInfo} close = {this.onClose} />}
             </section>
         }
 }
