@@ -185,10 +185,18 @@ const logic = {
 
     deleteAll() {
         return this._callCloudinaryApi(`/resources/image/upload/?prefix=${this.userUsername}`, 'delete')
+        .then(() => {
+            this._userImages = []
+            return true
+        })
     },
 
     deleteFolder() {
         return this._callCloudinaryApi(`/folders/${this.userUsername}`, 'delete')
+        .then(res => {
+            this.userImages = res
+            return true
+        })
     },
 
     deleteImage(id) {
