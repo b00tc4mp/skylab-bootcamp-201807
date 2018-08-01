@@ -31,8 +31,10 @@ const logic = {
 
     getGamesByName(name) {
         return logic.getAllGames()
+            //
+            //
             .then(res => res.filter(({ title }) => {
-                return title.includes(name)
+                return title.toLowerCase().includes((name.toLowerCase()))
             })
             )
     },
