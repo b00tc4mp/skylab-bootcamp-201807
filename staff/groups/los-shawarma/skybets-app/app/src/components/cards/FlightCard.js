@@ -1,14 +1,13 @@
 import React, {Component} from 'react'
 
+
 class FlightCard extends Component {
-
-
 
     render() {
 
         return(
             <section>
-                <div>
+               <div>
                     <span>Date</span><span></span>
                     <span>Time</span><span></span>
                     <span>IATA</span><span></span>

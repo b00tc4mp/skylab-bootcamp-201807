@@ -9,7 +9,7 @@ class FlightResults extends Component {
         allFlights: this.props.flightsProp,
         currentFlight: this.props.flightsProp[0],
         currentPage: null,
-        totalPages: null
+        totalPages: null,
       };
     
       /*componentDidMount() {
@@ -18,12 +18,12 @@ class FlightResults extends Component {
       }*/
     
       onPageChanged = data => {
-        const { allFlights } = this.state;
+        const { allFlights, currentIndex } = this.state;
         const { currentPage, totalPages, pageLimit } = data;
     
         const offset = (currentPage - 1) * pageLimit;
-        const currentFlight = allFlights.slice(offset, offset + pageLimit);
-
+        const currentFlight = allFlights.slice(offset, offset + pageLimit)[0];
+       
         this.setState({ currentPage, currentFlight, totalPages });
       };
     
