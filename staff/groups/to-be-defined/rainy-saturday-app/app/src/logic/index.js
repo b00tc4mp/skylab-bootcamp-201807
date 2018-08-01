@@ -149,15 +149,21 @@ const logic = {
   //         .then(({ data }) => data)
   // },
 
-  toggleTrackFavorite(trackId) {
+  getUserFavorites() {
+    return this._userFavorites
+  },
+
+
+  // TODO testing
+  toggleFavorite(objectNumber) {
     const favorites = this._userFavorites
 
-    const index = favorites.indexOf(trackId)
+    const index = favorites.indexOf(objectNumber)
 
     if (index > -1) {
       favorites.splice(index, 1)
     } else {
-      favorites.push(trackId)
+      favorites.push(objectNumber)
     }
 
     const data = {
@@ -174,8 +180,8 @@ const logic = {
       })
   },
 
-  isFavorite(trackId) {
-    return this._userFavorites.includes(trackId)
+  isFavorite(objectNumber) {
+    return this._userFavorites.includes(objectNumber)
   },
 
   storeUserData(fieldName, data) {
