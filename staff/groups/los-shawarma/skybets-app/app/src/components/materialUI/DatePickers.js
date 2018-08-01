@@ -15,14 +15,16 @@ const styles = theme => ({
   },
 });
 
+handleChange = ({label}) => this.props.onSelectDate(label)
+
 function DatePickers(props) {
   const { classes } = props;
 
   return (
     <form className={classes.container} noValidate>
       <TextField
+        onChange={}
         id="date"
-        label="Birthday"
         type="date"
         defaultValue="2018-08-03"
         className={classes.textField}
