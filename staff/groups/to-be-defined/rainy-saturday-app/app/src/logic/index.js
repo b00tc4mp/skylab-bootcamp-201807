@@ -190,7 +190,7 @@ const logic = {
         this._userId = id
         this._userToken = token
         this._userUsername = username
-        // this._userPassword = password // IDEAL encrypt it!
+        this._userPassword = password // IDEAL encrypt it!
 
         // return true
         return this._callUsersApi(`/user/${this._userId}`, 'get', undefined, true)
@@ -247,6 +247,7 @@ const logic = {
   //         .then(({ data }) => data)
   // },
 
+  toggleImageFavorite(objectNumber) {
   getUserFavorites() {
     return this._userFavorites
   },
@@ -254,6 +255,7 @@ const logic = {
 
   // TODO testing
   toggleFavorite(objectNumber) {
+
     const favorites = this._userFavorites
 
     const index = favorites.indexOf(objectNumber)
