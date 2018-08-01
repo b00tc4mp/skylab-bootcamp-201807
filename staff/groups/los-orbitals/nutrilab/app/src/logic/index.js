@@ -117,11 +117,11 @@ const logic = {
         if (newUsername) data.newUsername = newUsername
         
         return this._callApiUser(`/user/${this._userId}`, 'put', data, true )
-        .then(() => {
-            if (newUsername) this._userUsername = newUsername
-            if (newPassword) this._userPassword = newPassword
-            return true
-        })
+            .then(() => {
+                if (newUsername) this._userUsername = newUsername
+                if (newPassword) this._userPassword = newPassword
+                return true
+            })
     },
 
     /**
@@ -131,20 +131,20 @@ const logic = {
      */
     delete(password) {
         return this._callApiUser(`/user/${this._userId}`, 'delete', { username: this.userUsername, password }, true)
-        .then(() => {
-            sessionStorage.clear()
-            return true
-        })
+            .then(() => {
+                sessionStorage.clear()
+                return true
+            })
     },
 
     /**
      * @returns {status} the username, token and id status to convert to null and to clear the sessionStorage
      */
     logout() {
-         this._userUsername = null
-         this._userToken = null
-         this._userId = null
-         sessionStorage.clear()
+        this._userUsername = null
+        this._userToken = null
+        this._userId = null
+        sessionStorage.clear()
     },
 
     /**
@@ -178,11 +178,11 @@ const logic = {
         if (body) config.body = JSON.stringify({query:body})
 
         return fetch('https://trackapi.nutritionix.com/v2/' + path, config)
-        .then((res) => res.json())
-        .then(res => {
-            if (res.message) throw Error("api connection failed")
-            return res;
-        })
+            .then((res) => res.json())
+            .then(res => {
+                if (res.message) throw Error("api connection failed")
+                return res;
+            })
     },
 
     /**
