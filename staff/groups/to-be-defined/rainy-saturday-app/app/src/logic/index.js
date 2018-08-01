@@ -79,10 +79,108 @@ const logic = {
       })
   },
 
+   uploadFile(file) {
+
+     const cloudName = "rainysaturdayprojectskylab"
+     const unsignedUploadPreset = "rainysaturdayproject"
+
+     var url = `https://api.cloudinary.com/v1_1/${cloudName}/upload`;
+  var xhr = new XMLHttpRequest();
+  var fd = new FormData();
+  xhr.open('POST', url, true);
+  xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+  // Reset the upload progress bar
+  // document.getElementById('progress').style.width = 0;
+
+  // Update progress (can be used to show progress indicator)
+  // xhr.upload.addEventListener("progress", function(e) {
+  //   var progress = Math.round((e.loaded * 100.0) / e.total);
+  //   document.getElementById('progress').style.width = progress + "%";
+  //
+  //   console.log(`fileuploadprogress data.loaded: ${e.loaded},
+  // data.total: ${e.total}`);
+  // });
+
+  xhr.onreadystatechange = function(e) {
+    if (xhr.readyState == 4 && xhr.status == 200) {
+      // File uploaded successfully
+      var response = JSON.parse(xhr.responseText);
+      // https://res.cloudinary.com/cloudName/image/upload/v1483481128/public_id.jpg
+      var url = response.secure_url;
+      // Create a thumbnail of the uploaded image, with 150px width
+    console.log(response,url)
+    }
+  };
+
+  fd.append('upload_preset', unsignedUploadPreset);
+  fd.append('tags', 'browser_upload'); // Optional - add tag for image admin in Cloudinary
+  fd.append('file', file);
+  xhr.send(fd);
+},
+
+  test(file) {
+    var data = new FormData();
+    data.append('upload_preset', 'pvjxuw3w');
+    data.append('file', file);
+    data.append('cloud_name', 'rainysaturdayprojectskylab');
+
+    const config = {
+      method: "POST",
+      body: data
+    };
+
+    config.headers = {}
+    config.headers['X-Requested-With'] = 'XMLHttpRequest'
+
+    var imgurl = "https://api.cloudinary.com/v1_1/rainysaturdayprojectskylab/image/upload";
+
+    fetch(imgurl, config)
+      .then(responseData => {
+        console.log(JSON.stringify(responseData, null, 4));
+      })
+  },
+
+  _callCloudinaryApi(file, method = 'post') {
+
+    const config = {
+      method
+    }
+
+    const cloudName = "rainysaturdayprojectskylab"
+    const unsignedUploadPreset = "rainysaturdayproject"
+    const url = `https://api.cloudinary.com/v1_1/${cloudName}/upload`;
+
+
+    const fd = new FormData();
+    fd.append('upload_preset', unsignedUploadPreset);
+    fd.append('tags', 'browser_upload'); // Optional - add tag for image admin in Cloudinary
+    fd.append('file', file);
+
+
+    if (method !== 'get') {
+      config.headers = {}
+      config.headers['X-Requested-With'] = 'XMLHttpRequest'
+    }
+
+    return fetch(url, config)
+      .then(res => res.json())
+      .then(res => {
+       console.log(res)
+        debugger
+        return res;
+      })
+  },
+
+  uploadCloudinaryImage(file) {
+  // return this._callCloudinaryApi(file)
+   return this.test(file)
+  },
+
   // user's
 
   registerUser(name, lastname, username, email, password) {
-    return this._callUsersApi('/user', 'post', {username, password, name, lastname, email, })
+    return this._callUsersApi('/user', 'post', {username, password, name, lastname, email,})
       .then(res => res.data.id)
   },
 
@@ -267,26 +365,37 @@ const logic = {
       .then(res => {
         if (!res.artObject.webImage || res.artObject.webImage.url === "") return null;
         else {
-          const {dating: {period}, webImage: {url} ,objectNumber,title, longTitle, principalMaker: maker, colors, description, materials, physicalMedium} = res.artObject
-          return {colors, period, imageurl: url, title, objectNumber, longTitle, maker, description, materials, physicalMedium}
+          const {dating: {period}, webImage: {url}, objectNumber, title, longTitle, principalMaker: maker, colors, description, materials, physicalMedium} = res.artObject
+          return {
+            colors,
+            period,
+            imageurl: url,
+            title,
+            objectNumber,
+            longTitle,
+            maker,
+            description,
+            materials,
+            physicalMedium
+          }
         }
       })
   },
 
-/*
-  getFilteredSearchTerm(searchTerm, filters) {
+  /*
+    getFilteredSearchTerm(searchTerm, filters) {
 
-    const makerFilter = filters[this.MUSEUM_MAKER_FILTER]
-    const periodFilter = filters[this.MUSEUM_PERIOD_FILTER]
-    const materialFilter = filters[this.MUSEUM_MATERIAL_FILTER]
+      const makerFilter = filters[this.MUSEUM_MAKER_FILTER]
+      const periodFilter = filters[this.MUSEUM_PERIOD_FILTER]
+      const materialFilter = filters[this.MUSEUM_MATERIAL_FILTER]
 
-    const makerTerm = makerFilter ? `&principalMaker=${makerFilter.replace(/ /g, "%20")}` : "";
-    const periodTerm = periodFilter ? `&f.dating.period=${periodFilter}` : "";
-    const materialTerm = materialFilter ? `&material=${materialFilter.replace(/ /g, "%20")}` : "";
+      const makerTerm = makerFilter ? `&principalMaker=${makerFilter.replace(/ /g, "%20")}` : "";
+      const periodTerm = periodFilter ? `&f.dating.period=${periodFilter}` : "";
+      const materialTerm = materialFilter ? `&material=${materialFilter.replace(/ /g, "%20")}` : "";
 
-    return searchTerm + makerTerm + periodTerm + materialTerm
-  }
-*/
+      return searchTerm + makerTerm + periodTerm + materialTerm
+    }
+  */
 
 };
 
