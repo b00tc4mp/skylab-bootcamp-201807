@@ -11,15 +11,15 @@ const logic = {
             .then(res => res.appnews.newsitems[0])
     },
 
-    newsMostPlayedGames(){
+    newsMostPlayedGames() {
         return logic.mostPlayedGames()
             .then(res => {
-                let results =[] 
-                for(let game in res) {
+                let results = []
+                for (let game in res) {
                     results.push(logic.newsForApp(res[game].appid))
                 }
-               return Promise.all(results)
-        })
+                return Promise.all(results)
+            })
     },
 
     getAllGames() {
@@ -39,7 +39,7 @@ const logic = {
 
     //cloudinary
 
-    
+
 
     //userLogic
 
@@ -138,9 +138,10 @@ const logic = {
 
     updateUser(password, newUsername, newPassword) {
         const username = this._userUsername
-        return this._callUsersApi(`/user/${this._userId}`, 'put',{username,newUsername,password,newPassword} ,true)
+        return this._callUsersApi(`/user/${this._userId}`, 'put', { username, newUsername, password, newPassword }, true)
             .then(() => {
-                this._userUsername = newUsername    
+                this._userUsername = newUsername
+                this._newPassword=newPassword
                 return true
             })
     },
@@ -153,14 +154,15 @@ const logic = {
             .then(() => true)
     },
 
-    retrieveUser(password){
-       let username= this._userUsername
+    retrieveUser() {
         
-        return this._callUsersApi(`/user/${this._userId}`,'get')
-        .then(({data}) =>{ 
-            this._userUsername=this.data.username
-        })
-        return true
+
+        return this._callUsersApi(`/user/${this._userId}`, 'get', undefined, true)
+            .then(({ data }) => {
+                this._userUsername = data.username
+                return true
+            })
+
     }
 
 }
