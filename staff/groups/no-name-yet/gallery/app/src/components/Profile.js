@@ -61,7 +61,7 @@ class Profile extends Component {
                 <button onClick={this.props.onLogout} className="profile__btn profile__btn--logout"> Log out </button>
                 <div className="profile__change-username">
                     <h3 className="profile__text"> Change username </h3>
-                    <input className="profile__input" placeholder=" password" onChange={keepPassword1}></input>
+                    <input type="password" className="profile__input" placeholder=" password" onChange={keepPassword1}></input>
                     <input className="profile__input" placeholder=" new username" onChange={keepNewUsername}></input>
                     <div>
                         {update1 === 'success' ? <p className="profile__text--success">{update1}</p> : <p className="profile__text--error">{update1}</p>}
@@ -70,16 +70,16 @@ class Profile extends Component {
                 </div>
                 <div className="profile__change-password">
                     <h3 className="profile__text"> Change password </h3>
-                    <input className="profile__input" placeholder=" password" onChange={keepPassword2}></input>
-                    <input className="profile__input" placeholder=" new password" onChange={keepNewPassword}></input>
+                    <input type="password" className="profile__input" placeholder=" password" onChange={keepPassword2}></input>
+                    <input type="password" className="profile__input" placeholder=" new password" onChange={keepNewPassword}></input>
                     <div>
                         {update2 === 'success' ? <p className="profile__text--success">{update2}</p> : <p className="profile__text--error">{update2}</p>}
                     </div>
-                    <button className="profile__btn" onClick={updatePassword}> Update </button>
+                    <button type="password" className="profile__btn" onClick={updatePassword}> Update </button>
                 </div>
                 <div className="profile__delete">
                     <h3 className="profile__text"> Delete account </h3>
-                    <input className="profile__input" placeholder=" password" onChange={keepPassword3}></input>
+                    <input type="password" className="profile__input" placeholder=" password" onChange={keepPassword3}></input>
                     <div>
                         {deleteError && <p className="profile__text--error">{deleteError}</p>}
                     </div>
