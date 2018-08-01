@@ -1,4 +1,3 @@
-
 import React, { Component } from 'react'
 import { CardImg, Card } from 'reactstrap'
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
