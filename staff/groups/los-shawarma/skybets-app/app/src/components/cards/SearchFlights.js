@@ -19,6 +19,15 @@ class SearchFlights extends Component {
     onDateFrom = date => this.setState({ dateFrom: date })
     onDateTo = date => this.setState({ dateTo: date })
 
+    handleOnclick = () => {
+        this.props.getDataInputsProp(
+            this.state.selectedFrom, 
+            this.state.selectedTo, 
+            this.state.dateFrom, 
+            this.state.dateTo
+        )
+    }
+    
     render() {
         return (
             <MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -31,7 +40,7 @@ class SearchFlights extends Component {
                 <DatePicker value={this.state.dateFrom} onChange={this.onDateFrom} />
                 <label>Return date</label>
                 <DatePicker value={this.state.dateTo} onChange={this.onDateTo} />
-                <button>Search</button>  
+                <button onClick={this.handleOnclick}>Search</button>  
             </section>
             </MuiPickersUtilsProvider>
         )
