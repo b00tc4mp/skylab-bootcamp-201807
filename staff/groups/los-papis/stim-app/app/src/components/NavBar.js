@@ -32,6 +32,9 @@ class NavBar extends Component {
           {this.props.isLoggedIn ? <div><NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="mr-8" navbar>
+            <NavItem>
+                <NavLink tag={Link} to="/search">Search Games</NavLink>
+              </NavItem>
               <NavItem>
                 <NavLink tag={Link} to="/top">Top played games</NavLink>
               </NavItem>
