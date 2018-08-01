@@ -3,17 +3,11 @@ import PropTypes from 'prop-types';
 import ResultImage from './ResultImage';
 import './ImageDisplayer.css'
 
-
 class ImageDisplayer extends Component {
 
 
   static propTypes = {
     data: PropTypes.array.isRequired
-  }
-
-
-  onImageClicked = () => {
-    console.log("hola")
   }
 
   render() {
@@ -23,7 +17,8 @@ class ImageDisplayer extends Component {
 
     let ExtractData = this.props.data.map(imageurl => {
       return (
-        <ResultImage image={imageurl} key={imageurl.id} onImageClick={this.onImageClicked} />
+        <ResultImage image={imageurl} key={imageurl.id} />
+
 
       )
     })

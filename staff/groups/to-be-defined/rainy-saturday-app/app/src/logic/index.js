@@ -92,7 +92,7 @@ const logic = {
         this._userId = id
         this._userToken = token
         this._userUsername = username
-        // this._userPassword = password // IDEAL encrypt it!
+        this._userPassword = password // IDEAL encrypt it!
 
         // return true
         return this._callUsersApi(`/user/${this._userId}`, 'get', undefined, true)
@@ -149,15 +149,15 @@ const logic = {
   //         .then(({ data }) => data)
   // },
 
-  toggleTrackFavorite(trackId) {
+  toggleImageFavorite(objectNumber) {
     const favorites = this._userFavorites
 
-    const index = favorites.indexOf(trackId)
+    const index = favorites.indexOf(objectNumber)
 
     if (index > -1) {
       favorites.splice(index, 1)
     } else {
-      favorites.push(trackId)
+      favorites.push(objectNumber)
     }
 
     const data = {
@@ -174,8 +174,8 @@ const logic = {
       })
   },
 
-  isFavorite(trackId) {
-    return this._userFavorites.includes(trackId)
+  isFavorite(objectNumber) {
+    return this._userFavorites.includes(objectNumber)
   },
 
   storeUserData(fieldName, data) {
