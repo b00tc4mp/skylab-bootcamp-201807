@@ -22,8 +22,6 @@ class App extends Component {
     return (
       <div>
         <NavBar isLoggedIn={this.state.isLoggedIn} />
-
-
         <Switch>
           <Route exact path="/" render={() => this.state.isLoggedIn ? <Redirect to="/home" /> : <Landing updateLoggedIn={this.updateLoggedIn} />} />
           <Route path="/home" render={() => this.state.isLoggedIn ? <Home /> : <Redirect to="/" />} />
@@ -32,9 +30,6 @@ class App extends Component {
           <Route path="/login" render={() => this.state.isLoggedIn ? <Redirect to="/home" /> : <Redirect to="/" />} />
           <Route component={Error404} />
         </Switch>
-
-
-
       </div>
 
     )

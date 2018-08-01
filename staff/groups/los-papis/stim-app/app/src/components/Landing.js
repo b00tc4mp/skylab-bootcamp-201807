@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import { Link, Redirect } from "react-router-dom";
 import swal from 'sweetalert2'
+import '../styles/styles.css'
 import logic from "../logic";
 
 class Landing extends Component {
@@ -82,6 +83,8 @@ class Landing extends Component {
   render() {
     console.log("RENDER");
     return (
+
+      //Modals
       <div>
         <Button color="danger" onClick={this.toggle}>
           Register
@@ -113,23 +116,15 @@ class Landing extends Component {
         </Button>
         <Modal
           isOpen={this.state.modalLogin}
-          toggle={this.loginToggle}
-        >
+          toggle={this.loginToggle}>
           <ModalHeader toggle={this.loginToggle}>Modal title</ModalHeader>
           <form onSubmit={(e)=>{
             e.preventDefault()
             this.handleLoginSubmit(this.state.username, this.state.password)}
             }>
           <ModalBody >
-           
-
               <input type="text" placeholder="User name" value={this.state.username} onChange={this.keepUsername} />
               <input type="password" placeholder="Password" value={this.state.password} onChange={this.keepPassword} />
-
-           
-
-
-
           </ModalBody>
           <ModalFooter>
             <Button color="primary" type="submit" >
