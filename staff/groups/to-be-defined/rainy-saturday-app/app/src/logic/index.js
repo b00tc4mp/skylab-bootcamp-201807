@@ -347,11 +347,6 @@ const logic = {
    return this._userFavorites
  },
 
-
-
-
-
-
 /*
   getFilteredSearchTerm(searchTerm, filters) {
 
