@@ -10,7 +10,7 @@ import Main from './components/Main'
 import Profile from './components/Profile'
 import { Route, withRouter, Link, Redirect } from 'react-router-dom'
 
-logic.spotifyToken = 'BQCGT5G8bMVjag5KSDhqsTOkXlMqu_MkSkVnm9QMCz0CZYVX58ieRRrSpBBreILMlEvOWvdw2hxcpQXZ4O07IAaasLnMUHWrKB_Pqto-aSvWXvNyPxQ7CNeXD8Gez4IKTAwBfenbovqF'
+logic.spotifyToken = 'BQBaXXqjjeR2ee0FJ5K5XzQLdRW0OjLTg-GaQnArZbw8uHxaL9OFVgWAZZGNMASBkbju9avKC3MOXbByzMXgpCjTHvUaGatOc5yyS9yN-8t9tZOj7fvxL6rWemtHN7ePKvCdnYwtmtNy'
 
 const PROFILE_UPDATE_OK = 'Profile updated correctly'
 

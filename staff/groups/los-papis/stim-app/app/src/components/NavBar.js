@@ -40,10 +40,10 @@ class NavBar extends Component {
                   Profile
                 </DropdownToggle>
                 <DropdownMenu right>
-                  <DropdownItem>
+                  <DropdownItem tag={Link} to="/profiledetail">
                     Profile details
                   </DropdownItem>
-                  <DropdownItem>
+                  <DropdownItem tag={Link} to="/profilesettings">
                     Profile settings
                   </DropdownItem>
                 </DropdownMenu>
@@ -54,4 +54,5 @@ class NavBar extends Component {
     } 
 }
 
-export default NavBar
+export default NavBar;
+
