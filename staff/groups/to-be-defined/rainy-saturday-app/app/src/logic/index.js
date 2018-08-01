@@ -284,6 +284,7 @@ const logic = {
     const unsignedUploadPreset = "rainysaturdayproject"
 
     var url = `https://api.cloudinary.com/v1_1/${cloudName}/upload`;
+
     var xhr = new XMLHttpRequest();
     var fd = new FormData();
     xhr.open('POST', url, true);
@@ -373,6 +374,7 @@ const logic = {
       return searchTerm + makerTerm + periodTerm + materialTerm
     }
   */
+
 
 };
 
