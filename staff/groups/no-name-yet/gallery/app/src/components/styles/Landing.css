@@ -19,7 +19,8 @@
 }
 .landing__btn {
   background-color: white;
-  width: 70%;
+  width: 50%;
+  max-width: 400px;
   height: 50px;
   border: none;
   border-radius: 30px;
