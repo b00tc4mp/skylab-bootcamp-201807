@@ -14,17 +14,11 @@ class SearchFlights extends Component {
     onSelectedFrom = option => this.setState({selectedFrom: option})
     onSelectedTo = option => this.setState({selectedTo: option})
 
-    onChange = option => {
-
-        var ahah = option;
-        debugger;
-    }
-
     render() {
         return (
             <section>
                 <label>From</label>
-                <AutocompleteAsync onChange={this.onChange} onSelectedOption={this.onSelectedFrom}/>
+                <AutocompleteAsync onSelectedOption={this.onSelectedFrom}/>
                 <label>To</label>
                 <AutocompleteAsync onSelectedOption={this.onSelectedTo}/>
                 <label>Departure date</label>
