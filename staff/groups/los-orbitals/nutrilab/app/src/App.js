@@ -6,6 +6,7 @@ import Landing from './components/Landing'
 import Signup from './components/Signup'
 import Login from './components/Login'
 import Home from './components/Home'
+import Profile from './components/Profile'
 import { Route, withRouter, Link, Redirect} from 'react-router-dom'
 
 
@@ -18,6 +19,7 @@ class App extends Component {
   state={
     loggedIn: logic.loggedIn,
     registered: false,
+    updated: false,
     showFeedback: false
   }
 
@@ -57,17 +59,51 @@ class App extends Component {
   goToLogin = () => {
 
     this.setState ({showFeedback: false})
-  this.props.history.push('/login')
+    this.props.history.push('/login')
+  }
+
+  logout = event => {
+    event.preventDefault()
+    logic.logout()
+    this.setState({loggedIn: false})
+    this.props.history.push('/')
+  }
+
+  updateUser = (password, newUsername, newPassword) => {
+    logic.update(password, newUsername, newPassword)
+    .then(() => {
+      this.setState({updated: true})
+      this.props.history.push('/login')
+    })
+    .catch(({message}) => {
+      this.setState({showFeedback: message})
+    })
+  }
+
+  deleteUser = (password) => {
+    logic.delete(password)
+    .then(() => {
+      this.setState({loggedIn: false})
+      this.props.history.push('/')
+    })
+    .catch(({message}) => {
+      this.setState({showFeedback: message})
+    })
   }
 
   render() {
-    const {state:{loggedIn, showFeedback}, goToLogin, goToSignUp, signupUser, loginUser } = this
+    const {state:{loggedIn, showFeedback}, goToLogin, goToSignUp, signupUser, loginUser, logout, updateUser, deleteUser } = this
     return (
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <h2 className="App-title">Take care of your healty eating with an easy and fun way</h2>
-
+          <Route path="/(home|profile)" render={() => 
+            <nav>
+              <Link to="/home" >Home</Link>
+              <Link to="/profile" >Profile</Link>
+              <Link to="/" onClick={logout}>Logout</Link>
+            </nav>}/>
         </header>
         <br/>
           <br/>
@@ -75,6 +111,8 @@ class App extends Component {
     <Route path = "/signup" render = {() => loggedIn ? <Redirect to = "/home"/> : <Signup onSignUp = {signupUser} linkToLogin = {goToLogin} feedback = {showFeedback}/>} />
     <Route path = "/login" render = {() => loggedIn ? <Redirect to = "/home"/> : <Login onLogin = {loginUser} linkToSignUp = {goToSignUp} feedback = {showFeedback}/>} />
     <Route path = "/home" render = {() => loggedIn ? <Home /> : <Redirect to="/" />} />
+
+    <Route path="/profile" render={() => loggedIn ? <Profile onUpdate={updateUser} feedback = {showFeedback} onDelete={deleteUser}/> : <Redirect to="/"/> }/>
 
       </div>
     );
