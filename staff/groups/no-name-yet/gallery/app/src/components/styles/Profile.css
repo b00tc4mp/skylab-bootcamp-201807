@@ -1,3 +1,7 @@
+.body {
+  background-color: #FCF8FA;
+}
+
 .profile {
   height: 110vh;
   display: grid;
@@ -5,7 +9,7 @@
   align-items: center;
   justify-items: center;
   padding: 0 30px;
-  background-color: rgba(211, 211, 211, 0.6);
+  background-color: #FCF8FA;
 }
 .profile__change-username {
   display: grid;
@@ -35,7 +39,7 @@
   width: 100%;
 }
 .profile__input {
-  border: none;
+  border: 1px solid grey;
   border-radius: 10px;
   background-color: rgba(255, 255, 255, 0.7);
   width: 100%;
