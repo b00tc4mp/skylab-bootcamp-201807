@@ -11,6 +11,10 @@ const logic = {
         return sessionStorage.getItem('userId')
     },
 
+    get userId() {
+        return this._userId
+    },
+
     set _userToken(userToken) {
         sessionStorage.setItem('userToken', userToken)
     },
