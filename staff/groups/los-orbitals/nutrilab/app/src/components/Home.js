@@ -15,7 +15,8 @@ class Home extends Component{
         ingredients:[],
         ingredientInfo:[],
         panelActive: false,
-        listActive: false
+        listActive: false,
+        showFeedback: false
     }
 
 // This function prepare the view after click to close the productPanel
@@ -41,8 +42,8 @@ class Home extends Component{
             }) 
         })
 
-        .catch(() => {
-        console.log('hola, soy un error del listado')
+        .catch(({message}) => {
+            this.setState({showFeedback: message})
           })
 
     }
@@ -77,7 +78,9 @@ class Home extends Component{
             })
 
         })
-        .catch(() => console.log('hola, soy un error de la ficha'))
+        .catch(({message}) => {
+            this.setState({showFeedback: message})
+          })
     }
 
 // This render show and hide the different parts of the main part of the web (search and show data from the nutritionix.com api)
@@ -85,9 +88,9 @@ class Home extends Component{
     render () {
 
         return <section>
-                <Search onSearch = {this.onSearch} />
-                {this.state.listActive && <List ingredients = {this.state.ingredients} onItemClick = {this.onItemClick}/>}
-                {this.state.panelActive && <Productpanel ingredient = {this.state.ingredientInfo} close = {this.onClose}/>}
+                <Search onSearch = {this.onSearch} feedback={this.state.showFeedback}/>
+                {this.state.listActive && <List ingredients = {this.state.ingredients} onItemClick = {this.onItemClick} feedback={this.state.showFeedback}/> }
+                {this.state.panelActive && <Productpanel ingredient = {this.state.ingredientInfo} close = {this.onClose} />}
             </section>
         }
 }
