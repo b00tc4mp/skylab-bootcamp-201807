@@ -33,7 +33,7 @@ class Login extends Component {
                 </div>
                 <div className="login__group">
                     <h3 className="login__text"> Password </h3>
-                    <input className="login__input" onChange={keepPassword}></input>
+                    <input type="password" className="login__input" onChange={keepPassword}></input>
                 </div>
                 <div>
                     {error && <p className="login__error">{error}</p>}
