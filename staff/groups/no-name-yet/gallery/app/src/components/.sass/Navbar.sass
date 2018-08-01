@@ -4,10 +4,10 @@
     background-color: $color-app-grey
     height: $nav-height
     width: 100%
-    position: fixed
-    bottom: 0
+    max-width:500px
     display: grid
-    grid-template: 1fr / 1fr 1fr 1fr
+    grid-template: 1fr / repeat(3,1fr)
+    justify-items: center
     &__btn
         color: white
         background: none
@@ -19,3 +19,12 @@
         color: rgba(white,0.8)
         &:hover
             color: rgba($color-app-darkpink, $opacity-strong)
+.navbar__container
+    background-color: $color-app-grey
+    height: $nav-height
+    width: 100%
+    position: fixed
+    bottom: 0
+    display: grid
+    grid-template: 1fr /auto  100% auto
+    justify-items: center
