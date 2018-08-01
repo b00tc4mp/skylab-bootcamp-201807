@@ -8,7 +8,7 @@ import SearchFormFilterListWithCount from "./SearchFormFilterListWithCount"
 import ErrorPanel from './ErrorPanel'
 
 const FILTER_LIMIT = 10
-const OBJECT_LIMIT = 40
+const OBJECT_LIMIT = 100
 
 
 
