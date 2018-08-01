@@ -208,6 +208,29 @@ describe('logic (unsplash-app)', () => {
             })
         })
 
+        describe('generate random Id', () => {
+            let text
+
+            it('should random id', () => {
+                text = logic._generateRandomId()
+
+                expect(text).toBeDefined()
+                expect(text.length).toBe(11)
+                
+            })
+        })
+
+        describe('generate new collection Id', () => {
+            let result
+
+            it('should new collection id', () => {
+                result = logic._generateNewCollectionId()
+
+                expect(result).toBeDefined()
+                expect(result.length).toBe(11)
+            })
+        })
+    
         describe('collections', () => {
             let username
             const password = '123'
