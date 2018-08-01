@@ -5,6 +5,8 @@ import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 import logic from '../logic'
 import {withRouter} from 'react-router-dom'
 import ErrorPanel from './ErrorPanel'
+import swal from 'sweetalert2'
+import UserSuccesful from './SweetalertUser'
 
 
 
@@ -22,6 +24,7 @@ class UserRegister extends Component {
         comparepassword: null,
         errorRegister: null,
         finalcomparepassword: true,
+        title: "Register"
 }
 
     keepName = event => this.setState({ name: event.target.value })
@@ -36,6 +39,7 @@ class UserRegister extends Component {
 
     keepConfirmpassword = event => this.comparePassword(event.target.value)
 
+  
 
 
     handleSubmit = event => {
@@ -44,7 +48,7 @@ class UserRegister extends Component {
         logic.registerUser(name, lastname, username, email, password)
         .then(() =>   
         {
-        this.props.history.push('/login')
+        
         this.setState({
           name: "",
           lastname: "",
@@ -54,6 +58,11 @@ class UserRegister extends Component {
           profileimage: "",
           errorRegister: false
       })
+      
+      UserSuccesful(this.state.title).then(() => {
+        this.props.history.push('/login')
+      })
+
       })
         .catch(({message}) => {
           this.setState({
@@ -98,7 +107,7 @@ class UserRegister extends Component {
       <Form id="registerForm" onSubmit={this.handleSubmit}>
           <FormGroup>
           <Label for="name">Name</Label>
-          <Input value={this.state.name} type="text" name="Name" onChange = {this.keepName} placeholder="Name" required autofocus="true"/>
+          <Input value={this.state.name} type="text" name="Name" onChange = {this.keepName} placeholder="Name" required autoFocus="true"/>
           <FormText color="muted">
             Name is required
           </FormText>
