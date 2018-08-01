@@ -1,1 +1,1 @@
-{"version":3,"sourceRoot":"","sources":["../.sass/Landing.sass"],"names":[],"mappings":"AAAA;EACI;EACA;EACA;EACA;EACA;EACA;EACA;EACA;;AACA;EACI;;AACJ;EACI;EACA;EACA;EACA;;AACJ;EACI;EACA;EACA;EACA;EACA;EACA;;AACA;EACG;;AACH;EACI;EACA;;AACA;EACI","file":"Landing.css"}
+{"version":3,"sourceRoot":"","sources":["../.sass/Landing.sass","../.sass/Common.sass"],"names":[],"mappings":"AAEA;EACI;EACA;EACA;EACA;EACA;EACA;EACA;EACA;;AACA;EACI;;AACJ;EACI;EACA;EACA;EACA;;AACJ;EACI;EACA;EACA,WCZQ;EDaR;EACA;EACA;EACA;;AACA;EACG;;AACH;EACI;EACA;;AACA;EACI","file":"Landing.css"}

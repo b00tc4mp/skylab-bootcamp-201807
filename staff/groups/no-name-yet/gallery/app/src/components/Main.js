@@ -15,7 +15,10 @@ class Main extends Component {
     probability: null
   }
 
+  componentDidMount = () => this.startWebcam()
+
   startWebcam = () => {
+    this.setState({ image: null, result: null })
     const video = document.getElementById("webcam")
     navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
     var facingMode = "environment";
@@ -26,15 +29,21 @@ class Main extends Component {
       }
     }
     navigator.mediaDevices.getUserMedia(constraints)
-      .then(function success(stream) {
+      .then(stream => {
         video.srcObject = stream
         video.addEventListener('loadeddata', () => {
-          const ar = video.videoHeight / video.videoWidth
-          video.width = Math.min(window.innerWidth, 500)
-          video.height = video.width * ar
+          const w = video.videoWidth
+          const h = video.videoHeight
+          const ar = w / h
+          const newWidth = Math.min(window.innerWidth, 500)
+          video.width = newWidth
+          if (w >= h)
+             video.height = newWidth / ar
+          else
+             video.height = newWidth * ar
+          this.setState({ webcamOn: true })
         })
       })
-    this.setState({ image: null, webcamOn: true })
   }
 
   capture = () => {
@@ -48,27 +57,25 @@ class Main extends Component {
     image.src = canvas.toDataURL('image/png')
     image.width = video.width
     image.height = video.height
-
-    this.setState({ image: canvas.toDataURL('image/png'), webcamOn: false })
+    this.setState({ image: canvas.toDataURL('image/png'), webcamOn: false, result: null })
   }
 
   upload = event => {
     const file = event.target.files[0]
-    const url = URL.createObjectURL(file)
-    const image = document.getElementById("image")
-    image.src = url
-    image.addEventListener('load',  () => {
-      const ar = image.height / image.width
-      image.width = Math.min(window.innerWidth, 500)
-      image.height = image.width * ar
-
-      this.setState({ image: file, webcamOn: false })
-    })
+    if(file) {
+      const url = URL.createObjectURL(file)
+      const image = document.getElementById("image")
+      image.src = url
+      image.addEventListener('load', () => {
+        image.width = Math.min(window.innerWidth, 500)
+        this.setState({ image: file, webcamOn: false, result: null })
+      })
+    }
   }
 
   saveImage = () => {
     logic.addImage(this.state.image)
-    this.setState({ image: null })
+    this.setState({ image: null, result: null })
   }
 
   classify = () => {
@@ -83,15 +90,15 @@ class Main extends Component {
 
   transfer = () => {
     // Create a new Style Transfer Instance
-    const model = 'https://skylabcoders.herokuapp.com/proxy?url=https://github.com/ml5js/ml5-data-and-models/tree/master/models/style-transfer/udnie'
-    const style = ml5.styleTransfer(model, function() {
-      console.log('Model Loaded!');
-      // Grab a img element and generate a new image. 
-      // let img = document.getElementById('img')
-      // style.transfer(img, function (err, resultImg) {
-      //   img.src = resultImg.src;
-      // });
-    })
+    // const model = 'https://skylabcoders.herokuapp.com/proxy?url=https://github.com/ml5js/ml5-data-and-models/tree/master/models/style-transfer/udnie'
+    // const style = ml5.styleTransfer(model, function() {
+    // console.log('Model Loaded!');
+    // Grab a img element and generate a new image. 
+    // let img = document.getElementById('img')
+    // style.transfer(img, function (err, resultImg) {
+    //   img.src = resultImg.src;
+    // });
+    // })
   }
 
   render() {
@@ -110,8 +117,8 @@ class Main extends Component {
         <img className={image ? "image" : "image--hidden"} id="image" src="" alt="" />
         {webcamOn && <button onClick={this.capture} className="capture"> </button>}
         {image && <button onClick={this.saveImage} className="save">Save Image</button>}
-        {image && <button onClick={this.classify}>Classify</button>}
-        {image && <button onClick={this.transfer}>Transfer</button>}
+        {image && <button onClick={this.classify} className="save">Classify</button>}
+        {/* {image && <button onClick={this.transfer}>Transfer</button>} */}
         {result && <p>{result}, {probability}</p>}
       </div>
     )
