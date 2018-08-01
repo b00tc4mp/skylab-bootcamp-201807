@@ -81,7 +81,7 @@ class Search extends Component {
           style={{ height: 30 + "vh" }}
         >
           <Col md="4">
-          <Form mx-sm="3" onSubmit={this.handleSearch}>
+          <Form onSubmit={this.handleSearch} className="form-group mx-sm-3 mb-2">
             <input
               type="text"
               name="query"
