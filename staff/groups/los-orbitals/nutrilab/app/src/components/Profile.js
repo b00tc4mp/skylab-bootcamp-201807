@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import Feedback from './Feedback'
 
 class Profile extends Component {
 
@@ -39,6 +40,7 @@ class Profile extends Component {
                         <input type="password" placeholder="Enter new password" onChange={saveNewPassword}/>
                         <button type="submit">Update</button>
                     </form>
+                    {this.props.feedback && <Feedback message = {this.props.feedback} />}
                 </section>
                 <section>
                     <h2>Delete your Profile</h2>
@@ -47,6 +49,7 @@ class Profile extends Component {
                         <input type="password" placeholder="Enter old password" onChange={savePassword}/>
                         <button type="submit">Delete</button>
                     </form>
+                    {this.props.feedbackdelete && <Feedback message = {this.props.feedbackdelete} />}
                 </section>
             </section>
     }

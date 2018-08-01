@@ -19,7 +19,8 @@ class App extends Component {
     loggedIn: logic.loggedIn,
     registered: false,
     updated: false,
-    showFeedback: false
+    showFeedback: false,
+    showFeedbackDelete: false
   }
 
 // The signup function take the username and password from the usuary input and send it to logic resister. 
@@ -59,6 +60,7 @@ class App extends Component {
   goToSignUp = () => {
 
     this.setState ({showFeedback: false})
+    this.setState ({showFeedbackDelete: false})
     this.props.history.push('/signup')
   }
 
@@ -66,7 +68,9 @@ class App extends Component {
   goToLogin = () => {
 
     this.setState ({showFeedback: false})
+    this.setState ({showFeedbackDelete: false})
     this.props.history.push('/login')
+    
   }
 
   logout = event => {
@@ -80,6 +84,8 @@ class App extends Component {
     logic.update(password, newUsername, newPassword)
     .then(() => {
       this.setState({updated: true})
+      this.setState ({showFeedbackDelete: false})
+      this.setState ({showFeedback: false})
       this.props.history.push('/login')
     })
     .catch(({message}) => {
@@ -91,15 +97,22 @@ class App extends Component {
     logic.delete(password)
     .then(() => {
       this.setState({loggedIn: false})
+      this.setState ({showFeedbackDelete: false})
+      this.setState ({showFeedback: false})
       this.props.history.push('/')
     })
     .catch(({message}) => {
-      this.setState({showFeedback: message})
+      this.setState({showFeedbackDelete: message})
     })
   }
 
+  onResetMessage = () => {
+    this.setState({showFeedback: false})
+    this.setState({showFeedbackDelete: false})
+  }
+
   render() {
-    const {state:{loggedIn, showFeedback}, goToLogin, goToSignUp, signupUser, loginUser, logout, updateUser, deleteUser } = this
+    const {state:{loggedIn, showFeedback, showFeedbackDelete}, goToLogin, goToSignUp, signupUser, loginUser, logout, updateUser, deleteUser } = this
     return (
       <div className="App">
         <header className="App-header">
@@ -107,19 +120,19 @@ class App extends Component {
           <h2 className="App-title">Take care of your healty eating with an easy and fun way</h2>
           <Route path="/(home|profile)" render={() => 
             <nav>
-              <Link to="/home" >Home</Link>
+              <Link to="/home" onClick={this.onResetMessage} >Home</Link>
               <Link to="/profile" >Profile</Link>
               <Link to="/" onClick={logout}>Logout</Link>
             </nav>}/>
         </header>
         <br/>
           <br/>
-        <Route exact path = "/" render = {() => loggedIn ? <Redirect to = "/home"/> : <Landing signup = {goToSignUp} login = {goToLogin}/>}/> 
+        <Route exact path = "/" render = {() => loggedIn ? <Redirect to = "/home"/> : <Landing signup = {goToSignUp} login = {goToLogin} />}/> 
     <Route path = "/signup" render = {() => loggedIn ? <Redirect to = "/home"/> : <Signup onSignUp = {signupUser} linkToLogin = {goToLogin} feedback = {showFeedback}/>} />
     <Route path = "/login" render = {() => loggedIn ? <Redirect to = "/home"/> : <Login onLogin = {loginUser} linkToSignUp = {goToSignUp} feedback = {showFeedback}/>} />
     <Route path = "/home" render = {() => loggedIn ? <Home /> : <Redirect to="/" />} />
 
-    <Route path="/profile" render={() => loggedIn ? <Profile onUpdate={updateUser} feedback = {showFeedback} onDelete={deleteUser}/> : <Redirect to="/"/> }/>
+    <Route path="/profile" render={() => loggedIn ? <Profile onUpdate={updateUser} feedback = {showFeedback} feedbackdelete={showFeedbackDelete} onDelete={deleteUser}/> : <Redirect to="/"/> }/>
 
       </div>
     );
