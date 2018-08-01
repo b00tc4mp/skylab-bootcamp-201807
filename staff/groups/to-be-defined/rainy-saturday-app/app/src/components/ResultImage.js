@@ -7,7 +7,6 @@ import logic from '../logic'
 class ResultImage extends Component {
   constructor(props) {
     super(props);
-    console.log('SpotifyPlayer', 'init')
     this.state = {
       modal: false,
       error: '',
@@ -24,33 +23,32 @@ class ResultImage extends Component {
   }
 
 componentWillMount() {
-    console.log('SpotifyPlayer', 'will mount')
 }
 
 componentDidMount() {
-    console.log('SpotifyPlayer', 'did mount')
 }
 
 componentWillUnmount() {
-    console.log('SpotifyPlayer', 'will unmount')
 }
 
 componentWillUpdate() {
-    console.log('SpotifyPlayer', 'will update')
 }
 
 componentDidUpdate() {
-    console.log('SpotifyPlayer', 'did update')
 }
 
 componentWillReceiveProps(newProps) {
-    console.log('SpotifyPlayer', 'will receive props')
 
     this.refreshFavorite(newProps)
 }
 
 onToggleFavorite = () => {
-    logic.toggleImageFavorite(this.props.image.objectNumber)
+
+    const toStore = { objectNumber:this.props.image.objectNumber,
+    imageurl:this.props.image.imageurl
+    }
+
+    logic.toggleImageFavorite(toStore)
         .then(() => {
           this.refreshFavorite(this.props)})
         .catch(({ message }) => this.setState({ error: message }))
