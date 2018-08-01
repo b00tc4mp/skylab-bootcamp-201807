@@ -153,12 +153,12 @@ describe('logic (Museum-App)', () => {
         //     it('should toggle track to favorites', () => {
         //         const trackId = '4QxwXcPUm1VfkHksz6VuFi'
 
-        //         return logic.toggleTrackFavorite(trackId)
+        //         return logic.toggleFavorite(trackId)
         //             .then(res => {
         //                 expect(res).toBeTruthy()
         //                 expect(logic._userFavorites.includes(trackId)).toBeTruthy()
 
-        //                 return logic.toggleTrackFavorite(trackId)
+        //                 return logic.toggleFavorite(trackId)
         //             })
         //             .then(res => {
         //                 expect(res).toBeTruthy()
@@ -169,11 +169,11 @@ describe('logic (Museum-App)', () => {
         //     it('should check is favorite', () => {
         //         const trackId = '6ozp33PI3p9AdddB6ZL3xQ'
 
-        //         return logic.toggleTrackFavorite(trackId)
+        //         return logic.toggleFavorite(trackId)
         //             .then(() => {
         //                 expect(logic.isFavorite(trackId)).toBeTruthy()
 
-        //                 return logic.toggleTrackFavorite(trackId)
+        //                 return logic.toggleFavorite(trackId)
         //             })
         //             .then(() => {
         //                 expect(logic.isFavorite(trackId)).toBeFalsy()

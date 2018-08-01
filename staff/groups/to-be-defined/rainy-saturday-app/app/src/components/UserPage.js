@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 import logic from '../logic'
 import ErrorPanel from './ErrorPanel'
+import swal from 'sweetalert2'
+import UserSuccesful from './SweetalertUser'
 
 
 
@@ -17,7 +19,8 @@ export default class UserPage extends Component {
         password: "",
         newpassword:"",
         profileimage: "",
-        passwordvalid: true
+        passwordvalid: true,
+        title: "Update"
 }
 
 
@@ -35,11 +38,11 @@ export default class UserPage extends Component {
 
     componentDidMount(){
 
-      this.test()
+      this.retrieveData()
 
     }
 
-    test = () => {
+    retrieveData = () => {
 
       logic.retrieveUserData("email").then(res => {
         this.setState({
@@ -54,8 +57,6 @@ export default class UserPage extends Component {
 
     }
 
-
-
     handleSubmit = event => {
         event.preventDefault()
         const {state: {password, newusername, newpassword, newemail }} = this
@@ -68,8 +69,11 @@ export default class UserPage extends Component {
           password: "",
           newpassword: "",
           errorUpdate: false
-          },this.test())
+          },this.retrieveData())
+
+          UserSuccesful(this.state.title)
         })
+        
         .catch(({message}) => {
           this.setState({
           errorUpdate: message,
@@ -102,7 +106,7 @@ export default class UserPage extends Component {
         </FormGroup>
         <FormGroup>
           <Label for="NewUsername">New Username</Label>
-          <Input value={this.state.newusername} type="text" name="Username" onChange = {this.keepNewUsername} placeholder="New Username" autofocus="true"/>
+          <Input value={this.state.newusername} type="text" name="Username" onChange = {this.keepNewUsername} placeholder="New Username" autoFocus="true"/>
         </FormGroup>
         <FormGroup>
           <Label for="exampleEmail">Email</Label>
