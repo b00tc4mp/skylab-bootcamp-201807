@@ -99,7 +99,7 @@ export default class UserPage extends Component {
     return (
         
         <div id="comRainySaturdayUserRegisterAndLogin">
-      <Form id="updateForm" onSubmit={this.handleSubmit}>
+      <Form id="updateForm" className="mt-5" onSubmit={this.handleSubmit}>
         <FormGroup>
           <Label for="Username">Username</Label>
           <Input value={this.state.username} type="text" name="Username" onChange = {this.keepUsername} placeholder="Username" disabled="true"/>

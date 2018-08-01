@@ -49,7 +49,7 @@ export default class NavBar extends React.Component {
     console.log("logged in here is",logic.loggedIn,this.props.isLoggedIn)
     return (
       <div>
-        <Navbar color="light" light expand="md">
+        <Navbar color="dark" dark expand="md">
           <NavbarBrand id="comRainysaturdayNavBarFontSize" href="/">Rainy Saturday</NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
