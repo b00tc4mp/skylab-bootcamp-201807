@@ -13,6 +13,7 @@ class ImageDisplayer extends Component {
   render() {
     let incKey = 0
     // const that = this
+    console.log("image displayer this.props.data",this.props.data)
 
     let ExtractData = this.props.data.map(imageurl => {
       return (
