@@ -9,6 +9,7 @@ import {
   CardBody,
   CardText,
   CardTitle,
+  CardFooter,
   CardSubtitle,
   Form
 } from "reactstrap";
@@ -102,7 +103,7 @@ class Search extends Component {
                     <List
                       rowCount={this.state.data.length}
                       width={500}
-                      height={500}
+                      height={400}
                       rowHeight={250}
                       rowRenderer={this.renderRow}
                     />
@@ -130,13 +131,14 @@ class Search extends Component {
                   <CardBody>
                     <CardTitle>{this.state.detail.name}</CardTitle>
                     <CardSubtitle>{this.state.detail.developer}</CardSubtitle>
-                    <CardText>{this.state.detail.price / 100}$</CardText>
-                    <CardText>Tags: <ul>{Object.keys(this.state.detail.tags).map(i => <li>{i}</li>)}</ul>
+                    <CardText>{this.state.detail.price == 0 ? "Free" : (this.state.detail.price / 100)+"$" }</CardText>
+                    <div>Tags: <ul>{Object.keys(this.state.detail.tags).map(i => <li>{i}</li>)}</ul>
                     <p>Languages available: <br/><li>{this.state.detail.languages}</li></p>
                     
                     
-                    </CardText>
+                    </div>
                   </CardBody>
+                    <CardFooter> <Button target="_blank" rel="noopener noreferrer" href={`https://store.steampowered.com/app/${this.state.detail.appid}/`}> Steam Page </Button> </CardFooter>
                 </Card>
               </div>
             ) : (

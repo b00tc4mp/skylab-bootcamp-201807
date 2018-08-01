@@ -182,7 +182,7 @@ describe('logic (spotify-app)', () => {
     })
 
     describe('spotify\'s', () => {
-        logic.spotifyToken = 'BQBaWwVn9Zv9LJIvoBicx0MZ20v58rY_f-UizuPpAeFzpfOn2i369TmdpmbdZZCauxsX2yqr00Gxyhjulp7USPW_HgxUT2gK16YTmAvi2-d7m-hGcZYz8m7ngpMPLGIq4ADZg1hAZpxC'
+        logic.spotifyToken = 'BQBaXXqjjeR2ee0FJ5K5XzQLdRW0OjLTg-GaQnArZbw8uHxaL9OFVgWAZZGNMASBkbju9avKC3MOXbByzMXgpCjTHvUaGatOc5yyS9yN-8t9tZOj7fvxL6rWemtHN7ePKvCdnYwtmtNy'
 
         describe('search artists', () => {
             it('should find artists matching criteria', () => {

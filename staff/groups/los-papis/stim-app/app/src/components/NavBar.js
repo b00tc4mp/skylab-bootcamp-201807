@@ -35,18 +35,15 @@ class NavBar extends Component {
             <NavItem>
                 <NavLink tag={Link} to="/search">Search Games</NavLink>
               </NavItem>
-              <NavItem>
-                <NavLink tag={Link} to="/top">Top played games</NavLink>
-              </NavItem>
               <UncontrolledDropdown nav inNavbar>
                 <DropdownToggle nav caret>
                   Profile
                 </DropdownToggle>
                 <DropdownMenu right>
-                  <DropdownItem>
+                  <DropdownItem tag={Link} to="/profiledetail">
                     Profile details
                   </DropdownItem>
-                  <DropdownItem>
+                  <DropdownItem tag={Link} to="/profilesettings">
                     Profile settings
                   </DropdownItem>
                 </DropdownMenu>
@@ -57,4 +54,5 @@ class NavBar extends Component {
     } 
 }
 
-export default NavBar
+export default NavBar;
+
