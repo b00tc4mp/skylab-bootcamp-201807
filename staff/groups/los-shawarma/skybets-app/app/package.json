@@ -10,7 +10,9 @@
     "prop-types": "latest",
     "classnames": "latest",
     "@material-ui/core": "latest",
-    "react-select": "latest"
+    "react-select": "latest",
+    "date-fns": "2.0.0-alpha.7",
+    "material-ui-pickers": "1.0.0-rc.9"
   },
   "scripts": {
     "start": "react-scripts start",
