@@ -16,7 +16,6 @@ const loadOptions = (inputValue, callback) => {
 class AutocompleteAsync extends Component {
     state = {
         inputValue: null,
-        //selectedOption: null
     }
 
     handleInputChange = (newValue) => {
@@ -26,21 +25,19 @@ class AutocompleteAsync extends Component {
         return inputValue
     }
 
-    handleChange = ({label}) => {
-
-      debugger;
-      this.props.onSelectedOption(label)
-    }
+    handleChange = ({label}) => this.props.onSelectedOption(label)
 
     render() {
       return (
-        <AsyncSelect
-          cacheOptions
-          loadOptions={loadOptions}
-          defaultOptions
-          onInputChange={this.handleInputChange}
-          onChange={this.handleChange}
-        />
+        <div>
+            <AsyncSelect
+            cacheOptions
+            loadOptions={loadOptions}
+            defaultOptions
+            onInputChange={this.handleInputChange}
+            onChange={this.handleChange}
+          />
+        </div>
       )
     }
   }
