@@ -103,7 +103,7 @@ class UserRegister extends Component {
   render() {
     return (
         
-        <div id="comRainySaturdayUserRegisterAndLogin">
+        <div className="mt-5" id="comRainySaturdayUserRegisterAndLogin">
       <Form id="registerForm" onSubmit={this.handleSubmit}>
           <FormGroup>
           <Label for="name">Name</Label>

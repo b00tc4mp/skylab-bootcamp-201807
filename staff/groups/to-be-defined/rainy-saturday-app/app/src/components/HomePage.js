@@ -2,13 +2,12 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import Cloudinary from './Cloudinary'
 
-
 class HomePage extends Component {
 
 
   render(){
-    return <div><h2>HomePage</h2>
-      <Cloudinary />
+    return <div className="mt-5"><h2>HomePage</h2>
+      {/* <Cloudinary /> */}
     </div>
 
   }

@@ -73,7 +73,7 @@ class SearchPage extends ImageSearchBase {
   render() {
     const {isProcessing,badSearchMessage,errorMessage, data, makerData, makerSelected, periodData, periodSelected, materialData, materialSelected,searchTerm} = this.state
 
-    return (<Container><
+    return (<Container  className="mt-5"><
         Row><h2>Search</h2></Row>
         <Row> <SearchForm disabled={isProcessing} onSearch={this.doNewSearch}/></Row>
         { badSearchMessage && <Row><ErrorPanel color="warning" message={badSearchMessage}/></Row>}

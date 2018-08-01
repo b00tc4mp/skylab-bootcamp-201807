@@ -25,6 +25,7 @@ class SearchForm extends Component {
 
 
   render() {
+   
     return <Container>
     <Row>
       <Form onSubmit={this.onDoSearch}>
