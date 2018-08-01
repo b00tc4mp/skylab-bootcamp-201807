@@ -1,3 +1,5 @@
+// Import the components and extras
+
 import React, { Component } from 'react'
 import logo from './images/logo.svg'
 import './App.css'
@@ -9,10 +11,7 @@ import Home from './components/Home'
 import Profile from './components/Profile'
 import { Route, withRouter, Link, Redirect} from 'react-router-dom'
 
-
-{/* <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      rel="stylesheet"> */}
-
+// States are created and initialized
 
 class App extends Component {
 
@@ -22,6 +21,9 @@ class App extends Component {
     updated: false,
     showFeedback: false
   }
+
+// The signup function take the username and password from the usuary input and send it to logic resister. 
+// Then take the result or catch and show the error 
 
   signupUser = (username, password) => {
 
@@ -36,6 +38,9 @@ class App extends Component {
       })
   }
 
+  // The signup function take the username and password from the usuary input and send to logic register. 
+  // If it succes return an ID and if not catch the error and show the missage
+
   loginUser = (username, password) => {
 
       logic.login(username, password)
@@ -48,6 +53,8 @@ class App extends Component {
         this.setState({showFeedback: message})
       })
   }
+  
+// 
 
   goToSignUp = () => {
 
