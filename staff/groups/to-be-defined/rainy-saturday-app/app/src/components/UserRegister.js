@@ -150,7 +150,7 @@ class UserRegister extends Component {
         { this.state.errorRegister && <ErrorPanel message={this.state.errorRegister}/>}
         <FormGroup>
           <Label for="exampleFile">Profile Photo</Label>
-          <Input type="file" name="Profile Photo"/>
+          <Input type="file" ref={(ref) => this.fileUpload = ref} id="UserRegister-profilePhoto" name="Profile Photo"/>
           <FormText color="muted">
             Add your profile photo.
           </FormText>
