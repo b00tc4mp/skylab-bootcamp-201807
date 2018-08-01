@@ -138,7 +138,10 @@ const logic = {
             username: this.userUsername,
             password
         }, true)
-            .then(() => true)
+            .then(() => {
+                this.logout()
+                return true
+            })
     },
 
 
