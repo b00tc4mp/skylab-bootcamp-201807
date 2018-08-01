@@ -1,5 +1,4 @@
 describe('logic (gallery-app)', () => {
-/*
     describe('user\'s', () => {
 
         describe('register user', () => {
@@ -121,21 +120,23 @@ describe('logic (gallery-app)', () => {
         })
 
     })
-*/
 
     describe('gallery', () => {
-        let username, image
+        let username = 'galleryapp-test123321'
         const password = '123'
+        const canvas = document.createElement('canvas')
+        let img = new Image()
+        img.src = 'src/pics/landing.jpg'
+        canvas.getContext('2d').drawImage(img, 100, 100)
+        image = canvas.toDataURL('image/png')
 
         beforeEach(() => {
-            username = 'galleryapp-test'
-            img = new Image()
-            img.src = 'src/pics/landing.jpg'
-            const canvas = document.createElement('canvas')
-            canvas.getContext('2d').drawImage(img, 100, 100)
-            image = canvas.toDataURL('image/webp').replace(/^data:image\/(png|jpg);base64,/, '');
             return logic.registerUser(username, password)
                 .then(() => logic.loginUser(username, password))
+        })
+
+        afterEach(() => {
+            return logic.unregisterUser(password)
         })
 
         it('should add image to gallery', () => {
@@ -143,23 +144,46 @@ describe('logic (gallery-app)', () => {
                 .then(res => expect(res).toBeTruthy())
         })
 
-        it('should delete image from gallery', () => {
-            // TODO
+        it('should retrieve images from gallery', () => {
+            return logic.addImage(image)
+                .then(() => logic.retrieveImages())
+                .then(res => {
+                    expect(res).toBeTruthy()
+                    expect(logic._userImages.length).toBe(1)
+                })
         })
 
-        it('should retrieve images from gallery', () => {
-            // TODO
+        it('should delete image from gallery', () => {
+            return logic.addImage(image)
+                .then(() => logic._userImages[0].id)
+                .then(id => logic.deleteImage(id))
+                .then(res => {
+                    expect(res).toBeTruthy()
+                    expect(logic._userImages.length).toBe(0)
+                })
         })
 
         it('should delete all images from a user gallery', () => {
-            // TODO
+            return logic.addImage(image)
+                .then(() => logic.addImage(image))
+                .then(() => logic.deleteAll())
+                .then(res => {
+                    expect(res).toBeTruthy()
+                    expect(logic._userImages.length).toBe(0)
+                })
         })
 
         it('should delete user folder (on unregister)', () => {
-            // TODO
+            return logic.addImage(image)
+                .then(() => logic.addImage(image))
+                .then(() => logic.deleteAll())
+                .then(() => logic.deleteFolder())
+
+                .then(res => {
+                    expect(res).toBeTruthy()
+                    expect(logic._userImages.length).toBe(0)
+                })
+
         })
-        
-
     })
-
 })
