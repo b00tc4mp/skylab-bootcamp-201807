@@ -133,6 +133,15 @@ const logic = {
         sessionStorage.clear()
     },
 
+    unregisterUser(password) {
+        return this._callUsersApi(`/user/${this._userId}`, 'delete', {
+            username: this.userUsername,
+            password
+        }, true)
+            .then(() => true)
+    },
+
+
     // TODO: to kim
     // unregisterUser(password) {}
 
