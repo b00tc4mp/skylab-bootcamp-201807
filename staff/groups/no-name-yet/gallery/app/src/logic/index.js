@@ -160,8 +160,6 @@ const logic = {
             .catch(err => console.error(err.message))
     },
 
-    
-
     addImage(img) {
         return this._callCloudinaryApi('/upload', 'post', img)
             .then(({ public_id, url }) => {
