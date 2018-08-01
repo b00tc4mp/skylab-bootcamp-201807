@@ -21,9 +21,11 @@ body
         display: none
     &__upload
         width: 100%
+        max-width: 500px
         display: grid
         grid-template: 1fr / 1fr 1fr
-        grid-gap: 70%
+        grid-gap: 35%
+        justify-items: center
         & button
             border: none 
             background: none
@@ -53,7 +55,31 @@ body
     &:hover
         background-color: rgba(red, 0.6) 
 
-    .far
+
+    
+.style__images
+    display: grid
+    grid-template: 1fr/ repeat(5,20%)
+    width: 100%
+    align-items: stretch
+    max-width: 500px
+
+.style__image
+    width: 100%
+
+
+.menu
+    height: 90%
+    max-width:400px
+    max-height: 500px
+    
+
+.menu__container
+    display: flex
+    flex-direction: column
+    justify-content: center
+    height: 80vh
+
+
+
         
-    .fas
-       

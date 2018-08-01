@@ -4,6 +4,13 @@ import logic from '../logic'
 
 import './styles/Main.css'
 
+import udnie from '../pics/udnie.jpg'
+import wave from '../pics/wave.jpg'
+import rain_princess from '../pics/rain_princess.jpg'
+import la_muse from '../pics/la_muse.jpg'
+import modernist from '../pics/modernist.jpeg'
+import menu from '../pics/menu.jpg'
+
 class Main extends Component {
 
   state = {
@@ -11,14 +18,16 @@ class Main extends Component {
     url: null,
     width: null,
     height: null,
-    noTransfer: true
+    noTransfer: true,
+    imageState: 'Save Image'
+
   }
 
   // componentDidMount = () => this.startWebcam()
 
   startWebcam = () => {
     if (!this.state.webcamOn) {
-      this.setState({url: null})
+      this.setState({ url: null })
       const video = document.getElementById("webcam")
       navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
       var facingMode = "environment";
@@ -54,14 +63,15 @@ class Main extends Component {
     canvas.height = video.videoHeight
     canvas.getContext('2d').drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
     video.pause()
-    canvas.toBlob( blob => {
+    canvas.toBlob(blob => {
       this.image = blob
     }, 'image/png')
     this.setState({
       url: canvas.toDataURL('image/png'),
       width: video.width,
       height: video.height,
-      webcamOn: false
+      webcamOn: false,
+      noTransfer: true
     })
   }
 
@@ -73,26 +83,28 @@ class Main extends Component {
       this.setState({
         url,
         width: Math.min(window.innerWidth, 500),
-        webcamOn: false
+        webcamOn: false,
+        noTransfer: true
       })
     }
   }
 
   saveImage = () => {
-    if (this.image) {
+    if (this.state.url) {
+      this.setState({ imageState: ' Saving...' })
       logic.addImage(this.image)
         .then(() => {
           this.image = null
-          this.setState({ url: null })
+          this.setState({ url: null, imageState: 'Save Image' })
         })
     }
   }
 
-  transfer = () => {
-    this.setState({ noTransfer: false })
+  transfer = style => {
+    this.setState({ noTransfer: false, imageState: 'Transfering...' })
     let formData = new FormData()
     formData.append('file', this.image)
-    const myUrl = 'https://api.cloudmersive.com/image/artistic/painting/modernist'
+    const myUrl = `https://api.cloudmersive.com/image/artistic/painting/${style}`
     const config = {
       method: 'post',
       headers: {
@@ -127,13 +139,16 @@ class Main extends Component {
       .then(blob => {
         this.image = blob
         const url = URL.createObjectURL(blob)
-        this.setState({ url, noTransfer: true })
+        this.setState({ url, imageState: 'Save Image' })
       })
-      .catch(err =>  console.error(err))
+      .catch(err => {
+        this.setState({url: null, imageState: 'Error'})
+        console.error(err)
+      })
   }
 
   render() {
-    const { webcamOn, url, width, height, noTransfer } = this.state
+    const { webcamOn, url, width, height, noTransfer, imageState } = this.state
     return (
       <div className="main">
         <canvas id="canvas" style={{ display: "none" }}></canvas>
@@ -144,14 +159,40 @@ class Main extends Component {
           </label>
           <input id="fileinput" type="file" onChange={this.upload} />
         </div>
+        {!url && !webcamOn && this.renderWelcome()}
         <video className={webcamOn ? "webcam" : "webcam--hidden"} autoPlay playsInline muted id="webcam"></video>
         {url && <img className="image" id="image" src={url} alt="" width={width} height={height} />}
         {webcamOn && <button onClick={this.capture} className="capture"> </button>}
-        {url && <button onClick={this.saveImage} className="save">Save Image</button>}
-        {url && noTransfer && <button onClick={this.transfer}>Transfer</button>}
+        {url && <button onClick={this.saveImage} className="save">{imageState}</button>}
+        {url && noTransfer && this.renderStyleButtons()}
       </div>
     )
   }
+
+  renderStyleButtons = () => {
+    return (
+      <div>
+        <p> Choose an style: </p>
+        <div className="style__images">
+          <img className="style__image udnie" onClick={() => this.transfer('udnie')} src={udnie}></img>
+          <img className="style__image wave" onClick={() => this.transfer('wave')} src={wave}></img>
+          <img className="style__image rain_princess" onClick={() => this.transfer('rain_princess')} src={rain_princess}></img>
+          <img className="style__image la_muse" onClick={() => this.transfer('la_muse')} src={la_muse}></img>
+          <img className="style__image modernist" onClick={() => this.transfer('modernist')} src={modernist}></img>
+        </div>
+      </div>
+    )
+  }
+
+  renderWelcome = () => {
+    return(
+      <div className="menu__container">
+        <img className="menu" src={menu}/>
+      </div>
+    )
+  }
+
+
 }
 
 export default Main

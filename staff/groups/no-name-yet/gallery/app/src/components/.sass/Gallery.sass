@@ -1,3 +1,5 @@
+@import 'Common'
+
 .gallery
     display: grid
     grid-template: 1fr / 1fr 1fr
@@ -13,8 +15,9 @@
         position: absolute
         left: 5%
         top: 5%
-        color: rgba(brown, 0.5)
+        //color: rgba(brown, 0.5)
+        color: $color-app-darkpink
         &:hover
-            color: red
+            color: red 
     @media screen and (min-width: 700px)
         grid-template: 1fr / repeat(4, 1fr)
