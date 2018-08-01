@@ -13,6 +13,7 @@
 }
 .login__group {
   width: 65%;
+  max-width: 400px;
   color: lightgrey;
   display: grid;
   justify-items: start;
@@ -21,6 +22,7 @@
   color: white;
   margin: 0 auto;
   width: 100%;
+  max-width: 400px;
   height: 30px;
   border-radius: 10px;
   border: none;
@@ -30,7 +32,8 @@
   color: white;
   border: none;
   border-radius: 30px;
-  width: 40%;
+  width: 30%;
+  max-width: 400px;
   height: 40px;
   background-color: rgba(0, 0, 0, 0.3);
   font-size: 16px;

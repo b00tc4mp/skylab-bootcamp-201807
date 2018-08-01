@@ -1,17 +1,24 @@
+body {
+  background-color: #FCF8FA;
+}
+
 .main {
-  display: grid;
-  grid-gap: 20px;
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-items: center;
+  background-color: #FCF8FA;
+  height: 100%;
+  padding-bottom: 15vh;
 }
 .main button {
-  background: nonde;
+  background: none;
+  margin: 10px 0;
 }
 .main i {
   color: rgba(0, 0, 0, 0.7);
 }
 .main i:hover {
-  color: rgba(255, 0, 0, 0.8);
+  color: rgba(240, 179, 178, 0.8);
 }
 .main input {
   display: none;
@@ -31,9 +38,6 @@
   display: none;
 }
 
-.image {
-  width: 100%;
-}
 .image--hidden {
   display: none;
 }

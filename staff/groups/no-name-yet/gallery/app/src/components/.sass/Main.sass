@@ -1,14 +1,18 @@
 @import 'Common'
 
-.main
-    display: grid
-    grid-gap: 20px
-    align-items: start
-    justify-items: center
+body 
     background-color: $color-app-white
-    height: $app-height
+    
+.main
+    display: flex
+    flex-direction: column
+    align-items: center
+    background-color: $color-app-white
+    height: 100%
+    padding-bottom: 15vh
     & button
         background: none
+        margin: 10px 0
     & i
         color: rgba(black, 0.7)
         &:hover
