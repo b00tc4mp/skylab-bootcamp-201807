@@ -18,10 +18,15 @@ class ResultImage extends Component {
       modal: !this.state.modal
     });
   }
+  conLog(){
+    console.log("pressed heart")
+  }
   render() {
     return (
       <div>
+        <i className={"fas fa-star"}onClick={this.conLog}></i>
         <img src={this.props.image.imageurl} alt={this.props.image.title} onClick={this.toggle}/>
+        
         <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className} >
           <ModalHeader toggle={this.toggle}>{this.props.image.title}</ModalHeader>
           <ModalBody>
@@ -30,6 +35,7 @@ class ResultImage extends Component {
           <h6>Maker:</h6><p>{this.props.image.maker}</p>
           </ModalBody>
           <ModalFooter>
+      
             <Button color="primary" onClick={this.toggle}>Do Something</Button>{' '}
             <Button color="secondary" onClick={this.toggle}>Cancel</Button>
           </ModalFooter>

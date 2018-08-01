@@ -20,4 +20,17 @@
     height: 100%;
     object-fit: cover;
     border-radius: 1%;
+
   }
+
+  .fas{
+    position: relative;
+    top:100%;
+    /* left:0px; */
+    right: 0px;
+    color:yellow;
+    z-index: 1; 
+    padding: 5px;
+    background-color:silver;
+  }
+
