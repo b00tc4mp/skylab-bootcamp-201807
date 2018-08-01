@@ -7,15 +7,20 @@ class Register extends Component {
     state = {
         username: null,
         password: null,
+        password2: null,
         error: null
     }
 
-    keepPassword = event => this.setState({ password: event.target.value })
     keepUsername = event => this.setState({ username: event.target.value })
+    keepPassword = event => this.setState({ password: event.target.value })
+    keepPassword2 = event => this.setState({ password2: event.target.value })
+    
     registerUser = () => {
-        const { state: { username, password } } = this
+        const { state: { username, password, password2} } = this
+            if(password === password2){
         this.props.onRegister(username, password)
             .catch(err => this.setState({ error: err.message }))
+        }else{ alert("Password not match") }
     }
 
     render() {
@@ -23,6 +28,7 @@ class Register extends Component {
             state: { error },
             props: { onLogin },
             keepPassword,
+            keepPassword2,
             keepUsername,
             registerUser
         } = this
@@ -36,6 +42,10 @@ class Register extends Component {
                 <div className="register__group">
                     <h3 className="register__text"> Password </h3>
                     <input className="register__input" onChange={keepPassword}></input>
+                </div>
+                <div className="register__group">
+                    <h3 className="register__text"> Repeat Password </h3>
+                    <input className="register__input" onChange={keepPassword2}></input>
                 </div>
                 <div>
                     {error && <p className="register__error">{error}</p>}
