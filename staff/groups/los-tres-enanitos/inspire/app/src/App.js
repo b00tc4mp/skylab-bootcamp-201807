@@ -1,18 +1,25 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Switch, Route, withRouter, Link, Redirect } from 'react-router-dom'
+import ResultsPage from './containers/ResultsPage';
+import HomePage from './containers/HomePage';
+import RegisterPage from './containers/RegisterPage';
+import LoginPage from './containers/LoginPage';
+import ProfilePage from './containers/ProfilePage';
 
 class App extends Component {
+
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+        
+        <Switch>
+          <Route exact path="/" component={HomePage}/>
+          <Route path="/search/photos/:query" render={props => <ResultsPage query={props.match.params.query} />}/>
+          <Route path="/join" component={RegisterPage}/>
+          <Route path="/login" component={LoginPage}/>
+          <Route path="/profile/:id" render={props => <ProfilePage id={props.match.params.id} />}/>
+        </Switch>
+
       </div>
     );
   }
