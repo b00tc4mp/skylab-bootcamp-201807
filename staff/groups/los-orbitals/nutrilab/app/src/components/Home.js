@@ -1,9 +1,13 @@
+// Import the components
+
 import React, {Component} from 'react'
 import Search from './Search'
 import logic from '../logic'
 import List from './List'
 import Productpanel from './Productpanel'
 
+
+// States are created and initialized
 
 class Home extends Component{
 
@@ -15,10 +19,14 @@ class Home extends Component{
         showFeedback: false
     }
 
+// This function prepare the view after click to close the productPanel
+
     onClose = () => this.setState({panelActive: false, listActive: true })
 
-    onSearch = (query) => {
+// This function take the input query from the user and make a list with the name and a photo of each result, (and save this data in status). 
 
+    onSearch = (query) => {
+        
         logic.searchIngredients(query)
         .then(({common}) => {
             this.setState({
@@ -29,7 +37,8 @@ class Home extends Component{
                     }
              
                 }),
-                listActive: true
+                listActive: true,
+                panelActive: false
             }) 
         })
 
@@ -38,6 +47,9 @@ class Home extends Component{
           })
 
     }
+
+// This function make a search by the name of the product (because the API don't give 
+// a differecniated id) and also save some information in the stats to compose the product pannel.
 
     onItemClick = (query) => {
         logic.ingredientInfo(query)
@@ -70,6 +82,8 @@ class Home extends Component{
             this.setState({showFeedback: message})
           })
     }
+
+// This render show and hide the different parts of the main part of the web (search and show data from the nutritionix.com api)
 
     render () {
 

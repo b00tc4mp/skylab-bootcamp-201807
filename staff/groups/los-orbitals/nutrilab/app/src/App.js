@@ -55,7 +55,7 @@ class App extends Component {
       })
   }
   
-// 
+// Prepare the view to show the SignUp form and update the url path
 
   goToSignUp = () => {
 
@@ -64,6 +64,7 @@ class App extends Component {
     this.props.history.push('/signup')
   }
 
+// Prepare the view to show the Login form and update the url path
 
   goToLogin = () => {
 
@@ -73,12 +74,16 @@ class App extends Component {
     
   }
 
+// This function unlogg off the app
+
   logout = event => {
     event.preventDefault()
     logic.logout()
     this.setState({loggedIn: false})
     this.props.history.push('/')
   }
+
+// This function update the user information, (only password needed) you can change the name, the password or both
 
   updateUser = (password, newUsername, newPassword) => {
     logic.update(password, newUsername, newPassword)
@@ -92,6 +97,8 @@ class App extends Component {
       this.setState({showFeedback: message})
     })
   }
+
+// This function delete the user, (only password needed)
 
   deleteUser = (password) => {
     logic.delete(password)
@@ -111,13 +118,16 @@ class App extends Component {
     this.setState({showFeedbackDelete: false})
   }
 
+// This render show and hide the different parts of the web necessaries in each path of login part of the web
+  
   render() {
     const {state:{loggedIn, showFeedback, showFeedbackDelete}, goToLogin, goToSignUp, signupUser, loginUser, logout, updateUser, deleteUser } = this
     return (
       <div className="App">
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2 className="App-title">Take care of your healty eating with an easy and fun way</h2>
+        <Link to="/home"> <img src={logo} className="App-logo" alt="logo" /> </Link>
+
+          {!loggedIn && <h2 className="App-title">Take care of your eating habits in an easy and fun way</h2>}
           <Route path="/(home|profile)" render={() => 
             <nav>
               <Link to="/home" onClick={this.onResetMessage} >Home</Link>
