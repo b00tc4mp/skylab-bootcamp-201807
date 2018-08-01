@@ -154,7 +154,7 @@ const logic = {
         return this._callUsersApi(`/user/${this._userId}`, 'put', { username, newUsername, password, newPassword }, true)
             .then(() => {
                 this._userUsername = newUsername
-                this._newPassword=newPassword
+                this._userPassword = newPassword
                 return true
             })
     },

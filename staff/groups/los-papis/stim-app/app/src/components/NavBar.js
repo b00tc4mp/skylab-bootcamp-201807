@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import {
   Collapse,
+  Button,
   Navbar,
   NavbarToggler,
   NavbarBrand,
@@ -13,6 +14,7 @@ import {
   DropdownItem
 } from 'reactstrap';
 import { Link } from 'react-router-dom'
+import logic from '../logic'
 
 class NavBar extends Component {
 
@@ -25,6 +27,8 @@ class NavBar extends Component {
       isOpen: !this.state.isOpen
     });
   }
+
+  handle
 
     render() {
         return  <Navbar color="light" light expand="md">
@@ -40,11 +44,11 @@ class NavBar extends Component {
                   Profile
                 </DropdownToggle>
                 <DropdownMenu right>
-                  <DropdownItem tag={Link} to="/profiledetail">
-                    Profile details
-                  </DropdownItem>
                   <DropdownItem tag={Link} to="/profilesettings">
                     Profile settings
+                  </DropdownItem>
+                  <DropdownItem onClick={this.props.handleLogout} >
+                    Log Out
                   </DropdownItem>
                 </DropdownMenu>
               </UncontrolledDropdown>
