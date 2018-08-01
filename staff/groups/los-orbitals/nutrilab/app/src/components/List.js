@@ -3,13 +3,12 @@ import React from 'react'
 function List(props) {
 
     return <section>
-            <ul> {props.ingredients.map(({name}) => {
-                return <li key = {name}>
-                <a href="#/" onClick ={ () => {props.onItemClick(name)}}>{name}</a>
-                </li>
+             {props.ingredients.map(({name, photo}) => {
+                return <ul>
+                    <li><img src={photo} /><p key = {name}><a href="#/" onClick ={(event) => {event.preventDefault(); props.onItemClick(name)}}>{name}</a></p></li>
+                </ul>
             })
             }
-             </ul>
         </section>
 }
 

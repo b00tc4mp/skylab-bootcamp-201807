@@ -25,7 +25,7 @@ describe('logic (spotify-app)', () => {
 
             it('should login on correct data', () => {
                 return logic.loginUser(username, password)
-                    .then(res => {
+                    .then((res) => {
                         expect(res).toBeTruthy()
 
                         expect(logic._userId).toBe(userId)

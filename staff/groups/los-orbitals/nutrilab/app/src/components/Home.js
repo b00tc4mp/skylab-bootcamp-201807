@@ -7,9 +7,8 @@ import Productpanel from './Productpanel'
 class Home extends Component{
 
     state = {
-
         ingredients:[],
-        ingredientInfo:{}
+        ingredientInfo:''
     }
 
     onSearch = (query) => {
@@ -20,9 +19,11 @@ class Home extends Component{
                 ingredients: common.map((common) => {
                     return{
                         name: common.food_name, 
-                        //photo: common.photo.thumb
+                        photo: common.photo.thumb
                     }
-                })
+             
+                }),
+                search:true
             })
         })
 
@@ -33,14 +34,11 @@ class Home extends Component{
     }
 
     onItemClick = (query) => {
-
         logic.ingredientInfo(query)
-        .then(({foods}) => {
-            this.setState.ingredientInfo = {name: foods[0].food_name}  
-            })
-        
-        .catch(() => 
-        console.log('hola, soy un error de la ficha')) 
+        .then(foods => {
+            this.setState({ingredientInfo: foods.foods[0].food_name})
+        })
+        .catch(() => console.log('hola, soy un error de la ficha'))
     }
 
     render () {
@@ -49,7 +47,8 @@ class Home extends Component{
 
             <Search onSearch = {this.onSearch} />
             <List ingredients = {this.state.ingredients} onItemClick = {this.onItemClick}/>
-            <Productpanel name = {this.state.ingredientInfo}/>
+             {/* {this.state.ingredientInfo.length > 0 && <Productpanel ingredient = {this.state.ingredientInfo}/>} */}
+             <Productpanel ingredient = {this.state.ingredientInfo}/>
             </section>
         )
         }

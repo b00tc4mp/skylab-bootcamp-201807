@@ -1,13 +1,11 @@
 import React from 'react'
 
 function Productpanel(props) {
-
+    // console.log(props.ingredient)
     return <section>
-            <ul> 
-                <li>
-                {props.name}
-                </li>
-             </ul>
+             
+                <p>{props.ingredient}</p>
+            
         </section>
 }
 
