@@ -164,6 +164,27 @@ describe('users logic', () => {
                     })
                 })
             })
+
+            describe(' get retrieve name', () => {
+             let username
+             const password = '123'
+
+            beforeEach(() => {
+                username = 'stim-user-' + Math.random()
+
+                return logic.registerUser(username, password)
+                    .then(() => logic.loginUser(username, password))
+            })
+                it('should return an username', () => {
+                    
+                    return logic.retrieveUser(password)
+                    .then(res => {
+                        expect(res).toBeTruthy()
+                       
+                    })
+                })
+            })
+
     })
 
 

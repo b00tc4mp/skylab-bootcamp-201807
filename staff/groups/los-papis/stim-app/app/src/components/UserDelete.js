@@ -1,31 +1,51 @@
 import React, {Component} from 'react'
 import NavBar  from "./NavBar";
 import Landing from "./Landing";
+import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 
-class UserProfile extends Component{
+
+
+class UserDelete extends Component{
 
     state ={
-        newUsername: this.props.Username,
-        newPassword:null,
-        deleteError:null,
         
+        Username:"",
+        password:"",
+        newUsername: "",
+        newPassword:null,
 
     }
+
+
     keepNewUsername = event => this.setState({ newUsername: event.target.value })
     keepNewPassword = event => this.setState({ newPassword: event.target.value })
+    
+    onUpdate = event => {
+        event.preventDefault()
 
+        const { newUsername, password, newPassword } = this.state
+
+        this.props.onUpdate(password, newUsername, newPassword)
+    }
 
     render(){
         return <section>
         <h2>Profile</h2>
         <img src={require('../imagenes/logo-steam.png')} width="100vw" height="100vh" />
-        <form onSubmit={this.onUpdate}>
-            <label>User name:</label>
-            <input type="text" placeholder="Username" onChange={this.keepUsername} value={this.state.newUsername} /><br />
-            <label>Current password:</label>
-            <input type="password" onChange={this.keepPassword}/><br />
-            <button type="submit">Delete</button>
-        </form>
+        <Form>
+        <FormGroup>
+          <Label for="text-user">Username</Label>
+          <Input type="text" name="Username" id="username" placeholder="username" />
+        </FormGroup>
+        <FormGroup>
+          <Label for="examplePassword">Password</Label>
+          <Input type="password" name="password" id="examplePassword" placeholder="password placeholder" />
+        </FormGroup>
+        <Form>
+        <Button>Delete</Button>
+      </Form>
+      </Form>
+        
         
      </section>
     }

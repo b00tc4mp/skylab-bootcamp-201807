@@ -151,7 +151,18 @@ const logic = {
             password
         }, true)
             .then(() => true)
+    },
+
+    retrieveUser(password){
+       let username= this._userUsername
+        
+        return this._callUsersApi(`/user/${this._userId}`,'get')
+        .then(({data}) =>{ 
+            this._userUsername=this.data.username
+        })
+        return true
     }
+
 }
 
-export default logic;
+if (typeof module !== 'undefined') module.exports = logic;
