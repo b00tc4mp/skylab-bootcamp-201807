@@ -204,6 +204,9 @@ const logic = {
     /* .catch(err => console.error)*/
   },
 
+
+  // MUSEUM API
+
   museumKey: 'ROQio02r',
 
 // TODO TESTING
@@ -285,27 +288,6 @@ const logic = {
   }
 */
 
-  // spotify's
-
-//     searchArtists: function (query) {
-//         return this._callSpotifyApi('/search?type=artist&query=' + query)
-//             .then(res => res.artists.items)
-//     },
-
-//     retrieveAlbumsByArtistId(id) {
-//         return this._callSpotifyApi('/artists/' + id + '/albums')
-//             .then(res => res.items)
-//     },
-
-//     retrieveTracksByAlbumId(id) {
-//         return this._callSpotifyApi('/albums/' + id + '/tracks')
-//             .then(res => res.items)
-//     },
-
-//     retrieveTrackById(id) {
-//         return this._callSpotifyApi('/tracks/' + id)
-//     }
 };
 
-//export default logic;
 if (typeof module !== 'undefined') module.exports = logic;

@@ -3,6 +3,9 @@ import './UserRegisterAndLogin.css';
 import PropTypes from 'prop-types';
 import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 import logic from '../logic'
+import ErrorPanel from './ErrorPanel'
+import swal from 'sweetalert2'
+import UserSuccesful from './SweetalertUser'
 
 
 
@@ -16,7 +19,8 @@ export default class UserPage extends Component {
         password: "",
         newpassword:"",
         profileimage: "",
-        passwordvalid: true
+        passwordvalid: true,
+        title: "Update"
 }
 
 
@@ -32,21 +36,53 @@ export default class UserPage extends Component {
 
     keepNewPassword = event => this.checkPwd(event.target.value)
 
+    componentDidMount(){
 
+      this.retrieveData()
+
+    }
+
+    retrieveData = () => {
+
+      logic.retrieveUserData("email").then(res => {
+        this.setState({
+            email: res
+        })
+      })
+      logic.retrieveUserData("username").then(res => {
+        this.setState({
+            username: res
+        })
+      })
+
+    }
 
     handleSubmit = event => {
         event.preventDefault()
         const {state: {password, newusername, newpassword, newemail }} = this
         logic.updateUser(password, newusername, newpassword, newemail)
-        this.setState({
-        username: "",
-        newusername: "",
-        email: "",
-        newemail:"",
-        password: "",
-        newpassword: "",
-        profileimage: "",
-    })
+        .then(() =>   
+        {
+          this.setState({
+          newusername: "",
+          newemail: "",
+          password: "",
+          newpassword: "",
+          errorUpdate: false
+          },this.retrieveData())
+
+          UserSuccesful(this.state.title)
+        })
+        
+        .catch(({message}) => {
+          this.setState({
+          errorUpdate: message,
+          newusername: "",
+          newemail: "",
+          password: "",
+          newpassword: ""
+          })
+        })
     }
        
     checkPwd = str => {
@@ -66,15 +102,15 @@ export default class UserPage extends Component {
       <Form id="updateForm" onSubmit={this.handleSubmit}>
         <FormGroup>
           <Label for="Username">Username</Label>
-          <Input value={this.state.username} type="text" name="Username" onChange = {this.keepUsername} placeholder="Username"/>
+          <Input value={this.state.username} type="text" name="Username" onChange = {this.keepUsername} placeholder="Username" disabled="true"/>
         </FormGroup>
         <FormGroup>
           <Label for="NewUsername">New Username</Label>
-          <Input value={this.state.newusername} type="text" name="Username" onChange = {this.keepNewUsername} placeholder="New Username"/>
+          <Input value={this.state.newusername} type="text" name="Username" onChange = {this.keepNewUsername} placeholder="New Username" autoFocus="true"/>
         </FormGroup>
         <FormGroup>
           <Label for="exampleEmail">Email</Label>
-          <Input value={this.state.email} type="email" name="email" onChange = {this.keepEmail} placeholder="Email" />
+          <Input value={this.state.email} type="email" name="email" onChange = {this.keepEmail} placeholder="Email" disabled="true"/>
         </FormGroup>
         <FormGroup>
           <Label for="exampleEmail">New Email</Label>
@@ -91,6 +127,7 @@ export default class UserPage extends Component {
           Must contain at least one number and one uppercase and lowercase letter, and at least 6 to 15 characters
           </FormText>
         </FormGroup>
+        { this.state.errorUpdate && <ErrorPanel message={this.state.errorUpdate}/>}
         <FormGroup>
           <Label for="exampleFile">Profile Photo</Label>
           <Input type="file" name="Profile Photo" />
@@ -98,7 +135,7 @@ export default class UserPage extends Component {
             Change your profile photo.
           </FormText>
         </FormGroup>
-        <Button className="testButton" disabled={this.state.passwordvalid}>Submit</Button>
+        <Button className="testButton">Submit</Button>
       </Form>
      </div>
     );
