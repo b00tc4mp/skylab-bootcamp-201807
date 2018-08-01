@@ -9,6 +9,7 @@
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
     "react-scripts": "1.1.4",
+    "react-virtualized": "^9.20.1",
     "reactstrap": "^6.3.1",
     "sweetalert2": "^7.26.9"
   },

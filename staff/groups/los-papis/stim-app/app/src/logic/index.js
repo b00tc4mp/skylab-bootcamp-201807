@@ -5,7 +5,7 @@ const logic = {
             .then(res => res.json())
     },
 
-    newsForApp(appid, newsCount = 1, newsLength = 50) {
+    newsForGame(appid, newsCount = 1, newsLength = 50) {
         return fetch(`https://api.steampowered.com/ISteamNews/GetNewsForApp/v0002/?appid=${appid}&count=${newsCount}&maxlength=${newsLength}&format=json`)
             .then(res => res.json())
             .then(res => res.appnews.newsitems[0])
@@ -14,9 +14,9 @@ const logic = {
     newsMostPlayedGames() {
         return logic.mostPlayedGames()
             .then(res => {
-                let results = []
-                for (let game in res) {
-                    results.push(logic.newsForApp(res[game].appid))
+                let results =[] 
+                for(let game in res) {
+                    results.push(logic.newsForGame(res[game].appid))
                 }
                 return Promise.all(results)
             })
@@ -31,10 +31,23 @@ const logic = {
 
     getGamesByName(name) {
         return logic.getAllGames()
+            //
+            //
             .then(res => res.filter(({ title }) => {
-                return title.includes(name)
+                return title.toLowerCase().includes((name.toLowerCase()))
             })
             )
+    },
+
+    getStatsForGame (appid){
+         return fetch(`https://skylabcoders.herokuapp.com/proxy?url=http://steamspy.com/api.php?request=appdetails&appid=${appid}`)
+            .then(res => res.json())
+            .then (res => res)
+            // .then(res => Object.keys(res).map(i => 
+            //     {
+            //         if(i !== 19) res[i]
+            //         else Object.keys.map(j => res[i][j] )
+            //     }))
     },
 
     //cloudinary
@@ -167,4 +180,5 @@ const logic = {
 
 }
 
-if (typeof module !== 'undefined') module.exports = logic;
+export default logic;
+
