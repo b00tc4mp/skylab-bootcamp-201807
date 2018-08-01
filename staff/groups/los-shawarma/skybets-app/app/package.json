@@ -12,12 +12,19 @@
     "@material-ui/core": "latest",
     "react-select": "latest",
     "date-fns": "2.0.0-alpha.7",
-    "material-ui-pickers": "1.0.0-rc.9"
+    "material-ui-pickers": "1.0.0-rc.9",
+    "bootstrap": "^4.1.0"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "build:css": "node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/",
+    "watch:css": "npm run build:css && node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/ --watch --recursive"
+  },
+  "devDependencies": {
+    "node-sass-chokidar": "^1.2.2",
+    "npm-run-all": "^4.1.2"
   }
 }
