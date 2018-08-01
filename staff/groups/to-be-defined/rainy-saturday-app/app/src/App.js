@@ -24,9 +24,11 @@ class App extends Component {
   }
 
 
-  onLogin = (username, password) => {
+  onLogin = (username, password, alert) => {
     logic.loginUser(username, password)
-    .then(() => this.setState({loggedIn: true, errorLogin: null}))
+    .then(() => {
+      alert()
+      this.setState({loggedIn: true, errorLogin: null})})
     .catch(({message}) => this.setState({errorLogin: message}))
   }
 
