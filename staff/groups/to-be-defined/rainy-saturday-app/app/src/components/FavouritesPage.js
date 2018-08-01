@@ -26,6 +26,7 @@ class FavouritesPage extends ImageSearchBase {
   componentDidMount() {
       const favs = logic.getUserFavorites();
      if (favs.length >0) this.loadFavorites(favs)
+     else console.log("no favs")
   }
 
   loadFavorites = favs => {
@@ -38,7 +39,6 @@ class FavouritesPage extends ImageSearchBase {
     this.makerFilterText = ""
     this.imageMap.clear()
     this.setState({
-
       data: [],
       materialData: [],
       periodData: [],

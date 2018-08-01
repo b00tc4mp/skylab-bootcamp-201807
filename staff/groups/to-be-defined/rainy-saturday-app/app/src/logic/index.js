@@ -119,28 +119,6 @@ const logic = {
   xhr.send(fd);
 },
 
-  test(file) {
-    var data = new FormData();
-    data.append('upload_preset', 'pvjxuw3w');
-    data.append('file', file);
-    data.append('cloud_name', 'rainysaturdayprojectskylab');
-
-    const config = {
-      method: "POST",
-      body: data
-    };
-
-    config.headers = {}
-    config.headers['X-Requested-With'] = 'XMLHttpRequest'
-
-    var imgurl = "https://api.cloudinary.com/v1_1/rainysaturdayprojectskylab/image/upload";
-
-    fetch(imgurl, config)
-      .then(responseData => {
-        console.log(JSON.stringify(responseData, null, 4));
-      })
-  },
-
   _callCloudinaryApi(file, method = 'post') {
 
     const config = {
@@ -174,7 +152,7 @@ const logic = {
 
   uploadCloudinaryImage(file) {
   // return this._callCloudinaryApi(file)
-   return this.test(file)
+   return this._callCloudinaryApi(file)
   },
 
   // user's
