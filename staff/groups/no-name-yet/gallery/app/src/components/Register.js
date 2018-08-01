@@ -44,7 +44,7 @@ class Register extends Component {
                     <input type="password" className="register__input" onChange={keepPassword}></input>
                 </div>
                 <div className="register__group">
-                    <h3 className="register__text"> Repeat Password </h3>
+                    <h3 className="register__text"> Confirm Password </h3>
                     <input className="register__input" onChange={keepPassword2}></input>
                 </div>
                 <div>
