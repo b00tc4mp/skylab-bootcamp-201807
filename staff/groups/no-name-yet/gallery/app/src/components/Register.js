@@ -20,7 +20,7 @@ class Register extends Component {
             if(password === password2){
         this.props.onRegister(username, password)
             .catch(err => this.setState({ error: err.message }))
-        }else{ this.setState({ error: "passwords not match" })}
+        }else{ this.setState({ error: "passwords do not match" })}
     }
 
     render() {
