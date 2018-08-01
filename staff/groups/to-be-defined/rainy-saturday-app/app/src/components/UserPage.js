@@ -3,6 +3,7 @@ import './UserRegisterAndLogin.css';
 import PropTypes from 'prop-types';
 import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 import logic from '../logic'
+import ErrorPanel from './ErrorPanel'
 
 
 
@@ -33,6 +34,13 @@ export default class UserPage extends Component {
     keepNewPassword = event => this.checkPwd(event.target.value)
 
     componentDidMount(){
+
+      this.test()
+
+    }
+
+    test = () => {
+
       logic.retrieveUserData("email").then(res => {
         this.setState({
             email: res
@@ -44,7 +52,6 @@ export default class UserPage extends Component {
         })
       })
 
-
     }
 
 
@@ -53,15 +60,25 @@ export default class UserPage extends Component {
         event.preventDefault()
         const {state: {password, newusername, newpassword, newemail }} = this
         logic.updateUser(password, newusername, newpassword, newemail)
-        this.setState({
-        username: "",
-        newusername: "",
-        email: "",
-        newemail:"",
-        password: "",
-        newpassword: "",
-        profileimage: "",
-    })
+        .then(() =>   
+        {
+          this.setState({
+          newusername: "",
+          newemail: "",
+          password: "",
+          newpassword: "",
+          errorUpdate: false
+          },this.test())
+        })
+        .catch(({message}) => {
+          this.setState({
+          errorUpdate: message,
+          newusername: "",
+          newemail: "",
+          password: "",
+          newpassword: ""
+          })
+        })
     }
        
     checkPwd = str => {
@@ -85,7 +102,7 @@ export default class UserPage extends Component {
         </FormGroup>
         <FormGroup>
           <Label for="NewUsername">New Username</Label>
-          <Input value={this.state.newusername} type="text" name="Username" onChange = {this.keepNewUsername} placeholder="New Username"/>
+          <Input value={this.state.newusername} type="text" name="Username" onChange = {this.keepNewUsername} placeholder="New Username" autofocus="true"/>
         </FormGroup>
         <FormGroup>
           <Label for="exampleEmail">Email</Label>
@@ -106,6 +123,7 @@ export default class UserPage extends Component {
           Must contain at least one number and one uppercase and lowercase letter, and at least 6 to 15 characters
           </FormText>
         </FormGroup>
+        { this.state.errorUpdate && <ErrorPanel message={this.state.errorUpdate}/>}
         <FormGroup>
           <Label for="exampleFile">Profile Photo</Label>
           <Input type="file" name="Profile Photo" />
@@ -113,7 +131,7 @@ export default class UserPage extends Component {
             Change your profile photo.
           </FormText>
         </FormGroup>
-        <Button className="testButton" disabled={this.state.passwordvalid}>Submit</Button>
+        <Button className="testButton">Submit</Button>
       </Form>
      </div>
     );

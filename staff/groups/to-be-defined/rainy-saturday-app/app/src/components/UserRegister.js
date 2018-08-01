@@ -98,7 +98,7 @@ class UserRegister extends Component {
       <Form id="registerForm" onSubmit={this.handleSubmit}>
           <FormGroup>
           <Label for="name">Name</Label>
-          <Input value={this.state.name} type="text" name="Name" onChange = {this.keepName} placeholder="Name" required/>
+          <Input value={this.state.name} type="text" name="Name" onChange = {this.keepName} placeholder="Name" required autofocus="true"/>
           <FormText color="muted">
             Name is required
           </FormText>

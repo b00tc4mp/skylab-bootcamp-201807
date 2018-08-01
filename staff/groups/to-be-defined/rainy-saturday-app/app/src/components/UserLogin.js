@@ -25,15 +25,13 @@ handleLogin = event => {
     password: "",
 })
 }
-  
-  
     render() {
     return (
         <div id="comRainySaturdayUserRegisterAndLogin">
       <Form onSubmit={this.handleLogin}>
         <FormGroup>
           <Label for="exampleUsername">Username</Label>
-          <Input type="text" value={this.state.username} name="Username" onChange = {this.keepUsername} placeholder="Username" required/>
+          <Input type="text" value={this.state.username} name="Username" onChange = {this.keepUsername} placeholder="Username" required autofocus="true"/>
         </FormGroup>
         <FormGroup>
           <Label for="examplePassword">Password</Label>
