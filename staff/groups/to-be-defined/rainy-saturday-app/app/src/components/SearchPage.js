@@ -49,7 +49,8 @@ class SearchPage extends ImageSearchBase {
     logic.getMuseumImagesForSearchTerm(searchTerm)
       .then(results => {
         if (results.length === 0) {
-          this.setState({isProcessing:false,badSearchMessage:"Your search returned no results.  Please try again"})
+          this.processing = false;
+          this.setState({badSearchMessage:"Your search returned no results.  Please try again"})
           return;
         }
 

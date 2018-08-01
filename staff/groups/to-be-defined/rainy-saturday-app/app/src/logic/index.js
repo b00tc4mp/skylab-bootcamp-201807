@@ -319,34 +319,29 @@ const logic = {
   },
 
   _callCloudinaryApi(file, method = 'post') {
-
+console.log(file)
     const config = {
       method
-    }
-
-    const cloudName = "rainysaturdayprojectskylab"
-    const unsignedUploadPreset = "rainysaturdayproject"
+    };
+    const cloudName = "rainysaturdayprojectskylab";
+    const unsignedUploadPreset = "pvjxuw3w";
     const url = `https://api.cloudinary.com/v1_1/${cloudName}/upload`;
 
-
     const fd = new FormData();
-    fd.append('upload_preset', unsignedUploadPreset);
-    fd.append('tags', 'browser_upload'); // Optional - add tag for image admin in Cloudinary
-    fd.append('file', file);
+    fd.append("upload_preset", unsignedUploadPreset);
+    fd.append("tags", "browser_upload"); // Optional - add tag for image admin in Cloudinary
+    fd.append("file", file);
 
-
-    if (method !== 'get') {
-      config.headers = {}
-      config.headers['X-Requested-With'] = 'XMLHttpRequest'
+    if (method !== "get") {
+      config.headers = {};
+      config.headers["X-Requested-With"] = "XMLHttpRequest";
+      config.body = fd;
     }
-
     return fetch(url, config)
       .then(res => res.json())
       .then(res => {
-        console.log(res)
-        debugger
         return res;
-      })
+      });
   },
 
   uploadCloudinaryImage(file) {
