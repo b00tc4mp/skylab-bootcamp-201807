@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Container, Row, Col, CardColumns } from "reactstrap";
 import NavBar from "./NavBar";
-import _Card from "./Card";
+import GameCard from "./Card";
 import logic from "../logic";
 
 class Home extends Component {
@@ -21,9 +21,9 @@ class Home extends Component {
 
   render(){
     return (
-    <CardColumns className="mt-4">
+    <CardColumns className="mt-4 p-2">
    {this.state.data.map((e) => {
-      return <_Card data={e} key={e.appid}/>
+      return <GameCard data={e} key={e.appid}/>
     })}
     </CardColumns>
     )

@@ -38,7 +38,14 @@ const logic = {
     },
 
     getStatsForGame (appid){
-        //DETAIL GAME ==> STEAMSPY API
+         return fetch(`https://skylabcoders.herokuapp.com/proxy?url=http://steamspy.com/api.php?request=appdetails&appid=${appid}`)
+            .then(res => res.json())
+            .then (res => res)
+            // .then(res => Object.keys(res).map(i => 
+            //     {
+            //         if(i !== 19) res[i]
+            //         else Object.keys.map(j => res[i][j] )
+            //     }))
     },
 
     //cloudinary

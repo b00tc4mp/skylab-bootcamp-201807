@@ -9,14 +9,14 @@ import {
   Button
 } from "reactstrap";
 import logic from '../logic'
-class _Card extends Component {
+class NewCard extends Component {
 
   state = {
     newsData: ""
   }
 
   componentDidMount(){
-    logic.newsForGame(this.props.data.appid,1,150)
+    logic.newsForGame(this.props.data.appid,1,200)
     .then(res => {
       this.setState({
         newsData: res,
@@ -50,4 +50,4 @@ class _Card extends Component {
 </CardBody>
 </Card>  */
 }
-export default _Card;
+export default NewCard;

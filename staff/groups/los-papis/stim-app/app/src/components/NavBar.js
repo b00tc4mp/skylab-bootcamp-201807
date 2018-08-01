@@ -27,8 +27,7 @@ class NavBar extends Component {
       }
 
     render() {
-        return  <div>
-        <Navbar color="light" light expand="md">
+        return  <Navbar color="light" light expand="md">
           {this.props.isLoggedIn ? <div><NavbarBrand to="/home" tag={Link} > Home</NavbarBrand> </div> : <NavbarBrand to="/" tag={Link} > Home</NavbarBrand> }
           {this.props.isLoggedIn ? <div><NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
@@ -52,8 +51,7 @@ class NavBar extends Component {
             </Nav>
           </Collapse> </div>: ""}
         </Navbar>
-      </div>
-    }
+    } 
 }
 
 export default NavBar
