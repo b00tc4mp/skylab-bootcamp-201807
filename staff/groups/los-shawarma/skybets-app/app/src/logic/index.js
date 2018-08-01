@@ -1,10 +1,12 @@
 const logic = {
+    
     _callKiwiApi(fromIata, toIata, inputDateFrom, inputDateTo) {
-        // return fetch(`https://api.skypicker.com/flights?flyFrom=${fromIata}&to=${toIata}&returnFrom=${returnFrom}&returnTo=${returnTo}&directFlights=1&partner=picky`)
+               
         return fetch(`https://api.skypicker.com/flights?flyFrom=${fromIata}&to=${toIata}&dateFrom=${inputDateFrom}&dateTo=${inputDateFrom}&returnFrom=${inputDateTo}&returnTo=${inputDateTo}&directFlights=1&partner=picky`)
         .then(res => res.json())
         .then(res => {
             if (res.error) throw Error('request error, status ' + res.error.status);
+            console.log(res.data)
             return res.data;
         });
     },

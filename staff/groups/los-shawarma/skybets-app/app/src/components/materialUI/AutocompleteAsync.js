@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import AsyncSelect from 'react-select/lib/Async'
-import airports from '../../Resources/airport'
+import airports from '../../Resources/airportmin'
 
 
 const filterAirports = (inputValue) =>
