@@ -17,5 +17,10 @@
 .gallery__icon:hover {
   color: red;
 }
+@media screen and (min-width: 700px) {
+  .gallery {
+    grid-template: 1fr/repeat(4, 1fr);
+  }
+}
 
 /*# sourceMappingURL=Gallery.css.map */

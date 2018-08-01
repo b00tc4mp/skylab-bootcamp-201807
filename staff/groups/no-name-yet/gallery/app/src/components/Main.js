@@ -30,7 +30,7 @@ class Main extends Component {
         video.srcObject = stream
         video.addEventListener('loadeddata', () => {
           const ar = video.videoHeight / video.videoWidth
-          video.width = window.innerWidth
+          video.width = Math.min(window.innerWidth, 500)
           video.height = video.width * ar
         })
       })
@@ -44,15 +44,26 @@ class Main extends Component {
     canvas.height = video.videoHeight
     canvas.getContext('2d').drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
     video.pause()
-    document.getElementById("image").src = canvas.toDataURL('image/png')
+    const image = document.getElementById("image")
+    image.src = canvas.toDataURL('image/png')
+    image.width = video.width
+    image.height = video.height
+
     this.setState({ image: canvas.toDataURL('image/png'), webcamOn: false })
   }
 
   upload = event => {
     const file = event.target.files[0]
     const url = URL.createObjectURL(file)
-    document.getElementById("image").src = url
-    this.setState({ image: file, webcamOn: false })
+    const image = document.getElementById("image")
+    image.src = url
+    image.addEventListener('load',  () => {
+      const ar = image.height / image.width
+      image.width = Math.min(window.innerWidth, 500)
+      image.height = image.width * ar
+
+      this.setState({ image: file, webcamOn: false })
+    })
   }
 
   saveImage = () => {
