@@ -20,17 +20,22 @@ class Profile extends Component {
     keepPassword3 = event => this.setState({ password3: event.target.value })
     keepNewUsername = event => this.setState({ newUsername: event.target.value })
     keepNewPassword = event => this.setState({ newPassword: event.target.value })
-
+    
+    /** This is the function to update the user password */
     updatePassword = () => {
         this.props.updateUser(this.state.password2, '', this.state.newPassword)
             .then(() => this.setState({ update2: 'success' }))
             .catch(err => this.setState({ update2: err.message }))
     }
+
+    /** This is the function to update the user username/password */
     updateUsername = () => {
         this.props.updateUser(this.state.password1, this.state.newUsername, this.state.password1)
             .then(() => this.setState({ update1: 'success' }))
             .catch(err => this.setState({ update1: err.message }))
     }
+
+    /** This is the function to delete the user */
     deleteUser = () => {
         this.props.deleteUser(this.state.password3)
             .catch(err => {

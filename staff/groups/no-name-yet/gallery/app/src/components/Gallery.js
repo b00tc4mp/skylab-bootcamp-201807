@@ -9,7 +9,10 @@ class Gallery extends Component {
     state = {
         images: logic._userImages
     }
-
+    
+    /** This function delete an image
+     * @param {string} id - The image id
+     */
     deleteImage = id => {
         logic.deleteImage(id)
             .then(() => this.setState({ images: logic._userImages }))
@@ -22,7 +25,7 @@ class Gallery extends Component {
                 {this.state.images.map(({ id, url }) => {
                     return (
                         <div className="gallery__container">
-                            <img src={url} alt="" key={Math.random()} className="gallery__img" />
+                            <img src={url} alt="" key={id} className="gallery__img" />
                             <i onClick={() => deleteImage(id)} className="far fa-trash-alt gallery__icon"></i>
                         </div>
                     )
