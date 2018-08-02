@@ -1,9 +1,9 @@
-.mt-5.container .row h2 {
-  color: #ff7b00;
-  letter-spacing: 1.2em;
+.mt-5.container .row h2.page-mainTitle {
+  color: orangered;
+  letter-spacing: .2em;
   font-weight: 700;
   margin-bottom: 20px;
-  font-family: "Merienda", cursive; }
+  font-family: "Sunflower", sans-serif; }
 
 /*
 
@@ -54,9 +54,9 @@
   .navbar-maindiv .navbar.navbar-expand-md a.navbar-brand {
     font-size: 3em;
     letter-spacing: .2em;
-    font-family: "Merienda", cursive;
+    font-family: "Sunflower", sans-serif;
     font-weight: 900;
-    color: #ff7b00; }
+    color: orangered; }
   .navbar-maindiv .navbar.navbar-expand-md .nav-item a.navLinks.nav-link {
     color: #eeeeee; }
     .navbar-maindiv .navbar.navbar-expand-md .nav-item a.navLinks.nav-link:hover {
