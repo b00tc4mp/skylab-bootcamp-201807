@@ -147,8 +147,9 @@ class Home extends Component {
                     </div>
                     
                     <div className="card">
-                    
-                        <BetPriceCard currentPriceProp={currentPrice} currentOddsProp={currentOdds}/>  
+                    {(currentFlight && currentBet) && <BetPriceCard 
+                    currentFlightProp={currentFlight} 
+                    currentBetProp={currentBet}/> } 
                     </div>
                     
                 </div>

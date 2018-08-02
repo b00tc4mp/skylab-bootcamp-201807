@@ -1,50 +1,22 @@
-import React, {Component} from 'react'
+import React from 'react'
 
-class BetPriceCard extends Component { 
-    state = {
-        currentPrice: null,
-        currentOdds: null
-       
-      };
-
-      flightOddCalc = () => {
-        const {currentPriceProp, currentOddsProp} = this.props;
-
-        let currentPriceflight =  currentPriceProp;
-        let currentOdd = currentOddsProp;
-        return currentPriceflight/currentOdd;
-    } 
+ 
+const BestPriceCard = props =>  { 
+        const {dateFrom, cityFrom, flyFrom, dateTo, cityTo, flyTo, price, link } = props.currentFlightProp
+        const {odds, results, teams, competition, date, time} = props.currentBetProp
 
 
-
-    static getDerivedStateFromProps(props, state) {
-        if (props.currentPriceProp !== state.currentPrice || 
-            props.currentOddsProp !== state.currentOdds ) {
-          return {
-            currentPrice: props.currentPriceProp,
-            currentOdds : props.currentOddsProp
-          };
-        }
-    
-        return null; // Return null to indicate no change to state.
-      }
-
-   
-    render () {
         return(
-            <div>
-                <div className="card-body">
-                    <h2>Bet Price</h2>
-                    <p>{this.flightOddCalc()}</p>
-                </div>
-            </div>
+            <section className="card">
+                <div>
+                
+                    <span>Flights Price / Odds </span><span>{price/odds}</span>
+                
+      
+                
+            </div>     
+            </section>
+
         )
     }
-    }
-
-
-
-    
-
-
-export default BetPriceCard
+export default BestPriceCard
