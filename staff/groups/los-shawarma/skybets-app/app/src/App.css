@@ -1,58 +1,33 @@
 .App {
   text-align: center;
 }
-
 .App-logo {
   animation: App-logo-spin infinite 20s linear;
   height: 80px;
 }
-
 .App-header {
   background-color: #222;
   height: 150px;
   padding: 20px;
   color: white;
 }
-
 .App-title {
   font-size: 1.5em;
 }
-
 .App-intro {
   font-size: large;
 }
-
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
-
+.card {
+  min-width: 260px;
+}
 .current-page {
   font-size: 1.5rem;
   vertical-align: middle;
 }
-
-.country-card-container {
-  height: 60px;
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
-}
-
-.country-name {
-  font-size: 0.9rem;
-}
-
-.country-region {
-  font-size: 0.7rem;
-}
-
-.country-page,
-.country-name,
-.country-region {
-  line-height: 1;
-}
-
 ul.pagination {
   margin-top: 0;
   margin-bottom: 0;
@@ -64,16 +39,10 @@ ul.pagination li.page-item.active a.page-link {
   border-color: #ced4da !important;
 }
 ul.pagination a.page-link {
-  padding: 0.75rem 1rem;
-  min-width: 3.5rem;
-  text-align: center;
   box-shadow: none !important;
   border-color: #ced4da !important;
   color: #6b88a4;
-  font-weight: 900;
-  font-size: 1rem;
 }
 ul.pagination a.page-link:hover {
   background-color: #f4f4f4;
 }
-
