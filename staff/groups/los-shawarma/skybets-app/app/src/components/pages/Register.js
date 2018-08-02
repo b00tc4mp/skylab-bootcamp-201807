@@ -1,6 +1,5 @@
-import React, {Component} from 'react';
-import { Link } from 'react-router-dom';
-import Message from '../sections/Message';
+import React, {Component} from 'react'
+import Message from '../sections/Message'
 
 
 class Register extends Component {
@@ -8,7 +7,6 @@ class Register extends Component {
         username: null,
         password: null,
     }
-
 
 
     keepUsername = e => this.setState({username: e.target.value})

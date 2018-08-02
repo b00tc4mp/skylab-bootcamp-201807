@@ -1,8 +1,9 @@
 import React, {Component} from 'react'
 import AutocompleteAsync from '../materialUI/AutocompleteAsync'
-import DatePicker from 'material-ui-pickers/DatePicker';
-import DateFnsUtils from 'material-ui-pickers/utils/date-fns-utils';
-import MuiPickersUtilsProvider from 'material-ui-pickers/utils/MuiPickersUtilsProvider';
+import DatePicker from 'material-ui-pickers/DatePicker'
+import DateFnsUtils from 'material-ui-pickers/utils/date-fns-utils'
+import MuiPickersUtilsProvider from 'material-ui-pickers/utils/MuiPickersUtilsProvider'
+import SearchAutocomplete from '../materialUI/SearchAutocomplete'
 
 class SearchFlights extends Component {
 
@@ -36,6 +37,7 @@ class SearchFlights extends Component {
                 <AutocompleteAsync onSelectedOption={this.onSelectedFrom}/>
                 <label>To</label>
                 <AutocompleteAsync onSelectedOption={this.onSelectedTo}/>
+                {/*<SearchAutocomplete onSelectedOption={this.onSelectedTo}/>*/}
                 <label>Departure date</label>
                 <DatePicker value={this.state.dateFrom} onChange={this.onDateFrom} />
                 <label>Return date</label>

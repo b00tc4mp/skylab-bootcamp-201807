@@ -1,15 +1,17 @@
 import React, {Component} from 'react'
 import SearchFlights from '../cards/SearchFlights'
 import logic from '../../logic'
-import FlightResults from '../cards/FlightResults'
+//import FlightResults from '../cards/FlightResults'
+import ResultsSlider from '../cards/ResultsSlider'
+import FlightCard from '../cards/FlightCard'
 
 class Home extends Component {
 
     state = {
-        selectedFrom : null,
+        /*selectedFrom : null,
         selectedTo : null,
         dateFrom : null,
-        dateTo : null,
+        dateTo : null,*/
         flights: []
     }
     
@@ -20,17 +22,13 @@ class Home extends Component {
         return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`
     }
 
-
-    
-       
-    
     getDataInputs = (selectedFrom, selectedTo,  dateFrom, dateTo) => {
-        this.setState({
+        /*this.setState({
             selectedFrom,
             selectedTo,
             dateFrom,
             dateTo
-        })
+        })*/
 
         const fromIata = this.parseIata(selectedFrom)
         const toIata = this.parseIata(selectedTo)
@@ -39,35 +37,28 @@ class Home extends Component {
 
         logic._callKiwiApi(fromIata, toIata, inputDateFrom, inputDateTo)
         .then(flights => {
-            var flights = this.filterFlightsData(flights);
-            this.setState({flights: flights})
+            const filteredFlights = this.filterFlightsData(flights);
+            this.setState({flights: filteredFlights})
         })
         .catch()
     }
 
     filterFlightsData = (flights) => {
-
-        const filteredFlights = []
-        flights.forEach(flight => {
-            const flightFrom = flight.route[0]
-            const flightTo = flight.route[1]
-            const filteredFlight= {
-                price: flight.conversion.EUR,
-                dateFrom: flightFrom.aTimeUTC,
-                dateTo: flightTo.aTimeUTC,
-                cityFrom: flightFrom.cityFrom,
-                cityTo: flightFrom.cityTo,
-                flyFrom: flightFrom.flyFrom,
-                flyTo: flightFrom.flyTo,
-                link: flight.deep_link
-            }
-            filteredFlights.push(filteredFlight);
-        })
+        const filteredFlights = flights.map((flight, index) => ({
+            price: flight.conversion.EUR,
+            dateFrom: flight.route[0].aTimeUTC,
+            dateTo: flight.route[1].aTimeUTC,
+            cityFrom: flight.route[0].cityFrom,
+            cityTo: flight.route[0].cityTo,
+            flyFrom: flight.route[0].flyFrom,
+            flyTo: flight.route[0].flyTo,
+            link: flight.deep_link,
+            id: index,
+          }));
 
         return filteredFlights
     }
     
-
     
     render() {
 
@@ -77,13 +68,16 @@ class Home extends Component {
             <main>
                 <h1>Home Page</h1>
                 <SearchFlights getDataInputsProp={ this.getDataInputs } /> 
-                {flights.length > 0 && <FlightResults flightsProp={flights}/>}         
+                {/*flights.length > 0 && <FlightResults flightsProp={flights}/>*/} 
+                {flights.length > 0 && 
+                    <ResultsSlider 
+                    resultsProp={flights} 
+                    titleProps={'Flights'}
+                    render={ currentFlight => <FlightCard flightsProp={currentFlight}/> }
+                />}         
             </main>
         )
     }
-    
-        
-    
 
 }
 
