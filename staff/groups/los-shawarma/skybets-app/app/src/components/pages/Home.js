@@ -5,6 +5,7 @@ import logic from '../../logic'
 import ResultsSlider from '../cards/ResultsSlider'
 import FlightCard from '../cards/FlightCard'
 import BetCard from '../cards/BetCard'
+import BetPriceCard from '../cards/BetPriceCard';
 
 class Home extends Component {
 
@@ -16,6 +17,8 @@ class Home extends Component {
         flights: [],
         bets: [],
         currentFlight: null,
+        
+        
     }
     
     parseIata = iata => iata.substring(0, 3)
@@ -81,12 +84,20 @@ class Home extends Component {
 
         return filteredBets
     }
+
+    flightOddCalc = () => {
+        const {currentPrice, currentOdds} = this.state;
+
+        let currentPriceflight =  currentPrice;
+        let currentOdd = currentOdds;
+        return currentPriceflight/currentOdd;
+    } 
     
     
     render() {
 
         const {flights, bets} = this.state
-
+        
         return(
             <main>
                 <h1>Home Page</h1>
@@ -101,7 +112,8 @@ class Home extends Component {
                     resultsProp={ bets } 
                     titleProps={ 'Bets' }
                     render={ currentBet => <BetCard betsProp={currentBet}/> }
-                /> 
+                />
+                <BetPriceCard  betPriceProp={this.flightOddCalc}/>
             </main>
         )
     }
