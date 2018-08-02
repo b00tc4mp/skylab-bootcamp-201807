@@ -21,9 +21,25 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+/*Card*/
 .card {
   min-width: 260px;
+  margin-top: 50px;
 }
+
+.card .btn {
+  margin-top: 20px;
+}
+
+.card label {
+  margin-top: 30px;
+  font-weight: 700;
+}
+/*End Card*/
+
+
+/*Pagination*/
 .current-page {
   font-size: 1.5rem;
   vertical-align: middle;
@@ -46,3 +62,5 @@ ul.pagination a.page-link {
 ul.pagination a.page-link:hover {
   background-color: #f4f4f4;
 }
+
+/*End Pagination*/

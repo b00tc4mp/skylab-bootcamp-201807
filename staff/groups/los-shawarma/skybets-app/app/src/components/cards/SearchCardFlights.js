@@ -43,7 +43,9 @@ class SearchCardFlights extends Component {
                     <DatePicker value={this.state.dateFrom} onChange={this.onDateFrom} />
                     <label>Return date</label>
                     <DatePicker value={this.state.dateTo} onChange={this.onDateTo} />
-                    <button className="btn btn-primary" onClick={this.handleOnclick}>Search</button>  
+                    <div>
+                        <button className="btn btn-primary" onClick={this.handleOnclick}>Search</button>  
+                    </div> 
                 </div>
             </div>
             </MuiPickersUtilsProvider>
