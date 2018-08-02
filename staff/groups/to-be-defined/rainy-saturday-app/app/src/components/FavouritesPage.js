@@ -25,7 +25,7 @@ class FavouritesPage extends ImageSearchBase {
 
   componentDidMount() {
     const favs = logic.getUserFavorites();
-    if (favs.length > 0) this.loadFavorites(favs)
+    if (favs && favs.length > 0) this.loadFavorites(favs)
     else this.handleError("You don't seem to have any favourites at the moment.  You can go to the search page to add some!")
   }
 

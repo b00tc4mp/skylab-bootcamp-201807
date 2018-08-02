@@ -22,10 +22,6 @@ const logic = {
     sessionStorage.setItem('userUsername', userUsername)
   },
 
-  set _cloudinaryURL(cloudinaryURL) {
-    sessionStorage.setItem('cloudinaryURL', cloudinaryURL)
-  },
-
   get userUsername() {
     return sessionStorage.getItem('userUsername')
   },
@@ -42,8 +38,8 @@ const logic = {
     sessionStorage.setItem('userFavorites', JSON.stringify(userFavorites))
   },
 
-  get _cloudinaryURL() {
-    return JSON.parse(sessionStorage.getItem('cloudinaryURL')) || []
+  get _userFavorites() {
+    return JSON.parse(sessionStorage.getItem('userFavorites')) || []
   },
 
   get MUSEUM_MAKER_FILTER() {
@@ -85,8 +81,8 @@ const logic = {
 
   // user's
 
-  registerUser(name, lastname, username, email, password,cloudinaryURL) {
-    return this._callUsersApi('/user', 'post', {username, password, name, lastname, email,cloudinaryURL})
+  registerUser(name, lastname, username, email, password,profilePicture) {
+    return this._callUsersApi('/user', 'post', {username, password, name, lastname, email,})
       .then(res => res.data.id)
   },
 
@@ -103,7 +99,7 @@ const logic = {
       })
       .then(({data}) => {
         this._userFavorites = data.favorites || []
-        this._cloudinaryURL = data.cloudinaryURL || ""
+
         return true
       })
   },
@@ -282,7 +278,7 @@ const logic = {
       })
   },
 
-  uploadFile(file) {
+  /*uploadFile(file) {
 
     const cloudName = "rainysaturdayprojectskylab"
     const unsignedUploadPreset = "rainysaturdayproject"
@@ -320,7 +316,7 @@ const logic = {
     fd.append('tags', 'browser_upload'); // Optional - add tag for image admin in Cloudinary
     fd.append('file', file);
     xhr.send(fd);
-  },
+  },*/
 
   _callCloudinaryApi(file, method = 'post') {
 console.log(file)

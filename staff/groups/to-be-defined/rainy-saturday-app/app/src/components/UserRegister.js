@@ -40,11 +40,13 @@ class UserRegister extends Component {
     keepConfirmpassword = event => this.comparePassword(event.target.value)
 
   
-
+    storeProfilePhoto = () => {}
 
     handleSubmit = event => {
         event.preventDefault()
-        const {state: {name, lastname, username, email, password }} = this
+
+
+        const {state: {name, lastname, username, email, password,cloudinaryURL }} = this
         logic.registerUser(name, lastname, username, email, password,cloudinaryURL)
         .then(() =>   
         {
