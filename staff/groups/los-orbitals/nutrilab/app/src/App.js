@@ -8,7 +8,8 @@ import Signup from './components/Signup'
 import Login from './components/Login'
 import Home from './components/Home'
 import Profile from './components/Profile'
-import { Route, withRouter, Link, Redirect} from 'react-router-dom'
+import { Route, withRouter, Link, Redirect, Switch} from 'react-router-dom'
+import Error404 from './components/Error404';
 
 // States are created and initialized
 class App extends Component {
@@ -69,8 +70,7 @@ class App extends Component {
     this.props.history.push('/')
   }
 
-// This function update the user information, (only password needed) you can change the name, the password or both
-
+  // This function update the user information, (only password needed) you can change the name, the password or both
   updateUser = (password, newUsername, newPassword) => {
     logic.update(password, newUsername, newPassword)
       .then(() => {
@@ -122,11 +122,14 @@ class App extends Component {
             </nav>}/>
         </header>
 
-        <Route exact path="/" render = {() => loggedIn ? <Redirect to="/home"/> : <Landing signup={goToSignUp} login={goToLogin} />}/> 
-        <Route path="/signup" render = {() => loggedIn ? <Redirect to="/home"/> : <Signup onSignUp={signupUser} linkToLogin={goToLogin} feedback={showFeedback}/>} />
-        <Route path="/login" render = {() => loggedIn ? <Redirect to="/home"/> : <Login onLogin={loginUser} linkToSignUp={goToSignUp} feedback={showFeedback}/>} />
-        <Route path="/home" render = {() => loggedIn ? <Home/> : <Redirect to="/" />} />
-        <Route path="/profile" render={() => loggedIn ? <Profile onUpdate={updateUser} feedback={showFeedback} feedbackdelete={showFeedbackDelete} onDelete={deleteUser}/> : <Redirect to="/"/>} />
+        <Switch>
+          <Route exact path="/" render = {() => loggedIn ? <Redirect to="/home"/> : <Landing signup={goToSignUp} login={goToLogin} />}/> 
+          <Route path="/signup" render = {() => loggedIn ? <Redirect to="/home"/> : <Signup onSignUp={signupUser} linkToLogin={goToLogin} feedback={showFeedback}/>} />
+          <Route path="/login" render = {() => loggedIn ? <Redirect to="/home"/> : <Login onLogin={loginUser} linkToSignUp={goToSignUp} feedback={showFeedback}/>} />
+          <Route path="/home" render = {() => loggedIn ? <Home/> : <Redirect to="/" />} />
+          <Route path="/profile" render={() => loggedIn ? <Profile onUpdate={updateUser} feedback={showFeedback} feedbackdelete={showFeedbackDelete} onDelete={deleteUser}/> : <Redirect to="/"/>} />
+          <Route component={Error404} />
+        </Switch>
       </div>
     )
   }
