@@ -18,8 +18,6 @@ class Login extends Component {
         const { username, password } = this.state
         this.props.onLoginProp(username, password)
     }
-
-
     
 
     render() {

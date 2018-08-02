@@ -1,14 +1,16 @@
 import React, { Component } from 'react'
 import './App.css'
-import { Route, Redirect } from 'react-router-dom'
+//import { Route, Redirect } from 'react-router-dom'
 import logic from './logic'
-import Home from './components/pages/Home'
 import Login from './components/pages/Login'
+import Home from './components/pages/Home'
 import MyFavs from './components/pages/MyFavs'
 import Register from './components/pages/Register'
 import Update from './components/pages/Update'
 import Nav from './components/sections/Nav'
 import Footer from './components/sections/Footer'
+import { Route, withRouter, Link, Redirect } from 'react-router-dom'
+
 
 
 class App extends Component {
@@ -35,12 +37,15 @@ class App extends Component {
   }
 
   onLogin = (username, password) => {
+    debugger;
     logic.loginUser(username, password)
     .then(() => {
       this.setState({loggedIn: true, errorLogin: null, successLogin: true})
       this.props.history.push('/login')
     })
-    .catch(({message}) => this.setState({errorLogin: message}))
+    .catch(({message}) => {
+      this.setState({errorLogin: message})
+    })
   
   }
 
@@ -71,7 +76,7 @@ class App extends Component {
 
         <Route path="/" exact render={() => <Home />} />
         <Route path="/login" exact render={() => <Login onLoginProp={onLogin} errorMsg={errorLogin} successMsg={successLogin}/>} />
-        {/* <Route path="/myfavs" exact render={() => loggedIn ? <Myfavs /> : <Redirect to="/login" />} /> */}
+        <Route path="/myfavs" exact render={() => loggedIn ? <MyFavs /> : <Redirect to="/login" />} /> 
         <Route path="/register" exact render={() => <Register onRegisterProp={onRegister} errorMsg={errorRegister} successMsg={successRegister}/>} />
         <Route path="/update" exact render={() => loggedIn ? <Update onUpdateProp={onUpdate} username={logic.userUsername} errorMsg={errorUpdate} successMsg={successUpdate}/> : <Redirect to="/login" />} />
 
@@ -81,4 +86,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default withRouter(App);
