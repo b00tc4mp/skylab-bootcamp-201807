@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import logic from '../logic'
+import close from '../images/close.svg'
 
 class FavoriteList extends Component {
 
@@ -8,7 +9,9 @@ class FavoriteList extends Component {
     printFavorites = () => {
         return this.state.favorites.map((ingredient) => {
             return  <li>{ingredient}
-                        <a href="" onClick={(event) => {event.preventDefault(); this.onRefresh(ingredient)}}>X</a>
+                        <a href="" onClick={(event) => {event.preventDefault(); this.onRefresh(ingredient)}}>
+                            <img src={close}/>
+                        </a>
                     </li>
             })
     }

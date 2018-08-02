@@ -35,7 +35,7 @@ class Home extends Component{
                     panelActive: false,
                     showFeedback: false
                 }) }
-                else this.setState({showFeedback: 'Sorry! No matches found', listActive: false})
+                else this.setState({showFeedback: 'Sorry! No matches found', listActive: false, panelActive: false})
             })
             .catch(({message}) => this.setState({showFeedback: message}))
     }
