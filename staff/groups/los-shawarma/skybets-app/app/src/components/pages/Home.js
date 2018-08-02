@@ -4,6 +4,7 @@ import logic from '../../logic'
 //import FlightResults from '../cards/FlightResults'
 import ResultsSlider from '../cards/ResultsSlider'
 import FlightCard from '../cards/FlightCard'
+import BetCard from '../cards/BetCard'
 
 class Home extends Component {
 
@@ -12,7 +13,9 @@ class Home extends Component {
         selectedTo : null,
         dateFrom : null,
         dateTo : null,*/
-        flights: []
+        flights: [],
+        bets: [],
+        currentFlight: null,
     }
     
     parseIata = iata => iata.substring(0, 3)
@@ -40,10 +43,15 @@ class Home extends Component {
             const filteredFlights = this.filterFlightsData(flights);
             this.setState({flights: filteredFlights})
         })
+        .then(logic._callBetsApi)
+        .then(bets => {
+            const filteredBets = this.filterBetsData(bets);
+            this.setState({bets: filteredBets})
+        })
         .catch()
     }
 
-    filterFlightsData = (flights) => {
+    filterFlightsData = flights => {
         const filteredFlights = flights.map((flight, index) => ({
             price: flight.conversion.EUR,
             dateFrom: flight.route[0].aTimeUTC,
@@ -58,11 +66,26 @@ class Home extends Component {
 
         return filteredFlights
     }
+
+    filterBetsData = bets => {
+        const filteredBets = bets.map((bet, index) => ({
+            competition: bet.competition, 
+            date: bet.date, 
+            time: bet.time, 
+            teams: bet.team, 
+            link: bet.url, 
+            odds: bet.odds, 
+            results: bet.results,
+            id: index,
+        }));
+
+        return filteredBets
+    }
     
     
     render() {
 
-        const {flights} = this.state
+        const {flights, bets} = this.state
 
         return(
             <main>
@@ -70,10 +93,15 @@ class Home extends Component {
                 <SearchCardFlights getDataInputsProp={ this.getDataInputs } /> 
                 {/*flights.length > 0 && <FlightResults flightsProp={flights}/>*/} 
                 <ResultsSlider 
-                    resultsProp={flights} 
-                    titleProps={'Flights'}
+                    resultsProp={ flights } 
+                    titleProps={ 'Flights' }
                     render={ currentFlight => <FlightCard flightsProp={currentFlight}/> }
-                />        
+                />
+                <ResultsSlider 
+                    resultsProp={ bets } 
+                    titleProps={ 'Bets' }
+                    render={ currentBet => <BetCard betsProp={currentBet}/> }
+                /> 
             </main>
         )
     }
