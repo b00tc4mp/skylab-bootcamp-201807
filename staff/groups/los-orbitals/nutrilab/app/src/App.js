@@ -97,7 +97,7 @@ class App extends Component {
       })
   }
 
-  // To change to false the states of teh feedback messages
+  // To change to false the states of the feedback messages
   onResetMessage = () => {
     this.setState({showFeedback: false, showFeedbackDelete: false})
     window.location.reload()
@@ -112,26 +112,26 @@ class App extends Component {
       <div className="App">
         <header className="App__header">
         {!loggedIn && <Link to="/" onClick={this.onResetMessage}> <p className="App__header__nav__item">Nutrilab</p></Link>}
-          <Route path="/(home|profile)" render={() => 
+          <Route path="/(home|profile|favorites)" render={() => 
             <nav className="App__header__nav">
-            <ul>
-              <li className="App__header__item App__header__item__left">
-              <Link to="/home" onClick={this.onResetMessage}> <p className="App__header__nav__item">Nutrilab</p></Link></li>
-            </ul>
-            <ul className="App__header__nav__ul">  
-              <Link to="/home" onClick={this.onResetMessage} ><p className="App__header__nav__item">Home</p></Link>
-              <li className="App__header__item">
-              <Link to="/favorites"> <p className="App__header__nav__item">Favorites</p></Link></li>
-              <li className="App__header__item">
-              <Link to="/profile"> <p className="App__header__nav__item">Profile</p></Link></li>
-              <li className="App__header__item">
-              <Link to="/" onClick={logout} > <p className="App__header__nav__item">Logout</p></Link>
-              </li>
-            </ul>
+              <ul>
+                <li className="App__header__item App__header__item__left">
+                <Link to="/home" onClick={this.onResetMessage}> <p className="App__header__nav__item">Nutrilab</p></Link></li>
+              </ul>
+              <ul className="App__header__nav__ul">  
+                <Link to="/home" onClick={this.onResetMessage} ><p className="App__header__nav__item">Home</p></Link>
+                <li className="App__header__item">
+                <Link to="/favorites"> <p className="App__header__nav__item">Favorites</p></Link></li>
+                <li className="App__header__item">
+                <Link to="/profile"> <p className="App__header__nav__item">Profile</p></Link></li>
+                <li className="App__header__item">
+                <Link to="/" onClick={logout} > <p className="App__header__nav__item">Logout</p></Link>
+                </li>
+              </ul>
             </nav>}/>
         </header>
         {!loggedIn && <main className="App__main">
-            <h2 className="App__header__title">Care your eating habits in an easy and fun way</h2>
+            <h2 className="App__main__title">Care your eating habits in an easy and fun way</h2>
             </main>}
 
         <Switch>
