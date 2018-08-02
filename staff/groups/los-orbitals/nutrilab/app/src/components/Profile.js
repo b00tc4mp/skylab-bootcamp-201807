@@ -11,9 +11,23 @@ class Profile extends Component {
     
     savePassword = event => this.setState({ password: event.target.value })
 
-    saveNewUsername = event => this.setState({ newUsername: event.target.value })
+    saveNewUsername = event => this.checkNewUsername(event.target.value)
 
-    saveNewPassword = event => this.setState({ newPassword: event.target.value })
+    saveNewPassword = event => this.checkNewPassword(event.target.value)
+
+    checkNewUsername = value => {
+        const regex = (/^[a-zA-Z0-9]+$/)
+        let regexOk = value.match(regex)
+
+        if (regexOk !== null ) this.setState({newUsername: value})    
+    }
+
+    checkNewPassword = value => {
+        const regex = (/^[a-zA-Z0-9]+$/)
+        let regexOk = value.match(regex)
+
+        if (regexOk !== null ) this.setState({newPassword: value})    
+    }
 
     update = event => {
         event.preventDefault()
@@ -32,10 +46,9 @@ class Profile extends Component {
         return <section>
                     <section>
                         <h2>Update your Profile</h2>
-                        <p>Confirm your password</p>
-                        <p>New Username and New Password are optional</p>
+                        <p>it is required to fill in the field with the * symbol</p>
                         <form onSubmit={update}>
-                            <input type="password" placeholder="Enter old password" onChange={savePassword}/>
+                            <input type="password" placeholder="Enter password*" onChange={savePassword}/>
                             <input type="text" placeholder="Enter new username" onChange={saveNewUsername}/>
                             <input type="password" placeholder="Enter new password" onChange={saveNewPassword}/>
                             <button type="submit">Update</button>
@@ -44,9 +57,9 @@ class Profile extends Component {
                     </section>
                     <section>
                         <h2>Delete your Profile</h2>
-                        <p>Confirm your password</p>
+                        <p>it is required to fill in the field with the * symbol</p>
                         <form onSubmit={deleteUser}>
-                            <input type="password" placeholder="Enter old password" onChange={savePassword}/>
+                            <input type="password" placeholder="Enter password*" onChange={savePassword}/>
                             <button type="submit">Delete</button>
                         </form>
                         {this.props.feedbackdelete && <Feedback message={this.props.feedbackdelete} />}

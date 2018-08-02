@@ -1,10 +1,8 @@
 import React from 'react'
-import Feedback from './Feedback'
 
 function List(props) {
 
     return <section>
-                {props.feedback && <Feedback message={props.feedback}/>}
                 {props.ingredients.map(({name, photo}) => {
                     return <ul>
                                 <li><a href="#/" onClick={(event) => {event.preventDefault(); props.onItemClick(name)}}>
