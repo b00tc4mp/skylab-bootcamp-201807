@@ -3,6 +3,9 @@ import NavBar from "./NavBar";
 import Landing from "./Landing";
 import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 import logic from "../logic"
+import images from "../images/logo-steam.png"
+import "../styles/style-profile.css"
+
 
 
 class UserDelete extends Component {
@@ -47,8 +50,9 @@ class UserDelete extends Component {
 
   render() {
     return <section>
+      <div className="container1">
       <h2>Update</h2>
-      <img src={require('../imagenes/logo-steam.png')} width="100vw" height="100vh" />
+      <img src={images} width="100vw" height="100vh" />
       <Form onSubmit={this.onUpdate}>
         <FormGroup>
           <Label for="text-user">Username</Label>
@@ -68,11 +72,12 @@ class UserDelete extends Component {
         </FormGroup>
         <Button type="submit" className="btn-success">Update</Button>
       </Form>
+      </div>
 
 
-      <div>
+      <div className="container2">
         <h2>Delete profile</h2>
-        <img src={require('../imagenes/logo-steam.png')} width="100vw" height="100vh" />
+        <img src={images} width="100vw" height="100vh" />
         <Form onSubmit={this.onDelete}>
           <FormGroup>
             <Label for="text-user">Username</Label>

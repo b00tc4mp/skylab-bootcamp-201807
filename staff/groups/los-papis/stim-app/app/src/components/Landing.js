@@ -4,6 +4,8 @@ import { Link, Redirect } from "react-router-dom";
 import swal from 'sweetalert2'
 import '../styles/styles.css'
 import logic from "../logic";
+import "../styles/style-landing.css"
+import images from "../images/logo-steam.png"
 
 class Landing extends Component {
   state = {
@@ -83,17 +85,22 @@ class Landing extends Component {
   render() {
     console.log("RENDER");
     return (
-
-      //Modals
-      <div>
-        <Button color="danger" onClick={this.toggle}>
+      <div className="container">
+        
+      
+      <div className="container-fluid ">
+        <img id="logo-landing" src={images}/>
+        <p  className="row text-center justify-content-center">Stim is a web created by fans of videogames.Here, you'll be able to read news of<br/> your favourite games. We are wating for you.</p>
+        <div className="row text-center justify-content-center">
+        
+        <Button className="" color="danger" onClick={this.toggle}>
           Register
         </Button>
         <Modal
           isOpen={this.state.modal}
           toggle={this.toggle}
         >
-          <ModalHeader toggle={this.toggle}>Modal title</ModalHeader>
+          <ModalHeader toggle={this.toggle}>Register</ModalHeader>
           <form onSubmit={(e) => { 
             e.preventDefault()
             this.handleRegisterSubmit(this.state.username,this.state.password)}}>
@@ -111,13 +118,13 @@ class Landing extends Component {
           </ModalFooter>
           </form>
         </Modal>
-        <Button color="danger" onClick={this.loginToggle}>
+        <Button className="" color="danger" onClick={this.loginToggle}>
           Log In
         </Button>
         <Modal
           isOpen={this.state.modalLogin}
           toggle={this.loginToggle}>
-          <ModalHeader toggle={this.loginToggle}>Modal title</ModalHeader>
+          <ModalHeader toggle={this.loginToggle}>Login</ModalHeader>
           <form onSubmit={(e)=>{
             e.preventDefault()
             this.handleLoginSubmit(this.state.username, this.state.password)}
@@ -136,6 +143,8 @@ class Landing extends Component {
           </ModalFooter>
           </form>
         </Modal>
+        </div>
+      </div>
       </div>
     );
   }

@@ -3,6 +3,7 @@ import { Container, Row, Col, CardColumns } from "reactstrap";
 import NavBar from "./NavBar";
 import GameCard from "./Card";
 import logic from "../logic";
+import "../styles/style-navbar.css"
 
 class Home extends Component {
 

@@ -15,6 +15,10 @@ import {
 } from 'reactstrap';
 import { Link } from 'react-router-dom'
 import logic from '../logic'
+import images from "../images/logo-steam.png"
+import "../styles/style-navbar.css"
+
+
 
 class NavBar extends Component {
 
@@ -31,8 +35,8 @@ class NavBar extends Component {
   handle
 
     render() {
-        return  <Navbar color="light" light expand="md">
-          {this.props.isLoggedIn ? <div><NavbarBrand to="/home" tag={Link} > Home</NavbarBrand> </div> : <NavbarBrand to="/" tag={Link} > Home</NavbarBrand> }
+        return  <Navbar  light expand="md">
+          {this.props.isLoggedIn ? <div><NavbarBrand to="/home" tag={Link} ><img src={images}/></NavbarBrand> </div> : <NavbarBrand to="/" tag={Link} ><img src={images}/></NavbarBrand> }
           {this.props.isLoggedIn ? <div><NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="mr-8" navbar>
