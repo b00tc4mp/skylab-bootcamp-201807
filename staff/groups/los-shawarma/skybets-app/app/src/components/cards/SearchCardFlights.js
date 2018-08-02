@@ -44,7 +44,7 @@ class SearchCardFlights extends Component {
                     <div><label>Return date</label></div>
                     <DatePicker value={this.state.dateTo} onChange={this.onDateTo} />
                     <div>
-                        <button className="btn btn-primary" onClick={this.handleOnclick}>Search</button>  
+                        <button onClick={this.handleOnclick}>Search</button>  
                     </div> 
                 </div>
             </div>

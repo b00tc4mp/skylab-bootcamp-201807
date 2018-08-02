@@ -47,7 +47,7 @@ class ResultsSlider extends Component {
     
         const headerClass = [
           "text-dark py-2 pr-4 m-0",
-          currentPage ? "border-gray border-right" : ""
+          currentPage ? "" : ""
         ]
           .join(" ")
           .trim();
@@ -59,26 +59,28 @@ class ResultsSlider extends Component {
                 
                 { this.props.render(currentResult) }
                 
-                <div >
-                  <h2 className={headerClass}>
+                <div>
+                  <h6 className={headerClass}>
                     <strong className="text-secondary">{totalResults}</strong>{" "}
                     { this.props.titleProps }
-                  </h2>
-                  {currentPage && (
-                    <span >
+                  </h6>
+                  {/* {currentPage && (
+                    <span>
                       Page <span className="font-weight-bold">{currentPage}</span> /{" "}
                       <span className="font-weight-bold">{totalPages}</span>
                     </span>
-                  )}
+                  )} */}
                 </div>
                 
-                <div className="d-flex flex-row py-4 align-items-center">
-                  <Pagination
-                    totalRecords={totalResults}
-                    pageLimit={1}
-                    pageNeighbours={1}
-                    onPageChanged={this.onPageChanged}
-                  />
+                <div className="pb-3 pl-5">
+                  <div className="d-flex flex-row align-items-center">
+                    <Pagination
+                      totalRecords={totalResults}
+                      pageLimit={1}
+                      pageNeighbours={1}
+                      onPageChanged={this.onPageChanged}
+                    />
+                  </div>
                 </div>
               </div>
 
