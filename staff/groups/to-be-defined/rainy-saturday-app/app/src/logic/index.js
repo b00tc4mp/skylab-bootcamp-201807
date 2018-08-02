@@ -85,7 +85,9 @@ const logic = {
     return fetch('https://skylabcoders.herokuapp.com/api' + path, config)
       .then(res => res.json())
       .then(res => {
-        if (res.status === 'KO') throw Error(res.error)
+        if (res.status === 'KO') {
+          throw Error(res.error)
+        }
 
         return res;
       })
@@ -342,6 +344,8 @@ const logic = {
     xhr.send(fd);
   },*/
 
+  //TODO TEST
+
   _callCloudinaryApi(file, method = 'post') {
     const config = {
       method
@@ -367,11 +371,13 @@ const logic = {
       });
   },
 
+  //TODO TEST
   uploadCloudinaryImage(file) {
     // return this._callCloudinaryApi(file)
     return this._callCloudinaryApi(file)
   },
 
+  //TODO TEST
   getUserFavorites() {
     return this._userFavorites
   },

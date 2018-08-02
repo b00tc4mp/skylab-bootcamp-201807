@@ -130,63 +130,7 @@ describe('logic (Museum-App)', () => {
 
     })
 
-    // describe('retrieve user', () => {
-    //     const username = 'manuel-barzi-' + Math.random(), password = '123'
 
-    //     beforeEach(() => {
-    //         return logic.registerUser(username, password)
-    //             .then(() => logic.loginUser(username, password))
-    //     })
-
-    //     it('should retrieve user data', () => {
-    //         return logic.retrieveUser()
-    //             .then(data => {
-    //                 expect(data.username).toBe(logic.userUsername)
-    //             })
-    //     })
-    // })
-
-    // describe('favorites', () => {
-    //     let username
-    //     const password = '123'
-
-    //     beforeEach(() => {
-    //         username = 'manuel-barzi-' + Math.random()
-
-    //         return logic.registerUser(username, password)
-    //             .then(() => logic.loginUser(username, password))
-    //     })
-
-    //     it('should toggle track to favorites', () => {
-    //         const trackId = '4QxwXcPUm1VfkHksz6VuFi'
-
-    //         return logic.toggleFavorite(trackId)
-    //             .then(res => {
-    //                 expect(res).toBeTruthy()
-    //                 expect(logic._userFavorites.includes(trackId)).toBeTruthy()
-
-    //                 return logic.toggleFavorite(trackId)
-    //             })
-    //             .then(res => {
-    //                 expect(res).toBeTruthy()
-    //                 expect(logic._userFavorites.includes(trackId)).toBeFalsy()
-    //             })
-    //     })
-
-    //     it('should check is favorite', () => {
-    //         const trackId = '6ozp33PI3p9AdddB6ZL3xQ'
-
-    //         return logic.toggleFavorite(trackId)
-    //             .then(() => {
-    //                 expect(logic.isFavorite(trackId)).toBeTruthy()
-
-    //                 return logic.toggleFavorite(trackId)
-    //             })
-    //             .then(() => {
-    //                 expect(logic.isFavorite(trackId)).toBeFalsy()
-    //             })
-    //     })
-    // })
 
     describe('store user data', () => {
       let username = 'someone-' + Math.random()
@@ -314,6 +258,7 @@ describe('logic (Museum-App)', () => {
           })
           .catch(console.error)
 
+
       })
     })
 
@@ -334,6 +279,20 @@ describe('logic (Museum-App)', () => {
     })
 
     describe('detailed object search with _callRijksmuseumApiObjectDetail', () => {
+      //  https://www.rijksmuseum.nl/api/en/collection/SK-C-211?key=ROQio02r&format=json
+      it('should return detailed object results for an object number', () => {
+        return logic._callRijksmuseumApiObjectDetail('SK-C-211')
+          .then(results => {
+            expect(results).toBeDefined()
+            expect(results.artObject).toBeDefined();
+            expect(results.artObject.objectNumber).toBe("SK-C-211")
+            expect(results.artObject.title).toBe("The Windmill at Wijk bij Duurstede")
+          })
+
+      })
+    })
+
+   describe('get object data with  _callRijksmuseumApiObjectDetail', () => {
       //  https://www.rijksmuseum.nl/api/en/collection/SK-C-211?key=ROQio02r&format=json
       it('should return detailed object results for an object number', () => {
         return logic._callRijksmuseumApiObjectDetail('SK-C-211')
