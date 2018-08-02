@@ -1,14 +1,12 @@
 import React, {Component} from 'react'
 import close from '../images/close.svg'
 import logic from '../logic/index'
-import heart from '../images/heart.svg'
-import heartfull from '../images/heartfull.svg'
+import heart from '../images/fav-line.svg'
+import heartfull from '../images/fav-color.svg'
 
 class Productpanel extends Component{
 
-        state = {
-                favorite: logic.isFavorite (this.props.ingredient[0].name)
-        }
+        state = { favorite: logic.isFavorite(this.props.ingredient[0].name)}
 
         onToggleFavorite = () => {
                 logic.toggleFoodFavorite(this.props.ingredient[0].name)
@@ -16,20 +14,24 @@ class Productpanel extends Component{
                     .catch(({ message }) => this.setState({ error: message }))
         }
 
-        refreshFavorite() {
-                this.setState({ favorite: logic.isFavorite(this.props.ingredient[0].name) }) 
-        } 
+        refreshFavorite(props) { 
+                this.setState({ favorite: logic.isFavorite(props.ingredient[0].name) }) 
+        }
+
+        componentWillReceiveProps(newProps) {
+                this.refreshFavorite(newProps)
+        }
 
         render () {
+
                 return <section >
 
-        {this.props.ingredient.map(({name, calories, totalFat, cholesterol, totalCarbohydrate, sugars, protein, 
+                {this.props.ingredient.map(({name, calories, totalFat, cholesterol, totalCarbohydrate, sugars, protein, 
 saturatedFat, servingUnit, sodium, potassium, dietaryFiber, photo}) => {
                 return <section>
-                        <div>
-                                <a href="" onClick={(event) => {event.preventDefault(); this.props.close()}}>
-                                        <img src={close}/>
-                                </a>
+                                <a href="" onClick={(event) => {event.preventDefault(); this.props.close()}}><img src={close}/></a>
+                                <img src={photo}/>
+                                <a href="" onClick={(event) => {event.preventDefault(); this.onToggleFavorite()}}>{this.state.favorite ? <img src={heartfull}/> : <img src={heart}/>}</a>
                                 <p>Name: {name}</p>
                                 <p>Calories: {calories}</p>
                                 <p>Total Fat: {totalFat}</p>
@@ -42,18 +44,10 @@ saturatedFat, servingUnit, sodium, potassium, dietaryFiber, photo}) => {
                                 <p>Sodium: {sodium}</p>
                                 <p>Potassium: {potassium}</p>
                                 <p>Dietary Fiber: {dietaryFiber}</p>
-                                <img src={photo}/>
-                        </div>
-                        <div>
-                                {this.state.favorite && <a href="" onClick={(event) => {event.preventDefault(); this.onToggleFavorite()}}> <img src={heartfull} /></a>}
-                                {!this.state.favorite && <a href="" onClick={(event) => {event.preventDefault(); this.onToggleFavorite()}}> <img src={heart} /></a>}
-                        </div>
-                                
                         </section>
         })} 
         </section>
-        }
-        
+        }    
 }
 
 export default Productpanel

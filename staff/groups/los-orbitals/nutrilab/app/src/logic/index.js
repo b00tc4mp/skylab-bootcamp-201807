@@ -47,7 +47,6 @@ const logic = {
         return JSON.parse(sessionStorage.getItem('userFavorites')) || []  
     },
 
-
     /**
      * User API to register, login, update, unregister or logout an user account
      * 
@@ -164,7 +163,6 @@ const logic = {
 
     toggleFoodFavorite(name) {
         const favorites = this._userFavorites
-        
         const index = favorites.indexOf(name)
 
         if (index > -1) {
@@ -173,16 +171,11 @@ const logic = {
             favorites.push(name)
         }
 
-        const data = {
-            username: this.userUsername,
-            password: this._userPassword,
-            favorites
-        }
+        const data = { username: this.userUsername, password: this._userPassword, favorites}
 
         return this._callApiUser(`/user/${this._userId}`, 'put', data, true)
             .then(() => {
                 this._userFavorites = favorites
-                
                 return true
             })
     },
@@ -190,6 +183,8 @@ const logic = {
     isFavorite (name){
         return this._userFavorites.includes(name)
     },
+    
+
 
     /**
      * Nutrition API (Nutritionix) to list by searched ingredients and see the details of each one
@@ -218,7 +213,7 @@ const logic = {
             .then((res) => res.json())
             .then(res => {
                 if (res.message) throw Error("api connection failed")
-                return res;
+                return res
             })
     },
 
@@ -241,6 +236,7 @@ const logic = {
         return this._callApiNutrition('natural/nutrients/', 'post', query)
             .then((res) => res)
     }
+    
 }
 
 if (typeof module !== 'undefined') module.exports = logic;

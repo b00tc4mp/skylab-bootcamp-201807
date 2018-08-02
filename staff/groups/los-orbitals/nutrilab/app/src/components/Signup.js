@@ -5,12 +5,26 @@ class Signup extends Component{
 
     state = {
         username: null,
-        password: null
+        password: null,
     }
 
-    saveUsername = (event) => this.setState ({username: event.target.value}) 
+    saveUsername = (event) => this.checkUsername(event.target.value) 
 
-    savePassword = (event) => this.setState ({password: event.target.value}) 
+    savePassword = (event) => this.checkPassword(event.target.value) 
+
+    checkUsername = value => {
+        const regex = (/^[a-zA-Z0-9]+$/)
+        let regexOk = value.match(regex)
+
+        if (regexOk !== null ) this.setState({username: value})
+    }
+
+    checkPassword = value => {
+        const regex = (/^[a-zA-Z0-9]+$/)
+        let regexOk = value.match(regex)
+
+        if (regexOk !== null ) this.setState({password: value})    
+    }
 
     signup = (event) => {
         event.preventDefault()
