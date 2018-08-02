@@ -3,6 +3,50 @@
 describe('logic (Museum-App)', () => {
     describe('user\'s', () => {
 
+        describe('testing derictly from _callUsersApi', () => {
+            const name = 'javier', lastname = 'serrapell', username = 'someone-' + Math.random(), email = 'lopezno@gmail.com', password = '123'
+
+            return logic.registerUser(name, lastname, username, email, password)
+                .then(() => logic.loginUser(username, password))
+
+
+            it('should register on correct data', () => {
+                username = 'someone-' + Math.random()
+                return logic._callUsersApi('/user', 'post', { username, password, name, lastname, email })
+                    .then(res => {
+                        expect(res.data.id).toBeDefined()
+                    })
+            })
+
+            it('should login on correct data', () => {
+                return logic._callUsersApi('/auth', 'post', { username, password })
+                    .then(({ data: { id } }) => {
+                        expect(id).toBeDefined()
+                    })
+            })
+
+            it('should update the user data correctly', () => {
+                const newPassword = 143
+                const newUsername = 'someone-' + Math.random()
+                const email = 'iterariterariterar@test.com'
+                const data = {
+                    username,
+                    password,
+                    newUsername,
+                    email,
+                    newPassword
+
+                }
+
+                return logic._callUsersApi(`/user/${this._userId}`, 'put', data, true)
+                    .then(res => {
+                        expect(res.status).toBe('OK')
+                    })
+            })
+
+
+        })
+
         describe('register user', () => {
             const name = 'javier', lastname = 'serrapell', username = 'someone-' + Math.random(), email = 'lopezno@gmail.com', password = '123'
 
@@ -126,72 +170,58 @@ describe('logic (Museum-App)', () => {
 
         })
 
-        // describe('retrieve user', () => {
-        //     const username = 'manuel-barzi-' + Math.random(), password = '123'
+        describe('favorites', () => {
+            let username
+            const password = '123'
+            const name = 'javier', lastname = 'serrapell', email = 'lopezno@gmail.com'
+            beforeEach(() => {
+                username = 'someone-' + Math.random()
+                return logic.registerUser(name, lastname, username, email, password)
+                    .then(() => logic.loginUser(username, password))
+            })
 
-        //     beforeEach(() => {
-        //         return logic.registerUser(username, password)
-        //             .then(() => logic.loginUser(username, password))
-        //     })
+            it('should toggle track to favorites', () => {
 
-        //     it('should retrieve user data', () => {
-        //         return logic.retrieveUser()
-        //             .then(data => {
-        //                 expect(data.username).toBe(logic.userUsername)
-        //             })
-        //     })
-        // })
+                const imgData = { objectNumber: '7nkRfBjbHx3A53kip8ulbd' }
 
-        // describe('favorites', () => {
-        //     let username
-        //     const password = '123'
+                return logic.toggleImageFavorite(imgData)
+                    .then(res => {
+                        expect(res).toBeTruthy()
 
-        //     beforeEach(() => {
-        //         username = 'manuel-barzi-' + Math.random()
+                        expect(logic._userFavorites.some(element => element.objectNumber === imgData.objectNumber)).toBeTruthy()
 
-        //         return logic.registerUser(username, password)
-        //             .then(() => logic.loginUser(username, password))
-        //     })
+                        return logic.toggleImageFavorite(imgData)
+                    })
+                    .then(res => {
+                        expect(res).toBeTruthy()
+                        expect(logic._userFavorites.some(element => element.objectNumber === imgData.objectNumber)).toBeFalsy()
+                    })
+            })
 
-        //     it('should toggle track to favorites', () => {
-        //         const trackId = '4QxwXcPUm1VfkHksz6VuFi'
+            it('should check is favorite', () => {
+                const imgData = { objectNumber: '7nkRfBjbHx3A53kip8ulbd' }
 
-        //         return logic.toggleFavorite(trackId)
-        //             .then(res => {
-        //                 expect(res).toBeTruthy()
-        //                 expect(logic._userFavorites.includes(trackId)).toBeTruthy()
+                return logic.toggleImageFavorite(imgData)
+                    .then(() => {
+                        expect(logic.isFavorite(imgData.objectNumber)).toBeTruthy()
 
-        //                 return logic.toggleFavorite(trackId)
-        //             })
-        //             .then(res => {
-        //                 expect(res).toBeTruthy()
-        //                 expect(logic._userFavorites.includes(trackId)).toBeFalsy()
-        //             })
-        //     })
-
-        //     it('should check is favorite', () => {
-        //         const trackId = '6ozp33PI3p9AdddB6ZL3xQ'
-
-        //         return logic.toggleFavorite(trackId)
-        //             .then(() => {
-        //                 expect(logic.isFavorite(trackId)).toBeTruthy()
-
-        //                 return logic.toggleFavorite(trackId)
-        //             })
-        //             .then(() => {
-        //                 expect(logic.isFavorite(trackId)).toBeFalsy()
-        //             })
-        //     })
-        // })
+                        return logic.toggleImageFavorite(imgData)
+                    })
+                    .then(() => {
+                        expect(logic.isFavorite(imgData.objectNumber)).toBeFalsy()
+                    })
+            })
+        })
 
         describe('store user data', () => {
             let username = 'someone-' + Math.random()
             const password = '123'
             const dataFieldName = "favorites"
+            const name = 'javier', lastname = 'serrapell', email = 'lopezno@gmail.com'
 
             beforeEach(() => {
                 username = 'someone-' + Math.random()
-                return logic.registerUser(username, password)
+                return logic.registerUser(name, lastname, username, email, password)
                     .then(() => logic.loginUser(username, password))
                     .catch(console.error)
             })
@@ -320,11 +350,11 @@ describe('logic (Museum-App)', () => {
 
         let username = 'someone-' + Math.random()
         const password = '123'
-
+        const name = 'javier', lastname = 'serrapell', email = 'lopezno@gmail.com'
 
         beforeEach(() => {
             username = 'someone-' + Math.random()
-            return logic.registerUser(username, password)
+            return logic.registerUser(name, lastname, username, email, password)
                 .then(() => logic.loginUser(username, password))
                 .catch(console.error)
         })
@@ -370,7 +400,6 @@ describe('logic (Museum-App)', () => {
             it('should return correct details for objectNumber', () => {
                 return logic.getMuseumDetailsForObjectNumber('SK-C-211')
                     .then(results => {
-                        console.log(results)
 
                         expect(results.colors).toEqual([
                             "#65563B",
@@ -390,6 +419,60 @@ describe('logic (Museum-App)', () => {
                     .catch(console.error)
             })
 
+        })
+
+        describe('detailed object search with _callRijksmuseumApiObjectDetail', () => {
+            //  https://www.rijksmuseum.nl/api/en/collection/SK-C-211?key=ROQio02r&format=json
+            it('should return detailed object results for an object number', () => {
+                return logic._callRijksmuseumApiObjectDetail('SK-C-211')
+                    .then(results => {
+                        expect(results).toBeDefined()
+                        expect(results.artObject).toBeDefined();
+                        expect(results.artObject.objectNumber).toBe("SK-C-211")
+                        expect(results.artObject.title).toBe("The Windmill at Wijk bij Duurstede")
+                    })
+
+            })
+        })
+
+        describe('get object data with  getMuseumDetailsForObjectNumber', () => {
+            //  https://www.rijksmuseum.nl/api/en/collection/SK-C-211?key=ROQio02r&format=json
+            it('should return detailed object results for an object number', () => {
+                return logic.getMuseumDetailsForObjectNumber('SK-C-211')
+                    .then(results => {
+                        expect(results).toBeDefined()
+                        expect(results.colors).toEqual([
+                            "#65563B",
+                            " #77705A",
+                            " #898D83",
+                            " #231E12",
+                            " #3C3828",
+                            " #A7A58F",
+                            " #988561"
+                        ]);
+                        expect(results.imageurl).toBe("http://lh3.googleusercontent.com/3EDrQy1jW6akN2k8eAeCECHJ1FmvM1f2pb9a-de51ErcQcghh7cbpzFIh-QYdcGfpi3FjxH1AP6C_FvPNR-I9n8I4No=s0")
+                        expect(results.materials).toEqual([
+                            "canvas",
+                            "oil paint (paint)"
+                        ])
+                    })
+
+            })
+        })
+
+        describe('general filtered query search', () => {
+            it('should find results matching criteria', () => {
+                return logic._callRijksmuseumApiQuery('Rembrandt&principalMaker=Rembrandt+van+Rijn')
+                    .then(results => {
+                        expect(results).toBeDefined()
+                        expect(results.artObjects).toBeDefined();
+                        const ourObject = results.artObjects[0];
+                        expect(ourObject).toBeDefined();
+                        expect(ourObject.id).toBe("en-SK-A-4691")
+                        expect(ourObject.longTitle).toBe('Self-portrait, Rembrandt van Rijn, c. 1628')
+                        expect(ourObject.webImage.url).toBe('https://lh3.googleusercontent.com/7qzT0pbclLB7y3fdS1GxzMnV7m3gD3gWnhlquhFaJSn6gNOvMmTUAX3wVlTzhMXIs8kM9IH8AsjHNVTs8em3XQI6uMY')
+                    })
+            })
         })
 
     })

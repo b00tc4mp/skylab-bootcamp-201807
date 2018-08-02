@@ -1,68 +1,142 @@
 const logic = {
-  // _userId: null,
-  // _userToken: null,
-  // _userUsername: null,
+ /**
+   * Sets the user id in session storage
+   *
+   * @param userId {string}
+   * @private
+   */
   set _userId(userId) {
     sessionStorage.setItem('userId', userId)
   },
-
+  /**
+   * Retrieves user id from session storage
+   *
+   * @returns {string}  The user id
+   * @private
+   */
   get _userId() {
     return sessionStorage.getItem('userId')
   },
-
+ /**
+   * Sets the user token provided by user API in session storage
+   *
+   * @param  {string} userToken The user token provided by the API
+   * @private
+   */
   set _userToken(userToken) {
     sessionStorage.setItem('userToken', userToken)
   },
-
+  /**
+   *  Retrieves the user API user token from session storage
+   *
+   * @returns {string} The user user token
+   * @private
+   */
   get _userToken() {
     return sessionStorage.getItem('userToken')
   },
-
+ /**
+   * Sets the user name in session storage
+   *
+   * @param  {string} userUsername The user name
+   * @private
+   */
   set _userUsername(userUsername) {
     sessionStorage.setItem('userUsername', userUsername)
   },
-
+ /**
+   * Retrieves the user name from session storage
+   *
+   * @returns {string} The user name
+   */
   get userUsername() {
     return sessionStorage.getItem('userUsername')
   },
 
+  /**
+   * Sets the user password in session storage
+   *
+   * @param  {string} userPassword The user password
+   * @private
+   */
   set _userPassword(userPassword) {
     sessionStorage.setItem('userPassword', userPassword)
   },
+    /**
+   * Sets the cloudinary URL of the user profile picture in session storage
+   *
+   * @param {string} cloudinaryURL The cloudinary URL for the profile picture
+   * @private
+   */
   set _cloudinaryURL(cloudinaryURL) {
     sessionStorage.setItem('cloudinaryURL', cloudinaryURL)
   },
+
+
+  /**
+   * Retrieves the user password from session storage
+   *
+   * @returns {string} The user password
+   * @private
+   */
 
   get _userPassword() {
     return sessionStorage.getItem('userPassword')
   },
 
+ /**
+   * Sets the user's "favorites" in session storage
+   *
+   * @param  {[{objectNumber: string, imageurl: number}]} userFavorites
+   * @private
+   */
+
   set _userFavorites(userFavorites) {
     sessionStorage.setItem('userFavorites', JSON.stringify(userFavorites))
   },
+
+  /**
+   * Retrieves the user favorites from session storage
+   *
+   * @returns {[{objectNumber: string, imageurl: number}]} An array of objects representing user favorites
+   * @private
+   */
 
   get _userFavorites() {
     return JSON.parse(sessionStorage.getItem('userFavorites')) || []
   },
 
+  /**
+   * Retrieves the Cloudinary url of the user profile image from session storage or an empty string
+   *
+   * @returns {string}  The Cloudinary url of the user profile image
+   * @private
+   */
   get _cloudinaryURL() {
     return sessionStorage.getItem('cloudinaryURL') || ""
   },
+
+
+  /**
+   * Retrieves the Cloudinary url of the user profile image
+   *
+   * @returns {string} The Cloudinary url of the user profile image
+   */
 
   get cloudinaryURL() {
     return this._cloudinaryURL;
   },
 
-  get MUSEUM_MAKER_FILTER() {
-    return "maker"
-  },
-  get MUSEUM_MATERIAL_FILTER() {
-    return "material"
-  },
-  get MUSEUM_PERIOD_FILTER() {
-    return "period"
-  },
-
+  /**
+   * Calls the user API directly, sending and/or retrieving data  -- can be any kind of HTTP call
+   *
+   * @param path {string} Partial path for users API call
+   * @param  {string} [method = get] The HTTP method to use, defaults to "get"
+   * @param {Object} [body]  The body to pass to the API
+   * @param {string} useToken Whether to use the API user token for the call
+   * @returns {Promise<Object>} A promise which resolves to an object representing the results of the call
+   * @private
+   */
 
   _callUsersApi(path, method = 'get', body, useToken) {
     const config = {
@@ -93,6 +167,17 @@ const logic = {
   // user's
 
 
+  /**
+   * Registers the user with the user API
+   *
+   * @param {string} name The user name to register with the user API
+   * @param {string} lastname The lastname to register with the user API
+   * @param {string} username The username to register with the user API
+   * @param {string} email The email to register with the user API
+   * @param {string} password The password to register with the user API
+   * @param {string} imageFileName The file path for the profile image to register with the user API
+   * @returns {Promise<Number>} A promise that resolves to the new user ID
+   */
 
   registerUser(name, lastname, username, email, password, imageFileName) {
     if (!imageFileName) {
@@ -107,6 +192,14 @@ const logic = {
         }).then(res => res.data.id)
     }
   },
+
+    /**
+   * Logs the user into the user API
+   *
+   * @param {string} username The user's username
+   * @param {string} password The user's password
+   * @returns {Promise<boolean>} A promise that resolves to true if successful
+   */
 
   loginUser(username, password) {
     return this._callUsersApi('/auth', 'post', { username, password })
@@ -126,6 +219,10 @@ const logic = {
       })
   },
 
+    /**
+   * Logs the user out and clears the user's session storage
+   */
+
   logout() {
     this._userId = null
     this._userToken = null
@@ -134,9 +231,25 @@ const logic = {
     sessionStorage.clear()
   },
 
+    /**
+   * Returns user's logged-in status
+   *
+   * @returns {boolean} The user's logged-in status
+   */
+
   get loggedIn() {
     return !!(this._userId && this._userToken && this.userUsername)
   },
+
+    /**
+   * Updates user information with user API, returns true if successful
+   *
+   * @param {string} password User's password
+   * @param {string} [newUsername] New username
+   * @param {string} [newPassword] New password
+   * @param {string} [newEmail] New email
+   * @returns {Promise<boolean>} A promise that resolves to true if successful
+   */
 
   updateUser(password, newUsername, newPassword, newEmail) {
     const data = {
@@ -158,6 +271,14 @@ const logic = {
       })
   },
 
+
+  /**
+   * Unregister's user from user API
+   *
+   * @param {string} password User's password
+   * @returns {Promise<boolean>} A promise that resolves to true if successful
+   */
+
   unregisterUser(password) {
     return this._callUsersApi(`/user/${this._userId}`, 'delete', {
       username: this.userUsername,
@@ -170,6 +291,14 @@ const logic = {
   //     return this._callUsersApi(`/user/${this._userId}`, 'get', undefined, true)
   //         .then(({ data }) => data)
   // },
+
+
+  /**
+   * Toggles the "favorite" status in the user API of the passed object
+   *
+   * @param {Object} objectData The object data which represents the item to set/remove as favorite
+   * @returns {Promise<boolean>} A promise that resolves to true if successful
+   */
 
   toggleImageFavorite(objectData) {
     const favorites = this._userFavorites
@@ -195,10 +324,25 @@ const logic = {
       })
   },
 
+   /**
+   * Determines whether the artwork is a user favorite or not by object number
+   *
+   * @param objectNumber The object number of the artwork
+   * @returns {boolean} Returns true if is favorite, false if not
+   */
+
   isFavorite(objectNumber) {
     // return this._userFavorites.includes(objectNumber)
     return this._userFavorites.some(element => element.objectNumber === objectNumber)
   },
+
+    /**
+   * Stores arbitrary data in the user API in the field 'fieldName'
+   *
+   * @param {string} fieldName The field in which to store the data in the user API
+   * @param data The data
+   * @returns {Promise<boolean>} A promise that resolves to true if successful
+   */
 
   storeUserData(fieldName, data) {
     return this._callUsersApi(`/user/${this._userId}`, 'put', {
@@ -210,6 +354,13 @@ const logic = {
         return true
       })
   },
+
+  /**
+   * Retrieves arbitrary user data in field 'fieldName' from user API
+   *
+   * @param {string} fieldName The field in which to store the data
+   * @returns {Promise<T>} Returns a promise the resolves to the data if sucessful, null if not
+   */
 
   retrieveUserData(fieldName) {
     return this._callUsersApi(`/user/${this._userId}`, 'get', null, true)
@@ -225,7 +376,13 @@ const logic = {
 
   museumKey: 'ROQio02r',
 
-
+  /**
+   * Calls the Rijksmuseum API with a query and returns the results
+   *
+   * @param {string} query The query to send
+   * @returns {Promise<{}>} Returns a promise the resolves to the API response
+   * @private
+   */
 
   _callRijksmuseumApiQuery(query) {
     const searchString = `https://www.rijksmuseum.nl/api/en/collection?key=${this.museumKey}&q=${query}&ps=100`;
@@ -238,7 +395,14 @@ const logic = {
       });
   },
 
-  // TODO TESTING
+
+    /**
+   * Gets an artwork's 'object details' from the Rijksmuseum API for a particular object number
+   *
+   * @param {string} objectNumber The object number representing the artwork
+   * @returns {Promise<{}>} A promise that resolves to the response
+   * @private
+   */
 
   _callRijksmuseumApiObjectDetail(objectNumber) {
     const searchString = `https://www.rijksmuseum.nl/api/en/collection/${objectNumber}?key=${this.museumKey}&format=json`;
@@ -252,13 +416,31 @@ const logic = {
   },
 
 
+  /**
+   * Searches the Rijksmuseum API for artworks that match a particular query
+   *
+   * @param {string} query The query string
+   * @returns {Promise<[]>} A promise the resolves to an array of art objects
+   */
+
   searchMuseum: function (query) {
     return this._callRijksmuseumApiQuery(query)
       .then(res => {
         return res.artObjects
       })
   },
-  //TODO TEST
+
+    /**
+   * Searches the Rijksmuseum API for artworks that match a particular query
+   *
+   * @param {string} query The query string
+   * @returns {Promise<[{objectNumber: string,
+   * id:string,imageurl: string,
+   * title: string,
+   * longTitle: string,
+   * maker:string}]>} A promise the resolves to an array of objects representing artworks found
+   */
+
   getMuseumImagesForSearchTerm(query) {
     return this._callRijksmuseumApiQuery(query.trim().replace(/ /g, "%20"))
       .then(res => {
@@ -276,6 +458,22 @@ const logic = {
 
       })
   },
+
+    /**
+   * Retrieves the object details for a particular artwork
+   *
+   * @param {string} objectNumber The object number representing a particular artwork
+   * @returns {Promise<{colors: [],
+   * period: string,
+   * imageurl: string,
+   * title: string,
+   * objectNumber: string,
+   * longTitle: string,
+   * maker: string,
+   * description: string,
+   * materials:[],
+   * physicalMedium:string}>} A promise that resolves to an object that contains details about the artwork
+   */
 
   getMuseumDetailsForObjectNumber(objectNumber) {
     return this._callRijksmuseumApiObjectDetail(objectNumber)
@@ -299,48 +497,14 @@ const logic = {
       })
   },
 
-  /*uploadFile(file) {
-
-    const cloudName = "rainysaturdayprojectskylab"
-    const unsignedUploadPreset = "rainysaturdayproject"
-
-    var url = `https://api.cloudinary.com/v1_1/${cloudName}/upload`;
-
-    var xhr = new XMLHttpRequest();
-    var fd = new FormData();
-    xhr.open('POST', url, true);
-    xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-
-    // Reset the upload progress bar
-    // document.getElementById('progress').style.width = 0;
-
-    // Update progress (can be used to show progress indicator)
-    // xhr.upload.addEventListener("progress", function(e) {
-    //   var progress = Math.round((e.loaded * 100.0) / e.total);
-    //   document.getElementById('progress').style.width = progress + "%";
-    //
-    //   console.log(`fileuploadprogress data.loaded: ${e.loaded},
-    // data.total: ${e.total}`);
-    // });
-
-    xhr.onreadystatechange = function (e) {
-      if (xhr.readyState == 4 && xhr.status == 200) {
-        // File uploaded successfully
-        var response = JSON.parse(xhr.responseText);
-        // https://res.cloudinary.com/cloudName/image/upload/v1483481128/public_id.jpg
-        var url = response.secure_url;
-        // Create a thumbnail of the uploaded image, with 150px width
-        console.log(response, url)
-      }
-    };
-
-    fd.append('upload_preset', unsignedUploadPreset);
-    fd.append('tags', 'browser_upload'); // Optional - add tag for image admin in Cloudinary
-    fd.append('file', file);
-    xhr.send(fd);
-  },*/
-
-  //TODO TEST
+ /**
+   * Call the Cloudinary API to post image
+   *
+   * @param {string} file The file name of the image to upload
+   * @param {string} [method = post] The HTTP method
+   * @returns {Promise<{}>} A promise that resolves to the results returned from API
+   * @private
+   */
 
   _callCloudinaryApi(file, method = 'post') {
     const config = {
@@ -367,33 +531,28 @@ const logic = {
       });
   },
 
-  //TODO TEST
+/**
+   * Uploads an image to the Cloudinary API
+   *
+   * @param {string} file The file name of the image to upload
+   * @returns {Promise<{}>} A promise the resolves to the response from the Cloudinary API
+   */
+
   uploadCloudinaryImage(file) {
     // return this._callCloudinaryApi(file)
     return this._callCloudinaryApi(file)
   },
 
-  //TODO TEST
+  /**
+   * Retrieves the user favorites
+   *
+   * @returns {{objectNumber: string, imageurl: number}[]} The user favorites
+   *
+   */
+
   getUserFavorites() {
     return this._userFavorites
   },
-
-
-  /*
-    getFilteredSearchTerm(searchTerm, filters) {
-
-      const makerFilter = filters[this.MUSEUM_MAKER_FILTER]
-      const periodFilter = filters[this.MUSEUM_PERIOD_FILTER]
-      const materialFilter = filters[this.MUSEUM_MATERIAL_FILTER]
-
-      const makerTerm = makerFilter ? `&principalMaker=${makerFilter.replace(/ /g, "%20")}` : "";
-      const periodTerm = periodFilter ? `&f.dating.period=${periodFilter}` : "";
-      const materialTerm = materialFilter ? `&material=${materialFilter.replace(/ /g, "%20")}` : "";
-
-      return searchTerm + makerTerm + periodTerm + materialTerm
-    }
-  */
-
 
 };
 
