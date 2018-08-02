@@ -30,7 +30,7 @@ class SearchForm extends Component {
     return <Container>
     <Row>
       <Form onSubmit={this.onDoSearch}>
-        <FormGroup>
+        <FormGroup className="buttonSituation">
          {/* <Label for="com.rainysaturday.SearchForm.searchTermInput">Enter Search Term</Label>*/}
           <Input disabled={this.props.disabled} value={this.state.searchTerm} autoFocus type="text" name="searchTermInput" onChange={this.handleSearchTermChange}
                  id="rainysaturday-searchTermInput" placeholder="Enter artist, Genre, Type of work, keyword..." required />
