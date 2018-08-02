@@ -4,10 +4,10 @@ describe('logic (Museum-App)', () => {
     describe('user\'s', () => {
 
         describe('register user', () => {
-            const username = 'someone-' + Math.random(), password = '123'
+            const name = 'javier', lastname = 'serrapell', username = 'someone-' + Math.random(), email = 'lopezno@gmail.com', password = '123'
 
             it('should register on correct data', () => {
-                return logic.registerUser(username, password)
+                return logic.registerUser(name, lastname, username, email, password)
                     .then(id => {
                         expect(id).toBeDefined()
                     })
@@ -15,11 +15,11 @@ describe('logic (Museum-App)', () => {
         })
 
         describe('login user', () => {
-            const username = 'someone-' + Math.random(), password = '123'
+            const name = 'javier', lastname = 'serrapell', username = 'someone-' + Math.random(), email = 'lopezno@gmail.com', password = '123'
             let userId
 
             beforeEach(() => {
-                return logic.registerUser(username, password)
+                return logic.registerUser(name, lastname, username, email, password)
                     .then(id => userId = id)
             })
 
@@ -36,10 +36,11 @@ describe('logic (Museum-App)', () => {
         })
 
         describe('unregister user', () => {
-            const username = 'someone-' + Math.random(), password = '123'
+            const name = 'javier', lastname = 'serrapell', username = 'someone-' + Math.random(), email = 'lopezno@gmail.com', password = '123'
+
 
             beforeEach(() => {
-                return logic.registerUser(username, password)
+                return logic.registerUser(name, lastname, username, email, password)
                     .then(() => logic.loginUser(username, password))
             })
 
@@ -52,10 +53,11 @@ describe('logic (Museum-App)', () => {
         })
 
         describe('logout user', () => {
-            const username = 'someone-' + Math.random(), password = '123'
+            const name = 'javier', lastname = 'serrapell', username = 'someone-' + Math.random(), email = 'lopezno@gmail.com', password = '123'
+
 
             beforeEach(() => {
-                return logic.registerUser(username, password)
+                return logic.registerUser(name, lastname, username, email, password)
                     .then(() => logic.loginUser(username, password))
             })
 
@@ -75,11 +77,12 @@ describe('logic (Museum-App)', () => {
         describe('update user', () => {
             let username
             const password = '123'
+            const name = 'javier', lastname = 'serrapell', email = 'lopezno@gmail.com'
 
             beforeEach(() => {
                 username = 'someone-' + Math.random()
 
-                return logic.registerUser(username, password)
+                return logic.registerUser(name, lastname, username, email, password)
                     .then(() => logic.loginUser(username, password))
             })
 
@@ -87,7 +90,7 @@ describe('logic (Museum-App)', () => {
                 const newUsername = username + '-' + Math.random()
                 const newPassword = password + '-' + Math.random()
 
-                return logic.updateUser(password, newUsername, newPassword)
+                return logic.updateUser(password, newUsername, newPassword, email)
                     // .then(res => expect(res).toBeTruthy())
                     .then(res => {
                         expect(res).toBeTruthy()
@@ -120,7 +123,7 @@ describe('logic (Museum-App)', () => {
                     })
                     .then(res => expect(res).toBeTruthy())
             })
-            
+
         })
 
         // describe('retrieve user', () => {
@@ -184,49 +187,49 @@ describe('logic (Museum-App)', () => {
         describe('store user data', () => {
             let username = 'someone-' + Math.random()
             const password = '123'
-            const dataArray = [{a:"b",c:"d",obj:{something:"else"}}]
-            const dataObj = {something:{is:"different"}}
+            const dataArray = [{ a: "b", c: "d", obj: { something: "else" } }]
+            const dataObj = { something: { is: "different" } }
             const dataFieldName = "favorites"
-        
+
             beforeEach(() => {
-              username = 'someone-' + Math.random()
-              return logic.registerUser(username, password)
-                .then(() => logic.loginUser(username, password))
-                .catch(console.error)
+                username = 'someone-' + Math.random()
+                return logic.registerUser(username, password)
+                    .then(() => logic.loginUser(username, password))
+                    .catch(console.error)
             })
-        
+
             it('should store an array of data correctly', () => {
-              expect(logic._userId).toBeDefined()
-              expect(logic._userToken).toBeDefined()
-              expect(logic.userUsername).toBeDefined()
-              return logic.storeUserData(dataFieldName,dataArray)
-                .then((res) => {
-                  expect(res).toBeTruthy();
-                }).then(()=> {
-                  return logic.retrieveUserData(dataFieldName)
+                expect(logic._userId).toBeDefined()
+                expect(logic._userToken).toBeDefined()
+                expect(logic.userUsername).toBeDefined()
+                return logic.storeUserData(dataFieldName, dataArray)
                     .then((res) => {
-                      expect(res).toEqual(dataArray)
-                    });
-                }).catch(console.error)
-        
+                        expect(res).toBeTruthy();
+                    }).then(() => {
+                        return logic.retrieveUserData(dataFieldName)
+                            .then((res) => {
+                                expect(res).toEqual(dataArray)
+                            });
+                    }).catch(console.error)
+
             })
-        
+
             it('should store object data correctly', () => {
-              expect(logic._userId).toBeDefined()
-              expect(logic._userToken).toBeDefined()
-              expect(logic.userUsername).toBeDefined()
-              return logic.storeUserData(dataFieldName,dataObj)
-                .then((res) => {
-                  expect(res).toBeTruthy();
-                }).then(()=> {
-                  return logic.retrieveUserData(dataFieldName)
+                expect(logic._userId).toBeDefined()
+                expect(logic._userToken).toBeDefined()
+                expect(logic.userUsername).toBeDefined()
+                return logic.storeUserData(dataFieldName, dataObj)
                     .then((res) => {
-                      expect(res).toEqual(dataObj)
-                    });
-                }).catch(console.error)
-        
+                        expect(res).toBeTruthy();
+                    }).then(() => {
+                        return logic.retrieveUserData(dataFieldName)
+                            .then((res) => {
+                                expect(res).toEqual(dataObj)
+                            });
+                    }).catch(console.error)
+
             })
-          })
+        })
 
     })
 
@@ -235,22 +238,22 @@ describe('logic (Museum-App)', () => {
 
         let username = 'someone-' + Math.random()
         const password = '123'
-       
-    
+
+
         beforeEach(() => {
-          username = 'someone-' + Math.random()
-          return logic.registerUser(username, password)
-            .then(() => logic.loginUser(username, password))
-            .catch(console.error)
+            username = 'someone-' + Math.random()
+            return logic.registerUser(username, password)
+                .then(() => logic.loginUser(username, password))
+                .catch(console.error)
         })
-    
+
 
 
         describe('general filtered query search', () => {
             it('should find results matching criteria', () => {
                 return logic._callRijksmuseumApiQuery('Rembrandt&principalMaker=Rembrandt+van+Rijn')
                     .then(results => {
-                   const     ourObject = results.artObjects[0];
+                        const ourObject = results.artObjects[0];
 
                         expect(results).toBeDefined()
                         expect(ourObject.id).toBe("en-SK-A-4691")
@@ -281,65 +284,31 @@ describe('logic (Museum-App)', () => {
         })
 
 
-      describe('get object details', () => {
-        it('should return correct details for objectNumber', () => {
-          return logic.getMuseumDetailsForObjectNumber('SK-C-211')
-            .then(results => {
-              console.log(results)
+        describe('get object details', () => {
+            it('should return correct details for objectNumber', () => {
+                return logic.getMuseumDetailsForObjectNumber('SK-C-211')
+                    .then(results => {
+                        console.log(results)
 
-              expect(results.colors).toEqual([
-                "#65563B",
-                " #77705A",
-                " #898D83",
-                " #231E12",
-                " #3C3828",
-                " #A7A58F",
-                " #988561"
-              ])
-              expect(results.principalMaker).toBe("Jacob Isaacksz. van Ruisdael")
-              expect(results.materials).toEqual([
-                "canvas",
-                "oil paint (paint)"
-              ])
+                        expect(results.colors).toEqual([
+                            "#65563B",
+                            " #77705A",
+                            " #898D83",
+                            " #231E12",
+                            " #3C3828",
+                            " #A7A58F",
+                            " #988561"
+                        ])
+                        expect(results.principalMaker).toBe("Jacob Isaacksz. van Ruisdael")
+                        expect(results.materials).toEqual([
+                            "canvas",
+                            "oil paint (paint)"
+                        ])
+                    })
+                    .catch(console.error)
             })
-            .catch(console.error)
+
         })
 
-      })
-
-        // describe('retrieve albums by artist id', () => {
-        //     it('should retrieve albums for given artist id', () => {
-        //         return logic.retrieveAlbumsByArtistId('4BH2S4t8fh9YqRIXnEEDEN')
-        //             .then(albums => {
-        //                 expect(albums).toBeDefined()
-        //                 expect(albums.length).toBe(3)
-        //                 expect(albums[0].name).toBe('Hunter')
-        //                 expect(albums[0].type).toBe('album')
-        //             })
-        //     })
-        // })
-
-        // describe('retrieve tracks by album id', () => {
-        //     it('should retrieve tracks for given album id', () => {
-        //         return logic.retrieveTracksByAlbumId('7lnYU1xXbEiKPTZk3ltDE2')
-        //             .then(tracks => {
-        //                 expect(tracks).toBeDefined()
-        //                 expect(tracks.length).toBe(1)
-        //                 expect(tracks[0].name).toBe('Hunter')
-        //                 expect(tracks[0].type).toBe('track')
-        //             })
-        //     })
-        // })
-
-        // describe('retrieve track by id', () => {
-        //     it('should retrieve track for given id', () => {
-        //         return logic.retrieveTrackById('4QxwXcPUm1VfkHksz6VuFi')
-        //             .then(track => {
-        //                 expect(track).toBeDefined()
-        //                 expect(track.name).toBe('Hunter')
-        //                 expect(track.type).toBe('track')
-        //             })
-        //     })
-        // })
     })
 })
