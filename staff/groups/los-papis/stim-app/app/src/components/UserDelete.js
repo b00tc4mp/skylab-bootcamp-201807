@@ -1,95 +1,117 @@
-import React, {Component} from 'react'
-import NavBar  from "./NavBar";
-import Landing from "./Landing";
-import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import React, { Component } from 'react'
+import { Button, Form, FormGroup, Label, Input, FormText,Container } from 'reactstrap'
 import logic from "../logic"
+import swal from 'sweetalert2'
 
 
-class UserDelete extends Component{
+class UserDelete extends Component {
 
-    state ={
-        
-        Username:"",
-        newUsername:"",
-        password:"",
-        newPassword:"",
-        
-    }
+  state = {
 
-    keepUsername = event => this.setState({ Username: event.target.value })
-    keepPassword = event => this.setState({ password: event.target.value })
-    keepNewUsername = event => this.setState({ newUsername: event.target.value })
-    keepNewPassword = event => this.setState({ newPassword: event.target.value })
-    
-    onUpdate = event => {
-        event.preventDefault()
+    Username: logic._userUsername,
+    newUsername: "",
+    password: "",
+    newPassword: "",
 
-        const { newUsername, password, newPassword } = this.state
+  }
 
-        logic.updateUser(password, newUsername, newPassword)
-    }
-     
-    onDelete = event =>{
-        event.preventDefault()
-        const {password} = this.state
-        logic.unregisterUser(password)
-    }
+  keepUsername = event => this.setState({ Username: event.target.value })
+  keepPassword = event => this.setState({ password: event.target.value })
+  keepNewUsername = event => this.setState({ newUsername: event.target.value })
+  keepNewPassword = event => this.setState({ newPassword: event.target.value })
+
+  onUpdate = event => {
+    event.preventDefault()
+
+    const { newUsername, password, newPassword } = this.state
+
+    logic.updateUser(password, newUsername, newPassword)
+      .then(() => {
+        this.setState({
+        Username: logic._userUsername,
+        password: logic._userPassword
+      })
+    })
+    .then(() => {
+      swal({
+        title: 'Success! :)',
+        text: "Update successful",
+        type: 'success',
+        confirmButtonText: 'Nice!'
+      })
+    })
+      .catch((err) => swal({
+        title: 'Failed! :(',
+        text: err,
+        type: 'error',
+        confirmButtonText: 'Try again'
+      }))
 
 
+  }
 
-    render(){
-        return <section>
-        <h2>Update</h2>
-        <img src={require('../imagenes/logo-steam.png')} width="100vw" height="100vh" />
-        <Form onSubmit={this.onUpdate}>
+  onDelete = event => {
+    event.preventDefault()
+    const { password } = this.state
+    logic.unregisterUser(password)
+      .then(this.props.handleLogout)
+      .catch((err) => swal({
+        title: 'Failed! :(',
+        text: err,
+        type: 'error',
+        confirmButtonText: 'Try again'
+      }))
+  }
+
+  render() {
+    return <Container>
+      <h2>Update</h2>
+      <img src={require('../imagenes/logo-steam.png')} width="100vw" height="100vh" />
+      <Form onSubmit={this.onUpdate}>
         <FormGroup>
           <Label for="text-user">Username</Label>
-          <Input type="text" name="Username" id="username" placeholder="username" onChange={this.keepUsername} />
+          <Input type="text" disabled value={this.state.Username} />
         </FormGroup>
         <FormGroup>
           <Label for="text-user">newUsername</Label>
-          <Input type="text" name="Username" id="username" placeholder="username" onChange={this.keepNewUsername} />
+          <Input type="text" name="Username" placeholder="New username" onChange={this.keepNewUsername} />
         </FormGroup>
         <FormGroup>
           <Label for="examplePassword">Password</Label>
-          <Input type="password" name="password" id="examplePassword" placeholder="password" onChange={this.keepPassword} />
+          <Input type="password" name="password" placeholder="password" onChange={this.keepPassword} />
         </FormGroup>
         <FormGroup>
           <Label for="newPassword">New password</Label>
-          <Input type="password" name="newpassword" id="newPassword" placeholder=" new password" onChange={this.keepNewPassword} />
+          <Input type="password" name="newpassword" placeholder=" new password" onChange={this.keepNewPassword} />
         </FormGroup>
-        <Form>
-        <Button>Update</Button>
+        <Button type="submit" className="btn-success">Update</Button>
       </Form>
-      </Form>
-          
-         
-        <div>
+
+
+      <div>
         <h2>Delete profile</h2>
         <img src={require('../imagenes/logo-steam.png')} width="100vw" height="100vh" />
         <Form onSubmit={this.onDelete}>
-        <FormGroup>
-          <Label for="text-user">Username</Label>
-          <Input type="text" name="Username" id="username" placeholder="username" onChange={this.keepUsername} />
-        </FormGroup>
-        <FormGroup>
-          <Label for="examplePassword">Password</Label>
-          <Input type="password" name="password" id="examplePassword" placeholder="password " onChange={this.keepPassword} />
-        </FormGroup>
-        <Form>
-        <Button>Delete</Button>
-      </Form>
-      </Form>
+          <FormGroup>
+            <Label for="text-user">Username</Label>
+            <Input type="text" disabled value={this.state.Username} />
+          </FormGroup>
+          <FormGroup>
+            <Label for="examplePassword">Password</Label>
+            <Input type="password" name="password" placeholder="password " onChange={this.keepPassword} />
+          </FormGroup>
+          <Button type="submit" className="btn-danger">Delete</Button>
+        </Form>
       </div>
 
 
 
 
 
-        </section>
+    </Container>
 
 
-    }
+  }
 }
 
-export default UserDelete;
+export default UserDelete

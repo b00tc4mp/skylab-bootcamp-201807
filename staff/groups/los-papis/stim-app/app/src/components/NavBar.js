@@ -1,30 +1,32 @@
 import React, { Component } from 'react'
 import {
-    Collapse,
-    Navbar,
-    NavbarToggler,
-    NavbarBrand,
-    Nav,
-    NavItem,
-    NavLink,
-    UncontrolledDropdown,
-    DropdownToggle,
-    DropdownMenu,
-    DropdownItem
-} from 'reactstrap';
+  Collapse,
+  Navbar,
+  NavbarToggler,
+  NavbarBrand,
+  Nav,
+  NavItem,
+  NavLink,
+  UncontrolledDropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem
+} from 'reactstrap'
 import { Link } from 'react-router-dom'
 
 class NavBar extends Component {
 
-    state = {
-        isOpen: false
-    }
+  state = {
+    isOpen: false
+  }
 
-    toggle = () => {
-        this.setState({
-          isOpen: !this.state.isOpen
-        });
-      }
+  toggle = () => {
+    this.setState({
+      isOpen: !this.state.isOpen
+    })
+  }
+
+  handle
 
     render() {
         return  <Navbar color="light" light expand="md">
@@ -35,16 +37,19 @@ class NavBar extends Component {
             <NavItem>
                 <NavLink tag={Link} to="/search">Search Games</NavLink>
               </NavItem>
+              <NavItem>
+                <NavLink tag={Link} to="/favorites">Favorite Games</NavLink>
+              </NavItem>
               <UncontrolledDropdown nav inNavbar>
                 <DropdownToggle nav caret>
                   Profile
                 </DropdownToggle>
                 <DropdownMenu right>
-                  <DropdownItem tag={Link} to="/profiledetail">
-                    Profile details
-                  </DropdownItem>
                   <DropdownItem tag={Link} to="/profilesettings">
                     Profile settings
+                  </DropdownItem>
+                  <DropdownItem onClick={this.props.handleLogout} >
+                    Log Out
                   </DropdownItem>
                 </DropdownMenu>
               </UncontrolledDropdown>
@@ -54,5 +59,5 @@ class NavBar extends Component {
     } 
 }
 
-export default NavBar;
+export default NavBar
 

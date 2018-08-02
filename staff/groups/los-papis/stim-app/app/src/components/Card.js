@@ -1,13 +1,11 @@
-import React, { Component } from "react";
+import React, { Component } from "react"
 import {
   Card,
-  CardImg,
-  CardText,
   CardBody,
   CardTitle,
   CardSubtitle,
   Button
-} from "reactstrap";
+} from "reactstrap"
 import logic from '../logic'
 class NewCard extends Component {
 
@@ -37,8 +35,8 @@ class NewCard extends Component {
               {this.state.newsData && <p className="card-text" dangerouslySetInnerHTML={{__html:this.state.newsData.contents}}></p> }
               <Button target="_blank" rel="noopener noreferrer" href={!this.state.newsData ? "/newNotFound" : this.state.newsData.url} >See more</Button>
             </CardBody>
-          </Card>;
-        };
+          </Card>
+        }
       }
 {
   /* <Card>
@@ -50,4 +48,4 @@ class NewCard extends Component {
 </CardBody>
 </Card>  */
 }
-export default NewCard;
+export default NewCard
