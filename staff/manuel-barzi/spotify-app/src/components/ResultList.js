@@ -4,7 +4,7 @@ import Feedback from './Feedback'
 function ResultList(props) { // { results: [...{id, text}...], onItemClick: () => { ... } }
     return <section>
         <ul>
-            {props.results.map(({ id, text }) => <li key={id}><a href="#" onClick={
+            {props.results.map(({ id, text }) => <li key={id}><a href="" onClick={
                 event => {
                     event.preventDefault()
 

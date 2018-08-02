@@ -29,9 +29,9 @@ class Login extends Component {
                 <input type="password" onChange={this.keepPassword} />
                 <button type="submit">Login</button>
             </form>
-            {this.props.error && <Feedback message={this.props.error} />}
+            {this.props.error && <Feedback error={this.props.error} />}
             <p>
-                Go to <a href="/#" onClick={this.onGoToRegister}>Register</a>
+                Go to <a href="" onClick={this.onGoToRegister}>Register</a>
             </p>
         </section>
     }

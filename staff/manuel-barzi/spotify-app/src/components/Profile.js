@@ -45,8 +45,8 @@ class Profile extends Component {
                 <input type="password" onChange={this.keepNewPassword} /><br />
                 <button type="submit">Update</button>
             </form>
-            { this.props.error && <Feedback message={this.props.error} />}
-            { this.props.success && <Feedback message={this.props.success} positive={true} />}
+            { this.props.error && <Feedback error={this.props.error} />}
+            { this.props.success && <Feedback info={this.props.success} />}
         </section>
     }
 }

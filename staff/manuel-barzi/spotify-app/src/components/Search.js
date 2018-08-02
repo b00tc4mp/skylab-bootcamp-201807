@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Feedback from './Feedback'
 
-class SearchPanel extends Component {
+class Search extends Component {
     state = { query: '' }
 
     keepQuery = event => {
@@ -22,9 +22,9 @@ class SearchPanel extends Component {
                 <input type="text" onChange={this.keepQuery} />
                 <button type="submit">Search</button>
             </form>
-            {this.props.error && <Feedback message={this.props.error} />}
+            {this.props.error && <Feedback error={this.props.error} />}
         </section>
     }
 }
 
-export default SearchPanel
+export default Search
