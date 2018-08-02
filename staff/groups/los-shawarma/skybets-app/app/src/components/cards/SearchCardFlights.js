@@ -32,18 +32,20 @@ class SearchCardFlights extends Component {
     render() {
         return (
             <MuiPickersUtilsProvider utils={DateFnsUtils}>
-            <section>
-                <label>From</label>
-                <AutocompleteAsync onSelectedOption={this.onSelectedFrom}/>
-                <label>To</label>
-                <AutocompleteAsync onSelectedOption={this.onSelectedTo}/>
-                {/*<SearchAutocomplete onSelectedOption={this.onSelectedTo}/>*/}
-                <label>Departure date</label>
-                <DatePicker value={this.state.dateFrom} onChange={this.onDateFrom} />
-                <label>Return date</label>
-                <DatePicker value={this.state.dateTo} onChange={this.onDateTo} />
-                <button onClick={this.handleOnclick}>Search</button>  
-            </section>
+            <div>
+                <div className="card-body">
+                    <label>From</label>
+                    <AutocompleteAsync onSelectedOption={this.onSelectedFrom}/>
+                    <label>To</label>
+                    <AutocompleteAsync onSelectedOption={this.onSelectedTo}/>
+                    {/*<SearchAutocomplete onSelectedOption={this.onSelectedTo}/>*/}
+                    <label>Departure date</label>
+                    <DatePicker value={this.state.dateFrom} onChange={this.onDateFrom} />
+                    <label>Return date</label>
+                    <DatePicker value={this.state.dateTo} onChange={this.onDateTo} />
+                    <button className="btn btn-primary" onClick={this.handleOnclick}>Search</button>  
+                </div>
+            </div>
             </MuiPickersUtilsProvider>
         )
     }

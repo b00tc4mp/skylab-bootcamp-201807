@@ -22,7 +22,6 @@ class FavCard extends Component {
 
 
     static getDerivedStateFromProps(props, state) {
-        debugger
         if (props.currentPriceProp !== state.currentPrice || 
             props.currentOddsProp !== state.currentOdds ) {
           return {
