@@ -7,6 +7,7 @@ import Signup from './components/Signup'
 import Login from './components/Login'
 import Home from './components/Home'
 import Profile from './components/Profile'
+import FavoriteList from './components/FavoriteList'
 import Error404 from './components/Error404'
 import swal from 'sweetalert'
 import { Route, withRouter, Link, Redirect, Switch} from 'react-router-dom'
@@ -28,7 +29,7 @@ class App extends Component {
   signupUser = (username, password) => {
     logic.register(username, password)
       .then(() => {
-        swal("Wellcome!", "Now you can Login to enjoy the app!", "success")
+        swal("Welcome!", "Now you can Login to enjoy the app!", "success")
         this.setState({registered: true})
         this.props.history.push('/login')
       })
@@ -109,7 +110,6 @@ class App extends Component {
     
     return (
       <div className="App">
-
         <header className="App__header">
         {!loggedIn && <Link to="/" onClick={this.onResetMessage}> <p className="App__header__nav__item">Nutrilab</p></Link>}
           <Route path="/(home|profile)" render={() => 
@@ -119,8 +119,9 @@ class App extends Component {
               <Link to="/home" onClick={this.onResetMessage}> <p className="App__header__nav__item">Nutrilab</p></Link></li>
             </ul>
             <ul className="App__header__nav__ul">  
+              <Link to="/home" onClick={this.onResetMessage} ><p className="App__header__nav__item">Home</p></Link>
               <li className="App__header__item">
-              <Link to="/profile"> <p className="App__header__nav__item">Favorites</p></Link></li>
+              <Link to="/favorites"> <p className="App__header__nav__item">Favorites</p></Link></li>
               <li className="App__header__item">
               <Link to="/profile"> <p className="App__header__nav__item">Profile</p></Link></li>
               <li className="App__header__item">
@@ -139,6 +140,7 @@ class App extends Component {
           <Route path="/login" render = {() => loggedIn ? <Redirect to="/home"/> : <Login onLogin={loginUser} linkToSignUp={goToSignUp} feedback={showFeedback}/>} />
           <Route path="/home" render = {() => loggedIn ? <Home className="App__main2"/> : <Redirect to="/" />} />
           <Route path="/profile" render={() => loggedIn ? <Profile onUpdate={updateUser} feedback={showFeedback} feedbackdelete={showFeedbackDelete} onDelete={deleteUser}/> : <Redirect to="/"/>} />
+          <Route path="/favorites" render={() => loggedIn ? <FavoriteList /> :  <Redirect to="/"/>} />
           <Route component={Error404} />
         </Switch>
       </div>

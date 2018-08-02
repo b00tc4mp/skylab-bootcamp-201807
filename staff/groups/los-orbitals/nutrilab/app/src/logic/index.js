@@ -39,6 +39,13 @@ const logic = {
         return sessionStorage.getItem('userToken')   
     },
 
+    set _userFavorites (userFavorites){
+        sessionStorage.setItem('userFavorites', JSON.stringify(userFavorites))
+    },
+
+    get _userFavorites(){ 
+        return JSON.parse(sessionStorage.getItem('userFavorites')) || []  
+    },
 
     /**
      * User API to register, login, update, unregister or logout an user account
@@ -153,7 +160,40 @@ const logic = {
     get loggedIn (){
         return this.userUsername && this._userToken && this._userId
     },
-    
+
+    /**
+     * @param {string} name 
+     * if the name received is in the sessionStorage, it splices the name, else it pushes the name
+     * 
+     * @returns {Promise} updates the sessionStorage
+     */
+    toggleFoodFavorite(name) {
+        const favorites = this._userFavorites
+        const index = favorites.indexOf(name)
+
+        if (index > -1) {
+            favorites.splice(index, 1)
+        } else {
+            favorites.push(name)
+        }
+
+        const data = { username: this.userUsername, password: this._userPassword, favorites}
+
+        return this._callApiUser(`/user/${this._userId}`, 'put', data, true)
+            .then(() => {
+                this._userFavorites = favorites
+                return true
+            })
+    },
+
+    /**
+     * @param {string} name 
+     * 
+     * @returns {Function} updates the sessionStorage
+     */
+    isFavorite(name){
+        return this._userFavorites.includes(name)
+    },
 
 
     /**
@@ -183,7 +223,7 @@ const logic = {
             .then((res) => res.json())
             .then(res => {
                 if (res.message) throw Error("api connection failed")
-                return res;
+                return res
             })
     },
 
