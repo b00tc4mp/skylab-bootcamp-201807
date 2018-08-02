@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
 
 class BetPriceCard extends Component { 
-
     state = {
         currentPrice: null,
         currentOdds: null

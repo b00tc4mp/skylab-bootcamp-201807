@@ -132,7 +132,7 @@ class Pagination extends Component {
     return (
       <Fragment>
         <nav aria-label="Results Pagination">
-          <ul className="pagination">
+          <ul className="pagination pagination-sm">
             {pages.map((page, index) => {
               if (page === LEFT_PAGE)
                 return (

@@ -25,7 +25,6 @@ class Home extends Component {
     }
 
     keepCurrentPrice = ({ price: currentPrice }) => {
-
         this.setState({ currentPrice })
     }
 
@@ -75,15 +74,15 @@ class Home extends Component {
              const filteredFlights = this.filterFlightsData(flights);
 
              this.setState({flights: filteredFlights})
-             //this.setState({currentPrice: filteredFlights[0].price})
+             this.setState({currentPrice: filteredFlights[0].price})//
              this.setState({currentFlight: filteredFlights[0]})
 
          })
          .then(logic._callBetsApi)
          .then(bets => {
              const filteredBets = this.filterBetsData(bets);
+             this.setState({currentOdds: filteredBets[0].odds})
              this.setState({bets: filteredBets})
-             this.setState({currentBet: filteredBets[0]})
          })
          .catch()
     }
@@ -120,33 +119,38 @@ class Home extends Component {
     }
 
     render() {
-
+       
        const {flights, bets, currentPrice, currentOdds, currentBet, currentFlight} = this.state
         
        return(
-            <div className="card-deck mx-4">
-                <div className="card">
-                    <SearchCardFlights onSearchFlightsProp={ this.onSearchFlights } /> 
-                </div>
-                <div className="card">
-                    <ResultsSlider 
-                      resultsProp={ flights } 
-                      titleProps={ 'Flights' }
-                      onPageChangedProp={ this.keepCurrentFlight }
-                      render={ currentFlight => <FlightCard flightsProp={currentFlight}/> }
-                    />
-                </div>
-                <div className="card">
-                     <ResultsSlider 
-                        resultsProp={ bets } 
-                        titleProps={ 'Bets' }
-                        //onPageChangedProp={ this.keepCurrentOdds }
-                        onPageChangedProp={ this.keepCurrentBet }
-                        render={ currentBet => <BetCard betsProp={currentBet}/> }
-                    />
-                </div>
-                <div className="card">
-                    <BetPriceCard currentPriceProp={currentPrice} currentOddsProp={currentOdds}/>  
+            <main>
+                <div className="card-deck mx-4">
+                    <div className="card">
+                        <SearchCardFlights onSearchFlightsProp={ this.onSearchFlights } /> 
+                    </div>
+                    <div className="card">
+                        <ResultsSlider 
+                        resultsProp={ flights } 
+                        titleProps={ 'Flights' }
+                        onPageChangedProp={ this.keepCurrentFlight }
+                        render={ currentFlight => <FlightCard flightsProp={currentFlight}/> }
+                        />
+                    </div>
+                    <div className="card">
+                        <ResultsSlider 
+                            resultsProp={ bets } 
+                            titleProps={ 'Bets' }
+                            onPageChangedProp={ this.keepCurrentOdds }
+                            onPageChangedProp={ this.keepCurrentBet }
+                            render={ currentBet => <BetCard betsProp={currentBet}/> }
+                        />
+                    </div>
+                    
+                    <div className="card">
+                    
+                        <BetPriceCard currentPriceProp={currentPrice} currentOddsProp={currentOdds}/>  
+                    </div>
+                    
                 </div>
                 <div>
                     {(currentFlight && currentBet) && <FavCard 
@@ -154,10 +158,9 @@ class Home extends Component {
                         currentOddsProp={currentOdds}
                         currentFlightProp={currentFlight}
                         currentBetProp={currentBet}
-                     />}
-                 </div>
-            </div>
-
+                    />}
+                </div>
+            </main>
         )
     }
 
