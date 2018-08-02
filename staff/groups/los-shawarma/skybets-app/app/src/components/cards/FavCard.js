@@ -1,12 +1,11 @@
 import React from 'react'
 
- 
 const FavCard = props =>  { 
         const {dateFrom, cityFrom, flyFrom, dateTo, cityTo, flyTo, price, link } = props.currentFlightProp
         const {odds, results, teams, competition, date, time} = props.currentBetProp
 
-
         return(
+
             <section className="card">
                 <div>
                 
@@ -41,11 +40,12 @@ const FavCard = props =>  {
                     <span>{price}</span>
                     <span>Link:</span>
                     <span><a href={link}>Go to kiwi</a></span>
-                    <button>Add To Favorites</button>
+                    
                 
             </div>     
             </section>
 
         )
     }
+
 export default FavCard

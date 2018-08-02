@@ -64,15 +64,30 @@ class App extends Component {
     this.setState({loggedIn: false});
   }
 
+  ////////////////////////////////////////////////////////
+
+  onUpdateFavs = (currentBet, currentFlight) => {
+    logic.updateFavs(currentBet, currentFlight)
+    .then(() => {
+      debugger;
+      this.setState({errorUpdate: null, successUpdate: true})
+      this.props.history.push('/update')
+    })
+    .catch(({message}) => this.setState({errorUpdate: message}))
+  }
+
+  ////////////////////////////////////////////////////////
+
+
   render() {
     const {errorLogin, successLogin, errorRegister, successRegister, errorUpdate, successUpdate, loggedIn} =  this.state
-    const {onRegister, onLogin, onUpdate, onLogout} = this
+    const {onRegister, onLogin, onUpdate, onLogout, onUpdateFavs} = this
 
     return (
       <div className="App">
         <Nav onLogoutProp={onLogout}/>
 
-        <Route path="/" exact render={() => <Home />} />
+        <Route path="/" exact render={() => <Home onUpdateFavsProp={onUpdateFavs}/>} />
         <Route path="/login" exact render={() => <Login onLoginProp={onLogin} errorMsg={errorLogin} successMsg={successLogin}/>} />
         <Route path="/myfavs" exact render={() => loggedIn ? <MyFavs /> : <Redirect to="/login" />} /> 
         <Route path="/register" exact render={() => <Register onRegisterProp={onRegister} errorMsg={errorRegister} successMsg={successRegister}/>} />
