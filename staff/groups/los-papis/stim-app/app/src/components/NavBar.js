@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import {
   Collapse,
-  Button,
   Navbar,
   NavbarToggler,
   NavbarBrand,
@@ -14,7 +13,6 @@ import {
   DropdownItem
 } from 'reactstrap';
 import { Link } from 'react-router-dom'
-import logic from '../logic'
 
 class NavBar extends Component {
 

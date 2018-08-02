@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import { Container, Row, Col, CardColumns } from "reactstrap";
-import NavBar from "./NavBar";
+import { CardColumns } from "reactstrap";
 import GameCard from "./Card";
 import logic from "../logic";
 
