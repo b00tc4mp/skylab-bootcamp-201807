@@ -12,8 +12,15 @@ class Home extends Component {
         selectedTo : null,
         dateFrom : null,
         dateTo : null,*/
-        flights: []
+        flights: [],
+        bets: [],
+        currentPrice: null,
+        currentOdds: null,
     }
+
+    keepCurrentPrice = ({ price: currentPrice }) => this.setState({ currentPrice })
+
+    keepCurrentOdds = ({ odds: currentOdds }) => this.setState({ currentOdds })
     
     parseIata = iata => iata.substring(0, 3)
 
@@ -68,6 +75,22 @@ class Home extends Component {
 
         return filteredFlights
     }
+
+    filterBetsData = bets => {
+        const filteredBets = bets.map((bet, index) => ({
+            competition: bet.competition, 
+            date: bet.date, 
+            time: bet.time, 
+            teams: bet.team, 
+            link: bet.url, 
+            odds: bet.odds, 
+            results: bet.results,
+            id: index,
+        }));
+
+        return filteredBets
+    }
+
     
     
     render() {
@@ -80,10 +103,17 @@ class Home extends Component {
                 <SearchCardFlights getDataInputsProp={ this.getDataInputs } /> 
                 {/*flights.length > 0 && <FlightResults flightsProp={flights}/>*/} 
                 <ResultsSlider 
-                    resultsProp={flights} 
-                    titleProps={'Flights'}
+                    resultsProp={ flights } 
+                    titleProps={ 'Flights' }
+                    onPageChangedProp={ this.keepCurrentPrice }
                     render={ currentFlight => <FlightCard flightsProp={currentFlight}/> }
-                />        
+                />
+                <ResultsSlider 
+                    resultsProp={ bets } 
+                    titleProps={ 'Bets' }
+                    onPageChangedProp={ this.keepCurrentOdds }
+                    render={ currentBet => <BetCard betsProp={currentBet}/> }
+                /> 
             </main>
         )
     }
