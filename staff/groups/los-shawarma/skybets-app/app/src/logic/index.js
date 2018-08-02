@@ -61,6 +61,7 @@ const logic = {
 
      
     _callUsersApi(path, method = 'get', body, useToken) {
+        debugger;
         const config = {
             method
         }
@@ -139,13 +140,29 @@ const logic = {
             })
     },
 
+    updateFavs(currentBet, currentFlight) {
+        const data = {
+            "favorites":{
+                "bet": currentBet,
+                "flight": currentFlight
+            }
+        }
+
+        return this._callUsersApi(`/user/${this._userId}`, 'put', data, true)
+            .then(() => {
+                return true
+            })
+    },
+
     unregisterUser(password) {
         return this._callUsersApi(`/user/${this._userId}`, 'delete', {
             username: this.userUsername,
             password
         }, true)
             .then(() => true)
-    },
+    }
+
+    
 }
 
 //export default logic;

@@ -118,6 +118,15 @@ class Home extends Component {
         return filteredBets
     }
 
+    submitUpdateFav = e => {
+        e.preventDefault();
+        this.props.onUpdateFavsProp(this.state.currentBet, this.state.currentFlight)
+        console.log('The link was clicked.');
+      }
+
+
+    
+
     render() {
        
        const {flights, bets, currentPrice, currentOdds, currentBet, currentFlight} = this.state
@@ -158,8 +167,10 @@ class Home extends Component {
                         currentPriceProp={currentPrice} 
                         currentOddsProp={currentOdds}
                         currentFlightProp={currentFlight}
-                        currentBetProp={currentBet}
+                        currentBetProp={currentBet}                        
                     />}
+                {(currentFlight && currentBet) && 
+                <button onClick={this.submitUpdateFav}>Add To Favorites</button>}    
                 </div>
             </main>
         )
