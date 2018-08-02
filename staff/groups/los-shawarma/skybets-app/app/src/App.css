@@ -64,3 +64,14 @@ ul.pagination a.page-link:hover {
 }
 
 /*End Pagination*/
+button {
+  background-color: #6fa0c2;
+  color: white;
+  border-radius: 5px;
+  margin-top: 10px;
+  padding: 5px 20px;
+  border: none;
+
+}
+
+/* Start buttons */

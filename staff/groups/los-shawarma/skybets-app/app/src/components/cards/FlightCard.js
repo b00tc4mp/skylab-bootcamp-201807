@@ -8,28 +8,32 @@ const FlightCard = props => {
 
     return(
             <div>
-            <div className="block1">
-                <div>
-                    <span className="title">Date From: </span><span>{dateFrom}</span>
+                <div className="block">
+                    <div>
+                        <span className="font-weight-bold">Date From: </span><span>{dateFrom}</span>
+                    </div>
+                    <div>
+                        <span className="font-weight-bold">City From: </span><span>{cityFrom} ({flyFrom})</span>
+                    </div>
                 </div>
-                <div>
-                    <span className="title">City From: </span><span>{cityFrom} ({flyFrom})</span>
+                <div className="block2">
+                    <div>
+                        <span className="font-weight-bold">Date To: </span><span>{dateTo}</span>
+                    </div>
+                    <div>
+                        <span className="font-weight-bold">City To: </span><span>{cityTo} ({flyTo})</span>
+                    </div>
                 </div>
-            </div>
-            <div>
-                <div>
-                    <span>Date To: </span><span>{dateTo}</span>
+                <div className="block">
+                    <div>
+                        <span className="font-weight-bold">Price: </span><span>{price}€</span>
+                    </div>
                 </div>
-                <div>
-                    <span>City To: </span><span>{cityTo} ({flyTo})</span>
+                <div className="block2Btn">
+                    <div>
+                        <a target="_blank" href={link}>Go to kiwi</a>
+                    </div>
                 </div>
-            </div>
-            <div>
-                <h5>Price:</h5>
-                <p>{price}</p>
-                <h5>Link:</h5>
-                <a href={link}>Go to kiwi</a>
-            </div>
             </div>
     )
 }
