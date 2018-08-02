@@ -53,23 +53,25 @@ class ResultsSlider extends Component {
           .trim();
 
         return (
-          <div className="container mb-5">
-            <div className="row d-flex flex-row py-5">
-              <div className="w-100 px-4 py-5 d-flex flex-row flex-wrap align-items-center justify-content-between">
+          <div >
+            <div >
+              <div >
                 
-                <div className="d-flex flex-row align-items-center">
+                { this.props.render(currentResult) }
+                
+                <div >
                   <h2 className={headerClass}>
                     <strong className="text-secondary">{totalResults}</strong>{" "}
                     { this.props.titleProps }
                   </h2>
                   {currentPage && (
-                    <span className="current-page d-inline-block h-100 pl-4 text-secondary">
+                    <span >
                       Page <span className="font-weight-bold">{currentPage}</span> /{" "}
                       <span className="font-weight-bold">{totalPages}</span>
                     </span>
                   )}
                 </div>
-                { this.props.render(currentResult) }
+                
                 <div className="d-flex flex-row py-4 align-items-center">
                   <Pagination
                     totalRecords={totalResults}

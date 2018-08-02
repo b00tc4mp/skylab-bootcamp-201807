@@ -10,13 +10,9 @@ const BestPriceCard = props =>  {
             <section className="card">
                 <div>
                 
-                    <span>Flights Price / Odds </span><span>{price/odds}</span>
-                
-      
-                
-            </div>     
+                    <span>Flights Price / Odds </span><span>{(price/odds).toFixed(2)}</span>
+                </div>     
             </section>
-
         )
     }
 export default BestPriceCard
