@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import './App.css'
-//import { Route, Redirect } from 'react-router-dom'
 import logic from './logic'
 import Login from './components/pages/Login'
 import Home from './components/pages/Home'
@@ -68,7 +67,6 @@ class App extends Component {
   render() {
     const {errorLogin, successLogin, errorRegister, successRegister, errorUpdate, successUpdate, loggedIn} =  this.state
     const {onRegister, onLogin, onUpdate, onLogout} = this
-    //const { state: {onRegister}, onRegister} = this
 
     return (
       <div className="App">
