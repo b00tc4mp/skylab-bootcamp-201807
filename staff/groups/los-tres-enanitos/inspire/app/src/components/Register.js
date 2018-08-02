@@ -1,14 +1,19 @@
 import React, { Component } from 'react'
-
+import Utils from '../utils/Utils'
 
 class Register extends Component {
-  
+
   state = {
     firstName: '',
     lastName: '',
     email: '',
     username: '',
     password: '',
+    firstNameError: '',
+    lastNameError: '',
+    emailError: '',
+    usernameError: '',
+    passwordError: '',
   }
 
   handleFirstName = (event) => {
@@ -16,39 +21,115 @@ class Register extends Component {
   }
 
   handleLastName = (event) => {
-    this.setState({ lastName: event.target.value }) 
+    this.setState({ lastName: event.target.value })
   }
 
   handleEmail = (event) => {
-    this.setState({ email: event.target.value }) 
+    this.setState({ email: event.target.value })
   }
 
   handleUsername = (event) => {
-    this.setState({ username: event.target.value }) 
+    this.setState({ username: event.target.value })
   }
 
   handlePassword = (event) => {
-    this.setState({ password: event.target.value }) 
+    this.setState({ password: event.target.value })
   }
 
   handleSubmit = (event) => {
     event.preventDefault()
 
-    // TODO: validate required fields
+    let isValid = true
+    
+    this.setState({
+      firstNameError: '',
+      lastNameError: '',
+      emailError: '',
+      usernameError: '',
+      passwordError: '',
+    })
 
-    this.props.onSubmit(this.state)
+    if (Utils.isBlank(this.state.firstName)) {
+      this.setState({ firstNameError: `First name can't be blank` })
+      isValid = false
+    }
+
+    if (Utils.isBlank(this.state.lastName)) {
+      this.setState({ lastNameError: `Last name can't be blank` })
+      isValid = false
+    }
+
+    if (Utils.isBlank(this.state.email)) {
+      this.setState({ emailError: `Email can't be blank` })
+      isValid = false
+    }
+
+    if (Utils.isBlank(this.state.username)) {
+      this.setState({ usernameError: `Username can't be blank` })
+      isValid = false
+    }
+
+    if (Utils.isBlank(this.state.password)) {
+      this.setState({ passwordError: `Password can't be blank` })
+      isValid = false
+    }
+
+    if (isValid) {
+      this.props.onSubmit(this.state)
+    }
   }
-  
+
   render() {
     return (
-        <form className="register-form" onSubmit={this.handleSubmit}>
-            <input type="text" className="register-form__username" placeholder="First name" onChange={ this.handleFirstName }/>
-            <input type="text" className="register-form__username" placeholder="Last name" onChange={ this.handleLastName }/>
-            <input type="text" className="register-form__username" placeholder="Email" onChange={ this.handleEmail }/>
-            <input type="text" className="register-form__username" placeholder="Username" onChange={ this.handleUsername }/>
-            <input type="password" className="register-form__pass" placeholder="Password" onChange={ this.handlePassword }/>
-            <button type="submit" className="register-form__submit">Join</button>
-        </form>
+      <form className="register-form" onSubmit={this.handleSubmit}>
+        {
+          this.props.error &&
+          <div className="register-form__main-feedback register-form__main-feedback--invalid">
+            {this.props.error}
+          </div>
+        }
+        <div className={'register-form__field ' + (this.state.firstNameError && 'has-error')}>
+          <label className="register-form__label" htmlFor="first-name">First name</label>
+          <input type="text" name="" id="first-name" className="register-form__input" onChange={this.handleFirstName} />
+          {
+            this.state.firstNameError &&
+            <div className="register-form__feedback register-form__feedback--invalid">{this.state.firstNameError}</div>
+          }
+        </div>
+        <div className={'register-form__field ' + (this.state.lastNameError && 'has-error')}>
+          <label className="register-form__label" htmlFor="last-name">Last name</label>
+          <input type="text" name="" id="last-name" className="register-form__input" onChange={this.handleLastName} />
+          {
+            this.state.lastNameError &&
+            <div className="register-form__feedback register-form__feedback--invalid">{this.state.lastNameError}</div>
+          }
+        </div>
+        <div className={'register-form__field ' + (this.state.emailError && 'has-error')}>
+          <label className="register-form__label" htmlFor="email">Email</label>
+          <input type="text" name="" id="email" className="register-form__input" onChange={this.handleEmail} />
+          {
+            this.state.emailError &&
+            <div className="register-form__feedback register-form__feedback--invalid">{this.state.emailError}</div>
+          }
+        </div>
+        <div className={'register-form__field ' + (this.state.usernameError && 'has-error')}>
+          <label className="register-form__label" htmlFor="username">Username</label>
+          <input type="text" name="" id="username" className="register-form__input" onChange={this.handleUsername} />
+          {
+            this.state.usernameError &&
+            <div className="register-form__feedback register-form__feedback--invalid">{this.state.usernameError}</div>
+          }
+        </div>
+        <div className={'register-form__field ' + (this.state.passwordError && 'has-error')}>
+          <label className="register-form__label" htmlFor="password">Password</label>
+          <input type="password" name="" id="password" className="register-form__input" onChange={this.handlePassword} />
+          {
+            this.state.passwordError &&
+            <div className="register-form__feedback register-form__feedback--invalid">{this.state.passwordError}</div>
+          }
+        </div>
+        <button type="submit" className="register-form__submit">Join</button>
+      </form>
     )
   }
 }
