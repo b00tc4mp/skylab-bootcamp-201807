@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import SearchFlights from '../cards/SearchFlights'
+import SearchCardFlights from '../cards/SearchCardFlights'
 import logic from '../../logic'
 //import FlightResults from '../cards/FlightResults'
 import ResultsSlider from '../cards/ResultsSlider'
@@ -67,14 +67,13 @@ class Home extends Component {
         return(
             <main>
                 <h1>Home Page</h1>
-                <SearchFlights getDataInputsProp={ this.getDataInputs } /> 
+                <SearchCardFlights getDataInputsProp={ this.getDataInputs } /> 
                 {/*flights.length > 0 && <FlightResults flightsProp={flights}/>*/} 
-                {flights.length > 0 && 
-                    <ResultsSlider 
+                <ResultsSlider 
                     resultsProp={flights} 
                     titleProps={'Flights'}
                     render={ currentFlight => <FlightCard flightsProp={currentFlight}/> }
-                />}         
+                />        
             </main>
         )
     }

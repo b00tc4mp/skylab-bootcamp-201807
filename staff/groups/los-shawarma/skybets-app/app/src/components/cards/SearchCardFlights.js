@@ -5,7 +5,7 @@ import DateFnsUtils from 'material-ui-pickers/utils/date-fns-utils'
 import MuiPickersUtilsProvider from 'material-ui-pickers/utils/MuiPickersUtilsProvider'
 import SearchAutocomplete from '../materialUI/SearchAutocomplete'
 
-class SearchFlights extends Component {
+class SearchCardFlights extends Component {
 
     state = {
         selectedFrom : null,
@@ -50,4 +50,4 @@ class SearchFlights extends Component {
 
 }
 
-export default SearchFlights
+export default SearchCardFlights
