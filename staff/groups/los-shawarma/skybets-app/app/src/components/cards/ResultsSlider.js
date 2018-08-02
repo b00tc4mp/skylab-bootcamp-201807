@@ -30,6 +30,8 @@ class ResultsSlider extends Component {
         const currentResult = allResults.slice(offset, offset + pageLimit)[0];
        
         this.setState({ currentPage, currentResult, totalPages });
+
+        this.props.onPageChangedProp(currentResult);
       };
     
       render() {

@@ -15,8 +15,13 @@ class Home extends Component {
         dateTo : null,*/
         flights: [],
         bets: [],
-        currentFlight: null,
+        currentPrice: null,
+        currentOdds: null,
     }
+
+    keepCurrentPrice = ({ price: currentPrice }) => this.setState({ currentPrice })
+
+    keepCurrentOdds = ({ odds: currentOdds }) => this.setState({ currentOdds })
     
     parseIata = iata => iata.substring(0, 3)
 
@@ -81,6 +86,7 @@ class Home extends Component {
 
         return filteredBets
     }
+
     
     
     render() {
@@ -95,11 +101,13 @@ class Home extends Component {
                 <ResultsSlider 
                     resultsProp={ flights } 
                     titleProps={ 'Flights' }
+                    onPageChangedProp={ this.keepCurrentPrice }
                     render={ currentFlight => <FlightCard flightsProp={currentFlight}/> }
                 />
                 <ResultsSlider 
                     resultsProp={ bets } 
                     titleProps={ 'Bets' }
+                    onPageChangedProp={ this.keepCurrentOdds }
                     render={ currentBet => <BetCard betsProp={currentBet}/> }
                 /> 
             </main>
