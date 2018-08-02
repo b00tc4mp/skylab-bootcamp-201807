@@ -94,7 +94,7 @@ class Landing extends Component {
           isOpen={this.state.modal}
           toggle={this.toggle}
         >
-          <ModalHeader toggle={this.toggle}>Modal title</ModalHeader>
+          <ModalHeader toggle={this.toggle}>Register</ModalHeader>
           <form onSubmit={(e) => { 
             e.preventDefault()
             this.handleRegisterSubmit(this.state.username,this.state.password)}}>
@@ -118,7 +118,7 @@ class Landing extends Component {
         <Modal
           isOpen={this.state.modalLogin}
           toggle={this.loginToggle}>
-          <ModalHeader toggle={this.loginToggle}>Modal title</ModalHeader>
+          <ModalHeader toggle={this.loginToggle}>Log In</ModalHeader>
           <form onSubmit={(e)=>{
             e.preventDefault()
             this.handleLoginSubmit(this.state.username, this.state.password)}
