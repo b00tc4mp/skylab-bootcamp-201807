@@ -13,8 +13,9 @@
 
  h1 {
     color: orangered !important;
-     margin-left: 35%;
      font-family: 'Sunflower', sans-serif !important;;
+     font-size:3em  !important;
+     letter-spacing:.2em;
 
  }
 
