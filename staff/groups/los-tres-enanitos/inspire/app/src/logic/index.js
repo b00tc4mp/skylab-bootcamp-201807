@@ -39,6 +39,10 @@ const logic = {
         return sessionStorage.getItem('userPassword')
     },
 
+    get userPassword() {
+        return this._userPassword
+    },
+
     get loggedIn() {
         return this._userId && this._userToken && this.userUsername
     },
@@ -49,6 +53,10 @@ const logic = {
 
     get _userLikes() {
         return JSON.parse(sessionStorage.getItem('userLikes')) || []
+    },
+
+    get userLikes() {
+        return this._userLikes
     },
 
     set _userCollections(userCollections) {
@@ -147,10 +155,6 @@ const logic = {
                 return true
             })
     },
-
-
-    // TODO: to kim
-    // unregisterUser(password) {}
 
     togglePhotoLike(photoId) {
         const likes = this._userLikes

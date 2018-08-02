@@ -81,54 +81,54 @@ class Register extends Component {
 
   render() {
     return (
-      <form className="register-form" onSubmit={this.handleSubmit}>
+      <form className="form" onSubmit={this.handleSubmit}>
         {
           this.props.error &&
-          <div className="register-form__main-feedback register-form__main-feedback--invalid">
+          <div className="form__main-feedback form__main-feedback--invalid">
             {this.props.error}
           </div>
         }
-        <div className={'register-form__field ' + (this.state.firstNameError && 'has-error')}>
-          <label className="register-form__label" htmlFor="first-name">First name</label>
-          <input type="text" name="" id="first-name" className="register-form__input" onChange={this.handleFirstName} />
+        <div className={'form__field ' + (this.state.firstNameError && 'has-error')}>
+          <label className="form__label" htmlFor="first-name">First name</label>
+          <input type="text" name="" id="first-name" className="form__input" onChange={this.handleFirstName} />
           {
             this.state.firstNameError &&
-            <div className="register-form__feedback register-form__feedback--invalid">{this.state.firstNameError}</div>
+            <div className="form__feedback form__feedback--invalid">{this.state.firstNameError}</div>
           }
         </div>
-        <div className={'register-form__field ' + (this.state.lastNameError && 'has-error')}>
-          <label className="register-form__label" htmlFor="last-name">Last name</label>
-          <input type="text" name="" id="last-name" className="register-form__input" onChange={this.handleLastName} />
+        <div className={'form__field ' + (this.state.lastNameError && 'has-error')}>
+          <label className="form__label" htmlFor="last-name">Last name</label>
+          <input type="text" name="" id="last-name" className="form__input" onChange={this.handleLastName} />
           {
             this.state.lastNameError &&
-            <div className="register-form__feedback register-form__feedback--invalid">{this.state.lastNameError}</div>
+            <div className="form__feedback form__feedback--invalid">{this.state.lastNameError}</div>
           }
         </div>
-        <div className={'register-form__field ' + (this.state.emailError && 'has-error')}>
-          <label className="register-form__label" htmlFor="email">Email</label>
-          <input type="text" name="" id="email" className="register-form__input" onChange={this.handleEmail} />
+        <div className={'form__field ' + (this.state.emailError && 'has-error')}>
+          <label className="form__label" htmlFor="email">Email</label>
+          <input type="text" name="" id="email" className="form__input" onChange={this.handleEmail} />
           {
             this.state.emailError &&
-            <div className="register-form__feedback register-form__feedback--invalid">{this.state.emailError}</div>
+            <div className="form__feedback form__feedback--invalid">{this.state.emailError}</div>
           }
         </div>
-        <div className={'register-form__field ' + (this.state.usernameError && 'has-error')}>
-          <label className="register-form__label" htmlFor="username">Username</label>
-          <input type="text" name="" id="username" className="register-form__input" onChange={this.handleUsername} />
+        <div className={'form__field ' + (this.state.usernameError && 'has-error')}>
+          <label className="form__label" htmlFor="username">Username</label>
+          <input type="text" name="" id="username" className="form__input" onChange={this.handleUsername} />
           {
             this.state.usernameError &&
-            <div className="register-form__feedback register-form__feedback--invalid">{this.state.usernameError}</div>
+            <div className="form__feedback form__feedback--invalid">{this.state.usernameError}</div>
           }
         </div>
-        <div className={'register-form__field ' + (this.state.passwordError && 'has-error')}>
-          <label className="register-form__label" htmlFor="password">Password</label>
-          <input type="password" name="" id="password" className="register-form__input" onChange={this.handlePassword} />
+        <div className={'form__field ' + (this.state.passwordError && 'has-error')}>
+          <label className="form__label" htmlFor="password">Password</label>
+          <input type="password" name="" id="password" className="form__input" onChange={this.handlePassword} />
           {
             this.state.passwordError &&
-            <div className="register-form__feedback register-form__feedback--invalid">{this.state.passwordError}</div>
+            <div className="form__feedback form__feedback--invalid">{this.state.passwordError}</div>
           }
         </div>
-        <button type="submit" className="register-form__submit">Join</button>
+        <button type="submit" className="form__submit">Join</button>
       </form>
     )
   }

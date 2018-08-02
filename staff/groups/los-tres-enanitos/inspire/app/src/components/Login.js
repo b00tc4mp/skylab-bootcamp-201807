@@ -41,30 +41,30 @@ class Login extends Component {
 
   render() {
     return (
-      <form className="login-form" onSubmit={this.handleSubmit}>
+      <form className="form" onSubmit={this.handleSubmit}>
         {
           this.props.error &&
-          <div className="login-form__main-feedback login-form__main-feedback--invalid">
+          <div className="form__main-feedback form__main-feedback--invalid">
             {this.props.error}
           </div>
         }
-        <div className={'login-form__field ' + (this.state.usernameError && 'has-error')}>
-          <label className="login-form__label" htmlFor="username">Username</label>
-          <input type="text" name="" id="username" className="login-form__input" onChange={this.handleUsername} />
+        <div className={'form__field ' + (this.state.usernameError && 'has-error')}>
+          <label className="form__label" htmlFor="username">Username</label>
+          <input type="text" name="" id="username" className="form__input" onChange={this.handleUsername} />
           {
             this.state.usernameError &&
-            <div className="login-form__feedback login-form__feedback--invalid">{this.state.usernameError}</div>
+            <div className="form__feedback form__feedback--invalid">{this.state.usernameError}</div>
           }
         </div>
-        <div className={'login-form__field ' + (this.state.passwordError && 'has-error')}>
-          <label className="login-form__label" htmlFor="password">Password</label>
-          <input type="password" name="" id="password" className="login-form__input" onChange={this.handlePassword} />
+        <div className={'form__field ' + (this.state.passwordError && 'has-error')}>
+          <label className="form__label" htmlFor="password">Password</label>
+          <input type="password" name="" id="password" className="form__input" onChange={this.handlePassword} />
           {
             this.state.passwordError &&
-            <div className="login-form__feedback login-form__feedback--invalid">{this.state.usernameError}</div>
+            <div className="form__feedback form__feedback--invalid">{this.state.usernameError}</div>
           }
         </div>
-        <button type="submit" className="login-form__submit">Login</button>
+        <button type="submit" className="form__submit">Login</button>
       </form>
     )
   }

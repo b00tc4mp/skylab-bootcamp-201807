@@ -201,7 +201,7 @@ body {
   .block__description {
     font-size: 19px; }
 
-.login-form__main-feedback {
+.form__main-feedback {
   margin: 0 auto;
   padding: 15px 15px 1px;
   max-width: 100%;
@@ -210,25 +210,35 @@ body {
   text-align: center;
   margin-bottom: 20px;
   border-radius: 5px; }
-  .login-form__main-feedback--invalid {
+  .form__main-feedback--valid {
+    color: #155724;
+    background-color: #d4edda; }
+  .form__main-feedback--invalid {
     color: #dc3545;
     background-color: #f9ded8; }
-.login-form__field {
+.form__field {
   margin-bottom: 0.5rem; }
-  .login-form__field.has-error .login-form__label {
+  .form__field.has-error .form__label {
     color: #dc3545; }
-  .login-form__field.has-error .login-form__input {
+  .form__field.has-error .form__input {
     border-color: #dc3545; }
-.login-form__label {
+.form__label {
   display: inline-block; }
-.login-form__input {
+.form__input {
   display: block;
   padding: 10px;
   border-radius: 5px;
   border: 1px solid #999999;
   font-size: 1rem;
   width: 100%; }
-.login-form__submit {
+.form__textarea {
+  display: block;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #999999;
+  font-size: 1rem;
+  width: 100%; }
+.form__submit {
   background-color: #111111;
   color: white;
   font-size: 1rem;
@@ -237,95 +247,14 @@ body {
   width: 100%;
   margin-bottom: 2em;
   margin-top: 2em; }
-.login-form__submit:hover {
+.form__submit:hover {
   cursor: pointer; }
-.login-form__feedback {
+.form__feedback {
   font-size: 0.8rem; }
-  .login-form__feedback--valid {
+  .form__feedback--valid {
     color: #28a745; }
-  .login-form__feedback--invalid {
+  .form__feedback--invalid {
     color: #dc3545; }
-
-.register-form__main-feedback {
-  margin: 0 auto;
-  padding: 15px 15px 1px;
-  max-width: 100%;
-  overflow-x: visible;
-  padding-bottom: 15px;
-  text-align: center;
-  margin-bottom: 20px;
-  border-radius: 5px; }
-  .register-form__main-feedback--invalid {
-    color: #dc3545;
-    background-color: #f9ded8; }
-.register-form__field {
-  margin-bottom: 0.5rem; }
-  .register-form__field.has-error .register-form__label {
-    color: #dc3545; }
-  .register-form__field.has-error .register-form__input {
-    border-color: #dc3545; }
-.register-form__label {
-  display: inline-block; }
-.register-form__input {
-  display: block;
-  padding: 10px;
-  border-radius: 5px;
-  border: 1px solid #999999;
-  font-size: 1rem;
-  width: 100%; }
-.register-form__submit {
-  background-color: #111111;
-  color: white;
-  font-size: 1rem;
-  border-radius: 5px;
-  padding: 12px 10px 11px;
-  width: 100%;
-  margin-bottom: 2em;
-  margin-top: 2em; }
-.register-form__submit:hover {
-  cursor: pointer; }
-.register-form__feedback {
-  font-size: 0.8rem; }
-  .register-form__feedback--valid {
-    color: #28a745; }
-  .register-form__feedback--invalid {
-    color: #dc3545; }
-
-.edit-profile {
-  padding: 1em;
-  text-align: center; }
-  .edit-profile__photo {
-    border-radius: 50%;
-    width: 7em;
-    height: 7em;
-    float: left;
-    margin-bottom: 1em; }
-  .edit-profile__username {
-    font-size: 1.5em; }
-  .edit-profile__newusername {
-    padding: 12px 10px 11px;
-    width: 90%;
-    font-size: 1.5em;
-    margin-bottom: 0.5em; }
-  .edit-profile__pass {
-    padding: 12px 10px 11px;
-    width: 90%;
-    font-size: 1.5em;
-    margin-bottom: 0.5em; }
-  .edit-profile__newpass {
-    padding: 12px 10px 11px;
-    width: 90%;
-    font-size: 1.5em;
-    margin-bottom: 1.8em; }
-  .edit-profile__submit {
-    background-color: #111111;
-    color: white;
-    font-size: 1em;
-    border-radius: 4px;
-    padding: 12px 10px 11px;
-    width: 97%; }
-  .edit-profile__submit:hover {
-    cursor: pointer; }
 
 .profile {
   margin: 0 auto;
@@ -350,7 +279,9 @@ body {
   .profile__details-name {
     font-size: 50px;
     padding-right: 20px;
-    line-height: 50px; }
+    line-height: 50px;
+    max-width: 500px;
+    min-width: 300px; }
   .profile__details-edit {
     background-color: white;
     color: #BEC6C6;
@@ -434,7 +365,7 @@ body {
   color: black;
   border-color: black; }
 .photo-detail__image img {
-  width: 75%;
+  width: 55%;
   display: block;
   margin-left: auto;
   margin-right: auto; }
