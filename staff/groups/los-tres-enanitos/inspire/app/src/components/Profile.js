@@ -12,7 +12,12 @@ class Profile extends Component {
     return (
       <div className="profile">
         <div className="profile__photo-container">
-          <img className="profile__photo" src="images/icono-user.png" alt="Profile picture" title={`${this.props.firstName} ${this.props.lastName}`} />
+          <img
+            className="profile__photo"
+            src="images/default-user.jpg"
+            alt={`${this.props.firstName} ${this.props.lastName}`}
+            title={`${this.props.firstName} ${this.props.lastName}`}
+          />
         </div>
         <div className="profile__details">
           <div className="profile__details-flex">

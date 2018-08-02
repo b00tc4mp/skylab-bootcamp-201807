@@ -9,7 +9,7 @@ class PhotoListItem extends Component {
   render() {
     return (
       <div className="photo-list-item">
-        <img className="photo-list-item__image" src={this.props.url} alt="photo" onClick={this.handleClick} />
+        <img className="photo-list-item__image" src={this.props.url} alt={this.props.id} onClick={this.handleClick} />
       </div>
     )
   }

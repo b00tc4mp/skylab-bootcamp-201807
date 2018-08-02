@@ -35,7 +35,8 @@ class Login extends Component {
     }
 
     if (isValid) {
-      this.props.onSubmit(this.state)
+      const { usernameError, passwordError, ...formData } = this.state
+      this.props.onSubmit(formData)
     }
   }
 

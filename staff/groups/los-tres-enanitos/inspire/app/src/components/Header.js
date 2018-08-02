@@ -1,14 +1,9 @@
 import React, { Component } from 'react'
 import Search from './Search';
-import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom'
 import logic from '../logic'
 
 class Header extends Component {
-
-  state = {
-    loggedIn: logic.loggedIn,
-  }
 
   handleSearchSubmit = query => {
     this.props.history.push('/search/photos/' + query)
@@ -21,7 +16,7 @@ class Header extends Component {
 
   goToLogin = (event) => {
     event.preventDefault()
-    if (this.props.location.pathname != '/login')
+    if (this.props.location.pathname !== '/login')
       this.props.history.push('/login')
   }
 
@@ -32,7 +27,7 @@ class Header extends Component {
 
   goToProfile = (event) => {
     event.preventDefault()
-    if (this.props.location.pathname != `/profile/${logic.userId}`)
+    if (this.props.location.pathname !== `/profile/${logic.userId}`)
       this.props.history.push(`/profile/${logic.userId}`)
   }
 
@@ -60,7 +55,7 @@ class Header extends Component {
         </div>
         <div className="site-nav">
           {
-            !this.state.loggedIn && (
+            !this.props.loggedIn && (
               <ul className="site-nav__list">
                 <li className="site-nav__item">
                   <a href="#/" onClick={this.goToLogin} className="site-nav__login">Login</a>
@@ -72,14 +67,14 @@ class Header extends Component {
             )
           }
           {
-            this.state.loggedIn && (
+            this.props.loggedIn && (
               <ul className="site-nav__list">
                 <li className="site-nav__item">
                   <a href="#/" onClick={this.handleLogout} className="site-nav__logout">Logout</a>
                 </li>
                 <li className="site-nav__item">
-                  <a href="#" onClick={this.goToProfile} className="site-nav__profile">
-                    <img src="https://thumbs.dreamstime.com/b/omita-el-icono-del-perfil-avatar-placeholder-gris-de-la-foto-99724602.jpg" alt=""
+                  <a href="#/" onClick={this.goToProfile} className="site-nav__profile">
+                    <img src="images/default-user.jpg" alt=""
                       className="site-nav__profile-image" />
                   </a>
                 </li>

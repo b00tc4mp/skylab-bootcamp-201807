@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import PhotoDetail from '../components/PhotoDetail';
-import logic from '../logic'
 import Header from '../components/Header';
+import { withRouter } from 'react-router-dom'
+import logic from '../logic'
 
 logic.unsplashAccessKey = '1cb96dfdb0925fb516e37123f0c906d5fbaadf2669fb3b9c5f0f833539476627'
 
@@ -29,7 +30,7 @@ class PhotoDetailPage extends Component {
   render() {
     return (
       <div>
-        <Header />
+        <Header loggedIn={this.props.loggedIn} />
         <main>
           {
             this.state.photo && <PhotoDetail
@@ -46,4 +47,4 @@ class PhotoDetailPage extends Component {
   }
 }
 
-export default PhotoDetailPage
+export default withRouter(PhotoDetailPage)

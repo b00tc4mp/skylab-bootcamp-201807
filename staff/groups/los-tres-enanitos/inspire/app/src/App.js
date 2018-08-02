@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Switch, Route, withRouter, Link, Redirect } from 'react-router-dom'
+import { Switch, Route, withRouter, Redirect } from 'react-router-dom'
 import ResultsPage from './containers/ResultsPage';
 import HomePage from './containers/HomePage';
 import RegisterPage from './containers/RegisterPage';
@@ -16,23 +16,38 @@ class App extends Component {
     loggedIn: logic.loggedIn
   }
 
+  handleLoginSubmit = (formData) => {
+
+    logic.loginUser(formData.username, formData.password)
+      .then(() => {
+        this.setState({ loggedIn: true })
+        this.props.history.push('/')
+      })
+      .catch(error => {
+        this.setState({ loginError: `Upps, ${error.message}` })
+      })
+  }
+
+  handleLogout = () => {
+    logic.logout()
+    this.setState({ loggedIn: false })
+    if (this.props.location.pathname !== '/')
+      this.props.history.push('/')
+  }
+
   render() {
     return (
       <div className="App">
 
         <Switch>
-          <Route exact path="/" component={HomePage} />
-          <Route path="/search/photos/:query" render={props => <ResultsPage query={props.match.params.query} />} />
-          <Route path="/join" component={RegisterPage} />
-          <Route path="/login" component={LoginPage} />
-          <Route strict path="/profile/edit" render={() => !this.state.loggedIn ? <Redirect to="/login" /> : <EditProfilePage />} />
-          <Route strict path="/profile/:id" render={props => <ProfilePage id={props.match.params.id} />} />
-          <Route path="/photos/:id" render={props => <PhotoDetailPage id={props.match.params.id} />} />
-          <Route path="/logout" component={LogoutPage} />
-          {/* <Route path="/logout" render={() => {
-            this.setState({ loggedIn: logic.loggedIn })
-            return <LogoutPage />
-          }} /> */}
+          <Route exact path="/" render={() => <HomePage loggedIn={this.state.loggedIn} />} />
+          <Route path="/search/photos/:query" render={props => <ResultsPage loggedIn={this.state.loggedIn} query={props.match.params.query} />} />
+          <Route path="/join" render={() => <RegisterPage loggedIn={this.state.loggedIn} />} />
+          <Route path="/login" render={() => <LoginPage loggedIn={this.state.loggedIn} onLoginSubmit={this.handleLoginSubmit} />} />
+          <Route strict path="/profile/edit" render={() => !this.state.loggedIn ? <Redirect to="/login" /> : <EditProfilePage loggedIn={this.state.loggedIn} />} />
+          <Route path="/profile/:id" render={props => <ProfilePage loggedIn={this.state.loggedIn} id={props.match.params.id} />} />
+          <Route path="/photos/:id" render={props => <PhotoDetailPage loggedIn={this.state.loggedIn} id={props.match.params.id} />} />
+          <Route path="/logout" render={() => <LogoutPage loggedIn={this.state.loggedIn} onLogout={this.handleLogout} />} />
         </Switch>
 
       </div>
@@ -40,4 +55,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default withRouter(App);

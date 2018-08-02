@@ -4,6 +4,7 @@ import logic from '../logic'
 import Block from '../components/Block';
 import Header from '../components/Header';
 import PhotoList from '../components/PhotoList';
+import { withRouter } from 'react-router-dom'
 
 logic.unsplashAccessKey = '1cb96dfdb0925fb516e37123f0c906d5fbaadf2669fb3b9c5f0f833539476627'
 
@@ -38,7 +39,7 @@ class HomePage extends Component {
   render() {
     return (
       <div>
-        <Header visibleSearch={false} />
+        <Header loggedIn={this.props.loggedIn} visibleSearch={false} />
         <main>
           <section className="showcase-container" style={{ backgroundImage: "url('images/man.jpg')" }}>
             <div className="showcase">
@@ -72,4 +73,4 @@ class HomePage extends Component {
   }
 }
 
-export default HomePage
+export default withRouter(HomePage)
