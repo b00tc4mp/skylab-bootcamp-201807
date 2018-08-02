@@ -1,32 +1,29 @@
 import React, {Component} from 'react'
 
 
-class FlightCard extends Component {
+const FlightCard = props => { 
 
-    render() {
+    return(
+        <section>
+            <div>
+                <span>Date</span><span></span>
+                <span>Time</span><span></span>
+                <span>IATA</span><span></span>
 
-        return(
-            <section>
-               <div>
-                    <span>Date</span><span></span>
-                    <span>Time</span><span></span>
-                    <span>IATA</span><span></span>
-
-                </div>
-                <div>
-                    <span>Date</span><span></span>
-                    <span>Time</span><span></span>
-                    <span>IATA</span><span></span>
-                    
-                </div>
-                <div>
-                    <span>Price</span><span>{this.props.flightsProp.price}</span>
-                    <span>Link</span><span>{this.props.flightsProp.link}</span>
-                </div>
-            </section>
-        )
-    }
-
+            </div>
+            <div>
+                <span>Date</span><span></span>
+                <span>Time</span><span></span>
+                <span>IATA</span><span></span>
+                
+            </div>
+            <div>
+                <span>Price</span><span>{props.flightsProp.price}</span>
+                <span>Link</span><span><a href={props.flightsProp.link}>Go to kiwi</a></span>
+            </div>
+        </section>
+    )
 }
+
 
 export default FlightCard
