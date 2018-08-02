@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import Cloudinary from './Cloudinary'
 import './HomePage.css'
 import {
   Carousel,
