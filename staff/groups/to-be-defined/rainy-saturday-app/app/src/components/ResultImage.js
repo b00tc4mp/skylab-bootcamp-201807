@@ -69,8 +69,10 @@ refreshFavorite(props) {
           <ModalHeader toggle={this.toggle}>{this.props.image.title}</ModalHeader>
           <ModalBody>
           <img className="imageList"src={this.props.image.imageurl} alt={this.props.image.title}/>
-          <h5>Title:</h5><p>{this.props.image.longTitle}</p>
+          <h6>Title:</h6><p>{this.props.image.longTitle}</p>
           <h6>Maker:</h6><p>{this.props.image.maker}</p>
+          <h6>Materials:</h6><p>{this.props.image.materials[0]}</p>
+          <h6>Period:</h6><p>{this.props.image.period}</p>
           </ModalBody>
           <ModalFooter>
       

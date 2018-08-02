@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AAUI,uBAAG;EACD,KAAK,EATD,OAAO;EAUX,cAAc,EAAC,KAAK;EACpB,WAAW,EAAC,GAAG;EACf,aAAa,EAAC,IAAI;EAClB,WAAW,EAXN,mBAAmB;;AAgB9B;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;EA8BE",
+"sources": ["../App.scss"],
+"names": [],
+"file": "SearchPage.css"
+}
