@@ -6,7 +6,6 @@ const logic = {
         .then(res => res.json())
         .then(res => {
             if (res.error) throw Error('request error, status ' + res.error.status);
-            console.log(res.data)
             return res.data;
         });
     },
