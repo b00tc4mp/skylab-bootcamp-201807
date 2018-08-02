@@ -11,6 +11,8 @@ class Login extends Component {
 
     keepPassword = event => this.setState({ password: event.target.value })
     keepUsername = event => this.setState({ username: event.target.value })
+
+    /** This is the function to login a user */
     loginUser = () => {
         const { state: { username, password } } = this
         this.props.onLogin(username, password)

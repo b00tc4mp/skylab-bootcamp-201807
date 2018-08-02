@@ -23,6 +23,7 @@ class Main extends Component {
     allowSave: true
   }
 
+  /** This is the function to start the webcam */
   startWebcam = () => {
     if (!this.state.webcamOn) {
       this.setState({ url: null, imageState: "Save Image" })
@@ -54,6 +55,7 @@ class Main extends Component {
     }
   }
 
+  /** This is the function to capture an image from the webcam */
   capture = () => {
     const canvas = document.getElementById('canvas')
     let video = document.getElementById("webcam")
@@ -73,6 +75,9 @@ class Main extends Component {
     })
   }
 
+  /** This is the function to load an image from the input tag 
+   * @param {event} event - The input tag event
+  */
   upload = event => {
     const file = event.target.files[0]
     if (file) {
@@ -88,17 +93,19 @@ class Main extends Component {
     }
   }
 
+  /** This is the function to save an image to the gallery */
   saveImage = () => {
     if (this.state.url && this.state.allowSave) {
       this.setState({ imageState: ' Saving...' })
       logic.addImage(this.image)
-        .then(() => {
-          this.setState({ imageState: 'Save Image' })
-        })
+        .then(() => this.setState({ imageState: 'Save Image' }))
         .catch( () => this.setState({imageState: 'Cloudinary not available', noTransfer: false}))
     }
   }
 
+  /** This is the function to transfer the style into an image 
+   * @param {string} style - The style to transform the image
+  */
   transfer = style => {
     this.setState({ allowSave: false, noTransfer: false, imageState: 'Transfering...' })
     logic.transfer(this.image, style)
@@ -107,10 +114,7 @@ class Main extends Component {
         const url = URL.createObjectURL(blob)
         this.setState({ allowSave: true, url, imageState: 'Save Image' })
       })
-      .catch(err => {
-        this.setState({ imageState: 'Cloudmersive not available', noTransfer: false })
-        console.error(err)
-      })
+      .catch(err => this.setState({ imageState: 'Cloudmersive not available', noTransfer: false }))
   }
 
   render() {

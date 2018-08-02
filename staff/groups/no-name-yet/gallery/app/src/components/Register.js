@@ -14,13 +14,14 @@ class Register extends Component {
     keepUsername = event => this.setState({ username: event.target.value })
     keepPassword = event => this.setState({ password: event.target.value })
     keepPassword2 = event => this.setState({ password2: event.target.value })
-    
+
+    /** This the function to register a user */
     registerUser = () => {
-        const { state: { username, password, password2} } = this
-            if(password === password2){
-        this.props.onRegister(username, password)
-            .catch(err => this.setState({ error: err.message }))
-        }else{ this.setState({ error: "passwords do not match" })}
+        const { state: { username, password, password2 } } = this
+        if (password === password2) {
+            this.props.onRegister(username, password)
+                .catch(err => this.setState({ error: err.message }))
+        } else this.setState({ error: "passwords do not match" })
     }
 
     render() {
