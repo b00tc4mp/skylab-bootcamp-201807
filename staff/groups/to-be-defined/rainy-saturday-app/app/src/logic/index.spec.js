@@ -245,73 +245,73 @@ describe('logic (Museum-App)', () => {
                             });
                     }).catch(console.error)
 
-            })   
-            
+            })
+
             it('should reutrn null when we send bad data', () => {
-                const dataUndefined = undefined
+                const dataNull = null
                 expect(logic._userId).toBeDefined()
                 expect(logic._userToken).toBeDefined()
                 expect(logic.userUsername).toBeDefined()
-                return logic.storeUserData(dataFieldName, dataUndefined)
+                return logic.storeUserData(dataFieldName, dataNull)
                     .then((res) => {
                         expect(res).toBeTruthy();
                     }).then(() => {
                         return logic.retrieveUserData(dataFieldName)
                             .then((res) => {
-                                expect(res).toEqual(null)
+                                expect(res).toEqual(dataNull)
                             });
                     }).catch(console.error)
 
-            })  
+            })
         })
 
         describe('retrieve user data', () => {
             const name = 'javier', lastname = 'serrapell', email = 'lopezno@gmail.com'
             let username = 'robert-anthony-' + Math.random()
             const password = '123'
-            const dataArray = [{a:"b",c:"d"}]
-            const dataObj = {something:{is:"different"}}
+            const dataArray = [{ a: "b", c: "d" }]
+            const dataObj = { something: { is: "different" } }
             const dataFieldNameArray = "favorites"
             const dataFieldNameObject = "favoriteObject"
-        
+
             beforeEach(() => {
-              username = 'robert-anthony-' + Math.random()
-              return logic.registerUser(name, lastname, username, email, password)  
-                .then(() => logic.loginUser(username, password))
-                .then(() => {
-                  return logic.storeUserData(dataFieldNameArray,dataArray)
-                })
-                .then(() => {
-                  return logic.storeUserData(dataFieldNameObject,dataObj)
-                })
-                .catch(console.error)
+                username = 'robert-anthony-' + Math.random()
+                return logic.registerUser(name, lastname, username, email, password)
+                    .then(() => logic.loginUser(username, password))
+                    .then(() => {
+                        return logic.storeUserData(dataFieldNameArray, dataArray)
+                    })
+                    .then(() => {
+                        return logic.storeUserData(dataFieldNameObject, dataObj)
+                    })
+                    .catch(console.error)
             })
-        
+
             it('should retrieve an array of data correctly', () => {
-              expect(logic._userId).toBeDefined()
-              expect(logic._userToken).toBeDefined()
-              expect(logic.userUsername).toBeDefined()
-              return logic.retrieveUserData(dataFieldNameArray)
-                .then((res) => {
-                  expect(res).toEqual(dataArray);
-                })
-                .catch(console.error)
-        
+                expect(logic._userId).toBeDefined()
+                expect(logic._userToken).toBeDefined()
+                expect(logic.userUsername).toBeDefined()
+                return logic.retrieveUserData(dataFieldNameArray)
+                    .then((res) => {
+                        expect(res).toEqual(dataArray);
+                    })
+                    .catch(console.error)
+
             })
-        
-        
+
+
             it('should retrieve object data correctly', () => {
-              expect(logic._userId).toBeDefined()
-              expect(logic._userToken).toBeDefined()
-              expect(logic.userUsername).toBeDefined()
-              return logic.retrieveUserData(dataFieldNameObject)
-                .then((res) => {
-                  expect(res).toEqual(dataObj);
-                })
-                .catch(console.error)
-        
+                expect(logic._userId).toBeDefined()
+                expect(logic._userToken).toBeDefined()
+                expect(logic.userUsername).toBeDefined()
+                return logic.retrieveUserData(dataFieldNameObject)
+                    .then((res) => {
+                        expect(res).toEqual(dataObj);
+                    })
+                    .catch(console.error)
+
             })
-          })
+        })
 
     })
 

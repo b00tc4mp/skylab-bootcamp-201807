@@ -340,6 +340,8 @@ const logic = {
     xhr.send(fd);
   },*/
 
+  //TODO TEST
+
   _callCloudinaryApi(file, method = 'post') {
     const config = {
       method
@@ -365,11 +367,13 @@ const logic = {
       });
   },
 
+  //TODO TEST
   uploadCloudinaryImage(file) {
     // return this._callCloudinaryApi(file)
     return this._callCloudinaryApi(file)
   },
 
+  //TODO TEST
   getUserFavorites() {
     return this._userFavorites
   },
