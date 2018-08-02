@@ -4,6 +4,9 @@ import logic from '../../logic'
 //import FlightResults from '../cards/FlightResults'
 import ResultsSlider from '../cards/ResultsSlider'
 import FlightCard from '../cards/FlightCard'
+import BetCard from '../cards/BetCard'
+import BetPriceCard from '../cards/BetPriceCard';
+import FavCard from '../cards/FavCard';
 
 class Home extends Component {
 
@@ -18,7 +21,10 @@ class Home extends Component {
         currentOdds: null,
     }
 
-    keepCurrentPrice = ({ price: currentPrice }) => this.setState({ currentPrice })
+    keepCurrentPrice = ({ price: currentPrice }) => {
+        debugger;
+        this.setState({ currentPrice })
+    }
 
     keepCurrentOdds = ({ odds: currentOdds }) => this.setState({ currentOdds })
     
@@ -28,6 +34,8 @@ class Home extends Component {
         const date = new Date(Date.parse(when));
         return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`
     }
+
+
 
     parseDateFromEpoch = (timestamp) => {
         const date = new Date(timestamp*1000)
@@ -39,7 +47,7 @@ class Home extends Component {
         return `${day}/${month}/${year}`
     }
 
-    getDataInputs = (selectedFrom, selectedTo,  dateFrom, dateTo) => {
+    onSearchFlights = (selectedFrom, selectedTo,  dateFrom, dateTo) => {
         /*this.setState({
             selectedFrom,
             selectedTo,
@@ -53,11 +61,19 @@ class Home extends Component {
         const inputDateTo = this.parseDate(dateTo)
 
         logic._callKiwiApi(fromIata, toIata, inputDateFrom, inputDateTo)
-        .then(flights => {
-            const filteredFlights = this.filterFlightsData(flights);
-            this.setState({flights: filteredFlights})
-        })
-        .catch()
+         .then(flights => {
+             const filteredFlights = this.filterFlightsData(flights);
+             debugger;
+             this.setState({flights: filteredFlights})
+             this.setState({currentPrice: filteredFlights[0].price})
+
+         })
+         .then(logic._callBetsApi)
+         .then(bets => {
+             const filteredBets = this.filterBetsData(bets);
+             this.setState({bets: filteredBets})
+         })
+         .catch()
     }
 
     filterFlightsData = (flights) => {
@@ -91,16 +107,14 @@ class Home extends Component {
         return filteredBets
     }
 
-    
-    
     render() {
 
-        const {flights} = this.state
-
+        const {flights, bets, currentPrice, currentOdds} = this.state
+        debugger;
         return(
             <main>
                 <h1>Home Page</h1>
-                <SearchCardFlights getDataInputsProp={ this.getDataInputs } /> 
+                <SearchCardFlights onSearchFlightsProp={ this.onSearchFlights } /> 
                 {/*flights.length > 0 && <FlightResults flightsProp={flights}/>*/} 
                 <ResultsSlider 
                     resultsProp={ flights } 
@@ -113,7 +127,9 @@ class Home extends Component {
                     titleProps={ 'Bets' }
                     onPageChangedProp={ this.keepCurrentOdds }
                     render={ currentBet => <BetCard betsProp={currentBet}/> }
-                /> 
+                />
+                <BetPriceCard  currentPriceProp={currentPrice} currentOddsProp={currentOdds}/>
+                <FavCard currentPriceProp={currentPrice} currentOddsProp={currentOdds}/>
             </main>
         )
     }
