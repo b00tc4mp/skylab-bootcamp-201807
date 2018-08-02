@@ -1,0 +1,19 @@
+.list {
+  display: flex;
+  justify-content: center;
+}
+.list__warp {
+  display: flex;
+  width: 60%;
+}
+.list__item {
+  width: 10em;
+}
+.list__img {
+  background-size: cover;
+  border-radius: 50%;
+  width: 6em;
+  height: 6em;
+}
+
+/*# sourceMappingURL=list.css.map */

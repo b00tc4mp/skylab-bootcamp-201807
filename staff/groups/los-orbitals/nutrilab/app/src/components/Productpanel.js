@@ -1,5 +1,6 @@
 import React from 'react'
 import close from '../images/close.svg'
+import '../sass/productpanel.css'
 
 function Productpanel(props) {
 
@@ -8,10 +9,12 @@ function Productpanel(props) {
         {props.ingredient.map(({name, calories, totalFat, cholesterol, totalCarbohydrate, sugars, protein, 
 saturatedFat, servingUnit, sodium, potassium, dietaryFiber, photo}) => {
 
-                return <section>
-                                <a href="" onClick={(event) => {event.preventDefault(); props.close()}}>        <img src={close}/>
+                return <section className="product__panel">
+                                <img src={photo}/>
+                                <a className="icon__close" href="" onClick={(event) => {event.preventDefault(); props.close()}}>        <img src={close}/>
                                 </a>
-                                <p>Name: {name}</p>
+                                <h2>{name}</h2>
+                                <div className="div__background--gray">
                                 <p>Calories: {calories}</p>
                                 <p>Total Fat: {totalFat}</p>
                                 <p>Cholesterol: {cholesterol}</p>
@@ -23,7 +26,7 @@ saturatedFat, servingUnit, sodium, potassium, dietaryFiber, photo}) => {
                                 <p>Sodium: {sodium}</p>
                                 <p>Potassium: {potassium}</p>
                                 <p>Dietary Fiber: {dietaryFiber}</p>
-                                <img src={photo}/>
+                                </div>
                         </section>
         })} 
         </section>

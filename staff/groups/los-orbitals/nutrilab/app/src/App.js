@@ -1,7 +1,6 @@
 // Import the components and extras
 import React, { Component } from 'react'
-import logo from './images/logo.svg'
-import './App.css'
+import './sass/App.css'
 import logic from './logic'
 import Landing from './components/Landing'
 import Signup from './components/Signup'
@@ -110,22 +109,35 @@ class App extends Component {
     
     return (
       <div className="App">
-        <header className="App-header">
-        <Link to="/home"> <img src={logo} className="App-logo" alt="logo" /> </Link>
-          {!loggedIn && <h2 className="App-title">Take care of your eating habits in an easy and fun way</h2>}
+
+        <header className="App__header">
+        {!loggedIn && <Link to="/" onClick={this.onResetMessage}> <p className="App__header__nav__item">Nutrilab</p></Link>}
           <Route path="/(home|profile)" render={() => 
-            <nav>
-              <Link to="/home" onClick={this.onResetMessage} >Home</Link>
-              <Link to="/profile">Profile</Link>
-              <Link to="/" onClick={logout}>Logout</Link>
+            <nav className="App__header__nav">
+            <ul>
+              <li className="App__header__item App__header__item__left">
+              <Link to="/home" onClick={this.onResetMessage}> <p className="App__header__nav__item">Nutrilab</p></Link></li>
+            </ul>
+            <ul className="App__header__nav__ul">  
+              <li className="App__header__item">
+              <Link to="/profile"> <p className="App__header__nav__item">Favorites</p></Link></li>
+              <li className="App__header__item">
+              <Link to="/profile"> <p className="App__header__nav__item">Profile</p></Link></li>
+              <li className="App__header__item">
+              <Link to="/" onClick={logout} > <p className="App__header__nav__item">Logout</p></Link>
+              </li>
+            </ul>
             </nav>}/>
         </header>
+        {!loggedIn && <main className="App__main">
+            <h2 className="App__header__title">Care your eating habits in an easy and fun way</h2>
+            </main>}
 
         <Switch>
           <Route exact path="/" render = {() => loggedIn ? <Redirect to="/home"/> : <Landing signup={goToSignUp} login={goToLogin} />}/> 
           <Route path="/signup" render = {() => loggedIn ? <Redirect to="/home"/> : <Signup onSignUp={signupUser} linkToLogin={goToLogin} feedback={showFeedback}/>} />
           <Route path="/login" render = {() => loggedIn ? <Redirect to="/home"/> : <Login onLogin={loginUser} linkToSignUp={goToSignUp} feedback={showFeedback}/>} />
-          <Route path="/home" render = {() => loggedIn ? <Home/> : <Redirect to="/" />} />
+          <Route path="/home" render = {() => loggedIn ? <Home className="App__main2"/> : <Redirect to="/" />} />
           <Route path="/profile" render={() => loggedIn ? <Profile onUpdate={updateUser} feedback={showFeedback} feedbackdelete={showFeedbackDelete} onDelete={deleteUser}/> : <Redirect to="/"/>} />
           <Route component={Error404} />
         </Switch>
