@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
-import NavBar from "./NavBar";
-import Landing from "./Landing";
-import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import { Button, Form, FormGroup, Label, Input, FormText,Container } from 'reactstrap'
 import logic from "../logic"
+import swal from 'sweetalert2'
 
 
 class UserDelete extends Component {
@@ -11,7 +10,7 @@ class UserDelete extends Component {
 
     Username: logic._userUsername,
     newUsername: "",
-    password: logic._userPassword,
+    password: "",
     newPassword: "",
 
   }
@@ -27,13 +26,26 @@ class UserDelete extends Component {
     const { newUsername, password, newPassword } = this.state
 
     logic.updateUser(password, newUsername, newPassword)
-      .then(res => {
+      .then(() => {
         this.setState({
         Username: logic._userUsername,
         password: logic._userPassword
       })
     })
-      .catch(err => console.warn(err))
+    .then(() => {
+      swal({
+        title: 'Success! :)',
+        text: "Update successful",
+        type: 'success',
+        confirmButtonText: 'Nice!'
+      })
+    })
+      .catch((err) => swal({
+        title: 'Failed! :(',
+        text: err,
+        type: 'error',
+        confirmButtonText: 'Try again'
+      }))
 
 
   }
@@ -43,10 +55,16 @@ class UserDelete extends Component {
     const { password } = this.state
     logic.unregisterUser(password)
       .then(this.props.handleLogout)
+      .catch((err) => swal({
+        title: 'Failed! :(',
+        text: err,
+        type: 'error',
+        confirmButtonText: 'Try again'
+      }))
   }
 
   render() {
-    return <section>
+    return <Container>
       <h2>Update</h2>
       <img src={require('../imagenes/logo-steam.png')} width="100vw" height="100vh" />
       <Form onSubmit={this.onUpdate}>
@@ -90,10 +108,10 @@ class UserDelete extends Component {
 
 
 
-    </section>
+    </Container>
 
 
   }
 }
 
-export default UserDelete;
+export default UserDelete

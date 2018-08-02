@@ -11,7 +11,7 @@ import {
   DropdownToggle,
   DropdownMenu,
   DropdownItem
-} from 'reactstrap';
+} from 'reactstrap'
 import { Link } from 'react-router-dom'
 
 class NavBar extends Component {
@@ -23,7 +23,7 @@ class NavBar extends Component {
   toggle = () => {
     this.setState({
       isOpen: !this.state.isOpen
-    });
+    })
   }
 
   handle
@@ -59,5 +59,5 @@ class NavBar extends Component {
     } 
 }
 
-export default NavBar;
+export default NavBar
 

@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from "react"
 import {
   Container,
   Row,
@@ -12,9 +12,9 @@ import {
   CardFooter,
   CardSubtitle,
   Form
-} from "reactstrap";
-import logic from "../logic";
-import { List, AutoSizer } from "react-virtualized";
+} from "reactstrap"
+import logic from "../logic"
+import { List, AutoSizer } from "react-virtualized"
 
 class Search extends Component {
   state = {
@@ -23,13 +23,13 @@ class Search extends Component {
     detail: {},
     isFav: null
     
-  };
+  }
 
   handleChange = e => {
     this.setState({
       query: e.target.value
-    });
-  };
+    })
+  }
 
   handleSearch = (e) => {
     e.preventDefault()
@@ -37,19 +37,19 @@ class Search extends Component {
       this.setState({
         detail:{},
         data: res
-      });
-    });
-  };
+      })
+    })
+  }
 
   getDetail = id => {
-    console.log(id);
+    console.log(id)
     logic.getStatsForGame(id).then(res => {
-      console.log(res);
+      console.log(res)
       this.setState({
         detail: res
-      });
-    });
-  };
+      })
+    })
+  }
 
   renderRow = ({ index, isScrolling, key, style }) => {
     return (
@@ -63,8 +63,8 @@ class Search extends Component {
         </div>
         <div> {this.state.data[index].title}</div>
       </div>
-    );
-  };
+    )
+  }
 
   renderDetailRow = ({ index, isScrolling, key, style }) => {
     return (
@@ -73,8 +73,8 @@ class Search extends Component {
           <p>{this.state.detail.name}</p>
         </div>
       </div>
-    );
-  };
+    )
+  }
 
 
 // TODO check for future version 17 (make it work!)
@@ -109,6 +109,7 @@ onToggleFavorite = () => {
           <Col md="4">
           <Form onSubmit={this.handleSearch} className="form-group mx-sm-3 mb-2">
             <input
+              autocomplete="off"
               type="text"
               name="query"
               className="form-control"
@@ -121,7 +122,8 @@ onToggleFavorite = () => {
         </Row>
         <div className="container justify-content-between">
           <div className="row">
-          { (typeof this.state.data === "object" && this.state.data.length === 0 )? <h1>NO RESULTS</h1> : <div className="col-6">
+          { (typeof this.state.data === "object" && this.state.data.length === 0 )? <h1>NO RESULTS</h1> :  <div className="col-6">
+          {this.state.data.length !== 0 ? <h2>RESULTS {`(${this.state.data.length})`} :  </h2> : "" }
               <AutoSizer>
                 {({ width, height }) => {
                   return (
@@ -132,41 +134,25 @@ onToggleFavorite = () => {
                       rowHeight={250}
                       rowRenderer={this.renderRow}
                     />
-                  );
+                  )
                 }}
               </AutoSizer>
             </div> }
-            
-            {/* <p>{this.state.detail.name}</p>
-            <AutoSizer>
-                {({ width, height }) => {
-                    return (
-                        <List
-                        rowCount={1}
-                        width={300}
-                        height={300}
-                        rowHeight={500}
-                        rowRenderer={this.renderDetailRow}
-                        />
-                        );
-                    }}
-            </AutoSizer> */}
-            {Object.keys(this.state.detail).length ? (
+            {Object.keys(this.state.detail).length ? ( 
               <div className="col-6">
+              <h1>DETAILS : </h1>
                 <Card>
                   <CardBody>
-                    <CardTitle>{this.state.detail.name}</CardTitle>
+                    <CardTitle>{this.state.detail.name} <span>{this.state.isFav ? <i className={"fa-heart fa-2x fas fa-heart-active text-danger"} onClick={this.onToggleFavorite} /> : <i className={"fa-heart fa-2x far fa-heart-inactive text-danger"} onClick={this.onToggleFavorite} />}</span></CardTitle>
                     <CardSubtitle>{this.state.detail.developer}</CardSubtitle>
-                    <CardText>{this.state.detail.price === 0 ? "Free" : (this.state.detail.price / 100)+"$" }</CardText>
+                    <CardText>{this.state.detail.price === "0" ? "Free" : (this.state.detail.price / 100)+"$" }</CardText>
                     <div>Tags: <ul>{Object.keys(this.state.detail.tags).map(i => <li>{i}</li>)}</ul>
                     <p>Languages available: <br/><li>{this.state.detail.languages}</li></p>
-                    <p>{this.state.isFav ? <i className={"fa-heart fa-2x fas fa-heart-active "} onClick={this.onToggleFavorite} /> : <i className={"fa-heart fa-2x far fa-heart-inactive "} onClick={this.onToggleFavorite} />}</p>
-                    
-
-                    
                     </div>
                   </CardBody>
-                    <CardFooter> <Button target="_blank" rel="noopener noreferrer" href={`https://store.steampowered.com/app/${this.state.detail.appid}/`}> Steam Page </Button> </CardFooter>
+                    <CardFooter> 
+                      <Button target="_blank" rel="noopener noreferrer" href={`https://store.steampowered.com/app/${this.state.detail.appid}/`}> Steam Page </Button> 
+                    </CardFooter>
                 </Card>
               </div>
             ) : (
@@ -175,8 +161,8 @@ onToggleFavorite = () => {
           </div>
         </div>
       </div>
-    );
+    )
   }
 }
 
-export default Search;
+export default Search

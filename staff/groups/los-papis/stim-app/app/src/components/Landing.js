@@ -1,8 +1,8 @@
-import React, { Component } from "react";
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
+import React, { Component } from "react"
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap"
 import swal from 'sweetalert2'
 import '../styles/styles.css'
-import logic from "../logic";
+import logic from "../logic"
 
 class Landing extends Component {
   state = {
@@ -10,15 +10,15 @@ class Landing extends Component {
     modalLogin: false,
     username: "",
     password: ""
-  };
+  }
 
   toggle = () => {
     this.setState({
       modal: !this.state.modal,
       username: "",
       password: ""
-    });
-  };
+    })
+  }
 
   loginToggle = () => {
     this.setState({
@@ -26,8 +26,8 @@ class Landing extends Component {
       username: "",
       password: ""
 
-    });
-  };
+    })
+  }
 
   keepUsername = (e) => {
 
@@ -87,7 +87,7 @@ class Landing extends Component {
 
       //Modals
       <div>
-        <Button color="danger" onClick={this.toggle}>
+        <Button color="primary" onClick={this.toggle}>
           Register
         </Button>
         <Modal
@@ -105,14 +105,14 @@ class Landing extends Component {
           <ModalFooter>
             <Button color="primary">
               Submit
-            </Button>{" "}
+            </Button>
             <Button color="secondary" onClick={this.toggle}>
               Cancel
             </Button>
           </ModalFooter>
           </form>
         </Modal>
-        <Button color="danger" onClick={this.loginToggle}>
+        <Button color="primary" onClick={this.loginToggle}>
           Log In
         </Button>
         <Modal
@@ -130,7 +130,7 @@ class Landing extends Component {
           <ModalFooter>
             <Button color="primary" type="submit" >
               Submit
-            </Button>{" "}
+            </Button>
             <Button color="secondary" onClick={this.loginToggle}>
               Cancel
             </Button>
@@ -138,8 +138,8 @@ class Landing extends Component {
           </form>
         </Modal>
       </div>
-    );
+    )
   }
 }
 
-export default Landing;
+export default Landing

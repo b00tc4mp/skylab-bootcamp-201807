@@ -1,13 +1,13 @@
-import React, { Component } from "react";
-import logic from "../logic";
+import React, { Component } from "react"
+import logic from "../logic"
 import FavCard from '../components/FavCard'
-import { CardColumns } from "reactstrap";
+import { CardColumns } from "reactstrap"
 
 class Favorites extends Component {
   state = {
     favoriteList: logic._userFavorites,
 
-  };
+  }
 
 
   deleteFavorites = (id) => {
@@ -23,10 +23,10 @@ class Favorites extends Component {
   render() {
    return <CardColumns className="mt-4 p-2">
         {this.state.favoriteList.map(e => {
-          return <FavCard deleteFavorites={this.deleteFavorites} id={e} key={e} />;
+          return <FavCard deleteFavorites={this.deleteFavorites} id={e} key={e} />
         })}
       </CardColumns>
   }
 }
 
-export default Favorites;
+export default Favorites

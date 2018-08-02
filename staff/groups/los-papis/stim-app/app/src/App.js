@@ -8,6 +8,7 @@ import Error404 from './components/Error404'
 import UserDelete from './components/UserDelete';
 import Search from './components/Search';
 import Favorites from './components/Favorites'
+import swal from 'sweetalert2'
 
 
 class App extends Component {
@@ -24,6 +25,12 @@ class App extends Component {
   handleLogout = () => {
 
       logic.logout()
+        swal({
+        title: 'See you soon! :)',
+        text: "We hope to see you soon!",
+        type: 'success',
+        confirmButtonText: 'Bye!'
+      })
      return this.updateLoggedIn()
   }
 

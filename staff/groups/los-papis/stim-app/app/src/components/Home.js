@@ -1,7 +1,7 @@
-import React, { Component } from "react";
-import { CardColumns } from "reactstrap";
-import NewCard from "./Card";
-import logic from "../logic";
+import React, { Component } from "react"
+import { CardColumns } from "reactstrap"
+import NewCard from "./Card"
+import logic from "../logic"
 
 class Home extends Component {
 
@@ -31,4 +31,4 @@ class Home extends Component {
 
 }
 
-export default Home;
+export default Home

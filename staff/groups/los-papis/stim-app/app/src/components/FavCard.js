@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from "react"
 import {
   Card,
   CardImg,
@@ -6,7 +6,7 @@ import {
   CardTitle,
   CardFooter,
   Button
-} from "reactstrap";
+} from "reactstrap"
 import logic from '../logic'
 class FavCard extends Component {
 
@@ -29,7 +29,7 @@ class FavCard extends Component {
         <CardImg src={this.state.info.src}/>
       </CardBody>
     <CardFooter>
-            <Button onClick={() => this.props.deleteFavorites(Number(this.state.info.id))} > DELETE ME</Button>
+            <Button color="danger" onClick={() => this.props.deleteFavorites(Number(this.state.info.id))} > DELETE ME</Button>
         </CardFooter>
     </Card>
 
