@@ -7,21 +7,17 @@ const FlightCard = props => {
 
     return(
         <section>
-            <div className="card">
+            <div>
                 <h5>Date From:</h5>
                 <p>{dateFrom}</p>
-                {/* <span>Time</span><span>{props.flightsProp.dateFrom}</span> */}
                 <h5>City From:</h5>
                 <p>{cityFrom} ({flyFrom})</p>
-
             </div>
             <div>
                 <h5>Date To:</h5>
                 <p>{dateTo}</p>
-                {/* <span>Time</span><span>{props.flightsProp.dateTo}</span> */}
                 <h5>City To:</h5>
                 <p>{cityTo} ({flyTo})</p>
-                
             </div>
             <div>
                 <h5>Price:</h5>
