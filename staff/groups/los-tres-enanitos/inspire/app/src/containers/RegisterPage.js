@@ -38,10 +38,10 @@ class RegisterPage extends Component {
             <div className="text-center push-20">
               <ul className="tabs">
                 <li className="tabs__item">
-                  <a href="register.html" className="tabs__link tabs__link--active" onClick={(event) => event.preventDefault()}>Join</a>
+                  <a href="#/" className="tabs__link tabs__link--active" onClick={(event) => event.preventDefault()}>Join</a>
                 </li>
                 <li className="tabs__item">
-                  <a href="login.html" className="tabs__link" onClick={this.goToLogin}>Login</a>
+                  <a href="#/" className="tabs__link" onClick={this.goToLogin}>Login</a>
                 </li>
               </ul>
             </div>

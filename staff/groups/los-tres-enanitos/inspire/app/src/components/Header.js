@@ -21,7 +21,8 @@ class Header extends Component {
 
   goToLogin = (event) => {
     event.preventDefault()
-    this.props.history.push('/login')
+    if (this.props.location.pathname != '/login')
+      this.props.history.push('/login')
   }
 
   goToRegister = (event) => {
@@ -31,16 +32,13 @@ class Header extends Component {
 
   goToProfile = (event) => {
     event.preventDefault()
-    this.props.history.push(`/profile/${logic.userId}`)
+    if (this.props.location.pathname != `/profile/${logic.userId}`)
+      this.props.history.push(`/profile/${logic.userId}`)
   }
 
   handleLogout = (event) => {
     event.preventDefault()
-    logic.logout()
-    this.setState({ loggedIn: false })
-    
-    if (this.props.location.pathname != '/')
-      this.props.history.push('/')
+    this.props.history.push('/logout')
   }
 
   render() {

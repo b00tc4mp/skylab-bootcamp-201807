@@ -1,4 +1,4 @@
-.login-form
+.form
 
     &__main-feedback
         +content
@@ -7,6 +7,10 @@
         +push-20
         border-radius: 5px
         
+        &--valid
+            color: #155724
+            background-color: #d4edda
+
         &--invalid
             color: #dc3545
             background-color: #f9ded8
@@ -16,16 +20,24 @@
 
         &.has-error
 
-            .login-form__label
+            .form__label
                 color: #dc3545
 
-            .login-form__input
+            .form__input
                 border-color: #dc3545
 
     &__label
         display: inline-block
     
     &__input
+        display: block
+        padding: 10px
+        border-radius: 5px
+        border: 1px solid #999999
+        font-size: 1rem
+        width: 100%
+
+    &__textarea
         display: block
         padding: 10px
         border-radius: 5px

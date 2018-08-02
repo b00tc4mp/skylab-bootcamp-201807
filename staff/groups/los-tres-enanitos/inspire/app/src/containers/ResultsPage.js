@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import Header from '../components/Header';
+import PhotoList from '../components/PhotoList';
+import { withRouter } from 'react-router-dom'
 import logic from '../logic'
 
 logic.unsplashAccessKey = '1cb96dfdb0925fb516e37123f0c906d5fbaadf2669fb3b9c5f0f833539476627'
@@ -19,16 +21,28 @@ class ResultsPage extends Component {
   }
 
   search(query) {
+    this.setState({ photos: [] })
     logic.searchPhotos(query)
       .then(res => {
-        this.setState({ photos: res.results })
+        res.results.forEach(photo => {
+          let photos = this.state.photos
+          photos.push({
+            id: photo.id,
+            url: photo.urls.regular
+          })
+          this.setState({ photos })
+        })
       })
+  }
+
+  handlePhotoClick = photoId => {
+    this.props.history.push(`/photos/${photoId}`)
   }
 
   render() {
     return (
       <div>
-        <Header query={this.props.query}/>
+        <Header query={this.props.query} />
         <main>
           <section className="content">
             <h1 className="title">
@@ -45,17 +59,10 @@ class ResultsPage extends Component {
             </ul>
           </section>
           <section className="content">
-            <div className="photo-list">
-              {
-                this.state.photos.map(photo => {
-                  return (
-                    <div className="photo-list-item" key={photo.id}>
-                      <img className="photo-list-item__image" src={photo.urls.regular} alt="" />
-                    </div>
-                  )
-                })
-              }
-            </div>
+            <PhotoList
+              photos={this.state.photos}
+              onPhotoClick={this.handlePhotoClick}
+            />
           </section>
         </main>
       </div>
@@ -63,4 +70,4 @@ class ResultsPage extends Component {
   }
 }
 
-export default ResultsPage
+export default withRouter(ResultsPage)
