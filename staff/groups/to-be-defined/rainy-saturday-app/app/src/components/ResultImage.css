@@ -1,9 +1,9 @@
-.mt-5.container .row h2 {
-  color: #ff7b00;
-  letter-spacing: 1.2em;
+.mt-5.container .row h2.page-mainTitle {
+  color: orangered;
+  letter-spacing: .2em;
   font-weight: 700;
   margin-bottom: 20px;
-  font-family: "Merienda", cursive; }
+  font-family: "Sunflower", sans-serif; }
 
 /*
 
@@ -37,7 +37,7 @@
 }
 */
 #resultImage-favoriteIcon {
-  color: #ff7b00; }
+  color: orangered; }
 
 * {
   box-sizing: border-box;
@@ -61,15 +61,17 @@ p, h5, h6 {
   color: grey; }
   .modal-dialog .modal-content .modal-body img {
     border: 3px solid lightgrey;
-    max-height: 90%; }
+    max-height: 90%;
+    margin-bottom: 15px; }
   .modal-dialog .modal-content .modal-body h6 {
     font-size: 1.2em;
     margin-top: 10px;
     margin-bottom: 5px;
-    font-weight: 700; }
+    font-weight: 600; }
   .modal-dialog .modal-content .modal-body p {
-    color: #ff7b00;
+    color: orangered;
     padding-left: 30px;
-    padding-right: 30px; }
+    padding-right: 30px;
+    font-weight: 400; }
 
 /*# sourceMappingURL=ResultImage.css.map */

@@ -36,5 +36,7 @@
   to { transform: rotate(360deg); }
 }
 */
+.searchFormFilterList-title {
+  color: grey; }
 
-/*# sourceMappingURL=SearchPage.css.map */
+/*# sourceMappingURL=SearchFormFilterListWithCount.css.map */

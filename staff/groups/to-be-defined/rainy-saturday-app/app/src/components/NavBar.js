@@ -26,6 +26,8 @@ export default class NavBar extends React.Component {
 
 
 
+
+
   constructor(props) {
     super(props);
 
@@ -46,7 +48,8 @@ export default class NavBar extends React.Component {
   }
 
   render() {
-    const imgURL = logic.cloudinaryURL || this.state.userImageURL
+    console.log("logic.cloudinaryURL",logic.cloudinaryURL)
+    const imgURL = logic.cloudinaryURL || "http://www.mas40.com/app/mobileimg/icos/ico-perfil.png"
     return (
       <div className="navbar-maindiv">
         <Navbar expand="md">
