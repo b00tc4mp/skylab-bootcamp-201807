@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AAGA;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;EA8BE;AC/BF,kCAAmC;EACnC,UAAU,EAAC,IAAI;EACb,aAAa,EAAC,IAAI;EAClB,UAAU,EDHF,OAAO;ECIf,KAAK,EDJG,OAAO",
+"sources": ["../App.scss","SearchForm.scss"],
+"names": [],
+"file": "SearchForm.css"
+}

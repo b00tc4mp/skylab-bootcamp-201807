@@ -19,12 +19,12 @@ class UserRegister extends Component {
         email: "",
         password: "",
         confirmpassword: "",
-        profileimage: "",
         passwordvalid: true,
         comparepassword: null,
         errorRegister: null,
         finalcomparepassword: true,
-        title: "Register"
+        title: "Register",
+      cloudinaryURL:""
 }
 
     keepName = event => this.setState({ name: event.target.value })
@@ -40,12 +40,14 @@ class UserRegister extends Component {
     keepConfirmpassword = event => this.comparePassword(event.target.value)
 
   
-
+    storeProfilePhoto = () => {}
 
     handleSubmit = event => {
         event.preventDefault()
-        const {state: {name, lastname, username, email, password }} = this
-        logic.registerUser(name, lastname, username, email, password)
+
+
+        const {state: {name, lastname, username, email, password,cloudinaryURL }} = this
+        logic.registerUser(name, lastname, username, email, password,cloudinaryURL)
         .then(() =>   
         {
         
@@ -150,7 +152,7 @@ class UserRegister extends Component {
         { this.state.errorRegister && <ErrorPanel message={this.state.errorRegister}/>}
         <FormGroup>
           <Label for="exampleFile">Profile Photo</Label>
-          <Input type="file" name="Profile Photo"/>
+          <Input type="file" ref={(ref) => this.fileUpload = ref} id="UserRegister-profilePhoto" name="Profile Photo"/>
           <FormText color="muted">
             Add your profile photo.
           </FormText>

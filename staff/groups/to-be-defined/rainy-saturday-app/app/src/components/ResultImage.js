@@ -51,7 +51,7 @@ onToggleFavorite = () => {
     logic.toggleImageFavorite(toStore)
         .then(() => {
           this.refreshFavorite(this.props)})
-        .catch(({ message }) => this.setState({ error: message }))
+        .catch(( message ) => this.setState({ error: message }))
 }
 
 refreshFavorite(props) {
@@ -62,7 +62,7 @@ refreshFavorite(props) {
     const {favorite } = this.state
     return (
       <div>
-        <i className={(favorite ? "fas fa-star" : "far fa-star")}onClick={this.onToggleFavorite}></i>
+        <i id="resultImage-favoriteIcon" className={(favorite ? "fas fa-star fa-2x " : "far fa-star fa-2x ")}onClick={this.onToggleFavorite}></i>
         <img src={this.props.image.imageurl} alt={this.props.image.title} onClick={this.toggle}/>
         
         <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className} >

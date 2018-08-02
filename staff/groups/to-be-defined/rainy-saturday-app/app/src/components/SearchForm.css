@@ -29,20 +29,10 @@
   to { transform: rotate(360deg); }
 }
 */
-#resultImage-favoriteIcon {
+formSubmitButton.btn.btn-secondary {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  background: #ff7b00;
   color: #ff7b00; }
 
-* {
-  box-sizing: border-box;
-  color: #333333; }
-
-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 1%; }
-
-p, h5, h6 {
-  margin: 10px; }
-
-/*# sourceMappingURL=ResultImage.css.map */
+/*# sourceMappingURL=SearchForm.css.map */
