@@ -40,6 +40,20 @@ formSubmitButton.btn.btn-secondary {
   margin-top: 20px;
   margin-bottom: 20px;
   background: #ff7b00;
-  color: #ff7b00; }
+  color: #ff7b00; 
+
+}
+
+
+.formSubmitButton{
+  margin-left: 25px;
+  margin-bottom: 4px;
+  background: orangered !important;
+}
+
+.buttonSituation{
+  display: inline-grid;
+}
+
 
 /*# sourceMappingURL=SearchForm.css.map */
