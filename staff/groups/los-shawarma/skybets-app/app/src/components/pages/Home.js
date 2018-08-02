@@ -4,7 +4,6 @@ import logic from '../../logic'
 //import FlightResults from '../cards/FlightResults'
 import ResultsSlider from '../cards/ResultsSlider'
 import FlightCard from '../cards/FlightCard'
-import BetCard from '../cards/BetCard'
 
 class Home extends Component {
 
@@ -30,6 +29,16 @@ class Home extends Component {
         return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`
     }
 
+    parseDateFromEpoch = (timestamp) => {
+        const date = new Date(timestamp*1000)
+
+        const year = date.getFullYear()
+        const month = date.getMonth() + 1
+        const day = date.getDate()
+
+        return `${day}/${month}/${year}`
+    }
+
     getDataInputs = (selectedFrom, selectedTo,  dateFrom, dateTo) => {
         /*this.setState({
             selectedFrom,
@@ -48,19 +57,14 @@ class Home extends Component {
             const filteredFlights = this.filterFlightsData(flights);
             this.setState({flights: filteredFlights})
         })
-        .then(logic._callBetsApi)
-        .then(bets => {
-            const filteredBets = this.filterBetsData(bets);
-            this.setState({bets: filteredBets})
-        })
         .catch()
     }
 
-    filterFlightsData = flights => {
+    filterFlightsData = (flights) => {
         const filteredFlights = flights.map((flight, index) => ({
             price: flight.conversion.EUR,
-            dateFrom: flight.route[0].aTimeUTC,
-            dateTo: flight.route[1].aTimeUTC,
+            dateFrom: this.parseDateFromEpoch(flight.route[0].aTimeUTC),
+            dateTo: this.parseDateFromEpoch(flight.route[1].aTimeUTC),
             cityFrom: flight.route[0].cityFrom,
             cityTo: flight.route[0].cityTo,
             flyFrom: flight.route[0].flyFrom,
@@ -91,7 +95,7 @@ class Home extends Component {
     
     render() {
 
-        const {flights, bets} = this.state
+        const {flights} = this.state
 
         return(
             <main>
