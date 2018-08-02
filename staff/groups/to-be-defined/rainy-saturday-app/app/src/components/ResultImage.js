@@ -75,9 +75,7 @@ refreshFavorite(props) {
           <h6>Period:</h6><p>{this.props.image.period}</p>
           </ModalBody>
           <ModalFooter>
-      
-            <Button color="primary" onClick={this.toggle}>Do Something</Button>{' '}
-            <Button color="secondary" onClick={this.toggle}>Cancel</Button>
+            <Button color="primary" onClick={this.toggle}>Close</Button>{' '}
           </ModalFooter>
         </Modal>
       </div>
