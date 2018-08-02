@@ -26,7 +26,6 @@ class App extends Component {
 
 
   onRegister = (username, password) => {
-
     logic.registerUser(username, password)
     .then(() => {
       this.setState({errorRegister: null, successRegister: true})
@@ -36,7 +35,6 @@ class App extends Component {
   }
 
   onLogin = (username, password) => {
-    debugger;
     logic.loginUser(username, password)
     .then(() => {
       this.setState({loggedIn: true, errorLogin: null, successLogin: true})
@@ -68,8 +66,7 @@ class App extends Component {
 
   onUpdateFavs = (currentBet, currentFlight) => {
     logic.updateFavs(currentBet, currentFlight)
-    .then(() => {
-      debugger;
+    .then(res => {
       this.setState({errorUpdate: null, successUpdate: true})
       this.props.history.push('/update')
     })

@@ -142,9 +142,11 @@ const logic = {
 
     updateFavs(currentBet, currentFlight) {
         const data = {
-            "favorites":{
-                "bet": currentBet,
-                "flight": currentFlight
+            username: this.userUsername,
+            password: this._userPassword,
+            favorites:{
+                bet: currentBet,
+                flight: currentFlight
             }
         }
 
