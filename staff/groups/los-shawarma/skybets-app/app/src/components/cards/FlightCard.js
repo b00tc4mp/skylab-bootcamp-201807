@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import './FlightCard.css';
 
 
 const FlightCard = props => { 
@@ -6,26 +7,30 @@ const FlightCard = props => {
     const { dateFrom, cityFrom, flyFrom, dateTo, cityTo, flyTo, price, link } = props.flightsProp
 
     return(
-        <section>
             <div>
-                <h5>Date From:</h5>
-                <p>{dateFrom}</p>
-                <h5>City From:</h5>
-                <p>{cityFrom} ({flyFrom})</p>
+            <div className="block1">
+                <div>
+                    <span className="title">Date From: </span><span>{dateFrom}</span>
+                </div>
+                <div>
+                    <span className="title">City From: </span><span>{cityFrom} ({flyFrom})</span>
+                </div>
             </div>
             <div>
-                <h5>Date To:</h5>
-                <p>{dateTo}</p>
-                <h5>City To:</h5>
-                <p>{cityTo} ({flyTo})</p>
+                <div>
+                    <span>Date To: </span><span>{dateTo}</span>
+                </div>
+                <div>
+                    <span>City To: </span><span>{cityTo} ({flyTo})</span>
+                </div>
             </div>
             <div>
                 <h5>Price:</h5>
                 <p>{price}</p>
                 <h5>Link:</h5>
-                <p><a href={link}>Go to kiwi</a></p>
+                <a href={link}>Go to kiwi</a>
             </div>
-        </section>
+            </div>
     )
 }
 

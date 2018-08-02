@@ -7,6 +7,7 @@ import FlightCard from '../cards/FlightCard'
 import BetCard from '../cards/BetCard'
 import BetPriceCard from '../cards/BetPriceCard';
 import FavCard from '../cards/FavCard';
+import './Home.css';
 
 class Home extends Component {
 
@@ -123,7 +124,9 @@ class Home extends Component {
        const {flights, bets, currentPrice, currentOdds, currentBet, currentFlight} = this.state
         
        return(
-            <main>
+            <main className="bgHome">
+                <h1 className="text-white pt-4 heading-home">Skybets</h1>
+                <p className="text-white mx-5 mt-4 p-home">Esta aplicación es un buscador de vuelos y un comparador de apuestas. Tu vuelo deseado es muy caro? Has probado alguna vez de hacer una apuesta y ver ,en caso de ganar, por cuanto te podria salir realmente el vuelo? Prueba...</p>
                 <div className="card-deck mx-4">
                     <div className="card">
                         <SearchCardFlights onSearchFlightsProp={ this.onSearchFlights } /> 

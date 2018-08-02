@@ -1,0 +1,13 @@
+.bgHome {
+    background-image: url(http://www.slate.com/content/dam/slate/blogs/bad_astronomy/2015/10/151027_BA_blue-sky.jpg.CROP.promo-xlarge2.jpg);
+    background-size: cover;
+}
+
+.heading-home {
+    text-shadow: 2px 2px 5px #000000;
+}
+
+.p-home{
+    text-shadow: 2px 2px 5px #000000;
+    font-size: 20px !important;
+}
