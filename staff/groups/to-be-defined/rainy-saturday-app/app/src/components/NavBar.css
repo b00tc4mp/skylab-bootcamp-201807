@@ -1,3 +1,10 @@
+.mt-5.container .row h2 {
+  color: #ff7b00;
+  letter-spacing: 1.2em;
+  font-weight: 700;
+  margin-bottom: 20px;
+  font-family: "Merienda", cursive; }
+
 /*
 
 .App {
@@ -39,15 +46,16 @@
   font-size: 20px; }
 
 .navbar-maindiv {
-  background: url("http://lh5.ggpht.com/SgH3Qo-vYI8GGm7-b-Qt6lXgsCAIoU2VDRwO5LYSBVNhhbZCetcvc88ZPi518MTy0MHDrna4X4ZC1ymxVJVpzps8gqw=s0");
+  background: url(/images/rembrandt.jpg);
   background-repeat: repeat-y;
   background-size: cover; }
   .navbar-maindiv .bg-dark {
     background: transparent; }
   .navbar-maindiv .navbar.navbar-expand-md a.navbar-brand {
-    font-size: 2.5em;
+    font-size: 3em;
     letter-spacing: .2em;
-    font-family: 'Baloo Tamma', cursive;
+    font-family: "Merienda", cursive;
+    font-weight: 900;
     color: #ff7b00; }
   .navbar-maindiv .navbar.navbar-expand-md .nav-item a.navLinks.nav-link {
     color: #eeeeee; }

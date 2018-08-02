@@ -7,6 +7,7 @@ import {Container, Row, Col} from 'reactstrap';
 import SearchFormFilterListWithCount from "./SearchFormFilterListWithCount"
 import ErrorPanel from './ErrorPanel'
 import ImageSearchBase from "./ImageSearchBase"
+import './FavouritesPage.css'
 
 const FILTER_LIMIT = 10
 const OBJECT_LIMIT = 100
@@ -37,7 +38,6 @@ class FavouritesPage extends ImageSearchBase {
     this.imageMap.clear()
     favs.forEach(fav => this.imageMap.set(fav.objectNumber,fav.imageurl))
     const objectNumbers = favs.map(element=> element.objectNumber)
-    console.log("favs",favs,"objectNumbers",objectNumbers)
     this.setState({
       data: [],
       materialData: [],
@@ -47,7 +47,6 @@ class FavouritesPage extends ImageSearchBase {
     })
     this.getDetailsFromArtObjects(objectNumbers)
       .then(res => {
-        console.log("results from getDetailsFromArtObjects",res)
         this.buildDataAfterNewSearch(res)
         this.processing = false;
       })
@@ -60,7 +59,7 @@ class FavouritesPage extends ImageSearchBase {
     const {isProcessing,errorMessage,warningMessage, data} = this.state
 
     return (<Container  className="mt-5"><
-        Row><h2>Favorites</h2></Row>
+        Row><h2>Favourites</h2></Row>
         { errorMessage && <Row><ErrorPanel color="danger" message={errorMessage}/></Row>}
         { isProcessing && <Row><ErrorPanel color="info" message="Processing request..."/></Row>}
         <Row> {(data.length > 0) && <ImageDisplayer data={data}/>}</Row>

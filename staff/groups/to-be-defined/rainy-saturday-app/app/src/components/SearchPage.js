@@ -7,6 +7,7 @@ import {Container, Row, Col} from 'reactstrap';
 import SearchFormFilterListWithCount from "./SearchFormFilterListWithCount"
 import ErrorPanel from './ErrorPanel'
 import ImageSearchBase from "./ImageSearchBase"
+import './SearchPage.css'
 
 const FILTER_LIMIT = 10
 const OBJECT_LIMIT = 100

@@ -1,6 +1,23 @@
 
 
 $orangey: #ff7b00;
+//$main-font: 'Amatic SC', cursive;
+$main-font:'Merienda', cursive;
+
+
+
+.mt-5.container {
+  .row {
+    h2 {
+      color:$orangey;
+      letter-spacing:1.2em;
+      font-weight:700;
+      margin-bottom:20px;
+      font-family: $main-font;
+
+    }
+  }
+}
 /*
 
 .App {
