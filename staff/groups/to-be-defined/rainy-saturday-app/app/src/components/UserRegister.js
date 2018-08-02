@@ -19,12 +19,12 @@ class UserRegister extends Component {
         email: "",
         password: "",
         confirmpassword: "",
-        profileimage: "",
         passwordvalid: true,
         comparepassword: null,
         errorRegister: null,
         finalcomparepassword: true,
-        title: "Register"
+        title: "Register",
+      cloudinaryURL:""
 }
 
     keepName = event => this.setState({ name: event.target.value })
@@ -45,7 +45,7 @@ class UserRegister extends Component {
     handleSubmit = event => {
         event.preventDefault()
         const {state: {name, lastname, username, email, password }} = this
-        logic.registerUser(name, lastname, username, email, password)
+        logic.registerUser(name, lastname, username, email, password,cloudinaryURL)
         .then(() =>   
         {
         
