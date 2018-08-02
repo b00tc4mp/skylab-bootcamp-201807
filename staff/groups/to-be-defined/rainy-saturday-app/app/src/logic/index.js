@@ -94,22 +94,25 @@ const logic = {
   // user's
 
 
+
+
   registerUser(name, lastname, username, email, password, imageFileName) {
+    if (!imageFileName) {
+      return this._callUsersApi('/user', 'post', { username, password, name, lastname, email})
+        .then(res => res.data.id)
+    } else if (imageFileName) {
+      return this.uploadCloudinaryImage(imageFileName)
+        .then(cloudinaryData => {
+          const cloudinaryURL = cloudinaryData.secure_url
+          return this._callUsersApi('/user', 'post', { username, password, name, lastname, email, cloudinaryURL })
 
-    return this.uploadCloudinaryImage(imageFileName)
-      .then(cloudinaryData => {
-        const cloudinaryURL = cloudinaryData.secure_url
-
-        return this._callUsersApi('/user', 'post', {username, password, name, lastname, email, cloudinaryURL})
-      })
-      .then(res => res.data.id)
-
-
+        }).then(res => res.data.id)
+    }
   },
 
   loginUser(username, password) {
-    return this._callUsersApi('/auth', 'post', {username, password})
-      .then(({data: {id, token}}) => {
+    return this._callUsersApi('/auth', 'post', { username, password })
+      .then(({ data: { id, token } }) => {
         this._userId = id
         this._userToken = token
         this._userUsername = username
@@ -118,7 +121,7 @@ const logic = {
         // return true
         return this._callUsersApi(`/user/${this._userId}`, 'get', undefined, true)
       })
-      .then(({data}) => {
+      .then(({ data }) => {
         this._userFavorites = data.favorites || []
         this._cloudinaryURL = data.cloudinaryURL || ""
         return true
@@ -224,7 +227,7 @@ const logic = {
 
   museumKey: 'ROQio02r',
 
-// TODO TESTING
+
 
   _callRijksmuseumApiQuery(query) {
     const searchString = `https://www.rijksmuseum.nl/api/en/collection?key=${this.museumKey}&q=${query}&ps=100`;
@@ -237,7 +240,7 @@ const logic = {
       });
   },
 
-// TODO TESTING
+  // TODO TESTING
 
   _callRijksmuseumApiObjectDetail(objectNumber) {
     const searchString = `https://www.rijksmuseum.nl/api/en/collection/${objectNumber}?key=${this.museumKey}&format=json`;
@@ -257,7 +260,7 @@ const logic = {
         return res.artObjects
       })
   },
-
+  //TODO TEST
   getMuseumImagesForSearchTerm(query) {
     return this._callRijksmuseumApiQuery(query.trim().replace(/ /g, "%20"))
       .then(res => {
@@ -276,13 +279,12 @@ const logic = {
       })
   },
 
-// TODO TESTING
   getMuseumDetailsForObjectNumber(objectNumber) {
     return this._callRijksmuseumApiObjectDetail(objectNumber)
       .then(res => {
         if (!res.artObject || !res.artObject.webImage || res.artObject.webImage.url === "") return null;
         else {
-          const {dating: {period}, webImage: {url}, objectNumber, title, longTitle, principalMaker: maker, colors, description, materials, physicalMedium} = res.artObject
+          const { dating: { period }, webImage: { url }, objectNumber, title, longTitle, principalMaker: maker, colors, description, materials, physicalMedium } = res.artObject
           return {
             colors,
             period,
@@ -341,7 +343,6 @@ const logic = {
   },*/
 
   _callCloudinaryApi(file, method = 'post') {
-    console.log(file)
     const config = {
       method
     };

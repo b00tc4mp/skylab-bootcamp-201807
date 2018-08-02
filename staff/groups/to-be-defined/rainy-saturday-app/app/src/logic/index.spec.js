@@ -187,8 +187,6 @@ describe('logic (Museum-App)', () => {
         describe('store user data', () => {
             let username = 'someone-' + Math.random()
             const password = '123'
-            const dataArray = [{ a: "b", c: "d", obj: { something: "else" } }]
-            const dataObj = { something: { is: "different" } }
             const dataFieldName = "favorites"
 
             beforeEach(() => {
@@ -199,6 +197,7 @@ describe('logic (Museum-App)', () => {
             })
 
             it('should store an array of data correctly', () => {
+                const dataArray = [{ a: "b", c: "d", obj: { something: "else" } }]
                 expect(logic._userId).toBeDefined()
                 expect(logic._userToken).toBeDefined()
                 expect(logic.userUsername).toBeDefined()
@@ -215,6 +214,7 @@ describe('logic (Museum-App)', () => {
             })
 
             it('should store object data correctly', () => {
+                const dataObj = { something: { is: "different" } }
                 expect(logic._userId).toBeDefined()
                 expect(logic._userToken).toBeDefined()
                 expect(logic.userUsername).toBeDefined()
@@ -229,7 +229,89 @@ describe('logic (Museum-App)', () => {
                     }).catch(console.error)
 
             })
+
+            it('should store a number correctly', () => {
+                const dataNumber = 23123
+                expect(logic._userId).toBeDefined()
+                expect(logic._userToken).toBeDefined()
+                expect(logic.userUsername).toBeDefined()
+                return logic.storeUserData(dataFieldName, dataNumber)
+                    .then((res) => {
+                        expect(res).toBeTruthy();
+                    }).then(() => {
+                        return logic.retrieveUserData(dataFieldName)
+                            .then((res) => {
+                                expect(res).toEqual(dataNumber)
+                            });
+                    }).catch(console.error)
+
+            })   
+            
+            it('should reutrn null when we send bad data', () => {
+                const dataUndefined = undefined
+                expect(logic._userId).toBeDefined()
+                expect(logic._userToken).toBeDefined()
+                expect(logic.userUsername).toBeDefined()
+                return logic.storeUserData(dataFieldName, dataUndefined)
+                    .then((res) => {
+                        expect(res).toBeTruthy();
+                    }).then(() => {
+                        return logic.retrieveUserData(dataFieldName)
+                            .then((res) => {
+                                expect(res).toEqual(null)
+                            });
+                    }).catch(console.error)
+
+            })  
         })
+
+        describe('retrieve user data', () => {
+            const name = 'javier', lastname = 'serrapell', email = 'lopezno@gmail.com'
+            let username = 'robert-anthony-' + Math.random()
+            const password = '123'
+            const dataArray = [{a:"b",c:"d"}]
+            const dataObj = {something:{is:"different"}}
+            const dataFieldNameArray = "favorites"
+            const dataFieldNameObject = "favoriteObject"
+        
+            beforeEach(() => {
+              username = 'robert-anthony-' + Math.random()
+              return logic.registerUser(name, lastname, username, email, password)  
+                .then(() => logic.loginUser(username, password))
+                .then(() => {
+                  return logic.storeUserData(dataFieldNameArray,dataArray)
+                })
+                .then(() => {
+                  return logic.storeUserData(dataFieldNameObject,dataObj)
+                })
+                .catch(console.error)
+            })
+        
+            it('should retrieve an array of data correctly', () => {
+              expect(logic._userId).toBeDefined()
+              expect(logic._userToken).toBeDefined()
+              expect(logic.userUsername).toBeDefined()
+              return logic.retrieveUserData(dataFieldNameArray)
+                .then((res) => {
+                  expect(res).toEqual(dataArray);
+                })
+                .catch(console.error)
+        
+            })
+        
+        
+            it('should retrieve object data correctly', () => {
+              expect(logic._userId).toBeDefined()
+              expect(logic._userToken).toBeDefined()
+              expect(logic.userUsername).toBeDefined()
+              return logic.retrieveUserData(dataFieldNameObject)
+                .then((res) => {
+                  expect(res).toEqual(dataObj);
+                })
+                .catch(console.error)
+        
+            })
+          })
 
     })
 
@@ -299,7 +381,7 @@ describe('logic (Museum-App)', () => {
                             " #A7A58F",
                             " #988561"
                         ])
-                        expect(results.principalMaker).toBe("Jacob Isaacksz. van Ruisdael")
+                        expect(results.maker).toBe("Jacob Isaacksz. van Ruisdael")
                         expect(results.materials).toEqual([
                             "canvas",
                             "oil paint (paint)"
