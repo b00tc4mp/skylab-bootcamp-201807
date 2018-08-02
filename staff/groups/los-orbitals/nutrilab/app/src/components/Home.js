@@ -23,6 +23,7 @@ class Home extends Component{
     onSearch = (query) => {
         logic.searchIngredients(query)
             .then(({common}) => {
+                if (common.length > 0) {
                 this.setState({
                     ingredients: common.map((common) => {
                         return{
@@ -31,8 +32,10 @@ class Home extends Component{
                         }
                     }),
                     listActive: true,
-                    panelActive: false
-                }) 
+                    panelActive: false,
+                    showFeedback: false
+                }) }
+                else this.setState({showFeedback: 'Sorry! No matches found', listActive: false})
             })
             .catch(({message}) => this.setState({showFeedback: message}))
     }
@@ -73,7 +76,7 @@ class Home extends Component{
         const { state: {showFeedback, listActive, panelActive, ingredients, ingredientInfo}, onSearch, onItemClick, onClose } = this
         return <section>
                     <Search onSearch={onSearch} feedback={showFeedback}/>
-                    {listActive && <List ingredients={ingredients} onItemClick={onItemClick} feedback={showFeedback} />}
+                    {listActive && <List ingredients={ingredients} onItemClick={onItemClick}/>}
                     {panelActive && <Productpanel ingredient={ingredientInfo} close={onClose} />}
                 </section>
     }

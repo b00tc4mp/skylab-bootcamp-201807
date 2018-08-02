@@ -1,16 +1,37 @@
-import React from 'react'
+import React, {Component} from 'react'
 import close from '../images/close.svg'
+import logic from '../logic/index'
+import heart from '../images/fav-line.svg'
+import heartfull from '../images/fav-color.svg'
 
-function Productpanel(props) {
+class Productpanel extends Component{
 
-        return <section >
+        state = { favorite: logic.isFavorite(this.props.ingredient[0].name)}
 
-        {props.ingredient.map(({name, calories, totalFat, cholesterol, totalCarbohydrate, sugars, protein, 
+        onToggleFavorite = () => {
+                logic.toggleFoodFavorite(this.props.ingredient[0].name)
+                    .then(() => this.refreshFavorite(this.props))
+                    .catch(({ message }) => this.setState({ error: message }))
+        }
+
+        refreshFavorite(props) { 
+                this.setState({ favorite: logic.isFavorite(props.ingredient[0].name) }) 
+        }
+
+        componentWillReceiveProps(newProps) {
+                this.refreshFavorite(newProps)
+        }
+
+        render () {
+
+                return <section >
+
+                {this.props.ingredient.map(({name, calories, totalFat, cholesterol, totalCarbohydrate, sugars, protein, 
 saturatedFat, servingUnit, sodium, potassium, dietaryFiber, photo}) => {
-
                 return <section>
-                                <a href="" onClick={(event) => {event.preventDefault(); props.close()}}>        <img src={close}/>
-                                </a>
+                                <a href="" onClick={(event) => {event.preventDefault(); this.props.close()}}><img src={close}/></a>
+                                <img src={photo}/>
+                                <a href="" onClick={(event) => {event.preventDefault(); this.onToggleFavorite()}}>{this.state.favorite ? <img src={heartfull}/> : <img src={heart}/>}</a>
                                 <p>Name: {name}</p>
                                 <p>Calories: {calories}</p>
                                 <p>Total Fat: {totalFat}</p>
@@ -23,10 +44,10 @@ saturatedFat, servingUnit, sodium, potassium, dietaryFiber, photo}) => {
                                 <p>Sodium: {sodium}</p>
                                 <p>Potassium: {potassium}</p>
                                 <p>Dietary Fiber: {dietaryFiber}</p>
-                                <img src={photo}/>
                         </section>
         })} 
         </section>
+        }    
 }
 
 export default Productpanel
