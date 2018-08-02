@@ -35,6 +35,18 @@ class Home extends Component {
         return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`
     }
 
+
+
+    parseDateFromEpoch = (timestamp) => {
+        const date = new Date(timestamp*1000)
+
+        const year = date.getFullYear()
+        const month = date.getMonth() + 1
+        const day = date.getDate()
+
+        return `${day}/${month}/${year}`
+    }
+
     onSearchFlights = (selectedFrom, selectedTo,  dateFrom, dateTo) => {
         /*this.setState({
             selectedFrom,
@@ -49,24 +61,26 @@ class Home extends Component {
         const inputDateTo = this.parseDate(dateTo)
 
         logic._callKiwiApi(fromIata, toIata, inputDateFrom, inputDateTo)
-        .then(flights => {
-            const filteredFlights = this.filterFlightsData(flights);
-            this.setState({flights: filteredFlights})
-            this.keepCurrentPrice(filteredFlights[0])
-        })
-        .then(logic._callBetsApi)
-        .then(bets => {
-            const filteredBets = this.filterBetsData(bets);
-            this.setState({bets: filteredBets})
-        })
-        .catch()
+         .then(flights => {
+             const filteredFlights = this.filterFlightsData(flights);
+             debugger;
+             this.setState({flights: filteredFlights})
+             this.setState({currentPrice: filteredFlights[0].price})
+
+         })
+         .then(logic._callBetsApi)
+         .then(bets => {
+             const filteredBets = this.filterBetsData(bets);
+             this.setState({bets: filteredBets})
+         })
+         .catch()
     }
 
-    filterFlightsData = flights => {
+    filterFlightsData = (flights) => {
         const filteredFlights = flights.map((flight, index) => ({
             price: flight.conversion.EUR,
-            dateFrom: flight.route[0].aTimeUTC,
-            dateTo: flight.route[1].aTimeUTC,
+            dateFrom: this.parseDateFromEpoch(flight.route[0].aTimeUTC),
+            dateTo: this.parseDateFromEpoch(flight.route[1].aTimeUTC),
             cityFrom: flight.route[0].cityFrom,
             cityTo: flight.route[0].cityTo,
             flyFrom: flight.route[0].flyFrom,
