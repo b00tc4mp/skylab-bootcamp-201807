@@ -161,6 +161,12 @@ const logic = {
         return this.userUsername && this._userToken && this._userId
     },
 
+    /**
+     * @param {string} name 
+     * if the name received is in the sessionStorage, it splices the name, else it pushes the name
+     * 
+     * @returns {Promise} updates the sessionStorage
+     */
     toggleFoodFavorite(name) {
         const favorites = this._userFavorites
         const index = favorites.indexOf(name)
@@ -180,10 +186,14 @@ const logic = {
             })
     },
 
-    isFavorite (name){
+    /**
+     * @param {string} name 
+     * 
+     * @returns {Function} updates the sessionStorage
+     */
+    isFavorite(name){
         return this._userFavorites.includes(name)
     },
-    
 
 
     /**
