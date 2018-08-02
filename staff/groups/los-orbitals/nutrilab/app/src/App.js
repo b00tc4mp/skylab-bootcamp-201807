@@ -9,6 +9,7 @@ import Login from './components/Login'
 import Home from './components/Home'
 import Profile from './components/Profile'
 import { Route, withRouter, Link, Redirect} from 'react-router-dom'
+import FavoriteList from './components/FavoriteList';
 
 // States are created and initialized
 class App extends Component {
@@ -114,10 +115,11 @@ class App extends Component {
         <header className="App-header">
         <Link to="/home"> <img src={logo} className="App-logo" alt="logo" /> </Link>
           {!loggedIn && <h2 className="App-title">Take care of your eating habits in an easy and fun way</h2>}
-          <Route path="/(home|profile)" render={() => 
+          <Route path="/(home|profile|favorites)" render={() => 
             <nav>
               <Link to="/home" onClick={this.onResetMessage} >Home</Link>
               <Link to="/profile" >Profile</Link>
+              <Link to="/favorites">Favorites</Link>
               <Link to="/" onClick={logout}>Logout</Link>
             </nav>}/>
         </header>
@@ -127,6 +129,7 @@ class App extends Component {
         <Route path="/login" render = {() => loggedIn ? <Redirect to="/home"/> : <Login onLogin={loginUser} linkToSignUp={goToSignUp} feedback={showFeedback}/>} />
         <Route path="/home" render = {() => loggedIn ? <Home/> : <Redirect to="/" />} />
         <Route path="/profile" render={() => loggedIn ? <Profile onUpdate={updateUser} feedback={showFeedback} feedbackdelete={showFeedbackDelete} onDelete={deleteUser}/> : <Redirect to="/"/>} />
+        <Route path="/favorites" render={() => loggedIn ? <FavoriteList /> :  <Redirect to="/"/>} />
       </div>
     )
   }
