@@ -36,7 +36,7 @@ class PhotoDetail extends Component {
 
         </div>
         <div className="photo-detail__image">
-          <img src={this.props.url} alt="photo" />
+          <img src={this.props.url} alt={this.props.id} />
         </div>
         {
           this.props.location && (

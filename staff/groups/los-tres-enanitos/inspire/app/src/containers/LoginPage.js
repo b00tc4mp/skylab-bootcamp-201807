@@ -1,22 +1,12 @@
 import React, { Component } from 'react'
 import Login from '../components/Login';
 import Header from '../components/Header';
-import logic from '../logic'
+import { withRouter } from 'react-router-dom'
 
 class LoginPage extends Component {
 
   state = {
     loginError: ''
-  }
-
-  handleSubmit = (formData) => {
-    logic.loginUser(formData.username, formData.password)
-      .then(() => {
-        this.props.history.push('/')
-      })
-      .catch(error => {
-        this.setState({ loginError: `Upps, ${error.message}` })
-      })
   }
 
   goToRegister = (event) => {
@@ -27,7 +17,7 @@ class LoginPage extends Component {
   render() {
     return (
       <div>
-        <Header />
+        <Header loggedIn={this.props.loggedIn} />
         <main>
           <div className="form-container content push-40-t">
             <div className="text-center push-20">
@@ -41,7 +31,7 @@ class LoginPage extends Component {
               </ul>
             </div>
             <div>
-              <Login onSubmit={this.handleSubmit} error={this.state.loginError} />
+              <Login onSubmit={this.props.onLoginSubmit} error={this.state.loginError} />
             </div>
           </div>
         </main>
@@ -50,4 +40,4 @@ class LoginPage extends Component {
   }
 }
 
-export default LoginPage
+export default withRouter(LoginPage)

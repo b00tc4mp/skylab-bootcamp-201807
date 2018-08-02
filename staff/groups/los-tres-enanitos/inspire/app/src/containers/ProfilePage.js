@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import Profile from '../components/Profile';
 import Header from '../components/Header';
-import logic from '../logic'
-import { withRouter } from 'react-router-dom'
 import PhotoList from '../components/PhotoList';
+import { withRouter } from 'react-router-dom'
+import logic from '../logic'
 
 class ProfilePage extends Component {
 
@@ -43,7 +43,7 @@ class ProfilePage extends Component {
   render() {
     return (
       <div>
-        <Header />
+        <Header loggedIn={this.props.loggedIn}/>
         <main>
           <section className="profile-container">
             {
@@ -60,7 +60,7 @@ class ProfilePage extends Component {
           <section className="content push-50-l push-50-r">
             <ul className="tabs">
               <li className="tabs__item">
-                <a href="#" className="tabs__link tabs__link--active">{this.state.favoritePhotos.length} Favorites</a>
+                <a href="#/" className="tabs__link tabs__link--active">{this.state.favoritePhotos.length} Favorites</a>
               </li>
               {/* <li className="tabs__item">
                 <a href="#" className="tabs__link">2 Collections</a>

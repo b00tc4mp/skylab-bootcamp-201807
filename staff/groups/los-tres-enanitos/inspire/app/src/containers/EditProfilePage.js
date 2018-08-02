@@ -15,7 +15,7 @@ class EditProfilePage extends Component {
   componentDidMount() {
     logic.retrieveUserById(logic.userId)
       .then(user => {
-          this.setState({ user })
+        this.setState({ user })
       })
   }
 
@@ -25,13 +25,13 @@ class EditProfilePage extends Component {
 
     logic.updateUser(password, fields)
       .then(() => {
-        this.setState({ 
+        this.setState({
           updateSuccess: `Your profile has been updated correctly.`,
           updateError: '',
         })
       })
       .catch(error => {
-        this.setState({ 
+        this.setState({
           updateError: `Upps, ${error.message}`,
           updateSuccess: '',
         })
@@ -41,27 +41,27 @@ class EditProfilePage extends Component {
   render() {
     return (
       <div>
-        <Header />
+        <Header loggedIn={this.props.loggedIn} />
         <main>
 
           <div className="form-container content push-40-t">
             <div className="text-center push-20">
               <ul className="tabs">
                 <li className="tabs__item">
-                  <a href="#" className="tabs__link tabs__link--active" onClick={(event) => event.preventDefault()}>Edit Profile</a>
+                  <a href="#/" className="tabs__link tabs__link--active" onClick={(event) => event.preventDefault()}>Edit Profile</a>
                 </li>
               </ul>
             </div>
             <div>
               {
-              this.state.user && (
-                <EditProfile
-                  user={this.state.user}
-                  onSubmit={this.handleSubmit}
-                  success={this.state.updateSuccess}
-                  error={this.state.updateError}
-                />
-              )
+                this.state.user && (
+                  <EditProfile
+                    user={this.state.user}
+                    onSubmit={this.handleSubmit}
+                    success={this.state.updateSuccess}
+                    error={this.state.updateError}
+                  />
+                )
               }
             </div>
           </div>

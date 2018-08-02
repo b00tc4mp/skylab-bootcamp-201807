@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Register from '../components/Register';
 import Header from '../components/Header';
+import { withRouter } from 'react-router-dom'
 import logic from '../logic'
 
 class RegisterPage extends Component {
@@ -31,7 +32,7 @@ class RegisterPage extends Component {
   render() {
     return (
       <div>
-        <Header />
+        <Header loggedIn={this.props.loggedIn} />
         <main>
 
           <div className="form-container content push-40-t">
@@ -55,4 +56,4 @@ class RegisterPage extends Component {
   }
 }
 
-export default RegisterPage
+export default withRouter(RegisterPage)

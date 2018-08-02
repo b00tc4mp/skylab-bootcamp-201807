@@ -143,7 +143,7 @@ class EditProfile extends Component {
         </div>
         <div className="form__field">
           <label className="form__label" htmlFor="description">Description</label>
-          <textarea className="form__textarea" onChange={this.handleDescription}>{this.state.description}</textarea>
+          <textarea className="form__textarea" onChange={this.handleDescription} defaultValue={this.state.description} rows="5"></textarea>
         </div>
         <div className={'form__field ' + (this.state.passwordToUpdateError && 'has-error')}>
           <label className="form__label" htmlFor="password-to-update">Password to update</label>

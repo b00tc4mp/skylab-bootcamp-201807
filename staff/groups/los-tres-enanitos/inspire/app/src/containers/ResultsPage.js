@@ -42,7 +42,7 @@ class ResultsPage extends Component {
   render() {
     return (
       <div>
-        <Header query={this.props.query} />
+        <Header loggedIn={this.props.loggedIn} query={this.props.query} />
         <main>
           <section className="content">
             <h1 className="title">
