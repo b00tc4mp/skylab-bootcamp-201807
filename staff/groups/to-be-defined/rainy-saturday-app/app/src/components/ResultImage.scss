@@ -21,3 +21,34 @@ img {
 p, h5, h6 {
   margin: 10px;
 }
+
+.modal-dialog {
+  .modal-content {
+    .modal-header {
+     h5.modal-title {
+       color:darkcyan;
+       font-size:1.5em;
+       letter-spacing:.2em;
+       font-weight:900;
+     }
+    }
+    .modal-body {
+      color:grey;
+      img {
+        border: 3px solid lightgrey;
+        max-height:90%;
+      }
+      h6 {
+        font-size:1.2em;
+        margin-top:10px;
+        margin-bottom:5px;
+      font-weight:700;
+    }
+      p {
+        color: $orangey;
+        padding-left:30px;
+        padding-right:30px;
+      }
+    }
+  }
+}

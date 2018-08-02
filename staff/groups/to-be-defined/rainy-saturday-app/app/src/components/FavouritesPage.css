@@ -36,10 +36,5 @@
   to { transform: rotate(360deg); }
 }
 */
-formSubmitButton.btn.btn-secondary {
-  margin-top: 20px;
-  margin-bottom: 20px;
-  background: #ff7b00;
-  color: #ff7b00; }
 
-/*# sourceMappingURL=SearchForm.css.map */
+/*# sourceMappingURL=FavouritesPage.css.map */

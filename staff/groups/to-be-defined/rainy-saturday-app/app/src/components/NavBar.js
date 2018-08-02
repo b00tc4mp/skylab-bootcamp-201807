@@ -22,8 +22,8 @@ export default class NavBar extends React.Component {
 
   static propTypes = {
     isLoggedIn: PropTypes.bool.isRequired,
-
   }
+
 
 
   constructor(props) {
@@ -46,7 +46,7 @@ export default class NavBar extends React.Component {
   }
 
   render() {
-    console.log("logged in here is",logic.loggedIn,this.props.isLoggedIn)
+    const imgURL = logic.cloudinaryURL || this.state.userImageURL
     return (
       <div className="navbar-maindiv">
         <Navbar expand="md">
@@ -71,7 +71,7 @@ export default class NavBar extends React.Component {
               </NavItem>
               <UncontrolledDropdown nav inNavbar>
               {this.props.isLoggedIn && <DropdownToggle nav caret>
-                <img src={'http://www.mas40.com/app/mobileimg/icos/ico-perfil.png'} alt="User profile" className="imageProfile" /> 
+                <img src={imgURL} alt="User profile" className="imageProfile" />
                 </DropdownToggle>}
                 <DropdownMenu right>
                   <DropdownItem>

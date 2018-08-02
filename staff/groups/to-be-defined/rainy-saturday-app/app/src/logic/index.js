@@ -29,6 +29,9 @@ const logic = {
   set _userPassword(userPassword) {
     sessionStorage.setItem('userPassword', userPassword)
   },
+  set _cloudinaryURL(cloudinaryURL) {
+    sessionStorage.setItem('cloudinaryURL', cloudinaryURL)
+  },
 
   get _userPassword() {
     return sessionStorage.getItem('userPassword')
@@ -40,6 +43,14 @@ const logic = {
 
   get _userFavorites() {
     return JSON.parse(sessionStorage.getItem('userFavorites')) || []
+  },
+
+  get _cloudinaryURL() {
+    return sessionStorage.getItem('cloudinaryURL') || ""
+  },
+
+  get cloudinaryURL() {
+    return this._cloudinaryURL;
   },
 
   get MUSEUM_MAKER_FILTER() {
@@ -81,9 +92,15 @@ const logic = {
 
   // user's
 
-  registerUser(name, lastname, username, email, password,profilePicture) {
-    return this._callUsersApi('/user', 'post', {username, password, name, lastname, email,})
-      .then(res => res.data.id)
+
+
+  registerUser(name, lastname, username, email, password,imageFileName) {
+
+    return this.uploadCloudinaryImage(imageFileName)
+      .then(cloudinaryData =>{
+        const cloudinaryURL = cloudinaryData.secure_url
+        this._callUsersApi('/user', 'post', {username, password, name, lastname, email,cloudinaryURL })
+      })
   },
 
   loginUser(username, password) {
@@ -99,7 +116,7 @@ const logic = {
       })
       .then(({data}) => {
         this._userFavorites = data.favorites || []
-
+        this._cloudinaryURL = data.cloudinaryURL || ""
         return true
       })
   },
