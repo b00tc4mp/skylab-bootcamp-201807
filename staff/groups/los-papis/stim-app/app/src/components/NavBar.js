@@ -37,6 +37,9 @@ class NavBar extends Component {
             <NavItem>
                 <NavLink tag={Link} to="/search">Search Games</NavLink>
               </NavItem>
+              <NavItem>
+                <NavLink tag={Link} to="/favorites">Favorite Games</NavLink>
+              </NavItem>
               <UncontrolledDropdown nav inNavbar>
                 <DropdownToggle nav caret>
                   Profile

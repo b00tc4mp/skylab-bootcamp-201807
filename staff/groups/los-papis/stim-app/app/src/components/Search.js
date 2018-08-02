@@ -21,6 +21,7 @@ class Search extends Component {
     query: "",
     data: "",
     detail: {},
+    isFav: null
     
   };
 
@@ -77,16 +78,22 @@ class Search extends Component {
 
 
 // TODO check for future version 17 (make it work!)
-// componentDidUpdate(prevProps,prevState) {
-//     if (prevState.d.id !== this.props.track.id)
-//         this.refreshFavorite(this.props.track.id)
-// }
+componentDidUpdate(prevProps,prevState) {
+    if (prevState.detail.appid !== this.state.detail.appid)
+        this.refreshFavorite(this.state.detail.appid)
+}
+
+refreshFavorite = () => {
+  this.setState({
+    isFav: logic.isFavorite(this.state.detail.appid)
+  })
+}
 
 onToggleFavorite = () => {
     logic.toggleGameFavorite(this.state.detail.appid)
-        .then(() => this.setState(prevState => ({
-          toggleFav : !prevState.toggleFav
-        })))
+        .then(() => this.setState({
+          isFav : logic.isFavorite(this.state.detail.appid)
+        }))
         .catch(err => console.log(err))
 }
 
@@ -153,7 +160,7 @@ onToggleFavorite = () => {
                     <CardText>{this.state.detail.price == 0 ? "Free" : (this.state.detail.price / 100)+"$" }</CardText>
                     <div>Tags: <ul>{Object.keys(this.state.detail.tags).map(i => <li>{i}</li>)}</ul>
                     <p>Languages available: <br/><li>{this.state.detail.languages}</li></p>
-                    <p>{logic.isFavorite(this.state.detail.appid) ? <i className={"fa-heart fa-2x fas fa-heart-active "} onClick={this.onToggleFavorite} /> : <i className={"fa-heart fa-2x far fa-heart-inactive "} onClick={this.onToggleFavorite} />}</p>
+                    <p>{this.state.isFav ? <i className={"fa-heart fa-2x fas fa-heart-active "} onClick={this.onToggleFavorite} /> : <i className={"fa-heart fa-2x far fa-heart-inactive "} onClick={this.onToggleFavorite} />}</p>
                     
 
                     

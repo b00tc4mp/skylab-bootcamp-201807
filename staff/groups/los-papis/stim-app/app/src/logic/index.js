@@ -39,6 +39,16 @@ const logic = {
             )
     },
 
+    getGamesById(gameid) {
+        return logic.getAllGames()
+            //
+            //
+            .then(res => res.filter(({ id }) => {
+                return id == gameid
+            })
+            )
+    },
+
     getStatsForGame (appid){
          return fetch(`https://skylabcoders.herokuapp.com/proxy?url=http://steamspy.com/api.php?request=appdetails&appid=${appid}`)
             .then(res => res.json())
@@ -213,7 +223,18 @@ const logic = {
                 
                 return true
             })
-    }
+    },
+
+    updateFavorites(password,id) {
+        const username = this._userUsername
+        const favorites = this._userFavorites
+        return this._callUsersApi(`/user/${this._userId}`, 'put', { username, password,id }, true)
+            .then(() => {
+                favorites.push(id)
+                this._userFavorites = favorites
+                return true
+            })
+    },
 
 }
 

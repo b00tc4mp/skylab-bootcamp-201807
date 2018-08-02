@@ -7,6 +7,7 @@ import NavBar from './components/NavBar'
 import Error404 from './components/Error404'
 import UserDelete from './components/UserDelete';
 import Search from './components/Search';
+import Favorites from './components/Favorites'
 
 
 class App extends Component {
@@ -37,6 +38,7 @@ class App extends Component {
           <Route path="/search" render={() => this.state.isLoggedIn ? <Search /> : <Redirect to="/" />} />
           <Route path="/register" render={() => this.state.isLoggedIn ? <Redirect to="/home" /> : <Redirect to="/" />} />
           <Route path="/login" render={() => this.state.isLoggedIn ? <Redirect to="/home" /> : <Redirect to="/" />} />      
+          <Route path="/favorites" render={() => this.state.isLoggedIn ? <Favorites /> : <Redirect to="/" />} />
           {/* <Route path="/top" render={() => this.state.isLoggedIn ? <Top/> : <Redirect to="/" />} />           */}
           <Route component={Error404} />
         </Switch>
