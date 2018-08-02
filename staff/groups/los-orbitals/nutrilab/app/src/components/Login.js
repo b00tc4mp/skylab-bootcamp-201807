@@ -29,11 +29,11 @@ class Login extends Component{
             <section>
                 {this.props.feedback && <Feedback message={this.props.feedback} />} 
                 <form onSubmit={login}> 
-                    <input type="text" placeholder="Enter username" onChange={saveUsername}></input>
-                    <input type="password" placeholder="Enter password" onChange={savePassword}></input>
+                    <input type="text" placeholder="username" onChange={saveUsername}></input>
+                    <input type="password" placeholder="password" onChange={savePassword}></input>
                     <button type="submit">Login</button>
                 </form>
-                <p>Go to <a href="/#" onClick={linkToSignUp}>Sign up</a></p> 
+                <p>Go to <a href="/#" onClick={linkToSignUp}>Signup</a></p> 
             </section>
         )
     }

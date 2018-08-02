@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import close from '../images/close.svg'
+import '../sass/productpanel.css'
 import logic from '../logic/index'
 import heart from '../images/fav-line.svg'
 import heartfull from '../images/fav-color.svg'
@@ -24,6 +25,12 @@ class Productpanel extends Component{
 
         render () {
 
+                return <section className="product__panel">
+                                <img src={photo}/>
+                                <a className="icon__close" href="" onClick={(event) => {event.preventDefault(); props.close()}}><img src={close}/>
+                                </a>
+                                <h2>{name}</h2>
+                                <div className="div__background--gray">
                 return <section >
 
                 {this.props.ingredient.map(({name, calories, totalFat, cholesterol, totalCarbohydrate, sugars, protein, 

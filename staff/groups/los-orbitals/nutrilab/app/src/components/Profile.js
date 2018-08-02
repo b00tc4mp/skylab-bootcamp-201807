@@ -48,9 +48,9 @@ class Profile extends Component {
                         <h2>Update your Profile</h2>
                         <p>it is required to fill in the field with the * symbol</p>
                         <form onSubmit={update}>
-                            <input type="password" placeholder="Enter password*" onChange={savePassword}/>
-                            <input type="text" placeholder="Enter new username" onChange={saveNewUsername}/>
-                            <input type="password" placeholder="Enter new password" onChange={saveNewPassword}/>
+                            <input type="password" placeholder="Password" onChange={savePassword}/>
+                            <input type="text" placeholder="New username" onChange={saveNewUsername}/>
+                            <input type="password" placeholder="New password" onChange={saveNewPassword}/>
                             <button type="submit">Update</button>
                         </form>
                         {this.props.feedback && <Feedback message={this.props.feedback} />}
@@ -59,7 +59,7 @@ class Profile extends Component {
                         <h2>Delete your Profile</h2>
                         <p>it is required to fill in the field with the * symbol</p>
                         <form onSubmit={deleteUser}>
-                            <input type="password" placeholder="Enter password*" onChange={savePassword}/>
+                            <input type="password" placeholder="Password*" onChange={savePassword}/>
                             <button type="submit">Delete</button>
                         </form>
                         {this.props.feedbackdelete && <Feedback message={this.props.feedbackdelete} />}

@@ -44,9 +44,9 @@ class Signup extends Component{
             <section>
                 {this.props.feedback && <Feedback message={this.props.feedback}/>} 
                 <form onSubmit={signup}> 
-                    <input type="text" placeholder="Enter username" onChange={saveUsername}></input>
-                    <input type="password" placeholder="Enter password" onChange={savePassword}></input>
-                    <button type="submit">Sign up</button>
+                    <input type="text" placeholder="username" onChange={saveUsername}></input>
+                    <input type="password" placeholder="password" onChange={savePassword}></input>
+                    <button type="submit">Signup</button>
                 </form>
                 <p>Go to <a href="/#" onClick={linkToLogin}>Login</a></p>
             </section> 

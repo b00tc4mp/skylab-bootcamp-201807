@@ -1,0 +1,127 @@
+body {
+  font-family: "Roboto", sans-serif;
+  font-size: 10px;
+  color: #212121;
+}
+
+p {
+  font-size: 2em;
+  font-weight: 500;
+}
+
+a {
+  text-decoration: none;
+  display: inline;
+  text-align: left;
+  color: #212121;
+}
+a:hover {
+  color: #6BDFA0;
+}
+
+h2 {
+  font-size: 3em;
+  font-weight: 700;
+}
+
+section {
+  padding: 0em 0.5em;
+}
+
+ul {
+  list-style-type: none;
+}
+
+.div__background--gray {
+  background-color: #F1F1F1;
+}
+
+.App {
+  text-align: center;
+}
+.App__header {
+  background-color: #6BDFA0;
+  height: 6em;
+  color: white;
+  padding: 0em 3em;
+}
+.App__header__logo {
+  height: auto;
+}
+.App__header__nav {
+  font-weight: 500;
+  display: flex;
+  justify-content: space-between;
+}
+.App__header__nav__item {
+  font-size: 2em;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: white;
+  display: inline-block;
+  margin: 0.3em;
+  float: left;
+}
+.App__header__nav__ul {
+  display: flex;
+  flex-direction: row;
+}
+.App__main {
+  background-color: #F1F1F1;
+  height: 20em;
+  color: #525252;
+  margin-top: 0;
+}
+.App__main2 {
+  height: 0em;
+}
+
+button {
+  min-height: 3em;
+  background-color: #D3D3D3;
+  border-radius: 0.6em;
+  border: 0.1em;
+  padding: 0.5em 1em;
+  margin: 0.3em;
+  font-size: 2em;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  color: white;
+  cursor: pointer;
+}
+button:hover {
+  background-color: #6BDFA0;
+}
+
+input {
+  min-height: 2.7em;
+  border-radius: 0.7em;
+  border: 0.2em solid #D3D3D3;
+  padding: 0em 0.5em;
+  margin: 0.3em;
+  font-size: 2em;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  color: #212121;
+}
+
+@media only screen and (min-width: 768px) {
+  body {
+    font-size: 12px;
+  }
+
+  input {
+    border: 0.2em solid #D3D3D3;
+  }
+}
+@media only screen and (min-width: 1024px) {
+  body {
+    font-size: 14px;
+  }
+
+  input {
+    border: 0.15em solid #D3D3D3;
+  }
+}
+
+/*# sourceMappingURL=App.css.map */

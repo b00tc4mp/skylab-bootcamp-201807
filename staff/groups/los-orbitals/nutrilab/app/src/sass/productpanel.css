@@ -1,0 +1,19 @@
+.icon__close {
+  position: fixed;
+  top: 8em;
+  right: 2em;
+  width: 4em;
+}
+
+.product__panel {
+  z-index: 2;
+  position: absolute;
+  top: 6em;
+  background-color: white;
+  width: 100vw;
+  margin: 0;
+  padding-right: 8em;
+  padding: 3em;
+}
+
+/*# sourceMappingURL=productpanel.css.map */
