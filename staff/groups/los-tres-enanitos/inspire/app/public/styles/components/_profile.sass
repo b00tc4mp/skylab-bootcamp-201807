@@ -1,7 +1,7 @@
 
 .profile 
     margin: 0 auto
-    height: 300px
+    min-height: 300px
     width: 800px
     display: flex
     flex-direction: row
@@ -11,8 +11,9 @@
     &__photo-container 
         padding-right: 30px
 
-    &__photo-container img 
+    &__photo
         width: 130px
+        border-radius: 50%
     
     &__details
         padding-left: 30px
@@ -26,6 +27,7 @@
     &__details-name 
         font-size: 50px
         padding-right: 20px
+        line-height: 50px
 
     &__details-edit 
         background-color: white

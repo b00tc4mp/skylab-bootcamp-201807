@@ -5,14 +5,17 @@ import logic from '../logic'
 
 class LoginPage extends Component {
 
+  state = {
+    loginError: ''
+  }
+
   handleSubmit = (formData) => {
     logic.loginUser(formData.username, formData.password)
       .then(() => {
-        // redirect to home
         this.props.history.push('/')
       })
       .catch(error => {
-        console.log(error)
+        this.setState({ loginError: `Upps, ${error.message}` })
       })
   }
 
@@ -26,15 +29,21 @@ class LoginPage extends Component {
       <div>
         <Header />
         <main>
-          <ul className="tabs">
-            <li className="tabs__item">
-              <a href="#/" onClick={this.goToRegister} className="tabs__link">Join</a>
-            </li>
-            <li className="tabs__item">
-              <a href="#/" onClick={(event) => event.preventDefault()} className="tabs__link tabs__link--active">Login</a>
-            </li>
-          </ul>
-          <Login onSubmit={this.handleSubmit} />
+          <div className="form-container content push-40-t">
+            <div className="text-center push-20">
+              <ul className="tabs">
+                <li className="tabs__item">
+                  <a href="#/" className="tabs__link" onClick={this.goToRegister}>Join</a>
+                </li>
+                <li className="tabs__item">
+                  <a href="#/" className="tabs__link tabs__link--active" onClick={(event) => event.preventDefault()}>Login</a>
+                </li>
+              </ul>
+            </div>
+            <div>
+              <Login onSubmit={this.handleSubmit} error={this.state.loginError} />
+            </div>
+          </div>
         </main>
       </div>
     )
