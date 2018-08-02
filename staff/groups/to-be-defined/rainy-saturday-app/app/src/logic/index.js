@@ -30,6 +30,7 @@ const logic = {
     sessionStorage.setItem('userPassword', userPassword)
   },
   set _cloudinaryURL(cloudinaryURL) {
+    console.log("set _cloudinaryURL", cloudinaryURL)
     sessionStorage.setItem('cloudinaryURL', cloudinaryURL)
   },
 
@@ -93,14 +94,17 @@ const logic = {
   // user's
 
 
-
-  registerUser(name, lastname, username, email, password,imageFileName) {
+  registerUser(name, lastname, username, email, password, imageFileName) {
 
     return this.uploadCloudinaryImage(imageFileName)
-      .then(cloudinaryData =>{
+      .then(cloudinaryData => {
         const cloudinaryURL = cloudinaryData.secure_url
-        this._callUsersApi('/user', 'post', {username, password, name, lastname, email,cloudinaryURL })
+
+        return this._callUsersApi('/user', 'post', {username, password, name, lastname, email, cloudinaryURL})
       })
+      .then(res => res.data.id)
+
+
   },
 
   loginUser(username, password) {
@@ -168,7 +172,7 @@ const logic = {
 
   toggleImageFavorite(objectData) {
     const favorites = this._userFavorites
-    const index = favorites.findIndex(element =>element.objectNumber === objectData.objectNumber)
+    const index = favorites.findIndex(element => element.objectNumber === objectData.objectNumber)
 
     if (index > -1) {
       favorites.splice(index, 1)
@@ -336,7 +340,7 @@ const logic = {
   },*/
 
   _callCloudinaryApi(file, method = 'post') {
-console.log(file)
+    console.log(file)
     const config = {
       method
     };
