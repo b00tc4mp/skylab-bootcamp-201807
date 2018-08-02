@@ -27,19 +27,22 @@ class Login extends Component {
         const { submitLogin, keepUsername, keepPassword } = this
 
         return (
-            <section>
+            <div>
                 <h1>Login</h1>
                 <form onSubmit={submitLogin}>
-                    <input type="text" onChange={keepUsername}/>
-                    <input type="password"onChange={keepPassword}/>
-                    <button type="submit">Log In</button>
+                    <input type="text" className="form-control" placeholder="Enter username" onChange={keepUsername}/>
+                    <input type="password" className="form-control" placeholder="Enter Password" onChange={keepPassword}/>
+                    <button type="submit" className="btn btn-primary">Log In</button>
                 </form>
                 <Link to="/register">Register</Link>
                 <Link to="/">Home</Link>
-            </section>
+            </div>
         )
     }
 }
 
 export default Login;
+
+
+
 
