@@ -60,8 +60,11 @@ class ImageSearchBase extends Component {
 
   handleError = (error) => {
     this.processing = false;
-    this.setState({errorMessage:"There was a server error. Please try again"})
+    const msg = error || "There was a server error. Please try again"
+    this.setState({errorMessage:msg})
   }
+
+
 
 
 

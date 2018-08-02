@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {Container, Row, Col, FormText,Button,Form, Input, Label, FormGroup} from 'reactstrap';
+import "./SearchForm.css"
 
 class SearchForm extends Component {
 
@@ -36,7 +37,7 @@ class SearchForm extends Component {
           <FormText color="muted">
            You may enter any search term that occurs to you: "Rembrandt", "sky", "print" or a combination, e.g. "Rembrandt sky print"
           </FormText></FormGroup>
-        <Button>Submit</Button>
+        <Button type="submit" className="formSubmitButton">Submit</Button>
       </Form>
     </Row>
     </Container>

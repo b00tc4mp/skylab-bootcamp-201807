@@ -24,29 +24,30 @@ class FavouritesPage extends ImageSearchBase {
   }
 
   componentDidMount() {
-      const favs = logic.getUserFavorites();
-     if (favs.length >0) this.loadFavorites(favs)
+    const favs = logic.getUserFavorites();
+    if (favs && favs.length > 0) this.loadFavorites(favs)
+    else this.handleError("You don't seem to have any favourites at the moment.  You can go to the search page to add some!")
   }
 
   loadFavorites = favs => {
     if (this.processing) return;
-
     this.processing = true;
-    this.originalData =  this.originalPeriodData =  this.originalMaterialData =  this.originalMakerData = []
-    this.materialFilterText = ""
-    this.periodFilterText = ""
-    this.makerFilterText = ""
-    this.imageMap.clear()
-    this.setState({
 
+    this.originalData  = []
+    this.imageMap.clear()
+    favs.forEach(fav => this.imageMap.set(fav.objectNumber,fav.imageurl))
+    const objectNumbers = favs.map(element=> element.objectNumber)
+    console.log("favs",favs,"objectNumbers",objectNumbers)
+    this.setState({
       data: [],
       materialData: [],
       periodData: [],
       makerData: [],
       errorMessage:"",
     })
-    this.getDetailsFromArtObjects(favs)
+    this.getDetailsFromArtObjects(objectNumbers)
       .then(res => {
+        console.log("results from getDetailsFromArtObjects",res)
         this.buildDataAfterNewSearch(res)
         this.processing = false;
       })
@@ -56,7 +57,7 @@ class FavouritesPage extends ImageSearchBase {
 
 
   render() {
-    const {isProcessing,errorMessage, data} = this.state
+    const {isProcessing,errorMessage,warningMessage, data} = this.state
 
     return (<Container  className="mt-5"><
         Row><h2>Favorites</h2></Row>

@@ -49,6 +49,7 @@ class SearchPage extends ImageSearchBase {
     logic.getMuseumImagesForSearchTerm(searchTerm)
       .then(results => {
         if (results.length === 0) {
+          this.processing = false;
           this.setState({badSearchMessage:"Your search returned no results.  Please try again"})
           return;
         }
@@ -57,14 +58,13 @@ class SearchPage extends ImageSearchBase {
         results.forEach(result => {
           this.imageMap.set(result.objectNumber,result.imageurl);
         })
-        return results.map(element => element.objectNumber)
-      })
-      .then(res => {
-        return this.getDetailsFromArtObjects(res)
-      })
-      .then(res => {
-        this.buildDataAfterNewSearch(res)
-        this.processing = false;
+       const mapped = results.map(element => element.objectNumber)
+
+        return this.getDetailsFromArtObjects(mapped)
+          .then(res => {
+            this.buildDataAfterNewSearch(res)
+            this.processing = false;
+          })
       })
       .catch(this.handleError)
   }

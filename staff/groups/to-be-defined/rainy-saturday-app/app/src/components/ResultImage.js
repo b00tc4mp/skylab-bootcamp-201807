@@ -7,7 +7,6 @@ import logic from '../logic'
 class ResultImage extends Component {
   constructor(props) {
     super(props);
-    console.log('SpotifyPlayer', 'init')
     this.state = {
       modal: false,
       error: '',
@@ -24,36 +23,35 @@ class ResultImage extends Component {
   }
 
 componentWillMount() {
-    console.log('SpotifyPlayer', 'will mount')
 }
 
 componentDidMount() {
-    console.log('SpotifyPlayer', 'did mount')
 }
 
 componentWillUnmount() {
-    console.log('SpotifyPlayer', 'will unmount')
 }
 
 componentWillUpdate() {
-    console.log('SpotifyPlayer', 'will update')
 }
 
 componentDidUpdate() {
-    console.log('SpotifyPlayer', 'did update')
 }
 
 componentWillReceiveProps(newProps) {
-    console.log('SpotifyPlayer', 'will receive props')
 
     this.refreshFavorite(newProps)
 }
 
 onToggleFavorite = () => {
-    logic.toggleImageFavorite(this.props.image.objectNumber)
+
+    const toStore = { objectNumber:this.props.image.objectNumber,
+    imageurl:this.props.image.imageurl
+    }
+
+    logic.toggleImageFavorite(toStore)
         .then(() => {
           this.refreshFavorite(this.props)})
-        .catch(({ message }) => this.setState({ error: message }))
+        .catch(( message ) => this.setState({ error: message }))
 }
 
 refreshFavorite(props) {
@@ -64,7 +62,7 @@ refreshFavorite(props) {
     const {favorite } = this.state
     return (
       <div>
-        <i className={(favorite ? "fas fa-star" : "far fa-star")}onClick={this.onToggleFavorite}></i>
+        <i id="resultImage-favoriteIcon" className={(favorite ? "fas fa-star fa-2x " : "far fa-star fa-2x ")}onClick={this.onToggleFavorite}></i>
         <img src={this.props.image.imageurl} alt={this.props.image.title} onClick={this.toggle}/>
         
         <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className} >

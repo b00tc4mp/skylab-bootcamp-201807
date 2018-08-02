@@ -1,16 +1,66 @@
-#comRainysaturdayNavBarFontSize {
-    font-size: 1.5em
-      
-    }
+/*
 
-.imageProfile{
-    width:70px;
-    height:70px;
-    margin-top:-15;
+.App {
+  text-align: center;
 }
 
-.navLinks{
-    margin-top: 13px;
-    font-size: 20px;
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 80px;
 }
 
+.App-header {
+  background-color: #222;
+  height: 150px;
+  padding: 20px;
+  color: white;
+}
+
+.App-title {
+  font-size: 1.5em;
+}
+
+.App-intro {
+  font-size: large;
+}
+
+@keyframes App-logo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+*/
+.imageProfile {
+  width: 70px;
+  height: 70px;
+  margin-top: -15; }
+
+.navLinks {
+  margin-top: 13px;
+  font-size: 20px; }
+
+.navbar-maindiv {
+  background: url("http://lh5.ggpht.com/SgH3Qo-vYI8GGm7-b-Qt6lXgsCAIoU2VDRwO5LYSBVNhhbZCetcvc88ZPi518MTy0MHDrna4X4ZC1ymxVJVpzps8gqw=s0");
+  background-repeat: repeat-y;
+  background-size: cover; }
+  .navbar-maindiv .bg-dark {
+    background: transparent; }
+  .navbar-maindiv .navbar.navbar-expand-md a.navbar-brand {
+    font-size: 2.5em;
+    letter-spacing: .2em;
+    font-family: 'Baloo Tamma', cursive;
+    color: #ff7b00; }
+  .navbar-maindiv .navbar.navbar-expand-md .nav-item a.navLinks.nav-link {
+    color: #eeeeee; }
+    .navbar-maindiv .navbar.navbar-expand-md .nav-item a.navLinks.nav-link:hover {
+      color: #ff6e1f; }
+
+/*
+
+font-family: 'Slackey', cursive;
+font-family: 'Baloo Tamma', cursive;
+font-family: 'Sonsie One', cursive;
+font-family: 'Diplomata SC', cursive;
+font-family: 'Kumar One', cursive;
+*/
+
+/*# sourceMappingURL=NavBar.css.map */

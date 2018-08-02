@@ -5,10 +5,10 @@ class Cloudinary extends Component {
   state = {url: ""}
   doSubmit = (e) => {
     e.preventDefault()
-    const fileName = document.getElementById("rainysaturday-cloudinary-fileinput").value
+    const fileName = document.getElementById("rainysaturday-cloudinary-fileinput").files[0]
     logic.uploadCloudinaryImage(fileName)
-    /*  .then(res => console.log(res))
-      .catch(err => console.error(err))*/
+      .then(res => console.log(res))
+      .catch(err => console.error(err))
   }
 
   /*
