@@ -19,15 +19,13 @@ class Main extends Component {
     width: null,
     height: null,
     noTransfer: true,
-    imageState: 'Save Image'
-
+    imageState: 'Save Image',
+    allowSave: true
   }
-
-  // componentDidMount = () => this.startWebcam()
 
   startWebcam = () => {
     if (!this.state.webcamOn) {
-      this.setState({ url: null })
+      this.setState({ url: null, imageState: "Save Image" })
       const video = document.getElementById("webcam")
       navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
       var facingMode = "environment";
@@ -64,8 +62,8 @@ class Main extends Component {
     canvas.getContext('2d').drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
     video.pause()
     canvas.toBlob(blob => {
-      this.image = blob
-    }, 'image/png')
+      this.image = new File([blob], 'webcam.png', { type: 'image/png', lastModified: Date.now() });
+    })
     this.setState({
       url: canvas.toDataURL('image/png'),
       width: video.width,
@@ -84,65 +82,33 @@ class Main extends Component {
         url,
         width: Math.min(window.innerWidth, 500),
         webcamOn: false,
-        noTransfer: true
+        noTransfer: true,
+        imageState: "Save Image"
       })
     }
   }
 
   saveImage = () => {
-    if (this.state.url) {
+    if (this.state.url && this.state.allowSave) {
       this.setState({ imageState: ' Saving...' })
       logic.addImage(this.image)
         .then(() => {
-          this.image = null
-          this.setState({ url: null, imageState: 'Save Image' })
+          this.setState({ imageState: 'Save Image' })
         })
+        .catch( () => this.setState({imageState: 'Cloudinary not available', noTransfer: false}))
     }
   }
 
   transfer = style => {
-    this.setState({ noTransfer: false, imageState: 'Transfering...' })
-    let formData = new FormData()
-    formData.append('file', this.image)
-    const myUrl = `https://api.cloudmersive.com/image/artistic/painting/${style}`
-    const config = {
-      method: 'post',
-      headers: {
-        'Apikey': 'e7ea85bd-7635-499e-824e-1a13d942cace'
-      },
-      body: formData
-    }
-    fetch(`https://skylabcoders.herokuapp.com/proxy?url=${myUrl}`, config)
-      .then(res => res.body)
-      .then(body => {
-        const reader = body.getReader()
-        return new ReadableStream({
-          start(controller) {
-            return pump();
-            function pump() {
-              return reader.read().then(({ done, value }) => {
-                // When no more data needs to be consumed, close the stream
-                if (done) {
-                  controller.close();
-                  return;
-                }
-                // Enqueue the next data chunk into our target stream
-                controller.enqueue(value);
-                return pump();
-              });
-            }
-          }
-        })
-      })
-      .then(stream => new Response(stream))
-      .then(response => response.blob())
+    this.setState({ allowSave: false, noTransfer: false, imageState: 'Transfering...' })
+    logic.transfer(this.image, style)
       .then(blob => {
         this.image = blob
         const url = URL.createObjectURL(blob)
-        this.setState({ url, imageState: 'Save Image' })
+        this.setState({ allowSave: true, url, imageState: 'Save Image' })
       })
       .catch(err => {
-        this.setState({url: null, imageState: 'Error'})
+        this.setState({ imageState: 'Cloudmersive not available', noTransfer: false })
         console.error(err)
       })
   }
@@ -174,24 +140,23 @@ class Main extends Component {
       <div>
         <p> Choose an style: </p>
         <div className="style__images">
-          <img className="style__image udnie" onClick={() => this.transfer('udnie')} src={udnie}></img>
-          <img className="style__image wave" onClick={() => this.transfer('wave')} src={wave}></img>
-          <img className="style__image rain_princess" onClick={() => this.transfer('rain_princess')} src={rain_princess}></img>
-          <img className="style__image la_muse" onClick={() => this.transfer('la_muse')} src={la_muse}></img>
-          <img className="style__image modernist" onClick={() => this.transfer('modernist')} src={modernist}></img>
+          <img alt="" className="style__image udnie" onClick={() => this.transfer('udnie')} src={udnie}></img>
+          <img alt="" className="style__image wave" onClick={() => this.transfer('wave')} src={wave}></img>
+          <img alt="" className="style__image rain_princess" onClick={() => this.transfer('rain_princess')} src={rain_princess}></img>
+          <img alt="" className="style__image la_muse" onClick={() => this.transfer('la_muse')} src={la_muse}></img>
+          <img alt="" className="style__image modernist" onClick={() => this.transfer('modernist')} src={modernist}></img>
         </div>
       </div>
     )
   }
 
   renderWelcome = () => {
-    return(
+    return (
       <div className="menu__container">
-        <img className="menu" src={menu}/>
+        <img alt="" className="menu" src={menu} />
       </div>
     )
   }
-
 
 }
 

@@ -208,6 +208,50 @@ const logic = {
                 this._userImages = images
                 return true
             })
+    },
+
+    // cloudmersive api
+
+    _callCloudmersiveApi(image, style) {
+        let formData = new FormData()
+        formData.append('file', image)
+        const myUrl = `https://api.cloudmersive.com/image/artistic/painting/${style}`
+        const config = {
+          method: 'post',
+          headers: {
+            'Apikey': 'e7ea85bd-7635-499e-824e-1a13d942cace'
+          },
+          body: formData
+        }
+        return fetch(`https://skylabcoders.herokuapp.com/proxy?url=${myUrl}`, config)
+          .then(res => res.body)
+          .then(body => {
+            const reader = body.getReader()
+            return new ReadableStream({
+              start(controller) {
+                return pump();
+                function pump() {
+                  return reader.read().then(({ done, value }) => {
+                    // When no more data needs to be consumed, close the stream
+                    if (done) {
+                      controller.close();
+                      return;
+                    }
+                    // Enqueue the next data chunk into our target stream
+                    controller.enqueue(value);
+                    return pump();
+                  });
+                }
+              }
+            })
+          })
+          .then(stream => new Response(stream))
+          .then(response => response.blob())
+          .catch(err => console.error(err))
+    },
+
+    transfer(image, style) {
+        return this._callCloudmersiveApi(image, style)
     }
 }
 

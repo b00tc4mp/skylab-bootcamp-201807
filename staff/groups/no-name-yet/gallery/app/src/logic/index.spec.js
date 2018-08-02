@@ -1,4 +1,5 @@
 describe('logic (gallery-app)', () => {
+    
     describe('user\'s', () => {
 
         describe('register user', () => {
@@ -25,7 +26,6 @@ describe('logic (gallery-app)', () => {
                 return logic.loginUser(username, password)
                     .then(res => {
                         expect(res).toBeTruthy()
-
                         expect(logic._userId).toBe(userId)
                         expect(logic._userToken).toBeDefined()
                         expect(logic.userUsername).toBe(username)
@@ -122,13 +122,15 @@ describe('logic (gallery-app)', () => {
     })
 
     describe('gallery', () => {
-        let username = 'galleryapp-test123321'
+        let username = 'galleryapp-test/' + Math.random()
         const password = '123'
         const canvas = document.createElement('canvas')
         let img = new Image()
         img.src = 'src/pics/landing.jpg'
         canvas.getContext('2d').drawImage(img, 100, 100)
-        image = canvas.toDataURL('image/png')
+        canvas.toBlob(blob => {
+            image = new File([blob], 'webcam.png', { type: 'image/png', lastModified: Date.now() });
+        })
 
         beforeEach(() => {
             return logic.registerUser(username, password)
@@ -139,51 +141,106 @@ describe('logic (gallery-app)', () => {
             return logic.unregisterUser(password)
         })
 
-        it('should add image to gallery', () => {
-            return logic.addImage(image)
-                .then(res => expect(res).toBeTruthy())
+        describe('add image to gallery', () => {
+
+            it('should add image to cloudinary', () => {
+                return logic.addImage(image)
+                    .then(res => expect(res).toBeTruthy())
+            })
+
+            it('should add image to session storage', () => {
+                return logic.addImage(image)
+                    .then(() => expect(logic._userImages.length).not.toBe(0))
+            })
+
         })
 
-        it('should retrieve images from gallery', () => {
-            return logic.addImage(image)
-                .then(() => logic.retrieveImages())
-                .then(res => {
-                    expect(res).toBeTruthy()
-                    expect(logic._userImages.length).toBe(1)
-                })
+        describe('retrieve user\'s images', () => {
+
+            it('should retrieve images from cloudinary', () => {
+                return logic.addImage(image)
+                    .then(() => logic.retrieveImages())
+                    .then(res => expect(res).toBeTruthy())
+            })
+
+            it('should add retrieved images to session storage', () => {
+                return logic.addImage(image)
+                    .then(() => logic.retrieveImages())
+                    .then(() => expect(logic._userImages.length).toBe(1))
+            })
+
         })
 
-        it('should delete image from gallery', () => {
-            return logic.addImage(image)
-                .then(() => logic._userImages[0].id)
-                .then(id => logic.deleteImage(id))
-                .then(res => {
-                    expect(res).toBeTruthy()
-                    expect(logic._userImages.length).toBe(0)
-                })
+        describe('delete an image', () => {
+
+            it('should delete an image from cloudinary', () => {
+                return logic.addImage(image)
+                    .then(() => logic._userImages[0].id)
+                    .then(id => logic.deleteImage(id))
+                    .then(res => expect(res).toBeTruthy())
+            })
+
+            it('should delete an image from session sotrage', () => {
+                return logic.addImage(image)
+                    .then(() => logic._userImages[0].id)
+                    .then(id => logic.deleteImage(id))
+                    .then(() => expect(logic._userImages.length).toBe(0))
+            })
+
         })
 
-        it('should delete all images from a user gallery', () => {
-            return logic.addImage(image)
-                .then(() => logic.addImage(image))
-                .then(() => logic.deleteAll())
-                .then(res => {
-                    expect(res).toBeTruthy()
-                    expect(logic._userImages.length).toBe(0)
-                })
+        describe('delete all user\'s images', () => {
+            it('should delete all images from cloudinary user\'s folder', () => {
+                return logic.addImage(image)
+                    .then(() => logic.addImage(image))
+                    .then(() => logic.deleteAll())
+                    .then(res => expect(res).toBeTruthy())
+            })
+            it('should delete all images from session storage', () => {
+                return logic.addImage(image)
+                    .then(() => logic.addImage(image))
+                    .then(() => logic.deleteAll())
+                    .then(() => expect(logic._userImages.length).toBe(0))
+            })
         })
 
-        it('should delete user folder (on unregister)', () => {
+        it('should delete cloudinary user\'s folder', () => {
             return logic.addImage(image)
                 .then(() => logic.addImage(image))
                 .then(() => logic.deleteAll())
                 .then(() => logic.deleteFolder())
+                .then(res => expect(res).toBeTruthy())
+        })
 
+    })
+
+    describe('cloudmersive api', () => {
+        let username = 'galleryapp-test/' + Math.random()
+        const password = '123'
+        const style = "modernist"
+        const canvas = document.createElement('canvas')
+        let img = new Image()
+        img.src = 'src/pics/landing.jpg'
+        canvas.getContext('2d').drawImage(img, 100, 100)
+        canvas.toBlob(blob => {
+            image = new File([blob], 'test.png', { type: 'image/png', lastModified: Date.now() });
+        })
+
+        beforeEach(() => {
+            return logic.registerUser(username, password)
+                .then(() => logic.loginUser(username, password))
+        })
+
+        afterEach(() => {
+            return logic.unregisterUser(password)
+        })
+
+        it('should receive transformed image', () => {
+            return logic.transfer(image, style)
                 .then(res => {
-                    expect(res).toBeTruthy()
-                    expect(logic._userImages.length).toBe(0)
+                    expect(res).toBeDefined()
                 })
-
         })
     })
+
 })
