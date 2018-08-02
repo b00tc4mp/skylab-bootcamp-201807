@@ -76,7 +76,7 @@ class App extends Component {
 
         <Route path="/" exact render={() => <Home />} />
         <Route path="/login" exact render={() => <Login onLoginProp={onLogin} errorMsg={errorLogin} successMsg={successLogin}/>} />
-        <Route path="/myfavs" exact render={() => loggedIn ? <Myfavs /> : <Redirect to="/login" />} /> 
+        <Route path="/myfavs" exact render={() => loggedIn ? <MyFavs /> : <Redirect to="/login" />} /> 
         <Route path="/register" exact render={() => <Register onRegisterProp={onRegister} errorMsg={errorRegister} successMsg={successRegister}/>} />
         <Route path="/update" exact render={() => loggedIn ? <Update onUpdateProp={onUpdate} username={logic.userUsername} errorMsg={errorUpdate} successMsg={successUpdate}/> : <Redirect to="/login" />} />
 
