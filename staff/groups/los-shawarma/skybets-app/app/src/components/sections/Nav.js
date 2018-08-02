@@ -5,18 +5,25 @@ class Nav extends Component {
     
     render() {
         return (
-        <nav>
-            <h2>NAV</h2>
-            <div></div>
-
-            <ul>
-                <li><Link to='/'>Home</Link></li>
-                <li><Link to='/myfavs'>My Favourites</Link></li>
-                <li><Link to='/login'>LogIn</Link></li>
-                <li><Link to='/register'>Register</Link></li>
-                <li><Link to='/update'>Update</Link></li>
-                <button onClick={this.props.onLogoutProp}>LogOut</button>  
-            </ul>
+        <nav className="navbar navbar-expand-lg navbar-light bg-light">
+            <div className="collapse navbar-collapse" id="navbarTogglerDemo01">
+                <Link className="navbar-brand" to='/'>Skybets</Link>
+                <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
+                    <li className="nav-item">
+                        <a className="nav-link" href="#"><Link to='/myfavs'>My Favourites</Link></a>
+                    </li>
+                    <li className="nav-item">
+                        <a className="nav-link" href="#"><Link to='/login'>LogIn</Link></a>
+                    </li>
+                    <li className="nav-item">
+                        <a className="nav-link" href="#"><Link to='/register'>Register</Link></a>
+                    </li>
+                    <li className="nav-item">
+                        <a className="nav-link" href="#"><Link to='/update'>Update</Link></a>
+                    </li>
+                </ul>
+                <button className="btn btn-outline-success my-2 my-sm-0" onClick={this.props.onLogoutProp}>LogOut</button>  
+            </div>
         </nav>)
     }
 

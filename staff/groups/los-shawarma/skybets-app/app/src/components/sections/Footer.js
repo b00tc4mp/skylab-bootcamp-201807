@@ -5,7 +5,7 @@ class Footer extends Component {
     render() {
         return (
         <footer>
-            <h2>Footer</h2>
+            <h2>©SkyBets 2018.</h2>
         </footer>);
     }
 }
