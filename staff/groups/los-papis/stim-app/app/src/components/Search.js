@@ -121,7 +121,7 @@ onToggleFavorite = () => {
         </Row>
         <div className="container justify-content-between">
           <div className="row">
-          { (typeof this.state.data == "object" && this.state.data.length === 0 )? <h1>NO RESULTS</h1> : <div className="col-6">
+          { (typeof this.state.data === "object" && this.state.data.length === 0 )? <h1>NO RESULTS</h1> : <div className="col-6">
               <AutoSizer>
                 {({ width, height }) => {
                   return (
@@ -157,7 +157,7 @@ onToggleFavorite = () => {
                   <CardBody>
                     <CardTitle>{this.state.detail.name}</CardTitle>
                     <CardSubtitle>{this.state.detail.developer}</CardSubtitle>
-                    <CardText>{this.state.detail.price == 0 ? "Free" : (this.state.detail.price / 100)+"$" }</CardText>
+                    <CardText>{this.state.detail.price === 0 ? "Free" : (this.state.detail.price / 100)+"$" }</CardText>
                     <div>Tags: <ul>{Object.keys(this.state.detail.tags).map(i => <li>{i}</li>)}</ul>
                     <p>Languages available: <br/><li>{this.state.detail.languages}</li></p>
                     <p>{this.state.isFav ? <i className={"fa-heart fa-2x fas fa-heart-active "} onClick={this.onToggleFavorite} /> : <i className={"fa-heart fa-2x far fa-heart-inactive "} onClick={this.onToggleFavorite} />}</p>

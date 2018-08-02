@@ -44,7 +44,7 @@ const logic = {
             //
             //
             .then(res => res.filter(({ id }) => {
-                return id == gameid
+                return Number(id) === gameid
             })
             )
     },
