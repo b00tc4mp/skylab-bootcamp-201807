@@ -8,7 +8,10 @@ import Signup from './components/Signup'
 import Login from './components/Login'
 import Home from './components/Home'
 import Profile from './components/Profile'
-import { Route, withRouter, Link, Redirect} from 'react-router-dom'
+import Error404 from './components/Error404'
+import swal from 'sweetalert'
+import { Route, withRouter, Link, Redirect, Switch} from 'react-router-dom'
+
 
 // States are created and initialized
 class App extends Component {
@@ -18,7 +21,7 @@ class App extends Component {
     registered: false,
     updated: false,
     showFeedback: false,
-    showFeedbackDelete: false
+    showFeedbackDelete: false,
   }
 
   // The signup function take the username and password from the usuary input and send it to logic resister. 
@@ -26,6 +29,7 @@ class App extends Component {
   signupUser = (username, password) => {
     logic.register(username, password)
       .then(() => {
+        swal("Wellcome!", "Now you can Login to enjoy the app!", "success")
         this.setState({registered: true})
         this.props.history.push('/login')
       })
@@ -49,15 +53,13 @@ class App extends Component {
   
   // Prepare the view to show the SignUp form and update the url path
   goToSignUp = () => {
-    this.setState ({showFeedback: false})
-    this.setState ({showFeedbackDelete: false})
+    this.setState ({showFeedback: false, showFeedbackDelete: false})
     this.props.history.push('/signup')
   }
 
   // Prepare the view to show the Login form and update the url path
   goToLogin = () => {
-    this.setState ({showFeedback: false})
-    this.setState ({showFeedbackDelete: false})
+    this.setState ({showFeedback: false, showFeedbackDelete: false})
     this.props.history.push('/login')
   }
 
@@ -69,14 +71,12 @@ class App extends Component {
     this.props.history.push('/')
   }
 
-// This function update the user information, (only password needed) you can change the name, the password or both
-
+  // This function update the user information, (only password needed) you can change the name, the password or both
   updateUser = (password, newUsername, newPassword) => {
     logic.update(password, newUsername, newPassword)
       .then(() => {
-        this.setState({updated: true})
-        this.setState ({showFeedbackDelete: false})
-        this.setState ({showFeedback: false})
+        this.setState({updated: true, showFeedbackDelete: false, showFeedback: false})
+        swal("Well done!", "Username and/or password updated correctly!", "success")
         this.props.history.push('/login')
       })
       .catch(({message}) => {
@@ -88,9 +88,8 @@ class App extends Component {
   deleteUser = (password) => {
     logic.delete(password)
       .then(() => {
-        this.setState({loggedIn: false})
-        this.setState ({showFeedbackDelete: false})
-        this.setState ({showFeedback: false})
+        this.setState({loggedIn: false, showFeedbackDelete: false, showFeedback: false})
+        swal("WTF!?", "User account deleted correctly!", "success")
         this.props.history.push('/')
       })
       .catch(({message}) => {
@@ -100,8 +99,8 @@ class App extends Component {
 
   // To change to false the states of teh feedback messages
   onResetMessage = () => {
-    this.setState({showFeedback: false})
-    this.setState({showFeedbackDelete: false})
+    this.setState({showFeedback: false, showFeedbackDelete: false})
+    window.location.reload()
   }
 
   // This render show and hide the different parts of the web necessaries in each path of login part of the web
@@ -117,16 +116,19 @@ class App extends Component {
           <Route path="/(home|profile)" render={() => 
             <nav>
               <Link to="/home" onClick={this.onResetMessage} >Home</Link>
-              <Link to="/profile" >Profile</Link>
+              <Link to="/profile">Profile</Link>
               <Link to="/" onClick={logout}>Logout</Link>
             </nav>}/>
         </header>
 
-        <Route exact path="/" render = {() => loggedIn ? <Redirect to="/home"/> : <Landing signup={goToSignUp} login={goToLogin} />}/> 
-        <Route path="/signup" render = {() => loggedIn ? <Redirect to="/home"/> : <Signup onSignUp={signupUser} linkToLogin={goToLogin} feedback={showFeedback}/>} />
-        <Route path="/login" render = {() => loggedIn ? <Redirect to="/home"/> : <Login onLogin={loginUser} linkToSignUp={goToSignUp} feedback={showFeedback}/>} />
-        <Route path="/home" render = {() => loggedIn ? <Home/> : <Redirect to="/" />} />
-        <Route path="/profile" render={() => loggedIn ? <Profile onUpdate={updateUser} feedback={showFeedback} feedbackdelete={showFeedbackDelete} onDelete={deleteUser}/> : <Redirect to="/"/>} />
+        <Switch>
+          <Route exact path="/" render = {() => loggedIn ? <Redirect to="/home"/> : <Landing signup={goToSignUp} login={goToLogin} />}/> 
+          <Route path="/signup" render = {() => loggedIn ? <Redirect to="/home"/> : <Signup onSignUp={signupUser} linkToLogin={goToLogin} feedback={showFeedback}/>} />
+          <Route path="/login" render = {() => loggedIn ? <Redirect to="/home"/> : <Login onLogin={loginUser} linkToSignUp={goToSignUp} feedback={showFeedback}/>} />
+          <Route path="/home" render = {() => loggedIn ? <Home/> : <Redirect to="/" />} />
+          <Route path="/profile" render={() => loggedIn ? <Profile onUpdate={updateUser} feedback={showFeedback} feedbackdelete={showFeedbackDelete} onDelete={deleteUser}/> : <Redirect to="/"/>} />
+          <Route component={Error404} />
+        </Switch>
       </div>
     )
   }

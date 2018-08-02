@@ -153,6 +153,8 @@ const logic = {
     get loggedIn (){
         return this.userUsername && this._userToken && this._userId
     },
+    
+
 
     /**
      * Nutrition API (Nutritionix) to list by searched ingredients and see the details of each one
@@ -204,6 +206,7 @@ const logic = {
         return this._callApiNutrition('natural/nutrients/', 'post', query)
             .then((res) => res)
     }
+    
 }
 
 if (typeof module !== 'undefined') module.exports = logic;
