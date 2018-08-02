@@ -34,6 +34,14 @@ class Pagination extends Component {
     this.state = { currentPage: 1 };
   }
 
+  componentDidUpdate(prevProps){
+    if ( prevProps.totalRecords !== this.props.totalRecords ) {
+      this.totalRecords = this.props.totalRecords || 0;
+      this.totalPages = Math.ceil(this.totalRecords / this.pageLimit);
+      this.gotoPage(1);
+    }
+  }
+  
   componentDidMount() {
     this.gotoPage(1);
   }

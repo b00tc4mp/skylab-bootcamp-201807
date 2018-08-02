@@ -6,6 +6,7 @@ const FavCard = props =>  {
        const {dateFrom, cityFrom, flyFrom, dateTo, cityTo, flyTo, price, link } = props.currentBetProp
         const {odds, results, teams, competition, date, time} = props.currentFlightProp
 
+
         return(
             <section>
                 <div className="card">

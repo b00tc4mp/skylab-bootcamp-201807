@@ -25,7 +25,7 @@ class Home extends Component {
     }
 
     keepCurrentPrice = ({ price: currentPrice }) => {
-        
+
         this.setState({ currentPrice })
     }
 
@@ -73,7 +73,7 @@ class Home extends Component {
         logic._callKiwiApi(fromIata, toIata, inputDateFrom, inputDateTo)
          .then(flights => {
              const filteredFlights = this.filterFlightsData(flights);
-            
+
              this.setState({flights: filteredFlights})
              //this.setState({currentPrice: filteredFlights[0].price})
              this.setState({currentFlight: filteredFlights[0]})
@@ -121,42 +121,43 @@ class Home extends Component {
 
     render() {
 
-        const {flights, bets, currentPrice, currentOdds, currentBet, currentFlight} = this.state
+       const {flights, bets, currentPrice, currentOdds, currentBet, currentFlight} = this.state
         
-        return(
-            <main>
-                <h1>Home Page</h1>
-                <SearchCardFlights onSearchFlightsProp={ this.onSearchFlights } /> 
-                {/*flights.length > 0 && <FlightResults flightsProp={flights}/>*/} 
-                <ResultsSlider 
-                    resultsProp={ flights } 
-                    titleProps={ 'Flights' }
-                    //onPageChangedProp={ this.keepCurrentPrice }
-                    onPageChangedProp={ this.keepCurrentFlight }
-                    render={ currentFlight => <FlightCard flightsProp={currentFlight}/> }
-                />
-                <ResultsSlider 
-                    resultsProp={ bets } 
-                    titleProps={ 'Bets' }
-                    //onPageChangedProp={ this.keepCurrentOdds }
-                    onPageChangedProp={ this.keepCurrentBet }
-                    render={ currentBet => <BetCard betsProp={currentBet}/> }
-                />
-                <BetPriceCard  currentPriceProp={currentPrice} currentOddsProp={currentOdds}/>
-                {/*<BetPriceCard  currentPriceProp={currentFlight[0].price} currentOddsProp={currentBet.odds}/>*/}
-                
+       return(
+            <div className="card-deck mx-4">
+                <div className="card">
+                    <SearchCardFlights onSearchFlightsProp={ this.onSearchFlights } /> 
+                </div>
+                <div className="card">
+                    <ResultsSlider 
+                      resultsProp={ flights } 
+                      titleProps={ 'Flights' }
+                      onPageChangedProp={ this.keepCurrentFlight }
+                      render={ currentFlight => <FlightCard flightsProp={currentFlight}/> }
+                    />
+                </div>
+                <div className="card">
+                     <ResultsSlider 
+                        resultsProp={ bets } 
+                        titleProps={ 'Bets' }
+                        //onPageChangedProp={ this.keepCurrentOdds }
+                        onPageChangedProp={ this.keepCurrentBet }
+                        render={ currentBet => <BetCard betsProp={currentBet}/> }
+                    />
+                </div>
+                <div className="card">
+                    <BetPriceCard currentPriceProp={currentPrice} currentOddsProp={currentOdds}/>  
+                </div>
+                <div>
+                    {(currentFlight && currentBet) && <FavCard 
+                        currentPriceProp={currentPrice} 
+                        currentOddsProp={currentOdds}
+                        currentFlightProp={currentFlight}
+                        currentBetProp={currentBet}
+                     />}
+                 </div>
+            </div>
 
-                
-                {(currentFlight && currentBet) && <FavCard 
-                    currentPriceProp={currentPrice} 
-                    currentOddsProp={currentOdds}
-                    currentFlightProp={currentFlight}
-                    currentBetProp={currentBet}
-                />}
-
-
-
-            </main>
         )
     }
 

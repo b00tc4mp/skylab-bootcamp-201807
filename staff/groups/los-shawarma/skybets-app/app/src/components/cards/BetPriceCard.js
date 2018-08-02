@@ -19,7 +19,6 @@ class BetPriceCard extends Component {
 
 
     static getDerivedStateFromProps(props, state) {
-        debugger
         if (props.currentPriceProp !== state.currentPrice || 
             props.currentOddsProp !== state.currentOdds ) {
           return {
@@ -34,12 +33,12 @@ class BetPriceCard extends Component {
    
     render () {
         return(
-            <section>
-                <div className="card">
+            <div>
+                <div className="card-body">
                     <h2>Bet Price</h2>
                     <p>{this.flightOddCalc()}</p>
                 </div>
-            </section>
+            </div>
         )
     }
     }
