@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import logic from '../logic'
 import close from '../images/close.svg'
+import '../sass/favorites.css'
 
 class FavoriteList extends Component {
 
@@ -8,10 +9,11 @@ class FavoriteList extends Component {
 
     printFavorites = () => {
         return this.state.favorites.map((ingredient) => {
-            return  <li>{ingredient}
-                        <a href="" onClick={(event) => {event.preventDefault(); this.onRefresh(ingredient)}}>
+            return  <li className="favorites__list__item">
+                        <a className="favorites__list__item__delete" href="" onClick={(event) => {event.preventDefault(); this.onRefresh(ingredient)}}>
                             <img src={close}/>
                         </a>
+                        {ingredient}
                     </li>
             })
     }
@@ -24,9 +26,9 @@ class FavoriteList extends Component {
     }
 
     render() {
-        return  <section>
-                    <h2>Your Favorite List</h2>
-                    <ul>{this.printFavorites()}</ul>
+        return  <section className="favorites">
+                    <h2 className="favorites__title">Your Favorite List</h2>
+                    <ul className="favorites__list">{this.printFavorites()}</ul>
                 </section>
     }
 }

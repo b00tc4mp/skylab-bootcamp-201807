@@ -1,19 +1,21 @@
-.icon__close {
-  position: fixed;
-  top: 8em;
-  right: 2em;
-  width: 4em;
-}
-
-.product__panel {
+.product {
+  background-color: #F1F1F1;
   z-index: 2;
   position: absolute;
   top: 6em;
   background-color: white;
-  width: 100vw;
+  width: 88vw;
+  height: 150%;
   margin: 0;
-  padding-right: 8em;
-  padding: 3em;
-}
+  padding-left: 10vw;
+  padding-top: 7em; }
+  .product__close {
+    position: fixed;
+    top: 10em;
+    right: 5em;
+    width: 7em; }
+  .product__panel {
+    margin: 0;
+    width: 90%; }
 
 /*# sourceMappingURL=productpanel.css.map */

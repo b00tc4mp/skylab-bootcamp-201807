@@ -1,8 +1,9 @@
 import React from 'react'
+import '../sass/feedback.css'
 
 function showFeedback (props){
     return  <section>
-                <h4>{props.message}</h4>
+                <h4 className="message">{props.message}</h4>
             </section>
 }
 

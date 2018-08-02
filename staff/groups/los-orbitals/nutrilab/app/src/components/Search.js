@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import Feedback from './Feedback'
+import '../sass/search.css'
 
 class Search extends Component{
 
@@ -15,7 +16,7 @@ class Search extends Component{
     render(){
          
         const {searchIngredients, saveQuery} = this
-        return <section>
+        return <section className="search">
                     <form onSubmit={searchIngredients}>
                         <input type="text" placeholder="Type here..." onChange={saveQuery}></input>
                         <button type="submit">Search</button>

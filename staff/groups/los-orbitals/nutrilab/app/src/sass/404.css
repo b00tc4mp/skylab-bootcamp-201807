@@ -1,0 +1,24 @@
+.panel {
+  padding: 5em 12em; }
+  .panel__info {
+    float: left;
+    text-align: left; }
+    .panel__info__title {
+      font-size: 10em;
+      margin: 0;
+      color: #6BDFA0; }
+    .panel__info__description {
+      font-size: 3em;
+      margin: 0; }
+    .panel__info__type {
+      font-size: 1.8em;
+      color: #525252;
+      margin-bottom: 0; }
+    .panel__info__text {
+      font-size: 1.5em;
+      margin: 0; }
+  .panel__imagen {
+    float: right;
+    width: 60%; }
+
+/*# sourceMappingURL=404.css.map */

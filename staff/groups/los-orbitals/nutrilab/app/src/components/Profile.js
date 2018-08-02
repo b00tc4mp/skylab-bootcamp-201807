@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import Feedback from './Feedback'
+import '../sass/profile.css'
 
 class Profile extends Component {
 
@@ -43,26 +44,26 @@ class Profile extends Component {
 
     render() {
         const {savePassword, saveNewUsername, saveNewPassword, update, deleteUser} = this
-        return <section>
-                    <section>
-                        <h2>Update your Profile</h2>
-                        <p>it is required to fill in the field with the * symbol</p>
+        return <section className="profile">
+                    <section className="profile__update">
+                        <h2 className="profile__update__title">Update your Profile</h2>
+                        <p className="profile__update__text">it is required to fill in the field with the * symbol</p>
+                        {this.props.feedback && <Feedback message={this.props.feedback} />}
                         <form onSubmit={update}>
-                            <input type="password" placeholder="Password" onChange={savePassword}/>
+                            <input type="password" placeholder="Password*" onChange={savePassword}/>
                             <input type="text" placeholder="New username" onChange={saveNewUsername}/>
                             <input type="password" placeholder="New password" onChange={saveNewPassword}/>
                             <button type="submit">Update</button>
                         </form>
-                        {this.props.feedback && <Feedback message={this.props.feedback} />}
                     </section>
-                    <section>
-                        <h2>Delete your Profile</h2>
-                        <p>it is required to fill in the field with the * symbol</p>
+                    <section className="profile__delete">
+                        <h2 className="profile__delete__title">Delete your Profile</h2>
+                        <p className="profile__delete__text">it is required to fill in the field with the * symbol</p>
+                        {this.props.feedbackdelete && <Feedback message={this.props.feedbackdelete} />}
                         <form onSubmit={deleteUser}>
                             <input type="password" placeholder="Password*" onChange={savePassword}/>
                             <button type="submit">Delete</button>
                         </form>
-                        {this.props.feedbackdelete && <Feedback message={this.props.feedbackdelete} />}
                     </section>
                 </section>
     }

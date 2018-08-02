@@ -11,13 +11,13 @@ a
     text-decoration: none
     display: inline
     text-align: left
-    color: #212121
+    color: #6BDFA0
 
     &:hover
-        color: #6BDFA0
+        color: #2a724a
 
 h2
-    font-size: 3em
+    font-size: 2em
     font-weight: 700
 
 section
@@ -26,17 +26,15 @@ section
 ul 
     list-style-type: none
 
-.div__background--gray
-    background-color: #F1F1F1
-
 .App
     text-align: center
 
     &__header
         background-color: #6BDFA0
-        height: 6em
+        height: 5em
         color: white
-        padding: 0em 3em
+        padding-top: 1em 
+        padding-left: 3em
 
         &__logo 
             height: auto
@@ -55,20 +53,23 @@ ul
                 display: inline-block
                 margin: .3em
                 float: left
-            &__ul
-                display: flex
-                flex-direction: row
 
+            &__ul
+                padding-right: 3em
+                display: flex
+                flex-direction: row  
+                justify-content: center
+                       
 
     &__main
             background-color: #F1F1F1
-            height: 20em
+            height: 15em
             color: #525252
-            margin-top:0
+            margin-top: 0
 
-    &__main2
-            
-            height: 0em
+            &__title
+                margin: 0
+                padding: 5%
             
 
 button
@@ -97,8 +98,17 @@ input
     font-weight: 500
     letter-spacing: .05em
     color: #212121
+
+
+@media only screen and (max-width: 1024px) 
     
-@media only screen and (min-width: 768px) 
+    body
+        font-size: 14px
+
+    input
+        border: 0.15em solid #D3D3D3
+
+@media only screen and (max-width: 768px) 
     
     body
         font-size: 12px
@@ -106,11 +116,17 @@ input
     input
         border: 0.2em solid #D3D3D3
 
+    .App__header
+        height: 7em
 
-@media only screen and (min-width: 1024px) 
+@media only screen and (max-width: 768px) 
     
     body
-        font-size: 14px
+        font-size: 12px
 
     input
-        border: 0.15em solid #D3D3D3
+        border: 0.2em solid #D3D3D3
+
+    .App__header
+        height: 8em
+        
