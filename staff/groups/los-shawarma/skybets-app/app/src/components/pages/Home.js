@@ -6,6 +6,7 @@ import ResultsSlider from '../cards/ResultsSlider'
 import FlightCard from '../cards/FlightCard'
 import BetCard from '../cards/BetCard'
 import BetPriceCard from '../cards/BetPriceCard';
+import FavCard from '../cards/FavCard';
 
 class Home extends Component {
 
@@ -16,10 +17,16 @@ class Home extends Component {
         dateTo : null,*/
         flights: [],
         bets: [],
-        currentFlight: null,
-        
-        
+        currentPrice: null,
+        currentOdds: null,
     }
+
+    keepCurrentPrice = ({ price: currentPrice }) => {
+        debugger;
+        this.setState({ currentPrice })
+    }
+
+    keepCurrentOdds = ({ odds: currentOdds }) => this.setState({ currentOdds })
     
     parseIata = iata => iata.substring(0, 3)
 
@@ -28,7 +35,7 @@ class Home extends Component {
         return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`
     }
 
-    getDataInputs = (selectedFrom, selectedTo,  dateFrom, dateTo) => {
+    onSearchFlights = (selectedFrom, selectedTo,  dateFrom, dateTo) => {
         /*this.setState({
             selectedFrom,
             selectedTo,
@@ -45,6 +52,7 @@ class Home extends Component {
         .then(flights => {
             const filteredFlights = this.filterFlightsData(flights);
             this.setState({flights: filteredFlights})
+            this.keepCurrentPrice(filteredFlights[0])
         })
         .then(logic._callBetsApi)
         .then(bets => {
@@ -85,35 +93,29 @@ class Home extends Component {
         return filteredBets
     }
 
-    flightOddCalc = () => {
-        const {currentPrice, currentOdds} = this.state;
-
-        let currentPriceflight =  currentPrice;
-        let currentOdd = currentOdds;
-        return currentPriceflight/currentOdd;
-    } 
-    
-    
     render() {
 
-        const {flights, bets} = this.state
-        
+        const {flights, bets, currentPrice, currentOdds} = this.state
+        debugger;
         return(
             <main>
                 <h1>Home Page</h1>
-                <SearchCardFlights getDataInputsProp={ this.getDataInputs } /> 
+                <SearchCardFlights onSearchFlightsProp={ this.onSearchFlights } /> 
                 {/*flights.length > 0 && <FlightResults flightsProp={flights}/>*/} 
                 <ResultsSlider 
                     resultsProp={ flights } 
                     titleProps={ 'Flights' }
+                    onPageChangedProp={ this.keepCurrentPrice }
                     render={ currentFlight => <FlightCard flightsProp={currentFlight}/> }
                 />
                 <ResultsSlider 
                     resultsProp={ bets } 
                     titleProps={ 'Bets' }
+                    onPageChangedProp={ this.keepCurrentOdds }
                     render={ currentBet => <BetCard betsProp={currentBet}/> }
                 />
-                <BetPriceCard  betPriceProp={this.flightOddCalc}/>
+                <BetPriceCard  currentPriceProp={currentPrice} currentOddsProp={currentOdds}/>
+                <FavCard currentPriceProp={currentPrice} currentOddsProp={currentOdds}/>
             </main>
         )
     }

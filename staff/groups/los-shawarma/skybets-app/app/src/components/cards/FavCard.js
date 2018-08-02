@@ -1,6 +1,9 @@
 import React, {Component} from 'react'
 
-class BetPriceCard extends Component { 
+
+
+
+class FavCard extends Component { 
 
     state = {
         currentPrice: null,
@@ -31,6 +34,9 @@ class BetPriceCard extends Component {
         return null; // Return null to indicate no change to state.
       }
 
+      
+
+
    
     render () {
         return(
@@ -49,4 +55,4 @@ class BetPriceCard extends Component {
     
 
 
-export default BetPriceCard
+export default FavCard

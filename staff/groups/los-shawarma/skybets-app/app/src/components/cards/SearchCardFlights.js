@@ -21,7 +21,7 @@ class SearchCardFlights extends Component {
     onDateTo = date => this.setState({ dateTo: date })
 
     handleOnclick = () => {
-        this.props.getDataInputsProp(
+        this.props.onSearchFlightsProp(
             this.state.selectedFrom, 
             this.state.selectedTo, 
             this.state.dateFrom, 
