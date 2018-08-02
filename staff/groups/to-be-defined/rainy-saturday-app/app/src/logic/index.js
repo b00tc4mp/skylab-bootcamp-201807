@@ -2,7 +2,7 @@ const logic = {
   /**
    * Sets the user id in session storage
    *
-    * @param userId {string}
+   * @param userId {string}
    * @private
    */
   set _userId(userId) {
@@ -91,7 +91,7 @@ const logic = {
   /**
    * Sets the user's "favorites" in session storage
    *
-   * @param  {[{objectNumber:string, imageurl: number}]} userFavorites
+   * @param  {[{objectNumber: string, imageurl: number}]} userFavorites
    * @private
    */
   set _userFavorites(userFavorites) {
@@ -101,7 +101,7 @@ const logic = {
   /**
    * Retrieves the user favorites from session storage
    *
-   * @returns {[{objectNumber:string, imageurl: number}]} An array of objects representing user favorites
+   * @returns {[{objectNumber: string, imageurl: number}]} An array of objects representing user favorites
    * @private
    */
   get _userFavorites() {
@@ -111,7 +111,7 @@ const logic = {
   /**
    * Retrieves the Cloudinary url of the user profile image from session storage or an empty string
    *
-    * @returns {string}  The Cloudinary url of the user profile image
+   * @returns {string}  The Cloudinary url of the user profile image
    * @private
    */
   get _cloudinaryURL() {
@@ -121,12 +121,11 @@ const logic = {
   /**
    * Retrieves the Cloudinary url of the user profile image
    *
-    * @returns {string} The Cloudinary url of the user profile image
+   * @returns {string} The Cloudinary url of the user profile image
    */
   get cloudinaryURL() {
     return this._cloudinaryURL;
   },
-
 
 
   /**
@@ -183,13 +182,13 @@ const logic = {
    */
   registerUser(name, lastname, username, email, password, imageFileName) {
     if (!imageFileName) {
-      return this._callUsersApi('/user', 'post', { username, password, name, lastname, email})
+      return this._callUsersApi('/user', 'post', {username, password, name, lastname, email})
         .then(res => res.data.id)
     } else if (imageFileName) {
       return this.uploadCloudinaryImage(imageFileName)
         .then(cloudinaryData => {
           const cloudinaryURL = cloudinaryData.secure_url
-          return this._callUsersApi('/user', 'post', { username, password, name, lastname, email, cloudinaryURL })
+          return this._callUsersApi('/user', 'post', {username, password, name, lastname, email, cloudinaryURL})
 
         }).then(res => res.data.id)
     }
@@ -203,8 +202,8 @@ const logic = {
    * @returns {Promise<boolean>} A promise that resolves to true if successful
    */
   loginUser(username, password) {
-    return this._callUsersApi('/auth', 'post', { username, password })
-      .then(({ data: { id, token } }) => {
+    return this._callUsersApi('/auth', 'post', {username, password})
+      .then(({data: {id, token}}) => {
         this._userId = id
         this._userToken = token
         this._userUsername = username
@@ -213,7 +212,7 @@ const logic = {
         // return true
         return this._callUsersApi(`/user/${this._userId}`, 'get', undefined, true)
       })
-      .then(({ data }) => {
+      .then(({data}) => {
         this._userFavorites = data.favorites || []
         this._cloudinaryURL = data.cloudinaryURL || ""
         return true
@@ -234,7 +233,7 @@ const logic = {
   /**
    * Returns user's logged-in status
    *
-    * @returns {boolean} The user's logged-in status
+   * @returns {boolean} The user's logged-in status
    */
   get loggedIn() {
     return !!(this._userId && this._userToken && this.userUsername)
@@ -370,8 +369,8 @@ const logic = {
   /**
    * Calls the Rijksmuseum API with a query and returns the results
    *
-    * @param {string} query The query to send
-   * @returns {Promise<Response>} Returns a promise the resolves to the API response
+   * @param {string} query The query to send
+   * @returns {Promise<{}>} Returns a promise the resolves to the API response
    * @private
    */
   _callRijksmuseumApiQuery(query) {
@@ -390,7 +389,7 @@ const logic = {
    * Gets an artwork's 'object details' from the Rijksmuseum API for a particular object number
    *
    * @param {string} objectNumber The object number representing the artwork
-   * @returns {Promise<Response>} A promise that resolves to the response
+   * @returns {Promise<{}>} A promise that resolves to the response
    * @private
    */
   _callRijksmuseumApiObjectDetail(objectNumber) {
@@ -423,7 +422,11 @@ const logic = {
    * Searches the Rijksmuseum API for artworks that match a particular query
    *
    * @param {string} query The query string
-   * @returns {Promise<[{objectNumber:string,id:string,imageurl:string,title:string,longTitle:string,maker:string}]>} A promise the resolves to an array of objects representing artworks found
+   * @returns {Promise<[{objectNumber: string,
+   * id:string,imageurl: string,
+   * title: string,
+   * longTitle: string,
+   * maker:string}]>} A promise the resolves to an array of objects representing artworks found
    */
   getMuseumImagesForSearchTerm(query) {
     return this._callRijksmuseumApiQuery(query.trim().replace(/ /g, "%20"))
@@ -446,14 +449,23 @@ const logic = {
    * Retrieves the object details for a particular artwork
    *
    * @param {string} objectNumber The object number representing a particular artwork
-   * @returns {Promise<{colors:[],period:string,imageurl:string,title:string,objectNumber:string,longTitle:string,maker:string,description:string,materials:[],physicalMedium:string}>} A promise that resolves to an object that contains details about the artwork
+   * @returns {Promise<{colors: [],
+   * period: string,
+   * imageurl: string,
+   * title: string,
+   * objectNumber: string,
+   * longTitle: string,
+   * maker: string,
+   * description: string,
+   * materials:[],
+   * physicalMedium:string}>} A promise that resolves to an object that contains details about the artwork
    */
   getMuseumDetailsForObjectNumber(objectNumber) {
     return this._callRijksmuseumApiObjectDetail(objectNumber)
       .then(res => {
         if (!res.artObject || !res.artObject.webImage || res.artObject.webImage.url === "") return null;
         else {
-          const { dating: { period }, webImage: { url }, objectNumber, title, longTitle, principalMaker: maker, colors, description, materials, physicalMedium } = res.artObject
+          const {dating: {period}, webImage: {url}, objectNumber, title, longTitle, principalMaker: maker, colors, description, materials, physicalMedium} = res.artObject
           return {
             colors,
             period,
@@ -518,7 +530,7 @@ const logic = {
    *
    * @param {string} file The file name of the image to upload
    * @param {string} [method = post] The HTTP method
-   * @returns {Promise<Response>} A promise that resolves to the results returnd from API
+   * @returns {Promise<{}>} A promise that resolves to the results returned from API
    * @private
    */
   _callCloudinaryApi(file, method = 'post') {
@@ -540,10 +552,7 @@ const logic = {
       config.body = fd;
     }
     return fetch(url, config)
-      .then(res => res.json())
-      .then(res => {
-        return res;
-      });
+      .then(res => res.json());
   },
 
   //TODO TEST
@@ -551,7 +560,7 @@ const logic = {
    * Uploads an image to the Cloudinary API
    *
    * @param {string} file The file name of the image to upload
-   * @returns {Promise<Response>} A promise the resolves to the response from the Cloudinary API
+   * @returns {Promise<{}>} A promise the resolves to the response from the Cloudinary API
    */
   uploadCloudinaryImage(file) {
     // return this._callCloudinaryApi(file)
@@ -563,6 +572,7 @@ const logic = {
    * Retrieves the user favorites
    *
    * @returns {{objectNumber: string, imageurl: number}[]} The user favorites
+   *
    */
   getUserFavorites() {
     return this._userFavorites
