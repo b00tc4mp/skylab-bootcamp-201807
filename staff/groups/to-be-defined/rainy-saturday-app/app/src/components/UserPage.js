@@ -128,13 +128,13 @@ export default class UserPage extends Component {
           </FormText>
         </FormGroup>
         { this.state.errorUpdate && <ErrorPanel message={this.state.errorUpdate}/>}
-        <FormGroup>
+        {/* <FormGroup>
           <Label for="exampleFile">Profile Photo</Label>
           <Input type="file" name="Profile Photo" />
           <FormText color="muted">
             Change your profile photo.
           </FormText>
-        </FormGroup>
+        </FormGroup> */}
         <Button className="testButton">Submit</Button>
       </Form>
      </div>
