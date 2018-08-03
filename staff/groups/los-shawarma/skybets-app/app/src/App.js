@@ -62,7 +62,7 @@ class App extends Component {
     this.props.history.push('/')
   }
 
-  ////////////////////////////////////////////////////////
+
 
   onUpdateFavs = (currentBet, currentFlight) => {
     logic.updateFavs(currentBet, currentFlight)
@@ -73,12 +73,12 @@ class App extends Component {
     .catch(({message}) => this.setState({errorUpdate: message}))
   }
 
-  ////////////////////////////////////////////////////////
+  favs = JSON.parse(sessionStorage.getItem('userFavorites'))
 
 
   render() {
     const {loggedIn, errorMsg, showFeedback} =  this.state
-    const {onRegister, onLogin, onUpdate, onLogout, onUpdateFavs, hideFeedback} = this
+    const {onRegister, onLogin, onUpdate, onLogout, onUpdateFavs, hideFeedback, favs} = this
 
     return (
       <div className="App">
@@ -86,7 +86,7 @@ class App extends Component {
 
         <Route path="/" exact render={() => <Home onUpdateFavsProp={onUpdateFavs}/>} />
         <Route path="/login" exact render={() => <Login onLoginProp={onLogin} errorMsg={errorMsg} showFeedback={showFeedback} hideFeedback={hideFeedback}/>} />
-        <Route path="/myfavs" exact render={() => loggedIn ? <MyFavs /> : <Redirect to="/login" />} /> 
+        <Route path="/myfavs" exact render={() => loggedIn ? <MyFavs favsProp={favs}/> : <Redirect to="/login" />} /> 
         <Route path="/register" exact render={() => <Register onRegisterProp={onRegister} errorMsg={errorMsg} showFeedback={showFeedback} hideFeedback={hideFeedback}/>} />
         <Route path="/update" exact render={() => loggedIn ? <Update onUpdateProp={onUpdate} username={logic.userUsername} errorMsg={errorMsg} showFeedback={showFeedback} hideFeedback={hideFeedback}/> : <Redirect to="/login" />} />
 

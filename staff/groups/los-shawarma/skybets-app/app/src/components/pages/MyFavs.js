@@ -1,29 +1,28 @@
-import React, {Component} from 'react'
-import {Link} from 'react-router-dom';
+import React from 'react'
+import FavCard from '../cards/FavCard'
 
-class MyFavs extends Component {
-    
-    componentDidMount() {
-        this.callapi();
-      }
-
-    callapi (){
-        
-    } 
-
-    
-    render () {
-
-        return(
+const MyFavs = props => {
+   
+           return(
             <section>
-        <h1>Helooooooooooooooo</h1>
-        <Link to="/">Home</Link>
-
-        </section>
+                {props.favsProp.map((fav, index) => {
+                    return(<div key={index}>
+                        <FavCard 
+                            currentPriceProp={fav.flight.price} 
+                            currentOddsProp={fav.bet.odds}
+                            currentFlightProp={fav.flight}
+                            currentBetProp={fav.bet}                        
+                        /> 
+                    </div>)
+                    })}
+            </section>
         )
-    }
-
+    
+    
 }
+    
+
+
 
 
 export default MyFavs;

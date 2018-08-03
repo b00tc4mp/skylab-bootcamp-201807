@@ -128,7 +128,7 @@ class Home extends Component {
        return(
             <main className="bgHome">
                 <h1 className="text-white pt-4 heading-home">Skybets</h1>
-                <p className="text-white mx-5 mt-4 p-home">Esta aplicación es un buscador de vuelos y un comparador de apuestas. Tu vuelo deseado es muy caro? Has probado alguna vez de hacer una apuesta y ver ,en caso de ganar, por cuanto te podria salir realmente el vuelo? Prueba...</p>
+                <h3 className="text-white mx-5 mt-4 p-home">SEARCH BOOK BET & GET YOUR MONEY BACK</h3>
                 <div className="card-deck mx-4">
                     <div className="card">
                         <SearchCardFlights onSearchFlightsProp={ this.onSearchFlights } /> 

@@ -142,7 +142,7 @@ const logic = {
     },
 
     updateFavs(currentBet, currentFlight) {
-        debugger;
+        
 
         const newFavorites = [...this._userFavorites, {bet: currentBet,
             flight: currentFlight}]
