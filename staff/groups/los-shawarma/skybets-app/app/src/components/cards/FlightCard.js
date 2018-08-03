@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
 import './FlightCard.css';
 
-
 const FlightCard = props => { 
 
     const { dateFrom, cityFrom, flyFrom, dateTo, cityTo, flyTo, price, link } = props.flightsProp

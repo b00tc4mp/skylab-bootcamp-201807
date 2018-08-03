@@ -12,17 +12,13 @@ import './Home.css';
 class Home extends Component {
 
     state = {
-        /*selectedFrom : null,
-        selectedTo : null,
-        dateFrom : null,
-        dateTo : null,*/
         flights: [],
         bets: [],
         currentPrice: null,
         currentOdds: null,
         currentBet: null,
-        currentFlight: null
-
+        currentFlight: null,
+        emptyFlightMsg: false
     }
 
     keepCurrentPrice = ({ price: currentPrice }) => {
@@ -58,13 +54,6 @@ class Home extends Component {
     }
 
     onSearchFlights = (selectedFrom, selectedTo,  dateFrom, dateTo) => {
-        /*this.setState({
-            selectedFrom,
-            selectedTo,
-            dateFrom,
-            dateTo
-        })*/
-
         const fromIata = this.parseIata(selectedFrom)
         const toIata = this.parseIata(selectedTo)
         const inputDateFrom = this.parseDate(dateFrom)
@@ -72,12 +61,16 @@ class Home extends Component {
 
         logic._callKiwiApi(fromIata, toIata, inputDateFrom, inputDateTo)
          .then(flights => {
-             const filteredFlights = this.filterFlightsData(flights);
+            if(flights.length) {
+                this.setState({emptyFlightMsg: false}) 
+                const filteredFlights = this.filterFlightsData(flights);
 
-             this.setState({flights: filteredFlights})
-             this.setState({currentPrice: filteredFlights[0].price})//
-             this.setState({currentFlight: filteredFlights[0]})
-
+                this.setState({flights: filteredFlights})
+                this.setState({currentPrice: filteredFlights[0].price})
+            this.setState({currentFlight: filteredFlights[0]})
+            } else {
+                this.setState({emptyFlightMsg: true})
+            }
          })
          .then(logic._callBetsApi)
          .then(bets => {
@@ -85,7 +78,9 @@ class Home extends Component {
              this.setState({currentOdds: filteredBets[0].odds})
              this.setState({bets: filteredBets})
          })
-         .catch()
+         .catch(({message}) => {
+             this.setState({emptyFlightMsg: true}) //Feedback message if anything is wrong with the api call
+        })
     }
 
     filterFlightsData = (flights) => {
@@ -123,14 +118,12 @@ class Home extends Component {
         e.preventDefault();
         this.props.onUpdateFavsProp(this.state.currentBet, this.state.currentFlight)
         console.log('The link was clicked.');
-      }
+    }
 
-
-    
 
     render() {
        
-       const {flights, bets, currentPrice, currentOdds, currentBet, currentFlight} = this.state
+       const {flights, bets, currentPrice, currentOdds, currentBet, currentFlight, emptyFlightMsg} = this.state
         
        return(
             <main className="bgHome">
@@ -141,6 +134,7 @@ class Home extends Component {
                         <SearchCardFlights onSearchFlightsProp={ this.onSearchFlights } /> 
                     </div>
                     <div className="card">
+                        {emptyFlightMsg && <span className="pt-5">We couldn't find any flights for this search. Try another one</span>}
                         <ResultsSlider 
                         resultsProp={ flights } 
                         titleProps={ 'Flights' }
@@ -157,13 +151,11 @@ class Home extends Component {
                             render={ currentBet => <BetCard betsProp={currentBet}/> }
                         />
                     </div>
-                    
                     <div className="card">
                     {(currentFlight && currentBet) && <BetPriceCard 
                     currentFlightProp={currentFlight} 
                     currentBetProp={currentBet}/> } 
                     </div>
-                    
                 </div>
                 <div className="card mx-5 pb-3 pt-3">
                     {(currentFlight && currentBet) && <FavCard 
@@ -180,7 +172,6 @@ class Home extends Component {
     }
 
 }
-
 
 
 export default Home
