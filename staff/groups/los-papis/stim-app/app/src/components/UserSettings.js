@@ -5,7 +5,7 @@ import swal from 'sweetalert2'
 import { Redirect } from "react-router";
 
 
-class UserDelete extends Component {
+class UserSettings extends Component {
 
   state = {
 
@@ -120,4 +120,4 @@ class UserDelete extends Component {
   }
 }
 
-export default UserDelete
+export default UserSettings

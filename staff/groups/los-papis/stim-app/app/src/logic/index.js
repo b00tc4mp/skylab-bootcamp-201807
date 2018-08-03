@@ -31,8 +31,6 @@ const logic = {
 
     getGamesByName(name) {
         return logic.getAllGames()
-            //
-            //
             .then(res => res.filter(({ title }) => {
                 return title.toLowerCase().includes((name.toLowerCase()))
             })
@@ -53,11 +51,6 @@ const logic = {
          return fetch(`https://skylabcoders.herokuapp.com/proxy?url=http://steamspy.com/api.php?request=appdetails&appid=${appid}`)
             .then(res => res.json())
             .then (res => res)
-            // .then(res => Object.keys(res).map(i => 
-            //     {
-            //         if(i !== 19) res[i]
-            //         else Object.keys.map(j => res[i][j] )
-            //     }))
     },
     isFavorite(id) {
         return this._userFavorites.includes(id)
@@ -88,11 +81,6 @@ const logic = {
             })
     },
 
-    //cloudinary
-
-
-
-    //userLogic
 
     set _userId(userId) {
         sessionStorage.setItem('userId', userId)
@@ -206,8 +194,11 @@ const logic = {
             
         }, true)
             .then(() => {
-                if(newUsername !== null)this._userUsername = newUsername
-                return true})
+                    if(newUsername !== null)this._userUsername = newUsername
+                    if(newPassword !== null)this._userPassword = newPassword
+                    return true
+                }
+            )
     },
 
 
