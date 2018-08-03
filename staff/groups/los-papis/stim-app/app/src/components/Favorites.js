@@ -22,6 +22,7 @@ class Favorites extends Component {
 
   render() {
    return <CardColumns className="mt-4 p-2">
+        {!this.state.favoriteList.length && <h2>You have no favorites yet!</h2> }
         {this.state.favoriteList.map(e => {
           return <FavCard deleteFavorites={this.deleteFavorites} id={e} key={e} />
         })}
