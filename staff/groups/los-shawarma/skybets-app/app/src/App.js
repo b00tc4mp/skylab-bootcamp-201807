@@ -68,7 +68,7 @@ class App extends Component {
     logic.updateFavs(currentBet, currentFlight)
     .then(res => {
       this.setState({errorUpdate: null, successUpdate: true})
-      this.props.history.push('/update')
+      this.props.history.push('/')
     })
     .catch(({message}) => this.setState({errorUpdate: message}))
   }
