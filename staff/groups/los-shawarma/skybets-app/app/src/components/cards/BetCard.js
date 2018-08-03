@@ -8,7 +8,7 @@ const BetCard = props => {
         <div>
             <div className="block">
                 <div>
-                    <span className="font-weight-bold">Odds: </span><span>{odds}€</span>
+                    <span className="font-weight-bold">Odds: </span><span>{odds}</span>
                 </div>
             </div>
             <div className="block2">
