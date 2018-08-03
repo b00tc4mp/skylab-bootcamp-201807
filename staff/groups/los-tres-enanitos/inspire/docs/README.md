@@ -35,6 +35,7 @@ Inspire app se trate de un buscador de fotos de alta calidad en cual los usuario
 
 ### Classes
 - React main components
+![Classes](./images/classes.png)
 
 ### Data model
 ![Technical description: Data model](./images/data-model.png)
