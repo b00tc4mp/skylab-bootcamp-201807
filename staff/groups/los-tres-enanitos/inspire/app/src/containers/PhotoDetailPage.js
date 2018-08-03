@@ -12,27 +12,13 @@ class PhotoDetailPage extends Component {
 
   state = {
     photo: null,
-    isLiked: logic.isLiked(this.props.id),
-    relatedPhotos: [],
-    loadMoreRelatedPhotos: true
+    isLiked: logic.isLiked(this.props.id)
   }
 
   componentDidMount() {
     logic.retrievePhotoById(this.props.id)
       .then(photo => {
         this.setState({ photo })
-      })
-  }
-
-  componentWillReceiveProps(newProps) {
-    logic.retrievePhotoById(newProps.id)
-      .then(photo => {
-        this.setState({
-          photo,
-          isLiked: logic.isLiked(newProps.id),
-          relatedPhotos: [],
-          loadMoreRelatedPhotos: true
-        })
       })
   }
 
@@ -45,37 +31,6 @@ class PhotoDetailPage extends Component {
     } else {
       this.props.history.push('/login')
     }
-  }
-
-  retrieveRelatedPhotos = (page = 1) => {
-    const query = this.state.photo.location ? this.state.photo.location : ''
-    if (query) {
-      logic.searchPhotos(query, page)
-        .then(res => {
-          let relatedPhotos = this.state.relatedPhotos
-          res.results.forEach(photo => {
-            relatedPhotos.push({
-              id: photo.id,
-              url: photo.urls.regular
-            })
-          })
-          this.setState({ relatedPhotos })
-
-          if (page >= res.total_pages) {
-            this.setState({ loadMoreRelatedPhotos: false })
-          }
-        })
-    }
-  }
-
-  handleLoadMoreRelatedPhotos = page => {
-    if (this.state.loadMoreRelatedPhotos) {
-      this.retrieveRelatedPhotos(page)
-    }
-  }
-
-  handleRelatedPhotoClick = photoId => {
-    this.props.history.push(`/photos/${photoId}`)
   }
 
   render() {
@@ -94,30 +49,6 @@ class PhotoDetailPage extends Component {
               />
             }
           </div>
-          {this.state.photo && this.state.photo.location && (
-            <div>
-              <section className="content">
-                <ul className="tabs">
-                  <li className="tabs__item">
-                    <a href="#/" className="tabs__link tabs__link--active">Related photos</a>
-                  </li>
-                </ul>
-              </section>
-              <section className="content">
-                <InfiniteScroll
-                  pageStart={0}
-                  loadMore={this.handleLoadMoreRelatedPhotos}
-                  hasMore={this.state.loadMoreRelatedPhotos}
-                  loader={<div className="loader" key={0}>Loading ...</div>}
-                >
-                  <PhotoList
-                    photos={this.state.relatedPhotos}
-                    onPhotoClick={this.handleRelatedPhotoClick}
-                  />
-                </InfiniteScroll>
-              </section>
-            </div>
-          )}
         </main>
       </div>
     )
