@@ -15,6 +15,8 @@ import {
 } from "reactstrap";
 import logic from "../logic";
 import { List, AutoSizer } from "react-virtualized";
+import "../styles/style-search.css"
+
 
 class Search extends Component {
   state = {
