@@ -80,7 +80,7 @@ class UserDelete extends Component {
           <Input type="text" disabled value={this.state.Username} />
         </FormGroup>
         <FormGroup>
-          <Label for="text-user">newUsername</Label>
+          <Label for="text-user">New Username</Label>
           <Input type="text" name="Username" placeholder="New Username" onChange={this.keepNewUsername} />
         </FormGroup>
         <FormGroup>

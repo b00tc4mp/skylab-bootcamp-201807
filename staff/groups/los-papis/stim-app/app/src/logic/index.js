@@ -233,6 +233,6 @@ const logic = {
 
 }
 
-if (typeof module !== 'undefined') module.exports = logic;
+export default logic
 
 
