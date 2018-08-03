@@ -1,6 +1,6 @@
-# INSPIRE APP
+# Inspire App
 
-## Intro
+## Introduction
 
 Inspire app se trate de un buscador de fotos de alta calidad en cual los usuarios se pueden registrar y crear sus propia lista de favoritos. 
 
@@ -37,4 +37,4 @@ Inspire app se trate de un buscador de fotos de alta calidad en cual los usuario
 - React main components
 
 ### Data model
-![Technical description: Data model](./images/dataModel.png)
+![Technical description: Data model](./images/data-model.png)
