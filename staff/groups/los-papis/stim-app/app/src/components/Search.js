@@ -91,12 +91,12 @@ onToggleFavorite = () => {
 // 
   render() {
     return (
-      <div>
+      <div >
         <Row
           className="justify-content-center align-items-center"
           style={{ height: 30 + "vh" }}
         >
-          <Col md="4">
+          <Col md="4" >
           <Form inline onSubmit={this.handleSearch} className="form-group mx-sm-3 mb-2">
             <input
               autocomplete="off"
@@ -111,8 +111,8 @@ onToggleFavorite = () => {
           </Col>
         </Row>
         <div className="container justify-content-between">
-          <div className="row">
-          { (typeof this.state.data === "object" && this.state.data.length === 0 )? <h1>NO RESULTS</h1> :  <div className="col-6">
+          <div className="row" >
+          { (typeof this.state.data === "object" && this.state.data.length === 0 )? <h1>NO RESULTS</h1> :  <div className="col-6" >
           {this.state.data.length !== 0 ? <h2>RESULTS {`(${this.state.data.length})`} :  </h2> : "" }
               <AutoSizer>
                 {({ width, height }) => {

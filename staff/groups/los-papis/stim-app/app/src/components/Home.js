@@ -20,7 +20,7 @@ class Home extends Component {
 
   render(){
     return (
-    <CardColumns className="mt-4 p-2">
+    <CardColumns className="p-2" style={{background: "linear-gradient(to right, #d3cce3, #e9e4f0)"}}>
    {this.state.data.map((e) => {
       return <NewCard data={e} key={e.appid}/>
     })}
