@@ -28,7 +28,7 @@ You can also update your information and delete your acount.
 
 ### Activity diagram
 
-We just have two principal activities, upload a picture or take a picture. You can choose to apply some style or just save the picture in the galery. Finally, you can choose to delete the picture when you want.
+We have two principal activities, upload a picture or take a picture. You can choose to apply some style and save the picture in the gallery. Finally, you can choose to delete the picture when you want.
 
 ![Activity_Diagram](images/Activity_diagram.png)
 
@@ -42,34 +42,37 @@ The front end of the application was built using React. The back end is connecte
 
 ### Components Diagram
 
-Our application just have some react components, the business logic and the three api that we use, UserAPi, CloudinaryAPI and CloudmersiveAPI.
+Our application has some react components, the business logic and the three APIs that we use: UserAPi, CloudinaryAPI and CloudmersiveAPI.
 
 ![Component-Diagram](images/ComponentsDiagram.png)
 
 ### Sequence Diagram
 
-In this application, we have some repetitives sequence. The most significant are those that use the two APIs, Cloudinary and Cloudmersive.
-With the Cloudinary API we save the images and with the Cloudmersive API we transform the images, if the user decides to add a style to them.
+In this application, we have some repetitives tasks. The most significant are those that use the APIs.
+Cloudinary API is used to save the images and the Cloudmersive API is used to transform the images, if the user decides to add a style to them.
+
+- Users API
 
 ![Sequence-Diagram](images/sequencies_login_diagram.png)
 
+- Cloudinary API
 
 ![Sequence-Diagram](images/saveImage_sequencies_diagram.png)
 
+- Cloudmersive API
 
 ![Sequence-Diagram](images/transform_sequencies_diagram.png)
 
 ### Class Diagram
 
-We have differents components, the App, Main, Landing, Login, Register, Gallery, Profile and Navbar. All extends from Component.
+We have differents components: App, Main, Landing, Login, Register, Gallery, Profile and Navbar. All extend from Component.
 In this diagram we have the interaction between the components.
 
 ![Class-Diagram](images/class_diagram.png)
 
 
-
 ### Data Diagram
 
-Our logic have two componentes. The image and the user. The user have the username, id, password and gallery. In the other hand, the image have the id and the url. 
+Our logic has two componentes: the image and the user. The user is represented with a username, id, password and gallery. An image is represented with its id and the public url. 
 
 ![Data-Diagram](images/data_diagram.png)

@@ -159,7 +159,7 @@ class Main extends Component {
           <label htmlFor="fileinput" className="custom-file-upload fa-3x">
             <i className="far fa-folder-open"></i>
           </label>
-          <input id="fileinput" type="file" onChange={this.upload} />
+          <input id="fileinput" type="file" onChange={this.upload} accept="image/*"/>
         </div>
         {!url && !webcamOn && this.renderWelcome()}
         <video className={webcamOn ? "webcam" : "webcam--hidden"} autoPlay playsInline muted id="webcam"></video>
