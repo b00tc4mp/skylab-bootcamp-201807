@@ -117,7 +117,7 @@ class Home extends Component {
     submitUpdateFav = e => {
         e.preventDefault();
         this.props.onUpdateFavsProp(this.state.currentBet, this.state.currentFlight)
-        console.log('The link was clicked.');
+        
     }
 
 
