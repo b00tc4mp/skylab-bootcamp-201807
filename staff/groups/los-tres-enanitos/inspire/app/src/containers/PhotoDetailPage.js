@@ -2,8 +2,6 @@ import React, { Component } from 'react'
 import PhotoDetail from '../components/PhotoDetail';
 import Header from '../components/Header';
 import { withRouter } from 'react-router-dom'
-import InfiniteScroll from 'react-infinite-scroller';
-import PhotoList from '../components/PhotoList';
 import logic from '../logic'
 
 logic.unsplashAccessKey = '88da259f8e2bfd79534815ca812292719b02ad2ca90ed4ed04deeb63753d75bc'
