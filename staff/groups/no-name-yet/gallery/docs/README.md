@@ -44,8 +44,6 @@ The front end of the application was built using React. The back end is connecte
 
 ### Sequence Diagram
 
-
-
 ### Class Diagram
 
 ### Data Diagram
