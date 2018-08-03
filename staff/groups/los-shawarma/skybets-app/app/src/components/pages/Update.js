@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
+import './Update.css';
 
 class Update extends Component {
 
@@ -24,21 +25,22 @@ class Update extends Component {
     render () {
         return (
         <section>
-            <h1>Update Profile</h1>
-            <form onSubmit={this.submitUpdate}>
-                <label>Username</label>
-                <div>{this.state.username}</div>
-                <label>Password</label>
-                <input type="password" placeholder="type current password" onChange={this.keepPassword}/>
-                <label>New Username (optional)</label>
-                <input type="text" placeholder="type new Username" onChange={this.keepNewUsername}/>
-                <label>New Password (optional)</label>
-                <input type="password" placeholder="type new Password" onChange={this.keepNewPassword}/>
-                <button type="submit">Update Profile</button>
+            <form className="form-update" onSubmit={this.submitUpdate}>
+                <h1 className="h3 mb-3 font-weight-normal">Update Profile</h1>
+                <div className="sr-info">
+                    <label>Current Username: </label>
+                    <span> {this.state.username}</span>
+                </div>
+                <label className="sr-only">Password</label>
+                <input className="form-control" type="password" placeholder="type current password" onChange={this.keepPassword}/>
+                <label className="sr-only">New Username (optional)</label>
+                <input className="form-control" type="text" placeholder="type new Username" onChange={this.keepNewUsername}/>
+                <label className="sr-only">New Password (optional)</label>
+                <input className="form-control" type="password" placeholder="type new Password" onChange={this.keepNewPassword}/>
+                <button className="btn btn-lg btn-block" type="submit">Update Profile</button>
             </form>
         </section>
-        )
-        
+        )        
     }
 }
 
