@@ -43,7 +43,7 @@ class ProfilePage extends Component {
   render() {
     return (
       <div>
-        <Header loggedIn={this.props.loggedIn}/>
+        <Header loggedIn={this.props.loggedIn} />
         <main>
           <section className="profile-container">
             {
@@ -62,9 +62,6 @@ class ProfilePage extends Component {
               <li className="tabs__item">
                 <a href="#/" className="tabs__link tabs__link--active">{this.state.favoritePhotos.length} Favorites</a>
               </li>
-              {/* <li className="tabs__item">
-                <a href="#" className="tabs__link">2 Collections</a>
-              </li> */}
             </ul>
           </section>
           <section className="content push-70-l push-70-r">

@@ -4,7 +4,7 @@ import Header from '../components/Header';
 import { withRouter } from 'react-router-dom'
 import logic from '../logic'
 
-logic.unsplashAccessKey = 'f054c8ab6f6003082f765a95a875c1fa31770d47f951f23c7bb85c8865559406'
+logic.unsplashAccessKey = '88da259f8e2bfd79534815ca812292719b02ad2ca90ed4ed04deeb63753d75bc'
 
 class PhotoDetailPage extends Component {
 

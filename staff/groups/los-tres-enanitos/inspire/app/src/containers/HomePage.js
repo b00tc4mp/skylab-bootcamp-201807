@@ -5,27 +5,16 @@ import Block from '../components/Block';
 import Header from '../components/Header';
 import PhotoList from '../components/PhotoList';
 import { withRouter } from 'react-router-dom'
+import InfiniteScroll from 'react-infinite-scroller';
 
-logic.unsplashAccessKey = 'f054c8ab6f6003082f765a95a875c1fa31770d47f951f23c7bb85c8865559406'
+logic.unsplashAccessKey = '6a4d6b1b0f0719f5c63b9f29cf900ee814ade514f0d60c7a4d7dc451663a3533'
+const MAX_POPULARS_PHOTOS = 500
 
 class HomePage extends Component {
 
   state = {
-    popularsPhotos: []
-  }
-
-  componentDidMount() {
-    logic.retrievePopularPhotos()
-      .then(results => {
-        results.forEach(photo => {
-          let popularsPhotos = this.state.popularsPhotos
-          popularsPhotos.push({
-            id: photo.id,
-            url: photo.urls.regular
-          })
-          this.setState({ popularsPhotos })
-        })
-      })
+    popularsPhotos: [],
+    loadMorePhotos: true
   }
 
   handleSearchSubmit = query => {
@@ -34,6 +23,28 @@ class HomePage extends Component {
 
   handlePhotoClick = photoId => {
     this.props.history.push(`/photos/${photoId}`)
+  }
+
+  handleLoadMore = page => {
+
+    if (this.state.loadMorePhotos) {
+
+      logic.retrievePopularPhotos(page)
+        .then(results => {
+          let popularsPhotos = this.state.popularsPhotos
+          results.forEach(photo => {
+            popularsPhotos.push({
+              id: photo.id,
+              url: photo.urls.regular
+            })
+          })
+          this.setState({ popularsPhotos })
+
+          if (page >= MAX_POPULARS_PHOTOS) {
+            this.setState({ loadMorePhotos: false })
+          }
+        })
+    }
   }
 
   render() {
@@ -62,10 +73,17 @@ class HomePage extends Component {
             </ul>
           </section>
           <section className="content">
-            <PhotoList
-              photos={this.state.popularsPhotos}
-              onPhotoClick={this.handlePhotoClick}
-            />
+            <InfiniteScroll
+              pageStart={0}
+              loadMore={this.handleLoadMore}
+              hasMore={this.state.loadMorePhotos}
+              loader={<div className="loader" key={0}>Loading ...</div>}
+            >
+              <PhotoList
+                photos={this.state.popularsPhotos}
+                onPhotoClick={this.handlePhotoClick}
+              />
+            </InfiniteScroll>
           </section>
         </main>
       </div>
