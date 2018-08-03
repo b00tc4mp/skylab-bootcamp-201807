@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import {
   Collapse,
-  Button,
   Navbar,
   NavbarToggler,
   NavbarBrand,
@@ -12,13 +11,8 @@ import {
   DropdownToggle,
   DropdownMenu,
   DropdownItem
-} from 'reactstrap';
+} from 'reactstrap'
 import { Link } from 'react-router-dom'
-import logic from '../logic'
-import images from "../images/logo-steam.png"
-import "../styles/style-navbar.css"
-
-
 
 class NavBar extends Component {
 
@@ -29,7 +23,7 @@ class NavBar extends Component {
   toggle = () => {
     this.setState({
       isOpen: !this.state.isOpen
-    });
+    })
   }
 
   handle
@@ -42,6 +36,9 @@ class NavBar extends Component {
             <Nav className="mr-8" navbar>
             <NavItem>
                 <NavLink tag={Link} to="/search">Search Games</NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink tag={Link} to="/favorites">Favorite Games</NavLink>
               </NavItem>
               <UncontrolledDropdown nav inNavbar>
                 <DropdownToggle nav caret>
@@ -62,5 +59,5 @@ class NavBar extends Component {
     } 
 }
 
-export default NavBar;
+export default NavBar
 

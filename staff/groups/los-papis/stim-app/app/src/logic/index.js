@@ -39,6 +39,16 @@ const logic = {
             )
     },
 
+    getGamesById(gameid) {
+        return logic.getAllGames()
+            //
+            //
+            .then(res => res.filter(({ id }) => {
+                return Number(id) === gameid
+            })
+            )
+    },
+
     getStatsForGame (appid){
          return fetch(`https://skylabcoders.herokuapp.com/proxy?url=http://steamspy.com/api.php?request=appdetails&appid=${appid}`)
             .then(res => res.json())
@@ -87,6 +97,14 @@ const logic = {
     get _userPassword() {
         return sessionStorage.getItem('userPassword')
     },
+
+    set _userFavorites(userFavorites) {
+        sessionStorage.setItem('userFavorites', JSON.stringify(userFavorites))
+    },
+
+    get _userFavorites() {
+        return JSON.parse(sessionStorage.getItem('userFavorites')) || []
+    }, 
 
     _callUsersApi(path, method = 'get', body, useToken) {
         const config = {
@@ -150,14 +168,21 @@ const logic = {
     },
 
     updateUser(password, newUsername, newPassword) {
-        const username = this._userUsername
-        return this._callUsersApi(`/user/${this._userId}`, 'put', { username, newUsername, password, newPassword }, true)
+        return this._callUsersApi(`/user/${this._userId}`,'put',{
+            username: this._userUsername,
+            password,
+            // password:newPassword,
+            // username: newUsername
+            newPassword,
+            newUsername
+            
+        }, true)
             .then(() => {
-                this._userUsername = newUsername
-                this._userPassword = newPassword
-                return true
-            })
+                if(newUsername !== null)this._userUsername = newUsername
+                return true})
     },
+
+
 
     unregisterUser(password) {
         return this._callUsersApi(`/user/${this._userId}`, 'delete', {
@@ -176,9 +201,39 @@ const logic = {
                 return true
             })
 
-    }
+    },
+
+    isFavorite(id) {
+        return this._userFavorites.includes(id)
+    },
+
+    toggleGameFavorite(id) {
+        const favorites = this._userFavorites
+        
+        const index = favorites.indexOf(id)
+
+        if (index > -1) {
+            favorites.splice(index, 1)
+        } else {
+            favorites.push(id)
+        }
+
+        const data = {
+            username: this._userUsername,
+            password: this._userPassword,
+            favorites
+        }
+
+        return this._callUsersApi(`/user/${this._userId}`, 'put', data, true)
+            .then(() => {
+                this._userFavorites = favorites
+                
+                return true
+            })
+    },
 
 }
 
-export default logic;
+if (typeof module !== 'undefined') module.exports = logic;
+
 

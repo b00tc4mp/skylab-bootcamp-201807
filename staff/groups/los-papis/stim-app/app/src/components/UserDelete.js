@@ -1,11 +1,8 @@
 import React, { Component } from 'react'
-import NavBar from "./NavBar";
-import Landing from "./Landing";
-import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import { Button, Form, FormGroup, Label, Input, FormText,Container } from 'reactstrap'
 import logic from "../logic"
-import images from "../images/logo-steam.png"
-import "../styles/style-profile.css"
-
+import swal from 'sweetalert2'
+import { Redirect } from "react-router";
 
 
 class UserDelete extends Component {
@@ -13,9 +10,10 @@ class UserDelete extends Component {
   state = {
 
     Username: logic._userUsername,
-    newUsername: "",
-    password: logic._userPassword,
-    newPassword: "",
+    newUsername: null,
+    password: "",
+    newPassword: null,
+    redirectHome: false
 
   }
 
@@ -30,13 +28,30 @@ class UserDelete extends Component {
     const { newUsername, password, newPassword } = this.state
 
     logic.updateUser(password, newUsername, newPassword)
-      .then(res => {
+      .then(() => {
         this.setState({
         Username: logic._userUsername,
         password: logic._userPassword
       })
     })
-      .catch(err => console.warn(err))
+    .then(() => {
+      swal({
+        title: 'Success! :)',
+        text: "Update successful",
+        type: 'success',
+        confirmButtonText: 'Nice!'
+      })
+      .then(() => this.setState({
+        redirectHome: true
+      }))
+    })
+      .catch((err) => swal({
+        title: 'Failed! :(',
+        text: err,
+        type: 'error',
+        confirmButtonText: 'Try again'
+      })
+    )
 
 
   }
@@ -46,13 +61,19 @@ class UserDelete extends Component {
     const { password } = this.state
     logic.unregisterUser(password)
       .then(this.props.handleLogout)
+      .catch((err) => swal({
+        title: 'Failed! :(',
+        text: err,
+        type: 'error',
+        confirmButtonText: 'Try again'
+      }))
   }
 
   render() {
-    return <section>
-      <div className="container1">
+    return <div>
+   {this.state.redirectHome && <Redirect to="/home"/> } 
+    <Container className="mt-5">
       <h2>Update</h2>
-      <img src={images} width="100vw" height="100vh" />
       <Form onSubmit={this.onUpdate}>
         <FormGroup>
           <Label for="text-user">Username</Label>
@@ -60,24 +81,22 @@ class UserDelete extends Component {
         </FormGroup>
         <FormGroup>
           <Label for="text-user">newUsername</Label>
-          <Input type="text" name="Username" placeholder="New username" onChange={this.keepNewUsername} />
+          <Input type="text" name="Username" placeholder="New Username" onChange={this.keepNewUsername} />
         </FormGroup>
         <FormGroup>
           <Label for="examplePassword">Password</Label>
-          <Input type="password" name="password" placeholder="password" onChange={this.keepPassword} />
+          <Input type="password" name="password" placeholder="Password" onChange={this.keepPassword} />
         </FormGroup>
         <FormGroup>
           <Label for="newPassword">New password</Label>
-          <Input type="password" name="newpassword" placeholder=" new password" onChange={this.keepNewPassword} />
+          <Input type="password" name="newpassword" placeholder="New Password" onChange={this.keepNewPassword} />
         </FormGroup>
         <Button type="submit" className="btn-success">Update</Button>
       </Form>
-      </div>
+      </Container>
 
-
-      <div className="container2">
+      <Container className="mt-5">
         <h2>Delete profile</h2>
-        <img src={images} width="100vw" height="100vh" />
         <Form onSubmit={this.onDelete}>
           <FormGroup>
             <Label for="text-user">Username</Label>
@@ -89,16 +108,16 @@ class UserDelete extends Component {
           </FormGroup>
           <Button type="submit" id="button-red" className="btn-danger">Delete</Button>
         </Form>
+      </Container>
       </div>
 
 
 
 
-
-    </section>
+    
 
 
   }
 }
 
-export default UserDelete;
+export default UserDelete
