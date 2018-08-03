@@ -22,6 +22,7 @@ class App extends Component {
     updated: false,
     showFeedback: false,
     showFeedbackDelete: false,
+    showFeedbackUpdate: false
   }
 
   // The signup function take the username and password from the usuary input and send it to logic resister. 
@@ -75,12 +76,12 @@ class App extends Component {
   updateUser = (password, newUsername, newPassword) => {
     logic.update(password, newUsername, newPassword)
       .then(() => {
-        this.setState({updated: true, showFeedbackDelete: false, showFeedback: false})
+        this.setState({updated: true, showFeedbackDelete: false, showFeedback: false, showFeedbackUpdate: false})
         swal("Well done!", "Username and/or password updated correctly!", "success")
         this.props.history.push('/login')
       })
       .catch(({message}) => {
-        this.setState({showFeedback: message})
+        this.setState({showFeedbackUpdate: message})
       })
   }
 
@@ -106,7 +107,7 @@ class App extends Component {
   // This render show and hide the different parts of the web necessaries in each path of login part of the web
   render() {
     
-    const {state:{loggedIn, showFeedback, showFeedbackDelete}, goToLogin, goToSignUp, signupUser, loginUser, logout, updateUser, deleteUser} = this
+    const {state:{loggedIn, showFeedback, showFeedbackDelete, showFeedbackUpdate}, goToLogin, goToSignUp, signupUser, loginUser, logout, updateUser, deleteUser} = this
     
     return (
       <div className="App">
@@ -139,7 +140,7 @@ class App extends Component {
           <Route path="/signup" render = {() => loggedIn ? <Redirect to="/home"/> : <Signup onSignUp={signupUser} linkToLogin={goToLogin} feedback={showFeedback}/>} />
           <Route path="/login" render = {() => loggedIn ? <Redirect to="/home"/> : <Login onLogin={loginUser} linkToSignUp={goToSignUp} feedback={showFeedback}/>} />
           <Route path="/home" render = {() => loggedIn ? <Home className="App__main2"/> : <Redirect to="/" />} />
-          <Route path="/profile" render={() => loggedIn ? <Profile onUpdate={updateUser} feedback={showFeedback} feedbackdelete={showFeedbackDelete} onDelete={deleteUser}/> : <Redirect to="/"/>} />
+          <Route path="/profile" render={() => loggedIn ? <Profile onUpdate={updateUser} feedback={showFeedbackUpdate} feedbackdelete={showFeedbackDelete} onDelete={deleteUser}/> : <Redirect to="/"/>} />
           <Route path="/favorites" render={() => loggedIn ? <FavoriteList /> :  <Redirect to="/"/>} />
           <Route component={Error404} />
         </Switch>
