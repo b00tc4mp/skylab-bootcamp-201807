@@ -7,7 +7,7 @@ You also can take pictures from your webcam and save the results in your own gal
 
 ### Running the application
 
-To run this application download the [app](https://github.com/juansensio/skylab-bootcamp-201807/tree/develop/staff/groups/no-name-yet) folder and run  
+To run this application download the [app](https://github.com/juansensio/skylab-bootcamp-201807/tree/develop/staff/groups/no-name-yet/gallery) folder and run  
 
 ```sh
 npm start
