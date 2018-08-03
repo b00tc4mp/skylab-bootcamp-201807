@@ -13,4 +13,4 @@ NutriLab is an application to search ingredients and show their nutritional info
 
 **LIVE DEMO**
 
-[Here]() you could run the App.
+[Here](http://royal-hands.surge.sh) you could run the App.
