@@ -123,7 +123,7 @@ class Landing extends Component {
         <Modal
           isOpen={this.state.modalLogin}
           toggle={this.loginToggle}>
-          <ModalHeader toggle={this.loginToggle}>Log In</ModalHeader>
+          <ModalHeader toggle={this.loginToggle}>Login</ModalHeader>
           <form onSubmit={(e)=>{
             e.preventDefault()
             this.handleLoginSubmit(this.state.username, this.state.password)}
@@ -142,7 +142,7 @@ class Landing extends Component {
           </ModalFooter>
           </form>
         </Modal>
-      </div>
+        </div>
     )
   }
 }

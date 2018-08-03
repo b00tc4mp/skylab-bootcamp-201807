@@ -106,7 +106,7 @@ class UserDelete extends Component {
             <Label for="examplePassword">Password</Label>
             <Input type="password" name="password" placeholder="password " onChange={this.keepPassword} />
           </FormGroup>
-          <Button type="submit" className="btn-danger">Delete</Button>
+          <Button type="submit" id="button-red" className="btn-danger">Delete</Button>
         </Form>
       </Container>
       </div>
