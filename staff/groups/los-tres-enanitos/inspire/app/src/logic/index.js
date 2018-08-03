@@ -331,8 +331,8 @@ const logic = {
             });
     },
 
-    searchPhotos(query, page = 1) {
-        return this._callUnsplashApi(`/search/photos?query=${query}&page=${page}`)
+    searchPhotos(query, page = 1, results = 30) {
+        return this._callUnsplashApi(`/search/photos?query=${query}&page=${page}&per_page=${results}`)
             .then(res => res)
     },
 
@@ -346,8 +346,8 @@ const logic = {
             .then(res => res)
     },
 
-    retrievePopularPhotos(page = 1) {
-        return this._callUnsplashApi(`/photos?order_by=popular&page=${page}`)
+    retrievePopularPhotos(page = 1, results = 30) {
+        return this._callUnsplashApi(`/photos?order_by=popular&page=${page}&per_page=${results}`)
             .then(res => res)
     }
 };

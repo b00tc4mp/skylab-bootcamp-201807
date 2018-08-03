@@ -343,7 +343,7 @@ describe('logic (unsplash-app)', () => {
     })
 
     describe('unsplash\'s', () => {
-        logic.unsplashAccessKey = '1cb96dfdb0925fb516e37123f0c906d5fbaadf2669fb3b9c5f0f833539476627'
+        logic.unsplashAccessKey = 'f054c8ab6f6003082f765a95a875c1fa31770d47f951f23c7bb85c8865559406'
 
         describe('search', () => {
             it('should find results matching criteria', () => {
@@ -358,7 +358,7 @@ describe('logic (unsplash-app)', () => {
             it('should find results matching criteria and page', () => {
                 return logic.searchPhotos('tiger', 2)
                     .then(res => {
-                        expect(res.results.length).toBe(10)
+                        expect(res.results.length).toBe(30)
                     })
             })
         })
@@ -404,7 +404,7 @@ describe('logic (unsplash-app)', () => {
             it('should find results matching criteria and page', () => {
                 return logic.retrievePopularPhotos(2)
                     .then(res => {
-                        expect(res.length).toBe(10)
+                        expect(res.length).toBe(30)
                     })
             })
         })

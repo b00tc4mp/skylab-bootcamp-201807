@@ -6,7 +6,7 @@ import Header from '../components/Header';
 import PhotoList from '../components/PhotoList';
 import { withRouter } from 'react-router-dom'
 
-logic.unsplashAccessKey = '1cb96dfdb0925fb516e37123f0c906d5fbaadf2669fb3b9c5f0f833539476627'
+logic.unsplashAccessKey = 'f054c8ab6f6003082f765a95a875c1fa31770d47f951f23c7bb85c8865559406'
 
 class HomePage extends Component {
 
