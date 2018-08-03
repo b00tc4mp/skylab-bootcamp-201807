@@ -109,6 +109,8 @@ const logic = {
             })
     },
 
+
+
     logout() {
         this._userId = null
         this._userToken = null
@@ -140,13 +142,17 @@ const logic = {
     },
 
     updateFavs(currentBet, currentFlight) {
+        debugger;
+
+        const newFavorites = [...this._userFavorites, {bet: currentBet,
+            flight: currentFlight}]
+
+        this._userFavorites = newFavorites
+
         const data = {
             username: this.userUsername,
             password: this._userPassword,
-            favorites: this._userFavorites.push({
-                bet: currentBet,
-                flight: currentFlight
-            })
+            favorites: this._userFavorites
         }
 
         return this._callUsersApi(`/user/${this._userId}`, 'put', data, true)
