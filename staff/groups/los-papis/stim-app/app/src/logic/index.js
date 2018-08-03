@@ -206,8 +206,11 @@ const logic = {
             
         }, true)
             .then(() => {
-                if(newUsername !== null)this._userUsername = newUsername
-                return true})
+                    if(newUsername !== null)this._userUsername = newUsername
+                    if(newPassword !== null)this._userPassword = newPassword
+                    return true
+                }
+            )
     },
 
 
