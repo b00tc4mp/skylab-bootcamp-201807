@@ -59,6 +59,34 @@ const logic = {
             //         else Object.keys.map(j => res[i][j] )
             //     }))
     },
+    isFavorite(id) {
+        return this._userFavorites.includes(id)
+    },
+
+    toggleGameFavorite(id) {
+        const favorites = this._userFavorites
+        
+        const index = favorites.indexOf(id)
+
+        if (index > -1) {
+            favorites.splice(index, 1)
+        } else {
+            favorites.push(id)
+        }
+
+        const data = {
+            username: this._userUsername,
+            password: this._userPassword,
+            favorites
+        }
+
+        return this._callUsersApi(`/user/${this._userId}`, 'put', data, true)
+            .then(() => {
+                this._userFavorites = favorites
+                
+                return true
+            })
+    },
 
     //cloudinary
 
@@ -201,38 +229,10 @@ const logic = {
                 return true
             })
 
-    },
-
-    isFavorite(id) {
-        return this._userFavorites.includes(id)
-    },
-
-    toggleGameFavorite(id) {
-        const favorites = this._userFavorites
-        
-        const index = favorites.indexOf(id)
-
-        if (index > -1) {
-            favorites.splice(index, 1)
-        } else {
-            favorites.push(id)
-        }
-
-        const data = {
-            username: this._userUsername,
-            password: this._userPassword,
-            favorites
-        }
-
-        return this._callUsersApi(`/user/${this._userId}`, 'put', data, true)
-            .then(() => {
-                this._userFavorites = favorites
-                
-                return true
-            })
-    },
+    }
 
 }
 
-export default logic;
+if (typeof module !== 'undefined') module.exports = logic;
+
 
