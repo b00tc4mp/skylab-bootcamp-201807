@@ -56,7 +56,7 @@ class SearchFormFilterListWithCount extends Component {
         {selected  && <ListGroupItem key={currentFilterText }  onClick={(e) => {
           e.preventDefault();
           this.onClear();
-        }} className="justify-content-between  disabled"  tag="a" href="#">{currentFilterText} { <Badge color="warning" onClick={e=> {e.preventDefault();this.onClear}}>clear</Badge>}</ListGroupItem>}
+        }} className="justify-content-between  disabled"  tag="a" href="#">{currentFilterText} { <Badge color="warning" onClick={e=> {e.preventDefault();this.onClear()}}>clear</Badge>}</ListGroupItem>}
         {(data.length === 0) && <span>No results. Perhaps clear the other filters...</span>}
         </ListGroup>
           </section>
