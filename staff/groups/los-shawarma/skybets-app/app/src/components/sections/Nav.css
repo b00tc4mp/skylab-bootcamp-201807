@@ -1,0 +1,14 @@
+.navbar button {
+    /*color: #6fa0c2;
+    border-color: #6fa0c2;*/
+    color: #3f6b91;
+    border-color: #3f6b91;
+}
+
+.navbar button:hover {
+    background-color: #3f6b91;
+    border-color: #3f6b91;
+    /*background-color: #6fa0c2;
+    border-color: #6fa0c2;*/
+
+}

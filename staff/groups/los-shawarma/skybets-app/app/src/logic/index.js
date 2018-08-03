@@ -61,7 +61,6 @@ const logic = {
 
      
     _callUsersApi(path, method = 'get', body, useToken) {
-        debugger;
         const config = {
             method
         }
@@ -144,10 +143,10 @@ const logic = {
         const data = {
             username: this.userUsername,
             password: this._userPassword,
-            favorites:{
+            favorites: this._userFavorites.push({
                 bet: currentBet,
                 flight: currentFlight
-            }
+            })
         }
 
         return this._callUsersApi(`/user/${this._userId}`, 'put', data, true)

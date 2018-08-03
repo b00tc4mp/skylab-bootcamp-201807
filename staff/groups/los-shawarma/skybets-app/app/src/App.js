@@ -60,6 +60,7 @@ class App extends Component {
     logic.logout();
 
     this.setState({loggedIn: false});
+    this.props.history.push('/')
   }
 
   ////////////////////////////////////////////////////////
@@ -82,7 +83,7 @@ class App extends Component {
 
     return (
       <div className="App">
-        <Nav onLogoutProp={onLogout}/>
+        <Nav onLogoutProp={onLogout} loggedInProp={loggedIn} />
 
         <Route path="/" exact render={() => <Home onUpdateFavsProp={onUpdateFavs}/>} />
         <Route path="/login" exact render={() => <Login onLoginProp={onLogin} errorMsg={errorLogin} successMsg={successLogin}/>} />
