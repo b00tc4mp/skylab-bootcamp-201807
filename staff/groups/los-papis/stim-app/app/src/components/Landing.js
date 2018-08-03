@@ -1,7 +1,6 @@
 import React, { Component } from "react"
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap"
 import swal from 'sweetalert2'
-import '../styles/styles.css'
 import logic from "../logic"
 
 class Landing extends Component {

@@ -1,9 +1,7 @@
 import React, { Component } from "react"
 import {
-  Container,
   Row,
   Col,
-  CardColumns,
   Button,
   Card,
   CardBody,
@@ -15,6 +13,7 @@ import {
 } from "reactstrap"
 import logic from "../logic"
 import { List, AutoSizer } from "react-virtualized"
+import swal from 'sweetalert2'
 
 class Search extends Component {
   state = {
@@ -42,9 +41,7 @@ class Search extends Component {
   }
 
   getDetail = id => {
-    console.log(id)
     logic.getStatsForGame(id).then(res => {
-      console.log(res)
       this.setState({
         detail: res
       })
@@ -66,19 +63,7 @@ class Search extends Component {
     )
   }
 
-  renderDetailRow = ({ index, isScrolling, key, style }) => {
-    return (
-      <div key={key} style={style}>
-        <div>
-          <p>{this.state.detail.name}</p>
-        </div>
-      </div>
-    )
-  }
-
-
-// TODO check for future version 17 (make it work!)
-componentDidUpdate(prevProps,prevState) {
+componentDidUpdate(prevState) {
     if (prevState.detail.appid !== this.state.detail.appid)
         this.refreshFavorite(this.state.detail.appid)
 }
@@ -94,7 +79,12 @@ onToggleFavorite = () => {
         .then(() => this.setState({
           isFav : logic.isFavorite(this.state.detail.appid)
         }))
-        .catch(err => console.log(err))
+        .catch((err) => swal({
+          title: 'Something Failed! :(',
+          text: err,
+          type: 'error',
+          confirmButtonText: 'Try again'
+        }))
 }
 
 
@@ -107,7 +97,7 @@ onToggleFavorite = () => {
           style={{ height: 30 + "vh" }}
         >
           <Col md="4">
-          <Form onSubmit={this.handleSearch} className="form-group mx-sm-3 mb-2">
+          <Form inline onSubmit={this.handleSearch} className="form-group mx-sm-3 mb-2">
             <input
               autocomplete="off"
               type="text"
@@ -116,7 +106,7 @@ onToggleFavorite = () => {
               value={this.state.query}
               onChange={this.handleChange}
             />
-            <Button type="submit"> Search </Button>
+            <Button className="ml-3" color="primary" type="submit"> Search </Button>
             </Form>
           </Col>
         </Row>
@@ -151,7 +141,7 @@ onToggleFavorite = () => {
                     </div>
                   </CardBody>
                     <CardFooter> 
-                      <Button target="_blank" rel="noopener noreferrer" href={`https://store.steampowered.com/app/${this.state.detail.appid}/`}> Steam Page </Button> 
+                      <Button color="primary" target="_blank" rel="noopener noreferrer" href={`https://store.steampowered.com/app/${this.state.detail.appid}/`}> Steam Page </Button> 
                     </CardFooter>
                 </Card>
               </div>
