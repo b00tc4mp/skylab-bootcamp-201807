@@ -40,7 +40,7 @@ class Register extends Component {
     event.preventDefault()
 
     let isValid = true
-    
+
     this.setState({
       firstNameError: '',
       lastNameError: '',
@@ -75,7 +75,15 @@ class Register extends Component {
     }
 
     if (isValid) {
-      this.props.onSubmit(this.state)
+      const {
+        firstNameError,
+        lastNameError,
+        emailError,
+        usernameError,
+        passwordError,
+        ...formData
+      } = this.state
+      this.props.onSubmit(formData)
     }
   }
 

@@ -2,27 +2,8 @@ import React, { Component } from 'react'
 import Register from '../components/Register';
 import Header from '../components/Header';
 import { withRouter } from 'react-router-dom'
-import logic from '../logic'
 
 class RegisterPage extends Component {
-
-  state = {
-    registerError: ''
-  }
-
-  handleSubmit = (formData) => {
-    const { username, password, ...others } = formData
-    logic.registerUser(username, password, others)
-      .then(() => {
-        logic.loginUser(username, password)
-          .then(() => {
-            this.props.history.push('/')
-          })
-      })
-      .catch(error => {
-        this.setState({ registerError: `Upps, ${error.message}` })
-      })
-  }
 
   goToLogin = (event) => {
     event.preventDefault()
@@ -47,7 +28,7 @@ class RegisterPage extends Component {
               </ul>
             </div>
             <div>
-              <Register onSubmit={this.handleSubmit} error={this.state.registerError} />
+              <Register onSubmit={this.props.onRegisterSubmit} error={this.props.registerError} />
             </div>
           </div>
         </main>

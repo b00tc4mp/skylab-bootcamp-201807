@@ -12,28 +12,13 @@ class PhotoDetail extends Component {
       <section className="photo-detail">
         <div className="photo-detail__top">
           <div className="photo-detail__buttons">
-
-
-            <button 
-              className={ this.props.isLiked ? 'photo-detail__like' : 'photo-detail__unlike' }
+            <button
+              className={this.props.isLiked ? 'photo-detail__like photo-detail__like--is-liked' : 'photo-detail__like'}
               onClick={this.handleLikeClick}
-              >
-              <i className="fas fa-heart"></i>
+            >
+              <i className="fas fa-heart fa-lg"></i>
             </button>
-
-            {/* <button className="photo-detail__collect">
-              <i className="fas fa-plus"></i> COLLECT</button>
-
-            <button className="photo-detail__download">
-              <i className="fas fa-arrow-down"></i> DOWNLOAD
-                </button>
-
-            <button className="photo-detail__download">
-              <i className="fas fa-arrow-down"></i>
-            </button> */}
-
           </div>
-
         </div>
         <div className="photo-detail__image">
           <img src={this.props.url} alt={this.props.id} />
@@ -41,8 +26,13 @@ class PhotoDetail extends Component {
         {
           this.props.location && (
             <div className="photo-detail__location">
-              <i className="fas fa-map-marker-alt"></i>
-              <span> {this.props.location}</span>
+              <i className="fas fa-map-marker-alt fa-xs"></i>
+              <a
+                href={`https://www.google.com/maps?q=${this.props.location}`}
+                target="_blank"
+                className="photo-detail__location-link"
+              > {this.props.location}
+              </a>
             </div>
           )
         }

@@ -62,7 +62,7 @@ class Login extends Component {
           <input type="password" name="" id="password" className="form__input" onChange={this.handlePassword} />
           {
             this.state.passwordError &&
-            <div className="form__feedback form__feedback--invalid">{this.state.usernameError}</div>
+            <div className="form__feedback form__feedback--invalid">{this.state.passwordError}</div>
           }
         </div>
         <button type="submit" className="form__submit">Login</button>
