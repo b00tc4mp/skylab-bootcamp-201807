@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+// import logo from './logo.svg';
 import './App.css';
-import { Route, withRouter, Link, Redirect } from 'react-router-dom'
+import { Route, Redirect } from 'react-router-dom'
 import NavBar from "./components/NavBar";
 import HomePage from "./components/HomePage";
 import SearchPage from "./components/SearchPage"
 import FavouritesPage from "./components/FavouritesPage"
 import UserPage from "./components/UserPage"
-import { Button } from 'reactstrap';
+// import { Button } from 'reactstrap';
 import UserRegister from './components/UserRegister';
-import ImageDisplayer from './components/ImageDisplayer';
+// import ImageDisplayer from './components/ImageDisplayer';
 import UserLogin from './components/UserLogin';
 import logic from './logic'
 

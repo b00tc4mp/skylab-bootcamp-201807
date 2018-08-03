@@ -1,16 +1,16 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-import SearchForm from './SearchForm'
+// import PropTypes from 'prop-types'
+// import SearchForm from './SearchForm'
 import logic from '../logic'
 import ImageDisplayer from "./ImageDisplayer"
-import {Container, Row, Col} from 'reactstrap';
-import SearchFormFilterListWithCount from "./SearchFormFilterListWithCount"
+import {Container, Row} from 'reactstrap';
+// import SearchFormFilterListWithCount from "./SearchFormFilterListWithCount"
 import ErrorPanel from './ErrorPanel'
 import ImageSearchBase from "./ImageSearchBase"
 import './FavouritesPage.css'
 
-const FILTER_LIMIT = 10
-const OBJECT_LIMIT = 100
+// const FILTER_LIMIT = 10
+// const OBJECT_LIMIT = 100
 
 
 class FavouritesPage extends ImageSearchBase {
@@ -56,7 +56,7 @@ class FavouritesPage extends ImageSearchBase {
 
 
   render() {
-    const {isProcessing,errorMessage,warningMessage, data} = this.state
+    const {isProcessing,errorMessage, data} = this.state
 
     return (<Container  className="mt-5"><
         Row><h2 className="page-mainTitle">Favourites</h2></Row>

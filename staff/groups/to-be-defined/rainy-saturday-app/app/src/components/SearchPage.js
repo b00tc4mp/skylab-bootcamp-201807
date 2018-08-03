@@ -1,5 +1,5 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+// import PropTypes from 'prop-types'
 import SearchForm from './SearchForm'
 import logic from '../logic'
 import ImageDisplayer from "./ImageDisplayer"
@@ -9,7 +9,7 @@ import ErrorPanel from './ErrorPanel'
 import ImageSearchBase from "./ImageSearchBase"
 import './SearchPage.css'
 
-const FILTER_LIMIT = 10
+// const FILTER_LIMIT = 10
 const OBJECT_LIMIT = 100
 
 
@@ -72,7 +72,7 @@ class SearchPage extends ImageSearchBase {
 
 
   render() {
-    const {isProcessing,badSearchMessage,errorMessage, data, makerData, makerSelected, periodData, periodSelected, materialData, materialSelected,searchTerm} = this.state
+    const {isProcessing,badSearchMessage,errorMessage, data, makerData, periodData, materialData} = this.state
 
     return (<Container  className="mt-5">
     <Row><h2 className="page-mainTitle">Search</h2></Row>

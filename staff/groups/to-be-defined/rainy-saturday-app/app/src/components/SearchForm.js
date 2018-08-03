@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {Container, Row, Col, FormText,Button,Form, Input, Label, FormGroup} from 'reactstrap';
+import {Container, Row, FormText,Button,Form, Input, FormGroup} from 'reactstrap';
 import "./SearchForm.css"
 
 class SearchForm extends Component {

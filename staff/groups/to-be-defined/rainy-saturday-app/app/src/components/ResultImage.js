@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {CardImg, Card} from 'reactstrap'
+// import {CardImg, Card} from 'reactstrap'
 import {Button, Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap';
 import './ResultImage.css'
 import logic from '../logic'
@@ -20,21 +20,6 @@ class ResultImage extends Component {
     this.setState({
       modal: !this.state.modal
     });
-  }
-
-  componentWillMount() {
-  }
-
-  componentDidMount() {
-  }
-
-  componentWillUnmount() {
-  }
-
-  componentWillUpdate() {
-  }
-
-  componentDidUpdate() {
   }
 
   componentWillReceiveProps(newProps) {
