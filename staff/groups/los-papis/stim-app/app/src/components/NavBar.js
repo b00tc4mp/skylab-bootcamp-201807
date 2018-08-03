@@ -29,13 +29,13 @@ class NavBar extends Component {
   handle
 
     render() {
-        return  <Navbar color="light" light expand="md">
-          {this.props.isLoggedIn ? <div><NavbarBrand to="/home" tag={Link} > Home</NavbarBrand> </div> : <NavbarBrand to="/" tag={Link} > Home</NavbarBrand> }
+        return  <Navbar color="light"  light expand="md">
+          {this.props.isLoggedIn ? <div><NavbarBrand  to="/home" tag={Link} > Home</NavbarBrand> </div> : <NavbarBrand to="/" tag={Link} > Home</NavbarBrand> }
           {this.props.isLoggedIn ? <div><NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="mr-8" navbar>
             <NavItem>
-                <NavLink tag={Link} to="/search">Search Games</NavLink>
+                <NavLink color="light" tag={Link} to="/search">Search Games</NavLink>
               </NavItem>
               <NavItem>
                 <NavLink tag={Link} to="/favorites">Favorite Games</NavLink>
