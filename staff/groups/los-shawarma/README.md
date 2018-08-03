@@ -1,14 +1,31 @@
 # Description
-Esta aplicación es un buscador de vuelos y un comparador de apuestas. Tu vuelo deseado es muy caro? Has probado alguna vez de hacer una apuesta y ver ,en caso de ganar, por cuanto te podria salir realmente el vuelo? Prueba...
+SkyBets app is a flight search engine and a betting comparator. 
+Is your desired flight too expensive? Have you ever tried to make a bet and fly almost for free?
+Don't believe us? Try it!
 
 
+Uses Cases
+
+![USES CASES](skybets-app/docs/images/uses_cases.png)
+
+Login sequence
+
+![LOGIN](skybets-app/docs/images/login.png)
 
 
+Flights & bets Sequence
 
-![PASAPALABRA-WEB](./docs/images/login.png "calculadora-web")
+![FLIGHTS & BETS](skybets-app/docs/images/SequenceOnSearchFlights.png)
 
 
+Block Components
 
+![BLOCK COMPONENTS](skybets-app/docs/images/Blocks_Components.png)
+
+
+Components
+
+![COMPONENTS](skybets-app/docs/images/components.png)
 
 
 
