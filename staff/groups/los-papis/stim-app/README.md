@@ -8,7 +8,7 @@ Stim is a front end project that allows the user to read news of the most played
 
 ### Running the application
 
-You should download our [app](https://github.com/Javier1177/skylab-bootcamp-201807/tree/develop/staff/groups/los-papis/stim-app/app) to run it folder and run  
+You should download our [app](https://github.com/juansensio/skylab-bootcamp-201807/tree/develop/staff/groups/no-name-yet/gallery) to run it folder and run  
 
 ```sh
 npm start
