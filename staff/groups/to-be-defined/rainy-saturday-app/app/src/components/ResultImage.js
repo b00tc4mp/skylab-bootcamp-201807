@@ -21,11 +21,10 @@ class ResultImage extends Component {
       modal: !this.state.modal
     });
   }
-
+/*
   componentWillReceiveProps(newProps) {
-
     this.refreshFavorite(newProps)
-  }
+  }*/
 
   onToggleFavorite = () => {
 
@@ -36,14 +35,11 @@ class ResultImage extends Component {
 
     logic.toggleImageFavorite(toStore)
       .then(() => {
-        this.refreshFavorite(this.props)
+        this.setState({favorite: logic.isFavorite(this.props.image.objectNumber)})
       })
       .catch((message) => this.setState({error: message}))
   }
 
-  refreshFavorite(props) {
-    this.setState({favorite: logic.isFavorite(this.props.image.objectNumber)})
-  }
 
   render() {
     const {favorite} = this.state
