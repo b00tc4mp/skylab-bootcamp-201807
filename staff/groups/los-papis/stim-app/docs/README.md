@@ -1,6 +1,6 @@
 # Functional description
 
-Inside our application, you'll be able to search some games of Steam and mark them as favourite, or delete them if you don't like it anymore. Apart of that, you can visit its official web site on Steam.
+Inside our application, you'll be able to search some games of Steam and mark them as favourite, and delete them if you don't like them anymore. Apart of that, you can visit its official web site on Steam.
 
 
 ## Use Cases
