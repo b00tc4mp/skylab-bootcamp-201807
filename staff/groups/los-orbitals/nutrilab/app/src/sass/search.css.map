@@ -1,7 +1,1 @@
-{
-"version": 3,
-"mappings": "AAAA,OAAO;EACH,KAAK,EAAE,MAAM;EACb,gBAAgB,EAAE,OAAO;EACzB,OAAO,EAAE,KAAK;EACd,aAAa,EAAE,GAAG",
-"sources": [".search.sass"],
-"names": [],
-"file": "search.css"
-}
+{"version":3,"sourceRoot":"","sources":[".search.sass"],"names":[],"mappings":"AAAA;EACI;EACA;EACA;EACA;;;AAEJ;EACI;;;AAEJ;EACI;EACA;EACA;EACA;EACA;EACA","file":"search.css"}

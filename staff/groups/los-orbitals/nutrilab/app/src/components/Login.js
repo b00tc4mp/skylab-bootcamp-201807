@@ -29,8 +29,8 @@ class Login extends Component{
             <section>
                 {this.props.feedback && <Feedback message={this.props.feedback} />} 
                 <form onSubmit={login}> 
-                    <input type="text" placeholder="username" onChange={saveUsername}></input>
-                    <input type="password" placeholder="password" onChange={savePassword}></input>
+                    <input className="input--border" type="text" placeholder="username" onChange={saveUsername}></input>
+                    <input className="input--border" type="password" placeholder="password" onChange={savePassword}></input>
                     <button type="submit">Login</button>
                 </form>
                 <p>Go to <a href="/#" onClick={linkToSignUp}>Signup</a></p> 

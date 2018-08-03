@@ -132,7 +132,7 @@ class App extends Component {
             </nav>}/>
         </header>
         {!loggedIn && <main className="App__main">
-            <h2 className="App__main__title">Care your eating habits in an easy and fun way</h2>
+            <h2 className="App__main__title">Take care of your eating habits in an easy and fun way</h2>
             </main>}
 
         <Switch>

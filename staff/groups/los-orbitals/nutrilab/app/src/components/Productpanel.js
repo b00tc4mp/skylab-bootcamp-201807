@@ -31,10 +31,10 @@ class Productpanel extends Component{
 saturatedFat, servingUnit, sodium, potassium, dietaryFiber, photo}) => {
                 return <div className="product">
                                 <a className="product__close" href="" onClick={(event) => {event.preventDefault(); this.props.close()}}><img src={close}/></a>
-                                <section className="product__panel">
+                                <section className="product__panel ">
                                         <img src={photo}/>
                                         <a className="product__panel__heart" href="" onClick={(event) => {event.preventDefault(); this.onToggleFavorite()}}>{this.state.favorite ? <img src={heartfull}/> : <img src={heart}/>}</a>
-                                        <p>Name: {name}</p>
+                                        <h2> {name}</h2>
                                         <p>Calories: {calories}</p>
                                         <p>Total Fat: {totalFat}</p>
                                         <p>Cholesterol: {cholesterol}</p>
