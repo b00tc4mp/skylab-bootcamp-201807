@@ -60,7 +60,7 @@ class Update extends Component {
                 <input className="form-control" type="password" placeholder="type new Password" onChange={this.keepNewPassword}/>
                 <button className="btn btn-lg btn-block" type="submit">Update Profile</button>
                 {errorMsg && <Message success={false} text={this.props.errorMsg}/>}
-                {showFeedback && <Message success={true} text={'Your Login was successful'}/>}
+                {showFeedback && <Message success={true} text={'Your update was successful'}/>}
             </form>
         </section>
         )        
