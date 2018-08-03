@@ -48,7 +48,6 @@ export default class NavBar extends React.Component {
   }
 
   render() {
-    console.log("logic.cloudinaryURL",logic.cloudinaryURL)
     const imgURL = logic.cloudinaryURL || "http://www.mas40.com/app/mobileimg/icos/ico-perfil.png"
     return (
       <div className="navbar-maindiv">

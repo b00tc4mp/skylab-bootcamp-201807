@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
-import PropTypes from 'prop-types';
+import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
+// import PropTypes from 'prop-types';
 import "./UserRegisterAndLogin.css"
-import logic from '../logic'
+// import logic from '../logic'
 import ErrorPanel from './ErrorPanel'
 import UserSuccesful from './SweetalertUser'
 

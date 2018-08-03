@@ -4,7 +4,8 @@
     const UserSuccesful = props => {
         let timerInterval
         return swal({
-            title: props + ' ' + 'succesful!',
+            // title: props + ' ' + 'succesful!',
+            title:`${props} succesful!`,
             type: 'success',
             timer: 1500,
               onOpen: () => {

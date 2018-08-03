@@ -16,17 +16,17 @@ const items = [
   {
     src: 'https://images.ctfassets.net/niwziy2l9cvz/1bREqTCJn6omwwocqOI8Mi/8e7e6671c3cfd899fa32cf607f8b74ab/amsterdam-The-Battle-of-Waterloo-1500x630.jpg',
     altText: 'The Battle of Waterloo - Jan Willem Pieneman',
-    caption: 'The Battle of Waterloo - Jan Willem Pieneman'
+    caption: 'The Battle of Waterloo - Jan Willem Pieneman',
   },
   {
     src: 'http://3.bp.blogspot.com/-Cbzb5pcAizk/TrTqQchmGwI/AAAAAAAAAFg/7wioDG8FGog/w1200-h630-p-k-no-nu/rembrandt_night_watch.png',
     altText: 'Rembrand Van Rijn- De Nachtwacht',
-    caption: 'Rembrand Van Rijn- De Nachtwacht'
+    caption: 'Rembrand Van Rijn- De Nachtwacht',
   },
   {
     src: 'http://2.bp.blogspot.com/_vhl-SMfmDFI/SXj6hXKCuVI/AAAAAAAAC1c/SV1hEldoavo/w1200-h630-p-k-no-nu/Il+colosso+-+Goya.JPG',
     altText: 'IL COLOSSO (The Colossus) - Abraham van Beyeren',
-    caption: 'IL COLOSSO (The Colossus) - Abraham van Beyeren'
+    caption: 'IL COLOSSO (The Colossus) - Abraham van Beyeren',
   }
 ];
 
@@ -77,7 +77,7 @@ class HomePage extends Component {
           key={item.src}
         >
           <img src={item.src} alt={item.altText} />
-          <CarouselCaption captionHeader={item.caption} />
+          <CarouselCaption captionHeader={item.caption} captionText=""/>
         </CarouselItem>
       );
     });
@@ -100,7 +100,7 @@ class HomePage extends Component {
       </Row>
 
       <Row className="mt-2"><Col><Jumbotron>
-        <img className="App-logo"  src="/images/gogh.jpg"/>
+        <img className="App-logo" alt="van gogh" src="/images/gogh.jpg"/>
 
         <h1 className="mt-5">Plan your visit</h1>
         <h2 className="mt-3">Address</h2>

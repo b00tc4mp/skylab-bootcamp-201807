@@ -1,6 +1,6 @@
 import React from 'react';
 import { Alert } from 'reactstrap';
-import PropTypes from 'prop-types'
+// import PropTypes from 'prop-types'
 
 const ErrorPanel = (props) => {
   let color = props.color || "danger"

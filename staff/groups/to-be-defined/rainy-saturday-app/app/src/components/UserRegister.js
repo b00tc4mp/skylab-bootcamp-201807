@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
 import './UserRegisterAndLogin.css';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import {Button, Form, FormGroup, Label, Input, FormText} from 'reactstrap';
 import logic from '../logic'
 import {withRouter} from 'react-router-dom'
 import ErrorPanel from './ErrorPanel'
-import swal from 'sweetalert2'
+// import swal from 'sweetalert2'
 import UserSuccesful from './SweetalertUser'
 
 

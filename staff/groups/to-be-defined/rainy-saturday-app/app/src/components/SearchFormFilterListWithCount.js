@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {ListGroup, ListGroupItem, Badge} from 'reactstrap';
 import "./SearchFormFilterListWithCount.css"
-import classNames from 'classnames/bind';
+// import classNames from 'classnames/bind';
 
 
 class SearchFormFilterListWithCount extends Component {
