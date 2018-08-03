@@ -196,6 +196,8 @@ describe('users logic', () => {
                        .then(res => {
                            expect(res).toBeTruthy()
                            expect(res.name).toBe("Counter-Strike")
+                           expect(res.developer).toBe("Valve")
+                           expect(res.score_rank).toBe(97)
                        })
                    })
                })
@@ -204,11 +206,11 @@ describe('users logic', () => {
               
                 it('should check favorites', () => {
                            
-                           return logic.isFavorite(10)
-                           .then(res => {
-                               expect(res).toBeTruthy()
-                               expect(res.name).toBe("Counter-Strike")
-                           })
+                    const res= logic.isFavorite(10)
+                          
+                    expect(res).toBeFalsy()
+                               
+                         
                        })
                    })
 
