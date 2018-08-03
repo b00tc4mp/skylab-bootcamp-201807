@@ -34,7 +34,7 @@ const logic = {
                 for(let game in res) {
                     results.push(logic.newsForGame(res[game].appid))
                 }
-                return promise.all(results)
+                return Promise.all(results)
             })
     },
 
