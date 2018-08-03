@@ -1,11 +1,29 @@
-import React, {Component} from 'react';
-import { Link } from 'react-router-dom';
-import './Login.css';
+import React, {Component} from 'react'
+import Message from '../sections/Message'
+import './Login.css'
 
 class Login extends Component {
     state = {
         username: null,
-        password: null
+        password: null,
+        errorMsg: null,
+        showFeedback: false
+    }
+
+    componentDidMount() {
+        this.props.hideFeedback()
+    }
+
+    static getDerivedStateFromProps(props, state) {
+        if (props.errorMsg !== state.errorMsg || 
+            props.showFeedback !== state.showFeedback) {
+          return {
+            errorMsg: props.errorMsg,
+            showFeedback: props.showFeedback,
+          };
+        }
+    
+        return null; // Return null to indicate no change to state.
     }
 
     keepUsername = e => this.setState({username: e.target.value})
@@ -21,7 +39,7 @@ class Login extends Component {
 
     render() {
 
-        const { submitLogin, keepUsername, keepPassword } = this
+        const { submitLogin, keepUsername, keepPassword, state: {errorMsg, showFeedback} } = this
 
         return (
             <form className="form-signin" onSubmit={submitLogin}>
@@ -31,6 +49,8 @@ class Login extends Component {
                 <label className="sr-only">Password</label>
                 <input type="password" id="inputPassword" className="form-control" placeholder="Password" required="" onChange={keepPassword}/>
                 <button className="btn btn-lg btn-block" type="submit">Sign in</button>
+                {errorMsg && <Message success={false} text={this.props.errorMsg}/>}
+                {showFeedback && <Message success={true} text={'Your Login was successful'}/>}
             </form>
         )
     }
