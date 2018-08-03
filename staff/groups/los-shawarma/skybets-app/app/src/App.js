@@ -79,7 +79,6 @@ class App extends Component {
   render() {
     const {loggedIn, errorMsg, showFeedback} =  this.state
     const {onRegister, onLogin, onUpdate, onLogout, onUpdateFavs, hideFeedback, favs} = this
-    debugger;
 
     return (
       <div className="App">
