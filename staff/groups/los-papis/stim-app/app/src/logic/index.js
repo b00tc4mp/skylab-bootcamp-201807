@@ -168,14 +168,21 @@ const logic = {
     },
 
     updateUser(password, newUsername, newPassword) {
-        const username = this._userUsername
-        return this._callUsersApi(`/user/${this._userId}`, 'put', { username, newUsername, password, newPassword }, true)
+        return this._callUsersApi(`/user/${this._userId}`,'put',{
+            username: this._userUsername,
+            password,
+            // password:newPassword,
+            // username: newUsername
+            newPassword,
+            newUsername
+            
+        }, true)
             .then(() => {
-                this._userUsername = newUsername
-                this._userPassword = newPassword
-                return true
-            })
+                if(newUsername !== null)this._userUsername = newUsername
+                return true})
     },
+
+
 
     unregisterUser(password) {
         return this._callUsersApi(`/user/${this._userId}`, 'delete', {
@@ -221,17 +228,6 @@ const logic = {
             .then(() => {
                 this._userFavorites = favorites
                 
-                return true
-            })
-    },
-
-    updateFavorites(password,id) {
-        const username = this._userUsername
-        const favorites = this._userFavorites
-        return this._callUsersApi(`/user/${this._userId}`, 'put', { username, password,id }, true)
-            .then(() => {
-                favorites.push(id)
-                this._userFavorites = favorites
                 return true
             })
     },
