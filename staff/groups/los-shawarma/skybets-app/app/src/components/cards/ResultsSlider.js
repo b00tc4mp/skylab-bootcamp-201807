@@ -64,12 +64,6 @@ class ResultsSlider extends Component {
                     <strong className="text-secondary">{totalResults}</strong>{" "}
                     { this.props.titleProps }
                   </h6>
-                  {/* {currentPage && (
-                    <span>
-                      Page <span className="font-weight-bold">{currentPage}</span> /{" "}
-                      <span className="font-weight-bold">{totalPages}</span>
-                    </span>
-                  )} */}
                 </div>
                 
                 <div className="pb-3 pl-5">
