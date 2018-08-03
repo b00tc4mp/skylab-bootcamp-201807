@@ -63,7 +63,6 @@ class Profile extends Component {
 
         return (
             <div className="profile">
-                <button onClick={this.props.onLogout} className="profile__btn profile__btn--logout"> Log out </button>
                 <div className="profile__change-username">
                     <h3 className="profile__text"> Change username </h3>
                     <input type="password" className="profile__input" placeholder=" password" onChange={keepPassword1}></input>
@@ -90,6 +89,7 @@ class Profile extends Component {
                     </div>
                     <button className="profile__btn" onClick={deleteUser}> Delete </button>
                 </div>
+                <button onClick={this.props.onLogout} className="profile__btn profile__btn--logout"> Log out </button>
             </div>
         )
     }
