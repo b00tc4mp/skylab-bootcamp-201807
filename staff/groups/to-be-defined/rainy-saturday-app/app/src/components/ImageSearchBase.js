@@ -1,16 +1,8 @@
-// import React, {Component} from 'react'
+
 import {Component} from 'react'
-// import PropTypes from 'prop-types'
-// import SearchForm from './SearchForm'
 import logic from '../logic'
-// import ImageDisplayer from "./ImageDisplayer"
-// import {Container, Row, Col, FormText, Button, Form, Input, Label, FormGroup} from 'reactstrap';
-// import SearchFormFilterListWithCount from "./SearchFormFilterListWithCount"
-// import ErrorPanel from './ErrorPanel'
 
 const FILTER_LIMIT = 10
-// const OBJECT_LIMIT = 100
-
 
 class ImageSearchBase extends Component {
 

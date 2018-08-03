@@ -1,5 +1,4 @@
 import React from 'react'
-// import PropTypes from 'prop-types'
 import SearchForm from './SearchForm'
 import logic from '../logic'
 import ImageDisplayer from "./ImageDisplayer"
@@ -9,10 +8,7 @@ import ErrorPanel from './ErrorPanel'
 import ImageSearchBase from "./ImageSearchBase"
 import './SearchPage.css'
 
-// const FILTER_LIMIT = 10
 const OBJECT_LIMIT = 100
-
-
 
 class SearchPage extends ImageSearchBase {
 

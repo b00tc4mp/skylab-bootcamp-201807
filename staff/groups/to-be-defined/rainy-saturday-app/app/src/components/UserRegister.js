@@ -88,7 +88,7 @@ class UserRegister extends Component {
 
 
   checkPwd = str => {
-    if ((str.length < 6) || (str.length > 15) || (str.search(/\d/) === -1) || (str.search(/[a-zA-Z]/) === -1) || (str.search(/[^a-zA-Z0-9\!\@\#\$\%\^\&\*\(\)\_\+]/) !== -1)) {
+    if ((str.length < 6) || (str.length > 15) || (str.search(/\d/) === -1) || (str.search(/[a-zA-Z]/) === -1) || (str.search(/[^a-zA-Z0-9!@#$%^&*()_+]/) !== -1)) {
       this.setState({passwordvalid: true, finalcomparepassword: true})
     } else if (str === this.state.confirmpassword) {
       this.setState({passwordvalid: false, finalcomparepassword: false})
