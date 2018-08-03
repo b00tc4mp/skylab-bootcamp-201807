@@ -2,7 +2,9 @@ import React, { Component } from 'react'
 
 class Search extends Component {
   
-  state = { query: '' }
+  state = { 
+    query: this.props.query 
+  }
 
   handleInputChange = event => {
     var query = event.target.value
@@ -44,5 +46,9 @@ class Search extends Component {
     )
   }
 }
+
+Search.defaultProps = {
+  query: ''
+};
 
 export default Search

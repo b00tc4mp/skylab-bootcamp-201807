@@ -50,6 +50,7 @@ class Header extends Component {
               inputPlaceholder="Insert a word to inspire your mind..."
               position="header"
               onSearch={this.handleSearchSubmit}
+              query={this.props.query}
             />
           }
         </div>

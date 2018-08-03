@@ -21,10 +21,14 @@ class PhotoDetailPage extends Component {
   }
 
   togglePhotoLike = () => {
-    logic.togglePhotoLike(this.props.id)
-      .then(() => {
-        this.setState({ isLiked: logic.isLiked(this.props.id) })
-      })
+    if (this.props.loggedIn) {
+      logic.togglePhotoLike(this.props.id)
+        .then(() => {
+          this.setState({ isLiked: logic.isLiked(this.props.id) })
+        })
+    } else {
+      this.props.history.push('/login')
+    }
   }
 
   render() {
@@ -32,15 +36,17 @@ class PhotoDetailPage extends Component {
       <div>
         <Header loggedIn={this.props.loggedIn} />
         <main>
-          {
-            this.state.photo && <PhotoDetail
-              id={this.state.photo.id}
-              url={this.state.photo.urls.regular}
-              location={this.state.photo.location ? this.state.photo.location.title : ''}
-              isLiked={this.state.isLiked}
-              onLikeClick={this.togglePhotoLike}
-            />
-          }
+          <div className="push-40">
+            {
+              this.state.photo && <PhotoDetail
+                id={this.state.photo.id}
+                url={this.state.photo.urls.regular}
+                location={this.state.photo.location ? this.state.photo.location.title : ''}
+                isLiked={this.state.isLiked}
+                onLikeClick={this.togglePhotoLike}
+              />
+            }
+          </div>
         </main>
       </div>
     )

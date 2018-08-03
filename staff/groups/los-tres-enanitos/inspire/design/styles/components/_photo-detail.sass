@@ -5,17 +5,24 @@
         text-align: right
           
     &__like
-        color: white
-        background-color: #ED4110
-        border: #ED4110 1px solid
+        color: rgb(240, 85, 86)
         border-radius: 3px
-        padding: 5px 10px
-          
-    &__unlike
-        background-color: white
-        border: #999 1px solid
-        border-radius: 3px
-        padding: 5px 10px
+        padding: 10px 12px
+        cursor: pointer
+        
+        &:focus
+            outline: none
+
+        &:hover
+            border-color: #999
+
+        &--is-liked
+            color: #ffffff
+            background-color: rgb(240, 85, 86)
+            border: 1px solid rgb(240, 85, 86)
+
+            &:hover
+                border-color: rgb(240, 85, 86)
 
     &__collect
         background-color: white
@@ -51,8 +58,11 @@
         color: #808787
         font-size: 18px
     
-    &__location:hover
+    &__location-link
         color: black
-        text-decoration: underline
+        font-size: 0.9rem
+
+        &:hover
+            text-decoration: underline
 
 

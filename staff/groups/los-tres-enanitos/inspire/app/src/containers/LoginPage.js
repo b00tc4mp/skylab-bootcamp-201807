@@ -5,10 +5,6 @@ import { withRouter } from 'react-router-dom'
 
 class LoginPage extends Component {
 
-  state = {
-    loginError: ''
-  }
-
   goToRegister = (event) => {
     event.preventDefault()
     this.props.history.push('/join')
@@ -31,7 +27,7 @@ class LoginPage extends Component {
               </ul>
             </div>
             <div>
-              <Login onSubmit={this.props.onLoginSubmit} error={this.state.loginError} />
+              <Login onSubmit={this.props.onLoginSubmit} error={this.props.loginError} />
             </div>
           </div>
         </main>
