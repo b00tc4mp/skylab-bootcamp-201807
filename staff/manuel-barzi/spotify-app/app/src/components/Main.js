@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import logic from '../logic'
-import SearchPanel from './SearchPanel'
+import Search from './Search'
 import ResultList from './ResultList'
 // import TrackPlayer from './TrackPlayer'
 import SpotifyPlayer from './SpotifyPlayer'
@@ -91,7 +91,7 @@ class Main extends Component {
         return <section>
             <h2>Search</h2>
 
-            <SearchPanel onSearch={onSearch} error={searchError} />
+            <Search onSearch={onSearch} error={searchError} />
 
             {artists.length > 0 && <section><h2>Artists</h2><ResultList results={artists} onItemClick={onArtistClick} error={artistError} /></section>}
 
