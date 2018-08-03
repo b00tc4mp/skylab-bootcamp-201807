@@ -1,4 +1,4 @@
-## NutriLab v.1.0.0
+# NutriLab v.1.0.0
 
 **INTRODUCTION**
 
