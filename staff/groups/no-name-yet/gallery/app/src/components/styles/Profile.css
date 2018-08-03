@@ -5,10 +5,11 @@
 .profile {
   height: 110vh;
   display: grid;
-  grid-template: 100px repeat(3, 150px)/1fr;
+  grid-template: repeat(3, 150px) 100px/1fr;
   align-items: center;
   justify-items: center;
   padding: 0 30px;
+  padding-top: 30px;
   background-color: #FCF8FA;
 }
 .profile__change-username {
