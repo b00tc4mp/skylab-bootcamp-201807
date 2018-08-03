@@ -34,7 +34,7 @@ const logic = {
                 for(let game in res) {
                     results.push(logic.newsForGame(res[game].appid))
                 }
-                return promise.all(results)
+                return Promise.all(results)
             })
     },
 
@@ -204,13 +204,26 @@ const logic = {
                 return res;
             })
     },
-
+    
+    /**
+     * Register User
+     * @param {string} username - the username
+     * @param {number} password -the password
+     * @returns {promise} Returns a promise which result is a id of user.
+    */ 
 
     
     registerUser(username, password) {
         return this._callUsersApi('/user', 'post', { username, password })
             .then(res => res.data.id)
     },
+
+    /**
+     * Login User
+     * @param {string} username - the username
+     * @param {number} password -the password
+     * @returns {promise} Returns a promise which result is a boolean that indicates if  has been successful .
+    */ 
 
     loginUser(username, password) {
         return this._callUsersApi('/auth', 'post', { username, password })
@@ -230,6 +243,13 @@ const logic = {
             })
     },
 
+    /**
+     * Logout clear the session storage
+     * 
+     * 
+     */
+    
+
     logout() {
         this._userId = null
         this._userToken = null
@@ -241,7 +261,15 @@ const logic = {
     get loggedIn() {
         return !!(this._userId && this._userToken && this._userUsername)
     },
-
+    
+    
+    /**
+     * UpdateUser
+     * @param {number} password -the password
+     * @param {string} newUsername - the new username
+     *
+     * @returns {promise} Returns a promise which result is a boolean that indicates if  has been successful .
+    */ 
     updateUser(password, newUsername, newPassword) {
         return this._callUsersApi(`/user/${this._userId}`,'put',{
             username: this._userUsername,
@@ -260,7 +288,12 @@ const logic = {
             )
     },
 
-
+    /**
+     * UnregisterUser
+     * @param {number} password -the password
+     *
+     *  @returns {promise} Returns a promise which result is a boolean that indicates if  has been successful .
+    */ 
 
     unregisterUser(password) {
         return this._callUsersApi(`/user/${this._userId}`, 'delete', {
@@ -270,6 +303,11 @@ const logic = {
             .then(() => true)
     },
 
+    /**
+     * Retrieve User
+     *      
+     *  @returns {promise} Returns a promise which result is a boolean that indicates if  has been successful .
+    */ 
     retrieveUser() {
         
 
