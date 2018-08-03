@@ -1,12 +1,14 @@
 import React from 'react'
 import FavCard from '../cards/FavCard'
+import logic from '../../logic'
+
 
 const MyFavs = props => {
 
-        if (props && props.favsProp && props.favsProp[0] && props.favsProp[0].flight) {
+        if (logic._userFavorites[0] && logic._userFavorites[1] && logic._userFavorites[1].flight) {
             return(
                 <section>
-                    {props.favsProp.map((fav, index) => {
+                    {logic._userFavorites.map((fav, index) => {
                         return(<div key={index}>
                             <FavCard 
                                 currentPriceProp={fav.flight.price} 
