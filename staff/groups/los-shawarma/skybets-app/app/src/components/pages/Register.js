@@ -7,8 +7,25 @@ class Register extends Component {
     state = {
         username: null,
         password: null,
+        errorMsg: null,
+        showFeedback: false
     }
 
+    componentDidMount() {
+        this.props.hideFeedback()
+    }
+
+    static getDerivedStateFromProps(props, state) {
+        if (props.errorMsg !== state.errorMsg || 
+            props.showFeedback !== state.showFeedback) {
+          return {
+            errorMsg: props.errorMsg,
+            showFeedback: props.showFeedback,
+          };
+        }
+    
+        return null; // Return null to indicate no change to state.
+    }
 
     keepUsername = e => this.setState({username: e.target.value})
 
@@ -23,6 +40,7 @@ class Register extends Component {
 
     render () {
         const {submitRegistration, keepUsername, keepPassword } = this
+        const {errorMsg, showFeedback} = this.state
 
         return (
             <section>
@@ -34,8 +52,8 @@ class Register extends Component {
                     <input type="password" className="form-control" placeholder="Password" onChange={keepPassword}/>
                     <button type="submit" className="btn btn-lg btn-block" >Register</button>
                 </form>
-                {this.props.errorMsg && <Message success={false} text={this.props.errorMsg}/>}
-                {this.props.successMsg && <Message success={true} text={'Your registration was successful'}/>}
+                {errorMsg && <Message success={false} text={this.props.errorMsg}/>}
+                {showFeedback && <Message success={true} text={'Your registration was successful'}/>}
             </section>
         )
     }

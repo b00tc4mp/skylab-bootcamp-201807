@@ -16,45 +16,44 @@ class App extends Component {
 
   state = {
     loggedIn: false,
-    errorLogin: null,
-    successLogin: null,
-    errorRegister: null,
-    successRegister: null,
-    errorUpdate: null,
-    successUpdate: null
+    errorMsg: null,
+    showFeedback: false
   }
 
+  hideFeedback = () => this.setState({errorMsg: null, showFeedback: false});
 
   onRegister = (username, password) => {
+    this.hideFeedback()
     logic.registerUser(username, password)
     .then(() => {
-      this.setState({errorRegister: null, successRegister: true})
+      this.setState({showFeedback: true})
       this.props.history.push('/register')
     })
-    .catch(({message}) => this.setState({errorRegister: message}))
+    .catch(({message}) => this.setState({errorMsg: message}))
   }
 
   onLogin = (username, password) => {
+    this.hideFeedback()
     logic.loginUser(username, password)
     .then(() => {
-      this.setState({loggedIn: true, errorLogin: null, successLogin: true})
+      this.setState({loggedIn: true, showFeedback: true})
       this.props.history.push('/login')
     })
     .catch(({message}) => {
-      this.setState({errorLogin: message})
+      this.setState({errorMsg: message})
     })
   
   }
 
   onUpdate = (password, newUsername, newPassword) => {
+    this.hideFeedback()
     logic.updateUser(password, newUsername, newPassword)
     .then(() => {
-      this.setState({errorUpdate: null, successUpdate: true})
+      this.setState({showFeedback: true})
       this.props.history.push('/update')
     })
-    .catch(({message}) => this.setState({errorUpdate: message}))
+    .catch(({message}) => this.setState({errorMsg: message}))
   }
-
 
   onLogout = () => {
     logic.logout();
@@ -78,18 +77,18 @@ class App extends Component {
 
 
   render() {
-    const {errorLogin, successLogin, errorRegister, successRegister, errorUpdate, successUpdate, loggedIn} =  this.state
-    const {onRegister, onLogin, onUpdate, onLogout, onUpdateFavs} = this
+    const {loggedIn, errorMsg, showFeedback} =  this.state
+    const {onRegister, onLogin, onUpdate, onLogout, onUpdateFavs, hideFeedback} = this
 
     return (
       <div className="App">
         <Nav onLogoutProp={onLogout} loggedInProp={loggedIn} />
 
         <Route path="/" exact render={() => <Home onUpdateFavsProp={onUpdateFavs}/>} />
-        <Route path="/login" exact render={() => <Login onLoginProp={onLogin} errorMsg={errorLogin} successMsg={successLogin}/>} />
+        <Route path="/login" exact render={() => <Login onLoginProp={onLogin} errorMsg={errorMsg} showFeedback={showFeedback} hideFeedback={hideFeedback}/>} />
         <Route path="/myfavs" exact render={() => loggedIn ? <MyFavs /> : <Redirect to="/login" />} /> 
-        <Route path="/register" exact render={() => <Register onRegisterProp={onRegister} errorMsg={errorRegister} successMsg={successRegister}/>} />
-        <Route path="/update" exact render={() => loggedIn ? <Update onUpdateProp={onUpdate} username={logic.userUsername} errorMsg={errorUpdate} successMsg={successUpdate}/> : <Redirect to="/login" />} />
+        <Route path="/register" exact render={() => <Register onRegisterProp={onRegister} errorMsg={errorMsg} showFeedback={showFeedback} hideFeedback={hideFeedback}/>} />
+        <Route path="/update" exact render={() => loggedIn ? <Update onUpdateProp={onUpdate} username={logic.userUsername} errorMsg={errorMsg} showFeedback={showFeedback} hideFeedback={hideFeedback}/> : <Redirect to="/login" />} />
 
         <Footer />
       </div>

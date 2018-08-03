@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import Message from '../sections/Message'
 import './Update.css';
 
 class Update extends Component {
@@ -7,7 +8,25 @@ class Update extends Component {
         username: this.props.username,
         password: null,
         newPassword: null,
-        newUsername: null
+        newUsername: null,
+        errorMsg: null,
+        showFeedback: false
+    }
+
+    componentDidMount() {
+        this.props.hideFeedback()
+    }
+
+    static getDerivedStateFromProps(props, state) {
+        if (props.errorMsg !== state.errorMsg || 
+            props.showFeedback !== state.showFeedback) {
+          return {
+            errorMsg: props.errorMsg,
+            showFeedback: props.showFeedback,
+          };
+        }
+    
+        return null; // Return null to indicate no change to state.
     }
 
     keepNewUsername = e => this.setState({newUsername: e.target.value})
@@ -23,6 +42,8 @@ class Update extends Component {
 
     
     render () {
+        const {errorMsg, showFeedback} = this.state
+
         return (
         <section>
             <form className="form-update" onSubmit={this.submitUpdate}>
@@ -38,6 +59,8 @@ class Update extends Component {
                 <label className="sr-only">New Password (optional)</label>
                 <input className="form-control" type="password" placeholder="type new Password" onChange={this.keepNewPassword}/>
                 <button className="btn btn-lg btn-block" type="submit">Update Profile</button>
+                {errorMsg && <Message success={false} text={this.props.errorMsg}/>}
+                {showFeedback && <Message success={true} text={'Your Login was successful'}/>}
             </form>
         </section>
         )        
