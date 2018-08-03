@@ -11,3 +11,8 @@
     text-shadow: 2px 2px 5px #000000;
     font-size: 20px !important;
 }
+
+.errorSearch {
+    font-size: 20px;
+    padding: 240px 20px;
+}

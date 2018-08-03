@@ -134,7 +134,7 @@ class Home extends Component {
                         <SearchCardFlights onSearchFlightsProp={ this.onSearchFlights } /> 
                     </div>
                     <div className="card">
-                        {emptyFlightMsg && <span className="pt-5">We couldn't find any flights for this search. Try another one</span>}
+                        {emptyFlightMsg && <span className="errorSearch">We couldn't find any flights for this search. Try another one</span>}
                         <ResultsSlider 
                         resultsProp={ flights } 
                         titleProps={ 'Flights' }
