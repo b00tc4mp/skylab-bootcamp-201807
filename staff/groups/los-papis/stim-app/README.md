@@ -22,6 +22,19 @@ Open the specs runner in browser
 open SpecRunner.html
 ```
 
+### Deploying the package in surge
+
+1. run surge
+
+```sh
+$ surge
+```
+
+2. enter credentials (if they are asked)
+
+3. enter the folder from which to deploy (```build```)
+
+
 ### Documentation
 
 [README.md](./docs/README.md)
