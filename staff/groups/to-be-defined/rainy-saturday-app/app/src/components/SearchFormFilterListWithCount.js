@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {ListGroup, ListGroupItem, Badge} from 'reactstrap';
-import "./SearchFormFilterList.css"
+import "./SearchFormFilterListWithCount.css"
 import classNames from 'classnames/bind';
 
 
@@ -50,7 +50,7 @@ class SearchFormFilterListWithCount extends Component {
 
 
     return <section>
-      <h4>{title}</h4>
+      <h4 className="searchFormFilterList-title">{title}</h4>
       <ListGroup>
         {(data.length > 0 && !selected) && listItems}
         {selected  && <ListGroupItem key={currentFilterText }  onClick={(e) => {

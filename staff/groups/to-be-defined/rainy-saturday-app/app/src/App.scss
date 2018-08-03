@@ -1,16 +1,16 @@
 
 
-$orangey: #ff7b00;
-//$main-font: 'Amatic SC', cursive;
-$main-font:'Merienda', cursive;
+$orangey: orangered;
+$main-font: 'Sunflower', sans-serif;
+
 
 
 
 .mt-5.container {
   .row {
-    h2 {
+    h2.page-mainTitle {
       color:$orangey;
-      letter-spacing:1.2em;
+      letter-spacing:.2em;
       font-weight:700;
       margin-bottom:20px;
       font-family: $main-font;

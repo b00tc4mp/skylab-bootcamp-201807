@@ -59,7 +59,7 @@ class FavouritesPage extends ImageSearchBase {
     const {isProcessing,errorMessage,warningMessage, data} = this.state
 
     return (<Container  className="mt-5"><
-        Row><h2>Favourites</h2></Row>
+        Row><h2 className="page-mainTitle">Favourites</h2></Row>
         { errorMessage && <Row><ErrorPanel color="danger" message={errorMessage}/></Row>}
         { isProcessing && <Row><ErrorPanel color="info" message="Processing request..."/></Row>}
         <Row> {(data.length > 0) && <ImageDisplayer data={data}/>}</Row>
