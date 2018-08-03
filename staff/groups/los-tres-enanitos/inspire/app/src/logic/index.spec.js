@@ -358,7 +358,7 @@ describe('logic (unsplash-app)', () => {
             it('should find results matching criteria and page', () => {
                 return logic.searchPhotos('tiger', 2)
                     .then(res => {
-                        expect(res.results.length).toBe(10)
+                        expect(res.results.length).toBe(30)
                     })
             })
         })
@@ -404,7 +404,7 @@ describe('logic (unsplash-app)', () => {
             it('should find results matching criteria and page', () => {
                 return logic.retrievePopularPhotos(2)
                     .then(res => {
-                        expect(res.length).toBe(10)
+                        expect(res.length).toBe(30)
                     })
             })
         })
