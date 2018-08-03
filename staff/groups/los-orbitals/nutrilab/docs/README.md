@@ -59,6 +59,9 @@ Data Model Diagram:
 
 ![DataModelDiagram](images/datamodeldiagram.png)
 
+Classes Diagram:
+
+![ClassDiagram](images/classdiagram.png)
 
 **DESIGN**
 
