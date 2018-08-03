@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import Message from '../sections/Message'
+import './Register.css';
 
 
 class Register extends Component {
@@ -25,13 +26,13 @@ class Register extends Component {
 
         return (
             <section>
-                <h1> Register </h1>
-                <form onSubmit={submitRegistration}>
-                    <label>Username</label>
-                    <input type="text" placeholder="type username" onChange={keepUsername}/>
-                    <label>Password</label>
-                    <input type="password" placeholder="type password" onChange={keepPassword}/>
-                    <button type="submit" >Register</button>
+                <form className="form-register" onSubmit={submitRegistration}>
+                    <h1 className="h3 mb-3 font-weight-normal">Registration</h1>
+                    <label className="sr-only">Username</label>
+                    <input type="text" className="form-control" placeholder="Username" onChange={keepUsername}/>
+                    <label className="sr-only">Password</label>
+                    <input type="password" className="form-control" placeholder="Password" onChange={keepPassword}/>
+                    <button type="submit" className="btn btn-lg btn-block" >Register</button>
                 </form>
                 {this.props.errorMsg && <Message success={false} text={this.props.errorMsg}/>}
                 {this.props.successMsg && <Message success={true} text={'Your registration was successful'}/>}
