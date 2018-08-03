@@ -444,7 +444,6 @@ const logic = {
   getMuseumImagesForSearchTerm(query) {
     return this._callRijksmuseumApiQuery(query.trim().replace(/ /g, "%20"))
       .then(res => {
-        console.log(res)
         return res.artObjects.filter(element => element.hasImage).map(element => {
           return {
             objectNumber: element.objectNumber,
