@@ -6,13 +6,16 @@ Inside our application, you'll be able to search some games of Steam and mark th
 ## Use Cases
 ![use cases](images/use-cases.png)
 
+## Activity Diagram
+![activity digram](images/activity-diagram.png)
+
 # Technical description
 
-## Use Cases
+## Component Diagram
+![component digram](images/component-diagram.png)
+
+## Block Diagram
 ![block digram](images/block-diagram.png)
 
 ## Data Diagram
-![block digram](images/data-diagram.png)
-
-## Activity Diagram
-![block digram](images/data-diagram.png)
+![data digram](images/data-diagram.png)
