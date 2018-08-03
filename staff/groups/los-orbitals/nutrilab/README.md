@@ -1,4 +1,4 @@
-## Nutrilab v.1.0.0
+# NutriLab v.1.0.0
 
 NutriLab is an application to search ingredients and show their nutritional information.
 
