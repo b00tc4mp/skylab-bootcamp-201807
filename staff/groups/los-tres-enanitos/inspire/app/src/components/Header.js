@@ -11,7 +11,8 @@ class Header extends Component {
 
   goToHome = (event) => {
     event.preventDefault()
-    this.props.history.push('/')
+    if (this.props.location.pathname !== '/')
+      this.props.history.push('/')
   }
 
   goToLogin = (event) => {
