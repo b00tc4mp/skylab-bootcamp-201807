@@ -1,5 +1,5 @@
 
-import {Component} from 'react'
+import { Component } from 'react'
 import logic from '../logic'
 
 const FILTER_LIMIT = 10
@@ -34,11 +34,11 @@ class ImageSearchBase extends Component {
   }
   set makerFilterText(val) {
 
-    this._makerFilterText= val
+    this._makerFilterText = val
   }
   set periodFilterText(val) {
 
-    this._periodFilterText= val
+    this._periodFilterText = val
   }
 
   get processing() {
@@ -47,14 +47,14 @@ class ImageSearchBase extends Component {
 
   set processing(val) {
     this._processing = val
-    this.setState({isProcessing:val})
+    this.setState({ isProcessing: val })
   }
 
 
   handleError = (error) => {
     this.processing = false;
     const msg = error || "There was a server error. Please try again"
-    this.setState({errorMessage:msg})
+    this.setState({ errorMessage: msg })
   }
 
 
@@ -69,7 +69,7 @@ class ImageSearchBase extends Component {
         return (element1.text === element)
       })
       if (obj) obj.count++
-      else arr.push({text: element, count: 1})
+      else arr.push({ text: element, count: 1 })
     })
 
     return arr.sort((element1, element2) => element2.count - element1.count).slice(0, FILTER_LIMIT);
@@ -81,8 +81,8 @@ class ImageSearchBase extends Component {
     objectNumbers.forEach(objectNumber => {
       promises.push(logic.getMuseumDetailsForObjectNumber(objectNumber)
         .then(res => {
-            return res
-          }
+          return res
+        }
         ))
     })
     return Promise.all(promises)
@@ -101,7 +101,7 @@ class ImageSearchBase extends Component {
       }
     })
     localData.forEach(element => {
-      element.imageurl =  this.imageMap.get(element.objectNumber);
+      element.imageurl = this.imageMap.get(element.objectNumber);
     })
 
     period = this.sortCountAndCondenseFilterData(period)
@@ -118,14 +118,12 @@ class ImageSearchBase extends Component {
       materialData: material,
       makerData: maker,
     })
-
-
   }
 
   doFilteredSearch = () => {
     let materialData = [], periodData = [], makerData = []
 
-    let data =  this.originalData
+    let data = this.originalData
 
     if (this.materialFilterText !== "") data = data.filter(element => element.materials.includes(this.materialFilterText));
     if (this.periodFilterText !== "") data = data.filter(element => element.period === this.periodFilterText);
@@ -140,7 +138,7 @@ class ImageSearchBase extends Component {
     periodData = this.sortCountAndCondenseFilterData(periodData)
     makerData = this.sortCountAndCondenseFilterData(makerData)
     if (data.length === 0) debugger
-    this.setState({data, periodData, makerData, materialData})
+    this.setState({ data, periodData, makerData, materialData })
   }
 
 
