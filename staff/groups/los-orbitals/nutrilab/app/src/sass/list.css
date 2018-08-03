@@ -1,10 +1,10 @@
 .list {
   display: flex;
   justify-content: center;
-  margin: 2em auto; }
+  margin: 2em 7em; }
   .list__warp {
     display: flex;
-    width: 40%; }
+    width: 20%; }
     .list__warp__item {
       width: 10em; }
       .list__warp__item__img {
@@ -12,9 +12,11 @@
         border-radius: 50%;
         width: 6em;
         height: 6em; }
-    .list__warp__text__link {
-      color: #212121; }
-      .list__warp__text__link:hover {
-        color: #6BDFA0; }
+    .list__warp__text {
+      text-align: left; }
+      .list__warp__text__link {
+        color: #212121; }
+        .list__warp__text__link:hover {
+          color: #6BDFA0; }
 
 /*# sourceMappingURL=list.css.map */

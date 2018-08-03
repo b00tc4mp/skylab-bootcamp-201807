@@ -5,14 +5,13 @@
   top: 6em;
   background-color: white;
   width: 88vw;
-  height: 150%;
+  height: 300%;
   margin: 0;
   padding-left: 10vw;
   padding-top: 7em; }
   .product__close {
-    position: fixed;
     top: 10em;
-    right: 5em;
+    margin-left: 50em;
     width: 7em; }
   .product__panel {
     margin: 0;
