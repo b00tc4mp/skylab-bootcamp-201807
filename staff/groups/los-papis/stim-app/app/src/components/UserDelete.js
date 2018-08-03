@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Button, Form, FormGroup, Label, Input, FormText,Container } from 'reactstrap'
 import logic from "../logic"
 import swal from 'sweetalert2'
+import { Redirect } from "react-router";
 
 
 class UserDelete extends Component {
@@ -9,9 +10,10 @@ class UserDelete extends Component {
   state = {
 
     Username: logic._userUsername,
-    newUsername: "",
+    newUsername: null,
     password: "",
-    newPassword: "",
+    newPassword: null,
+    redirectHome: false
 
   }
 
@@ -39,13 +41,17 @@ class UserDelete extends Component {
         type: 'success',
         confirmButtonText: 'Nice!'
       })
+      .then(() => this.setState({
+        redirectHome: true
+      }))
     })
       .catch((err) => swal({
         title: 'Failed! :(',
         text: err,
         type: 'error',
         confirmButtonText: 'Try again'
-      }))
+      })
+    )
 
 
   }
@@ -64,9 +70,10 @@ class UserDelete extends Component {
   }
 
   render() {
-    return <Container>
+    return <div>
+   {this.state.redirectHome && <Redirect to="/home"/> } 
+    <Container className="mt-5">
       <h2>Update</h2>
-      <img src={require('../imagenes/logo-steam.png')} width="100vw" height="100vh" />
       <Form onSubmit={this.onUpdate}>
         <FormGroup>
           <Label for="text-user">Username</Label>
@@ -74,23 +81,22 @@ class UserDelete extends Component {
         </FormGroup>
         <FormGroup>
           <Label for="text-user">newUsername</Label>
-          <Input type="text" name="Username" placeholder="New username" onChange={this.keepNewUsername} />
+          <Input type="text" name="Username" placeholder="New Username" onChange={this.keepNewUsername} />
         </FormGroup>
         <FormGroup>
           <Label for="examplePassword">Password</Label>
-          <Input type="password" name="password" placeholder="password" onChange={this.keepPassword} />
+          <Input type="password" name="password" placeholder="Password" onChange={this.keepPassword} />
         </FormGroup>
         <FormGroup>
           <Label for="newPassword">New password</Label>
-          <Input type="password" name="newpassword" placeholder=" new password" onChange={this.keepNewPassword} />
+          <Input type="password" name="newpassword" placeholder="New Password" onChange={this.keepNewPassword} />
         </FormGroup>
         <Button type="submit" className="btn-success">Update</Button>
       </Form>
+      </Container>
 
-
-      <div>
+      <Container className="mt-5">
         <h2>Delete profile</h2>
-        <img src={require('../imagenes/logo-steam.png')} width="100vw" height="100vh" />
         <Form onSubmit={this.onDelete}>
           <FormGroup>
             <Label for="text-user">Username</Label>
@@ -100,15 +106,15 @@ class UserDelete extends Component {
             <Label for="examplePassword">Password</Label>
             <Input type="password" name="password" placeholder="password " onChange={this.keepPassword} />
           </FormGroup>
-          <Button type="submit" className="btn-danger">Delete</Button>
+          <Button type="submit" id="button-red" className="btn-danger">Delete</Button>
         </Form>
+      </Container>
       </div>
 
 
 
 
-
-    </Container>
+    
 
 
   }

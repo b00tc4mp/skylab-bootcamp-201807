@@ -1,7 +1,6 @@
 import React, { Component } from "react"
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap"
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter,Container, Row, Col } from "reactstrap"
 import swal from 'sweetalert2'
-import '../styles/styles.css'
 import logic from "../logic"
 
 class Landing extends Component {
@@ -87,9 +86,6 @@ class Landing extends Component {
 
       //Modals
       <div>
-        <Button color="primary" onClick={this.toggle}>
-          Register
-        </Button>
         <Modal
           isOpen={this.state.modal}
           toggle={this.toggle}
@@ -112,13 +108,22 @@ class Landing extends Component {
           </ModalFooter>
           </form>
         </Modal>
+        <Row
+          className="justify-content-center align-items-center"
+          style={{ height: 100 + "vh" }}
+        >
+        <h1>Welcome to </h1>
+        <Button  className="mr-5" color="primary" onClick={this.toggle}>
+          Register
+        </Button>
         <Button color="primary" onClick={this.loginToggle}>
           Log In
         </Button>
+            </Row>
         <Modal
           isOpen={this.state.modalLogin}
           toggle={this.loginToggle}>
-          <ModalHeader toggle={this.loginToggle}>Log In</ModalHeader>
+          <ModalHeader toggle={this.loginToggle}>Login</ModalHeader>
           <form onSubmit={(e)=>{
             e.preventDefault()
             this.handleLoginSubmit(this.state.username, this.state.password)}
@@ -137,7 +142,7 @@ class Landing extends Component {
           </ModalFooter>
           </form>
         </Modal>
-      </div>
+        </div>
     )
   }
 }

@@ -121,6 +121,26 @@ describe('users logic', () => {
                     .then(res => expect(res).toBeTruthy())
             })
         })
+        
+        describe(' get retrieve name', () => {
+            let username
+            const password = '123'
+
+           beforeEach(() => {
+               username = 'stim-user-' + Math.random()
+
+               return logic.registerUser(username, password)
+                   .then(() => logic.loginUser(username, password))
+           })
+               it('should return an username', () => {
+                   
+                   return logic.retrieveUser(password)
+                   .then(res => {
+                       expect(res).toBeTruthy()
+                      
+                   })
+               })
+           })
     })
 
     //Stim tests
@@ -138,7 +158,7 @@ describe('users logic', () => {
 
         describe('news games', () => {
             it('should return an array of news', () => {
-                return logic.newsForApp(400)
+                return logic.newsForGame(400)
                     .then(res => {
                         expect(Object.keys(res).length).toBe(11)
                     })
@@ -159,32 +179,51 @@ describe('users logic', () => {
                     
                     return logic.getGamesByName("Call")
                     .then(res => {
-                        expect(res.length).toBe(17)
+                        expect(res.length).toBe(18)
                        
                     })
                 })
             })
 
-            describe(' get retrieve name', () => {
-             let username
-             const password = '123'
+       
 
-            beforeEach(() => {
-                username = 'stim-user-' + Math.random()
 
-                return logic.registerUser(username, password)
-                    .then(() => logic.loginUser(username, password))
-            })
-                it('should return an username', () => {
+         describe('get stats for game ', () => {
+              
+            it('should return a game', () => {
+                       
+                       return logic.getStatsForGame(10)
+                       .then(res => {
+                           expect(res).toBeTruthy()
+                           expect(res.name).toBe("Counter-Strike")
+                       })
+                   })
+               })
+              
+         describe('is Favorite ', () => {
+              
+                it('should check favorites', () => {
+                           
+                           return logic.isFavorite(10)
+                           .then(res => {
+                               expect(res).toBeTruthy()
+                               expect(res.name).toBe("Counter-Strike")
+                           })
+                       })
+                   })
+
+
+        describe('toggle game favorite', () => {
+              
+               it('should check favorites', () => {
+                               
+                 return logic.toggleGameFavorite(10)
+                   .then(res => {
+                    expect(res).toBeTruthy()
                     
-                    return logic.retrieveUser(password)
-                    .then(res => {
-                        expect(res).toBeTruthy()
-                       
                     })
+                  })
                 })
-            })
-
     })
 
     

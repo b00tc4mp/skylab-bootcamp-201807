@@ -33,7 +33,7 @@ class NewCard extends Component {
               <CardTitle>{this.props.data.name}</CardTitle>
               <CardSubtitle>{this.props.data.developer}</CardSubtitle>
               {this.state.newsData && <p className="card-text" dangerouslySetInnerHTML={{__html:this.state.newsData.contents}}></p> }
-              <Button target="_blank" rel="noopener noreferrer" href={!this.state.newsData ? "/newNotFound" : this.state.newsData.url} >See more</Button>
+              <Button  color="primary" target="_blank" rel="noopener noreferrer" href={!this.state.newsData ? "/newNotFound" : this.state.newsData.url} >See more</Button>
             </CardBody>
           </Card>
         }
