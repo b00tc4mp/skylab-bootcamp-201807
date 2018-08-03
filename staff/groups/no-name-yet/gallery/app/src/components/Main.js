@@ -27,7 +27,8 @@ class Main extends Component {
   startWebcam = () => {
     if (!this.state.webcamOn) {
       this.setState({ url: null, imageState: "Save Image" })
-      const video = document.getElementById("webcam")
+      let video = document.getElementById("webcam")
+      window.addEventListener("orientationchange", () => this.adjustVideoSize(video))
       navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
       var facingMode = "environment";
       var constraints = {
@@ -40,19 +41,50 @@ class Main extends Component {
         .then(stream => {
           video.srcObject = stream
           video.addEventListener('loadeddata', () => {
-            const w = video.videoWidth
-            const h = video.videoHeight
-            const ar = w / h
-            const newWidth = Math.min(window.innerWidth, 500)
-            video.width = newWidth
-            if (w >= h)
-              video.height = newWidth / ar
-            else
-              video.height = newWidth * ar
-            this.setState({ webcamOn: true })
+            this.adjustVideoSize(video)
+            this.setState({ webcamOn: true, imageState: `Save Image` })
           })
         })
+      video.addEventListener('click', function () {
+        if (facingMode === "user") {
+          facingMode = "environment";
+        } else {
+          facingMode = "user";
+        }
+
+        constraints = {
+          audio: false,
+          video: {
+            facingMode: facingMode
+          }
+        }
+
+        navigator.mediaDevices.getUserMedia(constraints).then(function success(stream) {
+          video.srcObject = stream;
+          video.addEventListener('loadeddata', () => this.adjustVideoSize(video))
+        });
+      });
     }
+  }
+
+  adjustVideoSize = video => {
+
+    const w = video.videoWidth
+    const h = video.videoHeight
+    const ar = w / h
+
+    if(window.matchMedia("(orientation: portrait)").matches) {
+        // portrait
+        const newHeight = Math.min(h, 375)
+        video.height = newHeight
+        video.width = newHeight * ar
+    } else {
+        // landscape
+        const newWidth = Math.min(window.innerWidth, 500)
+        video.width = newWidth
+        video.height = newWidth / ar
+    }
+
   }
 
   /** This is the function to capture an image from the webcam */
@@ -99,7 +131,7 @@ class Main extends Component {
       this.setState({ imageState: ' Saving...' })
       logic.addImage(this.image)
         .then(() => this.setState({ imageState: 'Save Image' }))
-        .catch( () => this.setState({imageState: 'Cloudinary not available', noTransfer: false}))
+        .catch(() => this.setState({ imageState: 'Cloudinary not available', noTransfer: false }))
     }
   }
 
