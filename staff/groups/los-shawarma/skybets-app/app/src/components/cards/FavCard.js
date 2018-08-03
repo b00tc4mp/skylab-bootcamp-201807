@@ -6,44 +6,42 @@ const FavCard = props =>  {
 
         return(
 
-            <section className="card">
+            <div>
+                <div>
+                    <span className="font-weight-bold">Date From: </span>
+                    <span>{dateFrom} | </span>
+                    <span className="font-weight-bold">City From: </span>
+                    <span>{cityFrom} | </span>
+
+
+                    <span className="font-weight-bold">Date To: </span>
+                    <span>{dateTo} | </span>
+                    <span className="font-weight-bold">City To: </span>
+                    <span>{cityTo} | </span>
+
+
+                    <span className="font-weight-bold">Price: </span>
+                    <span>{price}€ | </span>
+                    <span><a href={link}>Go to kiwi</a></span>
+
+
+                </div>  
                 <div>
                 
-                    <span>Odds </span><span>{odds}</span>
+                    <span className="font-weight-bold">Odds: </span><span>{odds} | </span>
                 
                 
-                    <span>Results </span><span>{results}</span>
-                    <span>Teams </span><span>{teams}</span>
-                    <span>Competition </span><span>{competition}</span>
+                    <span className="font-weight-bold">Results: </span><span>{results} | </span>
+                    <span className="font-weight-bold">Teams: </span><span>{teams} | </span>
+                    <span className="font-weight-bold">Competition: </span><span>{competition} | </span>
             
                
-                    <span>Date </span><span>{date}</span>
-                    <span>Time </span><span>{time}</span>
-                    <span>Link </span><span><a href={link}>Go to Bet</a></span>
+                    <span className="font-weight-bold">Date: </span><span>{date} | </span>
+                    <span className="font-weight-bold">Time: </span><span>{time} | </span>
+                    <span><a href={link}>Go to Bet</a></span>
                 </div>
-                <div>
-
-                
-                    <span>Date From:</span>
-                    <span>{dateFrom}</span>
-                    <span>City From:</span>
-                    <span>{cityFrom}</span>
-                
-                
-                    <span>Date To:</span>
-                    <span>{dateTo}</span>
-                    <span>City To:</span>
-                    <span>{cityTo}</span>
-                
-                
-                    <span>Price:</span>
-                    <span>{price}</span>
-                    <span>Link:</span>
-                    <span><a href={link}>Go to kiwi</a></span>
-                    
-                
-            </div>     
-            </section>
+                   
+            </div>
 
         )
     }

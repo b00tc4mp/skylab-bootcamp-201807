@@ -165,16 +165,16 @@ class Home extends Component {
                     </div>
                     
                 </div>
-                <div>
+                <div className="card mx-5 pb-3 pt-3">
                     {(currentFlight && currentBet) && <FavCard 
                         currentPriceProp={currentPrice} 
                         currentOddsProp={currentOdds}
                         currentFlightProp={currentFlight}
                         currentBetProp={currentBet}                        
                     />}
-                {(currentFlight && currentBet) && 
-                <button onClick={this.submitUpdateFav}>Add To Favorites</button>}    
                 </div>
+                {(currentFlight && currentBet) && 
+                <button className="mb-5" onClick={this.submitUpdateFav}>Add To Favorites</button>}
             </main>
         )
     }
