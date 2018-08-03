@@ -2,15 +2,15 @@
 
 NutriLab is an application to search ingredients and show their nutritional information.
 
-[Documentation]()
+**DOCUMENTATION**
 
-[Instructions]()
+[Here](docs/README.md) you could find the detailed information about Nutrilab App, explained with functional and technical descriptions. It also includes some design screenshots.
 
-[Live Demo]()
+**INSTRUCTIONS**
+
+[Here](app/README.md) you could find the instructions to manage the App.
 
 
+**LIVE DEMO**
 
-
-//explicacion de como entrar a la app, (registro, login y que busque para que funcione..). 
-
-//y link al otro README en la carpeta docs (el cual explica el funcionamiento del proyecto)
+[Here]() you could run the App.
