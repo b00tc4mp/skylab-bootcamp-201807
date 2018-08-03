@@ -28,4 +28,10 @@ open SpecRunner.html
 
 ## Public URL
 
-[Gallery](http://stim-app.surge.sh/)
+[Stim](http://stim-app.surge.sh/)
+
+## Authors
+
+- Javi (Javier1177)
+- Aranzazu (Aranzazu0611)
+- Alejandro (alejaa03  )
