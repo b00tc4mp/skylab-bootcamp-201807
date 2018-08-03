@@ -1,6 +1,14 @@
-# nutrilab
+## Nutrilab v.1.0.0
 
-A app to search nutrients and receips
+NutriLab is an application to search ingredients and show their nutritional information.
+
+[Documentation]()
+
+[Instructions]()
+
+[Live Demo]()
+
+
 
 
 //explicacion de como entrar a la app, (registro, login y que busque para que funcione..). 
