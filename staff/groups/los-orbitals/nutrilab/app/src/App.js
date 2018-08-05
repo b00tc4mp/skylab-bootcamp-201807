@@ -64,6 +64,11 @@ class App extends Component {
     this.props.history.push('/login')
   }
 
+   // Prepare the view to show the Login form and update the url path
+   goToDeleteProfile = () => {
+    this.props.history.push('/deleteprofile')
+  }
+
   // This function unlogg off the app
   logout = event => {
     event.preventDefault()
@@ -139,6 +144,7 @@ class App extends Component {
           <Route exact path="/" render = {() => loggedIn ? <Redirect to="/home"/> : <Landing signup={goToSignUp} login={goToLogin} />}/> 
           <Route path="/signup" render = {() => loggedIn ? <Redirect to="/home"/> : <Signup onSignUp={signupUser} linkToLogin={goToLogin} feedback={showFeedback}/>} />
           <Route path="/login" render = {() => loggedIn ? <Redirect to="/home"/> : <Login onLogin={loginUser} linkToSignUp={goToSignUp} feedback={showFeedback}/>} />
+          <Route path="/delete" render = {() => loggedIn ? <Redirect to="/delete"/> : <Redirect to="/"/>}/>
           <Route path="/home" render = {() => loggedIn ? <Home className="App__main2"/> : <Redirect to="/" />} />
           <Route path="/profile" render={() => loggedIn ? <Profile onUpdate={updateUser} feedback={showFeedbackUpdate} feedbackdelete={showFeedbackDelete} onDelete={deleteUser}/> : <Redirect to="/"/>} />
           <Route path="/favorites" render={() => loggedIn ? <FavoriteList /> :  <Redirect to="/"/>} />

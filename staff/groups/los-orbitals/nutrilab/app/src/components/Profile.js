@@ -36,18 +36,16 @@ class Profile extends Component {
         this.props.onUpdate( password, newUsername, newPassword )
     }
 
-    deleteUser = event => {
+    linkToDeleteProfile = (event) => {
         event.preventDefault()
-        const { password } = this.state
-        this.props.onDelete( password)
+        this.props.linkToDeleteProfile()
     }
 
     render() {
-        const {savePassword, saveNewUsername, saveNewPassword, update, deleteUser} = this
-        return <section className="profile">
-                    <section className="profile__update">
+        const {savePassword, saveNewUsername, saveNewPassword, update, linkToDeleteProfile} = this
+        return <section className="profile__update">
                         <h2 className="profile__update__title">Update profile</h2>
-                        <p className="profile__update__text">it is required to fill in the field with the * symbol</p>
+                        <p className="profile__update__text">* fields are required</p>
                         {this.props.feedback && <Feedback message={this.props.feedback} />}
                         <form onSubmit={update}>
                             <input type="password" placeholder="Password*" onChange={savePassword}/>
@@ -55,17 +53,8 @@ class Profile extends Component {
                             <input type="password" placeholder="New password" onChange={saveNewPassword}/>
                             <button type="submit">Update</button>
                         </form>
+                    <p>Go to <a href="/#" onClick={linkToDeleteProfile}>Delete profile</a></p> 
                     </section>
-                    <section className="profile__delete">
-                        <h2 className="profile__delete__title">Delete profile</h2>
-                        <p className="profile__delete__text">it is required to fill in the field with the * symbol</p>
-                        {this.props.feedbackdelete && <Feedback message={this.props.feedbackdelete} />}
-                        <form onSubmit={deleteUser}>
-                            <input type="password" placeholder="Password*" onChange={savePassword}/>
-                            <button type="submit">Delete</button>
-                        </form>
-                    </section>
-                </section>
     }
 }
 
