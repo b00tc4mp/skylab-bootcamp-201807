@@ -12,7 +12,7 @@ class ResultImage extends Component {
       error: '',
       favorite: logic.isFavorite(this.props.image.objectNumber)
     };
-
+    console.log("in constructor",this.props.image.title,"logic.isFavorite(this.props.image.objectNumber):",this.props.image.objectNumber,logic.isFavorite(this.props.image.objectNumber))
     this.toggle = this.toggle.bind(this);
   }
 
@@ -21,10 +21,9 @@ class ResultImage extends Component {
       modal: !this.state.modal
     });
   }
-/*
-  componentWillReceiveProps(newProps) {
-    this.refreshFavorite(newProps)
-  }*/
+
+
+
 
   onToggleFavorite = () => {
 
@@ -42,7 +41,8 @@ class ResultImage extends Component {
 
 
   render() {
-    const {favorite} = this.state
+    const favorite = logic.isFavorite(this.props.image.objectNumber)
+
     return (
       <div>
         <i id="resultImage-favoriteIcon" className={(favorite ? "fas fa-star fa-2x " : "far fa-star fa-2x ")}

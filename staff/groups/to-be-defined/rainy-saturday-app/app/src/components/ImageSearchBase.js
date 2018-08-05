@@ -9,9 +9,9 @@ class ImageSearchBase extends Component {
 
 
   originalData = []
-  originalMakerData = []
+  /*originalMakerData = []
   originalMaterialData = []
-  originalPeriodData = []
+  originalPeriodData = []*/
   imageMap = new Map();
   _processing = false
   _makerFilterText = ""
@@ -108,9 +108,9 @@ class ImageSearchBase extends Component {
     material = this.sortCountAndCondenseFilterData(material)
     maker = this.sortCountAndCondenseFilterData(maker)
     this.originalData = localData
-    this.originalMakerData = maker
+  /*  this.originalMakerData = maker
     this.originalMaterialData = material
-    this.originalPeriodData = period
+    this.originalPeriodData = period*/
 
     this.setState({
       data: localData,
@@ -122,7 +122,6 @@ class ImageSearchBase extends Component {
 
   doFilteredSearch = () => {
     let materialData = [], periodData = [], makerData = []
-
     let data = this.originalData
 
     if (this.materialFilterText !== "") data = data.filter(element => element.materials.includes(this.materialFilterText));
@@ -137,7 +136,6 @@ class ImageSearchBase extends Component {
     materialData = this.sortCountAndCondenseFilterData(materialData)
     periodData = this.sortCountAndCondenseFilterData(periodData)
     makerData = this.sortCountAndCondenseFilterData(makerData)
-    if (data.length === 0) debugger
     this.setState({ data, periodData, makerData, materialData })
   }
 
