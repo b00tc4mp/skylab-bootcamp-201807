@@ -24,23 +24,19 @@
 .fas{
   position: relative;
   top:100%;
-  /* left:0px; */
-  right: 0px;
+   left:90%;
   color:rgba(0, 0, 0, 0.9);
   z-index: 1; 
   padding: 5px;
-  background-color:rgba(172, 164, 164, 0.5);
-  
+
 }
 .far{
   position: relative;
   top:100%;
-  /* left:0px; */
-  right: 0px;
+  left:90%;
   color:rgba(0, 0, 0, 0.9);
   z-index: 1; 
   padding: 5px;
-  background-color:rgba(172, 164, 164, 0.5);
-  
+
 }
 

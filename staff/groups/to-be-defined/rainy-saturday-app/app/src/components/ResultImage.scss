@@ -22,6 +22,11 @@ p, h5, h6 {
   margin: 10px;
 }
 
+div.modal-dialog.resultImage-modalDialog {
+  max-height:90vh;
+  max-width:90vw;
+}
+
 .modal-dialog {
   .modal-content {
     .modal-header {
