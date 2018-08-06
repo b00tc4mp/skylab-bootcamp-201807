@@ -1,0 +1,9 @@
+.player {
+  background-color: #444444;
+  height: 100%;
+  padding-top: 5%;
+  padding-bottom: 5%; }
+  .player__box {
+    box-shadow: 5px 10px 10px #222222; }
+
+/*# sourceMappingURL=player.css.map */

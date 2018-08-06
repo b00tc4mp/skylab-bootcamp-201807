@@ -1,0 +1,21 @@
+.favorites {
+  padding: 5em 25em; }
+  .favorites__title {
+    color: #525252;
+    font-size: 3em;
+    margin-bottom: 2em; }
+  .favorites__list {
+    text-align: left;
+    margin: 2em auto;
+    width: 50%; }
+    .favorites__list__item {
+      font-size: 2em; }
+      .favorites__list__item__delete {
+        margin-right: 1em; }
+
+.favorites {
+  padding: 5em; }
+  .favorites__title {
+    width: 80%; }
+
+/*# sourceMappingURL=favorites.css.map */
