@@ -1,24 +1,81 @@
-h1{
-    color: black;
+*{
+    margin: o;
+    padding: 0;
+    font-family: 'Markazi Text', serif;
 }
-table, td{
-    border: none
+
+header{
+    width: 90%;
+    margin:  auto;
+    text-align: center;
+
 }
+
+#sidebar{
+    width: 28%;
+    float: left;
+    background-color: green;
+    padding: 10px;
+    overflow: hidden;
+    font-size: 20px;
+    text-align: center;
+}
+
+#content{
+    width: 60%;
+    float: left;
+    padding: 10px;
+    overflow: hidden;
+    margin-bottom: 10px;
+    padding-left: 5%;
+    font-size: 30px;
+
+    
+    
+}
+
+footer{
+    width: 90%;
+    text-align: center;
+    font-size: 25px;
+    background-color: black;
+    color: white;
+    overflow: hidden;
+    margin: auto;
+}
+
+
 
 #bio{
     background-color: blue;
     width: 250px;
     text-align: center;
-    height: 800px;
-    
+    padding: 10px;
+    display: block;
+    margin-bottom: 10px;
+      
+}
+
+#sidebar p{
+    margin: 75px 40px;
 }
 
 #experience{
     width: 650px;
     padding-left: 50px;
+    display: block;
 }
 
 #pic{
-    width: 200px;
-    padding-left: 17px;
+    width: 65%;
+    
+}
+
+h1{
+    color: blue;
+    font-size: 150px;
+}
+
+li{
+    list-style: none;
 }
