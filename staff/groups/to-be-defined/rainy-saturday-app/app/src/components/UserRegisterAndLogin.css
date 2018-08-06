@@ -1,0 +1,20 @@
+#comRainySaturdayUserRegisterAndLogin {
+display: flex;
+justify-content: center;
+
+}
+
+#comRainySaturdayUserLoginForm {
+width: 20em;
+
+}
+
+.comRainySaturdayUserRegisterAndLoginBorderFail{
+
+    border: 2px solid red !important;
+}
+
+.comRainySaturdayUserRegisterAndLoginBorderOk{
+
+    border: 2px solid green !important;
+}

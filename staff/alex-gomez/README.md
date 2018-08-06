@@ -1,1 +1,0 @@
-[GitHub](https://www.github.com/alexgbor)
