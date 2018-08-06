@@ -1,0 +1,68 @@
+.form
+
+    &__main-feedback
+        +content
+        +content-full
+        +text-center
+        +push-20
+        border-radius: 5px
+        
+        &--valid
+            color: #155724
+            background-color: #d4edda
+
+        &--invalid
+            color: #dc3545
+            background-color: #f9ded8
+
+    &__field
+        margin-bottom: .5rem
+
+        &.has-error
+
+            .form__label
+                color: #dc3545
+
+            .form__input
+                border-color: #dc3545
+
+    &__label
+        display: inline-block
+    
+    &__input
+        display: block
+        padding: 10px
+        border-radius: 5px
+        border: 1px solid #999999
+        font-size: 1rem
+        width: 100%
+
+    &__textarea
+        display: block
+        padding: 10px
+        border-radius: 5px
+        border: 1px solid #999999
+        font-size: 1rem
+        width: 100%
+
+    &__submit
+        background-color: #111111
+        color: white
+        font-size: 1rem
+        border-radius: 5px
+        padding: 12px 10px 11px
+        width: 100%
+        margin-bottom: 2em
+        margin-top: 2em
+
+    &__submit:hover
+        cursor: pointer
+
+    &__feedback
+        font-size: 0.8rem
+
+        &--valid
+            color: #28a745
+
+        &--invalid
+            color: #dc3545

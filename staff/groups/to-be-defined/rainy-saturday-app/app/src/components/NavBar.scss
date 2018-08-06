@@ -1,0 +1,57 @@
+@import "../App.scss";
+
+#comRainysaturdayNavBar {
+
+}
+
+.imageProfile {
+  width: 70px;
+  height: 70px;
+  margin-top: -15;
+}
+
+.navLinks {
+  margin-top: 13px;
+  font-size: 20px;
+}
+
+.navbar-maindiv {
+  // background: url("http://lh5.ggpht.com/SgH3Qo-vYI8GGm7-b-Qt6lXgsCAIoU2VDRwO5LYSBVNhhbZCetcvc88ZPi518MTy0MHDrna4X4ZC1ymxVJVpzps8gqw=s0");
+  background: url(/images/rembrandt.jpg);
+  background-repeat: repeat-y;
+  background-size:cover;
+  .bg-dark {
+    background: transparent;
+
+  }
+
+  .navbar.navbar-expand-md {
+    a.navbar-brand {
+      font-size: 3em;
+      letter-spacing: .2em;
+      font-family: $main-font;
+      font-weight:900;
+      color: $orangey
+    }
+    .nav-item {
+      a.navLinks.nav-link {
+        color: #eeeeee;
+        &:hover {
+          color: #ff6e1f;
+        }
+      }
+    }
+  }
+
+}
+
+/*
+
+font-family: 'Slackey', cursive;
+font-family: 'Baloo Tamma', cursive;
+font-family: 'Sonsie One', cursive;
+font-family: 'Diplomata SC', cursive;
+font-family: 'Kumar One', cursive;
+*/
+
+

@@ -1,0 +1,112 @@
+button{
+	border: 1px solid;
+	color: white;
+    padding: 15px 32px;
+    line-height: 10%;
+    vertical-align: middle;
+    font-size: 16px;
+    margin-bottom: 4px;
+    
+}
+
+
+#square button{
+	height: 15px;
+	width: 100px;
+	border-radius: 3px;
+
+}
+
+#round button{
+	height: 15px;
+	width: 100px;
+	border-radius: 15px;
+}
+#row1st button{
+	border-color: ;
+	color: white;
+	}
+
+#row2nd button{
+	border-color: ;
+	background-color: white;
+	
+}
+
+#row3rd button{
+	border-color: ;
+	color: white;
+}
+
+#row4th button{
+	border-color: ;
+	background-color: white;
+	
+}
+				
+
+			
+
+#row5th button{
+	height: 12px;
+	width: 75px;
+	border-radius: 15px;
+	padding: 15px 10px;
+	color: white;
+	border: 2px solid;
+}
+					
+				
+#row6th button{
+	height: 75px;
+	width: 150px;
+	border-radius: 20px;
+	padding: 15px 10px;
+	color: white;
+	font-size: 30px;
+	border: 2px solid;
+}
+
+#row5th .A button{
+	color: black;
+	border-color: #999999;
+	}
+
+
+#row1st .A button{
+	color: black;
+	border-color: #999999;
+	}
+
+#row3rd .A button{
+	color: black;
+	border-color: #999999;
+	}
+
+
+.A button{
+	background-color: #d9d9d9;
+	color:#999999;
+	
+	}
+.B button{
+	background-color: #3333ff;
+	color: #0000b3;
+	}
+.C button{
+	background-color: #33cc33;
+	color: #196619;
+	}
+.D button{
+	background-color: #6699ff;
+	color: #003399;
+	}
+.E button{
+	background-color: #ffff00;
+	color: #999900;
+	}
+.F button{
+	background-color: #ff0000;
+	color: #800000;
+	}
+		
