@@ -1,0 +1,114 @@
+body {
+    background-color: #343a40;
+}
+
+/*Nav Bar*/
+.navbar-dark {
+    background-color: #191414;
+}
+
+.btn-outline-info{
+    color: #1db954;
+    border-color: #1db954;
+}
+
+.btn-outline-info:hover {
+    color: #fff;
+    background-color: #1db954;
+    border-color: #1db954;
+}
+
+.navbar-dark .navbar-brand {
+    width: 102px;
+}
+/*End Nav Bar*/
+
+/*Result list*/
+.results-container {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+}
+
+.results-container a{
+    grid-column: 1 / 7;
+}
+
+.results-container a:hover{
+    text-decoration: none;
+}
+
+.results-container h1{
+    font-size: 80px;
+}
+
+.results-container > div{
+    grid-column: 1 / 7;
+}
+
+.list-title, .results-container h1 {
+    color: #ffffff;
+    margin: 20px 0 10px 40px;
+}
+
+.list-group-item-action a{
+    color: #ffffff;
+    margin-left: 40px;
+    display: block;
+}
+
+.list-group-item-action:hover a{
+    color: #ffffff;
+    text-decoration: underline;
+}
+
+.list-group-item-action{
+    background-color: #343a40;
+}
+
+.list-group-item-action:hover, .list-group-item-action.active{
+    background-color: #222529;
+    border-color: #222529;
+}
+
+.list-group-item-action img, .list-group-item-action .empty-img {
+    border-style: none;
+    width: 84px;
+    height: 84px;
+}
+
+.artists-container .list-group-item-action img {
+    border-radius: 50%;
+}
+
+.list-group-item-action .empty-img {
+    display: inline-block;
+    height: auto;
+}
+
+.list-group-item-action .result-text {
+    margin-left: 20px;
+}
+/*End Result list*/
+
+/*Tracks and EmbedPlayer*/
+.tracks-container .empty-img{
+    background-image: url(./images/play-3-24.png);
+    height: 24px;
+    background-repeat: no-repeat;
+}
+
+.tracks-container .list-group-item-action.active .empty-img{
+    background-image: url(./images/volume-up-4-24.png);
+}
+
+.results-container .tracks-container {
+    grid-column: 1 / 4;
+}
+
+.results-container .detail-container {
+    grid-column: 5 / 6;
+    margin-top: 80px;
+}
+/*End Tracks and EmbedPlayer*/
+
+
