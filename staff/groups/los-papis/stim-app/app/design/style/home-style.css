@@ -1,0 +1,21 @@
+.row {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    margin-right: -15vw !important ;
+    margin-left: 8vw !important ;
+    margin-top: 15vh !important;
+}
+
+.btn{
+
+    margin-left: -10.6vw;
+
+}
+
+.form-control{
+
+
+
+}
