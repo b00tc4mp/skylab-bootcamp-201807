@@ -1,0 +1,23 @@
+body {
+    background-color: #f5f5f5;
+}
+
+.form-register {
+    width: 100%;
+    max-width: 330px;
+    padding: 15px;
+    margin: auto;
+}
+
+.form-register input.form-control {
+    margin: 20px 0;
+}
+
+.form-register button {
+    background-color: #6fa0c2;
+    border-color: #6fa0c2;
+}
+
+.form-register button:hover {
+    background-color: #3f6b91;
+}

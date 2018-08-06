@@ -1,0 +1,33 @@
+.container1{
+    color:white !important;
+    border:2px solid white !important;
+    max-width: 70vw;
+    margin-left:20vw;
+    margin-top:5vh;
+    padding: 4vw;
+}
+
+.btn-success{
+
+    margin-left: -0.2vw;
+
+
+
+}
+
+.container2{
+
+    color:white !important;
+    border:2px solid white !important;
+    max-width: 70vw;
+    margin-left:20vw;
+    margin-top:5vh;
+    padding: 4vw;
+    margin-bottom: 4vh;
+}
+
+#button-red{
+
+    margin-left: -0.2vw;
+
+}
