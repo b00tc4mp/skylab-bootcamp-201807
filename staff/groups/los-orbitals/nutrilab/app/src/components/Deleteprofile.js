@@ -2,21 +2,23 @@ import React, {Component} from 'react'
 import Feedback from './Feedback'
 import '../sass/profile.css'
 
-class Profile extends Component {
+class Deleteprofile extends Component {
 
     state = {
         password: null
     }
 
+    savePassword = (event) => this.setState ({password: event.target.value}) 
+
     deleteUser = event => {
         event.preventDefault()
         const { password } = this.state
-        this.props.onDelete( password)
+        this.props.onDelete(password)
     }
 
     linkToModifyProfile = (event) => {
         event.preventDefault()
-        this.props.linkToModifyProfile()
+        this.props.goToProfile()
     }
 
     render() {
@@ -26,7 +28,7 @@ class Profile extends Component {
                             <p className="profile__delete__text">it is required to fill in the field with the * symbol</p>
                             {this.props.feedbackdelete && <Feedback message={this.props.feedbackdelete} />}
                             <form onSubmit={deleteUser}>
-                                <input type="password" placeholder="Password*" onChange={savePassword}/>
+                                <input type="password" placeholder="Password*" onChange={this.savePassword}/>
                                 <button type="submit">Delete</button>
                             </form>
                         <p>Go to <a href="/#" onClick={linkToModifyProfile}>Modify profile</a></p> 
@@ -34,4 +36,4 @@ class Profile extends Component {
     }
 }
 
-export default Profile
+export default Deleteprofile
