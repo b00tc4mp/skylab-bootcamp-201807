@@ -30,6 +30,3 @@ var logic = {
         return this._callApi('/beer/' + id);
     }
 };
-
-
-
