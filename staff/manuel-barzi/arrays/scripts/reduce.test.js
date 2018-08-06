@@ -33,4 +33,3 @@ var total = reduce(cart, function(accum, product) {
 }, 0);
 
 console.log(total === 60);
-
