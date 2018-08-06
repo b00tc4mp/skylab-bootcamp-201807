@@ -301,6 +301,7 @@ const logic = {
    */
 
   toggleImageFavorite(objectData) {
+    console.log("toggleImageFavorite")
     const favorites = this._userFavorites
     const index = favorites.findIndex(element => element.objectNumber === objectData.objectNumber)
 
