@@ -7,6 +7,8 @@ import Signup from './components/Signup'
 import Login from './components/Login'
 import Home from './components/Home'
 import Profile from './components/Profile'
+import Update from './components/Update'
+import DeleteProfile from './components/Deleteprofile'
 import FavoriteList from './components/FavoriteList'
 import Error404 from './components/Error404'
 import swal from 'sweetalert'
@@ -66,7 +68,13 @@ class App extends Component {
 
    // Prepare the view to show the Login form and update the url path
    goToDeleteProfile = () => {
-    this.props.history.push('/deleteprofile')
+    this.setState ({showFeedbackDelete: false})
+    this.props.history.push('/delete')
+  }
+
+  goToUpdateProfile = () => {
+    this.setState ({showFeedback: false, showFeedbackUpdate: false})
+    this.props.history.push('/update')
   }
 
   // This function unlogg off the app
@@ -118,7 +126,7 @@ class App extends Component {
       <div className="App">
         <header className="App__header">
         {!loggedIn && <Link to="/" onClick={this.onResetMessage}> <p className="App__header__nav__item">Nutrilab</p></Link>}
-          <Route path="/(home|profile|favorites)" render={() => 
+          <Route path="/(home|profile|favorites|delete|update)" render={() => 
             <nav className="App__header__nav">
               <ul>
                 <li className="App__header__item App__header__item__left">
@@ -144,9 +152,10 @@ class App extends Component {
           <Route exact path="/" render = {() => loggedIn ? <Redirect to="/home"/> : <Landing signup={goToSignUp} login={goToLogin} />}/> 
           <Route path="/signup" render = {() => loggedIn ? <Redirect to="/home"/> : <Signup onSignUp={signupUser} linkToLogin={goToLogin} feedback={showFeedback}/>} />
           <Route path="/login" render = {() => loggedIn ? <Redirect to="/home"/> : <Login onLogin={loginUser} linkToSignUp={goToSignUp} feedback={showFeedback}/>} />
-          <Route path="/delete" render = {() => loggedIn ? <Redirect to="/delete"/> : <Redirect to="/"/>}/>
           <Route path="/home" render = {() => loggedIn ? <Home className="App__main2"/> : <Redirect to="/" />} />
-          <Route path="/profile" render={() => loggedIn ? <Profile onUpdate={updateUser} feedback={showFeedbackUpdate} feedbackdelete={showFeedbackDelete} onDelete={deleteUser}/> : <Redirect to="/"/>} />
+          <Route path="/profile" render = {() => loggedIn ? <Profile onUpdate={this.goToUpdateProfile} onDelete={this.goToDeleteProfile} /> : <Redirect to="/"/>}/> 
+          <Route path="/update" render={() => loggedIn ? <Update onUpdate={updateUser} feedback={showFeedbackUpdate} linkToDeleteProfile={this.goToDeleteProfile} /> : <Redirect to="/"/>} />
+          <Route path="/delete" render = {() => loggedIn ? <DeleteProfile onDelete={deleteUser}  feedbackdelete={showFeedbackDelete} goToProfile={this.goToUpdateProfile}/> : <Redirect to="/"/>}/>
           <Route path="/favorites" render={() => loggedIn ? <FavoriteList /> :  <Redirect to="/"/>} />
           <Route component={Error404} />
         </Switch>
