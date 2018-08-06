@@ -27,7 +27,7 @@ class FavoriteList extends Component {
 
     render() {
         return  <section className="favorites">
-                    <h2 className="favorites__title">Your Favorite List</h2>
+                    <h2 className="favorites__title">Favorites list</h2>
                     <ul className="favorites__list">{this.printFavorites()}</ul>
                 </section>
     }

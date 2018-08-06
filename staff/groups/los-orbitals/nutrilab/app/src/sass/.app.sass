@@ -31,10 +31,11 @@ ul
 
     &__header
         background-color: #6BDFA0
-        height: 5em
+        width: 100vw
+        height: 6em
         color: white
         padding-top: 1em 
-        padding-left: 3em
+        padding-left: 1em
 
         &__logo 
             height: auto
@@ -63,13 +64,17 @@ ul
 
     &__main
             background-color: #F1F1F1
-            height: 15em
             color: #525252
+            padding-top: 6em 
+            padding-left: 10vw
+            padding-right: 10vw
+            padding-bottom: 6em
             margin-top: 0
+            margin-bottom: 3rem
 
             &__title
                 margin: 0
-                padding: 5%
+
             
 
 button
@@ -99,34 +104,29 @@ input
     letter-spacing: .05em
     color: #212121
 
+@media only screen and (min-width: 768px) 
+    
+    body
+        font-size: 12px
 
-@media only screen and (max-width: 1024px) 
+.input--border
+        border: 0.2em solid #D3D3D3
+
+
+
+@media only screen and (min-width: 1024px) 
     
     body
         font-size: 14px
 
-    input
+.input--border
         border: 0.15em solid #D3D3D3
 
-@media only screen and (max-width: 768px) 
-    
-    body
-        font-size: 12px
+.App__main
+        padding-left: 20vw
+        padding-right: 20vw
 
-    input
-        border: 0.2em solid #D3D3D3
 
-    .App__header
-        height: 7em
 
-@media only screen and (max-width: 768px) 
-    
-    body
-        font-size: 12px
 
-    input
-        border: 0.2em solid #D3D3D3
-
-    .App__header
-        height: 8em
         

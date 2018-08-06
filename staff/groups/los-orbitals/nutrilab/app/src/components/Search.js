@@ -18,7 +18,7 @@ class Search extends Component{
         const {searchIngredients, saveQuery} = this
         return <section className="search">
                     <form onSubmit={searchIngredients}>
-                        <input type="text" placeholder="Type here..." onChange={saveQuery}></input>
+                        <input className="input--noborder" type="text" placeholder="Type here..." onChange={saveQuery}></input>
                         <button type="submit">Search</button>
                     </form>
                     {this.props.feedback && <Feedback message={this.props.feedback}/>}
