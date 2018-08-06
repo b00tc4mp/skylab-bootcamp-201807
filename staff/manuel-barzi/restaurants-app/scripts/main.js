@@ -129,4 +129,3 @@ detailContainer.clear = function() {
 document.body.appendChild(search.element);
 document.body.appendChild(results.element);
 document.body.appendChild(detailContainer);
-
