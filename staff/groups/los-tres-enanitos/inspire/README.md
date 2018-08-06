@@ -25,3 +25,8 @@ npm start
 
 ````
 $ open SpecRunner.html
+````
+
+## Live demo
+
+[http://inspire-app.surge.sh](http://inspire-app.surge.sh)
