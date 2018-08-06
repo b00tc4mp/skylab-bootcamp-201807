@@ -73,7 +73,7 @@ class App extends Component {
   }
 
   goToUpdateProfile = () => {
-    this.setState ({showFeedback: false})
+    this.setState ({showFeedback: false, showFeedbackUpdate: false})
     this.props.history.push('/update')
   }
 
@@ -154,7 +154,7 @@ class App extends Component {
           <Route path="/login" render = {() => loggedIn ? <Redirect to="/home"/> : <Login onLogin={loginUser} linkToSignUp={goToSignUp} feedback={showFeedback}/>} />
           <Route path="/home" render = {() => loggedIn ? <Home className="App__main2"/> : <Redirect to="/" />} />
           <Route path="/profile" render = {() => loggedIn ? <Profile onUpdate={this.goToUpdateProfile} onDelete={this.goToDeleteProfile} /> : <Redirect to="/"/>}/> 
-          <Route path="/update" render={() => loggedIn ? <Update onUpdate={updateUser} feedback={showFeedback} linkToDeleteProfile={this.goToDeleteProfile} /> : <Redirect to="/"/>} />
+          <Route path="/update" render={() => loggedIn ? <Update onUpdate={updateUser} feedback={showFeedbackUpdate} linkToDeleteProfile={this.goToDeleteProfile} /> : <Redirect to="/"/>} />
           <Route path="/delete" render = {() => loggedIn ? <DeleteProfile onDelete={deleteUser}  feedbackdelete={showFeedbackDelete} goToProfile={this.goToUpdateProfile}/> : <Redirect to="/"/>}/>
           <Route path="/favorites" render={() => loggedIn ? <FavoriteList /> :  <Redirect to="/"/>} />
           <Route component={Error404} />
