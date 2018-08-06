@@ -1,0 +1,98 @@
+/*Apply box-size and font-family*/
+* {
+    box-sizing: content-box;
+    color: #333333;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+  
+/*Center Body and Background-Color*/
+    body {
+        margin: 0 auto;
+        margin-bottom: 40px;
+        width:80%;
+    /* Old browsers */
+        background: #66D7D1;
+    /* Chrome 10-25, Safari 5.1-6 */
+        background: -webkit-linear-gradient(-45deg, #66D7D1, #141E30);
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        background: linear-gradient(-45deg, #66D7D1, #141E30);
+    }
+
+/*Headers Style */
+
+    h1 {
+        text-align: center;
+        font-size: 130px;
+        font-weight: 100;
+        color:#C0C0C0;
+    }
+
+    h2 {
+        text-align: center;
+        font-weight: 100;
+    }
+
+    h3 {
+        text-align: center;
+    }
+
+/*Make it Flex*/
+    main {
+        display: flex;
+        flex-flow: row wrap;
+    }
+
+/*Projects Card-View Style */
+    section {
+        margin: 5px;
+        border: 1px solid #ccc;
+        flex: 1 1 320px;
+        background-color: #E8E8E8;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        margin-bottom: 5px;
+        padding: 45px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    section:hover {
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 1), 0 6px 20px 0 rgba(0, 0, 0, 1);
+        border: 1.5px solid #141E30;
+        cursor: pointer;
+
+    }
+
+    p {
+        text-align: center;
+    }
+
+/*Image Settings*/
+    img {
+        width: 100%;
+        height: 100%;
+        border-radius: 15px;
+        object-fit: cover;
+    }
+
+/*View More - GitHub Buttons Style */
+/*
+    button{
+        margin:auto;
+        display:block;
+        padding: 20px 80px 20px 80px;
+        background-color: #141E30;
+        color:white;
+        border: none;
+        border-radius: 20px;
+        text-align: center;
+        text-decoration: none;
+        font-size: 20px;
+        align-items: flex-end;
+    }
+
+    button:hover{
+        cursor: pointer;
+        background-color: #4E505B;;
+    }
+    */

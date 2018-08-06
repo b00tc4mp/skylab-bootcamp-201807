@@ -1,0 +1,38 @@
+*{
+    font-family: 'Roboto Mono', monospace;
+}
+
+body{
+    background: linear-gradient(-45deg, rgb(247, 236, 201), rgb(53, 137, 233));
+    height: 100%;
+    font-size: 15px;
+    padding: 10px;
+} 
+
+section{
+    width: 700px;
+}
+
+h1:after
+{
+    content:' ';
+    display:block;
+    border:2px solid black;
+}
+
+h2:nth-child(n+1)
+{
+    content: ' ';
+    display: block;
+    border: 2px solid black;
+    width: 700px;
+    padding: 10px;
+}
+
+img{
+    height: 147px;
+    float: right;
+    margin-right: 1200px;
+    margin-top: 58px;
+    border-radius: 60px;
+}

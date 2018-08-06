@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang = "en">
+
+<head>
+	<meta charset="UTF-8">
+	<title> CALCULATOR </title>
+	<link rel="stylesheet" href="styles/styles.css">
+	<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+</head>
+
+<body>
+	<div id="display">
+		<p id="displayedNum"> 0 </p>
+	</div>
+	
+	<div id="numpad">
+		<div id=row1>	
+			<button id="n7" class="num" onclick="appendNum(this.id)"> 7 </button>
+			<button id="n8" class="num" onclick="appendNum(this.id)"> 8 </button>
+			<button id="n9" class="num" onclick="appendNum(this.id)"> 9 </button>
+			<button id="divide" class="op" onclick="appendOp(this.id)"> / </button>
+		</div>
+		<div id=row2>
+			<button id="n4" class="num" onclick="appendNum(this.id)"> 4 </button>
+			<button id="n5" class="num" onclick="appendNum(this.id)"> 5 </button>
+			<button id="n6" class="num" onclick="appendNum(this.id)"> 6 </button>
+			<button id="mult" class="op" onclick="appendOp(this.id)"> x </button>
+		</div>
+		<div id=row3>
+			<button id="n1" class="num" onclick="appendNum(this.id)"> 1 </button>
+			<button id="n2" class="num" onclick="appendNum(this.id)"> 2 </button>
+			<button id="n3" class="num" onclick="appendNum(this.id)"> 3 </button>
+			<button id="resta" class="op" onclick="appendOp(this.id)"> - </button>
+		</div>
+		<div id=row4>
+			<button id="dec" onclick="appendNum(this.id)"> . </button>
+			<button id="n0" class="num" onclick="appendNum(this.id)"> 0 </button>
+			<button id="igual" onclick="appendOp(this.id)"> = </button>
+			<button id="suma" class="op" onclick="appendOp(this.id)"> + </button>
+		</div>
+	</div>
+
+	<script src="app/app.js"></script>
+</body>
+
+</html>

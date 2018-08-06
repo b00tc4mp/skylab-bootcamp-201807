@@ -1,0 +1,44 @@
+* {
+    font-family: 'Merriweather', serif;
+}
+
+html {
+    background: linear-gradient(to bottom, #ffcc00 0%, #ff99cc 100%);
+}
+
+h1:after{
+    display: block;
+    border: 2px solid black;
+    content: ' ';
+}
+
+p {
+	font-size: 1em;
+	line-height: 1.4em;
+	margin-bottom: 20px;
+    color: #444;
+    padding: 25px;
+    width: 70%;
+}
+
+li {
+    line-height: 2em;
+}
+
+section,footer {
+    padding: 10px;
+}
+
+.head-picture {
+    float: right;
+    width: 200px;
+    margin-right: 10%;
+}
+
+
+
+
+
+
+
+

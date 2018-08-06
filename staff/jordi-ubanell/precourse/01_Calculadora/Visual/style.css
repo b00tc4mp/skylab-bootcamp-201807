@@ -1,0 +1,101 @@
+body{margin:0;
+	padding:0;
+}
+
+<link href="https://fonts.googleapis.com/css?family=Space+Mono" rel="stylesheet">
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+body {
+  margin-top: 60px;
+  font-family: 'Space Mono', monospace;
+  font-size: 30px;
+  background-color: #fff;
+  color: #444;
+}
+
+h1,
+p {
+  margin: 0 0 2rem 0;
+}
+
+.wrapper {
+  max-width: 900px;
+  vertical-align:auto;
+  margin: 0 10px;
+  display: grid;
+  grid-gap: 10px;
+}
+
+.orange{
+  background-color: #515041;
+}
+
+/* no grid support? */
+
+.wrapper {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.wrapper {
+  display: grid;
+  margin: 0 auto;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-auto-rows: minmax(50px, auto);
+}
+
+.panel {
+  /* needed for the flex layout*/
+  margin-left: 5px;
+  margin-right: 5px;
+  flex: 1 1 80px;
+}
+.panel1 {
+  /* needed for the flex layout*/
+  margin-left: 5px;
+  margin-right: 5px;
+  flex: 1 2 80px;
+  grid-column-start: 1;
+  grid-column-end: 3;
+}
+.panel2 {
+  /* needed for the flex layout*/
+  margin-left: 5px;
+  margin-right: 5px;
+  flex: 1 2 80px;
+  grid-column-start: 1;
+  grid-column-end: 3;
+}
+
+
+.header,
+.footer {
+  margin-left: 5px;
+  margin-right: 5px;
+  background-color: #red;
+  flex: 0 1 80%;
+  grid-column: 1 / -1;
+}
+
+.wrapper > * {
+  background-color: #a6a69e;
+  color: #fff;
+  border-radius: 5px;
+  padding: 15px 35px;
+  font-size: 150%;
+  margin-bottom: 10px;
+}
+
+
+/* We need to set the margin used on flex items to 0 as we have gaps in grid.  */
+
+@supports (display: grid) {
+  .wrapper > * {
+    margin: 0;
+  }
+}

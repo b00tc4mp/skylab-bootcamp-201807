@@ -1,0 +1,1 @@
+[Official way to ask jQuery wait for all images to load before executing something](https://stackoverflow.com/questions/544993/official-way-to-ask-jquery-wait-for-all-images-to-load-before-executing-somethin)

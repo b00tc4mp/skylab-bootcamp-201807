@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Pasapalabra</title>
+	<link rel="stylesheet" type="text/css" href="styles/styles.css">
+</head>
+<body onload="selectGame('html5')">
+	<div id="container">
+		<nav>
+					<a href="index.html""><div class="navegador">
+					</div></a>
+					<div class="title">
+					</div>
+					<a href="end.html"><div class="x">
+					</div></a>
+		</nav>
+		<div class="game">
+			<div class="circle" id="circlehtml5">
+			    <ul class="letters">
+			        <li class="letter letterht" id="letterA"><p id="letter0">A</p></li>
+			        <li class="letter letterht" id="letterB"><p id="letter1">B</p></li>
+			        <li class="letter letterht" id="letterC"><p id="letter2">C</p></li>
+			        <li class="letter letterht" id="letterD"><p id="letter3">D</p></li>
+			        <li class="letter letterht" id="letterE"><p id="letter4">E</p></li>
+			        <li class="letter letterht" id="letterF"><p id="letter5">F</p></li>
+			        <li class="letter letterht" id="letterG"><p id="letter6">G</p></li>
+			        <li class="letter letterht" id="letterH"><p id="letter7">H</p></li>
+			        <li class="letter letterht" id="letterI"><p id="letter8">I</p></li>
+			        <li class="letter letterht" id="letterJ"><p id="letter9">J</p></li>
+			        <li class="letter letterht" id="letterK"><p id="letter10">K</p></li>
+			        <li class="letter letterht" id="letterL"><p id="letter11">L</p></li>
+			        <li class="letter letterht" id="letterM"><p id="letter12">M</p></li>
+			        <li class="letter letterht" id="letterN"><p id="letter13">N</p></li>
+					<li class="letter letterht" id="letterÑ"><p id="letter14">Ñ</p></li>
+			        <li class="letter letterht" id="letterO"><p id="letter15">O</p></li>
+			        <li class="letter letterht" id="letterP"><p id="letter16">P</p></li>
+			        <li class="letter letterht" id="letterQ"><p id="letter17">Q</p></li>
+			        <li class="letter letterht" id="letterR"><p id="letter18">R</p></li>
+			        <li class="letter letterht" id="letterS"><p id="letter19">S</p></li>
+			        <li class="letter letterht" id="letterT"><p id="letter20">T</p></li>
+			        <li class="letter letterht" id="letterU"><p id="letter21">U</p></li>
+			        <li class="letter letterht" id="letterV"><p id="letter22">V</p></li>
+			        <li class="letter letterht" id="letterW"><p id="letter23">W</p></li>
+			        <li class="letter letterht" id="letterX"><p id="letter24">X</p></li>
+			        <li class="letter letterht" id="letterY"><p id="letter25">Y</p></li>
+			        <li class="letter letterht" id="letterZ"><p id="letter26">Z</p></li>
+			        <div class="scoreinrealtime" id="scoreinrealtime"></div>
+			        <div class="failsinrealtime" id="failsinrealtime"></div>
+			        <div class="pasapalabrainrealtime" id="pasapalabrainrealtime"></div>
+			   </ul>
+
+			</div>
+			<div class="playandinfo" id="playandinfo">
+				<div class="info">
+					<h4>Welcome to <i>Pasapalabra</i> / <ins>Skylab Coders Academy Precourse</ins></h4>
+					<p>Based on famous Tv Show <strong>Pass the word</strong> and their spanish version <strong>Pasapalabra.</strong></p>
+					<p>You'll see one definition by letter and you'll must write the correct answer or pass to answer to the end.</p>
+					<p>Press <i>enter</i> to validate or <i>space</i> to pass the word.</p>
+				</div>
+				<div class="buttonplay">
+					<button id="html5play" onclick="showControls();selectGame('html5')">PLAY</button>
+				</div>
+			</div>
+			<div class="controls" id="controls" style="display:none;">
+				<p id="definition" class="definition"></p>
+				<input id="useranswer" type="text" onkeypress="if (event.keyCode === 13){validate(1);}else if (event.keyCode===32){validate(0);}" autofocus placeholder="Write your answer">
+				<button class="validate" id="valJs" onclick="validate(1)">VALIDATE</button>
+				<button class="pasapalabra" id="pasapalabraJs" onclick="validate(0)">PASSTHEWORD</button>
+				<button class="exit" id="salirJs" onclick="exit()">EXIT</button>
+			</div>
+			<div class="score" id="score" style="display:none;">
+				<p id="jsscore" class="score"></p>
+			</div>
+		</div>
+		<script type="text/javascript" src="app/app.js"></script>
+	</div>
+</body>
+</html>
