@@ -1,0 +1,77 @@
+body {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    color: #ffffff;
+    font-size: 16px;
+    width: 60%;
+    margin-left: 20%;
+    margin-top: 50px;
+    background: linear-gradient(-30deg, #34325e, #376bb9);
+}
+
+main {
+    margin-top: 50px;
+}
+
+h1 {
+    font-family: 'Nanum Brush Script', cursive;
+    font-size: 80px;
+    color: #8bfff0;
+    margin: 0 auto;
+}
+
+h2 {
+    font-family: 'Nanum Brush Script', cursive;
+    font-size: 50px;
+    color: #8bfff0;
+    margin-top: 50px;
+    margin-bottom: 0px;
+}
+
+.girl {
+    width: 140px;
+    height: 180px;
+    float: left;
+}
+
+header section {
+    margin-left: 170px;
+}
+
+header section p {
+    margin: 0 auto;
+}
+
+aside {
+    float: left;
+    top: 0;
+    height: 800px;
+}
+
+aside section {
+    margin-top: 30px;
+    margin-bottom: 60px;
+    margin-right: 70px;
+}
+
+aside section ul {
+    list-style: none;
+    padding: 0px;
+    font-size: 14px;
+}
+
+img {
+    width: 30px;
+    height: 30px;
+}
+
+a {
+    color: #8bfff0;   
+}
+
+ul {
+    margin-top: 0px;
+}
+
+footer {
+    margin-top: 50px;
+}

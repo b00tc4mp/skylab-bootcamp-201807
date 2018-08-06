@@ -1,0 +1,31 @@
+@mixin menu--no-style($rollover-color:null) {
+  list-style-type: none;
+  margin:0;
+  padding:0;
+  li {
+    margin: 0;
+    padding: 0;
+    a {
+      text-decoration: none;
+      color: inherit;
+      cursor: pointer;
+      &:active, &:hover {
+        color: $rollover-color;
+      }
+    }
+  }
+}
+
+@mixin menu--no-style--vertical($rollover-color:null) {
+  @include menu--no-style($rollover-color);
+}
+
+@mixin menu--no-style--horizontal($rollover-color:null) {
+  @include menu--no-style($rollover-color);
+
+  li {
+    display: inline-block;
+
+  }
+}
+

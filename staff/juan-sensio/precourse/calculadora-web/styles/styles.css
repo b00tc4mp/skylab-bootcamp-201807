@@ -1,0 +1,36 @@
+* {
+	font-family: 'Montserrat', sans-serif;
+}
+
+body {
+	background: black;	
+}
+
+p {
+	padding: 0px;
+	margin: 0px;
+}
+
+button {
+	width: 80px;
+	height: 80px;
+	padding: 0px;
+	margin: 0px;
+	font-size: 40px;
+}
+
+#display {
+	color: white;
+	font-size: 80px;
+	width: 340px;
+}
+
+#numpad {
+	background: grey;
+	width: 340px;
+}
+
+.op {
+	color: white;
+	background: orange;
+}

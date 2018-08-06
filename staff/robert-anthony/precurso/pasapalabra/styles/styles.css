@@ -1,0 +1,229 @@
+/*
+font-family: 'Faster One', cursive;
+font-family: 'Codystar', cursive;
+font-family: 'Sarina', cursive;
+font-family: 'Monofett', cursive;
+font-family: 'Henny Penny', cursive;
+font-family: 'Nova Mono', monospace;
+font-family: 'Bad Script', cursive;
+font-family: 'Fira Mono', monospace;
+
+*/
+.textSnazz, #scoreBoard #cerrar {
+  background: rgba(0, 255, 21, 0.58);
+  border: solid 1px rgba(0, 255, 100, 0.6); }
+
+.textSnazz {
+  display: inline-block;
+  margin-right: 30%;
+  padding: .5em; }
+
+.letterBig {
+  background-color: rgba(78, 91, 255, 0.8);
+  transform: scale(2);
+  color: red;
+  z-index: 20;
+  border: double 1px rgba(0, 200, 255, 0.8); }
+
+.letterCorrect {
+  border: double 1px rgba(0, 255, 100, 0.8);
+  background-color: rgba(1, 255, 155, 0.5); }
+
+.letterIncorrect {
+  border: double 1px rgba(255, 100, 0, 0.8);
+  background-color: rgba(255, 0, 0, 0.7); }
+
+.letterPasapalabra {
+  border: double 1px rgba(255, 255, 100, 0.7);
+  background-color: rgba(255, 255, 0, 0.7); }
+
+.letterNormal {
+  background-color: rgba(151, 10, 150, 0.85);
+  color: white;
+  border: double 1px rgba(200, 0, 200, 0.8); }
+
+* {
+  box-sizing: border-box; }
+
+html {
+  height: 100%; }
+
+body {
+  color: white;
+  background: url("../images/ghibliroad.jpg") no-repeat;
+  background-attachment: fixed;
+  background-position: left bottom -20px;
+  background-size: cover;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+  background-color: skyblue;
+  font-family: "Open Sans", sans-serif;
+  border: 12px solid rgba(27, 129, 46, 0.87);
+  padding: 0;
+  margin: 0;
+  display: grid;
+  height: 100%;
+  grid-template-rows: 70px 1fr;
+  grid-template-columns: 640px 1fr;
+  grid-gap: 5px;
+  grid-template-areas: "pageHeader pageHeader " "letterDisplay userInteraction "; }
+
+#letter-display {
+  grid-area: letterDisplay;
+  position: relative; }
+  #letter-display div {
+    height: 50px;
+    width: 50px;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    font-family: 'Comfortaa', sans-serif;
+    position: absolute;
+    flex-direction: row;
+    display: flex;
+    justify-content: center;
+    align-items: center; }
+
+#user-interaction {
+  display: grid;
+  grid-gap: 5px;
+  grid-area: userInteraction;
+  grid-template-rows: 2fr 1fr;
+  grid-template-areas: "userOutput" "userInput"; }
+  #user-interaction button {
+    cursor: pointer;
+    border-radius: 5%;
+    width: 150px;
+    height: 40px;
+    text-align: center;
+    background-color: rgba(1, 255, 53, 0.65);
+    color: white;
+    border: white solid .9px;
+    font-size: .75em;
+    margin-top: 15px; }
+    #user-interaction button:hover, #user-interaction button:active {
+      border-color: rgba(255, 234, 0, 0.9);
+      color: rgba(255, 234, 0, 0.9); }
+  #user-interaction .buttonHidden {
+    opacity: 0;
+    visibility: hidden; }
+  #user-interaction .buttonVisible {
+    opacity: 1;
+    visibility: visible; }
+  #user-interaction #replayButton {
+    visibility: hidden;
+    display: none; }
+  #user-interaction #user-output {
+    grid-area: userOutput;
+    display: grid;
+    grid-gap: 5px;
+    grid-template-rows: 2fr 1fr;
+    grid-template-areas: "questionSpace" "message"; }
+  #user-interaction #user-input {
+    padding: 15px;
+    grid-area: userInput;
+    font-size: 1.5em; }
+    #user-interaction #user-input input {
+      color: white;
+      background: transparent;
+      height: 40px;
+      width: 80%;
+      margin-top: 10px;
+      font-size: 1em;
+      padding: 5px;
+      padding: 5px;
+      border: #1800ff solid 1px; }
+
+#message {
+  grid-area: message;
+  display: flex;
+  padding-left: 25%;
+  flex-direction: column;
+  justify-content: center;
+  background-image: url("../images/ghibli2.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: top left;
+  font-size: 1.5em; }
+
+#questionSpace {
+  padding: 15px;
+  padding-right: 20%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-size: contain;
+  background-position: bottom -40px right -40px;
+  background-repeat: no-repeat;
+  font-family: 'Courgette', cursive;
+  grid-area: questionSpace;
+  font-size: 1.5em; }
+
+.scoreboardOpen {
+  left: 80%; }
+
+.scoreboardClosed {
+  left: 100vw; }
+
+#scoreBoard {
+  width: 300px;
+  height: 100%;
+  position: absolute;
+  background: url("../images/Mascara_sin_rostro.png") fixed top right -80px no-repeat;
+  background-color: rgba(78, 91, 255, 0.8);
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  border: double 1px rgba(0, 200, 255, 0.8);
+  grid-area: scoreBoard;
+  font-family: "Open Sans", sans-serif; }
+  #scoreBoard #cerrar {
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    height: 20px;
+    width: 20px;
+    display: flex;
+    flex-direction: column;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    border-style: solid;
+    border-size: 2px;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer; }
+    #scoreBoard #cerrar:hover, #scoreBoard #cerrar:active {
+      border: solid 2px white; }
+    #scoreBoard #cerrar > div {
+      color: black; }
+      #scoreBoard #cerrar > div:hover, #scoreBoard #cerrar > div:active {
+        color: white; }
+
+.table {
+  left: 10px;
+  top: 40px;
+  display: table;
+  width: 60%;
+  color: white;
+  position: relative; }
+  .table .tableHeader {
+    display: table-header-group;
+    color: red;
+    font-weight: bold;
+    text-decoration: underline; }
+  .table .tableRow {
+    display: table-row;
+    width: 100%;
+    margin-top: .5em; }
+  .table .tableCell {
+    padding: .25em;
+    width: 50%;
+    display: table-cell; }
+
+#pageHeader {
+  font-family: 'Faster One', cursive;
+  font-size: 10vh;
+  grid-area: pageHeader; }
+
+/*# sourceMappingURL=styles.css.map */

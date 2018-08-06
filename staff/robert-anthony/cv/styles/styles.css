@@ -1,0 +1,64 @@
+body {
+  margin: 0;
+  padding: 30px;
+  background: ivory;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 16px;
+  display: grid;
+  grid-template-columns: 1fr 400px;
+  grid-template-rows: 100px repeat(4, 1fr);
+  grid-gap: 10px; }
+
+h1 {
+  color: darkred;
+  font-weight: 800;
+  font-size: 2.5em; }
+
+.heading {
+  font-size: 1.5em;
+  margin-left: 20px;
+  color: darkred; }
+
+.heading2 {
+  color: darkolivegreen;
+  font-size: 1.2em; }
+
+main {
+  margin-left: 5%;
+  width: 50%;
+  grid-area: 2 / 1 / span 3 / span 1; }
+
+#education dt + dd {
+  font-weight: 600; }
+
+section h2 {
+  color: darkslateblue;
+  font-weight: 600; }
+section dt {
+  color: indianred;
+  margin-left: .85em;
+  font-weight: 600;
+  margin-top: .5em; }
+section dd {
+  margin-left: 2em;
+  margin-top: .2em;
+  margin-bottom: .2em; }
+
+footer {
+  grid-area: 5 / 1 / span 1 / span 2; }
+
+header {
+  grid-area: 1 / 2 / span 2 / span 1; }
+
+address {
+  color: darkgrey;
+  font-weight: 300;
+  font-style: normal; }
+  address a, address a:visited {
+    color: darkgrey;
+    text-decoration: none; }
+    address a:hover, address a:active, address a:visited:hover, address a:visited:active {
+      color: darkmagenta;
+      text-decoration: underline; }
+
+/*# sourceMappingURL=styles.css.map */
