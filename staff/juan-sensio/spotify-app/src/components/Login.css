@@ -1,0 +1,49 @@
+.login {
+  height: 100vh;
+  width: 100%;
+  background: url(../pics/landing.jpg);
+  display: grid;
+  grid-template: 30% 5% 5% 1% 5% 5%/1fr;
+  grid-gap: 30px;
+  align-items: center;
+  justify-items: center;
+}
+.login__title {
+  color: white;
+}
+.login__group {
+  width: 65%;
+  color: lightgrey;
+  display: grid;
+  justify-items: start;
+}
+.login__input {
+  color: white;
+  margin: 0 auto;
+  width: 100%;
+  height: 30px;
+  border-radius: 10px;
+  border: none;
+  background: rgba(0, 0, 0, 0.3);
+}
+.login__btn {
+  color: white;
+  border: none;
+  border-radius: 30px;
+  width: 40%;
+  height: 40px;
+  background-color: rgba(0, 0, 0, 0.3);
+  font-size: 16px;
+  text-transform: uppercase;
+}
+.login__btn:hover {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.login__btn--secondary {
+  color: darkgray;
+}
+.login__error {
+  color: red;
+}
+
+/*# sourceMappingURL=Login.css.map */
