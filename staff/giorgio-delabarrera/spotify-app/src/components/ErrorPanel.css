@@ -1,0 +1,14 @@
+
+.ErrorPanel {
+  color: red;
+  padding: 15px;
+  border: 1px solid red;
+  width: 30%;
+  background-color: antiquewhite;
+  margin: 0 auto;
+}
+
+.ErrorPanel .ErrorPanel__list {
+  list-style: none;
+  padding: 0;
+}

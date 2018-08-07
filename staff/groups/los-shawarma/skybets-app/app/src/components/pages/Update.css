@@ -1,0 +1,38 @@
+body {
+    background-color: #f5f5f5;
+}
+
+.form-update .sr-info {
+    text-align: left
+}
+
+.form-update .sr-info label {
+    font-size: 18px;
+    margin-bottom: 0;
+    margin-left: 5px;
+    margin-top: 10px;
+}
+
+.form-update .sr-info span {
+    color: #495057;
+}
+
+.form-update {
+    width: 100%;
+    max-width: 330px;
+    padding: 15px;
+    margin: auto;
+}
+
+.form-update input.form-control {
+    margin: 20px 0;
+}
+
+.form-update button {
+    background-color: #6fa0c2;
+    border-color: #6fa0c2;
+}
+
+.form-update button:hover {
+    background-color: #3f6b91;
+}

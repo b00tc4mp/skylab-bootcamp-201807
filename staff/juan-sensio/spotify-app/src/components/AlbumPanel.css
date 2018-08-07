@@ -1,0 +1,26 @@
+.albumPanel {
+  height: 100vh;
+  background-color: black;
+}
+.albumPanel__btn {
+  margin: 10px 10px;
+  color: rgba(255, 255, 255, 0.9);
+  background: none;
+  background-color: rgba(66, 65, 65, 0.5);
+  border: none;
+  width: 50px;
+  height: 30px;
+  border-radius: 10px;
+}
+.albumPanel__btn:hover {
+  background-color: rgba(66, 65, 65, 0.9);
+}
+.albumPanel__title {
+  color: rgba(255, 255, 255, 0.9);
+  width: 100%;
+  text-align: center;
+  text-transform: uppercase;
+  padding: 10px 0;
+}
+
+/*# sourceMappingURL=AlbumPanel.css.map */

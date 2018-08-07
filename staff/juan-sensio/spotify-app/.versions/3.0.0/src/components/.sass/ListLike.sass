@@ -1,0 +1,25 @@
+$bg-color: black
+
+.list-like
+    background-color: $bg-color
+    padding-bottom: 20px
+    &__item 
+        height: 30px
+        padding: 10px 10px
+        display: grid
+        grid-template: 1fr / 90% 10%
+        align-items: center
+        justify-items: center
+        &:hover
+            background-color: rgba(grey, 0.3)
+        & a
+            color: rgba(white,0.9)
+            text-decoration: none
+            height: auto
+            width: 100%
+            cursor: default
+.far
+    color: silver
+    text-align: right
+.fas
+    color: red

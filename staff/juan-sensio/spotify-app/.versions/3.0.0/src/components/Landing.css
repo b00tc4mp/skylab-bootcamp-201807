@@ -1,0 +1,39 @@
+.landing {
+  color: white;
+  height: 100vh;
+  width: 100%;
+  background: url(../pics/landing.jpg);
+  display: grid;
+  grid-template: 50% 50%/1fr;
+  align-items: center;
+  justify-items: center;
+}
+.landing__title {
+  font-size: 60px;
+}
+.landing__buttons {
+  display: grid;
+  grid-gap: 30px;
+  width: 100%;
+  justify-items: center;
+}
+.landing__btn {
+  background-color: white;
+  width: 70%;
+  height: 50px;
+  border: none;
+  border-radius: 30px;
+  text-transform: uppercase;
+}
+.landing__btn:hover {
+  background-color: rgba(255, 255, 255, 0.7);
+}
+.landing__btn--register {
+  background-color: green;
+  color: white;
+}
+.landing__btn--register:hover {
+  background-color: rgba(0, 128, 0, 0.7);
+}
+
+/*# sourceMappingURL=Landing.css.map */
