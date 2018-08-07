@@ -1,0 +1,28 @@
+
+.player
+    display: grid
+    grid-template-columns: 3fr 3fr 3fr
+
+    &__track
+        display: grid
+        grid-template-columns: 60px 1fr
+        grid-column-gap: 15px
+
+    &__track-album
+        width: 60px
+
+    &__container-track-titles
+        display: flex
+        flex-direction: column
+        justify-content: center
+
+    &__track-title
+        color: #ffffff
+        font-size: 1rem
+        margin-bottom: 5px
+
+    &__track-artist
+        font-size: 0.8rem
+
+    &__controls
+        text-align: center

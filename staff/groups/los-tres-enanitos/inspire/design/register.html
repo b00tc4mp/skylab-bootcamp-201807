@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Inspire</title>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.1/css/all.css" integrity="sha384-O8whS3fhG2OnA5Kas0Y9l3cfpmYjapjI0E4theH4iuMD+pLhbf6JI0jIMfYcK3yZ"
+    crossorigin="anonymous">
+  <link rel="stylesheet" href="./styles/style.css">
+</head>
+
+<body>
+  <header class="header">
+    <div class="logo-container">
+      <a href="#">
+        <img src="./images/logo.png" alt="" class="logo">
+      </a>
+    </div>
+    <div>
+      <form class="search" action="results.html" method="post">
+        <input type="text" placeholder="Insert a word to inspire your mind..." class="search__query search__query--header">
+      </form>
+    </div>
+    <div class="site-nav">
+      <ul class="site-nav__list">
+        <li class="site-nav__item">
+          <a href="login.html" class="site-nav__login">Login</a>
+        </li>
+        <li class="site-nav__item">
+          <a href="register.html" class="site-nav__register">Join free</a>
+        </li>
+      </ul>
+    </div>
+  </header>
+
+  <main>
+    <div class="form-container content push-40-t">
+      <div class="text-center push-20">
+        <ul class="tabs">
+          <li class="tabs__item">
+            <a href="register.html" class="tabs__link tabs__link--active">Join</a>
+          </li>
+          <li class="tabs__item">
+            <a href="login.html" class="tabs__link">Login</a>
+          </li>
+        </ul>
+      </div>
+      <div>
+        <form action="" class="form">
+          <div class="form__main-feedback form__main-feedback--invalid">
+            user with username "deded" does not exist
+          </div>
+          <div class="form__field">
+            <label class="form__label" for="first-name">First name</label>
+            <input type="text" name="" id="first-name" class="form__input">
+            <div class="form__feedback form__feedback--valid">
+              Looks good!
+            </div>
+          </div>
+          <div class="form__field">
+            <label class="form__label" for="last-name">Last name</label>
+            <input type="text" name="" id="last-name" class="form__input">
+            <div class="form__feedback form__feedback--valid">
+              Looks good!
+            </div>
+          </div>
+          <div class="form__field">
+            <label class="form__label" for="email">Email</label>
+            <input type="text" name="" id="email" class="form__input">
+          </div>
+          <div class="form__field">
+            <label class="form__label" for="username">Username</label>
+            <input type="text" name="" id="username" class="form__input">
+            <div class="form__feedback form__feedback--invalid">
+              Please choose a username.
+            </div>
+          </div>
+          <div class="form__field">
+            <label class="form__label" for="password">Password</label>
+            <input type="password" name="" id="password" class="form__input">
+            <div class="form__feedback form__feedback--invalid">
+              Please choose a password.
+            </div>
+          </div>
+          <button type="submit" class="form__submit">Join</button>
+        </form>
+      </div>
+      <!-- <div class="terms">
+        <p>By completing this registration, you accept our
+          <a href="#" class="terms__span">Terms of Service.</span>
+        </p>
+      </div> -->
+    </div>
+  </main>
+</body>
+
+</html>

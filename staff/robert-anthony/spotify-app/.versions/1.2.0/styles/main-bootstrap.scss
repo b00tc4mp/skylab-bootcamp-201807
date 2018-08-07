@@ -1,0 +1,65 @@
+$yellowy: rgb(255, 251, 0);
+$orangey: rgb(255, 123, 0);
+$bluey: rgb(0, 49, 255);
+
+body {
+  font-family: 'Nunito', sans-serif;
+  font-family: 'Roboto Mono', monospace;
+
+}
+
+@mixin link-styling {
+  text-decoration: none;
+  cursor: pointer;
+  margin: 0;
+  padding: 0;
+  color: $bluey;
+  &:hover, &active {
+    color: white;
+    text-decoration: none;
+  }
+}
+
+@mixin gradient-1 {
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#a78fc1+0,ed9017+100 */
+  background: rgb(167, 143, 193); /* Old browsers */
+  background: -moz-linear-gradient(45deg, rgba(167, 143, 193, 1) 0%, rgba(237, 144, 23, 1) 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(45deg, rgba(167, 143, 193, 1) 0%, rgba(237, 144, 23, 1) 100%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(45deg, rgba(167, 143, 193, 1) 0%, rgba(237, 144, 23, 1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#a78fc1', endColorstr='#ed9017', GradientType=1); /* IE6-9 fallback on horizontal gradient */
+}
+
+.list-group .list-group-item .detail-panel__link {
+  @include link-styling;
+}
+
+nav {
+  h1.display-4 {
+color:$orangey;
+  }
+  background: $orangey;
+  @include gradient-1;
+  background-image: url("../imgs/Record-Album-02.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  form.form-inline {
+    color:$orangey;
+button {
+  color:$orangey;
+  border-color:$orangey;
+  &:hover {
+    background:darkblue;
+  }
+}
+  }
+}
+
+.audio-component {
+  visibility: hidden;
+}
+
+.list-group-item.active {
+  background-color:$orangey;
+  border-color: $orangey;
+}
+
