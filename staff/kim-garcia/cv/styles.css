@@ -1,25 +1,76 @@
 body{
     margin: 0 auto;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    background-image: url(fondoserio.jpg);
+    background-size: 100vw 100vh;
+    background-attachment: fixed;
+}
+
+div {
     width: 50%;
-    background-color: gold;
-    
-}
-ul {
-    background: #3399ff;
-    padding: 20px;
-}
-
-
-ul li {
-    background: #cce5ff;
-    margin: 5px;
-}
-
-h1 {
-    color: black;
-    margin-left: 20px;
-}
-
-table {
+    padding: 10px;
+    max-width: 550px;
+    margin: 0 auto;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 10px 20px;
+    box-sizing: border-box;
+    margin-top: 20px;
     margin-bottom: 20px;
+    border-radius: 7px;
+    border-style: solid;
+}
+
+img {
+    display:block;
+    margin:auto;
+}
+
+#nom {
+    color:white;
+    text-align: center;
+    font-weight:bold;
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 7px;
+    font-family: 'Kaushan Script', cursive;
+}
+
+#exp, #estudios {
+    border-collapse: collapse;
+    width: 100%;
+    table-layout: auto;
+}
+
+ul {
+    list-style-type: circle;
+    padding: 0%;
+    align-items: center;
+}
+
+#datos {
+    list-style-type: none;
+    column-count: 2;
+}
+
+h2 {
+    text-align: center;
+    background-color: rgb(233, 233, 233);
+    border-radius: 5px;
+    letter-spacing: 1mm;
+}
+
+h3 {
+    color:white;
+}
+
+h4{
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    text-align: center;
+}
+#idiomas, #hobbies {
+    padding-left: 20px;
+}
+header {
+    background-color: rgba(0, 0, 0, 0.1); ;
+    border-radius: 7px;
 }

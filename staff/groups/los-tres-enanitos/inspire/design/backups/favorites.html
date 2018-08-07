@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="./styles/style.css">
+</head>
+
+<body>
+    <header>BARRA AQUI</header>
+    <div>
+
+        <section class="profile-container">
+            <div class="profile">
+                <div class="profile__photo-container">
+                    <img src="images/icono-user.png" alt="Profile picture">
+                </div>
+                <div class="profile__details">
+                    <div class="profile__details-flex">
+                        <h1 class="profile__details-name">Name Surname</h1>
+                        <div> <a href="" class="profile__details-edit">Edit profile</a>
+                        </div>
+                    </div>
+                    <div class="profile__details-description">Download free, beautiful high-quality photos curated by Kim.</div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="photo-list">
+                <div class="photo-list__item-container">
+                    <div class="photo-list-item">
+                        <img class="photo-list-item__image" src="https://images.unsplash.com/photo-1503066211613-c17ebc9daef0?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=db24a634bad2f3b05cfe733c26e7680f&auto=format&fit=crop&w=1650&q=80" alt="">
+                        <div class="photo-list-item__mask">
+                            <div class="photo-list-item__options">
+                                <div class="photo-list-item__top-options">
+                                    <button>Like</button>
+                                    <button>Collect</button>
+                                </div>
+                                <div class="photo-list-item__bottom-options">
+                                    <button>Download</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="photo-list__item-container">
+                    <div class="photo-list-item">
+                        <img class="photo-list-item__image" src="https://images.unsplash.com/photo-1507318584470-a67407ebe29a?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=3df32f99e45939b2df51d78bfe8256dc&auto=format&fit=crop&w=668&q=80" alt="">
+                    </div>
+                </div>
+                <div class="photo-list__item-container">
+                    <div class="photo-list-item">
+                        <img class="photo-list-item__image" src="https://images.unsplash.com/photo-1519900270450-3a6adec39956?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=61c717efaa5ddb6abb69bfddf97456ce&auto=format&fit=crop&w=1650&q=80" alt="">
+                    </div>
+                </div>
+                <div class="photo-list__item-container">
+                    <div class="photo-list-item">
+                        <img class="photo-list-item__image" src="https://images.unsplash.com/photo-1476245195555-dcf26e109ce8?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=02cddfc64c04df1fd0226656ccfbb310&auto=format&fit=crop&w=668&q=80" alt="">
+                    </div>
+                </div>
+                <div class="photo-list__item-container">
+                    <div class="photo-list-item">
+                        <img class="photo-list-item__image" src="https://images.unsplash.com/photo-1512505965932-0dbfa7e7b8c8?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=0af80a2e279d833a4952eef8d76f64e0&auto=format&fit=crop&w=802&q=80" alt="">
+                    </div>
+                </div>
+                <div class="photo-list__item-container">
+                    <div class="photo-list-item">
+                        <img class="photo-list-item__image" src="https://images.unsplash.com/photo-1524132989408-c8ee48d8f147?ixlib=rb-0.3.5&s=067a55134bf56662565c611e703c1f86&auto=format&fit=crop&w=668&q=80" alt="">
+                    </div>
+                </div>
+                <div class="photo-list__item-container">
+                    <div class="photo-list-item">
+                        <img class="photo-list-item__image" src="https://images.unsplash.com/photo-1517957754642-2870518e16f8?ixlib=rb-0.3.5&s=d6bef472585626661f963206fcf35423&auto=format&fit=crop&w=802&q=80" alt="">
+                    </div>
+                </div>
+                <div class="photo-list__item-container">
+                    <div class="photo-list-item">
+                        <img class="photo-list-item__image" src="https://images.unsplash.com/photo-1488793207478-ff0892419e30?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=e5ccc540a940743bc34083d2c0113087&auto=format&fit=crop&w=666&q=80" alt="">
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+    <script src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.js"></script>
+    <script>
+        imagesLoaded( document.querySelector('.photo-list'), function( instance ) {
+            console.log('all images are loaded');
+            var elem = document.querySelector('.photo-list');
+            var msnry = new Masonry( elem, {
+                itemSelector: '.photo-list__item-container',
+                columnWidth: '.photo-list__item-container',
+                percentPosition: true,
+                // gutter: 10,
+                // transitionDuration: '0.8s'
+                }
+            );
+        });
+    </script>
+</body>
+
+</html>

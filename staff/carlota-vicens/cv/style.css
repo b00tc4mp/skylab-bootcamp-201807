@@ -1,11 +1,38 @@
+
+h1{
+    text-align: center;
+   
+}
+
 body{
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    background: -webkit-linear-gradient(black,red); 
+    padding-left: 60px; 
+    padding-top: 30px;
+    color: white; 
 }
+.titleh3{
+    border-top-style: dashed;
+    width: 300px;
+   
+}
+
 
 ul{
     font-style: italic;
 }
 
-il{
+li{
+    list-style: none;
     font-style: oblique;
 }
+
+figure{
+    float: right;
+    padding-right: 40px;
+}
+
+#information{
+    padding-top: 20px;
+}
+
