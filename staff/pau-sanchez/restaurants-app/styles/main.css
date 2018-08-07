@@ -1,0 +1,81 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    text-align: center;
+    width: 500px;
+    margin: auto;
+}
+
+form{
+    height: 50px;
+}
+
+input{
+    margin: 20px;
+}
+
+
+ul {
+    list-style-type: none;
+  }
+
+a.button-location {
+    -webkit-appearance: button;
+    -moz-appearance: button;
+    appearance: button;
+    width: 150px;
+    text-decoration: none;
+    color: initial;
+    text-align: center;
+    margin: 10px;
+    
+
+
+}
+/*
+.accordion {
+    background-color: #eee;
+    color: #444;
+    cursor: pointer;
+    width: 100%;
+    text-align: left;
+    border: none;
+    outline: none;
+    transition: 0.4s;
+}
+*/
+.panel {
+    
+    background-color: white;
+    display: none;
+    overflow: hidden;
+}
+
+.infoSpace{
+    display: none;
+    height: 300px;
+    
+}
+
+.infoName{
+    width: 100%;
+    margin: auto;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.infotext{
+    font-weight: normal;
+    font-size: 20px;
+}
+
+li{
+    text-align: center;
+}
+
+
+
+

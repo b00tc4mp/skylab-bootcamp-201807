@@ -1,0 +1,15 @@
+.block {
+    padding: 20px 0;
+    border-bottom: 1px solid #e8e8e8;
+}
+
+.block2 {
+    padding: 20px 0;
+    border-bottom: 1px solid #e8e8e8;
+    background-color: #f1f1f1;
+}
+
+.block2Btn{
+    padding:20px 0;
+    background-color: #f1f1f1;
+}

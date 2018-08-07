@@ -1,0 +1,21 @@
+.gallery {
+  display: grid;
+  grid-template: 1fr/1fr 1fr;
+}
+.gallery__container {
+  position: relative;
+}
+.gallery__img {
+  width: 100%;
+}
+.gallery__icon {
+  position: absolute;
+  left: 5%;
+  top: 5%;
+  color: rgba(165, 42, 42, 0.5);
+}
+.gallery__icon:hover {
+  color: red;
+}
+
+/*# sourceMappingURL=Gallery.css.map */

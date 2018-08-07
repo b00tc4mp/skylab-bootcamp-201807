@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <title>KEEP THE FUCKING NAME</title>
+  </head>
+
+  <body>
+
+<button id="startButton" onclick="startUp()">Empezar</button>
+
+<form  id="idTitle" action="#" style="display:none">
+    <label>Nombre primer jugador</label><br>
+    <input id="idNombre1" type="text" value=""/><br>
+    <input type="button" value="enviar" onclick="fuckingName1();" />
+</form>
+
+
+
+<form id="idTitle2" action="#" style="display:none">
+    <label>Nombre segundo jugador</label><br>
+    <input id="idNombre2" type="text" value=""/><br>
+    <input type="button" value="enviar" onclick="getReadyfuckingName2();" />
+</form>
+
+
+<button id="goGameButton" style="display: none"onclick="goGame()">Empezar a Jugar</button>
+
+<div id="questionSpace"></div>
+		<form id="space1stplayer" style="display:none">
+			<p id="question1stplayer"></p><br>
+			<input id="answer1stplayer" type="text" value=""/><br>
+			<input type="button" value="enviar" onclick="check1stplayer();"/>
+		</form>
+		<form id="space2ndplayer" style="display:none">
+			<p id="question2ndplayer"></p><br>
+			<input id="answer2ndplayer" type="text" value=""/><br>
+			<input type="button" value="enviar" onclick="check2ndplayer();"/>
+		</form>
+</div>
+
+
+	 
+
+<script type="text/javascript">
+
+function startUp() {
+	document.getElementById("startButton").style.display = "none";
+	document.getElementById("idTitle").style.display = "block";
+	document.getElementById("idTitle2").style.display = "block";
+
+}
+
+	
+
+function fuckingName1(){
+	var el = document.getElementById("idTitle");
+	var newEl = document.createElement('p');
+	newEl.innerHTML = document.getElementById("idNombre1").value;
+	var name1stplayer = document.getElementById("idNombre1").value;
+	el.parentNode.replaceChild(newEl, el);
+
+	console.log(name1stplayer)
+}
+
+function getReadyfuckingName2(){
+	var el = document.getElementById("idTitle2");
+	var newEl = document.createElement('p');
+	newEl.innerHTML = document.getElementById("idNombre2").value;
+	var name2ndplayer = document.getElementById("idNombre2").value;
+	el.parentNode.replaceChild(newEl, el);
+
+	document.getElementById("goGameButton").style.display = "block";
+	
+}
+
+function goGame() {
+	debugger;
+	document.getElementById("goGameButton").style.display = "none";
+	document.getElementById("space1stplayer").style.display = "block";
+	ask1stplayer(); /*If turn?*/
+}
+
+
+var respuestas = [
+	{pregunta: "text de la pregunta1", respuesta: "respuesta1"},
+	{pregunta: "text de la pregunta2", respuesta: "respuesta2"}
+]
+
+function ask1stplayer() {
+    console.log("askAndCheck1stplayer()")
+    var el = document.getElementById("question1stplayer");
+	var newEl = document.createElement('p');
+	newEl.innerHTML = respuestas[0].pregunta; /*<-- Which question*/
+	el.parentNode.replaceChild(newEl, el);
+	/*check1stplayer();*/
+    
+}
+	
+function check1stplayer() {
+	console.log("check1stplayer()")
+	if (document.getElementById("answer1stplayer").value === respuestas[0].respuesta){
+		console.log("check funciona!!")
+	} else {console.log("no funciona el check")}
+}
+
+function check2ndplayer(){
+
+}
+
+
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <title>KEEP THE FUCKING NAME</title>
+    
+  </head>
+
+  <body>
+
+<button id="goGameButton" onclick="goGame()">Empezar a Jugar</button>
+	 
+<div id="questionSpace"></div>
+
+<script>
+
+var respuestas = [
+{pregunta: "texx"}
+]	
+
+function goGame() {
+	
+	check1stplayer();
+}
+
+function check1stplayer() {
+	
+	
+}
+
+
+	
+</script>
+</body>
+
+</html>

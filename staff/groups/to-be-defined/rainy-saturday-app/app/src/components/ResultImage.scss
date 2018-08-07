@@ -1,0 +1,61 @@
+@import "../App.scss";
+
+#resultImage-favoriteIcon {
+  color: $orangey;
+}
+
+
+
+* {
+  box-sizing: border-box;
+  color: #333333;
+}
+
+img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 1%;
+}
+
+p, h5, h6 {
+  margin: 10px;
+}
+
+div.modal-dialog.resultImage-modalDialog {
+  max-height:90vh;
+  max-width:90vw;
+}
+
+.modal-dialog {
+  .modal-content {
+    .modal-header {
+     h5.modal-title {
+       color:darkcyan;
+       font-size:1.5em;
+       letter-spacing:.2em;
+       font-weight:900;
+     }
+    }
+    .modal-body {
+      color:grey;
+      img {
+        border: 3px solid lightgrey;
+        max-height:90%;
+        margin-bottom:15px;
+      }
+      h6 {
+        font-size:1.2em;
+        margin-top:10px;
+        margin-bottom:5px;
+      font-weight:600;
+    }
+      p {
+        color: $orangey;
+        padding-left:30px;
+        padding-right:30px;
+        font-weight:400;
+      }
+    }
+  }
+}
