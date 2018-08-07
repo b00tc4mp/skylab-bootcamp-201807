@@ -21,15 +21,10 @@ $(window).on('load', function () {
 
         var input2 = $form.find('input')[1];
 
-<<<<<<< HEAD
-$('.num-list li').click(function() { $(this).toggleClass('active'); });
-$('div').click(function () { $(this).toggleClass('active');});
-=======
         console.log($(input2).val());
     });
 
     $('.num-list li').click(function () { $(this).toggleClass('active'); });
->>>>>>> upstream/develop
 
     // $('form').on('submit', function(e) {
     // 	e.preventDefault();
