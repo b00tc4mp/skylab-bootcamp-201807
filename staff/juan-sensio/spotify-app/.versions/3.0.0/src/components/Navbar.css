@@ -1,0 +1,22 @@
+.navbar {
+  background-color: #424141;
+  height: 10vh;
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  display: grid;
+  grid-template: 1fr/1fr 1fr 1fr;
+}
+.navbar__btn {
+  color: white;
+  background: none;
+  border: none;
+  width: 100%;
+  height: 100%;
+  font-size: 20px;
+}
+.navbar__btn:hover {
+  background-color: grey;
+}
+
+/*# sourceMappingURL=Navbar.css.map */

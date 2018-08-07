@@ -1,0 +1,12 @@
+.favorites {
+  background-color: black;
+  height: 100vh;
+}
+.favorites__title {
+  color: white;
+  text-align: center;
+  padding: 15px;
+  text-transform: uppercase;
+}
+
+/*# sourceMappingURL=Favorites.css.map */

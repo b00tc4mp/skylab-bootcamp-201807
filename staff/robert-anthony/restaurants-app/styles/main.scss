@@ -1,0 +1,147 @@
+$yellowy: rgb(255, 251, 0);
+$orangey: rgb(255, 123, 0);
+
+@mixin button-mix {
+  margin: 0;
+  padding: 4px;
+  font-size: 1.2em;
+  background: white;
+  color: #000eb3;
+  -webkit-border-radius: 10%;
+  -moz-border-radius: 10%;
+  border-radius: 10%;
+  cursor: pointer;
+  &:hover {
+    color: $orangey;
+  }
+}
+
+@mixin h1-mix {
+  font-weight: 900;
+  color: $yellowy;
+  letter-spacing: .2em;
+}
+
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Lato', sans-serif;
+  font-weight: 400;
+}
+
+.main-container {
+  margin-left: 20px;
+  margin-top: 20px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  background: #5065eb;
+  padding: 20px;
+  display: grid;
+  grid-template-columns: 500px 1fr;
+  grid-template-rows: max-content max-content;
+  grid-template-areas: "searchArea searchArea" "resultArea detailArea";
+
+}
+
+.detailsPanel {
+  grid-area: detailArea;
+  height: 500px;
+  width: 100%;
+  color: white;
+  font-weight: 300;
+  padding: 2em;
+  padding-bottom: 3em;
+  border: 4px dotted white;
+  list-style-type: none;
+  visibility: hidden;
+  button {
+    @include button-mix;
+
+  }
+  h1 {
+    @include h1-mix;
+  }
+  ul {
+    list-style-type: none;
+    li {
+      margin: 0;
+      padding: 0;
+    }
+  }
+  span {
+    font-weight: 700;
+    color: $orangey;
+  }
+}
+
+.panel__search {
+  grid-area: searchArea;
+  h1 {
+    @include h1-mix;
+  }
+  input {
+    margin: 0 10px;
+    border: darkgreen;
+    -webkit-border-radius: 3px;
+    height: 30px;
+    font-size: 1.2em;
+    color: deepskyblue;
+    padding: 2px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+
+  }
+  button {
+    @include button-mix;
+
+  }
+}
+
+.artists-panel {
+
+  grid-area: resultArea;
+  font-weight: 300;
+  // overflow: hidden;
+  color: white;
+  // overflow-y: scroll;
+  list-style-type: none;
+  width: 100%;
+  li a {
+    text-decoration: none;
+    cursor: pointer;
+    margin: 0;
+    padding: 0;
+    color: inherit;
+    &:hover {
+      color: $orangey;
+    }
+  }
+}
+
+.radioButtons {
+  margin-top: 20px;
+  color: darkslategrey;
+  display: flex;
+  align-items: center;
+
+  label {
+    color: white;
+  }
+
+
+}
+.map {
+  margin: 0;
+  padding: 0;
+  height: 300px;
+  width:300px;
+
+}

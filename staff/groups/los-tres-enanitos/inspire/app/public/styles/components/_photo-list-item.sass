@@ -1,0 +1,68 @@
+
+.photo-list-item
+    cursor: zoom-in
+    display: inline-block
+    margin: 0 0 1em
+    width: 100%
+    
+    &__image
+        width: 100%
+        height: 100%
+    
+    &__mask
+        position: absolute
+        top: 0
+        right: 0px
+        width: 100%
+        height: 100%
+        padding: 10px
+    
+    &__options
+        height: 100%
+        display: flex
+        flex-direction: column
+        justify-content: space-between
+        text-align: right
+    
+    &__top-options
+        padding: 15px
+    
+    &__bottom-options
+        padding: 15px
+
+    &__btn-like
+        color: rgb(240, 85, 86)
+        // background-color: #ED4110
+        // border: 1px solid #ED4110 
+        border-radius: 3px
+        padding: 10px 12px
+        cursor: pointer
+    
+        &--active
+            background-color: white
+            border: 1px solid #999 
+            border-radius: 3px
+            padding: 5px 10px
+
+    &__btn-collect
+        background-color: white
+        border: 1px solid #C5C5C5
+        padding: 10px 12px
+        color: #C5C5C5
+        border-radius: 3px
+
+        &--active
+            background-color: green
+            color: #ffffff
+            border: 1px solid green
+
+        &:hover
+            color: black
+            border-color: black
+        
+    &__btn-download
+        background-color: white
+        padding: 10px 12px
+        border-radius: 3px
+        border: 1px solid #C5C5C5
+        color: #C5C5C5

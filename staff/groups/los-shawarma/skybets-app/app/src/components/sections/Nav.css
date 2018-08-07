@@ -1,0 +1,17 @@
+.navbar button {
+    color: #3f6b91;
+    border-color: #3f6b91;
+}
+
+.navbar button:hover {
+    background-color: #3f6b91;
+    border-color: #3f6b91;
+}
+
+.navbar button:active, 
+.navbar .btn-outline-success:not(:disabled):not(.disabled).active, 
+.navbar .btn-outline-success:not(:disabled):not(.disabled):active, 
+.navbar .show>.btn-outline-success.dropdown-toggle {
+    background-color: #3f6b91;
+    border-color: #3f6b91;
+}

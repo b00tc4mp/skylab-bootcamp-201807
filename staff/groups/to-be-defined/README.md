@@ -1,5 +1,7 @@
 # staff
 
-- Robert
-- Bernat
-- Gerard
+- Bernat (bcasasus)
+- Robert (robert-barcelona)
+- Gerard (gbaste)
+
+
