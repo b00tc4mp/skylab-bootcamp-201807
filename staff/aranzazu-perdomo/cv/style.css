@@ -1,0 +1,80 @@
+body {
+    background: linear-gradient(black,violet);
+}
+
+header h1 {
+    color: white;
+    text-align: center;
+    font-size: 85px;
+    text-decoration-line: underline;
+    margin-left: 5px;
+}
+
+ img {
+    border: 5px solid black;
+    border-radius: 50%;
+    float: left;
+    width: 25%;
+    margin: 5px;
+    margin-right: 25px;
+    
+}
+
+.datos strong {
+    color: white;
+    
+}
+
+.datos {
+    background-color:peru;
+    border: 2px solid black;
+    float: right;
+    width:100%;
+    text-align: left;
+  
+   
+   
+}
+.formacion-academica{
+    background-color: grey;
+    margin: 5px;
+    border: 2px solid black;
+    float: right;
+    width:60%;
+    text-align: center;
+}
+
+.formacion-profesional{
+    background-color: grey;
+    margin: 5px;
+    border: 2px solid black;
+    float: left;
+    width:60%;
+    text-align: center;
+}
+.experiencia {
+    background-color: grey;
+    margin: 5px;
+    border: 2px solid black;
+    float: right;
+    width:60%;
+    text-align: center;
+}
+   
+.formacion-academica strong {
+
+    color: red;
+}
+
+.formacion-profesional strong {
+
+    color: red;
+   }
+   
+.experiencia strong {
+    color: red ;
+}
+
+ul.datos-base{
+    list-style: none;
+}

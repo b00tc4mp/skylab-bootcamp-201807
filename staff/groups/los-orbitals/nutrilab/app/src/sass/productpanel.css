@@ -1,0 +1,32 @@
+.product {
+  background-color: #F1F1F1;
+  z-index: 2;
+  position: absolute;
+  top: 7em;
+  background-color: white;
+  width: 88vw;
+  height: 300vh;
+  margin: 0;
+  padding-left: 10vw;
+  padding-top: 7em;
+}
+.product__close {
+  top: 10em;
+  margin-left: 50em;
+  width: 7em;
+}
+.product__panel {
+  margin: 0;
+  width: 90%;
+}
+
+.text--panel {
+  text-align: left;
+  line-height: normal;
+}
+
+.two--columns {
+  column-count: 2;
+}
+
+/*# sourceMappingURL=productpanel.css.map */

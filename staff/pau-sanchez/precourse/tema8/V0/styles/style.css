@@ -1,0 +1,130 @@
+body{
+
+}
+
+#circleS{
+	margin: auto;
+}
+
+#textsPlayer1{
+	text-align:center;
+}
+
+#textsPlayer2{
+	text-align:center;
+}
+
+.circle{
+    border-radius:50%;
+    font-size:25px;
+    color:#fff;
+    text-align:center;
+    background:black;
+    border: 3px solid yellow;
+    width: 30px;
+    position: absolute;
+    font-family: "Roboto", sans-serif;
+}
+
+#pasapalabraPlayer1{
+	position: relative;
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+    padding-left: 350px;
+    padding-right: 250px;
+    padding-bottom: 100px;
+    padding-top: 200px;
+     
+    /*margin: 28px auto 0;*/
+    /*padding: 250px;*/
+}
+
+#pasapalabraPlayer2{
+	position: relative;
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+    padding-left: 350px;
+    padding-right: 250px;
+    padding-bottom: 100px;
+    padding-top: 200px;
+     
+    /*margin: 28px auto 0;*/
+    /*padding: 250px;*/
+}
+
+
+
+#circleAplayer1 { transform: rotate(-90deg) translate(175px) rotate(90deg);}/*translate(350px); }*/
+#circleBplayer1 { transform: rotate(-76.67deg) translate(175px) rotate(76.67deg);}
+#circleCplayer1 { transform: rotate(-63.33deg) translate(175px) rotate(63.33deg);}
+#circleDplayer1 { transform: rotate(-50deg) translate(175px) rotate(50deg);}
+#circleEplayer1 { transform: rotate(-36.67deg) translate(175px) rotate(36.67deg); }
+#circleFplayer1 { transform: rotate(-23.33deg) translate(175px) rotate(23.33deg); }
+#circleGplayer1 { transform: rotate(-10deg) translate(175px) rotate(10deg); }
+#circleHplayer1 { transform: rotate(3.33deg) translate(175px) rotate(-3.33deg); }
+#circleIplayer1 { transform: rotate(16.67deg) translate(175px) rotate(-16.67deg); }
+#circleJplayer1 { transform: rotate(30deg) translate(175px) rotate(-30deg); }
+#circleKplayer1 { transform: rotate(43.33deg) translate(175px) rotate(-43.33deg); }
+#circleLplayer1 { transform: rotate(56.67deg) translate(175px) rotate(-56.67deg); }
+#circleMplayer1 { transform: rotate(70deg) translate(175px) rotate(-70deg); }
+#circleNplayer1 { transform: rotate(83.33deg) translate(175px) rotate(-83.33deg); }
+#circleÑplayer1 { transform: rotate(96.67deg) translate(175px) rotate(-96.67deg); }
+#circleOplayer1 { transform: rotate(110deg) translate(175px) rotate(-110deg); }
+#circlePplayer1 { transform: rotate(123.33deg) translate(175px) rotate(-123.33deg); }
+#circleQplayer1 { transform: rotate(136.67deg) translate(175px) rotate(-136.67deg); }
+#circleRplayer1 { transform: rotate(150deg) translate(175px) rotate(-150deg); }
+#circleSplayer1 { transform: rotate(163.33deg) translate(175px) rotate(-163.33deg); }
+#circleTplayer1 { transform: rotate(176.67deg) translate(175px) rotate(-176.67deg); }
+#circleUplayer1 { transform: rotate(190deg) translate(175px) rotate(-190deg); }
+#circleVplayer1 { transform: rotate(203.33deg) translate(175px) rotate(-203.33deg); }
+#circleWplayer1 { transform: rotate(216.67deg) translate(175px) rotate(-216.67deg); }
+#circleXplayer1 { transform: rotate(230.00deg) translate(175px) rotate(-230deg); }
+#circleYplayer1 { transform: rotate(243.33deg) translate(175px) rotate(-243.33deg); }
+#circleZplayer1 { transform: rotate(256.67deg) translate(175px) rotate(-256.67deg); }
+
+#circleAplayer2 { transform: rotate(-90deg) translate(175px) rotate(90deg);}/*translate(350px); }*/
+#circleBplayer2 { transform: rotate(-76.67deg) translate(175px) rotate(76.67deg);}
+#circleCplayer2 { transform: rotate(-63.33deg) translate(175px) rotate(63.33deg);}
+#circleDplayer2 { transform: rotate(-50deg) translate(175px) rotate(50deg);}
+#circleEplayer2 { transform: rotate(-36.67deg) translate(175px) rotate(36.67deg); }
+#circleFplayer2 { transform: rotate(-23.33deg) translate(175px) rotate(23.33deg); }
+#circleGplayer2 { transform: rotate(-10deg) translate(175px) rotate(10deg); }
+#circleHplayer2 { transform: rotate(3.33deg) translate(175px) rotate(-3.33deg); }
+#circleIplayer2 { transform: rotate(16.67deg) translate(175px) rotate(-16.67deg); }
+#circleJplayer2 { transform: rotate(30deg) translate(175px) rotate(-30deg); }
+#circleKplayer2 { transform: rotate(43.33deg) translate(175px) rotate(-43.33deg); }
+#circleLplayer2 { transform: rotate(56.67deg) translate(175px) rotate(-56.67deg); }
+#circleMplayer2 { transform: rotate(70deg) translate(175px) rotate(-70deg); }
+#circleNplayer2 { transform: rotate(83.33deg) translate(175px) rotate(-83.33deg); }
+#circleÑplayer2 { transform: rotate(96.67deg) translate(175px) rotate(-96.67deg); }
+#circleOplayer2 { transform: rotate(110deg) translate(175px) rotate(-110deg); }
+#circlePplayer2 { transform: rotate(123.33deg) translate(175px) rotate(-123.33deg); }
+#circleQplayer2 { transform: rotate(136.67deg) translate(175px) rotate(-136.67deg); }
+#circleRplayer2 { transform: rotate(150deg) translate(175px) rotate(-150deg); }
+#circleSplayer2 { transform: rotate(163.33deg) translate(175px) rotate(-163.33deg); }
+#circleTplayer2 { transform: rotate(176.67deg) translate(175px) rotate(-176.67deg); }
+#circleUplayer2 { transform: rotate(190deg) translate(175px) rotate(-190deg); }
+#circleVplayer2 { transform: rotate(203.33deg) translate(175px) rotate(-203.33deg); }
+#circleWplayer2 { transform: rotate(216.67deg) translate(175px) rotate(-216.67deg); }
+#circleXplayer2 { transform: rotate(230.00deg) translate(175px) rotate(-230deg); }
+#circleYplayer2 { transform: rotate(243.33deg) translate(175px) rotate(-243.33deg); }
+#circleZplayer2 { transform: rotate(256.67deg) translate(175px) rotate(-256.67deg); }
+
+
+#startButton{
+	display: block;
+}
+
+
+#formNames {
+    width: 100%;
+    padding: 50px 0;
+    text-align: center;
+    background-color: lightblue;
+    margin-top: 20px;
+    display: none;
+}
+
+

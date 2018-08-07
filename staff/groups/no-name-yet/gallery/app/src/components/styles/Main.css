@@ -1,0 +1,93 @@
+body {
+  background-color: #FCF8FA;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #FCF8FA;
+  height: 100%;
+  padding-bottom: 15vh;
+}
+.main button {
+  background: none;
+  margin: 10px 0;
+}
+.main i {
+  color: rgba(0, 0, 0, 0.7);
+}
+.main i:hover {
+  color: rgba(240, 179, 178, 0.8);
+}
+.main input {
+  display: none;
+}
+.main__upload {
+  width: 100%;
+  max-width: 500px;
+  display: grid;
+  grid-template: 1fr/1fr 1fr;
+  grid-gap: 35%;
+  justify-items: center;
+}
+.main__upload button {
+  border: none;
+  background: none;
+}
+
+.webcam--hidden {
+  display: none;
+}
+
+.image--hidden {
+  display: none;
+}
+
+.capture {
+  width: 100px;
+  height: 100px;
+  background-color: rgba(165, 42, 42, 0.4);
+  border-radius: 50%;
+}
+.capture:hover {
+  background-color: rgba(255, 0, 0, 0.6);
+}
+
+.save {
+  font-size: 20px;
+  background-color: rgba(165, 42, 42, 0.4);
+  border-radius: 30px;
+  width: 150px;
+  height: 70px;
+}
+.save:hover {
+  background-color: rgba(255, 0, 0, 0.6);
+}
+
+.style__images {
+  display: grid;
+  grid-template: 1fr/repeat(5, 20%);
+  width: 100%;
+  align-items: stretch;
+  max-width: 500px;
+}
+
+.style__image {
+  width: 100%;
+}
+
+.menu {
+  height: 90%;
+  max-width: 400px;
+  max-height: 500px;
+}
+
+.menu__container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 80vh;
+}
+
+/*# sourceMappingURL=Main.css.map */
