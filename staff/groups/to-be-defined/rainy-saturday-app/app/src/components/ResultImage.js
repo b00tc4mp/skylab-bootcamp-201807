@@ -12,20 +12,20 @@ class ResultImage extends Component {
       error: '',
       favorite: logic.isFavorite(this.props.image.objectNumber)
     };
-
     this.toggle = this.toggle.bind(this);
   }
 
   toggle() {
+    console.log("this.props.className",this.props.className)
+
     this.setState({
-      modal: !this.state.modal
+
+    modal: !this.state.modal
     });
   }
 
-  componentWillReceiveProps(newProps) {
 
-    this.refreshFavorite(newProps)
-  }
+
 
   onToggleFavorite = () => {
 
@@ -36,31 +36,29 @@ class ResultImage extends Component {
 
     logic.toggleImageFavorite(toStore)
       .then(() => {
-        this.refreshFavorite(this.props)
+        this.setState({favorite: logic.isFavorite(this.props.image.objectNumber)})
       })
       .catch((message) => this.setState({error: message}))
   }
 
-  refreshFavorite(props) {
-    this.setState({favorite: logic.isFavorite(this.props.image.objectNumber)})
-  }
 
   render() {
-    const {favorite} = this.state
+    const favorite = logic.isFavorite(this.props.image.objectNumber)
     return (
       <div>
-        <i id="resultImage-favoriteIcon" className={(favorite ? "fas fa-star fa-2x " : "far fa-star fa-2x ")}
-           onClick={this.onToggleFavorite}></i>
+
         <img src={this.props.image.imageurl} alt={this.props.image.title} onClick={this.toggle}/>
 
-        <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
-          <ModalHeader toggle={this.toggle}>{this.props.image.title}</ModalHeader>
+        <Modal isOpen={this.state.modal} toggle={this.toggle} className="resultImage-modalDialog">
+         <ModalHeader toggle={this.toggle}>{this.props.image.title}</ModalHeader>
           <ModalBody>
             <img className="imageList" src={this.props.image.imageurl} alt={this.props.image.title}/>
             <h6>Title:</h6><p>{this.props.image.longTitle}</p>
             <h6>Maker:</h6><p>{this.props.image.maker}</p>
             <h6>Materials:</h6><p>{this.props.image.materials.join(", ")}</p>
             <h6>Period:</h6><p>{this.props.image.period}</p>
+            <i id="resultImage-favoriteIcon" className={(favorite ? "fas fa-star fa-2x " : "far fa-star fa-2x ")}
+               onClick={this.onToggleFavorite}></i>
           </ModalBody>
           <ModalFooter>
 

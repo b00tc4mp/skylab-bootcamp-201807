@@ -4,4 +4,4 @@
 
 ## [Instructions](app/README.md)
 
-<!-- ## [Live demo](https://spotify-app.surge.sh) -->
+## [Live demo](http://rainy-saturday.surge.sh/#/)
