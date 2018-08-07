@@ -1,7 +1,13 @@
-let res = 0
+// let res = 0
 
-for (var i = 2; i < process.argv.length; i ++) {
-    res = res + parseInt(process.argv[i])
-}
+// for (var i = 2; i < process.argv.length; i ++) {
+//     res = res + parseInt(process.argv[i])
+// }
+
+// console.log(res)
+
+const [, , ...nums] = process.argv
+
+const res = nums.reduce((accum, num) => accum + Number(num), 0)
 
 console.log(res)
