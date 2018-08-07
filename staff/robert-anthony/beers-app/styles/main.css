@@ -1,0 +1,124 @@
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box; }
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Lato', sans-serif;
+  font-weight: 400; }
+
+.main-container {
+  margin-left: 20px;
+  margin-top: 20px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  background: #5065eb;
+  padding: 20px;
+  display: grid;
+  grid-template-columns: 500px 1fr;
+  grid-template-rows: max-content max-content;
+  grid-template-areas: "searchArea searchArea" "resultArea detailArea"; }
+
+.detailsPanel {
+  grid-area: detailArea;
+  height: min-content;
+  width: 100%;
+  color: white;
+  font-weight: 300;
+  padding: 2em;
+  padding-bottom: 3em;
+  border: 4px dotted white;
+  list-style-type: none;
+  visibility: hidden; }
+  .detailsPanel .beer-image {
+    margin-left: 60px;
+    max-width: 500px;
+    max-height: 300px; }
+  .detailsPanel button {
+    margin: 0;
+    padding: 4px;
+    font-size: 1.2em;
+    background: white;
+    color: #000eb3;
+    -webkit-border-radius: 10%;
+    -moz-border-radius: 10%;
+    border-radius: 10%;
+    cursor: pointer; }
+    .detailsPanel button:hover {
+      color: #ff7b00; }
+  .detailsPanel h1 {
+    font-weight: 900;
+    color: #fffb00;
+    letter-spacing: .2em; }
+  .detailsPanel ul {
+    list-style-type: none; }
+    .detailsPanel ul li {
+      margin: 0;
+      padding: 0; }
+  .detailsPanel span {
+    font-weight: 700;
+    color: #ff7b00; }
+
+.panel__search {
+  grid-area: searchArea; }
+  .panel__search h1 {
+    font-weight: 900;
+    color: #fffb00;
+    letter-spacing: .2em; }
+  .panel__search input {
+    margin: 0 10px;
+    border: darkgreen;
+    -webkit-border-radius: 3px;
+    height: 30px;
+    font-size: 1.2em;
+    color: deepskyblue;
+    padding: 2px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px; }
+  .panel__search button {
+    margin: 0;
+    padding: 4px;
+    font-size: 1.2em;
+    background: white;
+    color: #000eb3;
+    -webkit-border-radius: 10%;
+    -moz-border-radius: 10%;
+    border-radius: 10%;
+    cursor: pointer; }
+    .panel__search button:hover {
+      color: #ff7b00; }
+
+.artists-panel {
+  grid-area: resultArea;
+  font-weight: 300;
+  color: white;
+  list-style-type: none;
+  width: 100%; }
+  .artists-panel li a {
+    text-decoration: none;
+    cursor: pointer;
+    margin: 0;
+    padding: 0;
+    color: inherit; }
+    .artists-panel li a:hover {
+      color: #ff7b00; }
+
+.radioButtons {
+  margin-top: 20px;
+  color: darkslategrey;
+  display: flex;
+  align-items: center; }
+  .radioButtons label {
+    color: white; }
+
+.map {
+  margin: 0;
+  padding: 0;
+  height: 300px;
+  width: 300px; }
+
+/*# sourceMappingURL=main.css.map */

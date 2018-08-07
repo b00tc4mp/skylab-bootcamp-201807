@@ -1,0 +1,193 @@
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box; }
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Lato', sans-serif;
+  font-weight: 400;
+  background: lightgrey; }
+
+.main-container {
+  margin-left: 20px;
+  margin-top: 20px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  background: #5065eb;
+  padding: 20px;
+  display: grid;
+  grid-gap: 20px;
+  grid-template-columns: 400px 1fr 1fr;
+  grid-template-rows: max-content max-content;
+  grid-template-areas: "searchArea .  ." "resultArea albumsDetail  tracksDetail"; }
+
+.detail-panel__link {
+  text-decoration: none;
+  cursor: pointer;
+  margin: 0;
+  padding: 0;
+  color: inherit; }
+  .detail-panel__link:hover {
+    color: #ff7b00; }
+
+.detail-panel__link--selected {
+  font-size: 1.5em;
+  color: #ff7b00; }
+
+.detail-panel-albums {
+  grid-area: albumsDetail;
+  height: min-content;
+  width: 100%;
+  color: white;
+  font-weight: 300;
+  padding: 2em;
+  padding-bottom: 3em;
+  border: 4px dotted white;
+  list-style-type: none;
+  visibility: hidden; }
+  .detail-panel-albums button {
+    margin: 0;
+    padding: 4px;
+    font-size: 1.2em;
+    background: white;
+    color: #000eb3;
+    -webkit-border-radius: 10%;
+    -moz-border-radius: 10%;
+    border-radius: 10%;
+    cursor: pointer; }
+    .detail-panel-albums button:hover {
+      color: #ff7b00; }
+  .detail-panel-albums h1 {
+    font-weight: 900;
+    color: #fffb00;
+    letter-spacing: .2em; }
+  .detail-panel-albums ul {
+    list-style-type: none; }
+    .detail-panel-albums ul li {
+      margin: 0;
+      padding: 0; }
+  .detail-panel-albums span {
+    font-weight: 700;
+    color: #ff7b00; }
+
+.detail-panel-tracks {
+  grid-area: tracksDetail;
+  height: min-content;
+  width: 100%;
+  color: white;
+  font-weight: 300;
+  padding: 2em;
+  padding-bottom: 3em;
+  border: 4px dotted white;
+  list-style-type: none;
+  visibility: hidden; }
+  .detail-panel-tracks button {
+    margin: 0;
+    padding: 4px;
+    font-size: 1.2em;
+    background: white;
+    color: #000eb3;
+    -webkit-border-radius: 10%;
+    -moz-border-radius: 10%;
+    border-radius: 10%;
+    cursor: pointer; }
+    .detail-panel-tracks button:hover {
+      color: #ff7b00; }
+  .detail-panel-tracks h1 {
+    font-weight: 900;
+    color: #fffb00;
+    letter-spacing: .2em; }
+  .detail-panel-tracks ul {
+    list-style-type: none; }
+    .detail-panel-tracks ul li {
+      margin: 0;
+      padding: 0; }
+  .detail-panel-tracks span {
+    font-weight: 700;
+    color: #ff7b00; }
+
+.detail-panel-trackInfo {
+  grid-area: trackInfoDetail;
+  height: min-content;
+  width: 100%;
+  color: white;
+  font-weight: 300;
+  padding: 2em;
+  padding-bottom: 3em;
+  border: 4px dotted white;
+  list-style-type: none;
+  visibility: hidden; }
+  .detail-panel-trackInfo button {
+    margin: 0;
+    padding: 4px;
+    font-size: 1.2em;
+    background: white;
+    color: #000eb3;
+    -webkit-border-radius: 10%;
+    -moz-border-radius: 10%;
+    border-radius: 10%;
+    cursor: pointer; }
+    .detail-panel-trackInfo button:hover {
+      color: #ff7b00; }
+  .detail-panel-trackInfo h1 {
+    font-weight: 900;
+    color: #fffb00;
+    letter-spacing: .2em; }
+  .detail-panel-trackInfo ul {
+    list-style-type: none; }
+    .detail-panel-trackInfo ul li {
+      margin: 0;
+      padding: 0; }
+  .detail-panel-trackInfo span {
+    font-weight: 700;
+    color: #ff7b00; }
+
+.search-panel {
+  grid-area: searchArea; }
+  .search-panel h1 {
+    font-weight: 900;
+    color: #fffb00;
+    letter-spacing: .2em; }
+  .search-panel input {
+    margin: 0 10px;
+    border: darkgreen;
+    -webkit-border-radius: 3px;
+    height: 30px;
+    font-size: 1.2em;
+    color: deepskyblue;
+    padding: 2px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px; }
+  .search-panel button {
+    margin: 0;
+    padding: 4px;
+    font-size: 1.2em;
+    background: white;
+    color: #000eb3;
+    -webkit-border-radius: 10%;
+    -moz-border-radius: 10%;
+    border-radius: 10%;
+    cursor: pointer; }
+    .search-panel button:hover {
+      color: #ff7b00; }
+
+.detail-panel-artists {
+  grid-area: resultArea;
+  font-weight: 300;
+  color: white;
+  list-style-type: none;
+  width: 100%; }
+  .detail-panel-artists li a {
+    text-decoration: none;
+    cursor: pointer;
+    margin: 0;
+    padding: 0;
+    color: inherit; }
+    .detail-panel-artists li a:hover {
+      color: #ff7b00; }
+
+/*# sourceMappingURL=main.css.map */

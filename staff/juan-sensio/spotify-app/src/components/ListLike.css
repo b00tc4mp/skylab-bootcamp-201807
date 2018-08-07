@@ -1,0 +1,33 @@
+.list-like {
+  background-color: black;
+  padding-bottom: 20px;
+}
+.list-like__item {
+  height: 30px;
+  padding: 10px 10px;
+  display: grid;
+  grid-template: 1fr/90% 10%;
+  align-items: center;
+  justify-items: center;
+}
+.list-like__item:hover {
+  background-color: rgba(128, 128, 128, 0.3);
+}
+.list-like__item a {
+  color: rgba(255, 255, 255, 0.9);
+  text-decoration: none;
+  height: auto;
+  width: 100%;
+  cursor: default;
+}
+
+.far {
+  color: silver;
+  text-align: right;
+}
+
+.fas {
+  color: red;
+}
+
+/*# sourceMappingURL=ListLike.css.map */

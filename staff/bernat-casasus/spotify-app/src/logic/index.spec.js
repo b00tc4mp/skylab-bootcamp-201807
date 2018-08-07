@@ -1,55 +1,153 @@
-'use strict';
+'use strict'
 
-describe('logic (spotify)', function () {
-    logic.token = 'BQAc1croyFKkNn0OU2h-qv2GNKhVktUAhibj5ed7dItnMLz3tgYHRSKmst01YzgKi6LIcmTIXKt0DOCmT2BS-LqPpR35VI90s-YSoS7AeWGmGdRIzY06UQWg8AeIW2fTvTrfuknU8NRYtanPb-oMeyM6Tsn8CIDyXIA';
+describe('logic (spotify-app)', () => {
+    describe('user\'s', () => {
+
+        describe('register user', () => {
+            const username = 'bernat-casasus-' + Math.random(), password = '123'
+
+            it('should register on correct data', () => {
+                return logic.registerUser(username, password)
+                    .then(id => {
+                        expect(id).toBeDefined()
+                    })
+            })
+        })
+
+        describe('login user', () => {
+            const username = 'bernat-casasus-' + Math.random(), password = '123'
+            let userId
+
+            beforeEach(() => {
+                return logic.registerUser(username, password)
+                    .then(id => userId = id)
+            })
+
+            it('should login on correct data', () => {
+                return logic.loginUser(username, password)
+                    .then(res => {
+                        expect(res).toBeTruthy()
+
+                        expect(logic._userId).toBe(userId)
+                        expect(logic._userToken).toBeDefined()
+                        expect(logic._userUsername).toBe(username)
+                    })
+            })
+        })
+
+        describe('unregister user', () => {
+            const username = 'bernat-casasus-' + Math.random(), password = '123'
+
+            beforeEach(() => {
+                return logic.registerUser(username, password)
+                    .then(() => logic.loginUser(username, password))
+            })
+
+            it('should unregister on correct data', () => {
+                return logic.unregisterUser(password)
+                    .then(res => {
+                        expect(res).toBeTruthy()
+                    })
+            })
+        })
+
+        describe('logout user', () => {
+            const username = 'bernat-casasus-' + Math.random(), password = '123'
+
+            beforeEach(() => {
+                return logic.registerUser(username, password)
+                    .then(() => logic.loginUser(username, password))
+            })
+
+            it('should logout correctly', () => {
+                expect(logic._userId).toBeDefined()
+                expect(logic._userToken).toBeDefined()
+                expect(logic._userUsername).toBeDefined()
+
+                logic.logout()
+
+                expect(logic._userId).toBeNull()
+                expect(logic._userToken).toBeNull()
+                expect(logic._userUsername).toBeNull()
+            })
+        })
+
+        describe('update user', () => {
+            const username = 'bernat-casasus-' + Math.random(), password = '123',newUsername = 'bernat-casasus-'+Math.random(), newPassword = '321'
     
-    describe('search artists', function () {
-        it('should find artists matching criteria', function () {
-            return logic.searchArtists('madonna')
-                .then(function (artists) {
-                    expect(artists).toBeDefined();
-                    expect(artists.length).toBe(20);
-                    expect(artists[0].name).toBe('Madonna');
-                });
-        });
-    });
+            beforeEach(() => {
+                return logic.registerUser(username, password)
+                    .then(() => logic.loginUser(username, password))
+            })
+    
+            it('should update correctly', () => {
+                expect(logic._userId).toBeDefined()
+                expect(logic._userToken).toBeDefined()
+                expect(logic._userUsername).toBeDefined()
+    
+                // logic.updateUser(password, newUsername, newPassword)
+    
+                // expect(logic.updateUser(password, newUsername, newPassword)).toBeTruthy()
+            })
 
-    describe('retrieve albums by artist id', function () {
-        it('should retrieve albums for given artist id', function () {
-            return logic.retrieveAlbumsByArtistId('4BH2S4t8fh9YqRIXnEEDEN')
-                .then(function (albums) {
-                    expect(albums).toBeDefined();
-                    expect(albums.length).toBe(3);
-                    expect(albums[0].name).toBe('Hunter');
-                });
-        });
-    });
-
-    describe('retrieve track by album id', function(){
-        it('should retrieve tracks from given album id', function(){
-
-            return logic.retrieveTracksByAlbumId('4hBA7VgOSxsWOf2N9dJv2X')
-                .then(function(track){
-                    expect(track.length).toBe(20);
-                    expect(track).toBeDefined();
-                    expect(track[0].type).toBe('track');
-                    expect(track[0].name).toBe('Rebel Heart Tour Intro - Live');
-                });
-
-        });
-    });
+            it('should unregister on correct data', () => {
+                return logic.updateUser(password, newUsername, newPassword)
+                    .then(res => {
+                        expect(res).toBeTruthy()
+                    })
+            })
+        })
+    })
 
 
-    describe('retrieve track by track id', function(){
-        it('should retrieve track from given track id', function(){
+    describe('spotify\'s', () => {
+        logic.spotifyToken = 'BQBaWwVn9Zv9LJIvoBicx0MZ20v58rY_f-UizuPpAeFzpfOn2i369TmdpmbdZZCauxsX2yqr00Gxyhjulp7USPW_HgxUT2gK16YTmAvi2-d7m-hGcZYz8m7ngpMPLGIq4ADZg1hAZpxC'
 
-            return logic.retrieveTrackById('5U1tMecqLfOkPDIUK9SVKa')
-                .then(function(track){
-                    expect(track.popularity).toBe(37);
-                    expect(track.type).toBe('track');
-                    expect(track.name).toBe('Rebel Heart Tour Intro - Live');
-                });
+        describe('search artists', () => {
+            it('should find artists matching criteria', () => {
+                return logic.searchArtists('madonna')
+                    .then(artists => {
+                        expect(artists).toBeDefined()
+                        expect(artists.length).toBe(20)
+                        expect(artists[0].name).toBe('Madonna')
+                        expect(artists[0].type).toBe('artist')
+                    })
+            })
+        })
 
-        });
-    });
-});
+        describe('retrieve albums by artist id', () => {
+            it('should retrieve albums for given artist id', () => {
+                return logic.retrieveAlbumsByArtistId('4BH2S4t8fh9YqRIXnEEDEN')
+                    .then(albums => {
+                        expect(albums).toBeDefined()
+                        expect(albums.length).toBe(3)
+                        expect(albums[0].name).toBe('Hunter')
+                        expect(albums[0].type).toBe('album')
+                    })
+            })
+        })
+
+        describe('retrieve tracks by album id', () => {
+            it('should retrieve tracks for given album id', () => {
+                return logic.retrieveTracksByAlbumId('7lnYU1xXbEiKPTZk3ltDE2')
+                    .then(tracks => {
+                        expect(tracks).toBeDefined()
+                        expect(tracks.length).toBe(1)
+                        expect(tracks[0].name).toBe('Hunter')
+                        expect(tracks[0].type).toBe('track')
+                    })
+            })
+        })
+
+        describe('retrieve track by id', () => {
+            it('should retrieve track for given id', () => {
+                return logic.retrieveTrackById('4QxwXcPUm1VfkHksz6VuFi')
+                    .then(track => {
+                        expect(track).toBeDefined()
+                        expect(track.name).toBe('Hunter')
+                        expect(track.type).toBe('track')
+                    })
+            })
+        })
+    })
+})
