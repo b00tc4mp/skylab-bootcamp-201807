@@ -5,6 +5,7 @@ const bl = require('bl')
 
 const { argv: [, , ...urls] } = process
 
+// const start = Date.now()
 const contents = []
 let count = 0
 
@@ -15,7 +16,11 @@ urls.forEach((url, index) => {
     
             contents[index] = content.toString()
 
-            if(++count === urls.length) contents.forEach(content => console.log(content))
+            if(++count === urls.length) {
+                contents.forEach(content => console.log(content))
+
+                // console.log(`${Date.now() - start}ms`)
+            }
         }))
     })
 })

@@ -5,6 +5,8 @@ const bl = require('bl')
 
 const { argv: [, , ...urls] } = process
 
+// const start = Date.now()
+
 getContent(urls)
 
 function getContent(urls) {
@@ -18,4 +20,6 @@ function getContent(urls) {
                 getContent(urls.slice(1))
             }))
         })
+    // else
+    //     console.log(`${Date.now() - start}ms`)
 }
