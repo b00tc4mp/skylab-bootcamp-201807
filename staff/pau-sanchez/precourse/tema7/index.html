@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+		<link rel="stylesheet" type="text/css" href="styles/style.css">
+		<link href="https://fonts.googleapis.com/css?family=Roboto:300" rel="stylesheet">
+	</head>	
+	<body>
+		<div id="calculator">
+			<div id="top">
+				<img src="styles/toppic.png">
+			</div>
+			<div id="results">
+				<div id="digits">
+					<p id="calc">0</p>
+					<p id="temp"></p>
+				</div>	
+				
+			</div>
+			<div id="machine">
+				<div id="numbers">
+					<button id="number7" onclick=pushitem(7);pushNumber("7")>7</button>
+					<button id="number8" onclick=pushitem(8);pushNumber("8")>8</button>
+					<button id="number9" onclick=pushitem(9);pushNumber("9")>9</button>
+					
+					<button id="number4" onclick=pushitem(4);pushNumber("4")>4</button>
+					<button id="number5" onclick=pushitem(5);pushNumber("5")>5</button>
+					<button id="number6" onclick=pushitem(6);pushNumber("6")>6</button>
+					
+					<button id="number1" onclick=pushitem(1);pushNumber("1")>1</button>
+					<button id="number2" onclick=pushitem(2);pushNumber("2")>2</button>
+					<button id="number3" onclick=pushitem(3);pushNumber("3")>3</button>
+					
+					<button id="numbercomma" onclick=pushitem(",");pushNumber(".")>,</button>
+					<button id="number0" onclick=pushitem(0);pushNumber("0")>0</button>
+					<button id="numberequal" onclick=pushResult()>=</button>
+
+					<div id="space"></div>
+						
+					
+					<div id="operations">
+						<button id="opeCE" onclick=reset()>CE</button>
+						<button id="opediv" onclick=pushitem("÷");pushOperation("/")>÷</button>
+						<button id="opemul" onclick=pushitem("x");pushOperation("*")>x</button>
+						<button id="opesub" onclick=pushitem("-");pushOperation("-")>-</button>
+						<button id="opesum" onclick=pushitem("+");pushOperation("+")>+</button>
+					</div>
+				</div>
+
+			</div>
+			<div id="menuphone">
+				<img src="styles/navipic.png">
+			</div>		
+
+		</div>
+		<script src="app/app.js"></script>	
+	</body>
+</html>

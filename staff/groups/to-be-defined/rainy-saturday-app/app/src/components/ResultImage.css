@@ -1,0 +1,81 @@
+.mt-5.container .row h2.page-mainTitle {
+  color: orangered;
+  letter-spacing: .2em;
+  font-weight: 700;
+  margin-bottom: 20px;
+  font-family: "Sunflower", sans-serif; }
+
+/*
+
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 80px;
+}
+
+.App-header {
+  background-color: #222;
+  height: 150px;
+  padding: 20px;
+  color: white;
+}
+
+.App-title {
+  font-size: 1.5em;
+}
+
+.App-intro {
+  font-size: large;
+}
+
+@keyframes App-logo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+*/
+#resultImage-favoriteIcon {
+  color: orangered; }
+
+* {
+  box-sizing: border-box;
+  color: #333333; }
+
+img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 1%; }
+
+p, h5, h6 {
+  margin: 10px; }
+
+div.modal-dialog.resultImage-modalDialog {
+  max-height: 90vh;
+  max-width: 90vw; }
+
+.modal-dialog .modal-content .modal-header h5.modal-title {
+  color: darkcyan;
+  font-size: 1.5em;
+  letter-spacing: .2em;
+  font-weight: 900; }
+.modal-dialog .modal-content .modal-body {
+  color: grey; }
+  .modal-dialog .modal-content .modal-body img {
+    border: 3px solid lightgrey;
+    max-height: 90%;
+    margin-bottom: 15px; }
+  .modal-dialog .modal-content .modal-body h6 {
+    font-size: 1.2em;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    font-weight: 600; }
+  .modal-dialog .modal-content .modal-body p {
+    color: orangered;
+    padding-left: 30px;
+    padding-right: 30px;
+    font-weight: 400; }
+
+/*# sourceMappingURL=ResultImage.css.map */
