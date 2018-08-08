@@ -13,4 +13,3 @@ module.exports = function(dir,ext, callback){
         callback(null,list)
       })
     }
-

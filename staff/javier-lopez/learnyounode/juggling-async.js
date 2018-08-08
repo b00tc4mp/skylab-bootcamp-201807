@@ -1,4 +1,32 @@
-//Version 1 -- IT WORKS!!!
+const http = require('http')
+let results = []
+let count = 0
+
+for (let i = 0; i < 3; i++) {
+  http.get(process.argv[i+2], function (res) {
+    let result = ''
+    res.setEncoding('utf-8')
+    res.on('data', function (data) {
+      result += data
+    })
+    res.on('end', () => {
+      results[i] = result
+      count ++
+      if (count === 3) {
+        printSolution()
+      }
+    })
+  })
+}
+
+function printSolution(){
+  for (let j = 0; j < count; j++) {
+    console.log(results[j])
+  }
+
+}
+
+//Version 2 -- IT WORKS!!!
 
 // const http = require('http')
 // let url = process.argv[2]
@@ -15,7 +43,7 @@
 //         console.log(result)
 //     })
 //   })
-  
+
 //   http.get(url2, function(response) {
 //     let result = ''
 //     response.setEncoding("utf-8")
@@ -26,7 +54,7 @@
 //         console.log(result)
 //     })
 //   })
-  
+
 //   http.get(url3, function(response) {
 //     let result = ''
 //     response.setEncoding("utf-8")
@@ -37,19 +65,3 @@
 //         console.log(result)
 //     })
 //   })
-
-const http = require('http')
-
-
-for(var i = 2;i<process.length;i++){
-  http.get(process[i], function(res){
-    let result=''
-    res.setEncoding('utf-8')
-    res.on('data', function(data){
-      res = res+data
-    })
-    res.on('end',()=>{
-      console.log(result)
-    })
-  })
-}
