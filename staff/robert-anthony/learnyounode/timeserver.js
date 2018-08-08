@@ -1,6 +1,8 @@
 net = require('net')
 strftime = require("strftime")
 
+const { argv:[port]} = process
+
 const server = net.createServer(socket => {
 
   // "YYYY-MM-DD hh:mm"
@@ -9,4 +11,4 @@ const server = net.createServer(socket => {
   socket.end(datetime)
 
 })
-server.listen(process.argv[2])
+server.listen(port)

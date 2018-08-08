@@ -1,11 +1,11 @@
 var fs = require('fs')
 var path = require('path')
 
-const ext = "." + process.argv[3]
 
+let { argv:[,,filename,ext]} = process.argv
+ext = "." + ext
 
-
-fs.readdir(process.argv[2],cb);
+fs.readdir(filename,cb);
 
 function cb(err,list) {
   for (item of list) {

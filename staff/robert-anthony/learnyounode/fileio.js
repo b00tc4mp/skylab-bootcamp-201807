@@ -1,6 +1,8 @@
 var fs = require('fs')
 
-const buff = fs.readFileSync(process.argv[2]);
+const [,, filename] = process.argv
+
+const buff = fs.readFileSync(filename);
 
 const n = buff.toString().split("\n").length -1;
 
