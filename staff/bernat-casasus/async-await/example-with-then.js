@@ -20,6 +20,7 @@ function getCatImgByUserId(userId) {
 
 getCatImgByUserId(123)
     .then(res => console.log(res))
+    .catch(({message}) => console.log(`Error del servidor: ${message}`))
 
 
 
