@@ -2,8 +2,8 @@
 
 function toCamelCase(string){
    var stringLowerCase = string.toLowerCase(),
-        //wordsArray = splitToWords(stringLowerCase), //Utilitzem funcio split ["hello", "world"]
-        wordsArray = stringLowerCase.split(' '),
+        wordsArray = splitToWords(stringLowerCase), //Utilitzem funcio split ["hello", "world"]
+       // wordsArray = stringLowerCase.split(' '), //Da error en dos test false
         myCamelCase = '';
 
     for (var i = 0; i < wordsArray.length; i++) {
@@ -12,9 +12,10 @@ function toCamelCase(string){
             var myCapitalFirstLetter = currentWord.charAt(0).toUpperCase(); // "W"
             currentWord = myCapitalFirstLetter.concat(currentWord.slice(1)); //"World"
         }
-        myCamelCase += currentWord;
+        myCamelCase += currentWord; //vamos añadiendo
     }
    return myCamelCase;
 
 
 }
+

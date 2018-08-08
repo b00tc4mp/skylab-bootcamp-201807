@@ -1,0 +1,27 @@
+.wrapper {
+	display: grid;
+	grid-template-columns: 150px 150px 150px 150px 150px;
+	grid-template-rows: 150px 150px 150px;
+	background-color: black;
+	color: black;
+	grid-gap: 20px;
+	padding: 10px;
+	
+}
+
+.box {
+	padding-left: 10px;
+	background-color: #bfbfbf;
+	border: 5px solid ;
+	border-color: white;
+	
+}
+
+p{
+	color: #595959;
+	font-family: sans-serif;
+	padding-left: 25px;
+	padding-top: 50px;
+	font-size: 13px;
+	font-weight: bold;
+}

@@ -1,0 +1,44 @@
+.all {
+  background-color: #444444;
+  height: 100vh;
+  margin: 0 auto;
+  padding-top: 5%; }
+  .all__form {
+    margin-top: 5%;
+    margin-bottom: 2%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap; }
+    .all__form__space {
+      margin: 5px;
+      height: 25px;
+      border-radius: 5px;
+      color: #888888;
+      padding-left: 5px; }
+    .all__form__button {
+      color: #000000;
+      font-size: 0.9em;
+      background-color: #239e4c;
+      color: white;
+      margin: 5px 10px;
+      width: 120px;
+      height: 30px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer; }
+      .all__form__button:hover {
+        background-color: #14612e;
+        font-size: 1em; }
+  .all__text {
+    position: absolute;
+    margin-left: 45%;
+    bottom: 5%;
+    color: #ffffff; }
+    .all__text__link {
+      color: #239e4c;
+      cursor: pointer; }
+      .all__text__link:hover {
+        color: #14612e; }
+
+/*# sourceMappingURL=login-register.css.map */

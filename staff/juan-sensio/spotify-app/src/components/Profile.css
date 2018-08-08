@@ -1,0 +1,61 @@
+.profile {
+  height: 90vh;
+  display: grid;
+  grid-template: 100px repeat(3, 1fr)/1fr;
+  align-items: center;
+  justify-items: center;
+  padding: 0 30px;
+  background-color: lightgray;
+}
+.profile__change-username {
+  width: 100%;
+  display: grid;
+  grid-template: repeat(3, 1fr) auto 1fr/1fr;
+  grid-gap: 10px;
+}
+.profile__change-password {
+  width: 100%;
+  display: grid;
+  grid-template: repeat(3, 1fr) auto 1fr/1fr;
+  grid-gap: 10px;
+}
+.profile__delete {
+  width: 100%;
+  display: grid;
+  grid-template: repeat(2, 1fr) auto 1fr/1fr;
+  grid-gap: 10px;
+}
+.profile__input {
+  border: none;
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.7);
+}
+.profile__btn {
+  background-color: grey;
+  border: none;
+  border-radius: 30px;
+  width: 40%;
+  height: 150%;
+  justify-self: center;
+}
+.profile__btn:hover {
+  background-color: darkgray;
+}
+.profile__btn--logout {
+  background-color: rgba(165, 42, 42, 0.8);
+  width: 50%;
+  height: 50%;
+  font-size: 20px;
+  color: white;
+}
+.profile__btn--logout:hover {
+  background-color: red;
+}
+.profile__text--success {
+  color: green;
+}
+.profile__text--error {
+  color: red;
+}
+
+/*# sourceMappingURL=Profile.css.map */

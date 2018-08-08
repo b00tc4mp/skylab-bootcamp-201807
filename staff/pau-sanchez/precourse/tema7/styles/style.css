@@ -1,0 +1,162 @@
+body{
+	background-color: black;
+}
+
+#calculator{
+	width: 394px;
+	 height: 693px;
+	background-color: white;
+	margin: auto;
+}
+
+#top{
+	width: 394px;
+	height: 27px;
+	background-color: #0097a7;
+}
+
+#results{
+	width: 394px;
+	height: 180px;
+	background-color: white;
+	margin-top: 0px;
+}
+
+#calc {
+	text-align: right;
+	padding-right: 15px;
+	padding-top: 10px;
+	font-size: 66px;
+	color: #636363;
+	font-family: "Roboto",sans-serif;
+
+}
+
+#temp {
+	text-align: right;
+	padding-right: 15px;
+	margin-top: -50px;
+	font-size: 33px;
+	color: #636363;
+	font-family: "Roboto",sans-serif;
+
+}
+
+#machine{
+	background-color: #1de9b6;
+	display: grid;
+	grid-gap: 0px;
+	grid-template-columns: 92px 92px 92px 94px 24px;
+	grid-template-rows: 92px 92px 92px 92px 32px;
+	color: white;
+
+}
+
+#numbers button{
+	background-color: #434343;
+	border-style: none;
+	color: white;
+	font-size: 33px;
+	font-family: "Roboto";
+	width: 92px;
+    height: 92px;
+    padding-right: 0px;
+    padding-left: 0px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+
+#operations button{
+	background-color: #636363;
+	border-style: none;
+	color: white;
+	font-size: 20px;
+	width: 92px;
+    height: 80px;
+    padding-right: 0px;
+    padding-left: 0px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+
+#numbers{
+	display: grid;
+	
+}
+
+#number7{
+	grid-column: 1;
+    grid-row: 1;
+    
+}
+
+#number8{
+	grid-column: 2;
+    grid-row: 1;
+}
+
+#number9{
+	grid-column: 3;
+    grid-row: 1;
+}
+
+#number4{
+	grid-column: 1;
+    grid-row: 2;
+}
+
+#number5{
+	grid-column: 2;
+    grid-row: 2;
+}
+
+#number6{
+	grid-column: 3;
+    grid-row: 2;
+}
+
+#number1{
+	grid-column: 1;
+    grid-row: 3;
+}
+
+#number2{
+	grid-column: 2;
+    grid-row: 3;
+}
+
+#number3{
+	grid-column: 3;
+    grid-row: 3;
+}
+
+#numbercomma{
+	grid-column: 1;
+    grid-row: 4;
+}
+
+#number0{
+	grid-column: 2;
+    grid-row: 4;
+}
+
+#numberequal{
+	grid-column: 3;
+    grid-row: 4;
+}
+
+#space{
+	background-color: #434343;
+	grid-column: 1 / span 3;
+    grid-row: 5;
+    height: 32px;
+}
+
+#operations{
+	grid-column: 4;
+	grid-row: 1 / span 5;
+		display: grid;
+		grid-gap: 0px;
+		grid-template-rows: 80px 80px 80px 80px 80px;
+		color: white;
+}
