@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+		<link rel="stylesheet" type="text/css" href="styles/style.css">
+		<link href="https://fonts.googleapis.com/css?family=Roboto:300" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Bree+Serif" rel="stylesheet">
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	</head>	
+	<body style="background-color: blue">
+		<div id=circleS>	
+			<table>
+				<tr>
+					<th id=headLogo colspan="3">
+						<img id=logo src="styles/logo.png">
+					</th>
+				</tr>	
+				<tr>
+					<td id=headLeft>
+						<p id=namePlayer1></p>
+					</td>
+					<td id=headcenter>
+						
+					</td>
+					<td id=headRight>
+						<p id=namePlayer2></p>
+					</td>
+				</tr>	
+				<tr>
+					<td id=circleLeft>
+							<div id=pasapalabraPlayer1>
+								<div id=circleplayer1_0 class=circle><img src=styles/player1.png></div>
+								<div id=circleplayer1_1 class=circle>A</div>
+								<div id=circleplayer1_2 class=circle>B</div>
+								<div id=circleplayer1_3 class=circle>C</div>
+								<div id=circleplayer1_4 class=circle>D</div>
+								<div id=circleplayer1_5 class=circle>E</div>
+								<div id=circleplayer1_6 class=circle>F</div>
+								<div id=circleplayer1_7 class=circle>G</div>
+								<div id=circleplayer1_8 class=circle>H</div>
+								<div id=circleplayer1_9 class=circle>I</div>
+								<div id=circleplayer1_10 class=circle>J</div>
+								<div id=circleplayer1_11 class=circle>K</div>
+								<div id=circleplayer1_12 class=circle>L</div>
+								<div id=circleplayer1_13 class=circle>M</div>
+								<div id=circleplayer1_14 class=circle>N</div>
+								<div id=circleplayer1_15 class=circle>Ñ</div>
+								<div id=circleplayer1_16 class=circle>O</div>
+								<div id=circleplayer1_17 class=circle>P</div>
+								<div id=circleplayer1_18 class=circle>Q</div>
+								<div id=circleplayer1_19 class=circle>R</div>
+								<div id=circleplayer1_20 class=circle>S</div>
+								<div id=circleplayer1_21 class=circle>T</div>
+								<div id=circleplayer1_22 class=circle>U</div>
+								<div id=circleplayer1_23 class=circle>V</div>
+								<div id=circleplayer1_24 class=circle>W</div>
+								<div id=circleplayer1_25 class=circle>X</div>
+								<div id=circleplayer1_26 class=circle>Y</div>
+								<div id=circleplayer1_27 class=circle>Z</div>
+							</div>
+					</td>
+					<td id=circleMid>	
+							<div id=inBetweenCircles></div>
+							<button id="empezar" onclick="askName1st();">Empezar</button>
+
+							<form  id="askName1" action="#">
+	    							<label id=labelName>NOMBRE PRIMER JUGADOR</label><br>
+	    							<input id="idNombre1" type="text" value=""/><br>
+	    							<input id="buttonName" type="button" value="enviar" onclick="askName2nd()"/>
+							</form>
+							<form  id="askName2" action="#">
+	    							<label id=labelName>NOMBRE SEGUNDO JUGADOR</label><br>
+	    							<input id="idNombre2" type="text" value=""/><br>
+	    							<input id="buttonName" type="button" value="enviar" onclick="launch1stplayer1stturn();"/>
+							</form>
+					</td>
+					<td id=circleRight>
+							<div id=pasapalabraPlayer2>
+								<div id=circleplayer2_0 class=circle><img src=styles/player2.png></div>
+								<div id=circleplayer2_1 class=circle>A</div>
+								<div id=circleplayer2_2 class=circle>B</div>
+								<div id=circleplayer2_3 class=circle>C</div>
+								<div id=circleplayer2_4 class=circle>D</div>
+								<div id=circleplayer2_5 class=circle>E</div>
+								<div id=circleplayer2_6 class=circle>F</div>
+								<div id=circleplayer2_7 class=circle>G</div>
+								<div id=circleplayer2_8 class=circle>H</div>
+								<div id=circleplayer2_9 class=circle>I</div>
+								<div id=circleplayer2_10 class=circle>J</div>
+								<div id=circleplayer2_11 class=circle>K</div>
+								<div id=circleplayer2_12 class=circle>L</div>
+								<div id=circleplayer2_13 class=circle>M</div>
+								<div id=circleplayer2_14 class=circle>N</div>
+								<div id=circleplayer2_15 class=circle>Ñ</div>
+								<div id=circleplayer2_16 class=circle>O</div>
+								<div id=circleplayer2_17 class=circle>P</div>
+								<div id=circleplayer2_18 class=circle>Q</div>
+								<div id=circleplayer2_19 class=circle>R</div>
+								<div id=circleplayer2_20 class=circle>S</div>
+								<div id=circleplayer2_21 class=circle>T</div>
+								<div id=circleplayer2_22 class=circle>U</div>
+								<div id=circleplayer2_23 class=circle>V</div>
+								<div id=circleplayer2_24 class=circle>W</div>
+								<div id=circleplayer2_25 class=circle>X</div>
+								<div id=circleplayer2_26 class=circle>Y</div>
+								<div id=circleplayer2_27 class=circle>Z</div>
+							</div>
+					</td>	
+				</tr>
+				<tr>
+					<td colspan="3" id=footer>
+							<div id="quiz"></div>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="3" id=footer2>
+						<button id="restart" style="display:none" onclick="reload()">Reiniciar</button>
+					</td>
+				</tr>
+			</table>	
+		</div>			
+		<script src="app/app.js"></script>
+	</body>
+</html>	

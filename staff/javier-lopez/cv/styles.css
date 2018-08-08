@@ -1,0 +1,31 @@
+body{
+    background: -webkit-linear-gradient(-45deg, #35577D, #141E30);
+    background: linear-gradient(-45deg, #35577D, #141E30);
+}
+
+figure img{
+    border-radius: 100px;
+}
+
+main header{
+    width: 58%;
+    text-align: center;
+    margin-left: 5%;
+    background-color: #6699CC;
+}
+
+.content{
+    border: 2px solid black;
+}
+main{
+    width: 70%;
+    float: left;
+}
+
+#name{
+    background-color: #009900;
+    width: 30%;
+    float: left;
+    height: 500px;
+    text-align: center; 
+}

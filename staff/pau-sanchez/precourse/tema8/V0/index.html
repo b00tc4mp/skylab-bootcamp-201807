@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+		<link rel="stylesheet" type="text/css" href="styles/style.css">
+		<link href="https://fonts.googleapis.com/css?family=Roboto:300" rel="stylesheet">
+	</head>	
+	<body>
+		<div id=circleS>	
+			<table>
+				<tr>
+					<th>
+						<div>
+							<p id=namePlayer1>namePlayer1</p>
+						</div>
+					</th>
+					<th>
+						<div id=inBetweenTop>
+							<p>TOP</p>
+						</div>
+					</th>
+
+					<th>
+						<div >
+							<p id=namePlayer2>namePlayer2</p>
+						</div>
+					</th>
+				</tr>	
+				<tr>
+						<td>		
+							<div id=pasapalabraPlayer1>
+								<div id=circleAplayer1 class=circle>A</div>
+								<div id=circleBplayer1 class=circle>B</div>
+								<div id=circleCplayer1 class=circle>C</div>
+								<div id=circleDplayer1 class=circle>D</div>
+								<div id=circleEplayer1 class=circle>E</div>
+								<div id=circleFplayer1 class=circle>F</div>
+								<div id=circleGplayer1 class=circle>G</div>
+								<div id=circleHplayer1 class=circle>H</div>
+								<div id=circleIplayer1 class=circle>I</div>
+								<div id=circleJplayer1 class=circle>J</div>
+								<div id=circleKplayer1 class=circle>K</div>
+								<div id=circleLplayer1 class=circle>L</div>
+								<div id=circleMplayer1 class=circle>M</div>
+								<div id=circleNplayer1 class=circle>N</div>
+								<div id=circleÑplayer1 class=circle>Ñ</div>
+								<div id=circleOplayer1 class=circle>O</div>
+								<div id=circlePplayer1 class=circle>P</div>
+								<div id=circleQplayer1 class=circle>Q</div>
+								<div id=circleRplayer1 class=circle>R</div>
+								<div id=circleSplayer1 class=circle>S</div>
+								<div id=circleTplayer1 class=circle>T</div>
+								<div id=circleUplayer1 class=circle>U</div>
+								<div id=circleVplayer1 class=circle>V</div>
+								<div id=circleWplayer1 class=circle>W</div>
+								<div id=circleXplayer1 class=circle>X</div>
+								<div id=circleYplayer1 class=circle>Y</div>
+								<div id=circleZplayer1 class=circle>Z</div>
+							</div>
+						</td>
+						<td>	
+							<div id="inBetweenCircles">
+								<button id=startButton onclick="startUp()">Empezar</button>
+								<div id="formNames">
+									<form onsubmit="getNames(); return false;">
+										<label>Nombre primer jugador</label>
+										<input type="text" id="name1stPlayer" value="">
+										<label>Nombre segundo jugador</label>
+										<input type="text" id="name2ndPlayer" value="">
+										<input type="submit" name="Continuar">
+									</form>
+								</div>
+								<p id="PinBetweenCircles"></p>
+								<div id="questions"></div>
+							</div>
+						</td>
+						<td>
+							<div id=pasapalabraPlayer2>
+								<div id=circleAplayer2 class=circle>A</div>
+								<div id=circleBplayer2 class=circle>B</div>
+								<div id=circleCplayer2 class=circle>C</div>
+								<div id=circleDplayer2 class=circle>D</div>
+								<div id=circleEplayer2 class=circle>E</div>
+								<div id=circleFplayer2 class=circle>F</div>
+								<div id=circleGplayer2 class=circle>G</div>
+								<div id=circleHplayer2 class=circle>H</div>
+								<div id=circleIplayer2 class=circle>I</div>
+								<div id=circleJplayer2 class=circle>J</div>
+								<div id=circleKplayer2 class=circle>K</div>
+								<div id=circleLplayer2 class=circle>L</div>
+								<div id=circleMplayer2 class=circle>M</div>
+								<div id=circleNplayer2 class=circle>N</div>
+								<div id=circleÑplayer2 class=circle>Ñ</div>
+								<div id=circleOplayer2 class=circle>O</div>
+								<div id=circlePplayer2 class=circle>P</div>
+								<div id=circleQplayer2 class=circle>Q</div>
+								<div id=circleRplayer2 class=circle>R</div>
+								<div id=circleSplayer2 class=circle>S</div>
+								<div id=circleTplayer2 class=circle>T</div>
+								<div id=circleUplayer2 class=circle>U</div>
+								<div id=circleVplayer2 class=circle>V</div>
+								<div id=circleWplayer2 class=circle>W</div>
+								<div id=circleXplayer2 class=circle>X</div>
+								<div id=circleYplayer2 class=circle>Y</div>
+								<div id=circleZplayer2 class=circle>Z</div>
+							</div>
+						</td>	
+				</tr>
+				<tr>
+						<td id=textsPlayer1>
+							<div id=textPlayer1>
+								<p>Espacio para el texto de las preguntas del player 1</p>
+							</div>
+							<div>
+								<p>Espacio para introducir respuesta player 1</p>
+							</div>
+							<div>
+								<p>Espacio para submit button</p>
+							</div>
+							<div>
+								<p>Espacio para pasapalabra button</p>
+							</div>
+						</td>
+						<td>	
+							<div id="inBetweenTexts">
+								<p>en medio</p>
+							</div>
+						</td>
+						<td id=textsPlayer2>
+							<div id=textPlayer2>
+								<p>Espacio para el texto de las preguntas del player 1</p>
+							</div>
+							<div>
+								<p>Espacio para introducir respuesta player 1</p>
+							</div>
+							<div>
+								<p>Espacio para submit button</p>
+							</div>
+							<div>
+								<p>Espacio para pasalabra button</p>
+							</div>
+						</td>
+				</tr>
+			</table>	
+		</div>		
+	<script src="app/app.js"></script>	
+	</body>
+</html>	
