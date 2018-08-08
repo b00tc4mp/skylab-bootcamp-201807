@@ -1,0 +1,336 @@
+*
+  padding: 0
+  margin: 0
+  font-family: 'Roboto', sans-serif
+
+body
+  min-width: 421px
+
+.navigationbar--logo
+  margin-top: 10px
+  margin-left: 15px
+  font-weight: bold
+  color: #1CAA98
+  font-size: 20px
+  padding-bottom: 10px
+
+.navigationbar--elements
+  padding-left: 15px
+  margin-top: 15px
+  a
+    padding-left: 15px
+
+li
+  list-style: none
+
+.elements--links
+  display: none
+
+.navigationbar
+  display: flex
+  flex-direction: row
+  background-color: #F8F8F8
+  height: 50px
+
+.navigationbar--burgericon
+  width: 30px
+  height: 5px
+  background-color: #888888
+  margin: 6px 0
+
+nav
+  background-color: #F8F8F8
+
+.navigationbar label
+  padding-top: 4px
+  border: 1px solid #CCCCCC
+  border-radius: 7px
+  padding: 2px 7px
+  margin: 4px 0px
+  margin-left: auto
+  margin-right: 15px
+
+#menuTrigger, nav
+  display: none
+
+#menuTrigger:checked + nav
+  display: block
+
+.navigationbar ul
+  display: flex
+
+.elements--links a
+  color: black
+  text-decoration: none
+
+.main--info
+  display: flex
+  background-color: black
+  justify-content: space-evenly
+
+.sales--name h1, .sales--text p
+  text-align: center
+
+.main--info h1
+  font-size: 45px
+  color: white
+  margin: 10px 0
+
+.sales--text p
+  font-size: 20px
+  color: white
+  margin: 10px 0
+
+.info--sales
+  display: flex
+  flex-direction: column
+  justify-content: space-evenly
+
+.sales--apps
+  display: flex
+  flex-direction: column
+  align-items: center
+  justify-content: center
+  margin: 10px 0
+  img
+    margin: 10px 0
+
+.info--pic img
+  display: none
+
+.demo--container
+  display: flex
+  flex-direction: column
+  justify-content: space-evenly
+
+.container--card
+  margin-top: 50px
+  margin-bottom: 50px
+  display: grid
+  grid-template-columns: 421px
+  grid-template-rows: 343px 50px 1fr
+  justify-content: center
+  margin-left: 5px
+  margin-right: 5px
+
+.card--pic
+  grid-column: 1 / 2
+  grid-row: 1
+  border: 1px solid #CCCCCC
+
+.card--title
+  margin-top: 10px
+
+.title--feature
+  font-size: 30px
+  font-weight: bold
+
+.card--pic img
+  width: 419px
+  height: 341px
+
+.card--title
+  grid-column: 1
+  grid-row: 2/3
+
+.card--infotext
+  margin-top: 10px
+  grid-column: 1
+  grid-row: 3 / 4
+  button
+    margin-top: 10px
+    padding: 10px
+    border-radius: 5px
+    border: 1px solid #CCCCCC
+    background-color: white
+    font-weight: bold
+
+.footer--features
+  color: white
+  background-color: #1CAA98
+  display: flex
+  flex-direction: column
+  padding-left: 50px
+
+.features--title
+  font-size: 20px
+
+.features--text
+  display: block
+  margin-top: 25px
+  font-size: 20px
+  line-height: 1.6
+
+.features--pic
+  display: block
+  padding-left: 50px
+  margin-right: 0px
+
+.pagetitle
+  background-color: green
+  height: 100px
+  color: white
+
+.pagetitle--title h1
+  font-size: 50px
+  margin-left: 15px
+  padding-top: 15px
+
+.mainabout--info
+  display: flex
+  flex-direction: column
+  justify-content: center
+
+.main form .container--card
+  margin-left: 20px
+
+.container--form
+  display: block
+
+.form--inputs
+  display: flex
+  flex-direction: column
+  margin: 50px 30px
+  p
+    font-weight: bold
+    margin-bottom: 7px
+  input
+    border-radius: 5px
+    border: 1px solid #CCCCCC
+    color: #999999
+
+textarea
+  border-radius: 5px
+  border: 1px solid #CCCCCC
+  color: #999999
+
+.form--inputs input
+  height: 30px
+
+.form--button
+  margin-top: 10px
+  padding: 10px
+  border-radius: 5px
+  border: 1px solid #CCCCCC
+  background-color: white
+  font-weight: bold
+  width: 75px
+
+.infoabout--text
+  margin-bottom: 35px
+  margin-left: 15px
+  margin-right: 15px
+
+.infoabout--title
+  font-size: 30px
+  font-weight: bold
+  margin: 20px 0
+
+.info--panels
+  margin-bottom: 20px
+  margin-left: 15px
+  margin-right: 15px
+
+.panels--collapsible
+  background-color: #F5F5F5
+  color: black
+  border: 1px solid #CCCCCC
+  border-radius: 10px 10px 0px 0px
+  cursor: pointer
+  padding: 18px
+  width: 100%
+  text-align: left
+  outline: none
+  font-size: 20px
+  margin-top: 10px
+
+.panels--content
+  padding: 0 15px
+  display: none
+  overflow: hidden
+  background-color: white
+  border: 1px solid #CCCCCC
+  border-radius: 0px 0px 10px 10px
+  p
+    padding: 10px
+
+.footer--bottom
+  color: white
+  background-color: black
+
+.bottom--links
+  padding-top: 10px
+  padding-bottom: 10px
+  a
+    color: white
+    text-decoration: none
+    padding: 5px
+  ul
+    display: flex
+    flex-direction: row
+    align-items: center
+    justify-content: center
+
+.bottom--credits
+  display: block
+  text-align: center
+  padding-bottom: 100px
+
+@media (min-width: 768px)
+  .navigationbar--burgericon, .navigationbar label
+    display: none
+  .elements--links
+    display: block
+  .footer--features
+    flex-direction: row
+    justify-content: space-around
+  .features--pic
+    justify-content: flex-end
+    margin-left: 200px
+  .sales--apps
+    display: flex
+    flex-direction: row
+  .form--inputs
+    display: flex
+    flex-direction: column
+    margin: 50px 30px
+    width: 500px
+  .info--infoabout
+    margin-right: 50px
+
+@media (min-width: 1024px)
+  .navigationbar--burgericon
+    display: none
+  .elements--links
+    display: block
+  .demo--container
+    display: flex
+    flex-direction: row
+    justify-content: space-evenly
+  .info--pic img
+    display: block
+    margin-top: 30px
+  .mainabout--info
+    display: flex
+    flex-direction: row
+    justify-content: space-evenly
+
+@media (min-width: 1400px)
+  .navigationbar--burgericon
+    display: none
+  .elements--links
+    display: block
+  .form--inputs
+    display: flex
+    flex-direction: column
+    margin: 50px 30px
+    width: 750px
+    
+    
+        
+  
+
+  
+
+
+

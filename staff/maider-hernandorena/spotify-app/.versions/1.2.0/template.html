@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+
+    
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="vendor/bootstrap/4.1.0/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
+    <title>Spotify App</title>
+  </head>
+
+  <body>
+
+    <div class="container-fluid">
+
+      <nav class="navbar navbar-light bg-light justify-content-between">
+        <a class="navbar-brand"><img src="spotify.png"></a>
+        <form class="form-inline">
+          <input class="form-control mr-sm-2" type="search" placeholder="Search any song" aria-label="Search">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+      </nav>
+      
+      <div class="grid">
+        <section class="grid grid-template">
+          <h2 class="section-title">Artists</h2>
+          <ul class="list-group">
+              <a href="#" class="list-group-item list-group-item-action">Amanida Amanitus</a>
+              <a href="#" class="list-group-item list-group-item-action">Boletus Bolean</a>
+              <a href="#" class="list-group-item list-group-item-action">Calamardo Caro</a>
+              <a href="#" class="list-group-item list-group-item-action">Delirio Dada</a>
+              <a href="#" class="list-group-item list-group-item-action">Energia Energetica</a>
+          </ul>
+        </section>
+        <section class="grid grid-template">
+          <h2 class="section-title">Albums</h2>
+          <ul class="list-group">
+              <a href="#" class="list-group-item list-group-item-action">Fernando</a>
+              <a href="#" class="list-group-item list-group-item-action">Garaitz</a>
+              <a href="#" class="list-group-item list-group-item-action">Haizea</a>
+              <a href="#" class="list-group-item list-group-item-action">Iñigo</a>
+              <a href="#" class="list-group-item list-group-item-action">Julen</a>
+          </ul>
+        </section>
+        <section class="grid grid-template">
+          <h2 class="section-title">Songs</h2>
+          <ul class="list-group">
+              <a data-toggle="modal" href="#songClick" id="songClick" class="list-group-item list-group-item-action">Karla</a>
+              <a href="#" class="list-group-item list-group-item-action">Larraitz</a>
+              <a href="#" class="list-group-item list-group-item-action">Maider</a>
+              <a href="#" class="list-group-item list-group-item-action">Nerea</a>
+              <a href="#" class="list-group-item list-group-item-action">Olatz</a>
+          </ul>
+        </section>
+      </div>
+
+
+      <div class="modal fade" id="songModal" tabindex="-1" role="dialog">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Song name</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <p>Modal body text goes here.</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        
+  
+        
+        <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="vendor/jquery/3.3.1/jquery-3.3.1.min.js"></script>
+    <script src="vendor/popper/1.14.0/popper.min.js"></script>
+    <script src="vendor/bootstrap/4.1.0/bootstrap.min.js"></script>
+
+    <!-- Modal -->
+    <script>
+      $(document).ready(function(){
+        $("#songClick").click(function(){
+            $("#songModal").modal();
+        });
+      });
+    </script>
+
+  </body>
+</html>

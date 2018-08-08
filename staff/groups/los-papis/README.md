@@ -1,5 +1,0 @@
-# staff
-
-- Javi
-- Alejandro
-- Aranzazu

@@ -3,7 +3,7 @@
  */
 function searchBeers(query, callback) {
   var request = new XMLHttpRequest();
-
+console.log(request);
   request.onreadystatechange = function () {
     if (request.readyState === 4 && request.status === 200) {
       var beers = JSON.parse(request.responseText);
@@ -18,4 +18,6 @@ function searchBeers(query, callback) {
 
   request.send();
 }
+
+searchBeers();
 

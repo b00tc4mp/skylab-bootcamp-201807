@@ -1,0 +1,11 @@
+.successful {
+    color: green;
+    margin-top: 75px;
+    font-size: 18px;
+}
+
+.error {
+    color: red;
+    margin-top: 75px;
+    font-size: 18px;
+}

@@ -1,0 +1,12 @@
+.fa-heart {
+    cursor: pointer;
+}
+
+.fa-heart-active {
+    color: red;
+}
+
+.fa-heart-inactive {
+    color: silver;
+}
+

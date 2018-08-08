@@ -1,0 +1,30 @@
+@import 'Common'
+
+.gallery
+    display: grid
+    grid-template: 1fr / 1fr 1fr
+    height: 100%
+    padding-bottom: 15vh
+    align-items: center 
+    justify-items: center
+    &__container
+        width: 100%
+        height: 100%
+        position: relative
+        display: grid
+        align-items: center 
+        justify-items: center
+        &:hover
+            background-color: rgba(grey,0.1)  
+    &__img
+        max-width: 100%
+        height: auto
+    &__icon
+        position: absolute
+        left: 5%
+        top: 5%
+        color: red
+        &:hover
+            color: $color-app-darkpink 
+    @media screen and (min-width: 500px)
+        grid-template: 1fr / repeat(4, 1fr)

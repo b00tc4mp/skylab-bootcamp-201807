@@ -1,5 +1,0 @@
-# staff
-
-- Carlota
-- Juan
-- Sergi

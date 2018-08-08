@@ -1,0 +1,32 @@
+.search-bar {
+  width: 80%;
+  margin: -3% auto; }
+  .search-bar__form {
+    margin-top: 5%;
+    margin-bottom: 2%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap; }
+    .search-bar__form__space {
+      margin: 5px;
+      height: 25px;
+      border-radius: 5px;
+      color: #888888;
+      padding-left: 5px; }
+    .search-bar__form__button {
+      color: #000000;
+      font-size: 0.9em;
+      background-color: #239e4c;
+      color: white;
+      margin: 5px 10px;
+      width: 120px;
+      height: 30px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer; }
+      .search-bar__form__button:hover {
+        background-color: #14612e;
+        font-size: 1em; }
+
+/*# sourceMappingURL=search.css.map */
