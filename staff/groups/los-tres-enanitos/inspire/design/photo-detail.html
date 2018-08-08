@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.1/css/all.css" integrity="sha384-O8whS3fhG2OnA5Kas0Y9l3cfpmYjapjI0E4theH4iuMD+pLhbf6JI0jIMfYcK3yZ"
+    crossorigin="anonymous">
+  <link rel="stylesheet" href="./styles/style.css">
+</head>
+
+<body>
+  <header class="header">
+    <div class="logo-container">
+      <a href="#">
+        <img src="./images/logo.png" alt="" class="logo">
+      </a>
+    </div>
+    <div>
+      <form class="search" action="results.html" method="post">
+        <input type="text" placeholder="Insert a word to inspire your mind..." class="search__query search__query--header">
+      </form>
+    </div>
+    <div class="site-nav">
+      <ul class="site-nav__list">
+        <li class="site-nav__item">
+          <a href="login.html" class="site-nav__login">Login</a>
+        </li>
+        <li class="site-nav__item">
+          <a href="register.html" class="site-nav__register">Join free</a>
+        </li>
+      </ul>
+    </div>
+  </header>
+
+  <main>
+    <div class="push-40">
+      <section class="photo-detail">
+        <div class="photo-detail__top">
+          <div class="photo-detail__buttons">
+
+            <button class="photo-detail__like" title="Like">
+              <i class="fas fa-heart fa-lg"></i>
+            </button>
+            <!-- <button class="photo-detail__like photo-detail__like--is-liked">
+              <i class="fas fa-heart fa-lg"></i>
+            </button> -->
+
+            <!-- <button class="photo-detail__collect">
+          <i class="fas fa-plus"></i> COLLECT</button>
+
+        <button class="photo-detail__download">
+          <i class="fas fa-arrow-down"></i> DOWNLOAD
+        </button>
+
+        <button class="photo-detail__download">
+          <i class="fas fa-arrow-down"></i>
+        </button> -->
+
+          </div>
+
+        </div>
+        <div class="photo-detail__image">
+          <img src="./images/wallpapers/calm.jpeg" alt="PHOTO">
+        </div>
+        <div class="photo-detail__location">
+          <i class="fas fa-map-marker-alt fa-xs"></i>
+          <a href="#" class="photo-detail__location-link">Australia</a>
+        </div>
+      </section>
+    </div>
+  </main>
+
+</body>
+
+</html>

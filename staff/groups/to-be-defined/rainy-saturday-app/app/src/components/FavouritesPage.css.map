@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AAUI,sCAAkB;EAChB,KAAK,EATD,SAAS;EAUb,cAAc,EAAC,IAAI;EACnB,WAAW,EAAC,GAAG;EACf,aAAa,EAAC,IAAI;EAClB,WAAW,EAZL,uBAAuB;;AAiBnC;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;EA8BE",
+"sources": ["../App.scss"],
+"names": [],
+"file": "FavouritesPage.css"
+}
