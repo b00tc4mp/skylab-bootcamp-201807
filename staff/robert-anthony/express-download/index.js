@@ -3,11 +3,14 @@ const fs = require('fs')
 const fileUpload = require('express-fileupload')
 const pack = require('./package.json')
 
-const { argv: [, , port] } = process
+const {argv: [, , port]} = process
 
 const app = express()
 
 app.use(fileUpload())
+
+app.set('views', __dirname + '/public/views');
+app.set('view engine', 'pug')
 
 app.get('/helloworld', (req, res) => {
   res.send(`<html>
@@ -23,52 +26,24 @@ app.get('/helloworld', (req, res) => {
 app.get('/files', (req, res) => {
   const files = fs.readdirSync('files')
 
-  res.send(`<html>
-    <head>
-        <title>files</title>
-    </head>
-    <body>
-        <ul>
-            ${files.map(file => `<li>${file}</li>`).join('')}
-        </ul>
+  res.render("files",{files:files})
 
-        <form action="/files" method="post" encType="multipart/form-data">
-            <input type="file" name="upload">
-            <button>upload</button>
-        </form>
-    </body>
-</html>`)
 })
 
-app.get('/downloads', (req, res) => {
-  const files = fs.readdirSync('files')
 
-  res.send(`<html>
-    <head>
-        <title>files</title>
-    </head>
-    <body>
-        <ul>
-            ${files.map(file => `<li><a href="/downloads/${file}">${file}</a></li>`).join('')}
-        </ul>
-
-        <form action="/files" method="post" encType="multipart/form-data">
-            <input type="file" name="upload">
-            <button>upload</button>
-        </form>
-    </body>
-</html>`)
+app.get("/downloads/:file", (req, res) => {
+  res.download(__dirname + "/files/" + req.params.file)
+  res.redirect("/files")
 })
 
-app.get("/downloads/:file",(req,res)=>{
-//  res.download(__dirname + "/files/" + req.params.file)
-  const rs = fs.createReadStream(..)
-  const ws =
+app.get("/delete/:file", (req, res) => {
+  fs.unlinkSync(__dirname + "/files/" + req.params.file)
+  res.redirect("/files")
 })
 
 
 app.post('/files', (req, res) => {
-  const { files: { upload } } = req
+  const {files: {upload}} = req
 
   upload.mv(`files/${upload.name}`, function (err) {
     if (err)
