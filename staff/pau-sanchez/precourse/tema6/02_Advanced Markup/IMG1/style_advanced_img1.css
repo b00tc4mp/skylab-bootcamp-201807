@@ -1,0 +1,28 @@
+.table table, td, th{
+	border: 1px solid black;
+}
+
+.share {
+	margin-top: 30px;
+	margin-bottom: 40px;
+}
+
+
+.share a{
+	font-size: 20px;
+}
+
+.boxgender{
+	padding-top: 15px;
+	padding-bottom: 15px;
+	padding-left: 10px;
+	border: 1px solid black;
+	margin-bottom: 15px;
+}
+
+.titlegender p{
+	margin-bottom: -9px;
+	padding-left: 10px;
+	background-color: white;
+}
+

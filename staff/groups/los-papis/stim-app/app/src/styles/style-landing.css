@@ -1,0 +1,71 @@
+.btn {
+   
+    margin-left: 3vw;
+    width: 15vw;
+   
+}
+.bg-dark {
+    background-color: black;
+}
+
+
+
+body{
+    background-image: url("../images/fondo-steam.jpg");
+    width: 100vw;
+    height: 100vh;
+    background-size: cover;
+   
+
+}
+
+.row text-center justify-content-center{
+
+    max-width: 100vw !important;
+    position: relative;
+	border: 1px;
+    background-color: rgba(0, 0, 0, 0.50);
+    margin-top: -8vh;
+    height: 100vh !important;
+   
+
+    
+}
+.row{
+    margin-bottom: 4vh;
+    
+}
+
+
+
+
+p {
+    margin-top: 50vh;
+    margin-bottom: 1rem;
+    color: white;
+    font-size: 2.5vw;
+    align-content: center;
+    text-align: center;
+    padding: 3vw;
+}
+
+.container-fluid {
+    
+    position: relative;
+    background-color: rgba(0, 0, 0, 0.70);
+    width: 90vw;
+    margin-right: 20vw;
+    margin-left: 20vw;
+    max-height: 95vh;
+    max-width: 80vw;
+    border: 2px solid white;
+    margin-top: 5vh;
+       
+    
+}
+
+ #logo-landing{
+    max-width: 50vw;
+    max-height: 45vh;
+    margin-left: 25vw;
+}

@@ -1,0 +1,77 @@
+.App {
+  text-align: center;
+}
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 80px;
+}
+.App-header {
+  background-color: #222;
+  height: 150px;
+  padding: 20px;
+  color: white;
+}
+.App-title {
+  font-size: 1.5em;
+}
+.App-intro {
+  font-size: large;
+}
+@keyframes App-logo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/*Card*/
+.card {
+  min-width: 260px;
+  margin-top: 50px;
+}
+
+.card .btn {
+  margin-top: 20px;
+}
+
+.card label {
+  margin-top: 30px;
+  font-weight: 700;
+}
+/*End Card*/
+
+
+/*Pagination*/
+.current-page {
+  font-size: 1.5rem;
+  vertical-align: middle;
+}
+ul.pagination {
+  margin-top: 0;
+  margin-bottom: 0;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+ul.pagination li.page-item.active a.page-link {
+  color: #445565 !important;
+  background-color: #e3e7eb !important;
+  border-color: #ced4da !important;
+}
+ul.pagination a.page-link {
+  box-shadow: none !important;
+  border-color: #ced4da !important;
+  color: #6b88a4;
+}
+ul.pagination a.page-link:hover {
+  background-color: #f4f4f4;
+}
+
+/*End Pagination*/
+button {
+  background-color: #6fa0c2;
+  color: white;
+  border-radius: 5px;
+  margin-top: 10px;
+  padding: 5px 20px;
+  border: none;
+
+}
+
+/* Start buttons */

@@ -1,0 +1,28 @@
+.list {
+  display: flex;
+  justify-content: center;
+}
+.list__warp {
+  display: flex;
+  width: 60%;
+}
+.list__warp__item {
+  width: 10em;
+}
+.list__warp__item__img {
+  background-size: cover;
+  border-radius: 50%;
+  width: 5em;
+  height: 5em;
+}
+.list__warp__text {
+  text-align: left;
+}
+.list__warp__text__link {
+  color: #212121;
+}
+.list__warp__text__link:hover {
+  color: #6BDFA0;
+}
+
+/*# sourceMappingURL=list.css.map */
