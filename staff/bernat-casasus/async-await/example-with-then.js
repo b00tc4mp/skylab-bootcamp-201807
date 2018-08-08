@@ -15,7 +15,6 @@ function getCatImgByUserId(userId) {
             )
             return Promise.all(promises)
         })
-        // .then(res =>res)
 }
 
 

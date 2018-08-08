@@ -17,9 +17,7 @@ async function getCatImgByUserId(userId) {
     }
 
     return catImageUrls
-
 }
-
 
 getCatImgByUserId(123)
     .then(res => console.log(res))
