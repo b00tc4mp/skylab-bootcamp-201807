@@ -29,7 +29,7 @@ app.get('/files', (req, res) => {
     </head>
     <body>
         <ul>
-            ${files.map(file => `<li>${file}</li>`).join('')}
+            ${files.map(file => `<li><a href="/download">${file} </a></li>`).join('')}
         </ul>
 
         <form action="/files" method="post" encType="multipart/form-data">
@@ -39,6 +39,8 @@ app.get('/files', (req, res) => {
     </body>
 </html>`)
 })
+
+// res.download(path [, filename] [, options] [, fn])
 
 app.post('/files', (req, res) => {
     const { files: { upload } } = req
