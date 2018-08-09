@@ -3,19 +3,23 @@
 const logic = {
     _users: {},
 
+    _validateField(fieldName, fieldValue) {
+        if (typeof fieldValue !== 'string' || !fieldValue.length) throw new Error(`invalid ${fieldName}`)
+    },
+
     register(username, password) {
-        if (typeof username !== 'string' || !username.length) throw new Error('username no valid')
-        if (typeof password !== 'string' || !password.length) throw new Error('password no valid')
+        this._validateField('username', username)
+        this._validateField('password', password)
 
         const user = this._users[username]
 
         if (user) throw new Error(`user ${username} already exists`)
-        this._users[username] = { password }
+        this._users[username] = { password, loggedIn: false }
     },
 
     login(username, password) {
-        if (typeof username !== 'string' || !username.length) throw new Error('wrong username')
-        if (typeof password !== 'string' || !password.length) throw new Error('wrong password')
+        this._validateField('username', username)
+        this._validateField('password', password)
 
         const user = this._users[username]
 
@@ -25,7 +29,7 @@ const logic = {
     },
 
     isLoggedIn(username) {
-        if (typeof username !== 'string' || !username.length) throw new Error('wrong username')
+        this._validateField('username', username)
 
         const user = this._users[username]
 
@@ -34,7 +38,7 @@ const logic = {
     },
 
     logout(username) {
-        if (typeof username !== 'string' || !username.length) throw new Error('wrong username')
+        this._validateField('username', username)
 
         const user = this._users[username]
 

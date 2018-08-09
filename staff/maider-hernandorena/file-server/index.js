@@ -16,7 +16,7 @@ app.use(fileUpload())
 app.use(morgan('dev'))
 app.use(express.static('public'))
 app.use(session({
-    secret: 'keyboard cat',
+    secret: 'zer ote da',
     resave: false,
     saveUninitialized: true,
     cookie: { maxAge: 24 * 60 * 60 * 1000 },
@@ -24,63 +24,145 @@ app.use(session({
 }))
 app.use(bodyParser.urlencoded({ extended: false }))
 
-const errors = {
-    emptyFile: 'cannot upload an empty file'
-}
-
-app.get('/helloworld', (req, res) => {
+app.get('/', (req, res) => {
     res.send(`<html>
                 <head>
-                    <title>hola mundo</title>
+                    <title>files</title>
                 </head>
                 <body>
-                    <h1>hello world!</h1>
+                    <h1>Welcome to files!</h1>
+                    <p>Please, <a href="/register">Register</a> or <a href="/login">Login</a> to continue to your files.</p>
                 </body>
             </html>`)
 })
 
-app.get('/files', (req, res) => {
-    const files = fs.readdirSync('files')
-    let errorMessage
-    const { session } = req
+app.get('/register', (req, res) => {
+    const { session: { error } } = req
+    res.send(`<html>
+                <head>
+                    <title>files</title>
+                    <link rel="stylesheet" href="/styles.css"/>
+                    <link rel="Shortcut Icon" href="/logo.png" type="image/png">
+                </head>
+                <body>
+                    <h1>Register</h1>
+                    <form action="/register" method="post">
+                        <input type="text" name="username" placeholder="Username">
+                        <input type="password" name="password" placeholder="Password">
+                        <button type="submit">Register</button>
+                    </form>
+                    ${error ? `<p class="error">${error}</p>` : ''}
+                    <p>Go to <a href="/login">Login</a></p>
+                </body>
+            </html>`)
+})
 
-    if (logic.isLoggedIn(session.username)) {
-        if (session.error) errorMessage = errors[session.error]
-            res.send(`<html>
-                        <head>
-                            <title>files</title>
-                            <link rel="stylesheet" href="/styles.css"/>
-                            <link rel="Shortcut Icon" href="/logo.png" type="image/png">
-                        </head>
-                        <body>
-                            <ul>
-                                ${files.map(file => `<li><a href="downloads/${file}">${file}</a><a href="deleted/${file}"><p>X</p></a></li>`).join('')}
-                            </ul>
+app.post('/register', (req, res) => {
+    const { session, body: { username, password } } = req
 
-                            <form action="/files" method="post" encType="multipart/form-data">
-                                <input type="file" name="upload">
-                                <button>UPLOAD</button>
-                            </form>
-
-                            ${errorMessage ? `<h2 class="error">${errorMessage}</h2>` : ''}
-                        </body>
-                    </html>`)
-    } else {
+    try {
+        logic.register(username, password)
         res.send(`<html>
                     <head>
                         <title>files</title>
                         <link rel="stylesheet" href="/styles.css"/>
                         <link rel="Shortcut Icon" href="/logo.png" type="image/png">
-                        </head>
+                    </head>
                     <body>
-                        <p>please, proceed to login to access files</p>
+                        <p>User ${username} successfully registered! Now you can go to <a href="/login">Login</a></p>
                     </body>
                 </html>`)
+    } catch ({ message }) {
+        session.error = message
+        res.redirect('/register')
+    }
+})
+
+app.get('/login', (req, res) => {
+    const { session: { error } } = req
+    res.send(`<html>
+                <head>
+                    <title>files</title>
+                    <link rel="stylesheet" href="/styles.css"/>
+                    <link rel="Shortcut Icon" href="/logo.png" type="image/png">
+                </head>
+                <body>
+                    <h1>Login</h1>
+                    <form action="/login" method="post">
+                        <input type="text" name="username" placeholder="Username">
+                        <input type="password" name="password" placeholder="Password">
+                        <button type="submit">Login</button>
+                    </form>
+                    ${error ? `<p class="error">${error}</p>` : ''}
+                    <p>Go to <a href="/register">Register</a></p>
+                </body>
+            </html>`)
+})
+
+app.post('/login', (req, res) => {
+    const { session, body: { username, password } } = req
+
+    try {
+        logic.login(username, password)
+        session.username = username
+        res.redirect('/files')
+    } catch({ message }) {
+        session.error = message
+        res.redirect('/login')
+    }
+})
+
+app.get('/logout', (req,res) => {
+    const { session, body: { username }} = req
+
+    try {
+        logic.logout(username)
+        res.redirect('/')
+    } catch({ message }) {
+        session.error = message
+        res.redirect('/files')
+    }
+})
+//esto no se si va
+
+app.get('/files', (req, res) => {
+    const { session } = req
+
+    //aqui peta y entra al catch solo a veces
+    try {
+        if (logic.isLoggedIn(session.username)) {
+                const files = fs.readdirSync('files')
+                res.send(`<html>
+                            <head>
+                                <title>files</title>
+                                <link rel="stylesheet" href="/styles.css"/>
+                                <link rel="Shortcut Icon" href="/logo.png" type="image/png">
+                            </head>
+                            <body>
+                                <nav>
+                                    <a href="/logout">Logout</a>
+                                </nav>
+                               
+                                <ul>
+                                    ${files.map(file => `<li><a href="downloads/${file}">${file}</a><a href="deleted/${file}"><p>X</p></a></li>`).join('')}
+                                </ul>
+                                <form action="/files" method="post" encType="multipart/form-data">
+                                    <input type="file" name="upload">
+                                    <button>Upload</button>
+                                </form>
+                            </body>
+                        </html>`)
+        } else {
+            res.redirect('/files')
+        }
+    } catch ({ message }) {
+        session.error = message
+        res.redirect('/')
     }
 })
 
 app.post('/files', (req, res) => {
-    const { files: { upload }, session } = req
+    const { session, files: { upload } } = req
 
     if (upload) {
         session.error = ''
@@ -91,7 +173,7 @@ app.post('/files', (req, res) => {
             res.redirect('/files')
         })
     } else {
-        session.error = 'emptyFile'
+        session.error = message
         res.redirect('/files')
     }
 })
@@ -105,91 +187,6 @@ app.get('/deleted/:file', (req, res) => {
     const fileToDelete = `files/${req.params.file}`
     fs.unlinkSync(fileToDelete)
     res.redirect('/files')
-})
-
-app.get('/register', (req, res) => {
-    res.send(`<html>
-                <head>
-                    <title>files</title>
-                    <link rel="stylesheet" href="/styles.css"/>
-                    <link rel="Shortcut Icon" href="/logo.png" type="image/png">
-                </head>
-                <body>
-                    <h1>register</h1>
-                    <form action="/register" method="post">
-                        <input type="text" name="username">
-                        <input type="password" name="password">
-                        <button type="submit">register</button>
-                    </form>
-                </body>
-            </html>`)
-})
-
-app.post('/register', (req, res) => {
-    const { body: { username, password } } = req
-
-    try {
-        logic.register(username, password)
-
-        res.send(`<html>
-                    <head>
-                        <title>files</title>
-                        <link rel="stylesheet" href="/styles.css"/>
-                        <link rel="Shortcut Icon" href="/logo.png" type="image/png">
-                    </head>
-                    <body>
-                        <h1>ok, user ${username} successfully registered</h1>
-                    </body>
-                </html>`)
-    } catch ({message}) {
-        res.send(`<html>
-                    <head>
-                        <title>files</title>
-                        <link rel="stylesheet" href="/styles.css"/>
-                        <link rel="Shortcut Icon" href="/logo.png" type="image/png">
-                    </head>
-                    <body>
-                        <h1>Error: ${message}</h1>
-                    </body>
-                </html>`)
-    }
-})
-
-app.get('/login', (req, res) => {
-    res.send(`<html>
-                <head>
-                    <title>files</title>
-                    <link rel="stylesheet" href="/styles.css"/>
-                    <link rel="Shortcut Icon" href="/logo.png" type="image/png">
-                </head>
-                <body>
-                    <h1>login</h1>
-
-                    <form action="/login" method="post">
-                        <input type="text" name="username">
-                        <input type="password" name="password">
-                        <button type="submit">login</button>
-                    </form>
-                </body>
-            </html>`)
-})
-
-app.post('/login', (req, res) => {
-    const { body: { username, password }, session } = req
-
-    logic.login(username, password)
-    session.username = username
-
-    res.send(`<html>
-                <head>
-                    <title>files</title>
-                    <link rel="stylesheet" href="/styles.css"/>
-                    <link rel="Shortcut Icon" href="/logo.png" type="image/png">
-                </head>
-                <body>
-                    <h1>${logic.isLoggedIn(session.username) ? `ok, user ${username} successfully logged in` : `ko, user ${username} failed to log in`}</h1>
-                </body>
-            </html>`)
 })
 
 
