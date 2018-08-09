@@ -2,16 +2,33 @@ const express = require('express')
 const fs = require('fs')
 const fileUpload = require('express-fileupload')
 const package = require('./package.json')
+const session = require('express-session')
+const FileStore = require('session-file-store')(session)
+const bodyParser = require('body-parser')
+const logic = require('./logic')
 
 const { argv: [, , port] } = process
 
 const app = express()
 
 app.use(fileUpload())
-
 app.use(express.static('public'))
+app.use(session({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+        maxAge: 24 * 60 * 60 * 1000,
+        //secure: true // WARN! in case requiring it to work in https only
+    },
+    store: new FileStore
+}))
+app.use(bodyParser.urlencoded({ extended: false }))
 
-//Pag hello world
+const errors = {
+    EMPTY_FILE: 'cannot upload empty files'
+}
+
 app.get('/helloworld', (req, res) => {
     res.send(`<html>
     <head>
@@ -23,65 +40,158 @@ app.get('/helloworld', (req, res) => {
 </html>`)
 })
 
-// vista files
 app.get('/files', (req, res) => {
+    //const { query: { error } } = req
     const files = fs.readdirSync('files')
-    const { query : {error} } = req
 
-    res.cookie('hello', 'world')
+    let errorMessage
 
-    res.send(`<html>
+    const { session } = req
+
+    if (logic.isLoggedIn(session.username)) {
+
+        if (session.error) errorMessage = errors[session.error]
+
+        res.send(`<html>
     <head>
         <title>files</title>
-        <link rel="stylesheet" href="styles.css"/>
-        <link href="https://www.skylabcoders.com/skylab-coders-academy_408.png" type="image/png" rel="Shortcut icon"
+        <link href="styles.css" rel="stylesheet">
+        <link href="skylab-icon.png" type="image/png" rel="Shortcut Icon">
     </head>
     <body>
         <ul>
-            ${files.map(file => `<li><a href="/files/download/${file}">${file}</a></li><a href="/files/delete/${file}">&nbspDelete</a></li>`).join('')}
+            ${files.map(file => `<li>${file}</li>`).join('')}
         </ul>
+
         <form action="/files" method="post" encType="multipart/form-data">
             <input type="file" name="upload">
-            <button>upload</button>
+            <button type="submit">upload</button>
         </form>
-        ${error ? `<h2 class='error'>${error}</h2>`: ''}
+
+        ${errorMessage ? `<h2 class="error">${errorMessage}</h2>` : ''}
+    </body>
+</html>`)
+
+    } else {
+        res.send(`<html>
+    <head>
+        <title>files</title>
+        <link href="styles.css" rel="stylesheet">
+        <link href="skylab-icon.png" type="image/png" rel="Shortcut Icon">
+    </head>
+    <body>
+        please, proceed to login to access files
+    </body>
+</html>`)
+    }
+})
+
+app.post('/files', (req, res) => {
+    const { files: { upload }, session } = req
+
+    if (upload) {
+        session.error = ''
+
+        upload.mv(`files/${upload.name}`, function (err) {
+            if (err)
+                return res.status(500).send(err)
+
+            res.redirect('/files')
+        })
+        // else
+        //     res.redirect('/files?error=EMPTY_FILE')
+    } else {
+        session.error = 'EMPTY_FILE'
+
+        res.redirect('/files')
+    }
+})
+
+app.get('/register', (req, res) => {
+    res.send(`<html>
+    <head>
+        <title>files</title>
+        <link href="styles.css" rel="stylesheet">
+        <link href="skylab-icon.png" type="image/png" rel="Shortcut Icon">
+    </head>
+    <body>
+        <h1>register</h1>
+
+        <form action="/register" method="post">
+            <input type="text" name="username">
+            <input type="password" name="password">
+            <button type="submit">register</button>
+        </form>
     </body>
 </html>`)
 })
 
-// GET para el download
-app.get('/files/download/:fileName', function(req, res){
+app.post('/register', (req, res) => {
+    const { body: { username, password } } = req
 
-    res.set('Content-type', 'file'); 
-    const {fileName} = req.params
-    const filePath = `${__dirname}/files/${fileName}`; 
-    res.download(filePath);
-    res.redirect('/files')
-  });
+    try {
+        logic.register(username, password)
 
-// GET para el delete
-app.get('/files/delete/:fileName', function(req, res){
+        res.send(`<html>
+            <head>
+                <title>files</title>
+                <link href="styles.css" rel="stylesheet">
+                <link href="skylab-icon.png" type="image/png" rel="Shortcut Icon">
+            </head>
+            <body>
+                <h1>ok, user ${username} successfully registered</h1>
+            </body>
+        </html>`)
+    } catch ({message}) {
+        res.send(`<html>
+            <head>
+                <title>files</title>
+                <link href="styles.css" rel="stylesheet">
+                <link href="skylab-icon.png" type="image/png" rel="Shortcut Icon">
+            </head>
+            <body>
+                <h1>Error: ${message}</h1>
+            </body>
+        </html>`)
+    }
+})
 
-    // res.set('Content-type', 'file');
-     const {fileName} = req.params
-     const filePath = `${__dirname}/files/${fileName}`; 
-     fs.unlinkSync(filePath);
-     res.redirect('/files')
-   });
+app.get('/login', (req, res) => {
+    res.send(`<html>
+    <head>
+        <title>files</title>
+        <link href="styles.css" rel="stylesheet">
+        <link href="skylab-icon.png" type="image/png" rel="Shortcut Icon">
+    </head>
+    <body>
+        <h1>login</h1>
 
-// POST para hacer el upload
-app.post('/files', (req, res) => {
-    const { files: { upload } } = req
+        <form action="/login" method="post">
+            <input type="text" name="username">
+            <input type="password" name="password">
+            <button type="submit">login</button>
+        </form>
+    </body>
+</html>`)
+})
 
-    if (upload)
-    upload.mv(`files/${upload.name}`, function (err) {
-        if (err)
-            return res.status(500).send(err)
-        res.redirect('/files')
-    })
-    else 
-       // res.status(510).send('<html><body><p>cannot upload empty fiels</p></body></html>')
-       res.redirect('/files?error=cannot upload empty files')
+app.post('/login', (req, res) => {
+    const { body: { username, password }, session } = req
+
+    logic.login(username, password)
+
+    session.username = username
+
+    res.send(`<html>
+    <head>
+        <title>files</title>
+        <link href="styles.css" rel="stylesheet">
+        <link href="skylab-icon.png" type="image/png" rel="Shortcut Icon">
+    </head>
+    <body>
+        <h1>${logic.isLoggedIn(session.username) ? `ok, user ${username} successfully logged in` : `ko, user ${username} failed to log in`}</h1>
+    </body>
+</html>`)
 })
 
 app.listen(port, () => console.log(`${package.name} ${package.version} up and running on port ${port}`))
