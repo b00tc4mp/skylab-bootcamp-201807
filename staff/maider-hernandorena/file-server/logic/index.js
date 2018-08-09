@@ -24,7 +24,9 @@ const logic = {
         const user = this._users[username]
 
         if (!user) throw new Error(`user ${username} does not exist`)
-        if (user.password === password) user.loggedIn = true
+        if (user.password === password) {
+            return user.loggedIn = true
+        }
         else throw new Error('wrong username and/or password')
     },
 
@@ -43,7 +45,7 @@ const logic = {
         const user = this._users[username]
 
         if (!user) throw new Error(`user ${username} does not exist`)
-        user.loggedIn = false
+        return user.loggedIn = false
     }
 }
 

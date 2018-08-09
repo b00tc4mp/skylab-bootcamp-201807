@@ -112,23 +112,21 @@ app.post('/login', (req, res) => {
     }
 })
 
-app.get('/logout', (req,res) => {
-    const { session, body: { username }} = req
+app.get('/logout', (req, res) => {
+    const { session } = req
 
     try {
-        logic.logout(username)
+        logic.logout(session.username)
         res.redirect('/')
     } catch({ message }) {
         session.error = message
         res.redirect('/files')
     }
 })
-//esto no se si va
 
 app.get('/files', (req, res) => {
     const { session } = req
 
-    //aqui peta y entra al catch solo a veces
     try {
         if (logic.isLoggedIn(session.username)) {
                 const files = fs.readdirSync('files')
@@ -142,7 +140,6 @@ app.get('/files', (req, res) => {
                                 <nav>
                                     <a href="/logout">Logout</a>
                                 </nav>
-                               
                                 <ul>
                                     ${files.map(file => `<li><a href="downloads/${file}">${file}</a><a href="deleted/${file}"><p>X</p></a></li>`).join('')}
                                 </ul>
@@ -153,7 +150,7 @@ app.get('/files', (req, res) => {
                             </body>
                         </html>`)
         } else {
-            res.redirect('/files')
+            res.redirect('/')
         }
     } catch ({ message }) {
         session.error = message
