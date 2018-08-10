@@ -2,6 +2,9 @@
 
 const fs = require('fs')
 
+if (!fs.existsSync('files'))
+    fs.mkdirSync('files')
+
 const logic = {
     _users: {},
 
