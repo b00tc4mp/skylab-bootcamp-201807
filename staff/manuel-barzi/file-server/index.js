@@ -26,6 +26,16 @@ app.use(session({
 app.use(bodyParser.urlencoded({ extended: false }))
 
 app.get('/', (req, res) => {
+    const { session: { username, error } } = req
+
+    try {
+        if (logic.isLoggedIn(username)) {
+            return res.redirect('/files')
+        }
+    } catch(err) {
+        delete req.session.username
+    }
+    
     res.send(`<html>
     <head>
         <title>files</title>
@@ -51,6 +61,7 @@ app.get('/files', (req, res) => {
         <link href="skylab-icon.png" type="image/png" rel="Shortcut Icon">
     </head>
     <body>
+        <nav><a href="/logout">logout</a></nav>
         <ul>
             ${files.map(file => `<li>${file}</li>`).join('')}
         </ul>
@@ -92,7 +103,15 @@ app.post('/files', (req, res) => {
 })
 
 app.get('/register', (req, res) => {
-    const { session: { error } } = req
+    const { session: { username, error } } = req
+
+    try {
+        if (logic.isLoggedIn(username)) {
+            return res.redirect('/files')
+        }
+    } catch(err) {
+        delete req.session.username
+    }
 
     res.send(`<html>
     <head>
@@ -138,7 +157,15 @@ app.post('/register', (req, res) => {
 })
 
 app.get('/login', (req, res) => {
-    const { session: { error } } = req
+    const { session: { username, error } } = req
+
+    try {
+        if (logic.isLoggedIn(username)) {
+            return res.redirect('/files')
+        }
+    } catch(err) {
+        delete req.session.username
+    }
 
     res.send(`<html>
     <head>
@@ -174,6 +201,18 @@ app.post('/login', (req, res) => {
 
         res.redirect('/login')
     }
+})
+
+app.get('/logout', (req, res) => {
+    const { session: { username }} = req
+
+    try {
+        logic.logout(username)
+    } catch(err) {
+        // noop
+    }
+
+    res.redirect('/')
 })
 
 app.listen(port, () => console.log(`${package.name} ${package.version} up and running on port ${port}`))
