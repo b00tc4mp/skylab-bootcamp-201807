@@ -6,14 +6,12 @@ const FileStore = require('session-file-store')(session)
 const bodyParser = require('body-parser')
 const logic = require('./logic')
 const package = require('./package.json')
-const morgan = require('morgan')
 
 const { argv: [, , port] } = process
 
 const app = express()
 
 app.use(fileUpload())
-app.use(morgan('dev'))
 app.use(express.static('public'))
 app.use(session({
     secret: 'zer ote da',
@@ -113,15 +111,13 @@ app.post('/login', (req, res) => {
 })
 
 app.get('/logout', (req, res) => {
-    const { session } = req
+    const { session: { username } } = req
 
     try {
-        logic.logout(session.username)
-        res.redirect('/')
-    } catch({ message }) {
-        session.error = message
-        res.redirect('/files')
+        logic.logout(username)
+    } catch(err) {
     }
+    res.redirect('/')
 })
 
 app.get('/files', (req, res) => {
@@ -129,31 +125,30 @@ app.get('/files', (req, res) => {
 
     try {
         if (logic.isLoggedIn(session.username)) {
-                const files = fs.readdirSync('files')
-                res.send(`<html>
-                            <head>
-                                <title>files</title>
-                                <link rel="stylesheet" href="/styles.css"/>
-                                <link rel="Shortcut Icon" href="/logo.png" type="image/png">
-                            </head>
-                            <body>
-                                <nav>
-                                    <a href="/logout">Logout</a>
-                                </nav>
-                                <ul>
-                                    ${files.map(file => `<li><a href="downloads/${file}">${file}</a><a href="deleted/${file}"><p>X</p></a></li>`).join('')}
-                                </ul>
-                                <form action="/files" method="post" encType="multipart/form-data">
-                                    <input type="file" name="upload">
-                                    <button>Upload</button>
-                                </form>
-                            </body>
-                        </html>`)
+            const files = fs.readdirSync('files')
+            res.send(`<html>
+                        <head>
+                            <title>files</title>
+                            <link rel="stylesheet" href="/styles.css"/>
+                            <link rel="Shortcut Icon" href="/logo.png" type="image/png">
+                        </head>
+                        <body>
+                            <nav>
+                                <a href="/logout">Logout</a>
+                            </nav>
+                            <ul>
+                                ${files.map(file => `<li><a href="downloads/${file}">${file}</a><a href="deleted/${file}"><p>X</p></a></li>`).join('')}
+                            </ul>
+                            <form action="/files" method="post" encType="multipart/form-data">
+                                <input type="file" name="upload">
+                                <button>Upload</button>
+                            </form>
+                        </body>
+                    </html>`)
         } else {
             res.redirect('/')
         }
     } catch ({ message }) {
-        session.error = message
         res.redirect('/')
     }
 })
@@ -170,7 +165,7 @@ app.post('/files', (req, res) => {
             res.redirect('/files')
         })
     } else {
-        session.error = message
+        session.error = 'empty file'
         res.redirect('/files')
     }
 })

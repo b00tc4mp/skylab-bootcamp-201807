@@ -6,8 +6,7 @@
   "scripts": {
     "start": "node . 8080",
     "debug": "node debug . 8080",
-    "test": "mocha logic",
-    "dev": "nodemon index.js 8080"
+    "test": "mocha logic"
   },
   "keywords": [],
   "author": "",
@@ -21,8 +20,6 @@
     "session-file-store": "^1.2.0"
   },
   "devDependencies": {
-    "chai": "^4.1.2",
-    "morgan": "^1.9.0",
-    "nodemon": "^1.18.3"
+    "chai": "^4.1.2"
   }
 }
