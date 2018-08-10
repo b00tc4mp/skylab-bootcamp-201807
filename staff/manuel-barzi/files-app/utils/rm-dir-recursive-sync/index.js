@@ -6,11 +6,10 @@ function rmDirRecursiveSync(folder) {
     files.forEach(file => {
         const path = `${folder}/${file}`
 
-        if (fs.lstatSync(path).isDirectory()) {
+        if (fs.lstatSync(path).isDirectory())
             rmDirRecursiveSync(path)
-        }
-
-        fs.unlinkSync(path)
+        else
+            fs.unlinkSync(path)
     })
 
     fs.rmdirSync(folder)
