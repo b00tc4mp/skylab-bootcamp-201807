@@ -1,5 +1,4 @@
 const express = require('express')
-const fs = require('fs')
 const fileUpload = require('express-fileupload')
 const package = require('./package.json')
 const session = require('express-session')
@@ -26,6 +25,19 @@ app.use(session({
 app.use(bodyParser.urlencoded({ extended: false }))
 
 app.get('/', (req, res) => {
+    const { session } = req
+
+    session.registerError = ''
+    session.loginError = ''
+
+    try {
+        if (logic.isLoggedIn(session.username)) {
+            return res.redirect('/files')
+        }
+    } catch (err) {
+        delete session.username
+    }
+
     res.send(`<html>
     <head>
         <title>files</title>
@@ -42,7 +54,7 @@ app.get('/files', (req, res) => {
 
     try {
         if (logic.isLoggedIn(session.username)) {
-            const files = fs.readdirSync('files')
+            const files = logic.listFiles(session.username)
 
             res.send(`<html>
     <head>
@@ -51,8 +63,9 @@ app.get('/files', (req, res) => {
         <link href="skylab-icon.png" type="image/png" rel="Shortcut Icon">
     </head>
     <body>
+        <nav>${session.username} <a href="/logout">logout</a></nav>
         <ul>
-            ${files.map(file => `<li>${file}</li>`).join('')}
+            ${files.map(file => `<li><a href="/download/${file}">${file}</a> <a href="/delete/${file}">[x]</a></li>`).join('')}
         </ul>
 
         <form action="/files" method="post" encType="multipart/form-data">
@@ -71,28 +84,40 @@ app.get('/files', (req, res) => {
 })
 
 app.post('/files', (req, res) => {
-    const { files: { upload }, session } = req
+    const { session, files: { upload } } = req
 
     if (upload) {
-        session.error = ''
+        // upload.mv(`${logic.getFilesFolder(username)}/${upload.name}`, function (err) {
+        //     if (err)
+        //         return res.status(500).send(err)
 
-        upload.mv(`files/${upload.name}`, function (err) {
-            if (err)
-                return res.status(500).send(err)
+        //     res.redirect('/files')
+        // })
 
-            res.redirect('/files')
-        })
-        // else
-        //     res.redirect('/files?error=EMPTY_FILE')
+        try {
+            logic.saveFile(session.username, upload.name, upload.data)
+        } catch ({ message }) {
+            session.error = message
+        }
+
+        res.redirect('/files')
     } else {
-        session.error = 'EMPTY_FILE'
-
         res.redirect('/files')
     }
 })
 
 app.get('/register', (req, res) => {
-    const { session: { error } } = req
+    const { session } = req
+
+    session.loginError = ''
+
+    try {
+        if (logic.isLoggedIn(session.username)) {
+            return res.redirect('/files')
+        }
+    } catch (err) {
+        delete session.username
+    }
 
     res.send(`<html>
     <head>
@@ -109,7 +134,7 @@ app.get('/register', (req, res) => {
             <button type="submit">register</button>
         </form>
 
-        ${error ? `<h2 class="error">${error}</h2>` : ''}
+        ${session.registerError ? `<h2 class="error">${session.registerError}</h2>` : ''}
     </body>
 </html>`)
 })
@@ -131,14 +156,24 @@ app.post('/register', (req, res) => {
             </body>
         </html>`)
     } catch ({ message }) {
-        session.error = message
+        session.registerError = message
 
         res.redirect('/register')
     }
 })
 
 app.get('/login', (req, res) => {
-    const { session: { error } } = req
+    const { session } = req
+
+    session.registerError = ''
+
+    try {
+        if (logic.isLoggedIn(session.username)) {
+            return res.redirect('/files')
+        }
+    } catch (err) {
+        delete session.username
+    }
 
     res.send(`<html>
     <head>
@@ -155,7 +190,7 @@ app.get('/login', (req, res) => {
             <button type="submit">login</button>
         </form>
 
-        ${error ? `<h2 class="error">${error}</h2>` : ''}        
+        ${session.loginError ? `<h2 class="error">${session.loginError}</h2>` : ''}        
     </body>
 </html>`)
 })
@@ -170,10 +205,42 @@ app.post('/login', (req, res) => {
 
         res.redirect('/files')
     } catch ({ message }) {
-        session.error = message
+        session.loginError = message
 
         res.redirect('/login')
     }
+})
+
+app.get('/logout', (req, res) => {
+    const { session } = req
+
+    session.loginError = ''
+
+    try {
+        logic.logout(session.username)
+    } catch (err) {
+        // noop
+    }
+
+    res.redirect('/')
+})
+
+app.get('/download/:file', (req, res) => {
+    const { session, params: { file } } = req
+
+    res.download(logic.getFilePath(session.username, file))
+})
+
+app.get('/delete/:file', (req, res) => {
+    const { session, params: { file } } = req
+
+    try {
+        logic.removeFile(session.username, file)
+    } catch ({ message }) {
+        // TODO
+    }
+
+    res.redirect('/files')
 })
 
 app.listen(port, () => console.log(`${package.name} ${package.version} up and running on port ${port}`))
