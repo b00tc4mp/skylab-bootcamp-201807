@@ -2,6 +2,8 @@
 
 const logic = require('.')
 const { expect } = require('chai')
+const rmDirRecursiveSync = require('../utils/rm-dir-recursive-sync')
+const fs = require('fs')
 
 describe('logic', () => {
     const username = 'jack', password = '123'
@@ -9,7 +11,9 @@ describe('logic', () => {
     beforeEach(() => {
         logic._users = {}
 
-        rmDirRecursive('files')
+        rmDirRecursiveSync('files')
+
+        fs.mkdirSync('files')
     })
 
     describe('_ validate string field', () => {
@@ -37,6 +41,8 @@ describe('logic', () => {
             expect(user).to.exist
             expect(user.password).to.equal(password)
             expect(user.loggedIn).to.be.false
+
+            expect(fs.lstatSync(`files/${username}`).isDirectory()).to.be.true
         })
 
         it('should fail on trying to register an already registered user', () => {
@@ -191,7 +197,35 @@ describe('logic', () => {
         })
     })
 
+    describe('list files', () => {
+        beforeEach(() => {
+            logic._users[username] = { password, loggedIn: true }
+
+            fs.mkdirSync(`files/${username}`)
+            fs.writeFileSync(`files/${username}/README.md`, '# documentation')
+            fs.writeFileSync(`files/${username}/hello-world.txt`, 'hello world!')
+            fs.mkdirSync(`files/${username}/folder`)
+        })
+
+        it('should list files if they exist', () => {
+            const files = logic.listFiles(username)
+
+            expect(files).to.exist
+            expect(files.length).to.equal(3)
+
+            expect(files.includes('README.md')).to.be.true
+            expect(files.includes('hello-world.txt')).to.be.true
+            expect(files.includes('folder')).to.be.true
+        })
+    })
+
     after(() => {
         logic._users = {}
+        logic._persist() // TODO: test it!
+
+        rmDirRecursiveSync('files')
+        fs.mkdirSync('files')
+
+        fs.writeFileSync('data/users.json', '{}')
     })
 })
