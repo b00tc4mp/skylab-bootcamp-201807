@@ -1,29 +1,56 @@
 'use strict'
 
 const logic = {
-    users: {},
+    _users: {},
+
+    _validateStringField(fieldName, fieldValue) {
+        if (typeof fieldValue !== 'string' || !fieldValue.length) throw new Error(`invalid ${fieldName}`)
+    },
 
     register(username, password) {
-        const user = this.users[username]
+        this._validateStringField('username', username)
+        this._validateStringField('password', password)
+
+        const user = this._users[username]
 
         if (user) throw new Error(`user ${username} already exists`)
 
-        this.users[username] = { password }
+        this._users[username] = { password, loggedIn: false }
     },
 
     login(username, password) {
-        const user = this.users[username]
+        this._validateStringField('username', username)
+        this._validateStringField('password', password)
 
-        if (user)
-            user.loggedIn = user.password === password
+        const user = this._users[username]
+
+        if (!user) throw new Error(`user ${username} does not exist`)
+
+        if (user.password === password)
+            user.loggedIn = true
+        else throw new Error('wrong credentials')
     },
 
     isLoggedIn(username) {
-        return this.users[username] && this.users[username].loggedIn
+        this._validateStringField('username', username)
+
+
+        const user = this._users[username]
+
+        if (!user) throw new Error(`user ${username} does not exist`)
+
+        return user.loggedIn
     },
 
     logout(username) {
-        // TODO
+        this._validateStringField('username', username)
+
+
+        const user = this._users[username]
+
+        if (!user) throw new Error(`user ${username} does not exist`)
+
+        user.loggedIn = false
     }
 }
 
