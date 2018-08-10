@@ -8,6 +8,8 @@ describe('logic', () => {
 
     beforeEach(() => {
         logic._users = {}
+
+        rmDirRecursive('files')
     })
 
     describe('_ validate string field', () => {
