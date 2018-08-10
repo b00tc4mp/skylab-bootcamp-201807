@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>FILES</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="screen">
+        <h1>FILES</h1> <img class="image" src="./default-image.png">
+        <nav>
+            > <a href="/profile">profile</a> <a href="/logout">logout</a> <span class="blink">_</span>
+        </nav>
+        <ul>
+            <li>file 1</li>
+            <li>file 2</li>
+            <li>file 3</li>
+        </ul>
+        <!-- <div class="upload"> -->
+            <button><label for="upload">Choose a file</label></button>
+            <form action="/files" method="post">
+                <input id="upload" type="file" name="upload" placeholder="" autofocus>
+                <button type="submit">upload</button>
+            </form>
+        <!-- </div> -->
+    </div>
+</body>
+</html>
