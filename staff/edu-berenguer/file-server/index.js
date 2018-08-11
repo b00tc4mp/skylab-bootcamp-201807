@@ -1,78 +1,283 @@
 const express = require('express')
-const fs = require('fs')
 const fileUpload = require('express-fileupload')
 const package = require('./package.json')
+const session = require('express-session')
+const FileStore = require('session-file-store')(session)
+const bodyParser = require('body-parser')
+const logic = require('./logic')
 
 const { argv: [, , port] } = process
 
 const app = express()
 
+app.set('view engine', 'pug')
+
 app.use(fileUpload())
-
 app.use(express.static('public'))
+app.use(session({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+        maxAge: 24 * 60 * 60 * 1000,
+        //secure: true // WARN! in case requiring it to work in https only
+    },
+    store: new FileStore
+}))
+app.use(bodyParser.urlencoded({ extended: false }))
 
-app.get('/helloworld', (req, res) => {
-    res.send(`<html>
-    <head>
-        <title>hola mundo</title>
-    </head>
-    <body>
-        <h1>hello world!</h1>
-    </body>
-</html>`)
+app.get('/', (req, res) => {
+    const { session } = req
+
+    session.registerError = ''
+    session.loginError = ''
+
+    try {
+        if (logic.isLoggedIn(session.username)) {
+            return res.redirect('/files')
+        }
+    } catch (err) {
+        delete session.username
+    }
+
+    res.render('index')
 })
 
 app.get('/files', (req, res) => {
-    const { query: { error } } = req
-    const files = fs.readdirSync('files')
-    // const errorMessage = errors[error]
+    const { session } = req
+    session.updateError = ''
+    try {
+        if (logic.isLoggedIn(session.username)) {
+            const files = logic.listFiles(session.username)
 
-    res.send(`<html>
-    <head>
-        <title>files</title>
-        <link rel="stylesheet" href="/styles.css">
-    </head>
-    <body>
-        <ul>
-            ${files.map(file => `<a href="download/${file}"><li>${file}</li></a><a href="delete/${file}"><button>delete</button></a>`).join('')}
-        </ul>
+            res.render('files', { files })
+//             res.send(`<html>
+//     <head>
+//         <title>files</title>
+//         <link href="styles.css" rel="stylesheet">
+//         <link href="skylab-icon.png" type="image/png" rel="Shortcut Icon">
+//     </head>
+//     <body>
+//         <nav>${session.username} <a href="/logout">logout</a></nav>
+//         <ul>
+//             ${files.map(file => `<li><a href="/download/${file}">${file}</a> <a href="/delete/${file}">[x]</a></li>`).join('')}
+//         </ul>
 
-        <form action="/files" method="post" encType="multipart/form-data">
-            <input type="file" name="upload">
-            <button>upload</button>
-        </form>
+//         <form action="/files" method="post" encType="multipart/form-data">
+//             <input type="file" name="upload">
+//             <button type="submit">upload</button>
+//         </form>
+//     </body>
+// </html>`)
 
-        ${error? `<h2 class="error">${error}</h2>`  : '' }
-    </body>
-</html>`)
+        } else {
+            res.redirect('/')
+        }
+    } catch ({ message }) {
+        res.redirect('/')
+    }
 })
 
 app.post('/files', (req, res) => {
-    
-    const { files: { upload } } = req
+    const { session, files: { upload } } = req
 
-    if(upload){
-        upload.mv(`files/${upload.name}`, function (err) {
-            if (err)
-                return res.status(500).send(err)
-    
-            res.redirect('/files')
-        });
+    if (upload) {
+        // upload.mv(`${logic.getFilesFolder(username)}/${upload.name}`, function (err) {
+        //     if (err)
+        //         return res.status(500).send(err)
+
+        //     res.redirect('/files')
+        // })
+
+        try {
+            logic.saveFile(session.username, upload.name, upload.data)
+        } catch ({ message }) {
+            session.error = message
+        }
+
+        res.redirect('/files')
+    } else {
+        res.redirect('/files')
     }
-    res.redirect('/files?error=Cannot upload empty files')
-    // res.status(500).send('<html><body><p>Cannot upload empty files</p></body></html>nodemo')
+})
+
+app.get('/register', (req, res) => {
+    const { session } = req
+
+    session.loginError = ''
+
+    try {
+        if (logic.isLoggedIn(session.username)) {
+            return res.redirect('/files')
+        }
+    } catch (err) {
+        delete session.username
+    }
+
+    // res.send(`<html>
+    // <head>
+    //     <title>files</title>
+    //     <link href="styles.css" rel="stylesheet">
+    //     <link href="skylab-icon.png" type="image/png" rel="Shortcut Icon">
+    // </head>
+    // <body>
+    //     <h1>register</h1>
+
+    //     <form action="/register" method="post">
+    //         <input type="text" name="username">
+    //         <input type="password" name="password">
+    //         <button type="submit">register</button>
+    //     </form>
+    
+    //     ${session.registerError ? `<h2 class="error">${session.registerError}</h2>` : ''}
+    // </body>
+    // </html>`)
+    res.render('register', { session })
+})
+
+app.post('/register', (req, res) => {
+    const { session, body: { username, password } } = req
+
+    try {
+        logic.register(username, password)
+
+        // res.send(`<html>
+        //     <head>
+        //         <title>files</title>
+        //         <link href="styles.css" rel="stylesheet">
+        //         <link href="skylab-icon.png" type="image/png" rel="Shortcut Icon">
+        //     </head>
+        //     <body>
+        //         ok, user ${username} successfully registered, now you can go to <a href="/login">login</a>
+        //     </body>
+        // </html>`)
+        res.render('registered', ({ session, username }))
+    } catch ({ message }) {
+        session.registerError = message
+        res.redirect('register')
+    }
+})
+
+app.get('/login', (req, res) => {
+    const { session } = req
+
+    session.registerError = ''
+
+    try {
+        if (logic.isLoggedIn(session.username)) {
+            return res.redirect('/files')
+        }
+    } catch (err) {
+        delete session.username
+    }
+
+//     res.send(`<html>
+//     <head>
+//         <title>files</title>
+//         <link href="styles.css" rel="stylesheet">
+//         <link href="skylab-icon.png" type="image/png" rel="Shortcut Icon">
+//     </head>
+//     <body>
+//         <h1>login</h1>
+
+//         <form action="/login" method="post">
+//             <input type="text" name="username">
+//             <input type="password" name="password">
+//             <button type="submit">login</button>
+//         </form>
+
+//         ${session.loginError ? `<h2 class="error">${session.loginError}</h2>` : ''}        
+//     </body>
+// </html>`)
+
+    res.render('login', { session })
+})
+
+app.post('/login', (req, res) => {
+    const { session, body: { username, password } } = req
+
+    try {
+        logic.login(username, password)
+        session.username = username
+        res.redirect('/files')
+
+    } catch ({ message }) {
+        session.loginError = message
+        res.redirect('/login')
+    }
+})
+
+app.get('/logout', (req, res) => {
+    const { session } = req
+
+    session.loginError = ''
+
+    try {
+        logic.logout(session.username)
+    } catch (err) {
+        // noop
+    }
+
+    res.redirect('/')
+})
+
+app.get('/download/ :file', (req, res) => {
+    const { session, params: { file } } = req
+
+    res.download(logic.getFilePath(session.username, file))
+})
+
+app.get('/delete/:file', (req, res) => {
+    const { session, params: { file } } = req
+
+    try {
+        logic.removeFile(session.username, file)
+    } catch ({ message }) {
+        // TODO
+    }
+
+    res.redirect('/files')
+})
+
+app.get('/profile', (req, res) => {
+    const { session } = req
+
+    session.error = ''
+    logic.isLoggedIn(session.username)
+    res.render('profile', { session })
+        //     res.send(`<html>
+        //     <head>
+        //         <title>files</title>
+        //         <link href="styles.css" rel="stylesheet">
+        //         <link href="skylab-icon.png" type="image/png" rel="Shortcut Icon">
+        //     </head>
+        //     <body>
+        //         <h1>Profile</h1>
+
+        //         <form action="/profile" method="post">
+        //             <input type="text" name="username" value="${session.username}" disable>
+        //             <input type="password" name="newPassword">
+        //             <button type="submit">Update</button>
+        //         </form>
+
+        //         ${session.updateError ? `<h2 class="error">${session.updateError}</h2>` : ''}        
+        //     </body>
+        // </html>`)
+    
+    // res.render('login', { session })
+})
+
+app.post('/profile', (req, res) => {
+    const { session, body: { username,newPassword } } = req
+
+    try {
+        logic.profile(username,newPassword)
+
+    } catch ({ message }) {
+        session.updateError = message
+        res.redirect('/profile')
+    }
 
 })
- 
-app.get('/download/:file',(req, res) => {
-  var file = `files/${req.params.file}`
-  res.download(file)
-});
-
-app.get('/delete/:file',(req, res) => {
-     var file = `files/${req.params.file}`
-    fs.unlinkSync(file)
-    res.redirect('/files')
-  });
 
 app.listen(port, () => console.log(`${package.name} ${package.version} up and running on port ${port}`))
