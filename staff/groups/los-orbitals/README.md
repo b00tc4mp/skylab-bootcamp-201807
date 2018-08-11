@@ -1,5 +1,5 @@
 # staff
 
-- Maider
-- Jordi
-- Sergio
+- Maider (maiderhernandorena)
+- Jordi (jordiubanell)
+- Sergio (SergioCastilloSorribes)

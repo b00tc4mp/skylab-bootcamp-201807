@@ -1,0 +1,23 @@
+.list__items {
+  list-style: none; }
+  .list__items__link {
+    text-decoration: none;
+    color: #ffffff;
+    cursor: pointer;
+    text-align: left; }
+    .list__items__link__each {
+      background-color: #666666;
+      margin-bottom: 1px;
+      padding: 5px;
+      padding-left: 10px;
+      border-radius: 5px; }
+      .list__items__link__each:hover {
+        background-color: #239e4c;
+        color: #ffffff;
+        cursor: pointer; }
+  .list__items__link-action:focus {
+    color: #50db7e;
+    font-weight: bold;
+    font-size: 1em; }
+
+/*# sourceMappingURL=list.css.map */

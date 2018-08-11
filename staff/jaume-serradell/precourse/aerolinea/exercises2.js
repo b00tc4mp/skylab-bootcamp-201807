@@ -446,7 +446,7 @@ var avengersObj = [hulk, tonyStark, gerard, jaume, alex, julapeno];
 function randomAvengers() {
 
 	function generateRandomNumber() {
-		return Math.floor((Math.random()*6);
+		return Math.floor((Math.random()*6));
 	}
 
 	function generateRandomAvengers() {

@@ -1,0 +1,29 @@
+.main {
+  background-color: #444444;
+  height: 100vh; }
+  .main:active {
+    background-color: #444444;
+    height: 100%; }
+  .main__searchtitle {
+    color: #ffffff;
+    margin-bottom: 0; }
+  .main__grid {
+    width: 100%;
+    padding: auto 5%;
+    margin: 5% auto 0 auto;
+    background-color: #444444;
+    height: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); }
+    .main__grid__list {
+      float: left;
+      padding: 5px 3%; }
+      .main__grid__list__titles {
+        text-align: left;
+        padding-left: 10%;
+        color: #ffffff; }
+  .main__track {
+    background-color: #444444;
+    height: 100%; }
+
+/*# sourceMappingURL=main.css.map */

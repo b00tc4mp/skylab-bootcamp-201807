@@ -1,0 +1,30 @@
+Circle in css
+http://jsfiddle.net/JJytE/5873/
+http://jsfiddle.net/rkEMR/10714/
+
+Circulo guía:
+https://stackoverflow.com/questions/12813573/position-icons-into-circle
+http://dabblet.com/gist/3864650
+
+Ñ en javascript
+https://stackoverflow.com/questions/6284128/using-%C3%B1-in-a-js-file
+
+EM to PX conversor
+https://www.w3schools.com/tags/ref_pxtoemconversion.asp
+
+TABLAS
+https://www.w3schools.com/html/html_tables.asp
+
+Toggle (Hide/Show) an Element
+https://www.w3schools.com/howto/howto_js_toggle_hide_show.asp
+
+Onsubmit (para cuando se envian datos de un formulario)
+https://www.w3schools.com/jsref/event_onsubmit.asp
+
+ANTIreload after submission
+https://stackoverflow.com/questions/40813467/html-reset-after-form-submit
+
+<form action="#">   
+STAY SAME PAGE
+https://stackoverflow.com/questions/8395269/what-do-form-action-and-form-method-post-action-do
+
