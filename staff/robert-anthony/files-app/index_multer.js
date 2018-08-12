@@ -1,5 +1,6 @@
 const express = require('express')
-const fileUpload = require('express-fileupload')
+//const fileUpload = require('express-fileupload')
+const multer = require('multer')
 const package = require('./package.json')
 const session = require('express-session')
 const FileStore = require('session-file-store')(session)
@@ -45,32 +46,24 @@ app.get('/', (req, res) => {
     delete session.username
   }
 
-  res.render('index', {loggedIn})
+  res.render('index',{loggedIn})
 })
 
 app.get('/files', (req, res) => {
   const {session} = req
   let loggedIn = false
-  const cud = session.currentUserDirectory
   try {
     if (logic.isLoggedIn(session.username)) {
-      const files = logic.listFiles(session.username, session.currentUserDirectory)
-      let filesMapped = files.map(file => {
-        let path = cud === "" ? file : `${cud}/${file}`
-        let stat = logic.getStat(session.username, path)
-        return {name: file, isDir: stat.isDirectory()}
-      })
+      const files = logic.listFiles(session.username)
       loggedIn = true
       profileImage = logic.getUserData(session.username).profileImage
-      res.render('file-get', {fileList: filesMapped, session, loggedIn, profileImage})
+      res.render('file-get', {fileList: files, session, loggedIn, profileImage})
 
     } else {
       res.redirect('/')
     }
   } catch ({message}) {
-    session.filesError = message
-    res.redirect("/files")
-    console.error(message)
+    res.redirect('/')
   }
 })
 
@@ -80,13 +73,7 @@ app.post('/files', (req, res) => {
   if (upload) {
 
     try {
-      let path
-
-      if (session.currentUserDirectory === "")
-        path = upload.name
-      else
-        path = `${session.currentUserDirectory}/${upload.name}`
-      logic.saveFile(session.username, path, upload.data)
+      logic.saveFile(session.username, upload.name, upload.data)
     } catch ({message}) {
       session.filesError = message
     }
@@ -111,7 +98,7 @@ app.get('/register', (req, res) => {
     delete session.username
   }
 
-  res.render('register-get', {session, loggedIn})
+  res.render('register-get', {session,loggedIn})
 })
 
 app.post('/register', (req, res) => {
@@ -121,7 +108,7 @@ app.post('/register', (req, res) => {
   try {
     logic.register(username, password)
 
-    res.render('register-post', {username, session, loggedIn})
+    res.render('register-post', {username,session,loggedIn})
   } catch ({message}) {
     session.registerError = message
 
@@ -144,7 +131,7 @@ app.get('/login', (req, res) => {
   }
 
 
-  res.render('login', {loggedIn, session})
+  res.render('login',{loggedIn,session})
 })
 
 app.post('/login', (req, res) => {
@@ -154,7 +141,6 @@ app.post('/login', (req, res) => {
     logic.login(username, password)
 
     session.username = username
-    session.currentUserDirectory = ""
     res.redirect('/files')
   } catch ({message}) {
     session.loginError = message
@@ -177,34 +163,17 @@ app.get('/logout', (req, res) => {
   res.redirect('/')
 })
 
-app.get('/fileclick/:file', (req, res) => {
+app.get('/download/:file', (req, res) => {
   const {session, params: {file}} = req
-  let path
-  if (session.currentUserDirectory === "")
-    path = `${file}`
-  else
-    path = `${session.currentUserDirectory}/${file}`
 
-  try {
-    const stat = logic.getStat(session.username, path)
-    if (stat.isDirectory()) {
-      session.currentUserDirectory = path
-      res.redirect('/files')
-    } else
-      res.download(logic.getFilePath(session.username, path))
-  } catch ({message}) {
-    session.filesError = message
-    res.redirect("/files")
-  }
-
+  res.download(logic.getFilePath(session.username, file))
 })
 
 app.get('/delete/:file', (req, res) => {
   const {session, params: {file}} = req
-  const path = `${session.currentUserDirectory}/${file}`
 
   try {
-    logic.removeFile(session.username, path)
+    logic.removeFile(session.username, file)
   } catch ({message}) {
     // TODO
   }
@@ -217,7 +186,6 @@ app.post('/profile', (req, res) => {
   const {session, files: {upload}} = req
   let profileImage = ''
   if (upload) {
-
     try {
       logic.saveUserImage(session.username, upload.name, upload.data)
     } catch ({message}) {
@@ -251,7 +219,7 @@ app.get('/profile', (req, res) => {
     try {
       loggedIn = true
       userData = logic.getUserData(session.username)
-      res.render('profile_get', {session, info: userData.info, profileImage: userData.profileImage, loggedIn})
+      res.render('profile_get', {session, info: userData.info, profileImage: userData.profileImage,loggedIn})
     } catch {
       // ??
     }
@@ -259,57 +227,6 @@ app.get('/profile', (req, res) => {
     res.redirect('/')
   }
 
-})
-
-
-app.get('/files/newfolder', (req, res) => {
-  const {session} = req
-  let loggedIn = false
-
-  try {
-    if (logic.isLoggedIn(req.session.username)) {
-      loggedIn = true
-      profileImage = logic.getUserData(session.username).profileImage
-
-      res.render('file_newfolder', {session, loggedIn, profileImage})
-    }
-    else (res.redirect('/'))
-  } catch ({message}) {
-    res.redirect("/")
-  }
-
-})
-
-
-app.post('/files/newfolder', (req, res) => {
-  const {body: {foldername}, session} = req
-  try {
-    if (logic.isLoggedIn(session.username)) {
-      try {
-        const path = `${session.currentUserDirectory}/${foldername}`
-
-        logic.makeDirectory(session.username, path)
-        //  session.currentUserDirectory = `${path}`
-        res.redirect('/files')
-      } catch ({message}) {
-        session.filesError = message
-      }
-    } else res.redirect("/")
-  } catch ({message}) {
-
-  }
-})
-
-
-app.get('/files/updirectory', (req, res) => {
-  const {session} = req
-
-  if (session.currentUserDirectory !== "/") {
-    const the_arr = session.currentUserDirectory.split('/');
-    the_arr.pop();
-    session.currentUserDirectory = the_arr.join('/');
-  }
-  res.redirect('/files')
 })
 
 

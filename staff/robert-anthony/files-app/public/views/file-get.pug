@@ -1,17 +1,30 @@
 extends base_layout
 
 block content_block
-    nav
-        | &gt;&nbsp;
-        a(href='/profile') profile
-        |&nbsp;
-        a(href='/logout') logout
-        span.blink _
+    | &nbsp;&nbsp;&nbsp;
+    a(href='/files/newfolder') add folder
+
+
+    if session.currentUserDirectory !== ""
+        br
+        | &nbsp;&nbsp;&nbsp;
+        a(href='/files/updirectory') up 1 level
+        i.fas.fa-arrow-up
+
+    | &nbsp;
+    - const cd = session.currentUserDirectory === "" ? "/" : session.currentUserDirectory
+    p Current Directory: #{cd}
+    | &nbsp;
     ul
        each file in fileList
             li
-                a(href=`/downloads/${file}`)  #{file}
-                 a(href=`/delete/${file}`)  Delete
+                a(href=`/fileclick/${file.name}`)  #{file.name}
+                if file.isDir
+                    | &nbsp;
+                    i.far.fa-folder
+                else
+                    | &nbsp;
+                    a(href=`/delete/${file.name}`): i.far.fa-trash-alt
        else
            p no files
 

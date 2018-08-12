@@ -1,11 +1,8 @@
 extends base_layout
 
 block content_block
-    nav
-        | &gt;  register or
-        a(href='/login') login
-        span.blink _
-        if (session.registerError)
+
+    if (session.registerError)
             h2.error #{session.registerError}
 
     form(action='/register' method='post')

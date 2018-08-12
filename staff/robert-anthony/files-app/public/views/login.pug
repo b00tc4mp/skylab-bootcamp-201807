@@ -1,11 +1,7 @@
 extends base_layout
 
 block content_block
-  nav
-    | &gt; 
-    a(href='/register') register
-    |  or login 
-    span.blink _
+
   form(action='/login' method='post')
     input(type='text' name='username' placeholder='username' autofocus='' autocomplete='off')
     input(type='password' name='password' placeholder='password' autocomplete='off')

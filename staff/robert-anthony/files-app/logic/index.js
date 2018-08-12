@@ -13,8 +13,14 @@ const logic = {
     fs.writeFileSync('data/users.json', JSON.stringify(this._users))
   },
 
-  _validateStringField(fieldName, fieldValue) {
-    if (typeof fieldValue !== 'string' || !fieldValue.length) throw new Error(`invalid ${fieldName}`)
+  // TODO TEST
+  _validateStringField(fieldName, fieldValue, admitEmptyString = false) {
+    if (admitEmptyString) {
+      if (typeof fieldValue !== 'string') throw new Error(`invalid ${fieldName}`)
+
+    } else {
+      if (typeof fieldValue !== 'string' || !fieldValue.length) throw new Error(`invalid ${fieldName}`)
+    }
   },
 
   _validateUserExists(username) {
@@ -31,7 +37,7 @@ const logic = {
 
     if (user) throw new Error(`user ${username} already exists`)
 
-    this._users[username] = {password, loggedIn: false, profileImage: '',info:''}
+    this._users[username] = {password, loggedIn: false, profileImage: '', info: ''}
 
     fs.mkdirSync(`files/${username}`)
     fs.mkdirSync(`data/userimages/${username}`)
@@ -48,13 +54,13 @@ const logic = {
 
     const user = this._users[username]
 
-    return {info:user.info,profileImage:user.profileImage}
+    return {info: user.info, profileImage: user.profileImage}
 
   },
 
   // TODO TESTING
 
-  setUserData(username,data) {
+  setUserData(username, data) {
     this._validateStringField('username', username)
 
     this._validateUserExists(username)
@@ -103,23 +109,42 @@ const logic = {
     this._persist()
   },
 
-  listFiles(username) {
+  // TODO TEST
+
+  listFiles(username, path) {
     this._validateStringField('username', username)
+    this._validateStringField('path', path, true)
 
     this._validateUserExists(username)
 
-    return fs.readdirSync(`files/${username}`)
+    const userpath = `files/${username}/${path}`
+    return fs.readdirSync(userpath)
   },
 
-  saveFile(username, filename, buffer) {
+
+  // TODO TEST
+
+  getStat(username, path) {
     this._validateStringField('username', username)
-    this._validateStringField('filename', filename)
+    this._validateStringField('path', path)
+    this._validateUserExists(username)
+    const userpath = `files/${username}/${path}`
+    return fs.statSync(userpath)
+  },
+
+  // TODO TEST
+
+
+  saveFile(username, path, buffer) {
+    this._validateStringField('username', username)
+    this._validateStringField('filename', path)
 
     if (typeof buffer === 'undefined' || /*!(buffer instanceof Buffer)*/ !Buffer.isBuffer(buffer)) throw new Error('invalid buffer')
 
     this._validateUserExists(username)
+    const userpath = `files/${username}/${path}`
 
-    fs.writeFileSync(`files/${username}/${filename}`, buffer)
+    fs.writeFileSync(userpath, buffer)
   },
 
   // TODO TEST
@@ -147,23 +172,40 @@ const logic = {
 
     return `userimages/${username}/${file}`
   },
+  // TODO TEST
 
-  getFilePath(username, file) {
+  getFilePath(username, path) {
     this._validateStringField('username', username)
-    this._validateStringField('file', file)
+    this._validateStringField('file', path)
 
     this._validateUserExists(username)
 
-    return `files/${username}/${file}`
+    return `files/${username}/${path}`
+  },
+  // TODO TEST
+
+  removeFile(username, path) {
+    this._validateStringField('username', username)
+    this._validateStringField('file', path)
+
+    this._validateUserExists(username)
+
+    fs.unlinkSync(`files/${username}/${path}`)
   },
 
-  removeFile(username, file) {
+  // TODO TEST
+  makeDirectory(username, relativePath) {
     this._validateStringField('username', username)
-    this._validateStringField('file', file)
+    this._validateStringField('relativePath', relativePath, true)
 
     this._validateUserExists(username)
 
-    fs.unlinkSync(`files/${username}/${file}`)
+    const fullPath = `files/${username}/${relativePath}`
+    if (!fs.existsSync(fullPath)) {
+      fs.mkdirSync(fullPath)
+      fs.chmodSync(fullPath,'777')
+    }
+
   }
 }
 

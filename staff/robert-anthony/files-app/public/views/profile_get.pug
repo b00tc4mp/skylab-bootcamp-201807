@@ -1,11 +1,7 @@
 extends base_layout
 
 block content_block
-    nav
-        | &gt;
-    a(href='/profile') profile
-    a(href='/logout') logout
-        span.blink _
+
     dl
         dt Username:
         dd #{session.username}
