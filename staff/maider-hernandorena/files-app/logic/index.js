@@ -8,7 +8,6 @@ if (!fs.existsSync('files'))
 const logic = {
     _users: {},
 
-    // TODO test!
     _persist() {
         fs.writeFileSync('data/users.json', JSON.stringify(this._users))
     },
@@ -75,6 +74,22 @@ const logic = {
         this._persist()
     },
 
+    updateUser(username, password, newPassword) {
+        this._validateUserExists(username)
+        if(password !== this._users[username].password){
+            throw new Error("wrong password")
+        }
+
+        this._validateStringField('new password', newPassword)
+        
+        // const user = this._users[username]
+        this._users[username] = { newPassword, loggedIn: false }
+
+        // user.password = newPassword
+
+        this._persist()
+    },
+
     listFiles(username) {
         this._validateStringField('username', username)
 
@@ -83,17 +98,11 @@ const logic = {
         return fs.readdirSync(`files/${username}`)
     },
 
-    // DEPRECATED
-    // TODO test!
-    // getFilesFolder(username) {
-    //     return `files/${username}`
-    // }
-
     saveFile(username, filename, buffer) {
         this._validateStringField('username', username)
         this._validateStringField('filename', filename)
 
-        if (typeof buffer === 'undefined' || /*!(buffer instanceof Buffer)*/ !Buffer.isBuffer(buffer)) throw new Error('invalid buffer')
+        if (typeof buffer === 'undefined' || !Buffer.isBuffer(buffer)) throw new Error('invalid buffer')
 
         this._validateUserExists(username)
 

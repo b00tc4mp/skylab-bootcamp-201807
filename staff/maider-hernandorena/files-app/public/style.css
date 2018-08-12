@@ -1,7 +1,7 @@
-@import url('https://fonts.googleapis.com/css?family=VT323');
+@import url('https://fonts.googleapis.com/css?family=Cutive+Mono');
 
 * {
-    font-family: VT323, 'Courier New', Courier, monospace;
+    font-family: 'Cutive Mono', monospace, 'Courier New', Courier, monospace;
     font-size: 24px;
 }
 
@@ -19,6 +19,11 @@ body {
 
 a {
     color: lime;
+}
+
+a:hover {
+    background-color: lime;
+    color: black;
 }
 
 .blink {
@@ -68,9 +73,3 @@ button:hover {
 h1 {
     display: inline-block;
 }
-
-/* .upload {
-    position: fixed;
-    bottom: 0;
-    display: inline;
-} */

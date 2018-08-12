@@ -20,7 +20,6 @@ app.use(session({
     saveUninitialized: true,
     cookie: {
         maxAge: 24 * 60 * 60 * 1000,
-        //secure: true // WARN! in case requiring it to work in https only
     },
     store: new FileStore
 }))
@@ -40,7 +39,7 @@ app.get('/', (req, res) => {
         delete session.username
     }
 
-    res.render('index')
+    res.render('landing')
 })
 
 app.get('/files', (req, res) => {
@@ -49,12 +48,7 @@ app.get('/files', (req, res) => {
     try {
         if (logic.isLoggedIn(session.username)) {
             const files = logic.listFiles(session.username)
-
-            options.filters = {
-                'my-list': files.map(file => `<li><a href="/download/${file}">${file}</a> <a href="/delete/${file}">[x]</a></li>`).join('')
-            }
-
-            res.render('files')
+            res.render('files', { session, files })
         } else {
             res.redirect('/')
         }
@@ -101,16 +95,7 @@ app.post('/register', (req, res) => {
     try {
         logic.register(username, password)
 
-        res.send(`<html>
-            <head>
-                <title>files</title>
-                <link href="styles.css" rel="stylesheet">
-                <link href="skylab-icon.png" type="image/png" rel="Shortcut Icon">
-            </head>
-            <body>
-                ok, user ${username} successfully registered, now you can go to <a href="/login">login</a>
-            </body>
-        </html>`)
+        res.render('goToLogin', {username})
     } catch ({ message }) {
         session.registerError = message
 
@@ -130,25 +115,6 @@ app.get('/login', (req, res) => {
     } catch (err) {
         delete session.username
     }
-
-//     res.send(`<html>
-//     <head>
-//         <title>files</title>
-//         <link href="styles.css" rel="stylesheet">
-//         <link href="skylab-icon.png" type="image/png" rel="Shortcut Icon">
-//     </head>
-//     <body>
-//         <h1>login</h1>
-
-//         <form action="/login" method="post">
-//             <input type="text" name="username">
-//             <input type="password" name="password">
-//             <button type="submit">login</button>
-//         </form>
-
-//         ${session.loginError ? `<h2 class="error">${session.loginError}</h2>` : ''}        
-//     </body>
-// </html>`)
 
     res.render('login', { session })
 })
@@ -176,11 +142,41 @@ app.get('/logout', (req, res) => {
 
     try {
         logic.logout(session.username)
-    } catch (err) {
-        // noop
+    } catch ({ message }) {
+        session.loginError = message
+        res.redirect('/files')
     }
 
     res.redirect('/')
+})
+
+// app.get('/profile', (req, res) => {
+//     const { session: {username} } = req
+//     res.render('profile', {username})
+// })
+
+app.get('/profile', (req, res) => {
+    const { session } = req
+
+    try {
+        if (logic.isLoggedIn(session.username)) {
+            res.render('profile', { session })
+        }
+    } catch (err) {
+        delete session.username
+    }
+})
+
+app.post('/profile', (req, res) => {
+    const { session, body: { password, newPassword } } = req
+
+    try {
+        logic.updateUser(session.username, password, newPassword)
+        res.redirect("/files")
+    } catch ({ message }) {
+        session.updateError = message
+        res.redirect('/profile')
+    }
 })
 
 app.get('/download/:file', (req, res) => {
@@ -195,7 +191,8 @@ app.get('/delete/:file', (req, res) => {
     try {
         logic.removeFile(session.username, file)
     } catch ({ message }) {
-        // TODO
+        session.loginError = message
+        res.redirect('/files')
     }
 
     res.redirect('/files')

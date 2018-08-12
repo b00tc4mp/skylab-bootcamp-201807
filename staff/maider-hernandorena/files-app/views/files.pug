@@ -7,15 +7,18 @@ head
   link(rel='stylesheet' href='style.css')
 .screen
   h1 FILES
-  img.image(src='./default-image.png')
+  img.image(src='./default-image.jpg')
   nav
     | &gt; 
     a(href='/profile') profile
     a(href='/logout') logout
     span.blink _
   ul
-    :my-list(file)
-
+    each file in files
+      li
+        a(href='/download/'+(file)) #{file}
+        | &nbsp;
+        a(href='/delete/'+(file)) [X] 
   button
     label(for='upload') Choose a file
   form(action='/files' method='post' enctype="multipart/form-data")
