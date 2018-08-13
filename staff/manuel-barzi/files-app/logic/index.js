@@ -34,7 +34,7 @@ const logic = {
 
         if (user) throw new Error(`user ${username} already exists`)
 
-        this._users[username] = { password, loggedIn: false }
+        this._users[username] = { password }
 
         fs.mkdirSync(`data/${username}`)
         fs.mkdirSync(`data/${username}/files`)
