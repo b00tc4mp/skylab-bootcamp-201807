@@ -29,11 +29,11 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.get('/', (req, res) => {
     const { session } = req
 
-    delete session.registerError
-    delete session.loginError
+    session.registerError = ''
+    session.loginError = ''
 
     try {
-        if (session.username) {
+        if (logic.isLoggedIn(session.username)) {
             return res.redirect('/files')
         }
     } catch (err) {
@@ -47,7 +47,7 @@ app.get('/files', (req, res) => {
     const { session } = req
 
     try {
-        if (session.username) {
+        if (logic.isLoggedIn(session.username)) {
             const files = logic.listFiles(session.username)
 
             res.render('files', { files })
@@ -78,10 +78,10 @@ app.post('/files', (req, res) => {
 app.get('/register', (req, res) => {
     const { session } = req
 
-    delete session.loginError
+    session.loginError = ''
 
     try {
-        if (session.username) {
+        if (logic.isLoggedIn(session.username)) {
             return res.redirect('/files')
         }
     } catch ({message}) {
@@ -119,10 +119,10 @@ app.post('/register', (req, res) => {
 app.get('/login', (req, res) => {
     const { session } = req
 
-    delete session.registerError
+    session.registerError = ''
 
     try {
-        if (session.username) {
+        if (logic.isLoggedIn(session.username)) {
             return res.redirect('/files')
         }
     } catch (err) {
@@ -136,7 +136,7 @@ app.post('/login', (req, res) => {
     const { session, body: { username, password } } = req
 
     try {
-        logic.authenticate(username, password)
+        logic.login(username, password)
 
         session.username = username
 
@@ -151,10 +151,10 @@ app.post('/login', (req, res) => {
 app.get('/logout', (req, res) => {
     const { session } = req
 
-    delete session.loginError
+    session.loginError = ''
 
     try {
-        delete session.username
+        logic.logout(session.username)
     } catch (err) {
         // noop
     }

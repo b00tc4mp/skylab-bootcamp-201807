@@ -42,7 +42,7 @@ const logic = {
         this._persist()
     },
 
-    authenticate(username, password) {
+    login(username, password) {
         this._validateStringField('username', username)
         this._validateStringField('password', password)
 
@@ -50,7 +50,33 @@ const logic = {
 
         const user = this._users[username]
 
-        if (user.password !== password) throw new Error('wrong credentials')
+        if (user.password === password) {
+            user.loggedIn = true
+
+            this._persist()
+        } else throw new Error('wrong credentials')
+    },
+
+    isLoggedIn(username) {
+        this._validateStringField('username', username)
+
+        this._validateUserExists(username)
+
+        const user = this._users[username]
+
+        return user.loggedIn
+    },
+
+    logout(username) {
+        this._validateStringField('username', username)
+
+        this._validateUserExists(username)
+
+        const user = this._users[username]
+
+        user.loggedIn = false
+
+        this._persist()
     },
 
     listFiles(username) {
