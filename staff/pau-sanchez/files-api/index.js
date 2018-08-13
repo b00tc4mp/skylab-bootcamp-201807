@@ -10,6 +10,7 @@ const app = express()
 
 app.use(fileUpload())
 app.use(bodyParser.json())
+//const jsonBodyParser = bodyParser.json()
 
 app.post('/register', (req, res) => {
     const { body: { username, password } } = req
@@ -50,6 +51,7 @@ app.get('/user/:username/files', (req, res) => {
 })
 
 app.post('/files', (req, res) => {
+
     // TODO get username from req
     const { files: { upload } } = req
 
@@ -70,7 +72,7 @@ app.get('/user/:username/files/:file', (req, res) => {
     res.download(logic.getFilePath(username, file))
 })
 
-app.get('/delete/:file', (req, res) => {
+app.delete('/delete/:file', (req, res) => {
     // TODO get username from req
     const { params: { file } } = req
 
