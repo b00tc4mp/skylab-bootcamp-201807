@@ -1,28 +1,30 @@
 'use strict'
 
-const { fetch } = require('whatwg-fetch')
-const { XMLHttpRequest } = require('xmlhttprequest')
-const { expect } = require('chai')
+const {expect} = require('chai')
 const logic = require('.')
-
-global.fetch = fetch
-global.XMLHttpRequest = XMLHttpRequest
-
-// const rmDirRecursiveSync = require('../utils/rm-dir-recursive-sync')
+const path = require('path')
 const fs = require('fs')
+
+//const rmDirRecursiveSync = require('../utils/rm-dir-recursive-sync')
 
 
 describe('logic', () => {
 
+ /* function clean() {
+    if (fs.existsSync('data'))
+      rmDirRecursiveSync('data')
 
+    fs.mkdirSync('data')
+
+  }*/
 
   describe('register', () => {
-    let username,username2,password
+    let username, username2, password
 
     beforeEach(() => {
       username = 'jack' + Math.random().toString() + Math.random().toString()
       password = '123'
-      username2 ="bobo"
+      username2 = "bobo"
     })
 
     it('should register on valid credentials', () => {
@@ -42,9 +44,6 @@ describe('logic', () => {
       return logic.register("", "")
         .then(res => expect(res).to.be.false)
     });
-
-
-
   })
 
   describe('authenticate', () => {
@@ -53,51 +52,97 @@ describe('logic', () => {
       username = 'jack' + Math.random().toString() + Math.random().toString()
       username2 = 'jill' + Math.random().toString() + Math.random().toString()
       password = '123'
-      return  logic.register(username,password)
+      return logic.register(username, password)
     })
 
     it('should authenticate on valid credentials', () => {
       return logic.authenticate(username, password)
-        .then(res => expect(res.message).to.equal('user authenticated'))
+        .then(res => expect(res).to.be.true)
     });
     it('should not authenticate on invalid username', () => {
       return logic.authenticate(username2, password)
-        .then(res => expect(res.message).not.to.equal('user registered'))
+        .then(res => expect(res).to.be.false)
     });
     it('should not authenticate on invalid password', () => {
       return logic.authenticate(username, "abcdefg")
-        .then(res => expect(res.message).not.to.equal('user registered'))
+        .then(res => expect(res).to.be.false)
     });
 
-  it('should not authenticate on invalid username and password', () => {
+    it('should not authenticate on invalid username and password', () => {
       return logic.authenticate(username2, "abcdefg")
-        .then(res => expect(res.message).not.to.equal('user registered'))
+        .then(res => expect(res).to.be.false)
     });
-
-
   })
 
   describe('upload files', () => {
-    let username, password,imageFileBuffer
-    const imageFileURL = "src/logic/files/vg.png"
-    const imageFileName = "vg.png"
-
+    let username, password
+    const textFilePath = "src/logic/files/something.txt"
+    const imageFilePath = "src/logic/files/vg.png"
+    let imageFileName, imageBuffer
+    let textFileName, textBuffer
     beforeEach(() => {
-      username = 'jack' + Math.random().toString() + Math.random().toString()
+      username = 'uploady' + Math.random().toString() + Math.random().toString()
       password = '123'
-      return  logic.register(username,password)
-        .then(logic.authenticate(username,password))
-        .then(imageFileBuffer = fs.readFileSync(imageFileURL))
+      return logic.register(username, password)
+        .then(() => logic.authenticate(username, password))
+        .then(() => {
+          imageFileName = imageFilePath.split(path.sep).pop()
+          imageBuffer = fs.readFileSync(imageFilePath)
+          textFileName = textFilePath.split(path.sep).pop()
+          textBuffer = fs.readFileSync(textFilePath)
+        })
     })
 
     it('should upload image file correctly', () => {
-      let upload = {name:imageFileName,data:imageFileBuffer}
-      return logic.uploadFile(username,upload)
+      return logic.uploadFile(username, imageBuffer, imageFileName)
+        .then(res => expect(res.message).not.to.equal('file saved'))
+    });
+
+    it('should upload text file correctly', () => {
+      return logic.uploadFile(username, textBuffer, textFileName)
+        .then(res => expect(res.message).not.to.equal('file saved'))
+    });
+
+
+  describe('download files', () => {
+    let username, password
+    const textFilePath = "src/logic/files/something.txt"
+    const imageFilePath = "src/logic/files/vg.png"
+    let imageFileName, imageBuffer
+    let textFileName, textBuffer
+    beforeEach(() => {
+      username = 'uploady' + Math.random().toString() + Math.random().toString()
+      password = '123'
+      return logic.register(username, password)
+        .then(() => logic.authenticate(username, password))
+        .then(() => {
+          imageFileName = imageFilePath.split(path.sep).pop()
+          imageBuffer = fs.readFileSync(imageFilePath)
+          textFileName = textFilePath.split(path.sep).pop()
+          textBuffer = fs.readFileSync(textFilePath)
+        })
+        .then(() => logic.uploadFile(username,imageBuffer,imageFileName))
+        .then(() => logic.uploadFile(username,textBuffer,textFileName))
+    })
+
+    it('should download image file correctly', () => {
+      return logic.downloadFile(username, filename)
+        .then(res => expect(res.message).not.to.equal('file saved'))
+    });
+
+    it('should download text file correctly', () => {
+      return logic.uploadFile(username, textBuffer, textFileName)
         .then(res => expect(res.message).not.to.equal('file saved'))
     });
 
 
   })
+
+ /* after(() => {
+
+
+    clean()
+  })*/
 })
 
 /*

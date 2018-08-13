@@ -1,44 +1,66 @@
+'use strict'
+
 const axios = require('axios')
+const FormData = require('form-data')
+
 
 const logic = {
   _endpointBase: "http://localhost:8080/",
-  _username: "",
-  _password: "",
+  /*_ _username: "",
+   _password: "",
 
-
-  /*_callFilesAPI(path, method = 'get', body) {
-    const config = {
-      method
-    }
-
-    const methodNotGet = method !== 'get'
-
-    if (methodNotGet) {
-      config.headers = {}
-      config.headers['content-type'] = 'application/json'
-    }
-
-    if (body) config.body = JSON.stringify(body)
-
-    return fetch(`${this._endpointBase}${path}`, config)
-      .then(res => res.json())
+  set username(username) {
+    _username = username
   },
 
 
-  _callFilesAPIForFormPost(path, body) {
-    const config = {
-      method: "POST",
-    }
-
-    config.headers = {}
-    config.headers['content-type'] = 'multipart/form-data'
-
-    if (body) config.body = body
-
-    return fetch(`${this._endpointBase}${path}`, config)
-      .then(res => res.json())
+  get username() {
+    return _username
   },
-*/
+
+  set password(password) {
+    _password = password
+  },
+
+
+  get password() {
+    return _password
+  },
+
+
+   callFilesAPI(path, method = 'get', body) {
+     const config = {
+       method
+     }
+
+     const methodNotGet = method !== 'get'
+
+     if (methodNotGet) {
+       config.headers = {}
+       config.headers['content-type'] = 'application/json'
+     }
+
+     if (body) config.body = JSON.stringify(body)
+
+     return fetch(`${this._endpointBase}${path}`, config)
+       .then(res => res.json())
+   },
+
+
+   _callFilesAPIForFormPost(path, body) {
+     const config = {
+       method: "POST",
+     }
+
+     config.headers = {}
+     config.headers['content-type'] = 'multipart/form-data'
+
+     if (body) config.body = body
+
+     return fetch(`${this._endpointBase}${path}`, config)
+       .then(res => res.json())
+   },
+ */
 
   _axiosGet(path) {
     const config = {}
@@ -49,7 +71,7 @@ const logic = {
 
   _axiosPost(path, body) {
     const config = {
-     // method: "post"
+      // method: "post"
     }
 
     return axios.post(`${this._endpointBase}${path}`, body)
@@ -71,45 +93,38 @@ const logic = {
       .then(res => res.json())
   },
 
-  set username(username) {
-    _username = username
-  },
-
-
-  get username() {
-    return _username
-  },
-
-  set password(password) {
-    _password = password
-  },
-
-
-  get password() {
-    return _password
-  },
-
   register(username, password) {
 
     return this._axiosPost('register', {username, password})
       .then(res => {
-        console.log(res)
-       return (res.status === 201)
+        return (res.status === 201)
       })
       .catch(err => false)
   },
 
   authenticate(username, password) {
-    return this._axiosPost('authenticate',  {username, password})
+    return this._axiosPost('authenticate', {username, password})
+      .then(res => {
+        return (res.status === 200)
+      })
+      .catch(err => false)
 
   },
 
-  uploadFile(username, upload) {
-    const files = {upload}
+  uploadFile(username, buffer, filename) {
+
     const fd = new FormData
-    fd.append("files", files)
-    return this._axiosPostForm(`user/${username}/files`, fd)
-  }
+    fd.append("upload", buffer, filename)
+    return axios.post(`${this._endpointBase}user/${username}/files`, fd, {
+      headers: fd.getHeaders(),
+    }).then(result => {
+      // Handle result…
+      return result.data === 201
+    })
+      .catch(err => false);
+  },
+
+
 
 
 }
