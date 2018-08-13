@@ -45,7 +45,7 @@ app.get('/', (req, res) => {
 
 app.get('/files', (req, res) => {
     const { session } = req
-
+    session.updateError = ''
     try {
         if (logic.isLoggedIn(session.username)) {
             const files = logic.listFiles(session.username)
@@ -208,6 +208,30 @@ app.post('/login', (req, res) => {
     }
 })
 
+app.get('/profile', (req, res) => {
+    const { session } = req
+
+    session.error = ''
+    logic.isLoggedIn(session.username)
+    res.render('profile', { session })
+
+})
+
+
+app.post('/profile', (req, res) => {
+    const { session, body: { username, newPassword } } = req
+
+    try {
+        logic.updateUser(username, newPassword)
+        session.success = 'Password changed'
+        res.redirect('/profile')
+    } catch ({ message }) {
+        session.updateError = message
+
+        res.redirect('/profile')
+    }
+})
+
 app.get('/logout', (req, res) => {
     const { session } = req
 
@@ -221,6 +245,12 @@ app.get('/logout', (req, res) => {
 
     res.redirect('/')
 })
+
+app.get('/profile', (req,res) =>{
+    const {session} = req
+    
+})
+
 
 app.get('/download/:file', (req, res) => {
     const { session, params: { file } } = req

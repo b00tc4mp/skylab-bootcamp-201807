@@ -53,6 +53,20 @@ const logic = {
         } else throw new Error('wrong credentials')
     },
 
+    updateUser(username, newPassword) {
+        this._validateStringField('username', username)
+        this._validateStringField('password', newPassword)
+
+        this._validateUserExists(username)
+
+        const user = this._users[username]
+
+        if (user.password !== newPassword) {
+            user.password = newPassword
+            this._persist()
+        } else throw new Error('Password should be different')
+    },
+
     isLoggedIn(username) {
         this._validateStringField('username', username)
 
