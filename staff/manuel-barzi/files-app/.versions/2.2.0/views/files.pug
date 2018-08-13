@@ -1,0 +1,35 @@
+doctype html
+head
+  meta(charset='UTF-8')
+  meta(name='viewport' content='width=device-width, initial-scale=1.0')
+  meta(http-equiv='X-UA-Compatible' content='ie=edge')
+  title FILES
+  link(rel='stylesheet' href='style.css')
+  link(href='icon.png' type='image/png' rel='shortcut icon')
+header  
+  h1.on FILES
+main
+  .screen
+    nav
+      | &gt; 
+      a(href='/profile') profile
+      | 
+      a(href='/logout') logout
+      | 
+      span.blink _
+      img.image(src='./default-image.png')
+    ul
+      each file in files
+        li
+          a(href='/download/' + file) #{file}
+          | &nbsp;
+          a(href='/delete/' + file) [x]
+    // <div class="upload">
+    button
+      label(for='upload') Choose a file
+    form(action='/files' method='post' encType='multipart/form-data')
+      input#upload(type='file' name='upload' placeholder='' autofocus='')
+      button(type='submit') upload
+    // </div>
+footer
+  span.power.on &#x23FB;
