@@ -1,6 +1,0 @@
-mixin file_list(files)
-    ul
-        each file in files
-            li: a(href=`/downloads/${file}`)  #{file}
-                a(href=`/delete/${file}`)  Delete
-
