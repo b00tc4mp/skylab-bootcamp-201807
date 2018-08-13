@@ -54,7 +54,6 @@ app.get('/user/:username/files', (req, res) => {
 app.post('/user/:username/files', (req, res) => {
     // TODO get username from req
     const { files: {upload}, params: { username}  } = req
-debugger;
 
      if (upload) { // should we use multer instead?
         try {
