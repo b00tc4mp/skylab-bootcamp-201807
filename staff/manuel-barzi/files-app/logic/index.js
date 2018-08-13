@@ -2,8 +2,11 @@
 
 const fs = require('fs')
 
-if (!fs.existsSync('files'))
-    fs.mkdirSync('files')
+if (!fs.existsSync('data')) {
+    fs.mkdirSync('data')
+
+    fs.writeFileSync('data/users.json', '{}')
+}
 
 const logic = {
     _users: {},
@@ -31,14 +34,15 @@ const logic = {
 
         if (user) throw new Error(`user ${username} already exists`)
 
-        this._users[username] = { password, loggedIn: false }
+        this._users[username] = { password }
 
-        fs.mkdirSync(`files/${username}`)
+        fs.mkdirSync(`data/${username}`)
+        fs.mkdirSync(`data/${username}/files`)
 
         this._persist()
     },
 
-    login(username, password) {
+    authenticate(username, password) {
         this._validateStringField('username', username)
         this._validateStringField('password', password)
 
@@ -46,33 +50,7 @@ const logic = {
 
         const user = this._users[username]
 
-        if (user.password === password) {
-            user.loggedIn = true
-
-            this._persist()
-        } else throw new Error('wrong credentials')
-    },
-
-    isLoggedIn(username) {
-        this._validateStringField('username', username)
-
-        this._validateUserExists(username)
-
-        const user = this._users[username]
-
-        return user.loggedIn
-    },
-
-    logout(username) {
-        this._validateStringField('username', username)
-
-        this._validateUserExists(username)
-
-        const user = this._users[username]
-
-        user.loggedIn = false
-
-        this._persist()
+        if (user.password !== password) throw new Error('wrong credentials')
     },
 
     listFiles(username) {
@@ -80,7 +58,7 @@ const logic = {
 
         this._validateUserExists(username)
 
-        return fs.readdirSync(`files/${username}`)
+        return fs.readdirSync(`data/${username}/files`)
     },
 
     // DEPRECATED
@@ -97,7 +75,7 @@ const logic = {
 
         this._validateUserExists(username)
 
-        fs.writeFileSync(`files/${username}/${filename}`, buffer)
+        fs.writeFileSync(`data/${username}/files/${filename}`, buffer)
     },
 
     getFilePath(username, file) {
@@ -106,7 +84,7 @@ const logic = {
 
         this._validateUserExists(username)
 
-        return `files/${username}/${file}`
+        return `data/${username}/files/${file}`
     },
 
     removeFile(username, file) {
@@ -115,7 +93,7 @@ const logic = {
 
         this._validateUserExists(username)
 
-        fs.unlinkSync(`files/${username}/${file}`)
+        fs.unlinkSync(`data/${username}/files/${file}`)
     }
 }
 

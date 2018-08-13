@@ -6,25 +6,31 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>FILES</title>
     <link rel="stylesheet" href="style.css">
+    <link href="icon.png" type="image/png" rel="shorcut icon">
 </head>
 <body>
-    <div class="screen">
-        <h1>FILES</h1> <img class="image" src="./default-image.png">
-        <nav>
-            > <a href="/profile">profile</a> <a href="/logout">logout</a> <span class="blink">_</span>
-        </nav>
-        <ul>
-            <li>file 1</li>
-            <li>file 2</li>
-            <li>file 3</li>
-        </ul>
-        <!-- <div class="upload"> -->
-            <button><label for="upload">Choose a file</label></button>
-            <form action="/files" method="post">
-                <input id="upload" type="file" name="upload" placeholder="" autofocus>
-                <button type="submit">upload</button>
-            </form>
-        <!-- </div> -->
-    </div>
+        <header>
+            <h1 class="on">FILES</h1>
+        </header>
+        <main>
+            <div class="screen">
+                <nav>
+                    > <a href="/profile">profile</a> <a href="/logout">logout</a> <span class="blink">_</span><img class="image" src="./default-image.png">
+                </nav>
+                <ul>
+                    <li><a href="/download/file-1.txt">file-1.txt</a> <a href="/delete/file-1.txt">[x]</a></li>
+                </ul>
+                <!-- <div class="upload"> -->
+                    <button><label for="upload">Choose a file</label></button>
+                    <form action="/files" method="post">
+                        <input id="upload" type="file" name="upload" placeholder="" autofocus>
+                        <button type="submit">upload</button>
+                    </form>
+                <!-- </div> -->
+            </div>
+        </main>
+        <footer>
+            <span class="power on">&#x23FB;</span>
+        </footer>
 </body>
 </html>
