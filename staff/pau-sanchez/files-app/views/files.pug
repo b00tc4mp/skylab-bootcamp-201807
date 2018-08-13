@@ -13,15 +13,15 @@ html(lang='en')
       nav
         | > 
         a(href='/profile') profile
+        | &nbsp
         a(href='/logout') logout
         span.blink _
       ul
-      
-        //${files.map(file => `<li><a href="/download/${file}">${file}</a> <a href="/delete/${file}">[x]</a></li>`).join('')}
-        //li file 1
-        //li file 2
-        //li file 3
-      // <div class="upload">
+        each file in files
+          li
+            a(href='/download/'+(file)) #{file}
+            | &nbsp
+            a(href='/delete/'+(file)) [X] 
       button
         label(for='upload') Choose a file
       form(action='/files', method='post' enctype="multipart/form-data")

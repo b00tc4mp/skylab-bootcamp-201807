@@ -50,7 +50,8 @@ app.get('/files', (req, res) => {
         if (logic.isLoggedIn(session.username)) {
             const files = logic.listFiles(session.username)
 
-            res.render('files')
+            
+            res.render('files', { session, files })
             //res.render('login', { session })
             /*res.send(`<html>
     <head>
@@ -241,6 +242,18 @@ app.get('/delete/:file', (req, res) => {
     }
 
     res.redirect('/files')
+})
+
+app.get('/update', (req, res) => {
+    //const { session } = req
+    res.render('update')
+    
+})
+
+app.post('/update', (req, res) => {
+    //const { session, body: { username, password } } = req
+    res.render('update')
+   
 })
 
 app.listen(port, () => console.log(`${package.name} ${package.version} up and running on port ${port}`))

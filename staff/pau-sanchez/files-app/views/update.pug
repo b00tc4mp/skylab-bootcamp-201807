@@ -1,0 +1,20 @@
+doctype html
+head
+  meta(charset='UTF-8')
+  meta(name='viewport' content='width=device-width, initial-scale=1.0')
+  meta(http-equiv='X-UA-Compatible' content='ie=edge')
+  title FILES
+  link(rel='stylesheet' href='style.css')
+.screen
+    h1 Update Profile
+    form(action='/register', method='post')
+      label(for='male') New Username
+      input(type='text', name='newusername')
+      br
+      label(for='male') Current Password
+      input(type='password', name='password')
+      br
+      label(for='male') New Password
+      input(type='password', name='newpassword')
+      br
+      button(type='submit') update profile
