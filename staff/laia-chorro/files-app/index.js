@@ -31,6 +31,7 @@ app.get('/', (req, res) => {
 
     session.registerError = ''
     session.loginError = ''
+    session.filesError = ''
 
     try {
         if (logic.isLoggedIn(session.username)) {
@@ -82,11 +83,10 @@ app.get('/files', (req, res) => {
 
 app.post('/files', (req, res) => {
     const { session, files: { upload } } = req
-
-
-    session.filesError = ''
     
     if (upload) {
+        session.filesError = ''
+
         // upload.mv(`${logic.getFilesFolder(username)}/${upload.name}`, function (err) {
         //     if (err)
         //         return res.status(500).send(err)
