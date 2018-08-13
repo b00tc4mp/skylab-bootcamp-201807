@@ -8,12 +8,19 @@ const fs = require('fs')
 describe('logic', () => {
     const username = 'jack', password = '123'
 
+    function clean() {
+        if (fs.existsSync('data'))
+            rmDirRecursiveSync('data')
+
+        fs.mkdirSync('data')
+
+        fs.writeFileSync('data/users.json', '{}')
+    }
+
     beforeEach(() => {
         logic._users = {}
 
-        rmDirRecursiveSync('files')
-
-        fs.mkdirSync('files')
+        clean()
     })
 
     describe('_ validate string field', () => {
@@ -42,7 +49,8 @@ describe('logic', () => {
             expect(user.password).to.equal(password)
             expect(user.loggedIn).to.be.false
 
-            expect(fs.lstatSync(`files/${username}`).isDirectory()).to.be.true
+            expect(fs.lstatSync(`data/${username}`).isDirectory()).to.be.true
+            expect(fs.lstatSync(`data/${username}/files`).isDirectory()).to.be.true
         })
 
         it('should fail on trying to register an already registered user', () => {
@@ -201,10 +209,11 @@ describe('logic', () => {
         beforeEach(() => {
             logic._users[username] = { password, loggedIn: true }
 
-            fs.mkdirSync(`files/${username}`)
-            fs.writeFileSync(`files/${username}/README.md`, '# documentation')
-            fs.writeFileSync(`files/${username}/hello-world.txt`, 'hello world!')
-            fs.mkdirSync(`files/${username}/folder`)
+            fs.mkdirSync(`data/${username}`)
+            fs.mkdirSync(`data/${username}/files`)
+            fs.writeFileSync(`data/${username}/files/README.md`, '# documentation')
+            fs.writeFileSync(`data/${username}/files/hello-world.txt`, 'hello world!')
+            fs.mkdirSync(`data/${username}/files/folder`)
         })
 
         it('should list files if they exist', () => {
@@ -220,12 +229,9 @@ describe('logic', () => {
     })
 
     after(() => {
-        logic._users = {}
-        logic._persist() // TODO: test it!
+        // logic._users = {}
+        // logic._persist() // TODO: test it!
 
-        rmDirRecursiveSync('files')
-        fs.mkdirSync('files')
-
-        fs.writeFileSync('data/users.json', '{}')
+        clean()
     })
 })

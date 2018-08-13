@@ -5,11 +5,17 @@ head
   meta(http-equiv='X-UA-Compatible' content='ie=edge')
   title FILES
   link(rel='stylesheet' href='style.css')
-.screen
-  h1 FILES
-  nav
-    | &gt; 
-    a(href='/register') register
-    |  or 
-    a(href='/login') login
-    span.blink _
+  link(href='icon.png' type='image/png' rel='shortcut icon')
+header
+  h1.off FILES
+main
+  .screen
+    nav
+      | &gt; 
+      a(href='/register') register
+      |  or 
+      a(href='/login') login
+      | 
+      span.blink _
+footer
+  span.power.on &#x23FB;
