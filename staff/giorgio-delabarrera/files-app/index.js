@@ -13,7 +13,7 @@ const app = express()
 app.set('view engine', 'pug')
 
 app.use(fileUpload())
-app.use(express.static('public'))
+// app.use(express.static('public'))
 app.use(session({
     secret: 'keyboard cat',
     resave: false,
