@@ -1,0 +1,144 @@
+{
+	"info": {
+		"_postman_id": "46a35dee-925b-4176-a9bf-674e7efb6821",
+		"name": "files-api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"_postman_id": "8f9281b5-5cf4-4052-8715-e80537814202",
+			"name": "retrieve file",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8080/user/u/files/README.md",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"u",
+						"files",
+						"README.md"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"_postman_id": "c1b00ec8-a0c7-4ccd-b3d4-1809be8162ec",
+			"name": "register user",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\": \"u2\",\n\t\"password\": \"p\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"_postman_id": "5a447a26-14ca-468c-8fbe-53dd6442444d",
+			"name": "upload file",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "upload",
+							"value": "",
+							"sessionValue": {
+								"0": {}
+							},
+							"type": "file"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/user/u2/files",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"u2",
+						"files"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"_postman_id": "3c731d83-2063-446c-9203-985c81dca4c7",
+			"name": "delete file",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8080/user/u2/files/big-image.jpg",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"u2",
+						"files",
+						"big-image.jpg"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"_postman_id": "13cab5cb-9bf5-45d0-ba75-cb399328900f",
+			"name": "list files",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8080/user/u2/files",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"u2",
+						"files"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
