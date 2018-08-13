@@ -29,11 +29,11 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.get('/', (req, res) => {
     const { session } = req
 
-    session.registerError = ''
-    session.loginError = ''
+    delete session.registerError
+    delete session.loginError
 
     try {
-        if (logic.isLoggedIn(session.username)) {
+        if (session.username) {
             return res.redirect('/files')
         }
     } catch (err) {
@@ -47,28 +47,10 @@ app.get('/files', (req, res) => {
     const { session } = req
 
     try {
-        if (logic.isLoggedIn(session.username)) {
+        if (session.username) {
             const files = logic.listFiles(session.username)
 
-            res.send(`<html>
-    <head>
-        <title>files</title>
-        <link href="styles.css" rel="stylesheet">
-        <link href="skylab-icon.png" type="image/png" rel="Shortcut Icon">
-    </head>
-    <body>
-        <nav>${session.username} <a href="/logout">logout</a></nav>
-        <ul>
-            ${files.map(file => `<li><a href="/download/${file}">${file}</a> <a href="/delete/${file}">[x]</a></li>`).join('')}
-        </ul>
-
-        <form action="/files" method="post" encType="multipart/form-data">
-            <input type="file" name="upload">
-            <button type="submit">upload</button>
-        </form>
-    </body>
-</html>`)
-
+            res.render('files', { files })
         } else {
             res.redirect('/')
         }
@@ -81,13 +63,6 @@ app.post('/files', (req, res) => {
     const { session, files: { upload } } = req
 
     if (upload) {
-        // upload.mv(`${logic.getFilesFolder(username)}/${upload.name}`, function (err) {
-        //     if (err)
-        //         return res.status(500).send(err)
-
-        //     res.redirect('/files')
-        // })
-
         try {
             logic.saveFile(session.username, upload.name, upload.data)
         } catch ({ message }) {
@@ -103,34 +78,19 @@ app.post('/files', (req, res) => {
 app.get('/register', (req, res) => {
     const { session } = req
 
-    session.loginError = ''
+    delete session.loginError
 
     try {
-        if (logic.isLoggedIn(session.username)) {
+        if (session.username) {
             return res.redirect('/files')
         }
-    } catch (err) {
+    } catch ({message}) {
         delete session.username
+
+        session.registerError = message
     }
 
-    res.send(`<html>
-    <head>
-        <title>files</title>
-        <link href="styles.css" rel="stylesheet">
-        <link href="skylab-icon.png" type="image/png" rel="Shortcut Icon">
-    </head>
-    <body>
-        <h1>register</h1>
-
-        <form action="/register" method="post">
-            <input type="text" name="username">
-            <input type="password" name="password">
-            <button type="submit">register</button>
-        </form>
-
-        ${session.registerError ? `<h2 class="error">${session.registerError}</h2>` : ''}
-    </body>
-</html>`)
+    res.render('register', { session })
 })
 
 app.post('/register', (req, res) => {
@@ -159,34 +119,15 @@ app.post('/register', (req, res) => {
 app.get('/login', (req, res) => {
     const { session } = req
 
-    session.registerError = ''
+    delete session.registerError
 
     try {
-        if (logic.isLoggedIn(session.username)) {
+        if (session.username) {
             return res.redirect('/files')
         }
     } catch (err) {
         delete session.username
     }
-
-//     res.send(`<html>
-//     <head>
-//         <title>files</title>
-//         <link href="styles.css" rel="stylesheet">
-//         <link href="skylab-icon.png" type="image/png" rel="Shortcut Icon">
-//     </head>
-//     <body>
-//         <h1>login</h1>
-
-//         <form action="/login" method="post">
-//             <input type="text" name="username">
-//             <input type="password" name="password">
-//             <button type="submit">login</button>
-//         </form>
-
-//         ${session.loginError ? `<h2 class="error">${session.loginError}</h2>` : ''}        
-//     </body>
-// </html>`)
 
     res.render('login', { session })
 })
@@ -195,7 +136,7 @@ app.post('/login', (req, res) => {
     const { session, body: { username, password } } = req
 
     try {
-        logic.login(username, password)
+        logic.authenticate(username, password)
 
         session.username = username
 
@@ -210,10 +151,10 @@ app.post('/login', (req, res) => {
 app.get('/logout', (req, res) => {
     const { session } = req
 
-    session.loginError = ''
+    delete session.loginError
 
     try {
-        logic.logout(session.username)
+        delete session.username
     } catch (err) {
         // noop
     }
