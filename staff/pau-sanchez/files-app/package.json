@@ -3,9 +3,24 @@
   "version": "3.0.0",
   "private": true,
   "dependencies": {
+<<<<<<< HEAD
     "react": "^16.4.2",
     "react-dom": "^16.4.2",
     "react-scripts": "1.1.4"
+=======
+    "axios": "^0.18.0",
+    "mocha": "^5.2.0",
+    "react": "^16.4.2",
+    "react-dom": "^16.4.2",
+    "react-scripts": "1.1.4"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "mocha src/logic",
+    "eject": "react-scripts eject",
+    "debug": "mocha debug src/logic/index.spec.js"
+>>>>>>> feat/react-files
   },
   "scripts": {
     "start": "react-scripts start",

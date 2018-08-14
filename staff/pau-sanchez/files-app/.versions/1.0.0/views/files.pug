@@ -1,0 +1,30 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset='UTF-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    meta(http-equiv='X-UA-Compatible', content='ie=edge')
+    title FILES
+    link(rel='stylesheet', href='style.css')
+  body
+    .screen
+      h1 FILES
+      img.image(src='default-image.png')
+      nav
+        | > 
+        a(href='/profile') profile
+        | &nbsp
+        a(href='/logout') logout
+        span.blink _
+      ul
+        each file in files
+          li
+            a(href='/download/'+(file)) #{file}
+            | &nbsp
+            a(href='/delete/'+(file)) [X] 
+      button
+        label(for='upload') Choose a file
+      form(action='/files', method='post' enctype="multipart/form-data")
+        input#upload(type='file', name='upload', placeholder='', autofocus='')
+        button(type='submit') upload
+      // </div>
