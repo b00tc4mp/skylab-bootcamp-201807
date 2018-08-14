@@ -9,9 +9,12 @@ const { argv: [, , port] } = process
 const app = express()
 
 app.use(fileUpload())
-app.use(bodyParser.json())
 
-app.post('/register', (req, res) => {
+// app.use(bodyParser.json())
+const jsonBodyParser = bodyParser.json()
+const formBodyParser = bodyParser.urlencoded({ extended: false })
+
+app.post('/register', jsonBodyParser, (req, res) => {
     const { body: { username, password } } = req
 
     try {
@@ -23,7 +26,7 @@ app.post('/register', (req, res) => {
     }
 })
 
-app.post('/authenticate', (req, res) => {
+app.post('/authenticate', jsonBodyParser, (req, res) => {
     const { body: { username, password } } = req
 
     try {
@@ -35,8 +38,6 @@ app.post('/authenticate', (req, res) => {
     }
 })
 
-// app.get('/files', (req, res) => {
-//     const { query: { username } } = req
 app.get('/user/:username/files', (req, res) => {
     const { params: { username } } = req
 
@@ -49,20 +50,21 @@ app.get('/user/:username/files', (req, res) => {
     }
 })
 
-app.post('/files', (req, res) => {
-    // TODO get username from req
-    const { files: { upload } } = req
+app.post('/user/:username/files', formBodyParser, (req, res) => {
+    const { params: { username }, files: { upload } } = req
 
-    // if (upload) { // should we use multer instead?
-    try {
-        logic.saveFile(username, upload.name, upload.data)
-    } catch ({ message }) {
-        session.error = message
-    }
+    if (upload) {
+        try {
+            logic.saveFile(username, upload.name, upload.data)
 
-    res.status(201).json({ message: 'file saved' })
+            res.status(201).json({ message: 'file saved' })
+        } catch ({ message }) {
+            res.status(500).json({ message })
+        }
+    } else
+        res.status(418).json({ message: 'no file received' })
+
 })
-
 
 app.get('/user/:username/files/:file', (req, res) => {
     const { params: { username, file } } = req
@@ -70,17 +72,16 @@ app.get('/user/:username/files/:file', (req, res) => {
     res.download(logic.getFilePath(username, file))
 })
 
-app.get('/delete/:file', (req, res) => {
-    // TODO get username from req
-    const { params: { file } } = req
+app.delete('/user/:username/files/:file', (req, res) => {
+    const { params: { username, file } } = req
 
     try {
         logic.removeFile(username, file)
-    } catch ({ message }) {
-        // TODO
-    }
 
-    res.redirect('/files')
+        res.status(200).json({ message: 'file deleted' })
+    } catch ({ message }) {
+        res.status(500).json({ message })
+    }
 })
 
 app.listen(port, () => console.log(`${package.name} ${package.version} up and running on port ${port}`))
