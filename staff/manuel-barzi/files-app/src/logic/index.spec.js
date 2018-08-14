@@ -6,7 +6,7 @@ const logic = require('.')
 const fs = require('fs')
 const rimraf = require('rimraf')
 const FormData = require('form-data')
-const bitmapManipulation = require("bitmap-manipulation")
+const Jimp = require('jimp')
 
 global.FormData = FormData
 
@@ -64,14 +64,14 @@ describe('logic', () => {
 
     describe('save file', () => {
         beforeEach(() => {
-            fs.writeFileSync('tests/helloworld.txt', 'hola mundo!')
+            fs.writeFileSync('tests/hello-world.txt', 'hola mundo!')
         })
 
         it('should succeed on correct file', () =>
             logic.register(username, password)
                 .then(() => logic.authenticate(username, password))
                 .then(() => {
-                    const file = fs.createReadStream('tests/helloworld.txt')
+                    const file = fs.createReadStream('tests/hello-world.txt')
 
                     return logic.saveFile(username, file)
                 })
@@ -80,29 +80,29 @@ describe('logic', () => {
         )
 
         afterEach(() => {
-            fs.unlinkSync('tests/helloworld.txt')
+            fs.unlinkSync('tests/hello-world.txt')
         })
     })
 
     describe('retrieve text file', () => {
         beforeEach(() => {
-            fs.writeFileSync('tests/helloworld.txt', 'hola mundo!')
+            fs.writeFileSync('tests/hello-world.txt', 'hola mundo!')
         })
 
         it('should succeed on correct file', () =>
             logic.register(username, password)
                 .then(() => logic.authenticate(username, password))
                 .then(() => {
-                    const file = fs.createReadStream('tests/helloworld.txt')
+                    const file = fs.createReadStream('tests/hello-world.txt')
 
                     return logic.saveFile(username, file)
                 })
-                .then(() => logic.retrieveFile(username, 'helloworld.txt'))
+                .then(() => logic.retrieveFile(username, 'hello-world.txt'))
                 .then(res => {
                     expect(res).to.exist
 
                     return new Promise((resolve, reject) => {
-                        const ws = fs.createWriteStream('tests/helloworld.txt-retrieved')
+                        const ws = fs.createWriteStream('tests/hello-world.txt-retrieved')
 
                         res.pipe(ws)
 
@@ -112,42 +112,41 @@ describe('logic', () => {
                     })
                 })
                 .then(() => {
-                    const from = fs.readFileSync('tests/helloworld.txt')
-                    const to = fs.readFileSync('tests/helloworld.txt-retrieved')
+                    const from = fs.readFileSync('tests/hello-world.txt')
+                    const to = fs.readFileSync('tests/hello-world.txt-retrieved')
 
                     expect(from.equals(to)).to.be.true
                 })
         )
 
         afterEach(() => {
-            fs.unlinkSync('tests/helloworld.txt')
+            fs.unlinkSync('tests/hello-world.txt')
         })
     })
 
     describe('retrieve binary file', () => {
-        beforeEach(() => {
-            const bitmap = new bitmapManipulation.Bitmap(400, 300);
- 
-            // Draw rectangle with border
-            bitmap.drawFilledRect(10, 10, 100, 50, 0x00, 0xff)
+        beforeEach(done => {
+            new Jimp(256, 256, 0xff0000ff, function(err, image) {
+                if (err) return done(err)
 
-            fs.writeFileSync('tests/helloworld.bmp', bitmap.data())
+                image.write('tests/hello-world.png', done)
+            })
         })
 
         it('should succeed on correct file', () =>
             logic.register(username, password)
                 .then(() => logic.authenticate(username, password))
                 .then(() => {
-                    const file = fs.createReadStream('tests/helloworld.bmp')
+                    const file = fs.createReadStream('tests/hello-world.png')
 
                     return logic.saveFile(username, file)
                 })
-                .then(() => logic.retrieveFile(username, 'helloworld.bmp'))
+                .then(() => logic.retrieveFile(username, 'hello-world.png'))
                 .then(res => {
                     expect(res).to.exist
 
                     return new Promise((resolve, reject) => {
-                        const ws = fs.createWriteStream('tests/helloworld.bmp-retrieved')
+                        const ws = fs.createWriteStream('tests/hello-world.png-retrieved')
 
                         res.pipe(ws)
 
@@ -157,15 +156,16 @@ describe('logic', () => {
                     })
                 })
                 .then(() => {
-                    const from = fs.readFileSync('tests/helloworld.bmp')
-                    const to = fs.readFileSync('tests/helloworld.bmp-retrieved')
+                    debugger
+                    const from = fs.readFileSync('tests/hello-world.png')
+                    const to = fs.readFileSync('tests/hello-world.png-retrieved')
 
                     expect(from.equals(to)).to.be.true
                 })
         )
 
         afterEach(() => {
-            fs.unlinkSync('tests/helloworld.bmp')
+            fs.unlinkSync('tests/hello-world.png')
         })
     })
 
