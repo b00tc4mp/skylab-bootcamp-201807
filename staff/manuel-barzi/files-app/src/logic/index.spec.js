@@ -102,7 +102,7 @@ describe('logic', () => {
                     expect(res).to.exist
 
                     return new Promise((resolve, reject) => {
-                        const ws = fs.createWriteStream('tests/hello-world.txt-retrieved')
+                        const ws = fs.createWriteStream('tests/hello-world-retrieved.txt')
 
                         res.pipe(ws)
 
@@ -113,7 +113,7 @@ describe('logic', () => {
                 })
                 .then(() => {
                     const from = fs.readFileSync('tests/hello-world.txt')
-                    const to = fs.readFileSync('tests/hello-world.txt-retrieved')
+                    const to = fs.readFileSync('tests/hello-world-retrieved.txt')
 
                     expect(from.equals(to)).to.be.true
                 })
@@ -146,7 +146,7 @@ describe('logic', () => {
                     expect(res).to.exist
 
                     return new Promise((resolve, reject) => {
-                        const ws = fs.createWriteStream('tests/hello-world.png-retrieved')
+                        const ws = fs.createWriteStream('tests/hello-world-retrieved.png')
 
                         res.pipe(ws)
 
@@ -158,7 +158,7 @@ describe('logic', () => {
                 .then(() => {
                     debugger
                     const from = fs.readFileSync('tests/hello-world.png')
-                    const to = fs.readFileSync('tests/hello-world.png-retrieved')
+                    const to = fs.readFileSync('tests/hello-world-retrieved.png')
 
                     expect(from.equals(to)).to.be.true
                 })
