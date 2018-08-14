@@ -1,45 +1,60 @@
-const axios = require('axios')
-const FormData = require('form-data')
-
-const form = new FormData()
-
 const logic = {
+    url: 'http://localhost:8080',
 
-    _userUsername : '',
+    _post(path, headers, body, expectedStatus) {
+        return fetch(`${this.url}/${path}`, {
+            method: 'post',
+            headers,
+            body
+        })
+            .then(res => {
+                if (res.status === expectedStatus) {
+                    return true
+                } else
+                    return res.json()
+                        .then(({ message }) => {
+                            throw new Error(message)
+                        })
+            })
+    },
 
     register(username, password) {
-        return axios.post('http://localhost:8080/register', { username, password })
-            .then(res => res.data.message)
-            .catch(error => {throw Error(error.response.data.message)})
+        return this._post('register', {
+            'Content-Type': 'application/json'
+        }, JSON.stringify({ username, password }), 201)
     },
 
-    login(username, password) {
-        return axios.post('http://localhost:8080/authenticate', { username, password })
+    authenticate(username, password) {
+        return this._post('authenticate', {
+            'Content-Type': 'application/json'
+        }, JSON.stringify({ username, password }), 200)
+    },
+
+    saveFile(username, file) {
+        const body = new FormData()
+
+        body.append('upload', file)
+
+        return this._post(`user/${username}/files`, undefined, body, 201)
+    },
+
+    retrieveFile(username, file) {
+        const path = `user/${username}/files/${file}`
+        const expectedStatus = 200
+
+        return fetch(`${this.url}/${path}`, {
+            method: 'get'
+        })
             .then(res => {
-                    this._userUsername = username
-                    return res.data.message
+                if (res.status === expectedStatus) {
+                    return res.body
+                } else
+                    return res.json()
+                        .then(({ message }) => {
+                            throw new Error(message)
+                        })
             })
-            .catch(error => {throw Error(error.response.data.message)})
-    },
-
-    downloadFile(username, file) {
-        return axios.get(`http://localhost:8080/user/${username}/files/${file}`)
-            .then(res => res)
-            .catch(error => {throw Error(error.response.data.message)})
-    },
-
-    deleteFile(username, file) {
-        return axios.delete(`http://localhost:8080/user/${username}/files/${file}`)
-            .then(res => res.data.message)
-            .catch(error => {throw Error(error.response.data.message)})
-    },
-
-    uploadFile(username, file) {
-        return axios.post(`http://localhost:8080/user/${username}/files`, file,  {headers: form.getHeaders()})
-            .then(res => res)
-            .catch(error => {throw Error(error.response.data.message)})
     }
 }
 
-
-if (typeof module !== 'undefined') module.exports = logic;
+module.exports = logic
