@@ -99,7 +99,6 @@ const logic = {
       .then(res => {
         return (res.status === 201)
       })
-      .catch(err => false)
   },
 
   authenticate(username, password) {
@@ -107,7 +106,6 @@ const logic = {
       .then(res => {
         return (res.status === 200)
       })
-      .catch(err => false)
 
   },
 
@@ -121,7 +119,6 @@ const logic = {
       // Handle result…
       return result.data === 201
     })
-      .catch(err => false);
   },
 
 
