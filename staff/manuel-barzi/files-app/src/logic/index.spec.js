@@ -13,16 +13,10 @@ describe('logic', () => {
         })
 
         describe('new user', () => {
-            let result
-
-            beforeEach(() =>
+            it('should succeed', () =>
                 logic.register(username, password)
-                    .then(res => result = res)
+                    .then(res => expect(res).to.be.true)
             )
-
-            it('should succeed', () => {
-                expect(result).to.be.true
-            })
         })
 
         describe('already existing user', () => {
