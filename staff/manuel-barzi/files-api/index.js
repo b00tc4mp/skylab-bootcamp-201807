@@ -17,6 +17,8 @@ const formBodyParser = bodyParser.urlencoded({ extended: false })
 app.post('/register', jsonBodyParser, (req, res) => {
     const { body: { username, password } } = req
 
+    debugger
+
     try {
         logic.register(username, password)
 
