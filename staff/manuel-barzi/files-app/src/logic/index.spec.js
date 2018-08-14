@@ -12,28 +12,21 @@ describe('logic', () => {
             username = `user-${Math.random()}`, password = '123'
         })
 
-        describe('new user', () => {
-            it('should succeed', () =>
-                logic.register(username, password)
-                    .then(res => expect(res).to.be.true)
-            )
-        })
+        it('should succeed on new user', () =>
+            logic.register(username, password)
+                .then(res => expect(res).to.be.true)
+        )
 
-        describe('already existing user', () => {
-            let error
-
-            beforeEach(() =>
-                logic.register(username, password)
-                    .then(() => logic.register(username, password))
-                    .catch(err => error = err)
-            )
-
-            it('should fail', () => {
-                expect(error).to.exist
-                expect(error.message).to.equal(`user ${username} already exists`)
-            })
-        })
-
+        it('should fail on already existing user', () =>
+            logic.register(username, password)
+                .then(() => logic.register(username, password))
+                .catch(err => err)
+                .catch(err => {
+                    expect(err).to.exist
+                    expect(err.message).to.equal(`user ${username} already exists`)
+                })
+        )
     })
+
 })
 
