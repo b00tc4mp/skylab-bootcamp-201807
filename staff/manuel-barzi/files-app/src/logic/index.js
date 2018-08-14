@@ -9,7 +9,15 @@ const logic = {
             },
             body: JSON.stringify({ username, password })
         })
-            .then(res => res.status === 201)
+            .then(res => {
+                if (res.status === 201) {
+                    return true
+                } else
+                    return res.json()
+                        .then(({ message }) => {
+                            throw new Error(message)
+                        })
+            })
     }
 }
 
