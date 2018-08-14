@@ -21,7 +21,7 @@ describe('logic', () => {
             logic.register(username, password)
                 .then(() => logic.register(username, password))
                 .catch(err => err)
-                .catch(err => {
+                .then(err => {
                     expect(err).to.exist
                     expect(err.message).to.equal(`user ${username} already exists`)
                 })
