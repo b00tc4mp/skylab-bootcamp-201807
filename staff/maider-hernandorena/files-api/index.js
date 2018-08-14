@@ -9,9 +9,12 @@ const { argv: [, , port] } = process
 const app = express()
 
 app.use(fileUpload())
-app.use(bodyParser.json())
 
-app.post('/register', (req, res) => {
+// app.use(bodyParser.json())
+const jsonBodyParser = bodyParser.json()
+const formBodyParser = bodyParser.urlencoded({ extended: false })
+
+app.post('/register', jsonBodyParser, (req, res) => {
     const { body: { username, password } } = req
 
     try {
@@ -23,7 +26,7 @@ app.post('/register', (req, res) => {
     }
 })
 
-app.post('/authenticate', (req, res) => {
+app.post('/authenticate', jsonBodyParser, (req, res) => {
     const { body: { username, password } } = req
 
     try {
@@ -47,19 +50,20 @@ app.get('/user/:username/files', (req, res) => {
     }
 })
 
-app.post('/user/:username/files/', (req, res) => {
+app.post('/user/:username/files', formBodyParser, (req, res) => {
     const { params: { username }, files: { upload } } = req
 
-    if (upload) { 
+    if (upload) {
         try {
             logic.saveFile(username, upload.name, upload.data)
-            res.status(200).json({ message: 'file saved' })
+
+            res.status(201).json({ message: 'file saved' })
         } catch ({ message }) {
             res.status(500).json({ message })
         }
-    } else {
-        res.status(418).json( {message: 'not file received' })
-    }
+    } else
+        res.status(418).json({ message: 'no file received' })
+
 })
 
 app.get('/user/:username/files/:file', (req, res) => {
@@ -73,6 +77,7 @@ app.delete('/user/:username/files/:file', (req, res) => {
 
     try {
         logic.removeFile(username, file)
+
         res.status(200).json({ message: 'file deleted' })
     } catch ({ message }) {
         res.status(500).json({ message })
