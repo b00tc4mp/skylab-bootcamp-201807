@@ -94,6 +94,15 @@ const logic = {
         this._validateUserExists(username)
 
         fs.unlinkSync(`data/${username}/files/${file}`)
+    },
+
+    updatePassword(username,newpwd) {
+        this._validateStringField('username', username)
+        this._validateStringField('newpwd', newpwd)
+
+        this._validateUserExists(username)
+
+         this._users[username].password = newpwd
     }
 }
 
