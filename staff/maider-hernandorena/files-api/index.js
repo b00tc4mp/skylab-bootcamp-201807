@@ -3,11 +3,12 @@ const fileUpload = require('express-fileupload')
 const package = require('./package.json')
 const bodyParser = require('body-parser')
 const logic = require('./logic')
+const cors = require('cors')
 
 const { argv: [, , port] } = process
 
 const app = express()
-
+app.use(cors())
 app.use(fileUpload())
 
 // app.use(bodyParser.json())

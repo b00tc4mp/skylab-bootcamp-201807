@@ -3,8 +3,10 @@
   "version": "3.0.0",
   "private": true,
   "dependencies": {
+    "jimp": "^0.3.5",
     "react": "^16.4.2",
     "react-dom": "^16.4.2",
+    "react-router-dom": "^4.3.1",
     "react-scripts": "1.1.4"
   },
   "devDependencies": {
