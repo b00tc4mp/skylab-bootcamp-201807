@@ -1,22 +1,38 @@
 import React, { Component } from 'react'
-import { Switch, Route } from 'react-router-dom'
+import { Switch, Route, withRouter, Redirect } from 'react-router-dom'
 import Landing from './components/Landing'
 import Register from './components/Register'
 import Login from './components/Login'
 import Files from './components/Files'
 
 class App extends Component {
+  state = {
+    username: ''
+  }
+
+  onLoggedIn = username => {
+    this.setState({ username })
+
+    this.props.history.push('/files')
+  }
+
+  isLoggedIn() {
+    return !!this.state.username
+  }
+
   render() {
+    const { username } = this.state
+    
     return <div className="full-height">
       <header>
-        <h1 className="off">FILES</h1>
+        <h1 className={this.isLoggedIn() ? 'on' : 'off'}>FILES</h1>
       </header>
 
       <Switch>
-        <Route exact path="/" component={Landing} />
-        <Route path="/register" component={Register} />
-        <Route path="/login" component={Login} />
-        <Route path="/files" component={Files} />
+        <Route exact path="/" render={() => this.isLoggedIn() ? <Redirect to="/files" /> : <Landing />} />
+        <Route path="/register" render={() => this.isLoggedIn() ? <Redirect to="/files" /> : <Register />} />
+        <Route path="/login" render={() => this.isLoggedIn() ? <Redirect to="/files" /> : <Login onLoggedIn={this.onLoggedIn} />} />
+        <Route path="/files" render={() => this.isLoggedIn() ? <Files username={username} /> : <Redirect to="/" />} />
       </Switch>
 
       <footer>
@@ -26,4 +42,4 @@ class App extends Component {
   }
 }
 
-export default App
+export default withRouter(App)
