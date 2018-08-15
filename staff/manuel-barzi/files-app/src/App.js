@@ -10,7 +10,7 @@ class App extends Component {
     username: ''
   }
 
-  onLoggedIn = (username) => {
+  onLoggedIn = username => {
     this.setState({ username })
 
     this.props.history.push('/files')

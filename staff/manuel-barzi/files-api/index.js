@@ -11,11 +11,7 @@ const app = express()
 
 app.use(cors())
 
-// app.use(fileUpload())
-
-// app.use(bodyParser.json())
 const jsonBodyParser = bodyParser.json()
-// const formBodyParser = bodyParser.urlencoded({ extended: false })
 
 app.post('/register', jsonBodyParser, (req, res) => {
     const { body: { username, password } } = req

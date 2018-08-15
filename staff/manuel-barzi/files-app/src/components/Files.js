@@ -32,9 +32,7 @@ class Files extends Component {
 
         logic.retrieveFile(this.props.username, file)
             .then(stream => new Response(stream).blob())
-            .then(blob => {
-                fileSaver.saveAs(blob, file)
-            })
+            .then(blob => fileSaver.saveAs(blob, file))
             .catch(({ message }) => alert(message))
     }
 
