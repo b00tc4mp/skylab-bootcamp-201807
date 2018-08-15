@@ -1,4 +1,5 @@
 const express = require('express')
+const cors = require('cors')
 const fileUpload = require('express-fileupload')
 const package = require('./package.json')
 const bodyParser = require('body-parser')
@@ -8,11 +9,9 @@ const { argv: [, , port] } = process
 
 const app = express()
 
-app.use(fileUpload())
+app.use(cors())
 
-// app.use(bodyParser.json())
 const jsonBodyParser = bodyParser.json()
-const formBodyParser = bodyParser.urlencoded({ extended: false })
 
 app.post('/register', jsonBodyParser, (req, res) => {
     const { body: { username, password } } = req
@@ -52,7 +51,7 @@ app.get('/user/:username/files', (req, res) => {
     }
 })
 
-app.post('/user/:username/files', formBodyParser, (req, res) => {
+app.post('/user/:username/files', fileUpload(), (req, res) => {
     const { params: { username }, files: { upload } } = req
 
     if (upload) {
