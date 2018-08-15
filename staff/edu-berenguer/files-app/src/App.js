@@ -9,6 +9,11 @@ import logic from './logic'
 
 class App extends Component {
 
+  state={
+    list: [],
+    user: ''
+  }
+
   goToRegister = (event) => {
     event.preventDefault()
     this.props.history.push('/Register')
@@ -20,28 +25,58 @@ class App extends Component {
   }
 
   onRegister = (username,password) =>{
-    logic.registerUser(username,password)
+    logic.register(username,password)
       .then(() => {
+        //Todo sweet alert
         this.props.history.push('/Login')
       })
   }
 
-  onLogin = (userName,password) =>{
-    logic.authUser(userName,password)
+  onLogin = (username,password) =>{
+    logic.authenticate(username,password)
       .then(() => {
-        this.props.history.push('/Files')
+        this.listFiles(username).then(() => {
+          this.setState({user:username})
+          this.props.history.push('/Files')
+        })
       })
   }
 
+  listFiles = (username) =>{
+    return logic.listFiles(username)
+      .then(res => {
+        this.setState({
+          list: res
+        })
+      })
+  }
+
+  uploadFile = (file) =>{
+    logic.saveFile(this.state.user,file)
+      .then(() => {
+      })
+  }
+
+  onRemove = (file) =>{
+      logic.removeFile(this.state.user,file)
+       .then(() => {
+          return logic.listFiles(this.state.user)
+            .then(res => {
+              this.setState({
+                list: res
+              })
+          })
+          
+       })
+  }
 
   render() {
     return (
-
       <Switch>
             <Route exact path="/" render={() => <HomePage onRegister={this.goToRegister} onLogin={this.goToLogin}/>}/>
             <Route path="/Register" render={() => <Register onRegister={this.onRegister}/>}/>
             <Route path="/Login" render={() => <Login onLogin={this.onLogin}/>}/>
-            <Route path="/Files" render={() => <Files />}/>
+            <Route path="/Files" render={() => <Files listFiles={this.state.list} onRemove={this.onRemove} uploadFile={this.uploadFile}/>}/>
       </Switch>
     );
   }

@@ -29,25 +29,25 @@ class Login extends Component {
   render() {
     return (
         <div>
-                <header>
-            <h1 className="off">FILES</h1>
-        </header>
-        <main>
-            <div className="screen">
-                <nav>
-                    > <a href="" onClick={this.goToRegister}>register</a> or login <span className="blink">_</span>
-                </nav>
-                {/* <form action="/login" method="post"> */}
-                <form onSubmit={this.onLogin}>
-                    <input type="text" name="username" placeholder="username" onChange={this.keepUser}/>
-                    <input type="password" name="password" placeholder="password" onChange={this.keepPassword}/>
-                    <button type="submit">login</button>
-                </form>
-            </div>
-        </main>
-        <footer>
-            <span className="power on">&#x23FB;</span>
-        </footer>
+            <header>
+                <h1 className="off">FILES</h1>
+            </header>
+            <main>
+                <div className="screen">
+                    <nav>
+                        > <a href="" onClick={this.goToRegister}>register</a> or login <span className="blink">_</span>
+                    </nav>
+                    {/* <form action="/login" method="post"> */}
+                    <form onSubmit={this.onLogin}>
+                        <input type="text" name="username" placeholder="username" onChange={this.keepUser}/>
+                        <input type="password" name="password" placeholder="password" onChange={this.keepPassword}/>
+                        <button type="submit">login</button>
+                    </form>
+                </div>
+            </main>
+            <footer>
+                <span className="power on">&#x23FB;</span>
+            </footer>
         </div>
     )
   }
