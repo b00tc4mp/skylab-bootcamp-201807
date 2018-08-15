@@ -94,16 +94,6 @@ const logic = {
         this._validateUserExists(username)
 
         fs.unlinkSync(`data/${username}/files/${file}`)
-    },
-
-    updateProfile(username, password, newPassword) {
-        this.authenticate(username, password)
-        this._validateStringField('newPassword', newPassword)
-
-        const user = this._users[username]
-
-        user.password = newPassword
-        this._persist()
     }
 }
 

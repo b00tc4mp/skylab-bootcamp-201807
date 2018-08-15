@@ -159,55 +159,6 @@ describe('logic', () => {
         })
     })
 
-    describe('update user password', () => {
-        const newPassword = "321"
-
-        beforeEach(() => {
-            logic._users[username] = { password }
-            
-        })
-
-        it('should change the password on correct data', () =>{
-            logic.updateProfile(username, password, newPassword)
-            
-            const user = logic._users[username]
-
-            expect(user).to.exist
-            expect(user.password).to.equal(newPassword)
-        })
-        it('should fail on wrong credentials', () => {
-            expect(() => logic.updateProfile('pepito', 'grillo',newPassword)).to.throw('user pepito does not exist')
-        })
-
-        it('should fail on wrong password', () => {
-            expect(() => logic.updateProfile(username, '456', newPassword)).to.throw('wrong credentials')
-        })
-
-        it('should fail on trying to updateProfile with an undefined username', () => {
-            expect(() => logic.updateProfile(undefined, password, newPassword)).to.throw(`invalid username`)
-        })
-
-        it('should fail on trying to updateProfile with an empty username', () => {
-            expect(() => logic.updateProfile('', password, newPassword)).to.throw(`invalid username`)
-        })
-
-        it('should fail on trying to updateProfile with a numeric username', () => {
-            expect(() => logic.updateProfile(123, password, newPassword)).to.throw(`invalid username`)
-        })
-
-        it('should fail on trying to updateProfile with an undefined password', () => {
-            expect(() => logic.updateProfile(username, undefined,newPassword)).to.throw(`invalid password`)
-        })
-
-        it('should fail on trying to updateProfile with an empty password', () => {
-            expect(() => logic.updateProfile(username, '',newPassword)).to.throw(`invalid password`)
-        })
-
-        it('should fail on trying to updateProfile with a numeric password', () => {
-            expect(() => logic.updateProfile(username, 123,newPassword)).to.throw(`invalid password`)
-        })
-    })
-
     after(() => {
         // logic._users = {}
         // logic._persist() // TODO: test it!
