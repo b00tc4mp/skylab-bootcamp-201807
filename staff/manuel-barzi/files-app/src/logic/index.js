@@ -45,11 +45,12 @@ const logic = {
                 return this._call('authenticate', 'post', {
                     'Content-Type': 'application/json'
                 }, JSON.stringify({ username, password }), 200)
-                    .then(() => true)
+                    .then(res => res.json())
+                    .then(({ token }) => token)
             })
     },
 
-    saveFile(username, file) {
+    saveFile(username, file, token) {
         return Promise.resolve()
             .then(() => {
                 this._validateStringField('username', username)
@@ -60,39 +61,39 @@ const logic = {
 
                 body.append('upload', file)
 
-                return this._call(`user/${username}/files`, 'post', undefined, body, 201)
+                return this._call(`user/${username}/files`, 'post', { authorization: `bearer ${token}` }, body, 201)
                     .then(() => true)
             })
     },
 
-    retrieveFile(username, file) {
+    retrieveFile(username, file, token) {
         return Promise.resolve()
             .then(() => {
                 this._validateStringField('username', username)
                 this._validateStringField('file', file)
 
-                return this._call(`user/${username}/files/${file}`, 'get', undefined, undefined, 200)
+                return this._call(`user/${username}/files/${file}`, 'get', { authorization: `bearer ${token}` }, undefined, 200)
                     .then(res => res.body)
             })
     },
 
-    listFiles(username) {
+    listFiles(username, token) {
         return Promise.resolve()
             .then(() => {
                 this._validateStringField('username', username)
 
-                return this._call(`user/${username}/files`, 'get', undefined, undefined, 200)
+                return this._call(`user/${username}/files`, 'get', { authorization: `bearer ${token}` }, undefined, 200)
                     .then(res => res.json())
             })
     },
 
-    removeFile(username, file) {
+    removeFile(username, file, token) {
         return Promise.resolve()
             .then(() => {
                 this._validateStringField('username', username)
                 this._validateStringField('file', file)
 
-                return this._call(`user/${username}/files/${file}`, 'delete', undefined, undefined, 200)
+                return this._call(`user/${username}/files/${file}`, 'delete', { authorization: `bearer ${token}` }, undefined, 200)
                     .then(res => res.body)
             })
     }
