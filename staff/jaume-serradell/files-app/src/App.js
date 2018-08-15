@@ -1,8 +1,8 @@
 // Dependencies
 import React, { Component } from 'react';
 import './App.css';
-import { BrowserRouter as Router, withRouter } from 'react-router-dom';
-import Route from 'react-router-dom/Route'
+import { withRouter, Switch, Route } from 'react-router-dom';
+
 import Register from './components/Register';
 import Login from './components/Login';
 import Landing from './components/Landing';
@@ -16,34 +16,48 @@ import GoToLogin from './components/GoToLogin'
 
 class App extends Component {
   state = {
-    loggedIn: true,
-    justRegistered: false
+    loggedIn: false,
+    justRegistered: false,
+    username: ''
   }
 
   goToRegister = () => this.props.history.push('/register')
 
   goToLogin = () => this.props.history.push('/login')
 
-  // registerUser = (username, password) =>
-  //   logic.registerUser(username, password)
-  //     .then(() => this.props.history.push('/registered'))
-  //     .catch(({ message }) => 'Error')
+  registerUser = (username, password) =>
+    logic.register(username, password)
+      .then(() => {
+        this.setState({ justRegistered: true })
+
+        this.props.history.push('/registered')
+      })
+      .catch(({ message }) => console.log('errorcito'))
+  
+  loginUser = (username, password) =>
+    logic.authenticate(username, password)
+      .then(() => {
+        this.setState({ loggedIn: true, username})
+
+        this.props.history.push('/files')
+      })
+      .catch(({ message }) => console.log('errorcito'))
   
   
   render() {
 
-    const { state: { loggedIn, justRegistered }, goToRegister, goToLogin, registerUser } = this;
+    const { state: { loggedIn, justRegistered, username }, goToRegister, goToLogin, registerUser, loginUser } = this;
 
     return (
-      <Router>
-        <div className="App">
-          <Route path='/' exact render={() => <Landing onRegister={goToRegister} onLogin={goToLogin}/>} />
-          <Route path='/register' render={() => loggedIn ? <Register /> : <Landing />} />
-          <Route path='/registered' render={() => justRegistered ? <GoToLogin /> : <Landing />} />
-          <Route path='/login' render={() => loggedIn ? <Login /> : <Landing />} />
-          <Route path='/files' render={() => loggedIn ? <Files /> : <Landing />} />
-        </div>
-      </Router>
+      <div className="App">
+        <Switch>
+            <Route exact path='/' render={() => <Landing onRegister={goToRegister} onLogin={goToLogin} />} />
+            <Route path='/register' render={() => <Register onRegister={registerUser} onLogin={goToLogin} />} />
+            <Route path='/registered' render={() => <GoToLogin onLogin={goToLogin}/>} />
+            <Route path='/login' render={() => <Login onLogin={loginUser} onGoToRegister={goToRegister} />} />
+            <Route path='/files' render={() => <Files name={username}/>} />
+        </Switch>
+      </div>
     ); 
   }
 }

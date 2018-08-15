@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 class Register extends Component {
     
-    state = { username: null, password: null }
+    state = { username: '', password: '' }
 
     keepUsername = event => this.setState({ username: event.target.value })
 
@@ -10,21 +10,24 @@ class Register extends Component {
 
     onRegister = event => {
         event.preventDefault()
-
         const { username, password } = this.state
-
         this.props.onRegister(username, password)
+    }
+
+    goToLoginPage = event => {
+        event.preventDefault()
+        this.props.onLogin()
     }
     
     render() {
         return <div className="screen">
             <h1>FILES</h1>
             <nav>
-                >  register or <a href="/login">login</a> <span className="blink">_</span>
+                >  register or <a href="" onClick={this.goToLoginPage}>login</a> <span className="blink">_</span>
             </nav>
-            <form action="/register" method="post">
-                <input type="text" name="username" placeholder="username" autoFocus />
-                <input type="password" name="password" placeholder="password" />
+            <form onSubmit={this.onRegister}>
+                <input type="text" onChange={this.keepUsername} placeholder="username" />
+                <input type="password" onChange={this.keepPassword} placeholder="password" />
                 <button type="submit">register</button>
             </form>
         </div>
