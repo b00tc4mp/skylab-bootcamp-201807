@@ -1,15 +1,16 @@
 const logic = {
     url: 'http://localhost:8080',
 
-    _post(path, headers, body, expectedStatus) {
-        return fetch(`${this.url}/${path}`, {
-            method: 'post',
-            headers,
-            body
-        })
+    _call(path, method, headers, body, expectedStatus) {
+        const config = { method }
+
+        if (headers) config.headers = headers
+        if (body) config.body = body
+
+        return fetch(`${this.url}/${path}`, config)
             .then(res => {
                 if (res.status === expectedStatus) {
-                    return true
+                    return res
                 } else
                     return res.json()
                         .then(({ message }) => {
@@ -18,41 +19,81 @@ const logic = {
             })
     },
 
+    _validateStringField(fieldName, fieldValue) {
+        if (typeof fieldValue !== 'string' || !fieldValue.length) throw new Error(`invalid ${fieldName}`)
+    },
+
     register(username, password) {
-        return this._post('register', {
-            'Content-Type': 'application/json'
-        }, JSON.stringify({ username, password }), 201)
+        return Promise.resolve()
+            .then(() => {
+                this._validateStringField('username', username)
+                this._validateStringField('password', password)
+
+                return this._call('register', 'post', {
+                    'Content-Type': 'application/json'
+                }, JSON.stringify({ username, password }), 201)
+                    .then(() => true)
+            })
     },
 
     authenticate(username, password) {
-        return this._post('authenticate', {
-            'Content-Type': 'application/json'
-        }, JSON.stringify({ username, password }), 200)
+        return Promise.resolve()
+            .then(() => {
+                this._validateStringField('username', username)
+                this._validateStringField('password', password)
+
+                return this._call('authenticate', 'post', {
+                    'Content-Type': 'application/json'
+                }, JSON.stringify({ username, password }), 200)
+                    .then(() => true)
+            })
     },
 
     saveFile(username, file) {
-        const body = new FormData()
+        return Promise.resolve()
+            .then(() => {
+                this._validateStringField('username', username)
 
-        body.append('upload', file)
+                if (typeof file !== 'object') throw new Error('invalid file')
 
-        return this._post(`user/${username}/files`, undefined, body, 201)
+                const body = new FormData()
+
+                body.append('upload', file)
+
+                return this._call(`user/${username}/files`, 'post', undefined, body, 201)
+                    .then(() => true)
+            })
     },
 
     retrieveFile(username, file) {
-        const path = `user/${username}/files/${file}`
-        const expectedStatus = 200
+        return Promise.resolve()
+            .then(() => {
+                this._validateStringField('username', username)
+                this._validateStringField('file', file)
 
-        return fetch(`${this.url}/${path}`, {
-            method: 'get'
-        })
-            .then(res => {
-                if (res.status === expectedStatus) {
-                    return res.body
-                } else
-                    return res.json()
-                        .then(({ message }) => {
-                            throw new Error(message)
-                        })
+                return this._call(`user/${username}/files/${file}`, 'get', undefined, undefined, 200)
+                    .then(res => res.body)
+            })
+    },
+
+    listFiles(username) {
+        return Promise.resolve()
+            .then(() => {
+                this._validateStringField('username', username)
+
+                return this._call(`user/${username}/files`, 'get', undefined, undefined, 200)
+                    .then(res => res.json())
+            })
+    },
+
+    removeFile(username, file) {
+        return Promise.resolve()
+            .then(() => {
+                this._validateStringField('username', username)
+                this._validateStringField('file', file)
+
+                return this._call(`user/${username}/files/${file}`, 'delete', undefined, undefined, 200)
+                    .then(res => res.body)
             })
     }
 }
