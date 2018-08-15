@@ -1,25 +1,44 @@
 import React, { Component } from 'react'
+import logic from '../logic'
 
 class Login extends Component {
-    render() {
-        return <main>
-        <div className="screen">
-          <nav>
-            &gt; <a href="/#/register">register</a> or login <span className="blink">_</span>
-          </nav>
-          <form action="/login" method="post">
-            <input
-              type="text"
-              name="username"
-              placeholder="username"
-              autofocus
-            />
-            <input type="password" name="password" placeholder="password" />
-            <button type="submit">login</button>
-          </form>
-        </div>
-      </main>
-    }
+  state = {
+    username: '',
+    password: '',
+    error: ''
+  }
+
+  onUsernameChanged = e => this.setState({ username: e.target.value })
+
+  onPasswordChanged = e => this.setState({ password: e.target.value })
+
+  onLoginSubmitted = e => {
+    e.preventDefault()
+
+    const { username, password } = this.state
+
+    logic.authenticate(username, password)
+      .then(() => this.props.onLoggedIn(username))
+      .catch(({ message }) => this.setState({ error: message }))
+  }
+
+  render() {
+    const { error } = this.state
+
+    return <main>
+      <div className="screen">
+        <nav>
+          &gt; <a href="/#/register">register</a> or login <span className="blink">_</span>
+        </nav>
+        <form onSubmit={this.onLoginSubmitted}>
+          <input type="text" name="username" placeholder="username" autofocus onChange={this.onUsernameChanged} />
+          <input type="password" name="password" placeholder="password" onChange={this.onPasswordChanged} />
+          <button type="submit">login</button>
+        </form>
+        {error && <p>{error}</p>}
+      </div>
+    </main>
+  }
 }
 
 export default Login
