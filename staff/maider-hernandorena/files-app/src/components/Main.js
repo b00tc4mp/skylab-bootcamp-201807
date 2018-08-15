@@ -3,56 +3,64 @@ import logic from '../logic'
 
 class Main extends Component {
 
-  state = { 
-    username : logic.username,
-    file: ''
-  }
+  state = { file: undefined, files: [] }
 
-  listFiles = () => {
-    logic.listFiles(this.state.username)
-      return <li></li>
-  }
+    componentDidMount() {
+        this.listFiles()
+            .catch(({ message }) => alert(message))
+    }
 
-  downloadFiles = () => {
-    logic.retrieveFile(this.state.username, this.state.file)
-      .then((event) => {
+    listFiles() {
+        return logic.listFiles(this.props.username)
+            .then(files => this.setState({ files }))
+    }
+
+    onFileChanged = event => this.setState({ file: event.target.files[0] })
+
+    onUpload = event => {
         event.preventDefault()
-        this.props.history.push('/home')
-      })
-  }
+        logic.saveFile(this.props.username, this.state.file)
+            .then(() => this.listFiles())
+            .catch(({ message }) => alert(message))
+    }
 
-  deleteFiles = () => {
-    logic.removeFile(this.state.username, this.state.file)
-      .then((event) => {
+    onDownload = event => {
         event.preventDefault()
-        this.props.history.push('/home')
-      })
-  }
+        const file = event.target.dataset.file
+        logic.retrieveFile(this.props.username, file)
+            .then(stream => new Response(stream).blob())
+            // .then(blob => fileSaver.saveAs(blob, file))
+            .catch(({ message }) => alert(message))
+    }
 
-  
-  render() {
+    onDelete = event => {
+        event.preventDefault()
+        const file = event.target.dataset.file
+        logic.removeFile(this.props.username, file)
+            .then(() => this.listFiles())
+            .catch(({ message }) => alert(message))
+    }
 
-    return <section className="main">
-              <header>
-                <h1>FILES</h1>
-              </header>
-                <div>
-                    <nav>
-                        > <a href="">profile</a> <a href="">logout</a> <span className="blink">_</span>
-                    </nav>
-                    <ul>
-                        <li><a href="/home" onClick={this.downloadFiles}></a> <a onClick={this.deleteFiles} href="/home">[x]</a></li>
-                    </ul>
-                    <div className="upload">
-                        <button><label for="upload">Choose a file</label></button>
-                        <form action="/files" method="post">
-                            <input id="upload" type="file" name="upload" placeholder=""/>
-                            <button type="submit">upload</button>
-                        </form>
-                    </div>
-                </div>
-             </section>
-  }
+    render() {
+        const { files } = this.state
+
+        return <div>
+                <nav>
+                  &gt; <a href="">profile</a> <a href="">logout</a> <span className="blink">_</span>
+                </nav>
+                {(!!files.length) && <ul>
+                  {files.map(file => <li><a href="" onClick={this.onDownload} data-file={file}>{file}</a> <a href="" onClick={this.onDelete} data-file={file}>[x]</a> </li> )}
+                </ul>}
+                <button>
+                  <label htmlFor="upload">Choose a file</label>
+                </button>
+                <form onSubmit={this.onUpload}>
+                  <input id="upload" type="file" name="upload" placeholder autoFocus onChange={this.onFileChanged} />
+                  <button type="submit">upload</button>
+                </form>
+            </div>
+    
+    }
 }
 
 export default Main
