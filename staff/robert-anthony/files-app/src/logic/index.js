@@ -1,129 +1,113 @@
-'use strict'
-
-const axios = require('axios')
-const FormData = require('form-data')
-
-
 const logic = {
-  _endpointBase: "http://localhost:8080/",
-  /*_ _username: "",
-   _password: "",
+    url: 'http://localhost:8080',
 
-  set username(username) {
-    _username = username
-  },
+    _call(path, method, headers, body, expectedStatus) {
+        const config = { method }
 
+        if (headers) config.headers = headers
+        if (body) config.body = body
 
-  get username() {
-    return _username
-  },
+        return fetch(`${this.url}/${path}`, config)
+            .then(res => {
+                if (res.status === expectedStatus) {
+                    return res
+                } else
+                    return res.json()
+                        .then(({ message }) => {
+                            throw new Error(message)
+                        })
+            })
+    },
 
-  set password(password) {
-    _password = password
-  },
+    _validateStringField(fieldName, fieldValue) {
+        if (typeof fieldValue !== 'string' || !fieldValue.length) throw new Error(`invalid ${fieldName}`)
+    },
 
+    register(username, password) {
+        return Promise.resolve()
+            .then(() => {
+                this._validateStringField('username', username)
+                this._validateStringField('password', password)
 
-  get password() {
-    return _password
-  },
+                return this._call('register', 'post', {
+                    'Content-Type': 'application/json'
+                }, JSON.stringify({ username, password }), 201)
+                    .then(() => true)
+            })
+    },
 
+    authenticate(username, password) {
+        return Promise.resolve()
+            .then(() => {
+                this._validateStringField('username', username)
+                this._validateStringField('password', password)
 
-   callFilesAPI(path, method = 'get', body) {
-     const config = {
-       method
-     }
+                return this._call('authenticate', 'post', {
+                    'Content-Type': 'application/json'
+                }, JSON.stringify({ username, password }), 200)
+                    .then(res => res.json())
+                    .then(({ token }) => token)
+            })
+    },
 
-     const methodNotGet = method !== 'get'
+    saveFile(username, file, token) {
+        return Promise.resolve()
+            .then(() => {
+                this._validateStringField('username', username)
 
-     if (methodNotGet) {
-       config.headers = {}
-       config.headers['content-type'] = 'application/json'
-     }
+                if (typeof file !== 'object') throw new Error('invalid file')
 
-     if (body) config.body = JSON.stringify(body)
+                const body = new FormData()
 
-     return fetch(`${this._endpointBase}${path}`, config)
-       .then(res => res.json())
-   },
+                body.append('upload', file)
 
+                return this._call(`user/${username}/files`, 'post', { authorization: `bearer ${token}` }, body, 201)
+                    .then(() => true)
+            })
+    },
 
-   _callFilesAPIForFormPost(path, body) {
-     const config = {
-       method: "POST",
-     }
+    retrieveFile(username, file, token) {
+        return Promise.resolve()
+            .then(() => {
+                this._validateStringField('username', username)
+                this._validateStringField('file', file)
 
-     config.headers = {}
-     config.headers['content-type'] = 'multipart/form-data'
+                return this._call(`user/${username}/files/${file}`, 'get', { authorization: `bearer ${token}` }, undefined, 200)
+                    .then(res => res.body)
+            })
+    },
 
-     if (body) config.body = body
+    listFiles(username, token) {
+        return Promise.resolve()
+            .then(() => {
+                this._validateStringField('username', username)
 
-     return fetch(`${this._endpointBase}${path}`, config)
-       .then(res => res.json())
-   },
- */
+                return this._call(`user/${username}/files`, 'get', { authorization: `bearer ${token}` }, undefined, 200)
+                    .then(res => res.json())
+            })
+    },
 
-  _axiosGet(path) {
-    const config = {}
+    removeFile(username, file, token) {
+        return Promise.resolve()
+            .then(() => {
+                this._validateStringField('username', username)
+                this._validateStringField('file', file)
+                return this._call(`user/${username}/files/${file}`, 'delete', { authorization: `bearer ${token}` }, undefined, 200)
+                    .then(res => res.body)
+            })
+    },
 
-    return axios.get(`${this._endpointBase}${path}`, config)
+  updatePassword(username,newpwd,token) {
 
-  },
-
-  _axiosPost(path, body) {
-    const config = {
-      // method: "post"
-    }
-
-    return axios.post(`${this._endpointBase}${path}`, body)
-
-  },
-
-  _axiosPostForm(path, body) {
-    const config = {
-      method: "POST",
-    }
-
-    config.headers = {}
-    config.headers['content-type'] = 'form-data'
-
-    if (body) config.data = body
-
-
-    return axios.post(`${this._endpointBase}${path}`, config)
-      .then(res => res.json())
-  },
-
-  register(username, password) {
-
-    return this._axiosPost('register', {username, password})
-      .then(res => {
-        return (res.status === 201)
-      })
-  },
-
-  authenticate(username, password) {
-    return this._axiosPost('authenticate', {username, password})
-      .then(res => {
-        return (res.status === 200)
-      })
-
-  },
-
-  uploadFile(username, buffer, filename) {
-
-    const fd = new FormData
-    fd.append("upload", buffer, filename)
-    return axios.post(`${this._endpointBase}user/${username}/files`, fd, {
-      headers: fd.getHeaders(),
-    }).then(result => {
-      // Handle result…
-      return result.data === 201
-    })
-  },
-
-
-
-
+      return Promise.resolve()
+        .then(() => {
+          this._validateStringField('username', username)
+          this._validateStringField('newpwd', newpwd)
+          const body = JSON.stringify({newpwd})
+          return this._call(`user/${username}/updatepassword`, 'post', { authorization: `bearer ${token}`,'Content-Type': 'application/json' }, body, 200)
+            .then(res => true)
+        })
+  }
 }
 
-if (typeof module !== 'undefined') module.exports = logic;
+module.exports = logic
