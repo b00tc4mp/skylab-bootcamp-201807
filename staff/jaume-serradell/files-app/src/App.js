@@ -29,7 +29,7 @@ class App extends Component {
     logic.register(username, password)
       .then(() => {
         this.setState({ justRegistered: true })
-
+        console.log('entro')
         this.props.history.push('/registered')
       })
       .catch(({ message }) => console.log('errorcito'))
