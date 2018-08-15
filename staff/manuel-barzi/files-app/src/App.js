@@ -7,11 +7,12 @@ import Files from './components/Files'
 
 class App extends Component {
   state = {
-    username: ''
+    username: '',
+    token: ''
   }
 
-  onLoggedIn = username => {
-    this.setState({ username })
+  onLoggedIn = (username, token) => {
+    this.setState({ username, token })
 
     this.props.history.push('/files')
   }
@@ -21,7 +22,7 @@ class App extends Component {
   }
 
   render() {
-    const { username } = this.state
+    const { username, token } = this.state
     
     return <div className="full-height">
       <header>
@@ -32,7 +33,7 @@ class App extends Component {
         <Route exact path="/" render={() => this.isLoggedIn() ? <Redirect to="/files" /> : <Landing />} />
         <Route path="/register" render={() => this.isLoggedIn() ? <Redirect to="/files" /> : <Register />} />
         <Route path="/login" render={() => this.isLoggedIn() ? <Redirect to="/files" /> : <Login onLoggedIn={this.onLoggedIn} />} />
-        <Route path="/files" render={() => this.isLoggedIn() ? <Files username={username} /> : <Redirect to="/" />} />
+        <Route path="/files" render={() => this.isLoggedIn() ? <Files username={username} token={token} /> : <Redirect to="/" />} />
       </Switch>
 
       <footer>
