@@ -84,9 +84,12 @@ const logic = {
 
     return Promise.resolve()
       .then(() => {
-        this._validateStringField('username', username)
+          this._validateStringField('username', username)
 
-        this._validateUserExists(username)
+          return this._validateUserExists(username)
+        }
+      )
+      .then(() => {
         return new Promise((resolve, reject) => {
 
           fs.readdir(`data/${username}/files`, (err, results) => {
@@ -138,7 +141,7 @@ const logic = {
   },
 
   removeFile(username, file) {
-    
+
     return Promise.resolve()
       .then(_ => {
         this._validateStringField('username', username)
@@ -146,8 +149,8 @@ const logic = {
         return this._validateUserExists(username)
       })
       .then(_ => {
-        return new Promise((resolve,reject)=> {
-          fs.unlink(`data/${username}/files/${file}`,(err)=> {
+        return new Promise((resolve, reject) => {
+          fs.unlink(`data/${username}/files/${file}`, (err) => {
             if (err) return reject(err)
             resolve()
           })
