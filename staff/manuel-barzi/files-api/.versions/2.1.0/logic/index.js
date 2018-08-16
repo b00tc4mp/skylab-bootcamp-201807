@@ -4,50 +4,42 @@ const fs = require('fs')
 
 if (!fs.existsSync('data')) {
     fs.mkdirSync('data')
+
+    fs.writeFileSync('data/users.json', '{}')
 }
 
 const logic = {
-    _users: null,
+    _users: {},
+
+    // TODO test!
+    _persist() {
+        fs.writeFileSync('data/users.json', JSON.stringify(this._users))
+    },
 
     _validateStringField(fieldName, fieldValue) {
         if (typeof fieldValue !== 'string' || !fieldValue.length) throw new LogicError(`invalid ${fieldName}`)
     },
 
     _validateUserExists(username) {
-        return this._users.findOne({ username })
-            .then(user => {
-                if (!user) throw new LogicError(`user ${username} does not exist`)
-            })
+        const user = this._users[username]
+
+        if (!user) throw new LogicError(`user ${username} does not exist`)
     },
 
     register(username, password) {
-        return Promise.resolve()
-            .then(() => {
-                this._validateStringField('username', username)
-                this._validateStringField('password', password)
+        this._validateStringField('username', username)
+        this._validateStringField('password', password)
 
-                return this._users.findOne({ username })
-            })
-            .then(user => {
-                if (user) throw new LogicError(`user ${username} already exists`)
+        const user = this._users[username]
 
-                const _user = { username, password }
+        if (user) throw new LogicError(`user ${username} already exists`)
 
-                return this._users.insertOne(_user)
-            })
-            .then(() =>
-                new Promise((resolve, reject) => {
-                    fs.mkdir(`data/${username}`, err => {
-                        if (err) return reject(err)
+        this._users[username] = { password }
 
-                        fs.mkdir(`data/${username}/files`, err => {
-                            if (err) return reject(err)
+        fs.mkdirSync(`data/${username}`)
+        fs.mkdirSync(`data/${username}/files`)
 
-                            resolve()
-                        })
-                    })
-                })
-            )
+        this._persist()
     },
 
     authenticate(username, password) {
@@ -124,5 +116,7 @@ class LogicError extends Error {
         super(message)
     }
 }
+
+logic._users = JSON.parse(fs.readFileSync('data/users.json'))
 
 module.exports = { logic, LogicError }
