@@ -113,8 +113,4 @@ router.delete('/user/:username/files/:file', validateJwt, (req, res) => {
     }
 })
 
-module.exports = function(db) {
-    logic._users = db.collection('users')
-
-    return router
-}
+module.exports = router
