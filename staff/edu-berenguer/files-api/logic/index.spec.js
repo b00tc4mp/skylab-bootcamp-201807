@@ -159,6 +159,18 @@ describe('logic', () => {
         })
     })
 
+    describe('update password user', () =>{
+        const newPassword = '456'
+
+        beforeEach(() => {
+            logic._users[username] = { password }
+        })
+
+        it('should update on correct passwords', () => {
+            expect(() => logic.updateProfile(username,password,newPassword)).not.to.throw()
+        })
+    })
+
     after(() => {
         // logic._users = {}
         // logic._persist() // TODO: test it!

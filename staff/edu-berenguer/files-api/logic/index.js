@@ -11,7 +11,6 @@ if (!fs.existsSync('data')) {
 const logic = {
     _users: {},
 
-    // TODO test!
     _persist() {
         fs.writeFileSync('data/users.json', JSON.stringify(this._users))
     },
@@ -61,12 +60,6 @@ const logic = {
         return fs.readdirSync(`data/${username}/files`)
     },
 
-    // DEPRECATED
-    // TODO test!
-    // getFilesFolder(username) {
-    //     return `files/${username}`
-    // }
-
     saveFile(username, filename, buffer) {
         this._validateStringField('username', username)
         this._validateStringField('filename', filename)
@@ -94,6 +87,15 @@ const logic = {
         this._validateUserExists(username)
 
         fs.unlinkSync(`data/${username}/files/${file}`)
+    },
+
+    updateProfile(username,password,newPassword){
+        if(password !== this._users[username].password) throw new Error(`wrong password`)
+
+        this._validateStringField('new password', newPassword)
+        this._users[username].password = newPassword
+
+        this._persist()
     }
 }
 

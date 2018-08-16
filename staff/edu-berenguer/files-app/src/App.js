@@ -1,85 +1,48 @@
-import React, { Component } from 'react';
-import './App.css';
-import HomePage from './components/HomePage'
+import React, { Component } from 'react'
+import { Switch, Route, withRouter, Redirect } from 'react-router-dom'
+import Landing from './components/Landing'
 import Register from './components/Register'
 import Login from './components/Login'
 import Files from './components/Files'
-import { Switch, Route, withRouter, Redirect } from 'react-router-dom'
-import logic from './logic'
+import Profile from './components/Profile'
 
 class App extends Component {
-
-  state={
-    list: [],
-    user: ''
+  state = {
+    username: '',
+    token: ''
   }
 
-  goToRegister = (event) => {
-    event.preventDefault()
-    this.props.history.push('/Register')
+  onLoggedIn = (username, token) => {
+    this.setState({ username, token })
+
+    this.props.history.push('/files')
   }
 
-  goToLogin = (event) => {
-    event.preventDefault()
-    this.props.history.push('/Login')
-  }
-
-  onRegister = (username,password) =>{
-    logic.register(username,password)
-      .then(() => {
-        //Todo sweet alert
-        this.props.history.push('/Login')
-      })
-  }
-
-  onLogin = (username,password) =>{
-    logic.authenticate(username,password)
-      .then(() => {
-        this.listFiles(username).then(() => {
-          this.setState({user:username})
-          this.props.history.push('/Files')
-        })
-      })
-  }
-
-  listFiles = (username) =>{
-    return logic.listFiles(username)
-      .then(res => {
-        this.setState({
-          list: res
-        })
-      })
-  }
-
-  uploadFile = (file) =>{
-    logic.saveFile(this.state.user,file)
-      .then(() => {
-      })
-  }
-
-  onRemove = (file) =>{
-      logic.removeFile(this.state.user,file)
-       .then(() => {
-          return logic.listFiles(this.state.user)
-            .then(res => {
-              this.setState({
-                list: res
-              })
-          })
-          
-       })
+  isLoggedIn() {
+    return !!this.state.username
   }
 
   render() {
-    return (
+    const { username, token } = this.state
+    
+    return <div className="full-height">
+      <header>
+        <h1 className={this.isLoggedIn() ? 'on' : 'off'}>FILES</h1>
+      </header>
+
       <Switch>
-            <Route exact path="/" render={() => <HomePage onRegister={this.goToRegister} onLogin={this.goToLogin}/>}/>
-            <Route path="/Register" render={() => <Register onRegister={this.onRegister}/>}/>
-            <Route path="/Login" render={() => <Login onLogin={this.onLogin}/>}/>
-            <Route path="/Files" render={() => <Files listFiles={this.state.list} onRemove={this.onRemove} uploadFile={this.uploadFile}/>}/>
+        <Route exact path="/" render={() => this.isLoggedIn() ? <Redirect to="/files" /> : <Landing />} />
+        <Route path="/register" render={() => this.isLoggedIn() ? <Redirect to="/files" /> : <Register />} />
+        <Route path="/login" render={() => this.isLoggedIn() ? <Redirect to="/files" /> : <Login onLoggedIn={this.onLoggedIn} />} />
+        <Route path="/files" render={() => this.isLoggedIn() ? <Files username={username} token={token} /> : <Redirect to="/" />} />
+        <Route path="/user/:username/profile" render={() => this.isLoggedIn() ? <Profile username={username} token={token} /> : <Redirect to="/" />} />
       </Switch>
-    );
+
+      <footer>
+        <span className="power on">&#x23FB;</span>
+      </footer>
+    </div>
   }
 }
 
-export default withRouter(App);
+export default withRouter(App)

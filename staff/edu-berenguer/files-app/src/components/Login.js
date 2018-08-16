@@ -1,56 +1,44 @@
 import React, { Component } from 'react'
 import logic from '../logic'
-import { withRouter } from 'react-router-dom'
-
 
 class Login extends Component {
-
   state = {
-        username: null,
-        password: null
+    username: '',
+    password: '',
+    error: ''
   }
 
-  keepUser = event => this.setState({username:event.target.value})
+  onUsernameChanged = e => this.setState({ username: e.target.value })
 
-  keepPassword = event => this.setState({password:event.target.value})
+  onPasswordChanged = e => this.setState({ password: e.target.value })
 
+  onLoginSubmitted = e => {
+    e.preventDefault()
 
-    onLogin = (event) =>{
-        event.preventDefault()
-        const { username, password } = this.state
-        this.props.onLogin(username,password)
-    }
+    const { username, password } = this.state
 
-  goToRegister = (event) => {
-    event.preventDefault()
-    this.props.history.push('/Register')
+    logic.authenticate(username, password)
+      .then(token => this.props.onLoggedIn(username, token))
+      .catch(({ message }) => this.setState({ error: message }))
   }
 
   render() {
-    return (
-        <div>
-            <header>
-                <h1 className="off">FILES</h1>
-            </header>
-            <main>
-                <div className="screen">
-                    <nav>
-                        > <a href="" onClick={this.goToRegister}>register</a> or login <span className="blink">_</span>
-                    </nav>
-                    {/* <form action="/login" method="post"> */}
-                    <form onSubmit={this.onLogin}>
-                        <input type="text" name="username" placeholder="username" onChange={this.keepUser}/>
-                        <input type="password" name="password" placeholder="password" onChange={this.keepPassword}/>
-                        <button type="submit">login</button>
-                    </form>
-                </div>
-            </main>
-            <footer>
-                <span className="power on">&#x23FB;</span>
-            </footer>
-        </div>
-    )
+    const { error } = this.state
+
+    return <main>
+      <div className="screen">
+        <nav>
+          &gt; <a href="/#/register">register</a> or login <span className="blink">_</span>
+        </nav>
+        <form onSubmit={this.onLoginSubmitted}>
+          <input type="text" name="username" placeholder="username" onChange={this.onUsernameChanged} />
+          <input type="password" name="password" placeholder="password" onChange={this.onPasswordChanged} />
+          <button type="submit">login</button>
+        </form>
+        {error && <p>{error}</p>}
+      </div>
+    </main>
   }
 }
 
-export default withRouter(Login)
+export default Login
