@@ -1,3 +1,5 @@
+const axios = require('axios')
+
 const logic = {
     url: 'http://localhost:8080',
 
@@ -19,6 +21,25 @@ const logic = {
             })
     },
 
+    _callAxios(path, method, headers, body, expectedStatus,responseType) {
+        const config = { method }
+        if (headers) config.headers = headers
+        if (body) config.data = body
+        config.url = `${this.url}/${path}`
+       config.responseType = "stream"
+
+        return axios( config)
+            .then(res => {
+                if (res.status === expectedStatus) {
+                    return res
+                } else
+                    return res.json()
+                        .then(({ message }) => {
+                            throw new Error(message)
+                        })
+            })
+    },
+
     _validateStringField(fieldName, fieldValue) {
         if (typeof fieldValue !== 'string' || !fieldValue.length) throw new Error(`invalid ${fieldName}`)
     },
@@ -29,7 +50,7 @@ const logic = {
                 this._validateStringField('username', username)
                 this._validateStringField('password', password)
 
-                return this._call('register', 'post', {
+                return this._call('register', 'POST', {
                     'Content-Type': 'application/json'
                 }, JSON.stringify({ username, password }), 201)
                     .then(() => true)
@@ -42,7 +63,7 @@ const logic = {
                 this._validateStringField('username', username)
                 this._validateStringField('password', password)
 
-                return this._call('authenticate', 'post', {
+                return this._call('authenticate', 'POST', {
                     'Content-Type': 'application/json'
                 }, JSON.stringify({ username, password }), 200)
                     .then(res => res.json())
@@ -61,7 +82,7 @@ const logic = {
 
                 body.append('upload', file)
 
-                return this._call(`user/${username}/files`, 'post', { authorization: `bearer ${token}` }, body, 201)
+                return this._call(`user/${username}/files`, 'POST', { authorization: `bearer ${token}` }, body, 201)
                     .then(() => true)
             })
     },
@@ -72,7 +93,7 @@ const logic = {
                 this._validateStringField('username', username)
                 this._validateStringField('file', file)
 
-                return this._call(`user/${username}/files/${file}`, 'get', { authorization: `bearer ${token}` }, undefined, 200)
+                return this._call(`user/${username}/files/${file}`, 'GET', { authorization: `bearer ${token}` }, undefined, 200)
                     .then(res => res.body)
             })
     },
@@ -82,7 +103,7 @@ const logic = {
             .then(() => {
                 this._validateStringField('username', username)
 
-                return this._call(`user/${username}/files`, 'get', { authorization: `bearer ${token}` }, undefined, 200)
+                return this._call(`user/${username}/files`, 'GET', { authorization: `bearer ${token}` }, undefined, 200)
                     .then(res => res.json())
             })
     },
@@ -92,7 +113,7 @@ const logic = {
             .then(() => {
                 this._validateStringField('username', username)
                 this._validateStringField('file', file)
-                return this._call(`user/${username}/files/${file}`, 'delete', { authorization: `bearer ${token}` }, undefined, 200)
+                return this._call(`user/${username}/files/${file}`, 'DELETE', { authorization: `bearer ${token}` }, undefined, 200)
                     .then(res => res.body)
             })
     },
@@ -104,7 +125,7 @@ const logic = {
           this._validateStringField('username', username)
           this._validateStringField('newpwd', newpwd)
           const body = JSON.stringify({newpwd})
-          return this._call(`user/${username}/updatepassword`, 'post', { authorization: `bearer ${token}`,'Content-Type': 'application/json' }, body, 200)
+          return this._call(`user/${username}/updatepassword`, 'PATCH', { authorization: `bearer ${token}`,'Content-Type': 'application/json' }, body, 200)
             .then(res => true)
         })
   }

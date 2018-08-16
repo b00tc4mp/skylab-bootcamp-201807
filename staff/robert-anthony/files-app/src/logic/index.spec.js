@@ -70,7 +70,6 @@ describe('logic', () => {
           expect(token).to.be.a('string')
 
           let payload
-        debugger
           expect(() => payload = jwt.verify(token, JWT_SECRET)).not.to.throw()
           expect(payload.sub).to.equal(username)
         })

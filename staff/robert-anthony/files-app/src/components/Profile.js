@@ -22,7 +22,7 @@ class Profile extends Component {
           this.setState({passwordFeedback: "Password reset"})
           this.setState({newPassword1:"",newPassword2:""})
         })
-        .catch(err => this.setState({passwordFeedback: err}))
+        .catch(err => this.setState({passwordFeedback: err.message}))
     } else {
       this.setState({passwordFeedback: "Passwords don't match"})
     }
@@ -34,7 +34,7 @@ class Profile extends Component {
     return <main>
       <div className="screen">
         <nav>
-          &gt; <a href="/Files">files</a> <a href="/logout">logout</a> <span className="blink">_</span>
+          &gt; <a href="/files">files</a> <a href="/logout">logout</a> <span className="blink">_</span>
           <img className="image" src="./default-image.png" alt=""/>
         </nav>
 
