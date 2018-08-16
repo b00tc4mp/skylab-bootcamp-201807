@@ -5,12 +5,23 @@ const cors = require('cors')
 const package = require('./package.json')
 const routes = require('./routes')
 
-const { argv: [, , port] } = process
+const { env: { MONGO_URL } } = process
 
-const app = express()
+const { MongoClient } = require('mongodb')
 
-app.use(cors())
+MongoClient.connect(MONGO_URL, { useNewUrlParser: true }, (err, conn) => {
+    if (err) throw err
 
-app.use('/api', routes)
+    const db = conn.db() // ??
 
-app.listen(port, () => console.log(`${package.name} ${package.version} up and running on port ${port}`))
+    const { PORT } = process.env
+
+    const app = express()
+    
+    app.use(cors())
+    
+    app.use('/api', routes(db))
+    
+    app.listen(PORT, () => console.log(`${package.name} ${package.version} up and running on port ${PORT}`))
+})
+
