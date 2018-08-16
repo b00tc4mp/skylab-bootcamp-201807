@@ -1,10 +1,13 @@
 import React from 'react'
-import {withRouter} from 'react-router-dom'
 
-function Landing({ onRegister, onLogin }) {
-    return <section>
-        <button onClick={onRegister}>Register</button> or <button onClick={onLogin}>Login</button> 
-    </section>
+function Landing() {
+    return <main>
+        <div className="screen">
+            <nav>
+                &gt; <a href="/#/register">register</a> or <a href="/#/login">login</a> <span className="blink">_</span>
+            </nav>
+        </div>
+    </main>
 }
 
-export default withRouter(Landing)
+export default Landing
