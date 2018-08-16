@@ -1,6 +1,6 @@
 'use strict'
 
-const { logic } = require('.')
+const logic = require('.')
 const { expect } = require('chai')
 const rmDirRecursiveSync = require('../utils/rm-dir-recursive-sync')
 const fs = require('fs')
@@ -157,38 +157,6 @@ describe('logic', () => {
             expect(files.includes('hello-world.txt')).to.be.true
             expect(files.includes('folder')).to.be.true
         })
-    })
-
-    describe('update password', () => {
-        let newPassword
-
-        beforeEach(() => {
-            logic._users[username] = { password }
-
-            newPassword = `${password}-${Math.random()}`
-        })
-
-        it('should succeed on correct passwords', () => {
-            expect(() => logic.updatePassword(username, password, newPassword)).not.to.throw()
-
-            expect(logic._users[username].password).to.equal(newPassword)
-        })
-
-        it('should fail on empty username', () =>
-            expect(() => logic.updatePassword('', password, newPassword)).to.throw('invalid username')
-        )
-
-        it('should fail on empty password', () =>
-            expect(() => logic.updatePassword(username, '', newPassword)).to.throw('invalid password')
-        )
-
-        it('should fail on empty new password', () =>
-            expect(() => logic.updatePassword(username, password, '')).to.throw('invalid new password')
-        )
-
-        it('should fail on new password same as current password', () =>
-            expect(() => logic.updatePassword(username, password, password)).to.throw('new password cannot be same as current password')
-        )
     })
 
     after(() => {
