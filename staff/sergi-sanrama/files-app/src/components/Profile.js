@@ -1,45 +1,55 @@
 import React, { Component } from 'react'
-import {withRouter} from 'react-router-dom'
+import logic from '../logic'
 
-class Profile extends Component{
+class Profile extends Component {
+    
     state = {
-        password: '',
-        newpassword: '',
-        error: ''
+        password: "",
+        newPassword: "",
+        error : ""
       }
-    
-      onPasswordChanged = e => this.setState({ password: e.target.value })
       
-      onNewPasswordChanged = e => this.setState({ newpassword: e.target.value })
-    
-      onLoginSubmitted = e => {
+      handleChange = e => {
+        const { name, value } = e.target;
+        this.setState({
+          [name]: value
+        });
+      };
+      
+      onUpdateProfile = e => {
         e.preventDefault()
-    
-        const { password, newpassword } = this.state
-    
-        // logic.authenticate(username, password)
-        //   .then(token => this.props.onLoggedIn(username, token))
-        //   .catch(({ message }) => this.setState({ error: message }))
+        const {password,newPassword} = this.state
+        const {username,token} = this.props
+        logic.updateProfile(username,password,newPassword,token)
+          .then(res => console.log(res))
+          .catch(({ message }) => alert(message))
       }
+   
     
-      render() {
-        const { error } = this.state
     
-        return <main>
-          <div className="screen">
-            <nav>
-              &gt; <a href="/#/Files">Go Back</a><span className="blink">_</span>
-            </nav>
-            <form onSubmit={this.onLoginSubmitted}>
-              <input type="password" name="password" placeholder="password" onChange={this.onPasswordChanged} />
-              <input type="newpassword" name="newpassword" placeholder="newpassword" onChange={this.onPasswordChanged} />
-              <button type="submit">¡Change it!</button>
-            </form>
-            {error && <p>{error}</p>}
-          </div>
-        </main>
-      }
-}
+    render() {
+        
 
+        return <main>
+            <div className="screen">
+                <nav>
+                    &gt;<a href="/#/files">Go Back</a><br/>
+                </nav>
+                <form onSubmit={this.onUpdateProfile}>
+                    <label>Update Password</label><br/>
+                    <input type="password" name="password" placeholder="Password" value={this.state.password} onChange={this.handleChange} />
+                    <input type="password" name="newPassword" placeholder="New password" value={this.state.newPassword} onChange={this.handleChange} />
+
+                    <button type="submit">¡Change it!</button>
+                </form>
+               
+            </div>
+        </main>
+    }
+
+
+
+
+}
 
 export default Profile
