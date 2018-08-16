@@ -60,7 +60,7 @@ class Files extends Component {
         return <main>
             <div className="screen">
                 <nav>
-                    &gt; <a href="/profile">profile</a> <a href="/logout">logout</a> <span className="blink">_</span>
+                    &gt; <a href="/profile">profile</a> <a href="" onClick={this.props.onLogout}>logout</a> <span className="blink">_</span>
                     <img className="image" src="./default-image.png" alt="" />
                 </nav>
                 {
