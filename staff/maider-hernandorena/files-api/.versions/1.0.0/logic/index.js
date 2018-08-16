@@ -94,16 +94,6 @@ const logic = {
         this._validateUserExists(username)
 
         fs.unlinkSync(`data/${username}/files/${file}`)
-    },
-    
-    updateProfile(username,password,newPassword){
-        if(password !== this._users[username].password) throw new Error(`wrong password`)
-
-        this._validateStringField('new password', newPassword)
-
-        this._users[username].password = newPassword
-
-        this._persist()
     }
 }
 

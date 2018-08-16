@@ -1,69 +1,47 @@
 import React, { Component } from 'react'
-import './App.css'
-import logic from './logic'
+import { Switch, Route, withRouter, Redirect } from 'react-router-dom'
 import Landing from './components/Landing'
 import Register from './components/Register'
 import Login from './components/Login'
-import Main from './components/Main'
-import { Route, withRouter, Redirect } from 'react-router-dom'
-
+import Files from './components/Files'
+import Profile from './components/Profile'
 
 class App extends Component {
-
   state = {
     username: '',
-    registerWrong: false,
-    loginWrong: false
+    token: ''
   }
 
-  goToRegister = (event) => {
-    event.preventDefault()
-    this.props.history.push('/register')
+  onLoggedIn = (username, token) => {
+    this.setState({ username, token })
+
+    this.props.history.push('/files')
   }
 
-  goToLogin = (event) => {
-    event.preventDefault()
-    this.props.history.push('/login')
-  }
-
-  registerUser = (username, password) =>
-    logic.register(username, password)
-      .then(() => {
-        this.props.history.push('/login')
-      })
-      .catch(({ message }) => this.setState({ registerWrong: message }))
-
-  loginUser = (username, password) =>
-    logic.authenticate(username, password)
-      .then(() => {
-        this.onLoggedIn(username)
-        this.props.history.push('/home')
-      })
-      .catch(({ message }) => this.setState({ loginWrong: message }))
-
-  onLoggedIn = username => {
-    this.setState({ username })
-    this.props.history.push('/home')
-  }
-  
   isLoggedIn() {
     return !!this.state.username
   }
-    
 
   render() {
-    const { state: { registerWrong, loginWrong, username }, goToRegister, goToLogin, loginUser, registerUser } = this
+    const { username, token } = this.state
+    
+    return <div className="full-height">
+      <header>
+        <h1 className={this.isLoggedIn() ? 'on' : 'off'}>FILES</h1>
+      </header>
 
-    return <div className="screen">
-              <header>
-                <h1>Files App</h1>
-              </header>
-              <Route exact path="/" render = {() => this.isLoggedIn() ? <Redirect to="/home" /> : <Landing onRegister={goToRegister} onLogin={goToLogin} />} /> 
-              <Route path="/register" render = {() => this.isLoggedIn() ? <Redirect to="/home" /> : <Register onRegister={registerUser} error={registerWrong} linkToLogin={goToLogin}/>} /> 
-              <Route path="/login" render = {() => this.isLoggedIn() ? <Redirect to="/home" /> : <Login onLogin={loginUser} error={loginWrong} linkToRegister={goToRegister} />} /> 
-              <Route path="/home" render = {() => this.isLoggedIn() ? <Main username={username}/> : <Redirect to="/" />}  />
-            </div>
+      <Switch>
+        <Route exact path="/" render={() => this.isLoggedIn() ? <Redirect to="/files" /> : <Landing />} />
+        <Route path="/register" render={() => this.isLoggedIn() ? <Redirect to="/files" /> : <Register />} />
+        <Route path="/login" render={() => this.isLoggedIn() ? <Redirect to="/files" /> : <Login onLoggedIn={this.onLoggedIn} />} />
+        <Route path="/files" render={() => this.isLoggedIn() ? <Files username={username} token={token} /> : <Redirect to="/" />} />
+        <Route path="/user/:username/profile" render={() => this.isLoggedIn() ? <Profile username={username} token={token} /> : <Redirect to="/" />} />
+      </Switch>
 
+      <footer>
+        <span className="power on">&#x23FB;</span>
+      </footer>
+    </div>
   }
 }
 

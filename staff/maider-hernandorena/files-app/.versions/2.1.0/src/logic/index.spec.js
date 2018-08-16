@@ -1,7 +1,5 @@
 'use strict'
 
-require('dotenv').config()
-
 require('isomorphic-fetch')
 const { expect } = require('chai')
 const logic = require('.')
@@ -9,12 +7,10 @@ const fs = require('fs')
 const rimraf = require('rimraf')
 const FormData = require('form-data')
 const Jimp = require('jimp')
-const jwt = require('jsonwebtoken')
 
 global.FormData = FormData
 
 describe('logic', () => {
-    const { JWT_SECRET } = process.env
     let username, password
 
     before(() => {
@@ -67,14 +63,7 @@ describe('logic', () => {
         it('should succeed on existing user', () =>
             logic.register(username, password)
                 .then(() => logic.authenticate(username, password))
-                .then(token => {
-                    expect(token).to.be.a('string')
-
-                    let payload
-
-                    expect(() => payload = jwt.verify(token, JWT_SECRET)).not.to.throw()
-                    expect(payload.sub).to.equal(username)
-                })
+                .then(res => expect(res).to.be.true)
         )
 
         it('should fail on unregistered user', () =>
@@ -113,10 +102,10 @@ describe('logic', () => {
         it('should succeed on correct file', () =>
             logic.register(username, password)
                 .then(() => logic.authenticate(username, password))
-                .then(token => {
+                .then(() => {
                     const file = fs.createReadStream('tests/hello-world.txt')
 
-                    return logic.saveFile(username, file, token)
+                    return logic.saveFile(username, file)
                 })
                 .catch(res => res)
                 .then(res => expect(res).to.be.true)
@@ -153,12 +142,12 @@ describe('logic', () => {
         it('should succeed on correct file', () =>
             logic.register(username, password)
                 .then(() => logic.authenticate(username, password))
-                .then(token => {
+                .then(() => {
                     const file = fs.createReadStream('tests/hello-world.txt')
 
-                    return logic.saveFile(username, file, token)
-                        .then(() => logic.retrieveFile(username, 'hello-world.txt', token))
+                    return logic.saveFile(username, file)
                 })
+                .then(() => logic.retrieveFile(username, 'hello-world.txt'))
                 .then(res => {
                     expect(res).to.exist
 
@@ -215,12 +204,12 @@ describe('logic', () => {
         it('should succeed on correct file', () =>
             logic.register(username, password)
                 .then(() => logic.authenticate(username, password))
-                .then(token => {
+                .then(() => {
                     const file = fs.createReadStream('tests/hello-world.png')
 
-                    return logic.saveFile(username, file, token)
-                        .then(() => logic.retrieveFile(username, 'hello-world.png', token))
+                    return logic.saveFile(username, file)
                 })
+                .then(() => logic.retrieveFile(username, 'hello-world.png'))
                 .then(res => {
                     expect(res).to.exist
 
@@ -258,22 +247,22 @@ describe('logic', () => {
         it('should succeed', () =>
             logic.register(username, password)
                 .then(() => logic.authenticate(username, password))
-                .then(token => {
+                .then(() => {
                     const file = fs.createReadStream('tests/hello-world.txt')
 
-                    return logic.saveFile(username, file, token)
-                        .then(() => {
-                            const file = fs.createReadStream('tests/hello-world-2.txt')
-
-                            return logic.saveFile(username, file, token)
-                        })
-                        .then(() => {
-                            const file = fs.createReadStream('tests/hello-world-3.txt')
-
-                            return logic.saveFile(username, file, token)
-                        })
-                        .then(() => logic.listFiles(username, token))
+                    return logic.saveFile(username, file)
                 })
+                .then(() => {
+                    const file = fs.createReadStream('tests/hello-world-2.txt')
+
+                    return logic.saveFile(username, file)
+                })
+                .then(() => {
+                    const file = fs.createReadStream('tests/hello-world-3.txt')
+
+                    return logic.saveFile(username, file)
+                })
+                .then(() => logic.listFiles(username))
                 .then(files => {
                     expect(files.length).to.equal(3)
                     expect(files.includes('hello-world.txt'))
@@ -311,23 +300,23 @@ describe('logic', () => {
         it('should succeed', () =>
             logic.register(username, password)
                 .then(() => logic.authenticate(username, password))
-                .then(token => {
+                .then(() => {
                     const file = fs.createReadStream('tests/hello-world.txt')
 
-                    return logic.saveFile(username, file, token)
-                        .then(() => {
-                            const file = fs.createReadStream('tests/hello-world-2.txt')
-
-                            return logic.saveFile(username, file, token)
-                        })
-                        .then(() => {
-                            const file = fs.createReadStream('tests/hello-world-3.txt')
-
-                            return logic.saveFile(username, file, token)
-                        })
-                        .then(() => logic.removeFile(username, 'hello-world.txt', token))
-                        .then(() => logic.listFiles(username, token))
+                    return logic.saveFile(username, file)
                 })
+                .then(() => {
+                    const file = fs.createReadStream('tests/hello-world-2.txt')
+
+                    return logic.saveFile(username, file)
+                })
+                .then(() => {
+                    const file = fs.createReadStream('tests/hello-world-3.txt')
+
+                    return logic.saveFile(username, file)
+                })
+                .then(() => logic.removeFile(username, 'hello-world.txt'))
+                .then(() => logic.listFiles(username))
                 .then(files => {
                     expect(files.length).to.equal(2)
                     expect(files.includes('hello-world-2.txt'))
