@@ -1,4 +1,5 @@
 const express = require('express')
+const cors = require('cors')
 const fileUpload = require('express-fileupload')
 const package = require('./package.json')
 const bodyParser = require('body-parser')
@@ -8,14 +9,14 @@ const { argv: [, , port] } = process
 
 const app = express()
 
-// app.use(fileUpload())
+app.use(cors())
 
-// app.use(bodyParser.json())
 const jsonBodyParser = bodyParser.json()
-const formBodyParser = bodyParser.urlencoded({ extended: false })
 
 app.post('/register', jsonBodyParser, (req, res) => {
     const { body: { username, password } } = req
+
+    debugger
 
     try {
         logic.register(username, password)
@@ -52,7 +53,7 @@ app.get('/user/:username/files', (req, res) => {
 
 app.post('/user/:username/files', fileUpload(), (req, res) => {
     const { params: { username }, files: { upload } } = req
-    console.log(upload)
+
     if (upload) {
         try {
             logic.saveFile(username, upload.name, upload.data)
@@ -84,4 +85,4 @@ app.delete('/user/:username/files/:file', (req, res) => {
     }
 })
 
-app.listen(port, () => console.log(`${package.name} ${package.version} up and running on port ${port}`)) 
+app.listen(port, () => console.log(`${package.name} ${package.version} up and running on port ${port}`))

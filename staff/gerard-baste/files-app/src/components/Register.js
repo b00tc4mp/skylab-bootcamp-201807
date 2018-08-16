@@ -1,55 +1,49 @@
 import React, { Component } from 'react'
 import logic from '../logic'
-import { withRouter } from 'react-router-dom'
-
 
 class Register extends Component {
+    state = {
+        username: '',
+        password: '',
+        succeeded: false,
+        error: ''
+    }
 
-  state = {
-    username: "",
-    password: ""
-  }
+    onUsernameChanged = e => this.setState({ username: e.target.value })
 
-  keepUser = event => this.setState({username:event.target.value})
+    onPasswordChanged = e => this.setState({ password: e.target.value })
 
-  keepPassword = event => this.setState({password:event.target.value})
+    onRegisterSubmitted = e => {
+        e.preventDefault()
 
-  onRegister = (event) =>{
-      event.preventDefault()
-      const { username, password } = this.state
-      this.props.onRegister(username,password)
-  }
+        const { username, password } = this.state
 
-  goToLogin = (event) => {
-    event.preventDefault()
-    this.props.history.push('/Login')
-  }
+        logic.register(username, password)
+            .then(() => this.setState({ succeeded: true }))
+            .catch(({ message }) => this.setState({ error: message }))
+    }
 
-  render() {
-    return (
-        <div>
-            <header>
-                <h1 className="off">FILES</h1>
-            </header>
-            <main>
-                <div className="screen">
+    render() {
+        const { succeeded, error } = this.state
+
+        return <main>
+            {!succeeded ? <div className="screen">
+                <nav>
+                    &gt; register or <a href="/#/login">login</a> <span className="blink">_</span>
+                </nav>
+                <form onSubmit={this.onRegisterSubmitted}>
+                    <input type="text" name="username" placeholder="username" autofocus onChange={this.onUsernameChanged} />
+                    <input type="password" name="password" placeholder="password" onChange={this.onPasswordChanged} />
+                    <button type="submit">register</button>
+                </form>
+                {error && <p>{error}</p>}
+            </div> : <div className="screen">
                     <nav>
-                        >  register or <a href="" onClick={this.goToLogin}>login</a> <span className="blink">_</span>
+                        &gt; User register successfully, now you can proceed to <a href="/#/login">login</a> <span className="blink">_</span>
                     </nav>
-                    {/* <form action="/register" method="post"> */}
-                    <form onSubmit={this.onRegister}>
-                        <input type="text" name="username" placeholder="username" onChange={this.keepUser}/>
-                        <input type="password" name="password" placeholder="password" onChange={this.keepPassword}/>
-                        <button type="submit">register</button>
-                    </form>
-                </div>
-            </main>
-            <footer>
-                <span className="power on">&#x23FB;</span>
-            </footer>
-        </div>
-    )
-  }
+                </div>}
+        </main>
+    }
 }
 
-export default withRouter(Register)
+export default Register
