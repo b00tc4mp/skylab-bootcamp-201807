@@ -11,7 +11,9 @@ class Files extends Component {
     }
 
     listFiles() {
-        return logic.listFiles(this.props.username)
+        const { username, token } = this.props
+
+        return logic.listFiles(username, token)
             .then(files => this.setState({ files }))
     }
 
@@ -20,7 +22,9 @@ class Files extends Component {
     onUpload = e => {
         e.preventDefault()
 
-        logic.saveFile(this.props.username, this.state.file)
+        const { username, token } = this.props
+
+        logic.saveFile(username, this.state.file, token)
             .then(() => this.listFiles())
             .catch(({ message }) => alert(message))
     }
@@ -30,7 +34,9 @@ class Files extends Component {
 
         const file = e.target.dataset.file
 
-        logic.retrieveFile(this.props.username, file)
+        const { username, token } = this.props
+
+        logic.retrieveFile(username, file, token)
             .then(stream => new Response(stream).blob())
             .then(blob => fileSaver.saveAs(blob, file))
             .catch(({ message }) => alert(message))
@@ -41,7 +47,9 @@ class Files extends Component {
 
         const file = e.target.dataset.file
 
-        logic.removeFile(this.props.username, file)
+        const { username, token } = this.props
+
+        logic.removeFile(username, file, token)
             .then(() => this.listFiles())
             .catch(({ message }) => alert(message))
     }
