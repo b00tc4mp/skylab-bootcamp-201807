@@ -1,21 +1,46 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react'
+import { Switch, Route, withRouter, Redirect } from 'react-router-dom'
+import Landing from './components/Landing'
+import Register from './components/Register'
+import Login from './components/Login'
+import Files from './components/Files'
 
 class App extends Component {
+  state = {
+    username: '',
+    token: ''
+  }
+
+  onLoggedIn = (username, token) => {
+    this.setState({ username, token })
+
+    this.props.history.push('/files')
+  }
+
+  isLoggedIn() {
+    return !!this.state.username
+  }
+
   render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
-    );
+    const { username, token } = this.state
+    
+    return <div className="full-height">
+      <header>
+        <h1 className={this.isLoggedIn() ? 'on' : 'off'}>FILES</h1>
+      </header>
+
+      <Switch>
+        <Route exact path="/" render={() => this.isLoggedIn() ? <Redirect to="/files" /> : <Landing />} />
+        <Route path="/register" render={() => this.isLoggedIn() ? <Redirect to="/files" /> : <Register />} />
+        <Route path="/login" render={() => this.isLoggedIn() ? <Redirect to="/files" /> : <Login onLoggedIn={this.onLoggedIn} />} />
+        <Route path="/files" render={() => this.isLoggedIn() ? <Files username={username} token={token} /> : <Redirect to="/" />} />
+      </Switch>
+
+      <footer>
+        <span className="power on">&#x23FB;</span>
+      </footer>
+    </div>
   }
 }
 
-export default App;
+export default withRouter(App)
