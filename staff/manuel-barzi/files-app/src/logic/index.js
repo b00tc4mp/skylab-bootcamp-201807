@@ -1,5 +1,5 @@
 const logic = {
-    url: 'http://localhost:8080',
+    url: 'http://localhost:8080/api',
 
     _call(path, method, headers, body, expectedStatus) {
         const config = { method }
