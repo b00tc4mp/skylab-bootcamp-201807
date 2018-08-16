@@ -1,26 +1,44 @@
 'use strict'
 
-const logic = require('.')
+require('dotenv').config()
+
+const { logic } = require('.')
 const { expect } = require('chai')
 const rmDirRecursiveSync = require('../utils/rm-dir-recursive-sync')
 const fs = require('fs')
+const { MongoClient } = require('mongodb')
+
+const { MONGO_URL } = process.env
 
 describe('logic', () => {
     const username = 'jack', password = '123'
+    let _conn, _db, _users
+
+    before(done => {
+        MongoClient.connect(MONGO_URL, { useNewUrlParser: true }, (err, conn) => {
+            if (err) return done(err)
+
+            _conn = conn
+
+            const db = _db = conn.db()
+
+            logic._users = _users = db.collection('users')
+
+            done()
+        })
+    })
 
     function clean() {
         if (fs.existsSync('data'))
             rmDirRecursiveSync('data')
 
         fs.mkdirSync('data')
-
-        fs.writeFileSync('data/users.json', '{}')
     }
 
     beforeEach(() => {
-        logic._users = {}
-
         clean()
+
+        return _users.deleteMany()
     })
 
     describe('_ validate string field', () => {
@@ -39,107 +57,184 @@ describe('logic', () => {
 
     describe('register', () => {
         it('should register on valid credentials', () => {
-            expect(logic._users[username]).not.to.exist
+            return _users.findOne({ username })
+                .then(user => {
+                    expect(user).to.be.null
 
-            logic.register(username, password)
+                    return logic.register(username, password)
+                })
+                .then(() =>
+                    _users.findOne({ username })
+                )
+                .then(user => {
+                    expect(user).to.exist
 
-            const user = logic._users[username]
+                    expect(user.username).to.equal(username)
+                    expect(user.password).to.equal(password)
 
-            expect(user).to.exist
-            expect(user.password).to.equal(password)
-
-            expect(fs.lstatSync(`data/${username}`).isDirectory()).to.be.true
-            expect(fs.lstatSync(`data/${username}/files`).isDirectory()).to.be.true
+                    expect(fs.lstatSync(`data/${username}`).isDirectory()).to.be.true
+                    expect(fs.lstatSync(`data/${username}/files`).isDirectory()).to.be.true
+                })
         })
 
         it('should fail on trying to register an already registered user', () => {
-            logic.register(username, password)
-
-            // let error
-
-            // try {
-            //     logic.register(username, password)
-            // } catch(err) {
-            //     error = err
-            // }
-
-            // expect(error).to.exist
-            // expect(error.message).to.equal(`user ${username} already exists`)
-
-            expect(() => logic.register(username, password)).to.throw(`user ${username} already exists`)
+            return _users.insertOne({ username, password })
+                .then(() => logic.register(username, password))
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`user ${username} already exists`))
         })
 
         it('should fail on trying to register with an undefined username', () => {
-            expect(() => logic.register(undefined, password)).to.throw(`invalid username`)
+            logic.register(undefined, password)
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`invalid username`))
         })
 
         it('should fail on trying to register with an empty username', () => {
-            expect(() => logic.register('', password)).to.throw(`invalid username`)
+            logic.register('', password)
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`invalid username`))
         })
 
         it('should fail on trying to register with a numeric username', () => {
-            expect(() => logic.register(123, password)).to.throw(`invalid username`)
+            logic.register(123, password)
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`invalid username`))
         })
 
         it('should fail on trying to register with an undefined password', () => {
-            expect(() => logic.register(username, undefined)).to.throw(`invalid password`)
+            logic.register(username)
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`invalid password`))
         })
 
         it('should fail on trying to register with an empty password', () => {
-            expect(() => logic.register(username, '')).to.throw(`invalid password`)
+            logic.register(username, '')
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`invalid password`))
         })
 
         it('should fail on trying to register with a numeric password', () => {
-            expect(() => logic.register(username, 123)).to.throw(`invalid password`)
+            logic.register(username, 123)
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`invalid password`))
         })
     })
 
     describe('authenticate', () => {
         beforeEach(() => {
-            logic._users[username] = { password }
+            return _users.findOne({ username })
+                .then(user => {
+                    expect(user).to.be.null
+                    return logic.register(username, password)
+                })
+                .then(() => _users.findOne({ username }))
+                .then(user => {
+                    expect(user).to.exist
+                    expect(user.username).to.equal(username)
+                    expect(user.password).to.equal(password)
+                })
         })
 
         it('should authenticate on correct credentials', () => {
-            expect(() => logic.authenticate(username, password)).not.to.throw()
-        })
-
-        it('should fail on wrong credentials', () => {
-            expect(() => logic.authenticate('pepito', 'grillo')).to.throw('user pepito does not exist')
-        })
-
-        it('should fail on wrong password', () => {
-            expect(() => logic.authenticate(username, '456')).to.throw('wrong credentials')
+            logic.authenticate(username, password)
+                .then(() => _users.findOne({ username }))
+                .then(user => {
+                    expect(user).to.exist
+                    expect(user.username).to.equal(username)
+                    expect(user.password).to.equal(password)
+                })
         })
 
         it('should fail on trying to authenticate with an undefined username', () => {
-            expect(() => logic.authenticate(undefined, password)).to.throw(`invalid username`)
+            logic.authenticate(undefined, password)
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`invalid username`)) 
         })
 
         it('should fail on trying to authenticate with an empty username', () => {
-            expect(() => logic.authenticate('', password)).to.throw(`invalid username`)
+            logic.authenticate('', password)
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`invalid username`)) 
         })
 
         it('should fail on trying to authenticate with a numeric username', () => {
-            expect(() => logic.authenticate(123, password)).to.throw(`invalid username`)
+            logic.authenticate(123, password)
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`invalid username`))  
         })
 
         it('should fail on trying to authenticate with an undefined password', () => {
-            expect(() => logic.authenticate(username, undefined)).to.throw(`invalid password`)
+            logic.authenticate(username)
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`invalid password`))  
         })
 
         it('should fail on trying to authenticate with an empty password', () => {
-            expect(() => logic.authenticate(username, '')).to.throw(`invalid password`)
+            logic.authenticate(username, '')
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`invalid password`)) 
         })
 
         it('should fail on trying to authenticate with a numeric password', () => {
-            expect(() => logic.authenticate(username, 123)).to.throw(`invalid password`)
+            logic.authenticate(username, 123)
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`invalid password`))  
         })
     })
 
-    describe('list files', () => {
+    describe('update password', () => {
+        let newPassword
+
+        beforeEach(() => {
+            return _users.findOne({ username })
+                .then(user => {
+                    expect(user).to.be.null
+                    return logic.register(username, password)
+                })
+                .then(() => _users.findOne({ username }))
+                .then(user => {
+                    expect(user).to.exist
+                    expect(user.username).to.equal(username)
+                    expect(user.password).to.equal(password)
+                    logic.authenticate(username, password)
+                })
+                .then(() => _users.findOne({ username }))
+                .then(user => {
+                    expect(user).to.exist
+                    expect(user.username).to.equal(username)
+                    expect(user.password).to.equal(password)
+                })
+
+            newPassword = `${password}-${Math.random()}`
+        })
+
+        it('should succeed on correct passwords', () => {
+            logic.updatePassword(username, password, newPassword)
+                .then(() => _users.findOne({ username }))
+                .then(user => {
+                    expect(user).to.exist
+                    expect(user.username).to.equal(username)
+                    expect(user.password).to.equal(newPassword)
+                })
+        })
+
+        it('should fail on empty new password', () =>
+            logic.updatePassword(username, password, '')                
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`invalid new password`))  
+        )
+
+        it('should fail on new password same as current password', () =>
+            logic.updatePassword(username, password, password)                
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`new password cannot be same as current password`))  
+        )
+    })
+
+    false && describe('list files', () => {
         beforeEach(() => {
             logic._users[username] = { password }
-
             fs.mkdirSync(`data/${username}`)
             fs.mkdirSync(`data/${username}/files`)
             fs.writeFileSync(`data/${username}/files/README.md`, '# documentation')
@@ -149,10 +244,8 @@ describe('logic', () => {
 
         it('should list files if they exist', () => {
             const files = logic.listFiles(username)
-
             expect(files).to.exist
             expect(files.length).to.equal(3)
-
             expect(files.includes('README.md')).to.be.true
             expect(files.includes('hello-world.txt')).to.be.true
             expect(files.includes('folder')).to.be.true
@@ -160,9 +253,7 @@ describe('logic', () => {
     })
 
     after(() => {
-        // logic._users = {}
-        // logic._persist() // TODO: test it!
-
         clean()
+        return _conn.close()
     })
 })
