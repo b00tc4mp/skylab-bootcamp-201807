@@ -17,13 +17,13 @@ const logic = {
     },
 
     _validateStringField(fieldName, fieldValue) {
-        if (typeof fieldValue !== 'string' || !fieldValue.length) throw new LogicError(`invalid ${fieldName}`)
+        if (typeof fieldValue !== 'string' || !fieldValue.length) throw new Error(`invalid ${fieldName}`)
     },
 
     _validateUserExists(username) {
         const user = this._users[username]
 
-        if (!user) throw new LogicError(`user ${username} does not exist`)
+        if (!user) throw new Error(`user ${username} does not exist`)
     },
 
     register(username, password) {
@@ -32,7 +32,7 @@ const logic = {
 
         const user = this._users[username]
 
-        if (user) throw new LogicError(`user ${username} already exists`)
+        if (user) throw new Error(`user ${username} already exists`)
 
         this._users[username] = { password }
 
@@ -50,21 +50,7 @@ const logic = {
 
         const user = this._users[username]
 
-        if (user.password !== password) throw new LogicError('wrong credentials')
-    },
-
-    updatePassword(username, password, newPassword) {
-        this.authenticate(username, password)
-
-        this._validateStringField('new password', newPassword)
-
-        if (password === newPassword) throw new LogicError('new password cannot be same as current password')
-
-        const user = this._users[username]
-
-        user.password = newPassword
-
-        this._persist()
+        if (user.password !== password) throw new Error('wrong credentials')
     },
 
     listFiles(username) {
@@ -85,7 +71,7 @@ const logic = {
         this._validateStringField('username', username)
         this._validateStringField('filename', filename)
 
-        if (typeof buffer === 'undefined' || /*!(buffer instanceof Buffer)*/ !Buffer.isBuffer(buffer)) throw new LogicError('invalid buffer')
+        if (typeof buffer === 'undefined' || /*!(buffer instanceof Buffer)*/ !Buffer.isBuffer(buffer)) throw new Error('invalid buffer')
 
         this._validateUserExists(username)
 
@@ -111,12 +97,6 @@ const logic = {
     }
 }
 
-class LogicError extends Error {
-    constructor(message) {
-        super(message)
-    }
-}
-
 logic._users = JSON.parse(fs.readFileSync('data/users.json'))
 
-module.exports = { logic, LogicError }
+module.exports = logic
