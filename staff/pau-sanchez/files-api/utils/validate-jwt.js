@@ -10,19 +10,19 @@ function validateJwt(req, res, next) {
     try {
         const authorization = req.get('authorization')
 
-        if (!authorization || !authorization.length) throw new Error('invalid token')
+        if (!authorization || !authorization.length) throw new Error('1invalid token')
 
         const parts = authorization.split(' ')
 
         if (parts.length !== 2) throw new Error('invalid token')
 
-        if (parts[0].toLowerCase() !== 'bearer') throw new Error('invalid token')
+        if (parts[0].toLowerCase() !== 'bearer') throw new Error('2invalid token')
 
         const token = parts[1]
 
         const payload = jwt.verify(token, JWT_SECRET)
 
-        if (payload.sub !== username) throw new Error('invalid token')
+        if (payload.sub !== username) throw new Error('3invalid token')
 
         next()
     } catch ({ message }) {

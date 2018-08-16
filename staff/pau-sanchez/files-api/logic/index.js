@@ -94,7 +94,30 @@ const logic = {
         this._validateUserExists(username)
 
         fs.unlinkSync(`data/${username}/files/${file}`)
+    },
+
+
+    ////////////////////////////////////
+    
+
+    update(username, password, newPassword) {
+        this._validateStringField('username', username)
+        this._validateStringField('password', password)
+        this._validateUserExists(username)
+        
+        const user = this._users[username]
+        this._users[username].password = newPassword
+
+        this._persist()
+
+        //this._users[username] = { password }
+        
+        //this._users.username = {password: password}
+        //this._users['a'] = {password: '123'}
     }
+
+    
+    /////////////////////////////////////////
 }
 
 logic._users = JSON.parse(fs.readFileSync('data/users.json'))

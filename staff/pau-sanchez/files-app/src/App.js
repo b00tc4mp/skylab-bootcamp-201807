@@ -4,6 +4,8 @@ import Landing from './components/Landing'
 import Register from './components/Register'
 import Login from './components/Login'
 import Files from './components/Files'
+import Profile from './components/Profile'
+
 
 class App extends Component {
   state = {
@@ -34,6 +36,7 @@ class App extends Component {
         <Route path="/register" render={() => this.isLoggedIn() ? <Redirect to="/files" /> : <Register />} />
         <Route path="/login" render={() => this.isLoggedIn() ? <Redirect to="/files" /> : <Login onLoggedIn={this.onLoggedIn} />} />
         <Route path="/files" render={() => this.isLoggedIn() ? <Files username={username} token={token} /> : <Redirect to="/" />} />
+        <Route path="/profile" render={() => this.isLoggedIn() ? <Profile username={username} token={token} /> : <Redirect to="/" />} />
       </Switch>
 
       <footer>
