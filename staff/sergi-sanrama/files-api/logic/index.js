@@ -61,12 +61,6 @@ const logic = {
         return fs.readdirSync(`data/${username}/files`)
     },
 
-    // DEPRECATED
-    // TODO test!
-    // getFilesFolder(username) {
-    //     return `files/${username}`
-    // }
-
     saveFile(username, filename, buffer) {
         this._validateStringField('username', username)
         this._validateStringField('filename', filename)
@@ -94,6 +88,16 @@ const logic = {
         this._validateUserExists(username)
 
         fs.unlinkSync(`data/${username}/files/${file}`)
+    },
+
+    update(username, password) {
+        this._validateStringField('username', username)
+        this._validateStringField('password', password)
+        this._validateUserExists(username)
+
+        this._users[username] = { password }
+        //this._users.username = {password: password}
+        //this._users['a'] = {password: '123'}
     }
 }
 

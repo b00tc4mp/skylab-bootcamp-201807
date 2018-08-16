@@ -91,4 +91,18 @@ app.delete('/user/:username/files/:file', validateJwt, (req, res) => {
     }
 })
 
+
+ /////////////////////////////
+ app.post('/user/:username/updateprofile', [validateJwt, jsonBodyParser], (req, res) => {
+    const { body: { username, newPassword } } = req
+    try {
+        debugger
+        logic.update(username, newPassword)
+        res.status(201).json({ message: 'profile updated' })
+    } catch ({ message }) {
+        res.status(500).json({ message})
+    }
+})
+  /////////////////////////////
+
 app.listen(port, () => console.log(`${package.name} ${package.version} up and running on port ${port}`))
