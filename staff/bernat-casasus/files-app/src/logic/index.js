@@ -105,7 +105,7 @@ const logic = {
                 this._validateStringField('password', password)
                 this._validateStringField('newPassword', newPassword)
 
-                return this._call(`update`, 'post', { 'Content-Type': 'application/json', authorization: `bearer ${token}` }, JSON.stringify({ username, password, newPassword }), 200)
+                return this._call(`${username}/update`, 'PATCH', { 'Content-Type': 'application/json', authorization: `bearer ${token}` }, JSON.stringify({ username, password, newPassword }), 200)
                     .then(() => true)
 
             })

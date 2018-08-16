@@ -45,7 +45,7 @@ app.post('/authenticate', jsonBodyParser, (req, res) => {
     }
 })
 
-app.post('/update', jsonBodyParser, (req, res) => {
+app.patch('/:username/update', [validateJwt,jsonBodyParser], (req, res) => {
     const { body: { username, password, newPassword } } = req
 
     try {
