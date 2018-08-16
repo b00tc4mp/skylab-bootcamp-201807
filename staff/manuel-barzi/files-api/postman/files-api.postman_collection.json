@@ -6,31 +6,42 @@
 	},
 	"item": [
 		{
-			"_postman_id": "8f9281b5-5cf4-4052-8715-e80537814202",
+			"_postman_id": "abf6d593-a33e-4a06-aa86-8a2cc4ed6196",
 			"name": "retrieve file",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1IiwiaWF0IjoxNTM0NDE3ODQ5LCJleHAiOjE1MzQ0MjE0NDl9.9ErOSsHvdLW-0GIJkZpuoExrVfoArDtoZcWcfj8KwNQ",
+							"type": "string"
+						}
+					]
+				},
 				"method": "GET",
 				"header": [],
 				"body": {},
 				"url": {
-					"raw": "http://localhost:8080/user/u/files/README.md",
+					"raw": "http://localhost:8080/api/user/u/files/cat.jpg",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
+						"api",
 						"user",
 						"u",
 						"files",
-						"README.md"
+						"cat.jpg"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"_postman_id": "c1b00ec8-a0c7-4ccd-b3d4-1809be8162ec",
+			"_postman_id": "11839de6-d7d4-4cf6-8602-e39181910435",
 			"name": "register user",
 			"request": {
 				"method": "POST",
@@ -42,16 +53,17 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"username\": \"u2\",\n\t\"password\": \"p\"\n}"
+					"raw": "{\n\t\"username\": \"u\",\n\t\"password\": \"p\"\n}"
 				},
 				"url": {
-					"raw": "http://localhost:8080/register",
+					"raw": "http://localhost:8080/api/register",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
+						"api",
 						"register"
 					]
 				}
@@ -59,17 +71,62 @@
 			"response": []
 		},
 		{
-			"_postman_id": "5a447a26-14ca-468c-8fbe-53dd6442444d",
-			"name": "upload file",
+			"_postman_id": "d76b9154-98bc-4fe3-b68c-3112bb79012a",
+			"name": "authenticate user",
 			"request": {
 				"method": "POST",
-				"header": [],
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\": \"u\",\n\t\"password\": \"p\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/authenticate",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"authenticate"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"_postman_id": "bb900a59-58db-46dc-9783-3d657afcbabc",
+			"name": "save file",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1IiwiaWF0IjoxNTM0NDE3ODQ5LCJleHAiOjE1MzQ0MjE0NDl9.9ErOSsHvdLW-0GIJkZpuoExrVfoArDtoZcWcfj8KwNQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"disabled": true
+					}
+				],
 				"body": {
 					"mode": "formdata",
 					"formdata": [
 						{
 							"key": "upload",
-							"value": "",
 							"sessionValue": {
 								"0": {}
 							},
@@ -78,15 +135,16 @@
 					]
 				},
 				"url": {
-					"raw": "http://localhost:8080/user/u2/files",
+					"raw": "http://localhost:8080/api/user/u/files",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
+						"api",
 						"user",
-						"u2",
+						"u",
 						"files"
 					]
 				}
@@ -94,38 +152,101 @@
 			"response": []
 		},
 		{
-			"_postman_id": "3c731d83-2063-446c-9203-985c81dca4c7",
+			"_postman_id": "885ecd08-13e9-4526-ab8b-ab9a53f483e5",
 			"name": "delete file",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1IiwiaWF0IjoxNTM0NDE3ODQ5LCJleHAiOjE1MzQ0MjE0NDl9.9ErOSsHvdLW-0GIJkZpuoExrVfoArDtoZcWcfj8KwNQ",
+							"type": "string"
+						}
+					]
+				},
 				"method": "DELETE",
 				"header": [],
 				"body": {},
 				"url": {
-					"raw": "http://localhost:8080/user/u2/files/big-image.jpg",
+					"raw": "http://localhost:8080/api/user/u/files/cat.jpg",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
+						"api",
 						"user",
-						"u2",
+						"u",
 						"files",
-						"big-image.jpg"
+						"cat.jpg"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"_postman_id": "13cab5cb-9bf5-45d0-ba75-cb399328900f",
+			"_postman_id": "449a6a22-0814-44bb-8ddb-84638a2808f1",
 			"name": "list files",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1IiwiaWF0IjoxNTM0NDE3ODQ5LCJleHAiOjE1MzQ0MjE0NDl9.9ErOSsHvdLW-0GIJkZpuoExrVfoArDtoZcWcfj8KwNQ",
+							"type": "string"
+						}
+					]
+				},
 				"method": "GET",
 				"header": [],
 				"body": {},
 				"url": {
-					"raw": "http://localhost:8080/user/u2/files",
+					"raw": "http://localhost:8080/api/user/u/files",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"user",
+						"u",
+						"files"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"_postman_id": "4ce1af74-b494-46fb-85c3-2962cab8c274",
+			"name": "update user",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1IiwiaWF0IjoxNTM0NDE2NDIwLCJleHAiOjE1MzQ0MjAwMjB9.AFYgfnpcKcotgGqo1dT0Q6bHpgbcN-ORmjP6hXgHrLw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"password\": \"p\",\n\t\"newPassword\": \"p2\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/user/u",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -133,8 +254,7 @@
 					"port": "8080",
 					"path": [
 						"user",
-						"u2",
-						"files"
+						"u"
 					]
 				}
 			},
