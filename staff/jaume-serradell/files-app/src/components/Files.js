@@ -1,78 +1,88 @@
-import React, { Component } from 'react';
-import logic from '../logic';
+import React, { Component } from 'react'
+import logic from '../logic'
+import fileSaver from 'file-saver'
 
 class Files extends Component {
+    state = { file: undefined, files: [] }
 
-    onListFile = (event) =>
-        logic.listFiles(this.props.name)
-            .then(() => {
-            // this.setState({ justRegistered: true })
+    componentDidMount() {
+        this.listFiles()
+            .catch(({ message }) => alert(message))
+    }
 
-            // this.props.history.push('/registered')
+    listFiles() {
+        const { username, token } = this.props
 
-                console.log('Entra')
-                console.log(this.props.name)
-            })
-            .catch(({ message }) => console.log('errorcito'))
-    
-    onSaveFile = (username, file) =>
-        logic.saveFile(this.props.name, file)
-            .then(() => {
-                // this.setState({ justRegistered: true })
+        return logic.listFiles(username, token)
+            .then(files => this.setState({ files }))
+    }
 
-                // this.props.history.push('/registered')
+    onFileChanged = e => this.setState({ file: e.target.files[0] })
 
-                console.log('Entra')
-            })
-            .catch(({ message }) => console.log('errorcito'))
+    onUpload = e => {
+        e.preventDefault()
 
-    onDownloadFile = (username, file) =>
-        logic.retrieveFile(this.props.name, file)
-            .then(() => {
-            // this.setState({ justRegistered: true })
-    
-            // this.props.history.push('/registered')
-    
-            console.log('Entra')
-            })
-            .catch(({ message }) => console.log('errorcito'))
+        const { username, token } = this.props
 
-    onDeleteFile = (username, file) =>
-        logic.removeFile(this.props.name, file)
-            .then(() => {
-            // this.setState({ justRegistered: true })
+        logic.saveFile(username, this.state.file, token)
+            .then(() => this.listFiles())
+            .catch(({ message }) => alert(message))
+    }
 
-            // this.props.history.push('/registered')
+    onDownload = e => {
+        e.preventDefault()
 
-            console.log('Entra')
-            })
-            .catch(({ message }) => console.log('errorcito'))
+        const file = e.target.dataset.file
 
-    
-    
+        const { username, token } = this.props
 
+        logic.retrieveFile(username, file, token)
+            .then(stream => new Response(stream).blob())
+            .then(blob => fileSaver.saveAs(blob, file))
+            .catch(({ message }) => alert(message))
+    }
 
+    onDelete = e => {
+        e.preventDefault()
 
+        const file = e.target.dataset.file
 
+        const { username, token } = this.props
 
+        logic.removeFile(username, file, token)
+            .then(() => this.listFiles())
+            .catch(({ message }) => alert(message))
+    }
 
     render() {
-        return <div className="screen">
-            <h1>FILES</h1> <img className="image" src="images/default-image.png" />
-            <nav>
-                > <a href="/#">profile</a> <a href="/#">logout</a> <span className="blink">_</span>
-            </nav>
-            <ul>
-                <li>file 1</li>
-                <li>file 2</li>
-                <li>file 3</li>
-            </ul>
-            <button><label for="upload">Choose a file</label></button>
-            <form action="/files" method="post">
-                <input id="upload" type="file" name="upload" placeholder="" />
-                <button type="submit">upload</button>
-            </form>
-        </div>
+        const { files } = this.state
+
+        return <main>
+            <div className="screen">
+                <nav>
+                    &gt; <a href="/profile">profile</a> <a href="" onClick={this.props.onLogout}>logout</a> <span className="blink">_</span>
+                    <img className="image" src="./default-image.png" alt="" />
+                </nav>
+                {
+                    (!!files.length) && <ul>
+                        {
+                            files.map(file =>
+                                <li>
+                                    <a href="" onClick={this.onDownload} data-file={file}>{file}</a> <a href="" onClick={this.onDelete} data-file={file}>[x]</a>
+                                </li>
+                            )
+                        }
+                    </ul>
+                }
+                <button>
+                    <label htmlFor="upload">Choose a file</label>
+                </button>
+                <form onSubmit={this.onUpload}>
+                    <input id="upload" type="file" name="upload" placeholder autofocus onChange={this.onFileChanged} />
+                    <button type="submit">upload</button>
+                </form>
+            </div>
+        </main>
     }
 }
 

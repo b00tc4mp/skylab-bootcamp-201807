@@ -1,36 +1,48 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
+import logic from '../logic'
 
 class Register extends Component {
-    
-    state = { username: '', password: '' }
+    state = {
+        username: '',
+        password: '',
+        succeeded: false,
+        error: ''
+    }
 
-    keepUsername = event => this.setState({ username: event.target.value })
+    onUsernameChanged = e => this.setState({ username: e.target.value })
 
-    keepPassword = event => this.setState({ password: event.target.value })
+    onPasswordChanged = e => this.setState({ password: e.target.value })
 
-    onRegister = event => {
-        event.preventDefault()
+    onRegisterSubmitted = e => {
+        e.preventDefault()
+
         const { username, password } = this.state
-        this.props.onRegister(username, password)
+
+        logic.register(username, password)
+            .then(() => this.setState({ succeeded: true }))
+            .catch(({ message }) => this.setState({ error: message }))
     }
 
-    goToLoginPage = event => {
-        event.preventDefault()
-        this.props.onLogin()
-    }
-    
     render() {
-        return <div className="screen">
-            <h1>FILES</h1>
-            <nav>
-                >  register or <a href="" onClick={this.goToLoginPage}>login</a> <span className="blink">_</span>
-            </nav>
-            <form onSubmit={this.onRegister}>
-                <input type="text" onChange={this.keepUsername} placeholder="username" />
-                <input type="password" onChange={this.keepPassword} placeholder="password" />
-                <button type="submit">register</button>
-            </form>
-        </div>
+        const { succeeded, error } = this.state
+
+        return <main>
+            {!succeeded ? <div className="screen">
+                <nav>
+                    &gt; register or <a href="/#/login">login</a> <span className="blink">_</span>
+                </nav>
+                <form onSubmit={this.onRegisterSubmitted}>
+                    <input type="text" name="username" placeholder="username" autofocus onChange={this.onUsernameChanged} />
+                    <input type="password" name="password" placeholder="password" onChange={this.onPasswordChanged} />
+                    <button type="submit">register</button>
+                </form>
+                {error && <p>{error}</p>}
+            </div> : <div className="screen">
+                    <nav>
+                        &gt; User register successfully, now you can proceed to <a href="/#/login">login</a> <span className="blink">_</span>
+                    </nav>
+                </div>}
+        </main>
     }
 }
 

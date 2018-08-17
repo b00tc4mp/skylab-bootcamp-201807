@@ -1,65 +1,57 @@
-// Dependencies
-import React, { Component } from 'react';
-import './App.css';
-import { withRouter, Switch, Route } from 'react-router-dom';
-
-import Register from './components/Register';
-import Login from './components/Login';
-import Landing from './components/Landing';
-import Files from './components/Files';
-import logic from './logic';
-import GoToLogin from './components/GoToLogin'
-
-// Assets
-
-// Components
+import React, { Component } from 'react'
+import { Switch, Route, withRouter, Redirect } from 'react-router-dom'
+import Landing from './components/Landing'
+import Register from './components/Register'
+import Login from './components/Login'
+import Files from './components/Files'
 
 class App extends Component {
   state = {
-    loggedIn: false,
-    justRegistered: false,
-    username: ''
+    username: sessionStorage.getItem('username') || '',
+    token: sessionStorage.getItem('token') || ''
   }
 
-  goToRegister = () => this.props.history.push('/register')
+  onLoggedIn = (username, token) => {
+    this.setState({ username, token })
 
-  goToLogin = () => this.props.history.push('/login')
+    sessionStorage.setItem('username', username)
+    sessionStorage.setItem('token', token)
 
-  registerUser = (username, password) =>
-    logic.register(username, password)
-      .then(() => {
-        this.setState({ justRegistered: true })
-        console.log('entro')
-        this.props.history.push('/registered')
-      })
-      .catch(({ message }) => console.log('errorcito'))
-  
-  loginUser = (username, password) =>
-    logic.authenticate(username, password)
-      .then(() => {
-        this.setState({ loggedIn: true, username})
+    this.props.history.push('/files')
+  }
 
-        this.props.history.push('/files')
-      })
-      .catch(({ message }) => console.log('errorcito'))
-  
-  
+  isLoggedIn() {
+    return !!this.state.username
+  }
+
+  onLogout = e => {
+    e.preventDefault()
+
+    this.setState({ username: '', token: '' })
+
+    sessionStorage.clear()
+  }
+
   render() {
+    const { username, token } = this.state
 
-    const { state: { loggedIn, justRegistered, username }, goToRegister, goToLogin, registerUser, loginUser } = this;
+    return <div className="full-height">
+      <header>
+        <h1 className={this.isLoggedIn() ? 'on' : 'off'}>FILES</h1>
+      </header>
 
-    return (
-      <div className="App">
-        <Switch>
-            <Route exact path='/' render={() => <Landing onRegister={goToRegister} onLogin={goToLogin} />} />
-            <Route path='/register' render={() => <Register onRegister={registerUser} onLogin={goToLogin} />} />
-            <Route path='/registered' render={() => <GoToLogin onLogin={goToLogin}/>} />
-            <Route path='/login' render={() => <Login onLogin={loginUser} onGoToRegister={goToRegister} />} />
-            <Route path='/files' render={() => <Files name={username}/>} />
-        </Switch>
-      </div>
-    ); 
+      <Switch>
+        <Route exact path="/" render={() => this.isLoggedIn() ? <Redirect to="/files" /> : <Landing />} />
+        <Route path="/register" render={() => this.isLoggedIn() ? <Redirect to="/files" /> : <Register />} />
+        <Route path="/login" render={() => this.isLoggedIn() ? <Redirect to="/files" /> : <Login onLoggedIn={this.onLoggedIn} />} />
+        <Route path="/files" render={() => this.isLoggedIn() ? <Files username={username} token={token} onLogout={this.onLogout} /> : <Redirect to="/" />} />
+      </Switch>
+
+      <footer>
+        <span className="power on">&#x23FB;</span>
+      </footer>
+    </div>
   }
 }
 
-export default withRouter(App);
+export default withRouter(App)

@@ -1,11 +1,13 @@
-import React from 'react';
+import React from 'react'
 
-function Landing({ onRegister, onLogin }){
-    return <div className="screen">
-        <h1>Welcome to Files App</h1>
-        <br />
-        <button onClick={onRegister}>Register</button> or <button onClick={onLogin}>Login</button>
-    </div>
+function Landing() {
+    return <main>
+        <div className="screen">
+            <nav>
+                &gt; <a href="/#/register">register</a> or <a href="/#/login">login</a> <span className="blink">_</span>
+            </nav>
+        </div>
+    </main>
 }
 
 export default Landing

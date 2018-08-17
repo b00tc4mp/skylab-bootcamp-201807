@@ -1,38 +1,44 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
+import logic from '../logic'
 
 class Login extends Component {
-    state = { username: null, password: null }
-    
-    keepUsername = event => this.setState({ username: event.target.value })
+  state = {
+    username: '',
+    password: '',
+    error: ''
+  }
 
-    keepPassword = event => this.setState({ password: event.target.value })
+  onUsernameChanged = e => this.setState({ username: e.target.value })
 
-    //Link to register on nav
-    goToRegisterPage = event => {
-        event.preventDefault()
-        this.props.onGoToRegister()
-    }
+  onPasswordChanged = e => this.setState({ password: e.target.value })
 
-    //Function to login
-    onLogin = event => {
-        event.preventDefault()
-        const { username, password } = this.state
-        this.props.onLogin(username, password)
-    }
-    
-    render() {
-        return <div className="screen">
-            <h1>FILES</h1>
-            <nav>
-                > <a href="" onClick={this.goToRegisterPage}>register</a> or login <span className="blink">_</span>
-            </nav>
-            <form onSubmit={this.onLogin}>
-                <input type="text" placeholder="username" onChange={this.keepUsername} />
-                <input type="password" placeholder="password" onChange={this.keepPassword} />
-                <button type="submit">login</button>
-            </form>
-        </div>
-    }
+  onLoginSubmitted = e => {
+    e.preventDefault()
+
+    const { username, password } = this.state
+
+    logic.authenticate(username, password)
+      .then(token => this.props.onLoggedIn(username, token))
+      .catch(({ message }) => this.setState({ error: message }))
+  }
+
+  render() {
+    const { error } = this.state
+
+    return <main>
+      <div className="screen">
+        <nav>
+          &gt; <a href="/#/register">register</a> or login <span className="blink">_</span>
+        </nav>
+        <form onSubmit={this.onLoginSubmitted}>
+          <input type="text" name="username" placeholder="username" autofocus onChange={this.onUsernameChanged} />
+          <input type="password" name="password" placeholder="password" onChange={this.onPasswordChanged} />
+          <button type="submit">login</button>
+        </form>
+        {error && <p>{error}</p>}
+      </div>
+    </main>
+  }
 }
 
 export default Login
