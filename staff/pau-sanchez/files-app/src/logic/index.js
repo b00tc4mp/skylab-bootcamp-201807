@@ -81,7 +81,7 @@ const logic = {
         return Promise.resolve()
             .then(() => {
                 this._validateStringField('username', username)
-
+             
                 return this._call(`user/${username}/files`, 'get', { authorization: `bearer ${token}` }, undefined, 200)
                     .then(res => res.json())
             })

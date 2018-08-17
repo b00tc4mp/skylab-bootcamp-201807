@@ -10,7 +10,7 @@ const validateJwt = require('./helpers/validate-jwt')
 const router = express.Router()
 
 const jsonBodyParser = bodyParser.json()
-
+/*
 router.post('/register', jsonBodyParser, (req, res) => {
     const { body: { username, password } } = req
 
@@ -23,6 +23,14 @@ router.post('/register', jsonBodyParser, (req, res) => {
 
         res.status(err instanceof LogicError? 400 : 500).json({ message })
     }
+})
+*/
+
+router.post('/register', jsonBodyParser, (req, res) => {
+    const {body: { username, password} } = req
+    logic.register(username, username)
+        .then(() =>  res.status(201).json({ message: 'user registered' }))
+        .catch(({message}) => res.status(err instanceof LogicError? 400 : 500).json({ message }))
 })
 
 router.post('/authenticate', jsonBodyParser, (req, res) => {
