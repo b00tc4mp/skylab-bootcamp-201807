@@ -13,12 +13,12 @@ const logic = {
         if (typeof fieldValue !== 'string' || !fieldValue.length) throw new LogicError(`invalid ${fieldName}`)
     },
 
-    _validateUserExists(username) {
-        return this._users.findOne({ username })
-            .then(user => {
-                if (!user) throw new LogicError(`user ${username} does not exist`)
-            })
-    },
+    // _validateUserExists(username) {
+    //     return this._users.findOne({ username })
+    //         .then(user => {
+    //             if (!user) throw new LogicError(`user ${username} does not exist`)
+    //         })
+    // },
 
     register(username, password) {
         return Promise.resolve()
@@ -50,105 +50,123 @@ const logic = {
             )
     },
 
+
     authenticate(username, password) {
-        // this._validateStringField('username', username)
-        // this._validateStringField('password', password)
-
-        // this._validateUserExists(username)
-
-        // const user = this._users[username]
-
-        // if (user.password !== password) throw new LogicError('wrong credentials')
         return Promise.resolve()
-            .then(() =>{
+            .then(() => {
                 this._validateStringField('username', username)
                 this._validateStringField('password', password)
 
                 return this._users.findOne({ username })
             })
             .then(user => {
+                if (!user) throw new LogicError(`user ${username} does not exist`)
 
-                if(!user) throw new LogicError(`user not found`)
+                if (user.password !== password) throw new LogicError('wrong credentials')
 
-                if(user.password !== password) throw new LogicError(`wrong password`)
                 return true
             })
     },
 
-    updatePassword(username, _password, newPassword) {
+    updatePassword(username, password, newPassword) {
         return Promise.resolve()
-        .then(() => {
-            // this._validateStringField('username', username)
-            this._validateStringField('password', _password)
-            this._validateStringField('new password', newPassword)
-            return this.authenticate(username, _password)
-        })
-        .then(() => {
-            //    return Promise.resolve() 
-            //         .then(() => {
-            return this._users.updateOne({username},{$set:{password:newPassword}})
-                .then((res) => {
-                    if (res.result.ok) return res.result.ok
-                        else throw new LogicError
-                    })
-        })
+            .then(() => {
+                this._validateStringField('username', username)
+                this._validateStringField('password', password)
+                this._validateStringField('new password', newPassword)
+
+                return this._users.findOne({ username })
+            })
+            .then(user => {
+                if (!user) throw new LogicError(`user ${username} does not exists`)
+
+                if (user.password !== password) throw new LogicError('wrong credentials')
+
+                if (password === newPassword) throw new LogicError('new password cannot be same as current password')
+
+                //return this._users.updateOne({ username }, { $set: { password: newPassword } })
+                return this._users.updateOne({ _id: user._id }, { $set: { password: newPassword } })
+            })
     },
 
     listFiles(username) {
+        return Promise.resolve()
+            .then(() => {
+                this._validateStringField('username', username)
 
-        // return Promise.resolve()
-        //     .then(() => {
+                return this._users.findOne({ username })
+            })
+            .then((user) => {
+                if (!user) throw new LogicError(`user ${username} does not exist`)
+
                 return new Promise((resolve, reject) => {
                     fs.readdir(`data/${username}/files`, (err, files) => {
                         if (err) return reject(err)
-                        return resolve(files)
+
+                        resolve(files)
                     })
                 })
 
-            // })
+            })
     },
-
-    // DEPRECATED
-    // TODO test!
-    // getFilesFolder(username) {
-    //     return `files/${username}`
-    // }
 
     saveFile(username, filename, buffer) {
-        // this._validateStringField('username', username)
-        // this._validateStringField('filename', filename)
-        // if (typeof buffer === 'undefined' || /*!(buffer instanceof Buffer)*/ !Buffer.isBuffer(buffer)) throw new LogicError('invalid buffer')
         return Promise.resolve()
-            .then(() =>{
+            .then(() => {
                 this._validateStringField('username', username)
                 this._validateStringField('filename', filename)
-                if (typeof buffer === 'undefined' || !Buffer.isBuffer(buffer)) throw new LogicError('invalid buffer')
+
+                if (typeof buffer === 'undefined' || /*!(buffer instanceof Buffer)*/ !Buffer.isBuffer(buffer)) throw new LogicError('invalid buffer')
+
+                return this._users.findOne({ username })
             })
-            .then(() =>{
-                this._validateUserExists(username)
-                fs.writeFile(`data/${username}/files/${filename}`, buffer, (err) => {
-                    if(err) throw new LogicError(err.messagge)
-                    return true
+            .then((user) => {
+                if (!user) throw new LogicError(`user ${username} does not exist`)
+
+                return new Promise((resolve, reject) => {
+                    fs.writeFile(`data/${username}/files/${filename}`, buffer, err => {
+                        if (err) return reject(err)
+
+                        resolve(true)
+                    })
                 })
-            })           
+            })
     },
 
-    getFilePath(username, file) {
-        this._validateStringField('username', username)
-        this._validateStringField('file', file)
+    getFilePath(username, file) { // TODO test this!
+        return Promise.resolve()
+            .then(() => {
+                this._validateStringField('username', username)
+                this._validateStringField('file', file)
+                
+                return this._users.findOne({ username })
+            })
+            .then((user) => {
+                if (!user) throw new LogicError(`user ${username} does not exist`)
 
-        this._validateUserExists(username)
-
-        return `data/${username}/files/${file}`
+                return `data/${username}/files/${file}`
+            })
     },
 
-    removeFile(username, file) {
-        this._validateStringField('username', username)
-        this._validateStringField('file', file)
+    removeFile(username, filename) {
+        return Promise.resolve()
+            .then(() => {
+                this._validateStringField('username', username)
+                this._validateStringField('filename', filename)
 
-        this._validateUserExists(username)
+                return this._users.findOne({ username })
+            })
+            .then((user) => {
+                if (!user) throw new LogicError(`user ${username} does not exist`)
 
-        fs.unlinkSync(`data/${username}/files/${file}`)
+                return new Promise((resolve, reject) => {
+                    fs.unlink(`data/${username}/files/${filename}`, err => {
+                        if (err) return reject(err)
+
+                        resolve(true)
+                    })
+                })
+            })
     }
 }
 
