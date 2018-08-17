@@ -5,14 +5,14 @@ const cors = require('cors')
 const package = require('./package.json')
 const routes = require('./routes')
 
-const { env: { MONGO_URL } } = process
-
 const { MongoClient } = require('mongodb')
+
+const { env: { MONGO_URL } } = process
 
 MongoClient.connect(MONGO_URL, { useNewUrlParser: true }, (err, conn) => {
     if (err) throw err
 
-    const db = conn.db() // ??
+    const db = conn.db() 
 
     const { PORT } = process.env
 
