@@ -9,3 +9,5 @@
 [Tasks board](https://trello.com/b/Ulbre8vC/skylab-bootcamp-201807-board)
 
 [Pizza Vote](http://debonair-comparison.surge.sh)
+
+[Whiteboard](https://docs.google.com/document/d/1sXhC2zKXtrObzM79ByO6NsMDnWDgGQCGQxRmBBcsqYM/edit)
