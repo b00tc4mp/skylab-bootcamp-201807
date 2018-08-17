@@ -133,13 +133,19 @@ const logic = {
             })
     },
 
-    getFilePath(username, file) {
-        this._validateStringField('username', username)
-        this._validateStringField('file', file)
+    getFilePath(username, file) { // TODO test this!
+        return Promise.resolve()
+            .then(() => {
+                this._validateStringField('username', username)
+                this._validateStringField('file', file)
+                
+                return this._users.findOne({ username })
+            })
+            .then((user) => {
+                if (!user) throw new LogicError(`user ${username} does not exist`)
 
-        this._validateUserExists(username)
-
-        return `data/${username}/files/${file}`
+                return `data/${username}/files/${file}`
+            })
     },
 
     removeFile(username, filename) {
