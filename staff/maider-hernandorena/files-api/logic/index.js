@@ -62,51 +62,67 @@ const logic = {
     updatePassword(username, password, newPassword) {
         return Promise.resolve()
             .then(() => {
+                this._validateStringField('username', username)
+                this._validateStringField('password', password)
                 this._validateStringField('new password', newPassword)
                 return this._users.findOne({ username })
             })
             .then(user => {
                 if (!user) throw new LogicError(`user ${username} does not exists`)
+                if (user.password !== password) throw new LogicError('wrong credentials')
                 if (password === newPassword) throw new LogicError('new password cannot be same as current password')
-                return this._users.updateOne({ $set: { password: newPassword } })
+                return this._users.updateOne({username}, { $set: { password: newPassword } })
             })
     },
 
     listFiles(username) {
-        this._validateStringField('username', username)
-
-        this._validateUserExists(username)
-
-        return fs.readdirSync(`data/${username}/files`)
+        return Promise.resolve()
+            .then(() => {
+                this._validateStringField('username', username)
+                this._validateUserExists(username)
+                fs.readdir(`data/${username}/files`)
+            })
     },
 
     saveFile(username, filename, buffer) {
-        this._validateStringField('username', username)
-        this._validateStringField('filename', filename)
-
-        if (typeof buffer === 'undefined' || !Buffer.isBuffer(buffer)) throw new LogicError('invalid buffer')
-
-        this._validateUserExists(username)
-
-        fs.writeFileSync(`data/${username}/files/${filename}`, buffer)
+        return Promise.resolve()
+            .then(() => {
+                this._validateStringField('username', username)
+                this._validateStringField('filename', filename)
+                if (typeof buffer === 'undefined' || !Buffer.isBuffer(buffer)) throw new LogicError('invalid buffer')
+                return this._users.findOne({ username })
+            })
+            .then(() => {
+                if (!user) throw new LogicError(`user ${username} does not exists`)
+                return new Promise((resolve, reject) => {
+                    fs.writeFile(`data/${username}/files/${filename}`, buffer, err => {
+                        if(err) return reject(err)
+                        resolve(true)
+                    })
+                })
+            })
     },
 
     getFilePath(username, file) {
-        this._validateStringField('username', username)
-        this._validateStringField('file', file)
-
-        this._validateUserExists(username)
-
-        return `data/${username}/files/${file}`
+        return Promise.resolve()
+            .then(() => {
+                this._validateStringField('username', username)
+                this._validateStringField('file', file)
+                this._validateUserExists(username)
+                return `data/${username}/files/${file}`
+            })
     },
 
     removeFile(username, file) {
-        this._validateStringField('username', username)
-        this._validateStringField('file', file)
-
-        this._validateUserExists(username)
-
-        fs.unlinkSync(`data/${username}/files/${file}`)
+        return Promise.resolve()
+            .then(() => {
+                this._validateStringField('username', username)
+                this._validateStringField('file', file)
+                this._validateUserExists(username)
+            })
+            .then(() => {
+                fs.unlink(`data/${username}/files/${file}`)
+            })
     }
 }
 
