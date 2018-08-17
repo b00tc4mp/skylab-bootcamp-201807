@@ -14,51 +14,49 @@ const jsonBodyParser = bodyParser.json()
 router.post('/register', jsonBodyParser, (req, res) => {
     const { body: { username, password } } = req
 
-    try {
-        logic.register(username, password)
-
-        res.status(201).json({ message: 'user registered' })
-    } catch (err) {
-        const { message } = err
-
-        res.status(err instanceof LogicError? 400 : 500).json({ message })
-    }
+    logic.register(username, password)
+        .then(() => res.status(201).json({ message: 'user registered' }))
+        .catch(err => {
+            const { message } = err
+            
+            res.status(err instanceof LogicError? 400 : 500).json({ message })
+        })
 })
 
 router.post('/authenticate', jsonBodyParser, (req, res) => {
     const { body: { username, password } } = req
 
-    try {
-        logic.authenticate(username, password)
+    logic.authenticate(username, password)
+        .than(() => {
+            const { JWT_SECRET, JWT_EXP } = process.env
 
-        const { JWT_SECRET, JWT_EXP } = process.env
+            const token = jwt.sign({ sub: username }, JWT_SECRET, { expiresIn: JWT_EXP })
 
-        const token = jwt.sign({ sub: username }, JWT_SECRET, { expiresIn: JWT_EXP })
-
-        res.status(200).json({ message: 'user authenticated', token })
-    } catch (err) {
-        const { message } = err
-
-        res.status(err instanceof LogicError? 401 : 500).json({ message })
-    }
+            res.status(200).json({ message: 'user authenticated', token })
+        })
+        .catch(err => {
+            const { message } = err
+            
+            res.status(err instanceof LogicError? 401 : 500).json({ message })
+        })
 })
 
 router.patch('/user/:username', [validateJwt, jsonBodyParser], (req, res) => {
     const { params: { username }, body: { password, newPassword } } = req
 
-    try {
-        logic.updatePassword(username, password, newPassword)
-
-        res.status(200).json({ message: 'user updated' })
-    } catch (err) {
-        const { message } = err
-
-        res.status(err instanceof LogicError? 400 : 500).json({ message })
-    }
+    logic.updatePassword(username, password, newPassword)
+        .then(() => res.status(200).json({ message: 'user updated' }))
+        .catch(err => {
+            const { message } = err
+            
+            res.status(err instanceof LogicError? 400 : 500).json({ message })
+        })
 })
 
 router.get('/user/:username/files', validateJwt, (req, res) => {
     const { params: { username } } = req
+
+
 
     try {
         const files = logic.listFiles(username)
@@ -102,15 +100,14 @@ router.get('/user/:username/files/:file', validateJwt, (req, res) => {
 router.delete('/user/:username/files/:file', validateJwt, (req, res) => {
     const { params: { username, file } } = req
 
-    try {
-        logic.removeFile(username, file)
+    logic.removeFile(username, file)
+    
+        .then(() => res.status(200).json({ message: 'file deleted' }))
+        .catch(res => {
+            const { message } = err
 
-        res.status(200).json({ message: 'file deleted' })
-    } catch (err) {
-        const { message } = err
-
-        res.status(err instanceof LogicError? 400 : 500).json({ message })
-    }
+            res.status(err instanceof LogicError? 400 : 500).json({ message })
+        })
 })
 
 module.exports = function(db) {
