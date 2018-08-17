@@ -1,6 +1,8 @@
 'use strict'
 
 require('dotenv').config()
+const rimraf = require('rimraf')
+const FormData = require('form-data')
 
 const { logic } = require('.')
 const { expect } = require('chai')
@@ -9,6 +11,8 @@ const fs = require('fs')
 const { MongoClient } = require('mongodb')
 
 const { MONGO_URL } = process.env
+
+global.FormData = FormData
 
 describe('logic', () => {
     const username = 'jack', password = '123'
@@ -33,6 +37,11 @@ describe('logic', () => {
             rmDirRecursiveSync('data')
 
         fs.mkdirSync('data')
+
+        if (fs.existsSync('tests'))
+            rimraf.sync('tests')
+
+        fs.mkdirSync('tests')
     }
 
     beforeEach(() => {
@@ -134,6 +143,7 @@ describe('logic', () => {
         })
 
         it('should fail on wrong credentials', () => {
+
             return logic.authenticate('pepito', 'grillo')
                 .catch(err => err)
                 .then(({ message }) => expect(message).to.equal('user pepito does not exist'))
@@ -206,6 +216,38 @@ describe('logic', () => {
                 })
 
         })
+
+        it('should not list files if they do not exist', () => {
+            return _users.insertOne({ username: 'pepe', password })
+                .then(() => {
+                    fs.mkdirSync(`data/pepe`)
+                    fs.mkdirSync(`data/pepe/files`)
+
+                    return logic.listFiles('pepe')
+                        .then(files => {
+                            expect(files).to.exist
+                            expect(files.length).to.equal(0)
+                        })
+                })
+        })
+        it('should fail on trying to authenticate with an undefined username', () => {
+            return logic.listFiles(undefined)
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal('invalid username'))
+        })
+
+        it('should fail on trying to authenticate with an empty username', () => {
+            return logic.authenticate('')
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal('invalid username'))
+        })
+
+        it('should fail on trying to authenticate with a numeric username', () => {
+            return logic.authenticate(123)
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal('invalid username'))
+        })
+
     })
 
     describe('update password', () => {
@@ -214,15 +256,16 @@ describe('logic', () => {
         beforeEach(() => {
             return _users.insertOne({ username, password })
                 .then(() =>
-                    _users.findOne({ username })
-                )
-                .then(user => {
-                    expect(user).to.exist
-
-                    expect(user.username).to.equal(username)
-                    expect(user.password).to.equal(password)
+                    // _users.findOne({ username })
                     newPassword = `${password}-${Math.random()}`
-                })
+                )
+            // .then(user => {
+            //     expect(user).to.exist
+
+            //     expect(user.username).to.equal(username)
+            //     expect(user.password).to.equal(password)
+            //     newPassword = `${password}-${Math.random()}`
+            // })
 
 
         })
@@ -258,9 +301,53 @@ describe('logic', () => {
         })
     })
 
+    false && describe('save file', () => {
+        const filename = "hello-world.txt"
+        beforeEach(() => {
+            return _users.insertOne({ username, password })
+                .then(() => {
+                    fs.writeFileSync('tests/hello-world.txt', 'hola mundo!')
+                })
+        })
+
+        it('should succeed on correct file', () => {
+
+            const buffer = fs.createReadStream('tests/hello-world.txt')
+            console.log(buffer)
+            const body = new FormData()
+            body.append('upload', buffer)
+
+            console.log(body)
+            return logic.saveFile(username, filename, buffer)
+                .then(res => expect(res).to.be.true)
+
+        })
+
+        it('should fail on empty username', () =>
+            logic.saveFile('', 'whatever')
+                .catch(err => err)
+                .then(err => {
+                    expect(err).to.exist
+                    expect(err.message).to.equal(`invalid username`)
+                })
+        )
+
+        it('should fail on empty file', () =>
+            logic.saveFile(username, undefined)
+                .catch(err => err)
+                .then(err => {
+                    expect(err).to.exist
+                    expect(err.message).to.equal(`invalid file`)
+                })
+        )
+
+        afterEach(() => {
+            fs.unlinkSync('tests/hello-world.txt')
+        })
+    })
     after(() => {
         clean()
-
+        _users.deleteMany()
         return _conn.close()
     })
 })
