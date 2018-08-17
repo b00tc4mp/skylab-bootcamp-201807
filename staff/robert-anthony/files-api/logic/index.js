@@ -58,6 +58,7 @@ const logic = {
         this._validateStringField('password', password)
         return this._validateUserExists(username)
       })
+
       .then(() => this._users.findOne({username}))
       .then(user => {
         if (user.password !== password) throw new LogicError('wrong credentials')

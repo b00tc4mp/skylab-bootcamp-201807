@@ -183,6 +183,7 @@ describe('logic', () => {
   })
 
   describe('list files', () => {
+    debugger
     beforeEach(() => {
 
       fs.mkdirSync(`data/${username}`)
@@ -191,7 +192,6 @@ describe('logic', () => {
       fs.writeFileSync(`data/${username}/files/hello-world.txt`, 'hello world!')
       fs.mkdirSync(`data/${username}/files/folder`)
       return _users.insertOne({username, password})
-
     })
 
     it('should list files if they exist', () => {
@@ -211,10 +211,9 @@ describe('logic', () => {
   })
 
   describe('update password', () => {
-    let newPassword, err
+    let newPassword
 
     beforeEach(() => {
-      err = undefined
       return _users.insertOne({username, password})
         .then(() => newPassword = `${password}-${Math.random()}`)
     })
@@ -223,11 +222,10 @@ describe('logic', () => {
       return logic.updatePassword(username, password, newPassword)
         .then((res) => {
           expect(res).to.be.true
-          return logic.authenticate(username, newPassword)
+          return _users.findOne({username})
         })
-        .then(res => expect(res).to.be.true)
-        .then(() => _users.findOne({username}))
-        .then(user => expect(user.password).to.equal(newPassword))
+        .then(res => expect(res.password).to.equal(newPassword))
+
 
 
     })
