@@ -1,5 +1,5 @@
 const logic = {
-    url: 'http://localhost:8080',
+    url: 'http://localhost:8080/api',
 
     _call(path, method, headers, body, expectedStatus) {
         const config = { method }
@@ -96,21 +96,7 @@ const logic = {
                 return this._call(`user/${username}/files/${file}`, 'delete', { authorization: `bearer ${token}` }, undefined, 200)
                     .then(res => res.body)
             })
-    },
-
-    /////////////////////////////
-    updateProfile(username, password, newPassword, token){
-        return Promise.resolve()
-            .then(() => {
-                this._validateStringField('new password', newPassword)
-
-                return this._call(`user/${username}/updateprofile`, 'post',
-                 {'Content-type' : 'application/json', authorization: `bearer ${token}` },
-                    JSON.stringify({ username, password, newPassword}), 200)
-                    .then(res => res.json())
-            })
     }
-     /////////////////////////////
 }
 
 module.exports = logic
