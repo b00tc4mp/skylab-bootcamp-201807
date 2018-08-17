@@ -1,12 +1,11 @@
 const logic = {
-    url: 'http://localhost:8080',
+    url: 'http://localhost:8080/api',
 
     _call(path, method, headers, body, expectedStatus) {
         const config = { method }
 
         if (headers) config.headers = headers
         if (body) config.body = body
-        
 
         return fetch(`${this.url}/${path}`, config)
             .then(res => {
@@ -96,19 +95,6 @@ const logic = {
 
                 return this._call(`user/${username}/files/${file}`, 'delete', { authorization: `bearer ${token}` }, undefined, 200)
                     .then(res => res.body)
-            })
-    },
-    updateProfile(username,password,newPassword,token){
-        debugger
-        return Promise.resolve()
-                .then(() => {
-                // this._validateStringField('password', password)
-                this._validateStringField('new password', newPassword)
-
-                return this._call(`user/${username}/updateprofile`, 'post', 
-                 {'Content-Type' : 'application/json', authorization: `bearer ${token}`}, 
-                    JSON.stringify({ username, password, newPassword }), 200)
-                    .then(res => res.json())
             })
     }
 }

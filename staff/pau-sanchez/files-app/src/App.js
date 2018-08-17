@@ -4,17 +4,18 @@ import Landing from './components/Landing'
 import Register from './components/Register'
 import Login from './components/Login'
 import Files from './components/Files'
-import Profile from './components/Profile'
-
 
 class App extends Component {
   state = {
-    username: '',
-    token: ''
+    username: sessionStorage.getItem('username') || '',
+    token: sessionStorage.getItem('token') || ''
   }
 
   onLoggedIn = (username, token) => {
     this.setState({ username, token })
+
+    sessionStorage.setItem('username', username)
+    sessionStorage.setItem('token', token)
 
     this.props.history.push('/files')
   }
@@ -23,9 +24,17 @@ class App extends Component {
     return !!this.state.username
   }
 
+  onLogout = e => {
+    e.preventDefault()
+
+    this.setState({ username: '', token: '' })
+
+    sessionStorage.clear()
+  }
+
   render() {
     const { username, token } = this.state
-    
+
     return <div className="full-height">
       <header>
         <h1 className={this.isLoggedIn() ? 'on' : 'off'}>FILES</h1>
@@ -35,8 +44,7 @@ class App extends Component {
         <Route exact path="/" render={() => this.isLoggedIn() ? <Redirect to="/files" /> : <Landing />} />
         <Route path="/register" render={() => this.isLoggedIn() ? <Redirect to="/files" /> : <Register />} />
         <Route path="/login" render={() => this.isLoggedIn() ? <Redirect to="/files" /> : <Login onLoggedIn={this.onLoggedIn} />} />
-        <Route path="/files" render={() => this.isLoggedIn() ? <Files username={username} token={token} /> : <Redirect to="/" />} />
-        <Route path="/profile" render={() => this.isLoggedIn() ? <Profile username={username} token={token} /> : <Redirect to="/" />} />
+        <Route path="/files" render={() => this.isLoggedIn() ? <Files username={username} token={token} onLogout={this.onLogout} /> : <Redirect to="/" />} />
       </Switch>
 
       <footer>

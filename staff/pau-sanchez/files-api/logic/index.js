@@ -4,74 +4,124 @@ const fs = require('fs')
 
 if (!fs.existsSync('data')) {
     fs.mkdirSync('data')
-
-    fs.writeFileSync('data/users.json', '{}')
 }
 
 const logic = {
-    _users: {},
-
-    // TODO test!
-    _persist() {
-        fs.writeFileSync('data/users.json', JSON.stringify(this._users))
-    },
+    _users: null,
 
     _validateStringField(fieldName, fieldValue) {
-        if (typeof fieldValue !== 'string' || !fieldValue.length) throw new Error(`invalid ${fieldName}`)
+        if (typeof fieldValue !== 'string' || !fieldValue.length) throw new LogicError(`invalid ${fieldName}`)
     },
 
     _validateUserExists(username) {
-        const user = this._users[username]
+        return this._users.findOne({ username })
+            .then(user => {
+                if (!user) throw new LogicError(`user ${username} does not exist`)
 
-        if (!user) throw new Error(`user ${username} does not exist`)
+                return true
+            })
     },
 
     register(username, password) {
+        return Promise.resolve()
+            .then(() => {
+                this._validateStringField('username', username)
+                this._validateStringField('password', password)
+
+                return this._users.findOne({ username })
+            })
+            .then(user => {
+                if (user) throw new LogicError(`user ${username} already exists`)
+
+                const _user = { username, password }
+
+                return this._users.insertOne(_user)
+            })
+            .then(() =>
+                new Promise((resolve, reject) => {
+                    fs.mkdir(`data/${username}`, err => {
+                        if (err) return reject(err)
+
+                        fs.mkdir(`data/${username}/files`, err => {
+                            if (err) return reject(err)
+
+                            resolve()
+                        })
+                    })
+                })
+            )
+    },
+////////////////////////////////////
+authenticate(username, password) {
+    
+    return Promise.resolve()
+        .then(() => {
+            this._validateStringField('username', username)
+            this._validateStringField('password', password)
+            
+            return this._validateUserExists(username)       
+        })
+        .then(() => this._users.findOne({ username }))
+        .then(user => {
+            if(!user) throw new LogicError(`user ${username} does not exist`)
+            if (user.password !== password) throw new LogicError('wrong credentials')
+
+            //const _user = { username, password }
+
+            return true
+        })
+        
+},
+
+//////////////////////////////////
+    /*authenticate(username, password) {
         this._validateStringField('username', username)
         this._validateStringField('password', password)
 
+        this._validateUserExists(username)
+
         const user = this._users[username]
 
-        if (user) throw new Error(`user ${username} already exists`)
+        if (user.password !== password) throw new LogicError('wrong credentials')
+    },*/
 
-        this._users[username] = { password }
+    updatePassword(username, password, newPassword) {
+        this.authenticate(username, password)
 
-        fs.mkdirSync(`data/${username}`)
-        fs.mkdirSync(`data/${username}/files`)
+        this._validateStringField('new password', newPassword)
+
+        if (password === newPassword) throw new LogicError('new password cannot be same as current password')
+
+        const user = this._users[username]
+
+        user.password = newPassword
 
         this._persist()
     },
 
-    authenticate(username, password) {
-        this._validateStringField('username', username)
-        this._validateStringField('password', password)
-
-        this._validateUserExists(username)
-
-        const user = this._users[username]
-
-        if (user.password !== password) throw new Error('wrong credentials')
-    },
-
     listFiles(username) {
-        this._validateStringField('username', username)
+        return Promise.resolve()
+        .then(() => {
+            this._validateStringField('username', username)
 
-        this._validateUserExists(username)
+            return this._validateUserExists(username)
+        })
+        .then(() => {
+            return new Promise((resolve, reject) => {
+                fs.readdir(`data/${username}/files`, (err, files) => {
+                    if (err) return reject(err)
 
-        return fs.readdirSync(`data/${username}/files`)
+                    return resolve(files)
+                })
+            })
+        })
     },
-
-    // DEPRECATED
-    // TODO test!
-    // getFilesFolder(username) {
-    //     return `files/${username}`
-    // }
 
     saveFile(username, filename, buffer) {
         this._validateStringField('username', username)
         this._validateStringField('filename', filename)
 
-        if (typeof buffer === 'undefined' || /*!(buffer instanceof Buffer)*/ !Buffer.isBuffer(buffer)) throw new Error('invalid buffer')
+        if (typeof buffer === 'undefined' || /*!(buffer instanceof Buffer)*/ !Buffer.isBuffer(buffer)) throw new LogicError('invalid buffer')
 
         this._validateUserExists(username)
 
@@ -94,32 +144,13 @@ const logic = {
         this._validateUserExists(username)
 
         fs.unlinkSync(`data/${username}/files/${file}`)
-    },
-
-
-    ////////////////////////////////////
-    
-
-    update(username, password, newPassword) {
-        this._validateStringField('username', username)
-        this._validateStringField('password', password)
-        this._validateUserExists(username)
-        
-        const user = this._users[username]
-        this._users[username].password = newPassword
-
-        this._persist()
-
-        //this._users[username] = { password }
-        
-        //this._users.username = {password: password}
-        //this._users['a'] = {password: '123'}
     }
-
-    
-    /////////////////////////////////////////
 }
 
-logic._users = JSON.parse(fs.readFileSync('data/users.json'))
+class LogicError extends Error {
+    constructor(message) {
+        super(message)
+    }
+}
 
-module.exports = logic
+module.exports = { logic, LogicError }
