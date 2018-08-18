@@ -17,7 +17,7 @@ const logic = {
                 return this._users.findOne({ username })
             })
             .then(user => {
-                if(user) throw new Error(`user with ${username} username already exists`)
+                if(user) throw new Error(`user with ${username} username already exist`)
                 
                 const _user = {username, password, notes:[]}
                 return this._users.insertOne(_user)
@@ -33,7 +33,7 @@ const logic = {
                 return this._users.findOne({ username })
             })
             .then(user => {
-                if(!user) throw new Error(`user with ${username} username does not exists`)
+                if(!user) throw new Error(`user with ${username} username does not exist`)
                 if(user.password !== password) throw new Error(`wrong password`)
 
                 return true
@@ -50,7 +50,7 @@ const logic = {
                 return this._users.findOne({ username })
             })
             .then(user => {
-                if(!user) throw new Error(`user with ${username} username does not exists`)
+                if(!user) throw new Error(`user with ${username} username does not exist`)
                 if(user.password !== password) throw new Error(`wrong password`)
                 if(password === newPassword) throw new Error('new password must be different to old password')
             
@@ -70,7 +70,7 @@ const logic = {
                 return this._users.findOne({ username })
             })
             .then(user => {
-                if(!user) throw new Error(`user with ${username} username does not exists`)
+                if(!user) throw new Error(`user with ${username} username does not exist`)
                 if(user.password !== password) throw new Error(`wrong password`)
 
                 return this._users.deleteOne({_id: user._id})
@@ -91,7 +91,7 @@ const logic = {
                 return this._users.findOne({ username })
             })
             .then(user => {
-                if(!user) throw new Error(`user with ${username} username does not exists`)
+                if(!user) throw new Error(`user with ${username} username does not exist`)
                 if(user.password !== password) throw new Error(`wrong password`)
                 const id = uuidv4()
                 const notes = [...user.notes, {id, title, note}]
@@ -113,15 +113,13 @@ const logic = {
                 return this._users.findOne({ username })
             })
             .then(user => {
-                if(!user) throw new Error(`user with ${username} username does not exists`)
+                if(!user) throw new Error(`user with ${username} username does not exist`)
                 if(user.password !== password) throw new Error(`wrong password`)
                 const id = uuidv4()
                 const contacts = [...user.contacts, {id, contact, telephone}]
                 return this._users.updateOne({_id: user._id}, {$set: {contacts}})
             })
-            .then(() => {
-                return true
-            })
+            .then(() => true)
     }
 }
 

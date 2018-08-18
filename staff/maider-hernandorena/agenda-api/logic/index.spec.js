@@ -34,7 +34,6 @@ describe('logic', () => {
 
         it('should give the correct value', () => {
             expect(() => logic._validateField('username', username).to.equal(username))
-            expect(() => logic._validateField('email', email).to.equal(email))
             expect(() => logic._validateField('password', password).to.equal(password))
         })
 
@@ -73,7 +72,7 @@ describe('logic', () => {
             _users.insertOne({ username,  password })
                 .then(() => logic.register(username,  password))
                 .catch(err => err)
-                .then(({ message }) => expect(message).to.equal(`user with ${username} username already exists`))
+                .then(({ message }) => expect(message).to.equal(`user with ${username} username already exist`))
         )
 
         it('should fail on trying to register with an undefined username', () =>
@@ -302,7 +301,9 @@ describe('logic', () => {
                 .then(user => {
                     expect(user.notes.length).to.equal(1)
                     expect(user.notes[0].title).to.equal(title)
+                    expect(user.notes[0].title).to.equal('my note title')
                     expect(user.notes[0].note).to.equal(note)
+                    expect(user.notes[0].note).to.equal('my note content')
                 })
         )
 
@@ -394,7 +395,9 @@ describe('logic', () => {
                 .then(user => {
                     expect(user.contacts.length).to.equal(1)
                     expect(user.contacts[0].contact).to.equal(contact)
+                    expect(user.contacts[0].contact).to.equal('iker')
                     expect(user.contacts[0].telephone).to.equal(telephone)
+                    expect(user.contacts[0].telephone).to.equal('666 222 666')
                 })
         )
 
