@@ -55,7 +55,6 @@ const logic = {
                         return this._users.updateOne({email}, {$push:{notes:{id,title,content,date}}})
                         // return this._users.updateOne({email},{$set:{notes}})
                             .then((res) => {
-                                debugger
                                 return id
                             })
                     })
