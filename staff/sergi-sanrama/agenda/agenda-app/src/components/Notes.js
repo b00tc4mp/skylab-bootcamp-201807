@@ -86,7 +86,11 @@ class Notes extends Component{
         })
     }
 
+    onGoToContacts = event => {
+        event.preventDefault()
 
+        this.props.onGoToContacts()
+    }
 
     render(){
         return <div>
@@ -100,6 +104,7 @@ class Notes extends Component{
             <ul>
                 {this.state.notes.map(note => <li key={note.id}> {`TITULO: ${note.title} CONTENIDO: ${note.content} FECHA: ${note.date}`} <a href="" onClick={(e) =>  {e.preventDefault();this.deleteNote(note.id)}} >X</a> <a href="" onClick={(e) => this.editNote(e,note)}>EDIT ME </a> </li>)}
             </ul>
+            <div>Go to <a href="" onClick={this.onGoToContacts}>Contacts</a></div>
         </div>
     }
 

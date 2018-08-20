@@ -37,13 +37,17 @@ class App extends Component {
     // this.props.history.push("/")
   }
 
+  onGoToContacts = () => this.props.history.push('/contacts')  
+
+  onGoToNotes = () => this.props.history.push('notes')
+
   render() {
     return <Switch>
         <Route exact path="/" render={() => this.isLoggedIn() ? <Redirect to="/notes"/> : <Landing/>} />      
         <Route path="/login" render={() => this.isLoggedIn() ? <Redirect to="/notes"/> : <Login handleLogin={this.handleLogin}/>} />      
         <Route path="/register" render={() => this.isLoggedIn() ? <Redirect to="/notes"/> : <Register/>} />      
-        <Route path="/notes" render={() => this.isLoggedIn() ? <Notes handleLogout={this.handleLogout} usermail={this.state.usermail} token={this.state.token}/> : <Redirect to="/"/>} />      
-        <Route path="/contacts" render={() => this.isLoggedIn() ? <Contacts handleLogout={this.handleLogout} usermail={this.state.usermail} token={this.state.token}/> : <Redirect to="/"/>} />    
+        <Route path="/notes" render={() => this.isLoggedIn() ? <Notes handleLogout={this.handleLogout} usermail={this.state.usermail} token={this.state.token} onGoToContacts={this.onGoToContacts}/> : <Redirect to="/"/>} />      
+        <Route path="/contacts" render={() => this.isLoggedIn() ? <Contacts handleLogout={this.handleLogout} usermail={this.state.usermail} token={this.state.token} onGoToNotes={this.onGoToNotes}/> : <Redirect to="/"/>} />    
       </Switch>
   }
 }

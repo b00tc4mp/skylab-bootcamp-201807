@@ -97,6 +97,12 @@ class Contacts extends Component{
         })
     }
 
+    onGoToNotes = event => {
+        event.preventDefault()
+
+        this.props.onGoToNotes()
+    }
+
 
 
     render(){
@@ -113,6 +119,8 @@ class Contacts extends Component{
             <ul>
                 {this.state.contacts.map(contact => <li key={contact.id}> {`name:${contact.name},surname:${contact.surname},phone:${contact.phone},contactmail:${contact.contactmail},address:${contact.address}`} <a href="" onClick={(e) =>  {e.preventDefault();this.deleteContact(contact.id)}} >X</a> <a href="" onClick={(e) => this.editContact(e,contact)}>EDIT ME </a> </li>)}
             </ul>
+
+            <div>Go to <a href="" onClick={this.onGoToNotes}>Notes</a></div>
         </div>
     }
 
