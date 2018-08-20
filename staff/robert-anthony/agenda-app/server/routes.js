@@ -3,7 +3,7 @@ require('dotenv').config()
 const express = require('express')
 const bodyParser = require('body-parser')
 const {logic, LogicError} = require('./logic')
-const {notes} = require('./logic/notes')
+const {notesLogic} = require('./logic/notes')
 const jwt = require('jsonwebtoken')
 const router = express.Router()
 const validateJwt = require('./helpers/validate-jwt')
@@ -149,7 +149,7 @@ router.post('/user/:username/notes', [validateJwt, jsonBodyParser], (req, res) =
 
 module.exports = function (db) {
   logic._users = db.collection('users')
-  notes._notes = db.collection('notes')
+  notesLogic._notes = db.collection('notes')
 
   return router
 }

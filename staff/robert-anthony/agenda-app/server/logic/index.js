@@ -1,6 +1,6 @@
 'use strict'
 
-const dateToString = require('../utils/dateToString')
+const {notesLogic} = require('./notes')
 
 const logic = {
   _users: null,
@@ -62,12 +62,9 @@ const logic = {
       .then(_ => this._users.findOne({username}))
       .then(user => {
         if (!user) throw new LogicError(`user ${username} does not exist`)
-        return this._users.updateOne({_id: user._id}, {$addToSet: {"notes": note}})
+        return(notesLogic.addNote(user._id,note))
       })
-      .then(res => {
-        if (res.result.nModified === 0) throw new LogicError('error adding note')
-        else return true
-      })
+
 
 
   },
@@ -84,12 +81,7 @@ const logic = {
       .then(_ => this._users.findOne({username}))
       .then(user => {
         if (!user) throw new LogicError(`user ${username} does not exist`)
-
-        return this._users.updateOne({_id: user._id, "notes.id": note.id}, {$set: {"notes.$.text": note.text}})
-      })
-      .then(res => {
-        if (res.result.nModified === 0) throw new LogicError('error updating note')
-        else return true
+        return notesLogic.updateNote(user._id,note)
       })
   },
   /*
@@ -152,10 +144,7 @@ const logic = {
       .then(_ => this._users.findOne({username}))
       .then(user => {
         if (!user) throw new LogicError(`user ${username} does not exist`)
-        if (!user.notes) return []
-        else {
-          return user.notes.filter(note => note.date === date)
-        }
+        return notesLogic.getAllNotes(user._id,date)
 
       })
   },
