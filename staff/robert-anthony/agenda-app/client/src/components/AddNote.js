@@ -19,7 +19,7 @@ class UpdateNote extends Component {
         const { text} = this.state
         const date =  this.props.currentDate;
         const note = {text,date}
-
+        console.log("current date",note.date)
         logic.addNote(this.props.username,note,this.props.token)
             .then(({ message }) => {
               this.setState({ error: message })

@@ -137,17 +137,17 @@ const logic = {
 
 
 
-    getAllNotes(username,token) {
+    getAllNotes(username,date,token) {
 
         return Promise.resolve()
             .then(() => {
                 this._validateStringField('username', username)
 
-                return this._call(`user/${username}/notes`, 'GET', {
+                return this._call(`user/${username}/notes`, 'POST', {
                     'Content-Type': 'application/json',
                     'authorization': `bearer ${token}`
 
-                }, undefined, 200)
+                }, JSON.stringify({"date":date}), 200)
                     .then(res => res.json())
                     .then(res => res)
             })

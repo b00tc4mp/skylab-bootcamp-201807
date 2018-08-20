@@ -12,19 +12,21 @@ class Notes extends Component {
   }
 
   componentDidMount = () => {
-    this.getNotesForDate()
+    this.getNotesForDate(this.props.currentDate)
   }
 
-  getNotesForDate = () => {
-    logic.getAllNotes(this.props.username, this.props.token)
-      .then(res => res.filter(note => note.date === this.state.date))
-      .then(res => this.setState({notes: res}))
+  getNotesForDate = (date) => {
+    logic.getAllNotes(this.props.username, date,this.props.token)
+      .then(res => {
+        console.log(date,res)
+        this.setState({notes: res})
+      })
       .catch(({message}) => this.setState({error: message}))
   }
 
   onKeepDate = (e) => {
     e.preventDefault()
-    this.getNotesForDate()
+    this.getNotesForDate(e.target.value)
     this.setState({date: e.target.value})
     this.props.onChangeCurrentDate(e.target.value)
 
