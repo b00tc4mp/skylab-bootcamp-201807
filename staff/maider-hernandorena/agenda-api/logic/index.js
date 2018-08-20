@@ -1,4 +1,3 @@
-const uuidv4 = require('uuid/v4')
 
 const logic = {
 
@@ -80,6 +79,19 @@ const logic = {
             })
     },
 
+    listNotes(username) {
+        return Promise.resolve()
+            .then(() => {
+                this._validateField('username', username)
+                return this._users.findOne({ username })
+            })
+            .then((user) => {
+                if (!user) throw new Error(`user ${username} does not exist`)
+
+                return user.notes
+            })
+    },
+
     addNotes(username, title, note) {
         return Promise.resolve()
             .then(() => {
@@ -91,12 +103,40 @@ const logic = {
             })
             .then(user => {
                 if(!user) throw new Error(`user with ${username} username does not exist`)
-                const id = uuidv4()
-                const notes = [...user.notes, {id, title, note}]
+                const notes = [...user.notes, {title, note}]
                 return this._users.updateOne({_id: user._id}, {$set: {notes}})
             })
             .then(() => {
                 return true
+            })
+    },
+
+    deleteNote(username, title, note) {
+        return Promise.resolve()
+            .then(() => {
+                this._validateField('username', username)
+                this._validateField('title', title)
+                this._validateField('note', note)
+
+                return this._users.findOne({ username })
+            })
+            .then(user => {
+                if(!user) throw new Error(`user with ${username} username does not exist`)
+                return this._users.deleteOne({_id: user._id}, {$set: {notes}})
+            })
+            .then(() => true)
+    },
+
+    listContacts(username) {
+        return Promise.resolve()
+            .then(() => {
+                this._validateField('username', username)
+                return this._users.findOne({ username })
+            })
+            .then((user) => {
+                if (!user) throw new Error(`user ${username} does not exist`)
+
+                return user.contacts
             })
     },
 
@@ -111,11 +151,27 @@ const logic = {
             })
             .then(user => {
                 if(!user) throw new Error(`user with ${username} username does not exist`)
-                const contacts = [{contact, telephone}]
+                const contacts = [...user.contacts, {contact, telephone}]
                 return this._users.updateOne({_id: user._id}, {$set: {contacts}})
             })
             .then(() => true)
-    }
+    },
+
+    deleteContact(username, contact, telephone) {
+        return Promise.resolve()
+            .then(() => {
+                this._validateField('username', username)
+                this._validateField('contact', contact)
+                this._validateField('telephone', telephone)
+
+                return this._users.findOne({ username })
+            })
+            .then(user => {
+                if(!user) throw new Error(`user with ${username} username does not exist`)
+                return this._users.deleteOne({_id: user._id}, {$set: {contacts}})
+            })
+            .then(() => true)
+    },
 }
 
 module.exports = logic

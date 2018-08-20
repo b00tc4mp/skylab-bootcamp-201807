@@ -11,6 +11,10 @@ html {
     height: 100%;
 }
 
+main {
+    padding: 0 10%;
+}
+
 h1 {
     text-align: center;
     padding: 5%;
@@ -62,6 +66,13 @@ form, nav {
     margin-left: 10px;
 }
 
+.okey {
+    padding-left: 3%;
+    padding-right: 3%;
+    margin-top: 0;
+    margin-left: 10px;
+}
+
 input {
     padding: 10px;
     margin: 10px;
@@ -108,4 +119,38 @@ button:hover {
 .search {
     text-align: center;
     margin-top: 5%;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: 40% 60%;
+}
+
+.grid-container div {
+    margin-left: 5%;
+}
+
+textarea {
+    width: 108%;
+    height: 200px;
+    margin: 3%;
+    padding: 10px;
+    border: solid 0.5px #888888;
+    border-radius: 10px;
+}
+
+ul {
+    list-style: none;
+    padding: 0 10%;
+    margin-left: 10%;
+}
+
+li {
+    margin: 3%;
+    padding: 0;
+}
+
+li p {
+    margin: 0;
+    padding: 0;
 }

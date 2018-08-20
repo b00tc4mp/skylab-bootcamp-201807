@@ -59,6 +59,17 @@ router.delete('/user/:username/profile', [verifyJwt, jsonBodyParser], (req, res)
         })
 })
 
+router.get('/user/:username/notes', verifyJwt, (req, res) => {
+    const { params: { username } } = req
+
+    logic.listNotes(username)
+        .then(notes => res.json(notes))
+        .catch(err => {
+            const {message} = err
+            res.status(400 || 500).json({message})
+        })
+})
+
 router.post('/user/:username/notes', [verifyJwt, jsonBodyParser], (req, res) => {
     const { params: { username }, body: { title, note } } = req
 
@@ -74,6 +85,28 @@ router.post('/user/:username/notes', [verifyJwt, jsonBodyParser], (req, res) => 
         })
 })
 
+router.delete('/user/:username/notes', [verifyJwt, jsonBodyParser], (req, res) => {
+    const { params: { username }, body: { title, note } } = req
+
+    logic.deleteNote(username, title, note)
+        .then(() => res.json({ message: 'note deleted correctly' }))
+        .catch(err => {
+            const {message} = err
+            res.status(400 || 500).json({message})
+        })
+})
+
+router.get('/user/:username/contacts', verifyJwt, (req, res) => {
+    const { params: { username } } = req
+
+    logic.listContacts(username)
+        .then(contacts => res.json(contacts))
+        .catch(err => {
+            const {message} = err
+            res.status(400 || 500).json({message})
+        })
+})
+
 router.post('/user/:username/contacts', [verifyJwt, jsonBodyParser], (req, res) => {
     const { params: { username }, body: { contact, telephone } } = req
 
@@ -83,6 +116,17 @@ router.post('/user/:username/contacts', [verifyJwt, jsonBodyParser], (req, res) 
             
             res.json({ message: 'contact added correctly', contacts})
         })
+        .catch(err => {
+            const {message} = err
+            res.status(400 || 500).json({message})
+        })
+})
+
+router.delete('/user/:username/contacts', [verifyJwt, jsonBodyParser], (req, res) => {
+    const { params: { username }, body: { contact, telephone } } = req
+
+    logic.deleteContact(username, contact, telephone)
+        .then(() => res.json({ message: 'contact deleted correctly' }))
         .catch(err => {
             const {message} = err
             res.status(400 || 500).json({message})

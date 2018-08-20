@@ -7,6 +7,7 @@ import Agenda from './components/Agenda'
 import Profile from './components/Profile'
 import Notes from './components/Notes'
 import Contacts from './components/Contacts'
+import logic from './logic'
 
 class App extends Component {
   state = {
@@ -34,8 +35,18 @@ class App extends Component {
     this.props.history.push('/')
   }
 
+  onDelete = password => {
+    const {username, token} = this.state
+    logic.deleteUser(username, password, token)
+      .then(() => {
+        this.setState({username: '', password: ''})
+        this.props.history.push('/')
+      })
+      .catch(({ message }) => this.setState({deleteError: message}))
+  }
+
   render() {
-    const { state: {username, token}, onLoggedIn, onLogout } = this
+    const { state: {username, token}, onLoggedIn, onLogout, onDelete } = this
 
     return <div>
       <header>
@@ -55,7 +66,7 @@ class App extends Component {
         <Route path="/register" render={() => this.isLoggedIn() ? <Redirect to="/agenda" /> : <Register />} />
         <Route path="/login" render={() => this.isLoggedIn() ? <Redirect to="/agenda" /> : <Login onLoggedIn={onLoggedIn} />} />
         <Route path="/agenda" render={() => this.isLoggedIn() ? <Agenda username={username} token={token}/> : <Redirect to="/" />} />
-        <Route path="/user/:username/profile" render={() => this.isLoggedIn() ? <Profile username={username} token={token}/> : <Redirect to="/" />} />
+        <Route path="/user/:username/profile" render={() => this.isLoggedIn() ? <Profile username={username} token={token} onDelete={onDelete}/> : <Redirect to="/" />} />
         <Route path="/user/:username/notes" render={() => this.isLoggedIn() ? <Notes username={username} token={token}/> : <Redirect to="/" />} />
         <Route path="/user/:username/contacts" render={() => this.isLoggedIn() ? <Contacts username={username} token={token}/> : <Redirect to="/" />} />
       </Switch>

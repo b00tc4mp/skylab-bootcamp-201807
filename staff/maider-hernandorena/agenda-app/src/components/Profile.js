@@ -21,20 +21,13 @@ class Profile extends Component{
     const {password, newPassword} = this.state
     const {username, token} = this.props
     logic.updatePassword(username, password, newPassword, token)
-      .then(({ message }) => this.setState({ updated: message }))
+      .then( message => this.setState({ updated: message }))
       .catch(({ message }) => this.setState({ updateError: message }))
   }
 
   onDelete = e => {
     e.preventDefault()
-    const {password} = this.state
-    const {username, token} = this.props
-    logic.deleteUser(username, password, token)
-      .then(() => {
-        this.setState({username: '', password: ''})
-        this.props.history.push('/')
-      })
-      .catch(({ message }) => this.setState({deleteError: message}))
+    this.props.onDelete(this.state.password)
   }
 
   render(){
@@ -51,7 +44,7 @@ class Profile extends Component{
                 <button type="submit">Update</button>
               </form>
               {updateError && <p className="error">{updateError}</p>}
-              {updated && <p className="error">{updated}</p>}
+              {updated && <p className="okey">Okey! {updated}. Now you can continue navigating on your <a href={`/#/user/${this.props.username}/notes`}>notes</a> and <a href={`/#/user/${this.props.username}/contacts`}>contacts</a>, or go to <a href="/#/agenda">home</a></p>}
             </div>
             <div>
               <nav>

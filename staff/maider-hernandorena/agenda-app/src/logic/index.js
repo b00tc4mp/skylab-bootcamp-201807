@@ -55,7 +55,7 @@ const logic = {
                 
                 return this._call(`user/${username}/profile`, 'PATCH', {'Content-Type': 'application/json', authorization: `bearer ${token}` }, JSON.stringify({ password, newPassword }), 200)
                     .then(res => res.json())
-                    .then(() => true)
+                    .then(({message}) => message)
             })
     },
 
@@ -68,6 +68,16 @@ const logic = {
                 return this._call(`user/${username}/profile`, 'delete', {'Content-Type': 'application/json', authorization: `bearer ${token}` }, JSON.stringify({ password}), 200)
                     .then(res => res.json())
                     .then(() => true)
+            })
+    },
+
+    listNotes(username, token) {
+        return Promise.resolve()
+            .then(() => {
+                this._validateField('username', username)
+
+                return this._call(`user/${username}/notes`, 'get', { authorization: `bearer ${token}` }, undefined, 200)
+                    .then(res => res.json())
             })
     },
 
@@ -84,6 +94,29 @@ const logic = {
             })
     },
 
+    deleteNote(username, title, note, token) {
+        return Promise.resolve()
+            .then(() => {
+                this._validateField('username', username)
+                this._validateField('title', title)
+                this._validateField('note', note)
+
+                return this._call(`user/${username}/notes`, 'delete', {'Content-Type': 'application/json', authorization: `bearer ${token}` }, JSON.stringify({ title, note }), 200)
+                    .then(res => res.json())
+                    .then(() => true)
+            })
+    },
+
+    listContacts(username, token) {
+        return Promise.resolve()
+            .then(() => {
+                this._validateField('username', username)
+
+                return this._call(`user/${username}/contacts`, 'get', { authorization: `bearer ${token}` }, undefined, 200)
+                    .then(res => res.json())
+            })
+    },
+
     addContacts(username, contact, telephone, token) {
         return Promise.resolve()
             .then(() => {
@@ -94,6 +127,19 @@ const logic = {
                 return this._call(`user/${username}/contacts`, 'post', {'Content-Type': 'application/json', authorization: `bearer ${token}` }, JSON.stringify({ contact, telephone }), 200)
                     .then(res => res.json())
                     .then(({contacts}) => contacts)
+            })
+    },
+
+    deleteContact(username, contact, telephone, token) {
+        return Promise.resolve()
+            .then(() => {
+                this._validateField('username', username)
+                this._validateField('contact', contact)
+                this._validateField('telephone', telephone)
+
+                return this._call(`user/${username}/contacts`, 'delete', {'Content-Type': 'application/json', authorization: `bearer ${token}` }, JSON.stringify({ contact, telephone }), 200)
+                    .then(res => res.json())
+                    .then(() => true)
             })
     },
     
