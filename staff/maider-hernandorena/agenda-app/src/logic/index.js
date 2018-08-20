@@ -53,7 +53,7 @@ const logic = {
                 this._validateField('password', password)
                 this._validateField('new password', newPassword)
                 
-                return this._call(`user/${username}`, 'patch', {'Content-Type': 'application/json', authorization: `bearer ${token}` }, JSON.stringify({ password, newPassword }), 200)
+                return this._call(`user/${username}/profile`, 'PATCH', {'Content-Type': 'application/json', authorization: `bearer ${token}` }, JSON.stringify({ password, newPassword }), 200)
                     .then(res => res.json())
                     .then(() => true)
             })
@@ -65,12 +65,37 @@ const logic = {
                 this._validateField('username', username)
                 this._validateField('password', password)
 
-                return this._call(`user/${username}`, 'delete', {'Content-Type': 'application/json', authorization: `bearer ${token}` }, JSON.stringify({ password}), 200)
+                return this._call(`user/${username}/profile`, 'delete', {'Content-Type': 'application/json', authorization: `bearer ${token}` }, JSON.stringify({ password}), 200)
                     .then(res => res.json())
                     .then(() => true)
             })
-    }
+    },
 
+    addNotes(username, title, note, token) {
+        return Promise.resolve()
+            .then(() => {
+                this._validateField('username', username)
+                this._validateField('title', title)
+                this._validateField('note', note)
+
+                return this._call(`user/${username}/notes`, 'post', {'Content-Type': 'application/json', authorization: `bearer ${token}` }, JSON.stringify({ title, note }), 200)
+                    .then(res => res.json())
+                    .then(({notes}) => notes)
+            })
+    },
+
+    addContacts(username, contact, telephone, token) {
+        return Promise.resolve()
+            .then(() => {
+                this._validateField('username', username)
+                this._validateField('contact', contact)
+                this._validateField('telephone', telephone)
+
+                return this._call(`user/${username}/contacts`, 'post', {'Content-Type': 'application/json', authorization: `bearer ${token}` }, JSON.stringify({ contact, telephone }), 200)
+                    .then(res => res.json())
+                    .then(({contacts}) => contacts)
+            })
+    },
     
 }
 

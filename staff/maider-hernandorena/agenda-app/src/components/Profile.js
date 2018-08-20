@@ -21,8 +21,8 @@ class Profile extends Component{
     const {password, newPassword} = this.state
     const {username, token} = this.props
     logic.updatePassword(username, password, newPassword, token)
-      .then(({message}) => this.setState({updated: message}))
-      .catch(({ message }) => this.setState({updateError: message}))
+      .then(({ message }) => this.setState({ updated: message }))
+      .catch(({ message }) => this.setState({ updateError: message }))
   }
 
   onDelete = e => {
@@ -51,7 +51,7 @@ class Profile extends Component{
                 <button type="submit">Update</button>
               </form>
               {updateError && <p className="error">{updateError}</p>}
-              {updated && <p>{updated}</p>}
+              {updated && <p className="error">{updated}</p>}
             </div>
             <div>
               <nav>

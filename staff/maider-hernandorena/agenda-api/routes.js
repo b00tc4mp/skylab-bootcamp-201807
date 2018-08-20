@@ -37,7 +37,7 @@ router.post('/login', jsonBodyParser, (req, res) => {
         })
 })
 
-router.patch('/user/:username', [verifyJwt, jsonBodyParser], (req, res) => {
+router.patch('/user/:username/profile', [verifyJwt, jsonBodyParser], (req, res) => {
     const { params: { username }, body: { password, newPassword } } = req
 
     logic.updatePassword(username, password, newPassword)
@@ -48,7 +48,7 @@ router.patch('/user/:username', [verifyJwt, jsonBodyParser], (req, res) => {
         })
 })
 
-router.delete('/user/:username', [verifyJwt, jsonBodyParser], (req, res) => {
+router.delete('/user/:username/profile', [verifyJwt, jsonBodyParser], (req, res) => {
     const { params: { username }, body: { password } } = req
 
     logic.deleteUser(username, password)
@@ -59,14 +59,14 @@ router.delete('/user/:username', [verifyJwt, jsonBodyParser], (req, res) => {
         })
 })
 
-router.patch('/user/:username/notes', [verifyJwt, jsonBodyParser], (req, res) => {
-    const { params: { username }, body: { password, title, note } } = req
+router.post('/user/:username/notes', [verifyJwt, jsonBodyParser], (req, res) => {
+    const { params: { username }, body: { title, note } } = req
 
-    logic.addNotes(username, password, title, note)
+    logic.addNotes(username, title, note)
         .then(() => {
             const notes = [{title, note}]
 
-            res.json({ message: 'note added correctly' }, notes)
+            res.json({ message: 'note added correctly', notes})
         })
         .catch(err => {
             const {message} = err
@@ -74,11 +74,15 @@ router.patch('/user/:username/notes', [verifyJwt, jsonBodyParser], (req, res) =>
         })
 })
 
-router.patch('/user/:username/contacts', [verifyJwt, jsonBodyParser], (req, res) => {
-    const { params: { username }, body: { password, contact, telephone } } = req
+router.post('/user/:username/contacts', [verifyJwt, jsonBodyParser], (req, res) => {
+    const { params: { username }, body: { contact, telephone } } = req
 
-    logic.addContacts(username, password, contact, telephone)
-        .then(() => res.json({ message: 'contact added correctly' }, contact, telephone))
+    logic.addContacts(username, contact, telephone)
+        .then(() => {
+            const contacts = [{contact, telephone}]
+            
+            res.json({ message: 'contact added correctly', contacts})
+        })
         .catch(err => {
             const {message} = err
             res.status(400 || 500).json({message})

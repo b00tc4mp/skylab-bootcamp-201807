@@ -5,6 +5,8 @@ import Register from './components/Register'
 import Login from './components/Login'
 import Agenda from './components/Agenda'
 import Profile from './components/Profile'
+import Notes from './components/Notes'
+import Contacts from './components/Contacts'
 
 class App extends Component {
   state = {
@@ -42,9 +44,9 @@ class App extends Component {
 
       { this.isLoggedIn() ? <nav className="flex">
         <a href="/#/agenda">Home</a>
-        <a href="/#/notes">Notes</a>
-        <a href="/#/contacts">Contacts</a>
-        <a href={`/#/user/${username}`}>Profile</a>
+        <a href={`/#/user/${username}/notes`}>Notes</a>
+        <a href={`/#/user/${username}/contacts`}>Contacts</a>
+        <a href={`/#/user/${username}/profile`}>Profile</a>
         <a href="" onClick={onLogout}>Logout</a>
   </nav> : <nav></nav> }
 
@@ -53,7 +55,9 @@ class App extends Component {
         <Route path="/register" render={() => this.isLoggedIn() ? <Redirect to="/agenda" /> : <Register />} />
         <Route path="/login" render={() => this.isLoggedIn() ? <Redirect to="/agenda" /> : <Login onLoggedIn={onLoggedIn} />} />
         <Route path="/agenda" render={() => this.isLoggedIn() ? <Agenda username={username} token={token}/> : <Redirect to="/" />} />
-        <Route path="/user/:username" render={() => this.isLoggedIn() ? <Profile username={username} token={token}/> : <Redirect to="/" />} />
+        <Route path="/user/:username/profile" render={() => this.isLoggedIn() ? <Profile username={username} token={token}/> : <Redirect to="/" />} />
+        <Route path="/user/:username/notes" render={() => this.isLoggedIn() ? <Notes username={username} token={token}/> : <Redirect to="/" />} />
+        <Route path="/user/:username/contacts" render={() => this.isLoggedIn() ? <Contacts username={username} token={token}/> : <Redirect to="/" />} />
       </Switch>
 
     </div>

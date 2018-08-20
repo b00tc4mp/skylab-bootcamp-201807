@@ -80,11 +80,10 @@ const logic = {
             })
     },
 
-    addNotes(username, password, title, note) {
+    addNotes(username, title, note) {
         return Promise.resolve()
             .then(() => {
                 this._validateField('username', username)
-                this._validateField('password', password)
                 this._validateField('title', title)
                 this._validateField('note', note)
 
@@ -92,7 +91,6 @@ const logic = {
             })
             .then(user => {
                 if(!user) throw new Error(`user with ${username} username does not exist`)
-                if(user.password !== password) throw new Error(`wrong password`)
                 const id = uuidv4()
                 const notes = [...user.notes, {id, title, note}]
                 return this._users.updateOne({_id: user._id}, {$set: {notes}})
@@ -102,11 +100,10 @@ const logic = {
             })
     },
 
-    addContacts(username, password, contact, telephone) {
+    addContacts(username, contact, telephone) {
         return Promise.resolve()
             .then(() => {
                 this._validateField('username', username)
-                this._validateField('password', password)
                 this._validateField('contact', contact)
                 this._validateField('telephone', telephone)
 
@@ -114,9 +111,7 @@ const logic = {
             })
             .then(user => {
                 if(!user) throw new Error(`user with ${username} username does not exist`)
-                if(user.password !== password) throw new Error(`wrong password`)
-                const id = uuidv4()
-                const contacts = [...user.contacts, {id, contact, telephone}]
+                const contacts = [{contact, telephone}]
                 return this._users.updateOne({_id: user._id}, {$set: {contacts}})
             })
             .then(() => true)

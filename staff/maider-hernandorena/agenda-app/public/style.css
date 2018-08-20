@@ -21,6 +21,13 @@ h1 {
     margin: 0;
 }
 
+h3 {
+    padding: 5px;
+    margin-left: 3.5%;
+    margin-top: 5%;
+    font-size: 22px;
+}
+
 p {
     padding: 5px;
     margin: 5px;
