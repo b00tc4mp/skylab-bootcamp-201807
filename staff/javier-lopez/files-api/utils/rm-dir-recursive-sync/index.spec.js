@@ -5,7 +5,6 @@ const fs = require('fs')
 const rimraf = require('rimraf')
 const rmDirRecursiveSync = require('.')
 
-debugger
 
 describe('rm dir recursive sync', () => {
     beforeEach(() => {
