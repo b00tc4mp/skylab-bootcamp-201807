@@ -16,8 +16,6 @@ const jsonBodyParser = bodyParser.json()
 app.post('/register', jsonBodyParser, (req, res) => {
     const { body: { username, password } } = req
 
-    debugger
-
     try {
         logic.register(username, password)
 
