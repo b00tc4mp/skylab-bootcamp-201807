@@ -3,7 +3,6 @@ require('dotenv').config()
 const express = require('express')
 const bodyParser = require('body-parser')
 const {logic, LogicError} = require('./logic')
-const {notes} = require('./logic/notes')
 const jwt = require('jsonwebtoken')
 const router = express.Router()
 const validateJwt = require('./helpers/validate-jwt')
@@ -76,8 +75,8 @@ router.post('/user/:username/note', [validateJwt, jsonBodyParser], (req, res) =>
       res.status(err instanceof LogicError ? 400 : 500).json({message})
     })
 })
-/*
-/!*  get contact by id *!/
+
+/*  get contact by id */
 router.post('/user/:username/contact/:id', [validateJwt, jsonBodyParser], (req, res) => {
   const {params: {username,id}} = req
   logic.getContactByID(username, id)
@@ -88,7 +87,7 @@ router.post('/user/:username/contact/:id', [validateJwt, jsonBodyParser], (req, 
     })
 })
 
-/!*  get note by id *!/
+/*  get note by id */
 router.post('/user/:username/note/:id', [validateJwt, jsonBodyParser], (req, res) => {
   const {params: {username,id}} = req
   logic.getNoteByID(username, id)
@@ -97,7 +96,7 @@ router.post('/user/:username/note/:id', [validateJwt, jsonBodyParser], (req, res
       const {message} = err
       res.status(err instanceof LogicError ? 400 : 500).json({message})
     })
-})*/
+})
 
 /*  update note */
 router.patch('/user/:username/note', [validateJwt, jsonBodyParser], (req, res) => {
@@ -133,12 +132,10 @@ router.get('/user/:username/contacts', [validateJwt, jsonBodyParser], (req, res)
 })
 
 /*  get all notes */
-router.post('/user/:username/notes', [validateJwt, jsonBodyParser], (req, res) => {
-    const {params: {username},body:{date}} = req
-  logic.getAllNotes(username,date)
-    .then(notes => {
-      return res.json(notes)
-    })
+router.get('/user/:username/notes', [validateJwt, jsonBodyParser], (req, res) => {
+    const {params: {username}} = req
+  logic.getAllNotes(username)
+    .then(notes => res.json(notes))
     .catch(err => {
       const {message} = err
       res.status(err instanceof LogicError ? 400 : 500).json({message})
@@ -149,7 +146,6 @@ router.post('/user/:username/notes', [validateJwt, jsonBodyParser], (req, res) =
 
 module.exports = function (db) {
   logic._users = db.collection('users')
-  notes._notes = db.collection('notes')
 
   return router
 }
