@@ -4,8 +4,7 @@ require('dotenv').config()
 
 const { logic } = require('.')
 const { expect } = require('chai')
-const mongoose = require('mongoose')
-const { Contact, Note, User } = require('../data/models')
+const { MongoClient, ObjectId } = require('mongodb')
 
 const { env: { MONGO_URL } } = process
 
@@ -14,33 +13,50 @@ const { env: { MONGO_URL } } = process
 
 describe('logic', () => {
     const email = `maider-${Math.random()}@mail.com`, password = `123-${Math.random()}`
-    let _connection
-    let usersCount = 0
+    let _connect, _db, _users, _notes
+    let usersCount
 
-    before(() =>
-        mongoose.connect(MONGO_URL, { useNewUrlParser: true })
-            .then(conn => _connection = conn)
-    )
+    before(done => {
+        MongoClient.connect(MONGO_URL, { useNewUrlParser: true }, (err, connect) => {
+            if (err) return done(err)
+
+            _connect = connect
+
+            const db = _db = connect.db()
+
+            logic._users = _users = db.collection('users')
+            logic._notes = _notes = db.collection('notes')
+
+            done()
+        })
+    })
 
     beforeEach(() =>
-        Promise.all([
-            Note.deleteMany(),
-            User.deleteMany()
-        ])
-            .then(() => {
-                let count = Math.floor(Math.random() * 100)
+        _notes.deleteMany()
+            .then(() =>
+                _users.deleteMany()
+                    .then(() => {
+                        let count = Math.floor(Math.random() * 100)
 
-                const creations = []
+                        // const insertions = []
 
-                while (count--) creations.push({ email: `other-${Math.random()}@mail.com`, password: `123-${Math.random()}` })
+                        // while (count--) insertions.push(_users.insertOne({ email: `other-${Math.random()}@mail.com`, password: `123-${Math.random()}` }))
 
-                if (usersCount = creations.length)
-                    return User.create(creations)
-            })
+                        // if (usersCount = insertions.length)
+                        //     return Promise.all(insertions)
+
+                        const users = []
+
+                        while (count--) users.push({ email: `other-${Math.random()}@mail.com`, password: `123-${Math.random()}` })
+
+                        if (usersCount = users.length)
+                            return _users.insertMany(users)
+                    })
+            )
     )
 
     true && describe('validate fields', () => {
-        it('should succeed on correct value', () => {
+        it('should give the correct value', () => {
             expect(() => logic._validateStringField('email', email).to.equal(email))
             expect(() => logic._validateStringField('password', password).to.equal(password))
         })
@@ -58,7 +74,7 @@ describe('logic', () => {
         })
     })
 
-    !true && describe('register user', () => {
+    true && describe('register user', () => {
         it('should register correctly', () =>
             _users.findOne({ email })
                 .then(user => {
@@ -123,7 +139,7 @@ describe('logic', () => {
         )
     })
 
-    !true && describe('authenticate user', () => {
+    true && describe('authenticate user', () => {
         beforeEach(() => _users.insertOne({ email, password }))
 
         it('should login correctly', () =>
@@ -170,7 +186,7 @@ describe('logic', () => {
         )
     })
 
-    !true && describe('update user', () => {
+    true && describe('update user', () => {
         const newPassword = `${password}-${Math.random()}`
 
         beforeEach(() => _users.insertOne({ email, password }))
@@ -243,7 +259,7 @@ describe('logic', () => {
         )
     })
 
-    !true && describe('unregister user', () => {
+    true && describe('unregister user', () => {
         beforeEach(() => _users.insertOne({ email, password }))
 
         it('should unregister user correctly', () =>
@@ -295,7 +311,7 @@ describe('logic', () => {
         )
     })
 
-    !true && describe('add note', () => {
+    true && describe('add note', () => {
         const date = new Date(), text = 'my note'
 
         beforeEach(() => {
@@ -377,7 +393,7 @@ describe('logic', () => {
         )
     })
 
-    !true && describe('list notes', () => {
+    true && describe('list notes', () => {
         const notes = [
             { date: new Date('2018-08-20T12:10:15.474Z'), text: 'text 1' },
             { date: new Date('2018-08-23T13:00:00.000Z'), text: 'cumple jordi' },
@@ -419,7 +435,7 @@ describe('logic', () => {
         })
     })
 
-    !true && describe('remove note', () => {
+    true && describe('remove note', () => {
         const notes = [
             { date: new Date(), text: 'text 1' },
             { date: new Date(), text: 'text 2' },
@@ -469,11 +485,11 @@ describe('logic', () => {
         })
     })
 
-    after(() =>
-        Promise.all([
-            Note.deleteMany(),
-            User.deleteMany()
-        ])
-            .then(() => _connection.disconnect())
-    )
+    after(() => {
+        debugger
+        
+        _notes.deleteMany()
+            .then(() => _users.deleteMany())
+            .then(() => _connect.close())
+    })
 })
