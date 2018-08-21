@@ -18,7 +18,7 @@ const logic = {
             .then(user => {
                 if(user) throw new Error(`user with ${username} username already exist`)
                 
-                const _user = {username, password, notes:[]}
+                const _user = {username, password, notes:[], contacts:[]}
                 return this._users.insertOne(_user)
             })
     },
@@ -122,7 +122,7 @@ const logic = {
             })
             .then(user => {
                 if(!user) throw new Error(`user with ${username} username does not exist`)
-                return this._users.deleteOne({_id: user._id}, {$set: {notes}})
+                return this._users.updateOne({_id: user._id}, {$pull: {notes}})
             })
             .then(() => true)
     },
@@ -168,7 +168,7 @@ const logic = {
             })
             .then(user => {
                 if(!user) throw new Error(`user with ${username} username does not exist`)
-                return this._users.deleteOne({_id: user._id}, {$set: {contacts}})
+                return this._users.updateOne({_id: user._id}, {$pull: {contacts: {contact, telephone}}})
             })
             .then(() => true)
     },
