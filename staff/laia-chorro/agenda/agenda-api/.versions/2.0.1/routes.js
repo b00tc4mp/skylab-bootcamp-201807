@@ -111,6 +111,7 @@ router.delete('/user/:username/notes/:id', validateJwt, (req, res) => {
 
 module.exports = function (db) {
     logic._users = db.collection('users')
+    logic._notes = db.collection('notes')
 
     return router
 }

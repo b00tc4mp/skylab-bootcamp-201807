@@ -8,7 +8,7 @@ const routes = require('./routes')
 const { env: { MONGO_URL } } = process
 
 const { MongoClient } = require('mongodb')
-var ObjectId = require('mongodb').ObjectID
+//var ObjectId = require('mongodb').ObjectID
 
 MongoClient.connect(MONGO_URL, { useNewUrlParser: true }, (err, conn) => {
     if (err) throw err

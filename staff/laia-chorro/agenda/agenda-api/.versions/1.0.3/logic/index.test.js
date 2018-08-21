@@ -572,7 +572,7 @@ describe('logic', () => {
         })
 
         it('should retrieve all notes from the same day', () => {
-            const day = "2018-08-19T23:59:59.999Z"
+            const day = "2018-08-21T23:59:59.999Z"
             return logic.getNotesByDate(username, day)
                 .then((res) => {
 debugger;

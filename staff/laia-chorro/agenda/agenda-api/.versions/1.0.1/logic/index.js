@@ -5,8 +5,6 @@ const logic = {
 
     _users: null,
 
-    _notes: null,
-
     _validateStringField(fieldName, fieldValue) {
         if (typeof fieldValue !== 'string' || !fieldValue.length) throw new LogicError(`invalid ${fieldName}`)
     },
@@ -14,6 +12,10 @@ const logic = {
     _validateDate(date) {
         if (isNaN(Date.parse(date))) throw new LogicError('invalid date')
     },
+
+    /*_findUserByUsername() {
+
+    },*/
 
     register(username, password) {
         return Promise.resolve()
@@ -80,19 +82,15 @@ const logic = {
 
                 return this._users.findOne({ username })
             })
+            
             .then( user => {
                 if (!user) throw new LogicError(`user ${username} does not exist`)
 
-                const userId = user._id
-
-                return this._notes.insertOne({ date: new Date(date), text, userId })
+                return this._users.updateOne(
+                    { _id: user._id },
+                    { $push: { notes: { _id: ObjectId(), date: new Date(date), text } } }
+                 )
             })
-            .then((res) => {
-                if (res.result.nModified === 0) throw new Error('fail to add note')
-
-                return true
-            })
-
     },
 
     updateNote(username, idNote, newText) {
@@ -106,21 +104,15 @@ const logic = {
             .then( user => {
                 if (!user) throw new LogicError(`user ${username} does not exist`)
 
-                if (!idNote) throw new LogicError('invalid id note')
+                if(!user.notes) throw new LogicError(`notes does not exist for user ${username}`)
 
-                 const userId = user._id
+                if(!(user.notes).find( note => note._id.toString() === idNote )) 
+                    throw new LogicError(`note with id: "${idNote}" does not exist`)
 
-                 return this._notes.findOne({ _id: ObjectId(idNote), userId })
-            })
-            .then(note => {
-                if(!note) throw new LogicError(`note with id: "${idNote}" does not exist`)
-
-                return this._notes.updateOne({ _id: ObjectId(idNote) }, { $set: { text: newText } })
-            })
-            .then((res) => {
-                if (res.result.nModified === 0) throw new Error('fail to update note')
-
-                return true
+                return this._users.updateOne(
+                    { _id: user._id, 'notes._id': ObjectId(idNote) },
+                    { $set: { 'notes.$.text': newText } }
+                 )
             })
     },
 
@@ -134,21 +126,15 @@ const logic = {
             .then( user => {
                 if (!user) throw new LogicError(`user ${username} does not exist`)
 
-                if (!idNote) throw new LogicError('invalid id note')
+                if(!user.notes) throw new LogicError(`notes does not exist for user ${username}`)
 
-                const userId = user._id
+                if(!(user.notes).find( note => note._id.toString() === idNote )) 
+                    throw new LogicError(`note with id: "${idNote}" does not exist`)
 
-                return this._notes.findOne({ _id: ObjectId(idNote), userId })
-            })
-            .then(note => {
-                if(!note) throw new LogicError(`note with id: "${idNote}" does not exist`)
-
-                return this._notes.deleteOne({ _id: ObjectId(idNote) })
-            })
-            .then((res) => {
-                if (res.result.nModified === 0) throw new Error('fail to delete note')
-
-                return true
+                return this._users.updateOne(
+                    { _id: user._id },
+                    { $pull: { notes: { _id: ObjectId(idNote) } } }
+                 )
             })
     },
 
@@ -163,48 +149,134 @@ const logic = {
             .then( user => {
                 if (!user) throw new LogicError(`user ${username} does not exist`)
 
-                /*const userId = user._id,
-                    timestampDate = new Date(date).getTime(),
-                    fullDayInMiliSecs = 24 * 60 * 60 * 1000,
-                    dayBefore = timestampDate - fullDayInMiliSecs,
-                    dayAfter = timestampDate + fullDayInMiliSecs
+                if (!user.notes || !user.notes.length) throw new LogicError(`user ${username} does not have any note on this date`)
 
-                return this._notes.find({ userId, date: { 
-                                        $gt: new Date(dayBefore), 
-                                        $lt: new Date(dayAfter) } }).toArray() || []*/
+                const inputDate = new Date(date),
+                    inputYear = inputDate.getFullYear(),
+                    inputMonth = inputDate.getMonth() + 1,
+                    inputDay = inputDate.getDate(),
+                    notes = []
 
+                user.notes.forEach(note => {
+                    const noteDate = new Date(note.date),
+                        noteYear = noteDate.getFullYear(),
+                        noteMonth = noteDate.getMonth() + 1,
+                        noteDay = noteDate.getDate()
 
-                const userId = user._id,
-                    dayBefore = new Date(date),
-                    dayAfter = new Date(date)
-
-                    dayBefore.setDate(dayBefore.getDate() - 1)
-                    dayAfter.setDate(dayAfter.getDate() + 1)
-
-                return this._notes.find({ userId, date: { 
-                                        $gt: dayBefore, 
-                                        $lt: dayAfter } }).toArray() || []
-            })
-            .then(notes =>  
-                notes.map(note => {
-                    const oldName = '_id', newName = 'id'
-
-                    if (note.hasOwnProperty(oldName)) {
-                        note[newName] = (note[oldName]).toString();
-
-                        delete note[oldName];
-                    }
-                    return note;
+                        if (noteYear === inputYear && noteMonth === inputMonth && noteDay === inputDay)
+                            notes.push(note)
                 })
-            )
+                
+                return notes
+               
+            })
     },
 
     /*NOTES*/
 
 
     /*CONTACTS*/
+    /*addContact(username, info) {
+        return Promise.resolve()
+            .then(() => {
+                this._validateStringField('username', username)
+                this._validateStringField('note text', text)
+
+                //this._validateDate(date)
+
+                return this._users.findOne({ username })
+            })
+            
+            .then( user => {
+                if (!user) throw new LogicError(`user ${username} does not exist`)
+
+                return this._users.updateOne(
+                    { _id: user._id },
+                    { $push: { contacts: { _id: ObjectId(), date: new Date(date), text } } }
+                 )
+            })
+    },
+
+    updateNote(username, idNote, newText) {
+        return Promise.resolve()
+            .then(() => {
+                this._validateStringField('username', username)
+                this._validateStringField('note text', newText)
+
+                return this._users.findOne({ username })
+            })
+            .then( user => {
+                if (!user) throw new LogicError(`user ${username} does not exist`)
+
+                if(!user.notes) throw new LogicError(`notes does not exist for user ${username}`)
+
+                if(!(user.notes).find( note => note._id.toString() === idNote )) 
+                    throw new LogicError(`note with id: "${idNote}" does not exist`)
+
+                return this._users.updateOne(
+                    { _id: user._id, 'notes._id': ObjectId(idNote) },
+                    { $set: { 'notes.$.text': newText } }
+                 )
+            })
+    },
+
+    deleteNote(username, idNote) {
+        return Promise.resolve()
+            .then(() => {
+                this._validateStringField('username', username)
+
+                return this._users.findOne({ username })
+            })
+            .then( user => {
+                if (!user) throw new LogicError(`user ${username} does not exist`)
+
+                if(!user.notes) throw new LogicError(`notes does not exist for user ${username}`)
+
+                if(!(user.notes).find( note => note._id.toString() === idNote )) 
+                    throw new LogicError(`note with id: "${idNote}" does not exist`)
+
+                return this._users.updateOne(
+                    { _id: user._id },
+                    { $pull: { notes: { _id: ObjectId(idNote) } } }
+                 )
+            })
+    },
+
+    getNotesByDate(username, date) {
+        return Promise.resolve()
+            .then(() => {
+                this._validateStringField('username', username)
+                this._validateDate(date)
+
+                return this._users.findOne({ username })
+            })
+            .then( user => {
+                if (!user) throw new LogicError(`user ${username} does not exist`)
+
+                if (!user.notes || !user.notes.length) throw new LogicError(`user ${username} does not have any note on this date`)
+
+                const inputDate = new Date(date),
+                    inputYear = inputDate.getFullYear(),
+                    inputMonth = inputDate.getMonth() + 1,
+                    inputDay = inputDate.getDate(),
+                    notes = []
+
+                user.notes.forEach(note => {
+                    const noteDate = new Date(note.date),
+                        noteYear = noteDate.getFullYear(),
+                        noteMonth = noteDate.getMonth() + 1,
+                        noteDay = noteDate.getDate()
+
+                        if (noteYear === inputYear && noteMonth === inputMonth && noteDay === inputDay)
+                            notes.push(note)
+                })
+
+                return notes
+            })
+    },*/
 
     /*CONTACTS*/
+
 
 }
 

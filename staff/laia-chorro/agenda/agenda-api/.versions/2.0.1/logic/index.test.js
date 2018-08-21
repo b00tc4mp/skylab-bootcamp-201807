@@ -9,7 +9,7 @@ const { MongoClient, ObjectId } = require('mongodb')
 const { MONGO_URL } = process.env
 
 describe('logic', () => {
-    let _conn, _db, _users
+    let _conn, _db, _users, _notes
     const username = 'Jack', password = '123'
 
     before(done => {
@@ -22,12 +22,15 @@ describe('logic', () => {
 
             logic._users = _users = db.collection('users')
 
+            logic._notes = _notes = db.collection('notes')
+
             done()
         })
     })
 
     beforeEach(() => {
         return _users.deleteMany()
+            .then(() => _notes.deleteMany())
     })
 
     describe('_ validate string field', () => {
@@ -263,48 +266,30 @@ describe('logic', () => {
     describe('add note', () => {
         const text = 'my text note', date = new Date()
 
-        beforeEach(() => _users.insertOne({ username, password, notes: [{ text, date, _id: '0' }] }))
+        beforeEach(() => _users.insertOne({ username, password }) )
 
-        it('should add a first correct note to an existent user', () => {
-            const newUserName = 'Jack Jr'
-
-            return _users.insertOne({ username: newUserName, password })
-                .then(() => logic.addNote(newUserName, text, date))
-                .then(res => {
-                    expect(res).to.exist
-
-                    return _users.findOne({ username: newUserName })
-                })
+        it('should add a correct note created by an existent user', () => {
+            let userId = null
+            return _users.findOne({ username })
                 .then(user => {
                     expect(user).to.exist
-                    expect(user.notes).to.exist
-                    expect(user.notes).not.to.be.empty
 
-                    const firstNote = user.notes[0]
+                    userId = user._id
 
-                    expect(firstNote.text).to.equal(text)
-                    expect((firstNote.date).getTime()).to.equal(date.getTime())  //expect(firstNote.date).to.deep.equal(date)
+                    return logic.addNote(username, text, date)
+                })
+                .then((res) => {
+                    expect(res).to.be.true
+
+                    return _notes.findOne({ userId })
+                })
+                .then(note => {
+                    expect(note).to.exist
+                    expect(note.userId.toString()).to.equal(userId.toString())
+                    expect(note.text).to.equal(text)
+                    expect(note.date).to.deep.equal(date)
                 })
         })
-
-        it('should add a correct note to an existent user with more notes', () => 
-            logic.addNote(username, text, date)
-                .then(res => {
-                    expect(res).to.exist
-
-                    return _users.findOne({ username })
-                })
-                .then(user => {
-                    expect(user).to.exist
-                    expect(user.notes).to.exist
-                    expect(user.notes).not.to.be.empty
-
-                    const firstNote = user.notes[0]
-
-                    expect(firstNote.text).to.equal(text)
-                    expect((firstNote.date).getTime()).to.equal(date.getTime())
-                })
-        )
 
         it('should fail on an empty username when trying to add a note', () => 
             logic.addNote('', text, date)
@@ -380,31 +365,36 @@ describe('logic', () => {
 
     })
 
-    describe('update note', () => {
-        const text = 'my text note', date = new Date(), idNote = '5b794f56a0da0925f2ba2997', newText = 'my updated text note'
 
-        beforeEach(() => {
-            return _users.insertOne({ username, password, notes: [
-                { _id: ObjectId(idNote), text, date },
-                { _id: ObjectId('5b794f56a0da0925f2ba2998'), text, date }
-            ] })
-        })
+    describe('update note', () => {
+        const text = 'my text note', date = new Date(), newText = 'my updated text note'
+        let userId = null, idNote = null
+
+        beforeEach(() => 
+            _users.insertOne({ username, password })
+                .then(() => _users.findOne({ username }))
+                .then(user => {
+                    userId = user._id
+                    return _notes.insertOne( { date, text, userId } )
+                })
+                .then(() => _notes.findOne( { date, text, userId } ))
+                .then(note => {
+                    idNote = note._id
+                    return true
+                })
+        )
 
         it('should update a note on correct content and date', () => {
             return logic.updateNote(username, idNote, newText)
                 .then(res => {
-                    expect(res).to.exist
+                    expect(res).to.be.true
 
-                    return _users.findOne({ username, 'notes._id': ObjectId(idNote) })
+                    return _notes.findOne({ _id: ObjectId(idNote) })
                 })
-                .then(user => {
-                    expect(user).to.exist
-                    expect(user.notes).to.exist
-                    expect(user.notes).not.to.be.empty
-
-                    const note = user.notes[0]
+                .then(note => {
+                    expect(note).to.exist
                     expect(note.text).to.equal(newText)
-                    expect((note.date).getTime()).to.equal(date.getTime())
+                    expect(note.date).to.deep.equal(date)
                 })
         })
 
@@ -436,7 +426,7 @@ describe('logic', () => {
             logic.updateNote(username, '', newText)
                 .catch(err => err)
                 .then(({message}) => {
-                    expect(message).to.equal(`note with id: "" does not exist`)
+                    expect(message).to.equal('invalid id note')
                 })
         )
 
@@ -444,7 +434,7 @@ describe('logic', () => {
             logic.updateNote(username, undefined, newText)
                 .catch(err => err)
                 .then(({message}) => {
-                    expect(message).to.equal(`note with id: "undefined" does not exist`)
+                    expect(message).to.equal('invalid id note')
                 })
         )
 
@@ -483,31 +473,39 @@ describe('logic', () => {
     })
 
     describe('delete note', () => {
-        const text = 'my text note', date = new Date(), idNote = '5b794f56a0da0925f2ba2997'
+        //const text = 'my text note', date = new Date(), idNote = '5b794f56a0da0925f2ba2997'
+        const text = 'my text note', date = new Date()
+        let userId = null, idNote = null
 
-        beforeEach(() => {
-            return _users.insertOne({ username, password, notes: [
-                                                                { _id: ObjectId(idNote), text, date },
-                                                                { _id: ObjectId('5b794f56a0da0925f2ba2998'), text, date }
-                                                            ] })
-        })
+        beforeEach(() => 
+            _users.insertOne({ username, password })
+                .then(() => _users.findOne({ username }))
+                .then(user => {
+                    userId = user._id
+                    return _notes.insertOne( { date, text, userId } )
+                })
+                .then(res => {
+                    idNote = res.ops[0]._id.toString()
+                    return true
+                })
+                /*.then(() => _notes.findOne( { date, text, userId } ))
+                .then(note => {
+                    idNote = note._id
+                    return true
+                })*/
+
+        //////////////////////// treure id's del insert!!!!!!!!!!
+        )
 
         it('should delete one note on correct id', () => {
             return logic.deleteNote(username, idNote)
                 .then(res => {
-                    expect(res).to.exist
+                    expect(res).to.be.true
 
-                    return _users.findOne({ username })
+                    return _notes.findOne({ _id: ObjectId(idNote) })
                 })
-                .then(user => {
-                    expect(user).to.exist
-                    expect(user.notes).to.exist
-                    expect(user.notes).not.to.be.empty
-
-                    return _users.findOne({ username, 'notes._id': ObjectId(idNote) })
-                })
-                .then(user => {
-                    expect(user).not.to.exist
+                .then(note => {
+                    expect(note).not.to.exist
                 })
         })
 
@@ -539,7 +537,7 @@ describe('logic', () => {
             logic.deleteNote(username, '')
                 .catch(err => err)
                 .then(({message}) => {
-                    expect(message).to.equal(`note with id: "" does not exist`)
+                    expect(message).to.equal('invalid id note')
                 })
         )
 
@@ -547,7 +545,7 @@ describe('logic', () => {
             logic.deleteNote(username, undefined)
                 .catch(err => err)
                 .then(({message}) => {
-                    expect(message).to.equal(`note with id: "undefined" does not exist`)
+                    expect(message).to.equal('invalid id note')
                 })
         )
 
@@ -561,27 +559,70 @@ describe('logic', () => {
  
     })
 
-    describe('get notes by date', () => {
-        const text = 'my text note', date = new Date()
+    describe('list notes by date', () => {
+        const text = 'my text note', today = new Date(), tomorrow = new Date(new Date().setDate(new Date().getDate() + 1))
+        let userId = null
 
-        beforeEach(() => {
-            return _users.insertOne({ username, password, notes: [
-                                                                { _id: ObjectId('5b794f56a0da0925f2ba2997'), text, date },
-                                                                { _id: ObjectId('5b794f56a0da0925f2ba2998'), text, date: new Date("2018-08-23T23:59:59.999Z") }
-                                                            ] })
-        })
-
-        it('should retrieve all notes from the same day', () => {
-            const day = "2018-08-19T23:59:59.999Z"
-            return logic.getNotesByDate(username, day)
-                .then((res) => {
-debugger;
+        beforeEach(() => 
+            _users.insertOne({ username, password })
+                .then(() => _users.findOne({ username }))
+                .then((user) => {
+                    userId = user._id
+                    return _notes.insertMany([
+                        { date: today, text, userId },
+                        { date: today, text, userId },
+                        { date: tomorrow, text, userId },
+                        { date: tomorrow, text, userId },
+                    ])
                 })
-        })
+        )
+
+        it(`should retrieve all notes from today created by ${username}`, () => 
+            logic.getNotesByDate(username, today)
+                .then(notes => {
+                    expect(notes).to.exist
+                    expect(notes.length).to.equal(2)
+
+                    const firstNote = notes[0],
+                        secondNote = notes[1]
+
+                    expect(firstNote.userId).to.exist
+                    expect(firstNote.userId.toString()).to.equal(userId.toString())
+                    expect(firstNote.text).to.equal(text)
+                    expect(firstNote.date).to.deep.equal(today)
+
+                    expect(secondNote.userId).to.exist
+                    expect(secondNote.userId.toString()).to.equal(userId.toString())
+                    expect(secondNote.text).to.equal(text)
+                    expect(secondNote.date).to.deep.equal(today)
+
+                })
+        )
+
+        it(`should retrieve all notes from tomorrow created by ${username}`, () => 
+            logic.getNotesByDate(username, tomorrow)
+                .then(notes => {
+                    expect(notes).to.exist
+                    expect(notes.length).to.equal(2)
+
+                    const firstNote = notes[0],
+                        secondNote = notes[1]
+
+                    expect(firstNote.userId.toString()).to.equal(userId.toString())
+                    expect(firstNote.text).to.equal(text)
+                    expect(firstNote.date).to.deep.equal(tomorrow)
+
+                    expect(secondNote.userId.toString()).to.equal(userId.toString())
+                    expect(secondNote.text).to.equal(text)
+                    expect(secondNote.date).to.deep.equal(tomorrow)
+
+                })
+        )
     })
 
     after(() => {
         return _users.deleteMany()
+            .then(() => _notes.deleteMany())
             .then(() => _conn.close())
     })
     
