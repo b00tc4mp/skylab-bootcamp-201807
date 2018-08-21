@@ -28,7 +28,7 @@ class Login extends Component {
     return <main>
       <div className="screen">
         <nav>
-          &gt; <a href="/#/register">register</a> or login <span className="blink">_</span>
+         <a href="/#/register">register</a> or login
         </nav>
         <form onSubmit={this.onLoginSubmitted}>
           <input type="text" name="username" placeholder="username" autofocus onChange={this.onUsernameChanged} />

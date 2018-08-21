@@ -41,7 +41,7 @@ class Contacts extends Component {
             key={contact.id}>{`${contact.firstname} ${contact.surname} ${contact.address}`}</li>)}
         </ul>
         {error && <h3>{error.message}</h3>}
-        <a href="/#/addcontact">Add Contact</a>
+        <a    className="internalLink" href="/#/addcontact">Add Contact</a>
       </div>
     </main>
   }

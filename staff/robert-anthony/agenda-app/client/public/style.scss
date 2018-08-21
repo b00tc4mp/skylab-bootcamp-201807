@@ -33,7 +33,7 @@ header, footer {
 main {
   background: url("./seamless-web-background-of-aged-grid-paper.jpg");
   background-repeat: repeat;
-  border-color: lightblue;
+  border-color: rgba(173,216,230,0.7);
   border-radius: .5em;
   border-style: solid;
   border-width: .5em;
@@ -103,7 +103,25 @@ button:hover {
       color:orange;
     }
   }
+  a.internalLink {
+    font-size:18px;
+    border-radius:2em;
+    border: darkcyan solid 1px;
+    padding:.3em;
+    color:orange;
+    &:hover {
+      text-decoration:none;
+      border-color:orange;
+    }
+  }
 }
+
+.notes_dateHeader {
+  font-size:30px;
+  color: #1492b2;
+  letter-spacing: .2em;
+}
+
 
 .image {
   border-radius: 50%;

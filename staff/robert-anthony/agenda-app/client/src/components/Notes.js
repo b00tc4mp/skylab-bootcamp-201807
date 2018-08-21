@@ -64,7 +64,7 @@ class Notes extends Component {
 
     return <main>
       <div className="screen">
-        <h2>{this.props.currentDate}</h2>
+        <h2 className="notes_dateHeader">{this.props.currentDate}</h2>
         {!amEditing && <div id="notEditing">
           <form>
             <input value={this.state.date} type="date" onChange={this.onKeepDate}/>
@@ -77,7 +77,7 @@ class Notes extends Component {
           </ul>
           {error && <h3>{error}</h3>}
 
-          <a href="/#/addnote">Add Note</a>
+          <a className="internalLink" href="/#/addnote">Add Note</a>
         </div>}
         {amEditing && <div id="editing">
           <form onSubmit={this.onUpdateNote}>

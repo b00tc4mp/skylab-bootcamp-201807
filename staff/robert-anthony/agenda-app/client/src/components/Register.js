@@ -29,7 +29,7 @@ class Register extends Component {
         return <main>
             {!succeeded ? <div className="screen">
                 <nav>
-                    &gt; register or <a href="/#/login">login</a> <span className="blink">_</span>
+            register or <a href="/#/login">login</a>
                 </nav>
                 <form onSubmit={this.onRegisterSubmitted}>
                     <input type="text" name="username" placeholder="username" autofocus onChange={this.onUsernameChanged} />
