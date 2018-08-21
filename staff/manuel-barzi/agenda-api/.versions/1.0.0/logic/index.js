@@ -2,11 +2,9 @@
 
 const validateEmail = require('../utils/validate-email')
 const { ObjectId } = require('mongodb')
-const moment = require('moment')
 
 const logic = {
     _users: null,
-    _notes: null,
 
     _validateStringField(name, value) {
         if (typeof value !== 'string' || !value.length) throw new LogicError(`invalid ${name}`)
@@ -48,7 +46,6 @@ const logic = {
             })
             .then(user => {
                 if (!user) throw new LogicError(`user with ${email} email does not exist`)
-                
                 if (user.password !== password) throw new LogicError(`wrong password`)
 
                 return true
@@ -67,9 +64,7 @@ const logic = {
             })
             .then(user => {
                 if (!user) throw new LogicError(`user with ${email} email does not exist`)
-
                 if (user.password !== password) throw new LogicError(`wrong password`)
-
                 if (password === newPassword) throw new LogicError('new password must be different to old password')
 
                 return this._users.updateOne({ _id: user._id }, { $set: { password: newPassword } })
@@ -90,7 +85,6 @@ const logic = {
             })
             .then(user => {
                 if (!user) throw new LogicError(`user with ${email} email does not exist`)
-
                 if (user.password !== password) throw new LogicError(`wrong password`)
 
                 return this._users.deleteOne({ _id: user._id })
@@ -112,9 +106,23 @@ const logic = {
             .then(user => {
                 if (!user) throw new LogicError(`user with ${email} email does not exist`)
 
-                const note = { date, text, user: user._id }
+                // const notes = user.notes || []
 
-                return this._notes.insertOne(note)
+                // notes.push({ date, text })
+
+                // return this._users.updateOne({ _id: user._id }, { $set: { notes } })
+
+                // ...
+
+                // const note = { date, text }
+
+                // return this._users.updateOne({ _id: user._id }, { $push: { notes: note } })
+
+                // ...
+
+                const note = { date, text }
+
+                return this._users.updateOne({ _id: user._id }, { $addToSet: { notes: note } })
             })
             .then(res => {
                 if (res.result.nModified === 0) throw new LogicError('fail to add note')
@@ -131,27 +139,19 @@ const logic = {
                 return this._users.findOne({ email })
             })
             .then(user => {
-                if (!user) throw new LogicError(`user with ${email} email does not exist`)
+                if (!user) throw new LogicError(`user ${user} does not exist`)
 
-                const mDate = moment(date)
+                if (user.notes) {
+                    user.notes = user.notes.filter(({ date: _date }) => date.getFullYear() === _date.getFullYear() && date.getMonth() === _date.getMonth() && date.getDate() === _date.getDate())
 
-                const minDate = mDate.startOf('day').toDate()
-                const maxDate = mDate.endOf('day').toDate()
-
-                return this._notes.find({ user: user._id, date: { $gte: minDate, $lte: maxDate } }).toArray()
-            })
-            .then(notes => {
-                if (notes) {
-                    notes.forEach(note => {
+                    user.notes.forEach(note => {
                         note.id = note._id.toString()
 
                         delete note._id
-
-                        delete note.user
                     })
                 }
 
-                return notes || []
+                return user.notes || []
             })
     },
 
@@ -160,19 +160,12 @@ const logic = {
             .then(() => {
                 this._validateEmail(email)
 
-                return this._users.findOne({ email })
+                return this._users.findOne({ email, 'notes._id': ObjectId(noteId) })
             })
             .then((user) => {
-                if (!user) throw new LogicError(`user with ${email} email does not exist`)
-            
-                return this._notes.findOne({ _id: ObjectId(noteId) })
-                    .then(note => {
-                        if (!note) throw new LogicError(`note with id ${noteId} does not exist`)
+                if (!user) throw new LogicError(`note with id ${noteId} does not exist`)
 
-                        if (note.user.toString() !== user._id.toString()) throw new LogicError('note does not belong to user')
-
-                        return this._notes.deleteOne({ _id: ObjectId(noteId) })
-                    })
+                return this._users.updateOne({ email }, { $pull: { notes: { _id: ObjectId(noteId) } } })
             })
             .then(res => {
                 if (res.result.nModified === 0) throw new LogicError('fail to remove note')
