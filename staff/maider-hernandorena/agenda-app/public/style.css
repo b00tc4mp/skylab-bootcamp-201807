@@ -80,8 +80,17 @@ input {
     border-radius: 10px;
 }
 
-input:focus {
+input:focus, textarea:focus, button:focus {
     outline: 0px;
+}
+
+textarea {
+    width: 108%;
+    height: 200px;
+    margin: 3%;
+    padding: 10px;
+    border: solid 0.5px #888888;
+    border-radius: 10px;
 }
 
 button {
@@ -130,15 +139,6 @@ button:hover {
     margin-left: 5%;
 }
 
-textarea {
-    width: 108%;
-    height: 200px;
-    margin: 3%;
-    padding: 10px;
-    border: solid 0.5px #888888;
-    border-radius: 10px;
-}
-
 ul {
     list-style: none;
     padding: 0 10%;
@@ -150,7 +150,13 @@ li {
     padding: 0;
 }
 
-li p {
+li p, li h4 {
     margin: 0;
     padding: 0;
+    margin-left: 10%;
+}
+
+li a {
+    float: left;
+    padding-right: 5%;
 }

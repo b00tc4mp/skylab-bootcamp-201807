@@ -10,17 +10,17 @@ class Notes extends Component {
         error: ''
     }
 
-    keepTitle = e => this.setState({ title: e.target.value })
-    keepNote = e => this.setState({ note: e.target.value })
+    keepTitle = e => this.setState({ title: e.target.value, error: '' })
+    keepNote = e => this.setState({ note: e.target.value, error: '' })
 
-    componentDidMount() {
+    componentWillMount() {
         this.listNotes()
     }
 
     listNotes = () => {
         const { username, token } = this.props
         logic.listNotes(username, token)
-            .then(notes => this.setState({ notes }))
+            .then(notes => this.setState({ notes, title: '', note: '' }))
             .catch(({ message }) => this.setState({error: message}))
     }
 
@@ -35,8 +35,18 @@ class Notes extends Component {
             .catch(({ message }) => this.setState({error: message}))
     }
 
+    deleteNote = (e, {title, note}) => {
+        e.preventDefault()
+        const { username, token } = this.props
+        
+        logic.deleteNote(username, title, note, token)
+            .then(() => true)
+            .then(() => this.listNotes())
+            .catch(({ message }) => this.setState({error: message}))
+    }
+
     render() {
-        const { state: {notes, error}, addNotes, keepTitle, keepNote } = this
+        const { state: {notes, error}, addNotes, keepTitle, keepNote, deleteNote } = this
 
         return <main>
             <div>
@@ -51,9 +61,10 @@ class Notes extends Component {
                         {error && <p className="error">{error}</p>}
                     </div>
                     <ul>
-                        {notes.map(notes => <li key={notes.title}>
-                            <h4>{notes.title}</h4>
-                            <p>{notes.note}</p>
+                        {notes.map(note => <li key={note.title}>
+                            <a href="" onClick={e => deleteNote(e, note)} >X</a>
+                            <h4>{note.title}</h4>
+                            <p>{note.note}</p>
                         </li> )}
                     </ul>
                 </div>

@@ -9,8 +9,22 @@ class Register extends Component {
         error: ''
     }
 
-    keepUsername = e => this.setState({ username: e.target.value })
-    keepPassword = e => this.setState({ password: e.target.value })
+    keepUsername = e => this.checkUsername(e.target.value) 
+    keepPassword = e => this.checkPassword(e.target.value) 
+
+    checkUsername = value => {
+        const regex = (/^[a-zA-Z0-9]+$/)
+        let regexOk = value.match(regex)
+
+        if (regexOk !== null ) this.setState({ username: value, error: '' })
+    }
+
+    checkPassword = value => {
+        const regex = (/^[a-zA-Z0-9]+$/)
+        let regexOk = value.match(regex)
+
+        if (regexOk !== null ) this.setState({ password: value, error: '' })    
+    }
 
     onRegister = e => {
         e.preventDefault()

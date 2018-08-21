@@ -141,7 +141,7 @@ const logic = {
                     .then(res => res.json())
                     .then(() => true)
             })
-    },
+    }
     
 }
 

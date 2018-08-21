@@ -122,7 +122,7 @@ const logic = {
             })
             .then(user => {
                 if(!user) throw new Error(`user with ${username} username does not exist`)
-                return this._users.updateOne({_id: user._id}, {$pull: {notes}})
+                return this._users.updateOne({_id: user._id}, {$pull: {notes: {title, note}}})
             })
             .then(() => true)
     },
@@ -171,7 +171,7 @@ const logic = {
                 return this._users.updateOne({_id: user._id}, {$pull: {contacts: {contact, telephone}}})
             })
             .then(() => true)
-    },
+    }
 }
 
 module.exports = logic

@@ -14,7 +14,14 @@ class Profile extends Component{
   }
 
   keepPassword = e => this.setState({ password: e.target.value })
-  keepNewPassword = e => this.setState({ newPassword: e.target.value })
+  keepNewPassword = e => this.checkPassword(e.target.value) 
+
+  checkPassword = value => {
+    const regex = (/^[a-zA-Z0-9]+$/)
+    let regexOk = value.match(regex)
+
+    if (regexOk !== null ) this.setState({ newPassword: value })    
+  }
 
   onUpdate = e => {
     e.preventDefault()

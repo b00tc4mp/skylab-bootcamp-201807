@@ -8,8 +8,8 @@ class Login extends Component {
     error: ''
   }
 
-  keepUsername = e => this.setState({ username: e.target.value })
-  keepPassword = e => this.setState({ password: e.target.value })
+  keepUsername = e => this.setState({ username: e.target.value, error: '' })
+  keepPassword = e => this.setState({ password: e.target.value, error: '' })
 
   onLogin = e => {
     e.preventDefault()

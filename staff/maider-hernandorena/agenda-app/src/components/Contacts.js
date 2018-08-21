@@ -10,17 +10,24 @@ class Contacts extends Component {
         error: ''
     }
 
-    keepContact = e => this.setState({ contact: e.target.value })
-    keepTelephone = e => this.setState({ telephone: e.target.value })
+    keepContact = e => this.setState({ contact: e.target.value, error: '' })
+    keepTelephone = e => this.checkTelephone(e.target.value) 
 
-    componentDidMount() {
+    checkTelephone = value => {
+        const regex = (/^[0-9]+$/)
+        let regexOk = value.match(regex)
+
+        if (regexOk !== null && value.length === 9) this.setState({ telephone: value, error: '' })
+    }
+
+    componentWillMount() {
         this.listContacts()
     }
 
     listContacts = () => {
         const { username, token } = this.props
         logic.listContacts(username, token)
-            .then(contacts => this.setState({ contacts }))
+            .then(contacts => this.setState({ contacts, contact: '', telephone: '' }))
             .catch(({ message }) => this.setState({error: message}))
     }
 
@@ -35,10 +42,9 @@ class Contacts extends Component {
             .catch(({ message }) => this.setState({error: message}))
     }
 
-    deleteContact = e => {
+    deleteContact = (e, {contact, telephone}) => {
         e.preventDefault()
         const { username, token } = this.props
-        const { contact, telephone } = this.state
         
         logic.deleteContact(username, contact, telephone, token)
             .then(() => true)
@@ -47,7 +53,7 @@ class Contacts extends Component {
     }
 
     render() {
-        const { state: {contacts, error}, addContact, keepContact, keepTelephone } = this
+        const { state: {contacts, error}, addContact, keepContact, keepTelephone, deleteContact } = this
 
         return <main>
             <div>
@@ -62,10 +68,10 @@ class Contacts extends Component {
                         {error && <p className="error">{error}</p>}
                     </div>
                     <ul>
-                        {contacts.map(contacts => <li key={contacts.contact}>
-                            <a href="" onClick={this.deleteContact}>X</a>
-                            <h4>{contacts.contact}</h4>
-                            <p>{contacts.telephone}</p>
+                        {contacts.map(contact => <li key={contact.contact}>
+                            <a href="" onClick={e => deleteContact(e, contact)} >X</a>
+                            <h4>{contact.contact}</h4>
+                            <p>{contact.telephone}</p>
                         </li> )}
                     </ul>
                 </div>
