@@ -4,6 +4,7 @@ const validateEmail = require('../utils/validate-email')
 
 const logic = {
     _users: null,
+    _notes: null,
 
     _validateStringField(name, value) {
         if (typeof value !== 'string' || !value.length) throw new Error(`invalid ${name}`)
@@ -119,9 +120,9 @@ const logic = {
 
                 // ...
 
-                const note = { date, text }
+                // _notes.findOne({ user_id: user._id })
 
-                return this._users.updateOne({ _id: user._id }, { $addToSet: { notes: note } })
+                this._notes.insertOne({ date, text, user_id: user._id })
             })
             .then(res => {
                 if (res.result.nModified === 0) throw new Error('fail to add note')

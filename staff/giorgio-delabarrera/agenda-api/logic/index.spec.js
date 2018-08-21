@@ -10,7 +10,7 @@ const { env: { MONGO_URL } } = process
 
 describe('logic', () => {
     const username = `maider-${Math.random()}@mail.com`, password = `123-${Math.random()}`
-    let _connect, _db, _users
+    let _connect, _db, _users, _notes
     let usersCount
 
     before(done => {
@@ -22,6 +22,7 @@ describe('logic', () => {
             const db = _db = connect.db()
 
             logic._users = _users = db.collection('users')
+            logic._notes = _notes = db.collection('notes')
 
             done()
         })
@@ -317,9 +318,12 @@ describe('logic', () => {
                     return _users.findOne({ username })
                 })
                 .then(user => {
-                    expect(user.notes.length).to.equal(1)
+                    return _notes.findOne({ user_id: user._id })
+                })
+                .then(note => {
+                    // expect(user.notes.length).to.equal(1)
 
-                    const [note] = user.notes
+                    // const [note] = user.notes
 
                     expect(note.text).to.equal(text)
                     expect(note.date).to.deep.equal(date)
@@ -378,100 +382,6 @@ describe('logic', () => {
             logic.addNote(username, date, 123)
                 .catch(err => err)
                 .then(({ message }) => expect(message).to.equal('invalid text'))
-        )
-    })
-
-    false && describe('user contacts', () => {
-
-        const contact = 'iker', telephone = '666 222 666'
-
-        beforeEach(() => _users.insertOne({ username, password, contacts: [] }))
-
-        it('should add user contacts correctly', () =>
-            logic.addContacts(username, password, contact, telephone)
-                .then(res => {
-                    expect(res).to.be.true
-                    return _users.findOne({ username })
-                })
-                .then(user => {
-                    expect(user.contacts.length).to.equal(1)
-                    expect(user.contacts[0].contact).to.equal(contact)
-                    expect(user.contacts[0].contact).to.equal('iker')
-                    expect(user.contacts[0].telephone).to.equal(telephone)
-                    expect(user.contacts[0].telephone).to.equal('666 222 666')
-                })
-        )
-
-        it('should fail on trying to add contacts with an undefined username', () =>
-            logic.addContacts(undefined, password, contact, telephone)
-                .catch(err => err)
-                .then(({ message }) => expect(message).to.equal(`invalid username`))
-        )
-
-        it('should fail on trying to add contacts with an empty username', () =>
-            logic.addContacts('', password, contact, telephone)
-                .catch(err => err)
-                .then(({ message }) => expect(message).to.equal(`invalid username`))
-        )
-
-        it('should fail on trying to add contacts with a numeric username', () =>
-            logic.addContacts(123, password, contact, telephone)
-                .catch(err => err)
-                .then(({ message }) => expect(message).to.equal(`invalid username`))
-        )
-
-        it('should fail on trying to add contacts with an undefined password', () =>
-            logic.addContacts(username, undefined, contact, telephone)
-                .catch(err => err)
-                .then(({ message }) => expect(message).to.equal(`invalid password`))
-        )
-
-        it('should fail on trying to add contacts with an empty password', () =>
-            logic.addContacts(username, '', contact, telephone)
-                .catch(err => err)
-                .then(({ message }) => expect(message).to.equal(`invalid password`))
-        )
-
-        it('should fail on trying to add contacts with a numeric password', () =>
-            logic.addContacts(username, 123, contact, telephone)
-                .catch(err => err)
-                .then(({ message }) => expect(message).to.equal(`invalid password`))
-        )
-
-        it('should fail on trying to add contacts with an undefined contact', () =>
-            logic.addContacts(username, password, undefined, telephone)
-                .catch(err => err)
-                .then(({ message }) => expect(message).to.equal(`invalid contact`))
-        )
-
-        it('should fail on trying to add contacts with an empty contact', () =>
-            logic.addContacts(username, password, '', telephone)
-                .catch(err => err)
-                .then(({ message }) => expect(message).to.equal(`invalid contact`))
-        )
-
-        it('should fail on trying to add contacts with a numeric contact', () =>
-            logic.addContacts(username, password, 123, telephone)
-                .catch(err => err)
-                .then(({ message }) => expect(message).to.equal(`invalid contact`))
-        )
-
-        it('should fail on trying to add contacts with an undefined telephone', () =>
-            logic.addContacts(username, password, contact, undefined)
-                .catch(err => err)
-                .then(({ message }) => expect(message).to.equal(`invalid telephone`))
-        )
-
-        it('should fail on trying to add contacts with an empty telephone', () =>
-            logic.addContacts(username, password, contact, '')
-                .catch(err => err)
-                .then(({ message }) => expect(message).to.equal(`invalid telephone`))
-        )
-
-        it('should fail on trying to add contacts with a numeric telephone', () =>
-            logic.addContacts(username, password, contact, 123)
-                .catch(err => err)
-                .then(({ message }) => expect(message).to.equal(`invalid telephone`))
         )
     })
 
