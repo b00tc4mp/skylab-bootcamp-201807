@@ -442,7 +442,7 @@ describe('logic', () => {
         )
 
         it('should fail on non existing note', () => {
-            const nonExistingId = ObjectId()
+            const nonExistingId = ObjectId().toString()
 
             return logic.removeNote(email, nonExistingId)
                 .catch(err => err)
