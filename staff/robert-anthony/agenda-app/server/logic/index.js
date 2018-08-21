@@ -62,13 +62,27 @@ const logic = {
       .then(_ => this._users.findOne({username}))
       .then(user => {
         if (!user) throw new LogicError(`user ${username} does not exist`)
-        return(notesLogic.addNote(user._id,note))
+        return (notesLogic.addNote(user._id, note))
       })
-
 
 
   },
 
+
+  deleteNote(username, note) {
+    return Promise.resolve()
+      .then(_ => {
+        this._validateStringField('username', username)
+
+        if (note === null || note === undefined || typeof note !== 'object') throw new LogicError('invalid note information')
+         if (note.id === undefined || note.id === null || note.id === "") throw new LogicError("invalid note id")
+      })
+      .then(_ => this._users.findOne({username}))
+      .then(user => {
+        if (!user) throw new LogicError(`user ${username} does not exist`)
+        return notesLogic.deleteNote(user._id, note)
+      })
+  },
 
   updateNote(username, note) {
     return Promise.resolve()
@@ -76,12 +90,13 @@ const logic = {
         this._validateStringField('username', username)
 
         if (note === null || note === undefined || typeof note !== 'object') throw new LogicError('invalid note information')
-        // if (note.id === undefined || note.id === null || note.id === "") throw new LogicError("invalid note id")
+        if (note.id === undefined || note.id === null || note.id === "") throw new LogicError("invalid note id")
       })
       .then(_ => this._users.findOne({username}))
       .then(user => {
         if (!user) throw new LogicError(`user ${username} does not exist`)
-        return notesLogic.updateNote(user._id,note)
+
+        return notesLogic.updateNote(user._id, note)
       })
   },
   /*
@@ -130,7 +145,7 @@ const logic = {
       .then(_ => this._users.findOne({username}))
       .then(user => {
         if (!user) throw new LogicError(`user ${username} does not exist`)
-        if (user.contacts === undefined) throw new LogicError(`user ${username} has no contacts`)
+        if (user.contacts === undefined) return []
 
         return user.contacts
       })
@@ -144,9 +159,20 @@ const logic = {
       .then(_ => this._users.findOne({username}))
       .then(user => {
         if (!user) throw new LogicError(`user ${username} does not exist`)
-        return notesLogic.getAllNotes(user._id,date)
-
+        return notesLogic.getAllNotes(user._id, date)
       })
+      .then(res => {
+        return res.map(note => {
+          note.id = note._id.toString()
+          delete note._id
+          return note
+        })
+      })
+      .then(res => {
+        console.error(res)
+        return res
+      })
+
   },
 
   register: function (username, password) {

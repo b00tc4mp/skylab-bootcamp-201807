@@ -1,5 +1,8 @@
 'use strict'
 
+const { ObjectId } = require('mongodb')
+const uuidv1 = require('uuid/v1');
+
 
 const notesLogic = {
   _notes: null,
@@ -18,8 +21,19 @@ const notesLogic = {
 
   },
 
+  deleteNote(userID,note) {
+    let noteID = ObjectId(note.id)
+    return this._notes.deleteOne({userID, _id:noteID})
+
+      .then(res => {
+        if (res.result.nModified === 0) throw new LogicError('error deleting note')
+         return true
+      })
+  },
+
   updateNote(userID,note) {
-    return this._users.updateOne({userID, _id:note._id}, {$set: {"notes.$.text": note.text}})
+    let noteID = ObjectId(note.id)
+    return this._notes.updateOne({userID, _id:noteID}, {$set: {text: note.text}})
 
       .then(res => {
         if (res.result.nModified === 0) throw new LogicError('error updating note')
@@ -29,7 +43,7 @@ const notesLogic = {
 
   getAllNotes(userID,date) {
 
-    return this._notes.find({userID,date},{_id: 0}).toArray()
+    return this._notes.find({userID,date},{projection:{userID: 0}}).toArray()
 
   }
 

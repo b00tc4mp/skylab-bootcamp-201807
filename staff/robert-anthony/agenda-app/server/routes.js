@@ -110,6 +110,17 @@ router.patch('/user/:username/note', [validateJwt, jsonBodyParser], (req, res) =
     })
 })
 
+/*  delete note */
+router.delete('/user/:username/note', [validateJwt, jsonBodyParser], (req, res) => {
+    const {params: {username},body:{note}} = req
+  logic.deleteNote(username, note)
+    .then(result => res.json(result))
+    .catch(err => {
+      const {message} = err
+      res.status(err instanceof LogicError ? 400 : 500).json({message})
+    })
+})
+
 /*  update contact */
 router.patch('/user/:username/contact', [validateJwt, jsonBodyParser], (req, res) => {
     const {params: {username},body:{contact}} = req
