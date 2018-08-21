@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import {withRouter} from 'react-router-dom'
 import logic from '../logic'
+import '../styles/notes.css'
 
 class Notes extends Component{
 
@@ -92,19 +93,26 @@ class Notes extends Component{
         this.props.onGoToContacts()
     }
 
+
+    
     render(){
-        return <div>
+        return <div className='bground'>
+        <navbar className='topNav'>
             <h1>NOTES</h1>
-            <form onSubmit={this.handleSubmit}>
-                <input type="text" name="title" value={this.state.title} onChange={this.handleChange}/>
-                <input type="text" name="content" value={this.state.content} onChange={this.handleChange}/>
-                <input type="date" min="01-01-2018" value={this.state.date} name="date" onChange={this.handleChange}/>
-                <button type="submit">SUBMIT</button>
-            </form>
-            <ul>
-                {this.state.notes.map(note => <li key={note.id}> {`TITULO: ${note.title} CONTENIDO: ${note.content} FECHA: ${note.date}`} <a href="" onClick={(e) =>  {e.preventDefault();this.deleteNote(note.id)}} >X</a> <a href="" onClick={(e) => this.editNote(e,note)}>EDIT ME </a> </li>)}
-            </ul>
-            <div>Go to <a href="" onClick={this.onGoToContacts}>Contacts</a></div>
+        </navbar>
+        <form onSubmit={this.handleSubmit}>
+            <input type="text" name="title" value={this.state.title} onChange={this.handleChange}/>
+            <input type="text" name="content" value={this.state.content} onChange={this.handleChange}/>
+            <input type="date" min="01-01-2018" value={this.state.date} name="date" onChange={this.handleChange}/>
+            <button type="submit">SUBMIT</button>
+        </form>
+        <ul>
+            {this.state.notes.map(note => <li key={note.id}> {`TITULO: ${note.title} CONTENIDO: ${note.content} FECHA: ${note.date}`} <a href="" onClick={(e) =>  {e.preventDefault();this.deleteNote(note.id)}} >X</a> <a href="" onClick={(e) => this.editNote(e,note)}>EDIT ME </a> </li>)}
+        </ul>
+        <div class='back'>Go to <a href="" onClick={this.onGoToContacts}>Contacts</a></div>
+        <navbar className='bottomNav'>
+            <h2>Made with ♥ by: Sergi S</h2>
+        </navbar>
         </div>
     }
 

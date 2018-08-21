@@ -37,7 +37,7 @@ class App extends Component {
     // this.props.history.push("/")
   }
 
-  onGoToContacts = () => this.props.history.push('/contacts')  
+  onGoToContacts = () => this.props.history.push('contacts')  
 
   onGoToNotes = () => this.props.history.push('notes')
 

@@ -4,6 +4,7 @@ const express = require('express')
 const cors = require('cors')
 const package = require('./package.json')
 const routes = require('./routes')
+var mongoose = require('mongoose');
 
 const { env: { MONGO_URL } } = process
 
