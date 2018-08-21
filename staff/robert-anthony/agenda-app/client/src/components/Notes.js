@@ -32,6 +32,12 @@ class Notes extends Component {
 
   }
 
+  onDeleteNote = (note) => {
+    logic.deleteNote(this.props.username,note,this.props.token)
+      .then(() => this.getNotesForDate(this.state.date))
+      .catch(({message}) => this.setState({error: message}))
+  }
+
   onKeepEditText = (e) => {
     e.preventDefault()
     const note = this.state.currentNote
@@ -65,8 +71,9 @@ class Notes extends Component {
 
           </form>
           <ul>
-            {notes.map(note => <li key={note.id}>{`${note.date} ${note.text}`} <a href="" onClick={(e)=>{e.preventDefault();this.enterEditingMode(note)}}><i
-              className="fas fa-edit"></i></a></li>)}
+            {notes.map(note => <li key={note.id}> {`${note.text}`} <a href="" onClick={(e)=>{e.preventDefault();this.enterEditingMode(note)}}><i
+              className="fas fa-edit"></i></a>&nbsp;<a href="" onClick={(e)=>{e.preventDefault();this.onDeleteNote(note)}}><i
+              className="fas fa-trash-alt"></i></a></li>)}
           </ul>
           {error && <h3>{error}</h3>}
 

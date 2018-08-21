@@ -119,7 +119,25 @@ const logic = {
     },
 
 
-    addNote(username, note,token) {
+
+  deleteNote(username, note,token) {
+
+    return Promise.resolve()
+      .then(() => {
+        this._validateStringField('username', username)
+
+        return this._call(`user/${username}/note`, 'DELETE', {
+          'Content-Type': 'application/json',
+          'authorization': `bearer ${token}`
+
+        }, JSON.stringify({note}), 200)
+          .then(res => res.json())
+          .then(res => res)
+      })
+  },
+
+
+  addNote(username, note,token) {
 
         return Promise.resolve()
             .then(() => {

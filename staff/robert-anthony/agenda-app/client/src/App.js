@@ -53,11 +53,10 @@ class App extends Component {
 
     return <div className="full-height">
       <header>
-        <h1 className={this.isLoggedIn() ? 'on' : 'off'}>Contact</h1>
+        <h1 className="nav_headerTitle">Agenda 2018</h1>
         {this.isLoggedIn() &&
         <nav><a href="/#/contacts">contacts</a> <a href="/#/notes">notes</a> <a href=""
                                                                                 onClick={this.onLogout}>logout</a>
-          <span className="blink">_</span>
         </nav>}
       </header>
 
