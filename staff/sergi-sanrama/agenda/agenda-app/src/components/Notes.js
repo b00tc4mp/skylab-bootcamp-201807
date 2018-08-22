@@ -7,10 +7,10 @@ class Notes extends Component{
 
     state = {
         notes : [],
-        title:"",
-        content:"",
-        date:"",
-        id:""
+        title:'',
+        content:'',
+        date:'',
+        id:''
     }
 
     componentDidMount(){
@@ -37,18 +37,18 @@ class Notes extends Component{
         if(id){
             logic.updateNotes(usermail,id,title,content,date,token)
                 .then(() => this.setState({
-                    id:"",
-                    title:"",
-                    content:"",
-                    date:""
+                    id:'',
+                    title:'',
+                    content:'',
+                    date:''
                 }))
                 .then(() => this.listNotes())
         } else {
             logic.addNotes(usermail,title,content,date,token)
                 .then(() => this.setState({
-                    title:"",
-                    content:"",
-                    date:""
+                    title:'',
+                    content:'',
+                    date:''
                 }))
                 .then(() => this.listNotes())
         }
@@ -70,7 +70,7 @@ class Notes extends Component{
         logic.deleteNote(usermail,id,token)
             .then(() => {
                 this.setState({
-                    id:""
+                    id:''
                 })
                 this.listNotes()
             })
@@ -93,29 +93,27 @@ class Notes extends Component{
         this.props.onGoToContacts()
     }
 
-
-    
     render(){
         return <div className='bground'>
         <navbar className='topNav'>
             <h1>NOTES</h1>
         </navbar>
+        <header>ADD A NEW NOTE</header>
         <form onSubmit={this.handleSubmit}>
-            <input type="text" name="title" value={this.state.title} onChange={this.handleChange}/>
-            <input type="text" name="content" value={this.state.content} onChange={this.handleChange}/>
-            <input type="date" min="01-01-2018" value={this.state.date} name="date" onChange={this.handleChange}/>
-            <button type="submit">SUBMIT</button>
+            <input type='text' name='title' placeholder='Title' value={this.state.title} onChange={this.handleChange}/>
+            <input type='text' name='content' placeholder='Content' value={this.state.content} onChange={this.handleChange}/>
+            <input type='date' min='01-01-2018' value={this.state.date} name='date' onChange={this.handleChange}/>
+            <button type='submit'>SUBMIT</button>
         </form>
         <ul>
-            {this.state.notes.map(note => <li key={note.id}> {`TITULO: ${note.title} CONTENIDO: ${note.content} FECHA: ${note.date}`} <a href="" onClick={(e) =>  {e.preventDefault();this.deleteNote(note.id)}} >X</a> <a href="" onClick={(e) => this.editNote(e,note)}>EDIT ME </a> </li>)}
+            {this.state.notes.map(note => <li key={note.id}> {`TITULO: ${note.title} CONTENIDO: ${note.content} FECHA: ${note.date}`} <button type='button' onClick={(e) =>  {e.preventDefault();this.deleteNote(note.id)}} >X</button> <button type='button' onClick={(e) => this.editNote(e,note)}>EDIT ME </button> </li>)}
         </ul>
-        <div class='back'>Go to <a href="" onClick={this.onGoToContacts}>Contacts</a></div>
-        <navbar className='bottomNav'>
-            <h2>Made with ♥ by: Sergi</h2>
-        </navbar>
+        
+            <div className='buttonDown'>
+                <button className='block' type='submit' href='' onClick={this.onGoToContacts}> Contacts, please.</button>
+            </div>
         </div>
     }
-
 }
 
 export default withRouter(Notes)

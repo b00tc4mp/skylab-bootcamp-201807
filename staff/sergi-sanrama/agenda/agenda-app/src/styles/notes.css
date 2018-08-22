@@ -1,7 +1,7 @@
 
 
 body {
-    background-image: url(../files/Texture_Boards_Wooden_479402_2880x1800.jpg)
+    /* background-image: url(../files/Texture_Boards_Wooden_479402_2880x1800.jpg) */
 }
 
 .topNav{
@@ -10,3 +10,11 @@ body {
     position: inherit;
     background-color: transparent;
 }
+
+.bottomNav{
+    display: flex;
+    justify-content: center;
+    justify-content: end;
+}
+
+/* Button submit */
