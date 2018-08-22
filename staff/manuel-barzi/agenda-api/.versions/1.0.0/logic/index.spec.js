@@ -1,10 +1,10 @@
+'use strict'
+
 require('dotenv').config()
 
 const { logic } = require('.')
 const { expect } = require('chai')
-const mongoose = require('mongoose')
-const { Types: { ObjectId } } = mongoose
-const { Contact, Note, User } = require('../data/models')
+const { MongoClient, ObjectId } = require('mongodb')
 
 const { env: { MONGO_URL } } = process
 
@@ -13,33 +13,46 @@ const { env: { MONGO_URL } } = process
 
 describe('logic', () => {
     const email = `maider-${Math.random()}@mail.com`, password = `123-${Math.random()}`
-    let _connection
-    let usersCount = 0
+    let _connect, _db, _users
+    let usersCount
 
-    before(() =>
-        mongoose.connect(MONGO_URL, { useNewUrlParser: true })
-            .then(conn => _connection = conn)
-    )
+    before(done => {
+        MongoClient.connect(MONGO_URL, { useNewUrlParser: true }, (err, connect) => {
+            if (err) return done(err)
+
+            _connect = connect
+
+            const db = _db = connect.db()
+
+            logic._users = _users = db.collection('users')
+
+            done()
+        })
+    })
 
     beforeEach(() =>
-        Promise.all([
-            Note.deleteMany(),
-            User.deleteMany()
-        ])
+        _users.deleteMany()
             .then(() => {
                 let count = Math.floor(Math.random() * 100)
 
-                const creations = []
+                // const insertions = []
 
-                while (count--) creations.push({ email: `other-${Math.random()}@mail.com`, password: `123-${Math.random()}` })
+                // while (count--) insertions.push(_users.insertOne({ email: `other-${Math.random()}@mail.com`, password: `123-${Math.random()}` }))
 
-                if (usersCount = creations.length)
-                    return User.create(creations)
+                // if (usersCount = insertions.length)
+                //     return Promise.all(insertions)
+
+                const users = []
+
+                while (count--) users.push({ email: `other-${Math.random()}@mail.com`, password: `123-${Math.random()}` })
+
+                if (usersCount = users.length)
+                    return _users.insertMany(users)
             })
     )
 
-    true && describe('validate fields', () => {
-        it('should succeed on correct value', () => {
+    describe('validate fields', () => {
+        it('should give the correct value', () => {
             expect(() => logic._validateStringField('email', email).to.equal(email))
             expect(() => logic._validateStringField('password', password).to.equal(password))
         })
@@ -57,31 +70,29 @@ describe('logic', () => {
         })
     })
 
-    true && describe('register user', () => {
+    describe('register user', () => {
         it('should register correctly', () =>
-            User.findOne({ email })
+            _users.findOne({ email })
                 .then(user => {
                     expect(user).to.be.null
 
                     return logic.register(email, password)
                 })
-                .then(res => {
-                    expect(res).to.be.true
-
-                    return User.findOne({ email })
-                })
+                .then(() =>
+                    _users.findOne({ email })
+                )
                 .then(user => {
                     expect(user).to.exist
                     expect(user.email).to.equal(email)
                     expect(user.password).to.equal(password)
 
-                    return User.find()
+                    return _users.find().toArray()
                 })
                 .then(users => expect(users.length).to.equal(usersCount + 1))
         )
 
         it('should fail on trying to register an already registered user', () =>
-            User.create({ email, password })
+            _users.insertOne({ email, password })
                 .then(() => logic.register(email, password))
                 .catch(err => err)
                 .then(({ message }) => expect(message).to.equal(`user with ${email} email already exist`))
@@ -124,8 +135,8 @@ describe('logic', () => {
         )
     })
 
-    true && describe('authenticate user', () => {
-        beforeEach(() => User.create({ email, password }))
+    describe('authenticate user', () => {
+        beforeEach(() => _users.insertOne({ email, password }))
 
         it('should login correctly', () =>
             logic.authenticate(email, password)
@@ -171,17 +182,16 @@ describe('logic', () => {
         )
     })
 
-    true && describe('update user', () => {
+    describe('update user', () => {
         const newPassword = `${password}-${Math.random()}`
 
-        beforeEach(() => User.create({ email, password }))
+        beforeEach(() => _users.insertOne({ email, password }))
 
         it('should update password correctly', () =>
             logic.updatePassword(email, password, newPassword)
                 .then(res => {
                     expect(res).to.be.true
-
-                    return User.findOne({ email })
+                    return _users.findOne({ email })
                 })
                 .then(user => {
                     expect(user).to.exist
@@ -245,15 +255,15 @@ describe('logic', () => {
         )
     })
 
-    true && describe('unregister user', () => {
-        beforeEach(() => User.create({ email, password }))
+    describe('unregister user', () => {
+        beforeEach(() => _users.insertOne({ email, password }))
 
         it('should unregister user correctly', () =>
             logic.unregisterUser(email, password)
                 .then(res => {
                     expect(res).to.be.true
 
-                    return User.findOne({ email })
+                    return _users.findOne({ email })
                 })
                 .then(user => {
                     expect(user).not.to.exist
@@ -297,25 +307,24 @@ describe('logic', () => {
         )
     })
 
-    true && describe('add note', () => {
+    describe('add note', () => {
         const date = new Date(), text = 'my note'
 
-        beforeEach(() => User.create({ email, password }))
+        beforeEach(() => {
+            _users.insertOne({ email, password })
+        })
 
         it('should succeed on correct data', () =>
             logic.addNote(email, date, text)
                 .then(res => {
                     expect(res).to.be.true
 
-                    return User.findOne({ email })
+                    return _users.findOne({ email })
                 })
                 .then(user => {
-                    return Note.find({ user: user.id })
-                })
-                .then(notes => {
-                    expect(notes.length).to.equal(1)
+                    expect(user.notes.length).to.equal(1)
 
-                    const [note] = notes
+                    const [note] = user.notes
 
                     expect(note.text).to.equal(text)
                     expect(note.date).to.deep.equal(date)
@@ -377,32 +386,20 @@ describe('logic', () => {
         )
     })
 
-    true && describe('list notes', () => {
-        let notes = [
-            { date: new Date('2018-08-20T12:10:15.474Z'), text: 'text 1' },
-            { date: new Date('2018-08-23T13:00:00.000Z'), text: 'cumple jordi' },
-            { date: new Date('2018-08-24T13:15:00.000Z'), text: 'pizza' },
-            { date: new Date('2018-08-24T13:19:00.000Z'), text: 'la china' },
-            { date: new Date('2018-08-24T13:21:00.000Z'), text: 'party hard' }
+    describe('list notes', () => {
+        const notes = [
+            { _id: ObjectId(), date: new Date('2018-08-20T12:10:15.474Z'), text: 'text 1' },
+            { _id: ObjectId(), date: new Date('2018-08-23T13:00:00.000Z'), text: 'cumple jordi' },
+            { _id: ObjectId(), date: new Date('2018-08-24T13:15:00.000Z'), text: 'pizza' },
+            { _id: ObjectId(), date: new Date('2018-08-24T13:19:00.000Z'), text: 'la china' },
+            { _id: ObjectId(), date: new Date('2018-08-24T13:21:00.000Z'), text: 'party hard' }
         ]
 
-        beforeEach(() =>
-            new User({ email, password }).save()
-                .then(user => {
-                    const userId = user.id
-
-                    notes.forEach(note => note.user = userId)
-
-                    return Note.insertMany(notes)
-                })
-                .then(_notes => notes = _notes.map(note => note._doc))
-        )
+        beforeEach(() => _users.insertOne({ email, password, notes }))
 
         it('should list all user notes', () => {
             return logic.listNotes(email, new Date('2018-08-24'))
                 .then(_notes => {
-                    debugger
-
                     const expectedNotes = notes.slice(2)
 
                     expect(_notes.length).to.equal(expectedNotes.length)
@@ -412,10 +409,6 @@ describe('logic', () => {
 
                         delete note._id
 
-                        delete note.user
-
-                        delete note.__v
-
                         return note
                     })
 
@@ -424,48 +417,27 @@ describe('logic', () => {
         })
     })
 
-    true && describe('remove note', () => {
-        let notes = [
-            { date: new Date(), text: 'text 1' },
-            { date: new Date(), text: 'text 2' },
-            { date: new Date(), text: 'text 3' },
-            { date: new Date(), text: 'text 4' }
+    describe('remove note', () => {
+        const notes = [
+            { _id: ObjectId(), date: new Date(), text: 'text 1' },
+            { _id: ObjectId(), date: new Date(), text: 'text 2' },
+            { _id: ObjectId(), date: new Date(), text: 'text 3' },
+            { _id: ObjectId(), date: new Date(), text: 'text 4' }
         ]
 
-        let noteId
-
-        beforeEach(() =>
-            new User({ email, password }).save()
-                .then(user => {
-                    const userId = user.id
-
-                    notes.forEach(note => note.user = userId)
-
-                    return Note.insertMany(notes)
-                })
-                .then(_notes => {
-                    notes = _notes.map(note => note._doc)
-
-                    noteId = notes[0]._id.toString()
-                })
-        )
+        beforeEach(() => _users.insertOne({ email, password, notes }))
 
         it('should succeed on correct note id', () =>
-            logic.removeNote(email, noteId)
+            logic.removeNote(email, notes[0]._id.toString())
                 .then(res => {
                     expect(res).to.be.true
 
-                    return User.findOne({ email })
+                    return _users.findOne({ email })
                 })
                 .then(user => {
-                    return Note.find({ user: user.id }).lean()
-                })
-                .then(_notes => {
-                    const expectedNotes = notes.slice(1)
+                    expect(user.notes.length).to.equal(3)
 
-                    expect(_notes.length).to.equal(expectedNotes.length)
-
-                    expect(_notes).to.deep.equal(expectedNotes)
+                    expect(user.notes).to.deep.equal(notes.slice(1))
                 })
         )
 
@@ -478,11 +450,9 @@ describe('logic', () => {
         })
     })
 
-    after(() =>
-        Promise.all([
-            Note.deleteMany(),
-            User.deleteMany()
-        ])
-            .then(() => _connection.disconnect())
-    )
+    after(() => {
+        _users.deleteMany()
+            .then(() => _connect.close())
+    })
 })
+
