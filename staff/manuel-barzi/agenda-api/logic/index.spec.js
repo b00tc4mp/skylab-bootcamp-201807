@@ -1,10 +1,9 @@
-'use strict'
-
 require('dotenv').config()
 
 const { logic } = require('.')
 const { expect } = require('chai')
 const mongoose = require('mongoose')
+const { Types: { ObjectId } } = mongoose
 const { Contact, Note, User } = require('../data/models')
 
 const { env: { MONGO_URL } } = process
@@ -58,29 +57,31 @@ describe('logic', () => {
         })
     })
 
-    !true && describe('register user', () => {
+    true && describe('register user', () => {
         it('should register correctly', () =>
-            _users.findOne({ email })
+            User.findOne({ email })
                 .then(user => {
                     expect(user).to.be.null
 
                     return logic.register(email, password)
                 })
-                .then(() =>
-                    _users.findOne({ email })
-                )
+                .then(res => {
+                    expect(res).to.be.true
+
+                    return User.findOne({ email })
+                })
                 .then(user => {
                     expect(user).to.exist
                     expect(user.email).to.equal(email)
                     expect(user.password).to.equal(password)
 
-                    return _users.find().toArray()
+                    return User.find()
                 })
                 .then(users => expect(users.length).to.equal(usersCount + 1))
         )
 
         it('should fail on trying to register an already registered user', () =>
-            _users.insertOne({ email, password })
+            User.create({ email, password })
                 .then(() => logic.register(email, password))
                 .catch(err => err)
                 .then(({ message }) => expect(message).to.equal(`user with ${email} email already exist`))
@@ -123,8 +124,8 @@ describe('logic', () => {
         )
     })
 
-    !true && describe('authenticate user', () => {
-        beforeEach(() => _users.insertOne({ email, password }))
+    true && describe('authenticate user', () => {
+        beforeEach(() => User.create({ email, password }))
 
         it('should login correctly', () =>
             logic.authenticate(email, password)
@@ -170,16 +171,17 @@ describe('logic', () => {
         )
     })
 
-    !true && describe('update user', () => {
+    true && describe('update user', () => {
         const newPassword = `${password}-${Math.random()}`
 
-        beforeEach(() => _users.insertOne({ email, password }))
+        beforeEach(() => User.create({ email, password }))
 
         it('should update password correctly', () =>
             logic.updatePassword(email, password, newPassword)
                 .then(res => {
                     expect(res).to.be.true
-                    return _users.findOne({ email })
+
+                    return User.findOne({ email })
                 })
                 .then(user => {
                     expect(user).to.exist
@@ -243,15 +245,15 @@ describe('logic', () => {
         )
     })
 
-    !true && describe('unregister user', () => {
-        beforeEach(() => _users.insertOne({ email, password }))
+    true && describe('unregister user', () => {
+        beforeEach(() => User.create({ email, password }))
 
         it('should unregister user correctly', () =>
             logic.unregisterUser(email, password)
                 .then(res => {
                     expect(res).to.be.true
 
-                    return _users.findOne({ email })
+                    return User.findOne({ email })
                 })
                 .then(user => {
                     expect(user).not.to.exist
@@ -295,22 +297,20 @@ describe('logic', () => {
         )
     })
 
-    !true && describe('add note', () => {
+    true && describe('add note', () => {
         const date = new Date(), text = 'my note'
 
-        beforeEach(() => {
-            _users.insertOne({ email, password })
-        })
+        beforeEach(() => User.create({ email, password }))
 
         it('should succeed on correct data', () =>
             logic.addNote(email, date, text)
                 .then(res => {
                     expect(res).to.be.true
 
-                    return _users.findOne({ email })
+                    return User.findOne({ email })
                 })
                 .then(user => {
-                    return _notes.find({ user: user._id }).toArray()
+                    return Note.find({ user: user.id })
                 })
                 .then(notes => {
                     expect(notes.length).to.equal(1)
@@ -377,8 +377,8 @@ describe('logic', () => {
         )
     })
 
-    !true && describe('list notes', () => {
-        const notes = [
+    true && describe('list notes', () => {
+        let notes = [
             { date: new Date('2018-08-20T12:10:15.474Z'), text: 'text 1' },
             { date: new Date('2018-08-23T13:00:00.000Z'), text: 'cumple jordi' },
             { date: new Date('2018-08-24T13:15:00.000Z'), text: 'pizza' },
@@ -387,19 +387,22 @@ describe('logic', () => {
         ]
 
         beforeEach(() =>
-            _users.insertOne({ email, password })
-                .then(res => {
-                    const userId = res.ops[0]._id
+            new User({ email, password }).save()
+                .then(user => {
+                    const userId = user.id
 
                     notes.forEach(note => note.user = userId)
 
-                    return _notes.insertMany(notes)
+                    return Note.insertMany(notes)
                 })
+                .then(_notes => notes = _notes.map(note => note._doc))
         )
 
         it('should list all user notes', () => {
             return logic.listNotes(email, new Date('2018-08-24'))
                 .then(_notes => {
+                    debugger
+
                     const expectedNotes = notes.slice(2)
 
                     expect(_notes.length).to.equal(expectedNotes.length)
@@ -411,6 +414,8 @@ describe('logic', () => {
 
                         delete note.user
 
+                        delete note.__v
+
                         return note
                     })
 
@@ -419,8 +424,8 @@ describe('logic', () => {
         })
     })
 
-    !true && describe('remove note', () => {
-        const notes = [
+    true && describe('remove note', () => {
+        let notes = [
             { date: new Date(), text: 'text 1' },
             { date: new Date(), text: 'text 2' },
             { date: new Date(), text: 'text 3' },
@@ -430,15 +435,19 @@ describe('logic', () => {
         let noteId
 
         beforeEach(() =>
-            _users.insertOne({ email, password })
-                .then(res => {
-                    const userId = res.ops[0]._id
+            new User({ email, password }).save()
+                .then(user => {
+                    const userId = user.id
 
                     notes.forEach(note => note.user = userId)
 
-                    return _notes.insertMany(notes)
+                    return Note.insertMany(notes)
                 })
-                .then(res => noteId = res.ops[0]._id.toString())
+                .then(_notes => {
+                    notes = _notes.map(note => note._doc)
+
+                    noteId = notes[0]._id.toString()
+                })
         )
 
         it('should succeed on correct note id', () =>
@@ -446,10 +455,10 @@ describe('logic', () => {
                 .then(res => {
                     expect(res).to.be.true
 
-                    return _users.findOne({ email })
+                    return User.findOne({ email })
                 })
                 .then(user => {
-                    return _notes.find({ user: user._id }).toArray()
+                    return Note.find({ user: user.id }).lean()
                 })
                 .then(_notes => {
                     const expectedNotes = notes.slice(1)
