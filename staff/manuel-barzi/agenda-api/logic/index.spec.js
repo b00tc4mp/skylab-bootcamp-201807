@@ -1,5 +1,3 @@
-'use strict'
-
 require('dotenv').config()
 
 const { logic } = require('.')

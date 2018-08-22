@@ -1,5 +1,3 @@
-'use strict'
-
 const validateEmail = require('../utils/validate-email')
 const moment = require('moment')
 const { Contact, Note, User } = require('../data/models')
@@ -20,7 +18,6 @@ const logic = {
     register(email, password) {
         return Promise.resolve()
             .then(() => {
-                this._validateStringField('email', email)
                 this._validateEmail(email)
                 this._validateStringField('password', password)
 
@@ -37,7 +34,6 @@ const logic = {
     authenticate(email, password) {
         return Promise.resolve()
             .then(() => {
-                this._validateStringField('email', email)
                 this._validateEmail(email)
                 this._validateStringField('password', password)
 
@@ -55,7 +51,6 @@ const logic = {
     updatePassword(email, password, newPassword) {
         return Promise.resolve()
             .then(() => {
-                this._validateStringField('email', email)
                 this._validateEmail(email)
                 this._validateStringField('password', password)
                 this._validateStringField('new password', newPassword)
@@ -79,7 +74,6 @@ const logic = {
     unregisterUser(email, password) {
         return Promise.resolve()
             .then(() => {
-                this._validateStringField('email', email)
                 this._validateEmail(email)
                 this._validateStringField('password', password)
 
@@ -98,7 +92,6 @@ const logic = {
     addNote(email, date, text) {
         return Promise.resolve()
             .then(() => {
-                this._validateStringField('email', email)
                 this._validateEmail(email)
                 this._validateDateField('date', date)
                 this._validateStringField('text', text)

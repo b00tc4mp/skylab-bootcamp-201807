@@ -111,6 +111,7 @@ const logic = {
         return Promise.resolve()
             .then(() => {
                 this._validateStringField('email', email)
+                this._validateEmail(email)
                 this._validateDateField('date', date)
                 this._validateStringField('text', text)
 
