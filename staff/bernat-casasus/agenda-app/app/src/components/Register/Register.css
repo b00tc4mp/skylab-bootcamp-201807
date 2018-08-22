@@ -1,0 +1,24 @@
+.register-container{
+    padding-top: 50px;
+    padding-bottom: 50px;
+    background-color:rgb(234, 234, 234);
+}
+
+#register-body{
+    box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.2);
+  
+}
+
+#register-footer{
+    text-align: center;
+}
+
+#register-btn{
+    margin-top: 10px;
+    background-color: #C70039;
+}
+
+#register-title{
+    background-color: #C70039;
+    color:white;
+}

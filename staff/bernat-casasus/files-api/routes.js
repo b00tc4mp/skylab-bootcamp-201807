@@ -54,7 +54,7 @@ router.patch('/user/:username', [validateJwt, jsonBodyParser], (req, res) => {
 router.get('/user/:username/files', validateJwt, (req, res) => {
     const { params: { username } } = req
 
-    logic.listFiles(username)
+    logic.listFiles(username) 
         .then(files => res.json(files))
         .catch(err => {
             const { message } = err
