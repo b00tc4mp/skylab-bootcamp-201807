@@ -1,5 +1,5 @@
 const { Schema } = require('mongoose')
-const Contact = require('./Contact')
+const Contact = require('./contact')
 
 function validatePassword(password) {
     if (password.length < 6) throw Error('password length is too short')

@@ -14,6 +14,8 @@ const { env: { MONGO_URL } } = process
 
 describe('logic', () => {
     const email = `maider-${Math.random()}@mail.com`, password = `123-${Math.random()}`
+    const _users = logic._users = User.collection
+    const _notes = logic._notes = Note.collection
     let _connection
     let usersCount = 0
 
@@ -29,7 +31,7 @@ describe('logic', () => {
         ])
             .then(() => {
                 let count = Math.floor(Math.random() * 100)
-debugger;
+
                 const creations = []
 
                 while (count--) creations.push({ email: `other-${Math.random()}@mail.com`, password: `123-${Math.random()}` })
@@ -58,29 +60,29 @@ debugger;
         })
     })
 
-    !true && describe('register user', () => {
+    true && describe('register user', () => {
         it('should register correctly', () =>
-            _users.findOne({ email })
+            User.findOne({ email })
                 .then(user => {
                     expect(user).to.be.null
 
                     return logic.register(email, password)
                 })
                 .then(() =>
-                    _users.findOne({ email })
+                    User.findOne({ email })
                 )
                 .then(user => {
                     expect(user).to.exist
                     expect(user.email).to.equal(email)
                     expect(user.password).to.equal(password)
 
-                    return _users.find().toArray()
+                    return User.find({})
                 })
                 .then(users => expect(users.length).to.equal(usersCount + 1))
         )
 
         it('should fail on trying to register an already registered user', () =>
-            _users.insertOne({ email, password })
+            User.create({ email, password })
                 .then(() => logic.register(email, password))
                 .catch(err => err)
                 .then(({ message }) => expect(message).to.equal(`user with ${email} email already exist`))
@@ -123,8 +125,8 @@ debugger;
         )
     })
 
-    !true && describe('authenticate user', () => {
-        beforeEach(() => _users.insertOne({ email, password }))
+    true && describe('authenticate user', () => {
+        beforeEach(() => User.create({ email, password }))
 
         it('should login correctly', () =>
             logic.authenticate(email, password)
@@ -170,16 +172,16 @@ debugger;
         )
     })
 
-    !true && describe('update user', () => {
+    true && describe('update user', () => {
         const newPassword = `${password}-${Math.random()}`
 
-        beforeEach(() => _users.insertOne({ email, password }))
+        beforeEach(() => User.create({ email, password }))
 
         it('should update password correctly', () =>
             logic.updatePassword(email, password, newPassword)
                 .then(res => {
                     expect(res).to.be.true
-                    return _users.findOne({ email })
+                    return User.findOne({ email })
                 })
                 .then(user => {
                     expect(user).to.exist
@@ -243,15 +245,15 @@ debugger;
         )
     })
 
-    !true && describe('unregister user', () => {
-        beforeEach(() => _users.insertOne({ email, password }))
+    true && describe('unregister user', () => {
+        beforeEach(() => User.create({ email, password }))
 
         it('should unregister user correctly', () =>
             logic.unregisterUser(email, password)
                 .then(res => {
                     expect(res).to.be.true
 
-                    return _users.findOne({ email })
+                    return User.findOne({ email })
                 })
                 .then(user => {
                     expect(user).not.to.exist
@@ -295,11 +297,11 @@ debugger;
         )
     })
 
-    !true && describe('add note', () => {
+    true && describe('add note', () => {
         const date = new Date(), text = 'my note'
 
         beforeEach(() => {
-            _users.insertOne({ email, password })
+            User.create({ email, password })
         })
 
         it('should succeed on correct data', () =>
@@ -307,10 +309,10 @@ debugger;
                 .then(res => {
                     expect(res).to.be.true
 
-                    return _users.findOne({ email })
+                    return User.findOne({ email })
                 })
                 .then(user => {
-                    return _notes.find({ user: user._id }).toArray()
+                    return Note.find({ user: user._id })
                 })
                 .then(notes => {
                     expect(notes.length).to.equal(1)
@@ -377,7 +379,8 @@ debugger;
         )
     })
 
-    !true && describe('list notes', () => {
+
+    true && describe('list notes', () => {
         const notes = [
             { date: new Date('2018-08-20T12:10:15.474Z'), text: 'text 1' },
             { date: new Date('2018-08-23T13:00:00.000Z'), text: 'cumple jordi' },
@@ -387,13 +390,13 @@ debugger;
         ]
 
         beforeEach(() =>
-            _users.insertOne({ email, password })
-                .then(res => {
-                    const userId = res.ops[0]._id
+            User.create({ email, password })
+                .then(user => {
+                    const userId = user.id
 
                     notes.forEach(note => note.user = userId)
 
-                    return _notes.insertMany(notes)
+                    return Note.insertMany(notes)
                 })
         )
 
@@ -405,10 +408,6 @@ debugger;
                     expect(_notes.length).to.equal(expectedNotes.length)
 
                     const normalizedNotes = expectedNotes.map(note => {
-                        note.id = note._id.toString()
-
-                        delete note._id
-
                         delete note.user
 
                         return note
@@ -419,7 +418,11 @@ debugger;
         })
     })
 
-    !true && describe('remove note', () => {
+
+
+
+
+    true && describe('remove note', () => {
         const notes = [
             { date: new Date(), text: 'text 1' },
             { date: new Date(), text: 'text 2' },
@@ -430,29 +433,38 @@ debugger;
         let noteId
 
         beforeEach(() =>
-            _users.insertOne({ email, password })
-                .then(res => {
-                    const userId = res.ops[0]._id
+            User.create({ email, password })
+                .then(user => {
+                    const userId = user.id
 
                     notes.forEach(note => note.user = userId)
 
-                    return _notes.insertMany(notes)
+                    return Note.insertMany(notes)
                 })
-                .then(res => noteId = res.ops[0]._id.toString())
+                .then(_notes => noteId = _notes[0].id)
         )
+
 
         it('should succeed on correct note id', () =>
             logic.removeNote(email, noteId)
                 .then(res => {
                     expect(res).to.be.true
 
-                    return _users.findOne({ email })
+                    return User.findOne({ email })
                 })
-                .then(user => {
-                    return _notes.find({ user: user._id }).toArray()
-                })
+                .then(user => Note.find({ user: user.id }) )
                 .then(_notes => {
                     const expectedNotes = notes.slice(1)
+
+                    const parsedNotes = []
+                    if (_notes) {
+                        _notes.forEach(note => {
+                            const userId = note.user._id.toString()
+
+                            parsedNotes.push({ date: note.date, text: note.text, user: userId })
+                        })
+                    }
+                    _notes = parsedNotes
 
                     expect(_notes.length).to.equal(expectedNotes.length)
 
@@ -461,13 +473,14 @@ debugger;
         )
 
         it('should fail on non existing note', () => {
-            const nonExistingId = ObjectId().toString()
+            const nonExistingId = mongoose.Types.ObjectId().toString()
 
             return logic.removeNote(email, nonExistingId)
                 .catch(err => err)
                 .then(({ message }) => expect(message).to.equal(`note with id ${nonExistingId} does not exist`))
         })
     })
+    
 
     after(() =>
         Promise.all([

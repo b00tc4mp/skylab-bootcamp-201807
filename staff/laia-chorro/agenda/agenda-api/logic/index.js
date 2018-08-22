@@ -3,6 +3,7 @@
 const validateEmail = require('../utils/validate-email')
 const { ObjectId } = require('mongodb')
 const moment = require('moment')
+const { Contact, Note, User } = require('../data/models')
 
 const logic = {
     _users: null,
@@ -27,14 +28,19 @@ const logic = {
                 this._validateEmail(email)
                 this._validateStringField('password', password)
 
-                return this._users.findOne({ email })
+                return User.findOne({ email })
+
             })
             .then(user => {
                 if (user) throw new LogicError(`user with ${email} email already exist`)
 
-                const _user = { email, password, notes: [] }
-                return this._users.insertOne(_user)
+                //const _user = { email, password, notes: [] }
+                const _user = { email, password }
+
+                return User.create(_user)
+
             })
+            .then(() => true)
     },
 
     authenticate(email, password) {
@@ -44,7 +50,7 @@ const logic = {
                 this._validateEmail(email)
                 this._validateStringField('password', password)
 
-                return this._users.findOne({ email })
+                return User.findOne({ email })
             })
             .then(user => {
                 if (!user) throw new LogicError(`user with ${email} email does not exist`)
@@ -63,7 +69,7 @@ const logic = {
                 this._validateStringField('password', password)
                 this._validateStringField('new password', newPassword)
 
-                return this._users.findOne({ email })
+                return User.findOne({ email })
             })
             .then(user => {
                 if (!user) throw new LogicError(`user with ${email} email does not exist`)
@@ -72,7 +78,7 @@ const logic = {
 
                 if (password === newPassword) throw new LogicError('new password must be different to old password')
 
-                return this._users.updateOne({ _id: user._id }, { $set: { password: newPassword } })
+                return User.updateOne({ _id: user._id }, { $set: { password: newPassword } })
             })
             .then(() => {
                 return true
@@ -86,14 +92,14 @@ const logic = {
                 this._validateEmail(email)
                 this._validateStringField('password', password)
 
-                return this._users.findOne({ email })
+                return User.findOne({ email })
             })
             .then(user => {
                 if (!user) throw new LogicError(`user with ${email} email does not exist`)
 
                 if (user.password !== password) throw new LogicError(`wrong password`)
 
-                return this._users.deleteOne({ _id: user._id })
+                return User.deleteOne({ _id: user._id })
             })
             .then(() => {
                 return true
@@ -107,17 +113,17 @@ const logic = {
                 this._validateDateField('date', date)
                 this._validateStringField('text', text)
 
-                return this._users.findOne({ email })
+                return User.findOne({ email })
             })
             .then(user => {
                 if (!user) throw new LogicError(`user with ${email} email does not exist`)
 
                 const note = { date, text, user: user._id }
 
-                return this._notes.insertOne(note)
+                return Note.create(note)
             })
-            .then(res => {
-                if (res.result.nModified === 0) throw new LogicError('fail to add note')
+            .then(note => {
+                if (!note) throw new LogicError('fail to add note')
 
                 return true
             })
@@ -128,7 +134,7 @@ const logic = {
             .then(() => {
                 this._validateEmail(email)
 
-                return this._users.findOne({ email })
+                return User.findOne({ email })
             })
             .then(user => {
                 if (!user) throw new LogicError(`user with ${email} email does not exist`)
@@ -138,20 +144,16 @@ const logic = {
                 const minDate = mDate.startOf('day').toDate()
                 const maxDate = mDate.endOf('day').toDate()
 
-                return this._notes.find({ user: user._id, date: { $gte: minDate, $lte: maxDate } }).toArray()
+                return Note.find({ user: user._id, date: { $gte: minDate, $lte: maxDate } })
             })
             .then(notes => {
+                const parsedNotes = []
                 if (notes) {
                     notes.forEach(note => {
-                        note.id = note._id.toString()
-
-                        delete note._id
-
-                        delete note.user
+                        parsedNotes.push({ date: note.date, text: note.text })
                     })
                 }
-
-                return notes || []
+                return parsedNotes
             })
     },
 
@@ -160,25 +162,26 @@ const logic = {
             .then(() => {
                 this._validateEmail(email)
 
-                return this._users.findOne({ email })
+                return User.findOne({ email })
             })
             .then((user) => {
                 if (!user) throw new LogicError(`user with ${email} email does not exist`)
-            
-                return this._notes.findOne({ _id: ObjectId(noteId) })
+
+                return Note.findOne({ _id: noteId })
                     .then(note => {
                         if (!note) throw new LogicError(`note with id ${noteId} does not exist`)
 
-                        if (note.user.toString() !== user._id.toString()) throw new LogicError('note does not belong to user')
+                        if (note.user.toString() !== user.id) throw new LogicError('note does not belong to user')
 
-                        return this._notes.deleteOne({ _id: ObjectId(noteId) })
+                        return Note.deleteOne({ _id: noteId })
                     })
             })
-            .then(res => {
-                if (res.result.nModified === 0) throw new LogicError('fail to remove note')
+            .then((res) => {
+                if (res.ok === 0) throw new LogicError('fail to remove note')
 
                 return true
             })
+
     }
 
 }
