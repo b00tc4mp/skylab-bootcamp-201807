@@ -15,3 +15,5 @@
 [How do I test for an empty JavaScript object?](https://stackoverflow.com/questions/679915/how-do-i-test-for-an-empty-javascript-object)
 
 [Web Storage API: LocalStorage & SessionStorage](https://www.linkedin.com/pulse/web-storage-api-localstorage-sessionstorage-amir-boroumand)
+
+[A re-introduction to JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript/A_re-introduction_to_JavaScript)
