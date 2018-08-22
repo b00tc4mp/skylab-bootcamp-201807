@@ -32,7 +32,7 @@ const logic = {
             .then(user => {
                 if (user) throw new LogicError(`user with ${email} email already exist`)
 
-                const _user = { email, password, notes: [] }
+                const _user = { email, password }
                 return this._users.insertOne(_user)
             })
             .then(res => {
