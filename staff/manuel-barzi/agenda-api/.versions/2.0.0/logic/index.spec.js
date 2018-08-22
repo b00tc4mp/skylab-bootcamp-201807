@@ -82,9 +82,11 @@ describe('logic', () => {
 
                     return logic.register(email, password)
                 })
-                .then(() =>
-                    _users.findOne({ email })
-                )
+                .then(res => {
+                    expect(res).to.be.true
+
+                    return _users.findOne({ email })
+                })
                 .then(user => {
                     expect(user).to.exist
                     expect(user.email).to.equal(email)
@@ -314,9 +316,7 @@ describe('logic', () => {
     true && describe('add note', () => {
         const date = new Date(), text = 'my note'
 
-        beforeEach(() => {
-            _users.insertOne({ email, password })
-        })
+        beforeEach(() => _users.insertOne({ email, password }))
 
         it('should succeed on correct data', () =>
             logic.addNote(email, date, text)
