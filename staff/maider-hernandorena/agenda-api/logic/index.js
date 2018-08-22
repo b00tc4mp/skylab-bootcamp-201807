@@ -1,177 +1,169 @@
+'use strict'
+
+const validateEmail = require('../utils/validate-email')
+const moment = require('moment')
+const { Contact, Note, User } = require('../data/models')
 
 const logic = {
 
-    _users: null,
-
-    _validateField(name, value) {
-        if(typeof value !== 'string' || !value.length) throw new Error(`invalid ${name}`)
+    _validateStringField(name, value) {
+        if (typeof value !== 'string' || !value.length) throw new LogicError(`invalid ${name}`)
     },
 
-    register(username, password) {
+    _validateEmail(email) {
+        if (!validateEmail(email)) throw new LogicError('invalid email')
+    },
+
+    _validateDateField(name, field) {
+        if (!(field instanceof Date)) throw new LogicError(`invalid ${name}`)
+    },
+
+    register(email, password) {
         return Promise.resolve()
             .then(() => {
-                this._validateField('username', username)
-                this._validateField('password', password)
+                this._validateStringField('email', email)
+                this._validateEmail(email)
+                this._validateStringField('password', password)
 
-                return this._users.findOne({ username })
+                return User.findOne({ email })
             })
             .then(user => {
-                if(user) throw new Error(`user with ${username} username already exist`)
+                if (user) throw new LogicError(`user with ${email} email already exist`)
+
+                return User.create({ email, password })
+            })
+            .then(() => true)
+    },
+
+    authenticate(email, password) {
+        return Promise.resolve()
+            .then(() => {
+                this._validateStringField('email', email)
+                this._validateEmail(email)
+                this._validateStringField('password', password)
+
+                return User.findOne({ email })
+            })
+            .then(user => {
+                if (!user) throw new LogicError(`user with ${email} email does not exist`)
+                if (user.password !== password) throw new LogicError(`wrong password`)
+
+                return true
+            })
+    },
+
+    updatePassword(email, password, newPassword) {
+        return Promise.resolve()
+            .then(() => {
+                this._validateStringField('email', email)
+                this._validateEmail(email)
+                this._validateStringField('password', password)
+                this._validateStringField('new password', newPassword)
+
+                return User.findOne({ email })
+            })
+            .then(user => {
+                if (!user) throw new LogicError(`user with ${email} email does not exist`)
+                if (user.password !== password) throw new LogicError(`wrong password`)
+                if (password === newPassword) throw new LogicError('new password must be different to old password')
                 
-                const _user = {username, password, notes:[], contacts:[]}
-                return this._users.insertOne(_user)
+                user.password = newPassword
+
+                return user.save()
             })
+            .then(() => true)
     },
 
-    login(username, password) {
+    unregisterUser(email, password) {
         return Promise.resolve()
             .then(() => {
-                this._validateField('username', username)
-                this._validateField('password', password)
+                this._validateStringField('email', email)
+                this._validateEmail(email)
+                this._validateStringField('password', password)
 
-                return this._users.findOne({ username })
+                return User.findOne({ email })
             })
             .then(user => {
-                if(!user) throw new Error(`user with ${username} username does not exist`)
-                if(user.password !== password) throw new Error(`wrong password`)
+                if (!user) throw new LogicError(`user with ${email} email does not exist`)
+                if (user.password !== password) throw new LogicError(`wrong password`)
 
-                return true
+                return User.deleteOne({ _id: user._id })
             })
+            .then(() => true)
     },
 
-    updatePassword(username, password, newPassword) {
+    addNote(email, date, text) {
         return Promise.resolve()
             .then(() => {
-                this._validateField('username', username)
-                this._validateField('password', password)
-                this._validateField('new password', newPassword)
+                this._validateStringField('email', email)
+                this._validateEmail(email)
+                this._validateDateField('date', date)
+                this._validateStringField('text', text)
 
-                return this._users.findOne({ username })
+                return User.findOne({ email })
             })
             .then(user => {
-                if(!user) throw new Error(`user with ${username} username does not exist`)
-                if(user.password !== password) throw new Error(`wrong password`)
-                if(password === newPassword) throw new Error('new password must be different to old password')
+                if (!user) throw new LogicError(`user with ${email} email does not exist`)
+
+                const note = { date, text, user: user.id }
+
+                return Note.create(note)
+            })
+            .then(() => true)
+    },
+
+    listNotes(email, date) {
+        return Promise.resolve()
+            .then(() => {
+                this._validateEmail(email)
+
+                return User.findOne({ email })
+            })
+            .then(user => {
+                if (!user) throw new LogicError(`user with ${email} email does not exist`)
+
+                const mDate = moment(date)
+
+                const minDate = mDate.startOf('day').toDate()
+                const maxDate = mDate.endOf('day').toDate()
+
+                return Note.find({ user: user._id, date: { $gte: minDate, $lte: maxDate } }).lean()
+            })
+            .then(notes => notes || [] )
+    },
+
+    removeNote(email, noteId) {
+        return Promise.resolve()
+            .then(() => {
+                this._validateEmail(email)
+
+                return this._users.findOne({ email })
+            })
+            .then((user) => {
+                if (!user) throw new LogicError(`user with ${email} email does not exist`)
             
-                return this._users.updateOne({_id: user._id}, {$set: {password: newPassword}})
+                return this._notes.findOne({ _id: ObjectId(noteId) })
+                    .then(note => {
+                        if (!note) throw new LogicError(`note with id ${noteId} does not exist`)
+
+                        if (note.user.toString() !== user._id.toString()) throw new LogicError('note does not belong to user')
+
+                        return this._notes.deleteOne({ _id: ObjectId(noteId) })
+                    })
             })
-            .then(() => {
+            .then(res => {
+                if (res.result.nModified === 0) throw new LogicError('fail to remove note')
+
                 return true
             })
-    },
+    }
 
-    deleteUser(username, password) {
-        return Promise.resolve()
-            .then(() => {
-                this._validateField('username', username)
-                this._validateField('password', password)
+}
 
-                return this._users.findOne({ username })
-            })
-            .then(user => {
-                if(!user) throw new Error(`user with ${username} username does not exist`)
-                if(user.password !== password) throw new Error(`wrong password`)
-
-                return this._users.deleteOne({_id: user._id})
-            })
-            .then(() => {
-                return true
-            })
-    },
-
-    listNotes(username) {
-        return Promise.resolve()
-            .then(() => {
-                this._validateField('username', username)
-                return this._users.findOne({ username })
-            })
-            .then((user) => {
-                if (!user) throw new Error(`user ${username} does not exist`)
-
-                return user.notes
-            })
-    },
-
-    addNotes(username, title, note) {
-        return Promise.resolve()
-            .then(() => {
-                this._validateField('username', username)
-                this._validateField('title', title)
-                this._validateField('note', note)
-
-                return this._users.findOne({ username })
-            })
-            .then(user => {
-                if(!user) throw new Error(`user with ${username} username does not exist`)
-                const notes = [...user.notes, {title, note}]
-                return this._users.updateOne({_id: user._id}, {$set: {notes}})
-            })
-            .then(() => {
-                return true
-            })
-    },
-
-    deleteNote(username, title, note) {
-        return Promise.resolve()
-            .then(() => {
-                this._validateField('username', username)
-                this._validateField('title', title)
-                this._validateField('note', note)
-
-                return this._users.findOne({ username })
-            })
-            .then(user => {
-                if(!user) throw new Error(`user with ${username} username does not exist`)
-                return this._users.updateOne({_id: user._id}, {$pull: {notes: {title, note}}})
-            })
-            .then(() => true)
-    },
-
-    listContacts(username) {
-        return Promise.resolve()
-            .then(() => {
-                this._validateField('username', username)
-                return this._users.findOne({ username })
-            })
-            .then((user) => {
-                if (!user) throw new Error(`user ${username} does not exist`)
-
-                return user.contacts
-            })
-    },
-
-    addContacts(username, contact, telephone) {
-        return Promise.resolve()
-            .then(() => {
-                this._validateField('username', username)
-                this._validateField('contact', contact)
-                this._validateField('telephone', telephone)
-
-                return this._users.findOne({ username })
-            })
-            .then(user => {
-                if(!user) throw new Error(`user with ${username} username does not exist`)
-                const contacts = [...user.contacts, {contact, telephone}]
-                return this._users.updateOne({_id: user._id}, {$set: {contacts}})
-            })
-            .then(() => true)
-    },
-
-    deleteContact(username, contact, telephone) {
-        return Promise.resolve()
-            .then(() => {
-                this._validateField('username', username)
-                this._validateField('contact', contact)
-                this._validateField('telephone', telephone)
-
-                return this._users.findOne({ username })
-            })
-            .then(user => {
-                if(!user) throw new Error(`user with ${username} username does not exist`)
-                return this._users.updateOne({_id: user._id}, {$pull: {contacts: {contact, telephone}}})
-            })
-            .then(() => true)
+class LogicError extends Error {
+    constructor(message) {
+        super(message)
     }
 }
 
-module.exports = logic
+module.exports = { logic, LogicError }
