@@ -35,6 +35,11 @@ const logic = {
                 const _user = { email, password, notes: [] }
                 return this._users.insertOne(_user)
             })
+            .then(res => {
+                if (res.result.nModified === 0) throw new LogicError('fail register')
+
+                return true
+            })
     },
 
     authenticate(email, password) {
@@ -74,7 +79,9 @@ const logic = {
 
                 return this._users.updateOne({ _id: user._id }, { $set: { password: newPassword } })
             })
-            .then(() => {
+            .then(res => {
+                if (res.result.nModified === 0) throw new LogicError('fail to update')
+
                 return true
             })
     },

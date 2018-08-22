@@ -1,8 +1,6 @@
 const mongoose = require('mongoose')
 const { User, Contact, Note } = require('../models')
 
-debugger
-
 let connection
 
 mongoose.connect('mongodb://localhost/skylab', { useNewUrlParser: true })
