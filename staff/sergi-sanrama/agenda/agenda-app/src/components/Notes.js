@@ -111,7 +111,7 @@ class Notes extends Component{
         </ul>
         <div class='back'>Go to <a href="" onClick={this.onGoToContacts}>Contacts</a></div>
         <navbar className='bottomNav'>
-            <h2>Made with ♥ by: Sergi S</h2>
+            <h2>Made with ♥ by: Sergi</h2>
         </navbar>
         </div>
     }

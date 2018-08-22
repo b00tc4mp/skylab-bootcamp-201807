@@ -34,7 +34,6 @@ class App extends Component {
       token:''
     })
     sessionStorage.clear()
-    // this.props.history.push("/")
   }
 
   onGoToContacts = () => this.props.history.push('contacts')  
