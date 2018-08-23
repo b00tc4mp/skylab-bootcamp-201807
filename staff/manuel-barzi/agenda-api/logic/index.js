@@ -160,8 +160,42 @@ const logic = {
                     })
             })
             .then(() => true)
-    }
+    },
 
+    addContact(userEmail, email, name, surname, phone) {
+        return Promise.resolve()
+            .then(() => {
+                this._validateEmail(userEmail)
+                this._validateEmail(email)
+
+                if (typeof name !== 'undefined') this._validateStringField('name', name)
+                if (typeof surname !== 'undefined') this._validateStringField('surname', surname)
+                if (typeof phone !== 'undefined') this._validateStringField('phone', phone)
+
+                return User.findOne({ email: userEmail })
+            })
+            .then(user => {
+                if (!user) throw new LogicError(`user with ${email} email does not exist`)
+
+                const contact = { email }
+
+                if (name) contact.name = name
+                if (surname) contact.surname = surname
+                if (phone) contact.phone = phone
+
+                user.contacts.push(new Contact(contact))
+
+                return user.save()
+            })
+            .then(() => true)
+    },
+
+    listContacts(email, letter) {
+        return Promise.resolve()
+            .then(() => {
+                // TODO
+            })
+    }
 }
 
 class LogicError extends Error {
