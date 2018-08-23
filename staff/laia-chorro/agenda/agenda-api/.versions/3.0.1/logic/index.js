@@ -1,9 +1,14 @@
+'use strict'
+
 const validateEmail = require('../utils/validate-email')
+const { ObjectId } = require('mongodb')
 const moment = require('moment')
-const mongoose = require('mongoose')
 const { Contact, Note, User } = require('../data/models')
 
 const logic = {
+    _users: null,
+    _notes: null,
+
     _validateStringField(name, value) {
         if (typeof value !== 'string' || !value.length) throw new LogicError(`invalid ${name}`)
     },
@@ -19,15 +24,21 @@ const logic = {
     register(email, password) {
         return Promise.resolve()
             .then(() => {
+                this._validateStringField('email', email)
                 this._validateEmail(email)
                 this._validateStringField('password', password)
 
                 return User.findOne({ email })
+
             })
             .then(user => {
                 if (user) throw new LogicError(`user with ${email} email already exist`)
 
-                return User.create({ email, password })
+                //const _user = { email, password, notes: [] }
+                const _user = { email, password }
+
+                return User.create(_user)
+
             })
             .then(() => true)
     },
@@ -35,6 +46,7 @@ const logic = {
     authenticate(email, password) {
         return Promise.resolve()
             .then(() => {
+                this._validateStringField('email', email)
                 this._validateEmail(email)
                 this._validateStringField('password', password)
 
@@ -42,7 +54,7 @@ const logic = {
             })
             .then(user => {
                 if (!user) throw new LogicError(`user with ${email} email does not exist`)
-
+                
                 if (user.password !== password) throw new LogicError(`wrong password`)
 
                 return true
@@ -52,6 +64,7 @@ const logic = {
     updatePassword(email, password, newPassword) {
         return Promise.resolve()
             .then(() => {
+                this._validateStringField('email', email)
                 this._validateEmail(email)
                 this._validateStringField('password', password)
                 this._validateStringField('new password', newPassword)
@@ -65,16 +78,17 @@ const logic = {
 
                 if (password === newPassword) throw new LogicError('new password must be different to old password')
 
-                user.password = newPassword
-
-                return user.save()
+                return User.updateOne({ _id: user._id }, { $set: { password: newPassword } })
             })
-            .then(() => true)
+            .then(() => {
+                return true
+            })
     },
 
     unregisterUser(email, password) {
         return Promise.resolve()
             .then(() => {
+                this._validateStringField('email', email)
                 this._validateEmail(email)
                 this._validateStringField('password', password)
 
@@ -87,13 +101,15 @@ const logic = {
 
                 return User.deleteOne({ _id: user._id })
             })
-            .then(() => true)
+            .then(() => {
+                return true
+            })
     },
 
     addNote(email, date, text) {
         return Promise.resolve()
             .then(() => {
-                this._validateEmail(email)
+                this._validateStringField('email', email)
                 this._validateDateField('date', date)
                 this._validateStringField('text', text)
 
@@ -102,11 +118,15 @@ const logic = {
             .then(user => {
                 if (!user) throw new LogicError(`user with ${email} email does not exist`)
 
-                const note = { date, text, user: user.id }
+                const note = { date, text, user: user._id }
 
                 return Note.create(note)
             })
-            .then(() => true)
+            .then(note => {
+                if (!note) throw new LogicError('fail to add note')
+
+                return true
+            })
     },
 
     listNotes(email, date) {
@@ -124,20 +144,16 @@ const logic = {
                 const minDate = mDate.startOf('day').toDate()
                 const maxDate = mDate.endOf('day').toDate()
 
-                return Note.find({ user: user._id, date: { $gte: minDate, $lte: maxDate } }, { __v: 0 }).lean()
+                return Note.find({ user: user._id, date: { $gte: minDate, $lte: maxDate } })
             })
             .then(notes => {
+                const parsedNotes = []
                 if (notes) {
                     notes.forEach(note => {
-                        note.id = note._id.toString()
-
-                        delete note._id
-
-                        delete note.user
+                        parsedNotes.push({ date: note.date, text: note.text })
                     })
                 }
-
-                return notes || []
+                return parsedNotes
             })
     },
 
@@ -160,90 +176,13 @@ const logic = {
                         return Note.deleteOne({ _id: noteId })
                     })
             })
-            .then(() => true)
-    },
+            .then((res) => {
+                if (res.ok === 0) throw new LogicError('fail to remove note')
 
-
-    /////////////////////// CONTACT /////////////////////////////////
-    addContact(email, name, surname, phone, contactEmail) {
-        return Promise.resolve()
-            .then(() => {
-                this._validateEmail(email)
-                this._validateEmail(contactEmail)
-                this._validateStringField('name', name)
-                this._validateStringField('surname', surname)
-                //this._validateStringField('phone', phone)
-
-                return User.findOne({ email })
+                return true
             })
-            .then( user => {
-                if (!user) throw new LogicError(`user ${username} does not exist`)
 
-                /*return this._users.updateOne(
-                    { _id: user._id },
-                    { $push: { notes: { _id: ObjectId(), date: new Date(date), text } } }
-                 )*/
-                const contact = { name, surname, phone, email: contactEmail }
-                const contactModel = new Contact(contact)
-                ////////////////// idNote!!!!!!!!!!!!!!!!
-                user.contacts.push(contactModel)
-                //user.contacts.addToSet(contactModel)
-
-                return user.save()
-            })
-            .then(() => true)
-    },
-
-    listContacts(email, startsWith) {
-        return Promise.resolve()
-            .then(() => {
-                this._validateEmail(email)
-                this._validateStringField('startsWith filter', startsWith)
-
-                return User.findOne({ email })
-            })
-            .then( user => {
-                if (!user) throw new LogicError(`user ${username} does not exist`)
-
-                const userId = user.id
-
-                return User.aggregate([
-                    { $match: { "_id": mongoose.Types.ObjectId(userId) } },
-                    {
-                       $project: {
-                            contacts: {
-                                $filter: {
-                                    input: "$contacts",
-                                    as: "contact",
-                                    cond: { $eq: [ 
-                                        { $substr: [ "$$contact.name", 0, 1 ] }, // first letter of name
-                                        startsWith 
-                                    ] }
-                                }
-                          }
-                       }
-                    }
-                 ])
-            })
-            .then(res => {
-                let contacts = []
-
-                if (res && res[0] && res[0].contacts) {
-                    contacts = res[0].contacts
-
-                    contacts.forEach(contact => {
-                        contact.id = contact._id.toString()
-
-                        delete contact._id
-                    })
-                }
-
-                return contacts
-            })
-        }
-
-    /////////////////////// END CONTACT /////////////////////////////////
-
+    }
 
 }
 

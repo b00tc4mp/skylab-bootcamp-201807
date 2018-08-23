@@ -57,7 +57,7 @@ describe('logic', () => {
         })
     })
 
-    !true && describe('register user', () => {
+    true && describe('register user', () => {
         it('should register correctly', () =>
             User.findOne({ email })
                 .then(user => {
@@ -124,7 +124,7 @@ describe('logic', () => {
         )
     })
 
-    !true && describe('authenticate user', () => {
+    true && describe('authenticate user', () => {
         beforeEach(() => User.create({ email, password }))
 
         it('should login correctly', () =>
@@ -171,7 +171,7 @@ describe('logic', () => {
         )
     })
 
-    !true && describe('update user', () => {
+    true && describe('update user', () => {
         const newPassword = `${password}-${Math.random()}`
 
         beforeEach(() => User.create({ email, password }))
@@ -245,7 +245,7 @@ describe('logic', () => {
         )
     })
 
-    !true && describe('unregister user', () => {
+    true && describe('unregister user', () => {
         beforeEach(() => User.create({ email, password }))
 
         it('should unregister user correctly', () =>
@@ -297,7 +297,7 @@ describe('logic', () => {
         )
     })
 
-    !true && describe('add note', () => {
+    true && describe('add note', () => {
         const date = new Date(), text = 'my note'
 
         beforeEach(() => User.create({ email, password }))
@@ -377,7 +377,7 @@ describe('logic', () => {
         )
     })
 
-    !true && describe('list notes', () => {
+    true && describe('list notes', () => {
         let notes = [
             { date: new Date('2018-08-20T12:10:15.474Z'), text: 'text 1' },
             { date: new Date('2018-08-23T13:00:00.000Z'), text: 'cumple jordi' },
@@ -401,6 +401,8 @@ describe('logic', () => {
         it('should list all user notes', () => {
             return logic.listNotes(email, new Date('2018-08-24'))
                 .then(_notes => {
+                    debugger
+
                     const expectedNotes = notes.slice(2)
 
                     expect(_notes.length).to.equal(expectedNotes.length)
@@ -422,7 +424,7 @@ describe('logic', () => {
         })
     })
 
-    !true && describe('remove note', () => {
+    true && describe('remove note', () => {
         let notes = [
             { date: new Date(), text: 'text 1' },
             { date: new Date(), text: 'text 2' },
@@ -475,139 +477,6 @@ describe('logic', () => {
                 .then(({ message }) => expect(message).to.equal(`note with id ${nonExistingId} does not exist`))
         })
     })
-
-
-    ////////////////////  CONTACT /////////////////
-    !true && describe('add contact', () => {
-        const name = 'Fulanito', surname = 'Lopez', phone = 605532058, contactEmail = 'fulanito_lopez@email.org'
-
-        beforeEach(() => User.create({ email, password }))
-
-        it('should save contact on correct data', () =>
-            logic.addContact(email, name, surname, phone, contactEmail)
-                .then(res => {
-                    expect(res).to.be.true
-
-                    return User.findOne({ email })
-                })
-                .then(user => {
-                    expect(user).to.exist
-
-                    expect(user.contacts).to.exist
-                    expect(user.contacts.length).to.equal(1)
-                    expect(user.contacts[0].name).to.equal(name)
-                })
-        )
-
-        it('should fail on trying to add note with an undefined email', () =>
-            logic.addContact(undefined, name, surname, phone, contactEmail)
-                .catch(err => err)
-                .then(({ message }) => expect(message).to.equal(`invalid email`))
-        )
-
-        it('should fail on trying to add note with an empty email', () =>
-            logic.addContact('', name, surname, phone, contactEmail)
-                .catch(err => err)
-                .then(({ message }) => expect(message).to.equal(`invalid email`))
-        )
-
-        it('should fail on trying to add note with a numeric email', () =>
-            logic.addContact(123, name, surname, phone, contactEmail)
-                .catch(err => err)
-                .then(({ message }) => expect(message).to.equal(`invalid email`))
-        )
-
-        it('should fail on trying to add note with an undefined name', () =>
-            logic.addContact(email, undefined, surname, phone, contactEmail)
-                .catch(err => err)
-                .then(({ message }) => expect(message).to.equal('invalid name'))
-        )
-
-        it('should fail on trying to add note with an empty name', () =>
-            logic.addContact(email, '', surname, phone, contactEmail)
-                .catch(err => err)
-                .then(({ message }) => expect(message).to.equal('invalid name'))
-        )
-
-        it('should fail on trying to add note with a numeric name', () =>
-            logic.addContact(email, 123, surname, phone, contactEmail)
-                .catch(err => err)
-                .then(({ message }) => expect(message).to.equal('invalid name'))
-        )
-
-        it('should fail on trying to add note with an undefined surname', () =>
-            logic.addContact(email, name, undefined, phone, contactEmail)
-                .catch(err => err)
-                .then(({ message }) => expect(message).to.equal('invalid surname'))
-        )
-
-        it('should fail on trying to add note with an empty surname', () =>
-            logic.addContact(email, name, '', phone, contactEmail)
-                .catch(err => err)
-                .then(({ message }) => expect(message).to.equal('invalid surname'))
-        )
-
-        it('should fail on trying to add note with a numeric surname', () =>
-            logic.addContact(email, name, 123, phone, contactEmail)
-                .catch(err => err)
-                .then(({ message }) => expect(message).to.equal('invalid surname'))
-        )
-    })
-
-    true && describe('list contacts', () => {
-        let contacts = [
-            new Contact({ name:'Isabel', surname:'López', phone: '658510208', email: 'email@gemail.org' }),
-            new Contact({ name:'Ramona', surname:'López', phone: '658510208', email: 'email@gemail.org' }),
-            new Contact({ name:'Amor', surname:'Garcia', phone: '658510208', email: 'email@gemail.org' }),
-            new Contact({ name: 'Jordi', surname:'López', phone: '658510208', email: 'email@gemail.org' }),
-            new Contact({ name:'Jaume', surname:'Garcia', phone: '658510208', email: 'email@gemail.org' })
-        ]
-
-        /*let contacts = [
-            { name: 'Isabel', surname: 'López', phone: '658510208', email: 'email@gemail.org' },
-            { name: 'Ramona', surname: 'López', phone: '658510208', email: 'email@gemail.org' },
-            { name: 'Amor', surname: 'Garcia', phone: '658510208', email: 'email@gemail.org' },
-            { name: 'Jordi', surname: 'López', phone: '658510208', email: 'email@gemail.org' },
-            { name: 'Jaume', surname: 'Garcia', phone: '658510208', email: 'email@gemail.org' }
-        ]*/
-
-        beforeEach(() =>
-            new User({ email, password }).save()
-                .then(user => {
-                    //contacts.map(contact => new Contact(contact))
-
-                    user.contacts = contacts
-                    
-                    return user.save()
-                })
-        )
-
-        it('should list all contacts that their name starts with a specific letter', () => {
-            const startsWith = 'J'
-
-            return logic.listContacts(email, startsWith)
-                .then(_contacts => {
-                    const expectedContacts = contacts.slice(3)
-
-                    expect(_contacts.length).to.equal(expectedContacts.length)
-
-                    const docContacts = expectedContacts.map(contact => contact._doc)
-
-                    const normalizedContacts = docContacts.map(contact => {
-                        contact.id = contact._id.toString()
-
-                        delete contact._id
-
-                        return contact
-                    })
-
-                    expect(_contacts).to.deep.equal(normalizedContacts)
-                })
-        })
-    })
-
-    //////////////////// END CONTACT /////////////////
-
 
     after(() =>
         Promise.all([

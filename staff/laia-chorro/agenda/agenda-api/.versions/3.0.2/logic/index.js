@@ -1,6 +1,5 @@
 const validateEmail = require('../utils/validate-email')
 const moment = require('moment')
-const mongoose = require('mongoose')
 const { Contact, Note, User } = require('../data/models')
 
 const logic = {
@@ -161,89 +160,7 @@ const logic = {
                     })
             })
             .then(() => true)
-    },
-
-
-    /////////////////////// CONTACT /////////////////////////////////
-    addContact(email, name, surname, phone, contactEmail) {
-        return Promise.resolve()
-            .then(() => {
-                this._validateEmail(email)
-                this._validateEmail(contactEmail)
-                this._validateStringField('name', name)
-                this._validateStringField('surname', surname)
-                //this._validateStringField('phone', phone)
-
-                return User.findOne({ email })
-            })
-            .then( user => {
-                if (!user) throw new LogicError(`user ${username} does not exist`)
-
-                /*return this._users.updateOne(
-                    { _id: user._id },
-                    { $push: { notes: { _id: ObjectId(), date: new Date(date), text } } }
-                 )*/
-                const contact = { name, surname, phone, email: contactEmail }
-                const contactModel = new Contact(contact)
-                ////////////////// idNote!!!!!!!!!!!!!!!!
-                user.contacts.push(contactModel)
-                //user.contacts.addToSet(contactModel)
-
-                return user.save()
-            })
-            .then(() => true)
-    },
-
-    listContacts(email, startsWith) {
-        return Promise.resolve()
-            .then(() => {
-                this._validateEmail(email)
-                this._validateStringField('startsWith filter', startsWith)
-
-                return User.findOne({ email })
-            })
-            .then( user => {
-                if (!user) throw new LogicError(`user ${username} does not exist`)
-
-                const userId = user.id
-
-                return User.aggregate([
-                    { $match: { "_id": mongoose.Types.ObjectId(userId) } },
-                    {
-                       $project: {
-                            contacts: {
-                                $filter: {
-                                    input: "$contacts",
-                                    as: "contact",
-                                    cond: { $eq: [ 
-                                        { $substr: [ "$$contact.name", 0, 1 ] }, // first letter of name
-                                        startsWith 
-                                    ] }
-                                }
-                          }
-                       }
-                    }
-                 ])
-            })
-            .then(res => {
-                let contacts = []
-
-                if (res && res[0] && res[0].contacts) {
-                    contacts = res[0].contacts
-
-                    contacts.forEach(contact => {
-                        contact.id = contact._id.toString()
-
-                        delete contact._id
-                    })
-                }
-
-                return contacts
-            })
-        }
-
-    /////////////////////// END CONTACT /////////////////////////////////
-
+    }
 
 }
 
