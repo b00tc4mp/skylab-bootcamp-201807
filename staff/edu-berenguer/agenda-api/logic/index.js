@@ -1,14 +1,8 @@
-'use strict'
-
 const validateEmail = require('../utils/validate-email')
-// const { ObjectId } = require('mongodb')
 const moment = require('moment')
 const { Contact, Note, User } = require('../data/models')
 
 const logic = {
-    // _users: null,
-    // _notes: null,
-
     _validateStringField(name, value) {
         if (typeof value !== 'string' || !value.length) throw new LogicError(`invalid ${name}`)
     },
@@ -24,20 +18,15 @@ const logic = {
     register(email, password) {
         return Promise.resolve()
             .then(() => {
-                this._validateStringField('email', email)
                 this._validateEmail(email)
                 this._validateStringField('password', password)
 
                 return User.findOne({ email })
-
-                // return this._users.findOne({ email })
             })
             .then(user => {
                 if (user) throw new LogicError(`user with ${email} email already exist`)
 
-                const _user = { email, password, notes: [] }
-                return User.create(_user)
-                // return this._users.insertOne(_user)
+                return User.create({ email, password })
             })
             .then(() => true)
     },
@@ -45,16 +34,14 @@ const logic = {
     authenticate(email, password) {
         return Promise.resolve()
             .then(() => {
-                this._validateStringField('email', email)
                 this._validateEmail(email)
                 this._validateStringField('password', password)
 
-                // return this._users.findOne({ email })
                 return User.findOne({ email })
             })
             .then(user => {
                 if (!user) throw new LogicError(`user with ${email} email does not exist`)
-                
+
                 if (user.password !== password) throw new LogicError(`wrong password`)
 
                 return true
@@ -64,12 +51,10 @@ const logic = {
     updatePassword(email, password, newPassword) {
         return Promise.resolve()
             .then(() => {
-                this._validateStringField('email', email)
                 this._validateEmail(email)
                 this._validateStringField('password', password)
                 this._validateStringField('new password', newPassword)
 
-                // return this._users.findOne({ email })
                 return User.findOne({ email })
             })
             .then(user => {
@@ -79,21 +64,16 @@ const logic = {
 
                 if (password === newPassword) throw new LogicError('new password must be different to old password')
 
-                // return this._users.updateOne({ _id: user._id }, { $set: { password: newPassword } })
-                // user.password = newPassword;
-                // return user.save()
-                return User.updateOne({ _id: user._id }, { $set: { password: newPassword } })
+                user.password = newPassword
 
+                return user.save()
             })
-            .then(() => {
-                return true
-            })
+            .then(() => true)
     },
 
     unregisterUser(email, password) {
         return Promise.resolve()
             .then(() => {
-                this._validateStringField('email', email)
                 this._validateEmail(email)
                 this._validateStringField('password', password)
 
@@ -106,15 +86,13 @@ const logic = {
 
                 return User.deleteOne({ _id: user._id })
             })
-            .then(() => {
-                return true
-            })
+            .then(() => true)
     },
 
     addNote(email, date, text) {
         return Promise.resolve()
             .then(() => {
-                this._validateStringField('email', email)
+                this._validateEmail(email)
                 this._validateDateField('date', date)
                 this._validateStringField('text', text)
 
@@ -122,18 +100,12 @@ const logic = {
             })
             .then(user => {
                 if (!user) throw new LogicError(`user with ${email} email does not exist`)
-                
-                // const note = { date, text, user: user._id }
+
                 const note = { date, text, user: user.id }
 
-                // return Note.create(note)
                 return Note.create(note)
             })
-            .then(() => {
-                // if (res.result.nModified === 0) throw new LogicError('fail to add note')
-                // if (res.errors !== undefined) throw new LogicError('fail to add note')    
-                return true
-            })
+            .then(() => true)
     },
 
     listNotes(email, date) {
@@ -147,11 +119,10 @@ const logic = {
                 if (!user) throw new LogicError(`user with ${email} email does not exist`)
 
                 const mDate = moment(date)
-
                 const minDate = mDate.startOf('day').toDate()
                 const maxDate = mDate.endOf('day').toDate()
 
-                return Note.find({ user: user._id, date: { $gte: minDate, $lte: maxDate } })
+                return Note.find({ user: user._id, date: { $gte: minDate, $lte: maxDate } }, { __v: 0 }).lean()
             })
             .then(notes => {
                 if (notes) {
@@ -163,7 +134,6 @@ const logic = {
                         delete note.user
                     })
                 }
-
                 return notes || []
             })
     },
@@ -177,23 +147,91 @@ const logic = {
             })
             .then((user) => {
                 if (!user) throw new LogicError(`user with ${email} email does not exist`)
-            
-                return User.findOne({ _id: ObjectId(noteId) })
+
+                return Note.findOne({ _id: noteId })
                     .then(note => {
                         if (!note) throw new LogicError(`note with id ${noteId} does not exist`)
 
-                        if (note.user.toString() !== user._id.toString()) throw new LogicError('note does not belong to user')
+                        if (note.user.toString() !== user.id) throw new LogicError('note does not belong to user')
 
-                        return User.deleteOne({ _id: ObjectId(noteId) })
+                        return Note.deleteOne({ _id: noteId })
                     })
             })
-            .then(res => {
-                if (res.result.nModified === 0) throw new LogicError('fail to remove note')
+            .then(() => true)
+    },
+    addContact(email,contactMail, name, surname, phone) {
+        return Promise.resolve()
+            .then(() => {
+                this._validateEmail(email)
+                this._validateStringField('name', name)
+                this._validateStringField('surname', surname)
+                this._validateStringField('phone', phone)
 
-                return true
+                return User.findOne({ email })
             })
-    }
+            .then(user => {
+                if (!user) throw new LogicError(`user with ${email} email does not exist`)
 
+                const contact = new Contact( {email:contactMail,name, surname, phone} )
+                user.contacts.push(contact)
+                return user.save()
+            })
+            .then(() => true)
+    },
+
+    listContacts(email, initialLetter) {
+        return Promise.resolve()
+            .then(() => {
+                this._validateEmail(email)
+
+                return User.findOne({ email })
+            })
+            .then(user => {
+                if (!user) throw new LogicError(`user with ${email} email does not exist`)
+                return user.contacts.filter(contact => contact.name.startsWith(initialLetter))
+                // return User.aggregate([{name: /^pa/}])
+                // return User.aggregate([
+                //     {
+                //         $match: {
+                //             email
+                //         }
+                //     },
+                //     {$project: {
+                //         contacts: {
+                //             $filter: {
+                //                 input: '$contacts',
+                //                 as: 'contact',
+                //                 // cond: { $eq: [ "$$contact.name", 'pepe' ] }
+                //                // cond: {$regexFind:[{"$$contact.name": `/^${initialLetter}/` }]}
+                //             }
+                //         }
+                //     }}
+                // ])
+            })
+            // .then(contacts => {
+            //     if (contacts) {
+            //         contacts.forEach(contact => {
+            //             contact.id = contact._id.toString()
+
+            //             delete contact._id
+            //         })
+            //     }
+
+            //     return contacts || []
+            // })
+    },
+    deleteContact(email, contactEmail) {
+        return User.findOne({ email })
+            .then(user => {
+                if (!user) throw new LogicError(`user with ${email} email does not exist`)
+                const contacts = user._doc.contacts.map(contact => contact._doc.email)
+                const index = contacts.indexOf(contactEmail)
+                if (index === -1) throw new LogicError(`contact with ${contactEmail} email was not found`)
+                user.contacts.splice(index, 1)
+                return user.save()
+            })
+            .then(() => true)
+    }
 }
 
 class LogicError extends Error {
