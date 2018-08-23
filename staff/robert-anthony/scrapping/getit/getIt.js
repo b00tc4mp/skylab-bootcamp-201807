@@ -37,7 +37,6 @@ module.exports = {
 
 
   fetchSiteData(path) {
-
   return   this.getit(path, "GET", {'Content-Type': 'application/json'}, undefined, 200)
       .then(res => {
         return res

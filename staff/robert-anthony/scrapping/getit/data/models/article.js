@@ -1,4 +1,4 @@
 const mongoose = require('mongoose')
-const { Contact } = require('./schemas')
+const { Article } = require('./schemas')
 
 module.exports = mongoose.model('Article', Article)

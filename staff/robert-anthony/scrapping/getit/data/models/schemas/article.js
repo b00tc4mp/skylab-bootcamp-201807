@@ -3,7 +3,7 @@
 const { Schema } = require('mongoose')
 
 module.exports = new Schema({
-  imge: {
+  src: {
     type: String,
   },
 
@@ -11,5 +11,5 @@ module.exports = new Schema({
 
   author: String,
 
-  contant: String
+  content: String
 })
