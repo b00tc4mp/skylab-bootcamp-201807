@@ -190,11 +190,39 @@ const logic = {
             .then(() => true)
     },
 
-    listContacts(email, letter) {
+    listContacts(email, startWith) {
         return Promise.resolve()
             .then(() => {
-                // TODO
+                this._validateEmail(email)
+                this._validateStringField('start-with text', startWith)
+
+                return User.findOne({ email })
             })
+            .then(user => {
+                if (!user) throw new Error(`user with ${email} email does not exist`)
+
+                let contacts = user.contacts.map(contact => contact._doc)
+
+                contacts = contacts.filter(({ email, name, surname }) => {
+                    if (name) return name.startsWith(startWith)
+
+                    if (surname)  return surname.startsWith(startWith)
+
+                    return email.startsWith(startWith)
+                })
+
+                return contacts.map(contact => {
+                    contact.id = contact._id.toString()
+
+                    delete contact._id
+
+                    return contact
+                })
+            })
+    },
+
+    removeContact(email, contactId) {
+        // TODO
     }
 }
 
