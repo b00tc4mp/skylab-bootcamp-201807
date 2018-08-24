@@ -7,9 +7,6 @@ const saveIt = require('./saveIt')
 
 require('dotenv').config()
 
-const express = require('express')
-const cors = require('cors')
-const pkg = require('./package.json')
 const mongoose = require('mongoose')
 //const routes = require('./routes')
 

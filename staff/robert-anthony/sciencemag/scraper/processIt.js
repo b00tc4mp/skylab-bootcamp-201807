@@ -10,12 +10,12 @@ module.exports = {
 
   baseURL: "",
 
-  totalPages: 10,
+  totalPages: 100,
 
   parseBaseURL(base) {
     this.baseURL = base
     const promises = []
-    for (let i = 1; i <= 10; i++) {
+    for (let i = 0; i <= this.totalPages; i++) {
 
       const url = `${this.baseURL}/latest-news?page=${i}`
 
@@ -24,7 +24,7 @@ module.exports = {
       )
     }
     return Promise.all(promises)
-      .then(() =>  this.parsedValues)
+      .then(() => this.parsedValues)
   },
 
   parsePages(data) {
@@ -63,9 +63,13 @@ module.exports = {
           const headline = $('.article__headline').text()
           const author = $('.byline.byline--article').find('a').text()
 
+          const d = $('.byline.byline--article').find('time').text()
+          let date
+          if (d) date = new Date($('.byline.byline--article').find('time').text())
+
           const content = $('.article__body').find('p').text()
 
-          return this.parsedValues.push({src, headline, author, content})
+          return this.parsedValues.push({src, headline, author, date, content})
 
         })
 

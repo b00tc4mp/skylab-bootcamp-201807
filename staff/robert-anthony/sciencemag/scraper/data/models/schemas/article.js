@@ -3,13 +3,13 @@
 const { Schema } = require('mongoose')
 
 module.exports = new Schema({
-  src: {
-    type: String,
-  },
+  src:  String,
 
   headline: String,
 
   author: String,
+
+  date:Date,
 
   content: String
 })
