@@ -160,8 +160,70 @@ const logic = {
                     })
             })
             .then(() => true)
-    }
+    },
 
+    addContact(userEmail, email, name, surname, phone) {
+        return Promise.resolve()
+            .then(() => {
+                this._validateEmail(userEmail)
+                this._validateEmail(email)
+
+                if (typeof name !== 'undefined') this._validateStringField('name', name)
+                if (typeof surname !== 'undefined') this._validateStringField('surname', surname)
+                if (typeof phone !== 'undefined') this._validateStringField('phone', phone)
+
+                return User.findOne({ email: userEmail })
+            })
+            .then(user => {
+                if (!user) throw new LogicError(`user with ${email} email does not exist`)
+
+                const contact = { email }
+
+                if (name) contact.name = name
+                if (surname) contact.surname = surname
+                if (phone) contact.phone = phone
+
+                user.contacts.push(new Contact(contact))
+
+                return user.save()
+            })
+            .then(() => true)
+    },
+
+    listContacts(email, startWith) {
+        return Promise.resolve()
+            .then(() => {
+                this._validateEmail(email)
+                this._validateStringField('start-with text', startWith)
+
+                return User.findOne({ email })
+            })
+            .then(user => {
+                if (!user) throw new Error(`user with ${email} email does not exist`)
+
+                let contacts = user.contacts.map(contact => contact._doc)
+
+                contacts = contacts.filter(({ email, name, surname }) => {
+                    if (name) return name.startsWith(startWith)
+
+                    if (surname)  return surname.startsWith(startWith)
+
+                    return email.startsWith(startWith)
+                })
+
+                return contacts.map(contact => {
+                    contact.id = contact._id.toString()
+
+                    delete contact._id
+
+                    return contact
+                })
+            })
+    },
+
+    removeContact(email, contactId) {
+        // TODO
+    }
 }
 
 class LogicError extends Error {
