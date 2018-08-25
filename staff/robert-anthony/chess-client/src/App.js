@@ -1,13 +1,10 @@
 import React, {Component} from 'react'
-import {Switch, Route, withRouter, Redirect} from 'react-router-dom'
+import {Switch, Link, Route, withRouter, Redirect} from 'react-router-dom'
 import Landing from './components/Landing'
 import Register from './components/Register'
 import Login from './components/Login'
 import Main from './components/Main'
-import Contacts from './components/Contacts'
-import Notes from './components/Notes'
-import AddContact from './components/AddContact'
-import AddNote from './components/AddNote'
+
 import getToday from './helpers/getToday'
 
 class App extends Component {
@@ -50,7 +47,7 @@ class App extends Component {
     return <div className="full-height">
       <header>
         {this.isLoggedIn() &&
-        <nav>< <Link onClick={this.onLogout}>logout</Link>
+        <nav><Link to="" onClick={this.onLogout}>logout</Link>
         </nav>}
       </header>
 
