@@ -5,12 +5,12 @@ require('dotenv').config()
 require('isomorphic-fetch')
 const { expect } = require('chai')
 const logic = require('.')
-const fs = require('fs')
-const rimraf = require('rimraf')
+//const fs = require('fs')
+//const rimraf = require('rimraf')
 const FormData = require('form-data')
-const Jimp = require('jimp')
+//const Jimp = require('jimp')
 const jwt = require('jsonwebtoken')
-
+const randomEmail = require('random-email')
 global.FormData = FormData
 
 describe('logic', () => {
@@ -19,7 +19,8 @@ describe('logic', () => {
 
 
     beforeEach(() => {
-        username = `user-${Math.random()}`, password = '123'
+        username = "bobbo" + Math.random() + "@bobo.com"
+        password = 'ABCDef12342'
     })
 
     describe('register user', () => {
@@ -34,7 +35,7 @@ describe('logic', () => {
                 .catch(err => err)
                 .then(err => {
                     expect(err).to.exist
-                    expect(err.message).to.equal(`user ${username} already exists`)
+                    expect(err.message).to.equal(`user with ${username} email already exist`)
                 })
         )
 
@@ -76,7 +77,7 @@ describe('logic', () => {
                 .catch(err => err)
                 .then(err => {
                     expect(err).to.exist
-                    expect(err.message).to.equal(`user ${username} does not exist`)
+                    expect(err.message).to.equal(`user with ${username} email does not exist`)
                 })
         )
 

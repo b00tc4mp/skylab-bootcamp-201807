@@ -30,10 +30,6 @@ class App extends Component {
 
   }
 
-  onChangeCurrentDate = (newDate) => {
-    this.setState({currentDate:newDate})
-  }
-
 
 
   isLoggedIn() {
@@ -54,8 +50,7 @@ class App extends Component {
     return <div className="full-height">
       <header>
         {this.isLoggedIn() &&
-        <nav><a href="/#/contacts">contacts</a> <a href="/#/notes">notes</a> <a href=""
-                                                                                onClick={this.onLogout}>logout</a>
+        <nav>< <Link onClick={this.onLogout}>logout</Link>
         </nav>}
       </header>
 
@@ -63,16 +58,6 @@ class App extends Component {
         <Route exact path="/" render={() => this.isLoggedIn() ? <Redirect to="/main"/> : <Landing/>}/>
         <Route path="/register" render={() => this.isLoggedIn() ? <Redirect to="/main"/> : <Register/>}/>
         <Route path="/main" render={() => this.isLoggedIn() ? <Main/> : <Landing/>}/>
-        <Route path="/contacts"
-               render={() => this.isLoggedIn() ? <Contacts token={token} username={username}/> : <Landing/>}/>
-        <Route path="/notes"
-               render={() => this.isLoggedIn() ? <Notes onChangeCurrentDate={this.onChangeCurrentDate} currentDate={currentDate} token={token} username={username}/> : <Landing/>}/>
-        <Route path="/addcontact"
-               render={() => this.isLoggedIn() ? <AddContact token={token} username={username}/> : <Landing/>}/>
-
-        <Route path="/addnote"
-               render={() => this.isLoggedIn() ? <AddNote currentDate={currentDate} token={token} username={username}/> : <Landing/>}/>
-
         <Route path="/login" render={() => this.isLoggedIn() ? <Redirect to="/main"/> :
           <Login onLoggedIn={this.onLoggedIn}/>}/>
       </Switch>
