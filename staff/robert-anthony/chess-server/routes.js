@@ -56,7 +56,9 @@ router.patch('/user/:username', [validateJwt, jsonBodyParser], (req, res) => {
 
 
 
-module.exports = function (db) {
+
+
+module.exports = function () {
 
   return router
 }

@@ -4,7 +4,7 @@ const { User, Contact, Note } = require('../models')
 
 let connection
 
-mongoose.connect('mongodb://localhost::27017/scraping', { useNewUrlParser: true })
+mongoose.connect('mongodb://localhost/skylab', { useNewUrlParser: true })
     .then(conn => {
         connection = conn
 

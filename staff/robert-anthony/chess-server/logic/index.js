@@ -1,7 +1,13 @@
 const validateEmail = require('../utils/validate-email')
 const {User} = require('../data/models')
+var socketIO = require('socket.io');
 
 const logic = {
+
+  io: null,
+
+  loggedInUsers: [],
+
   _validateStringField(name, value) {
     if (typeof value !== 'string' || !value.length) throw new LogicError(`invalid ${name}`)
   },
@@ -13,6 +19,7 @@ const logic = {
   _validateDateField(name, field) {
     if (!(field instanceof Date)) throw new LogicError(`invalid ${name}`)
   },
+
 
   register(email, password) {
     return Promise.resolve()
@@ -28,6 +35,7 @@ const logic = {
         return User.create({email, password})
       })
       .then(() => true)
+
   },
 
   authenticate(email, password) {
@@ -42,9 +50,11 @@ const logic = {
         if (!user) throw new LogicError(`user with ${email} email does not exist`)
 
         if (user.password !== password) throw new LogicError(`wrong password`)
-
-        return true
+        this.loggedInUsers.push( {email:user.email, socket: null})
       })
+
+      .then(() => true)
+
   },
 
   updatePassword(email, password, newPassword) {
@@ -87,6 +97,24 @@ const logic = {
       })
       .then(() => true)
   },
+
+
+
+  setIO(io) {
+    this.io = io
+
+    io.on('connection', (client) => {
+
+      client.on('authenticated',username => {
+        const userData = this.loggedInUsers.find(userdata =>  userdata.email ===  username)
+        if (userData) userData.socket = client.id
+        else this.loggedInUsers.push({email:username,socket:client.id})
+        this.io.emit('all users',{users:this.loggedInUsers})
+      })
+
+    })
+  }
+
 
 }
 

@@ -4,24 +4,32 @@ const express = require('express')
 const cors = require('cors')
 const pkg = require('./package.json')
 const routes = require('./routes')
+var socketIO = require('socket.io');
+const http = require('http')
+const {env: {MONGO_URL}} = process
+const mongoose = require('mongoose')
+const {logic} = require('./logic')
 
-const { env: { MONGO_URL } } = process
-
-const { MongoClient } = require('mongodb')
-
-MongoClient.connect(MONGO_URL, { useNewUrlParser: true }, (err, conn) => {
+mongoose.connect(MONGO_URL, {useNewUrlParser: true}, (err, conn) => {
   if (err) throw err
 
-  const db = conn.db() // ??
 
-  const { PORT } = process.env
+  const {PORT} = process.env
 
   const app = express()
 
   app.use(cors())
 
-  app.use('/api', routes(db))
+  app.use('/api', routes())
 
-  app.listen(PORT, () => console.log(`${pkg.name} ${pkg.version} up and running on port ${PORT}`))
+  const server = http.createServer(app);
+  const io = socketIO(server);
+  logic.setIO(io)
+
+  server.listen(PORT, () => console.log(`${pkg.name} ${pkg.version} up and running on port ${PORT}`));
+// WARNING: app.listen(80) will NOT work here!
+
+
+
 })
 
