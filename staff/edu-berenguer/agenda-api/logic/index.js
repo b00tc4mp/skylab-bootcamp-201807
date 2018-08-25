@@ -89,7 +89,7 @@ const logic = {
             .then(() => true)
     },
 
-    addNote(email, date, text) {
+    addNote(email, date = new Date(), text) {
         return Promise.resolve()
             .then(() => {
                 this._validateEmail(email)
