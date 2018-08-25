@@ -1,0 +1,27 @@
+{
+  "name": "chess-server",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "ra",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "cors": "^2.8.4",
+    "dotenv": "^6.0.0",
+    "express": "^4.16.3",
+    "jsonwebtoken": "^8.3.0",
+    "mongoose": "^5.2.9",
+    "socket.io": "^2.1.1"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "debug": "^3.1.0",
+    "mocha": "^5.2.0",
+    "random-email": "^1.0.3"
+  }
+}
