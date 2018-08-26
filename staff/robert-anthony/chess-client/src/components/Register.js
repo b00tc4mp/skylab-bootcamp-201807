@@ -32,7 +32,7 @@ class Register extends Component {
             register or <a href="/#/login">login</a>
                 </nav>
                 <form onSubmit={this.onRegisterSubmitted}>
-                    <input type="text" name="username" placeholder="username" autofocus onChange={this.onUsernameChanged} />
+                    <input type="text" name="username" placeholder="username" autoFocus onChange={this.onUsernameChanged} />
                     <input type="password" name="password" placeholder="password" onChange={this.onPasswordChanged} />
                     <button type="submit">register</button>
                 </form>

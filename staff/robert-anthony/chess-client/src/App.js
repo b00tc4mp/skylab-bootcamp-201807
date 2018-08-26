@@ -15,19 +15,31 @@ class App extends Component {
 
   componentDidMount = () => {
 
+  this.setupSocketListeners()
 
+
+  }
+
+  setupSocketListeners = () => {
     this.socket = socketIOClient('http://localhost:8080');
-    this.socket.on('all users',users => {
-     this.setState(users)
-    })
+    if (this.socket) {
+
+      this.socket.on('all users',users => {
+        this.setState({users})
+        sessionStorage.setItem('users',JSON.stringify(users))
+      })
+
+      this.socket.on('error', message => console.error(message))
+
+    } else console.error("Error establishing connection to socket server")
 
   }
 
   state = {
     username: sessionStorage.getItem('username') || '',
     token: sessionStorage.getItem('token') || '',
+    users: JSON.parse(sessionStorage.getItem('users')) || [],
     currentDate: getToday(),
-    users: []
   }
 
 
@@ -36,9 +48,13 @@ class App extends Component {
     this.socket.emit('authenticated',username)
     sessionStorage.setItem('username', username)
     sessionStorage.setItem('token', token)
-
   }
 
+  setUpUsersConnection = (user) => {
+    this.socket.emit('establish connection',this.state.username,user,result =>{
+      console.log(result)
+    })
+  }
 
   isLoggedIn() {
     return !!this.state.username
@@ -46,9 +62,8 @@ class App extends Component {
 
   onLogout = e => {
     e.preventDefault()
-
+    this.socket.close()
     this.setState({username: '', token: ''})
-
     sessionStorage.clear()
   }
 
@@ -67,7 +82,7 @@ class App extends Component {
       <Switch>
         <Route exact path="/" render={() => this.isLoggedIn() ? <Redirect to="/main"/> : <Landing/>}/>
         <Route path="/register" render={() => this.isLoggedIn() ? <Redirect to="/main"/> : <Register/>}/>
-        <Route path="/main" render={() => this.isLoggedIn() ? <Main users={this.state.users}/> : <Landing/>}/>
+        <Route path="/main" render={() => this.isLoggedIn() ? <Main username={this.state.username} onUserClick={this.setUpUsersConnection} users={this.state.users}/> : <Landing/>}/>
         <Route path="/login" render={() => this.isLoggedIn() ? <Redirect to="/main"/> :
           <Login onLoggedIn={this.onLoggedIn}/>}/>
       </Switch>
