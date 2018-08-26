@@ -1,35 +1,32 @@
-'use strict'
+const validateEmail = require('../utils/validate-email')
+const moment = require('moment')
+const { Contact, Note, User } = require('../data/models')
 
 const logic = {
-    _users: null,
-
-    _validateStringField(fieldName, fieldValue) {
-        if (typeof fieldValue !== 'string' || !fieldValue.length) throw new LogicError(`invalid ${fieldName}`)
-    },
-    _validateNumericField(fieldName, fieldValue) {
-        if (typeof fieldValue !== 'number') throw new LogicError(`invalid ${fieldName}`)
-    },
-    _validateEmailField(email) {
-        this._validateStringField('email', email)
-
-        var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        if (re.test(email) === false) throw new LogicError(`invalid email`)
+    _validateStringField(name, value) {
+        if (typeof value !== 'string' || !value.length) throw new LogicError(`invalid ${name}`)
     },
 
-    register(name, surname, email, password) {
+    _validateEmail(email) {
+        if (!validateEmail(email)) throw new LogicError('invalid email')
+    },
+
+    _validateDateField(name, field) {
+        if (!(field instanceof Date)) throw new LogicError(`invalid ${name}`)
+    },
+
+    register(email, password) {
         return Promise.resolve()
             .then(() => {
-                this._validateStringField('name', name)
-                this._validateStringField('surname', surname)
-                this._validateEmailField(email)
+                this._validateEmail(email)
                 this._validateStringField('password', password)
 
-                return this._users.findOne({ email })
+                return User.findOne({ email })
             })
             .then(user => {
-                if (user) throw new LogicError(`email ${email} is already in use`)
+                if (user) throw new LogicError(`user with ${email} email already exist`)
 
-                return this._users.insertOne({ name, surname, email, password, notes: [], contacts: [] })
+                return User.create({ email, password })
             })
             .then(() => true)
     },
@@ -37,150 +34,133 @@ const logic = {
     authenticate(email, password) {
         return Promise.resolve()
             .then(() => {
-                this._validateEmailField(email)
+                this._validateEmail(email)
                 this._validateStringField('password', password)
 
-                return this._users.findOne({ email })
+                return User.findOne({ email })
             })
             .then(user => {
-                if (!user) throw new LogicError(`user with email ${email} does not exist`)
-                if (user.password !== password) throw new LogicError('wrong credentials')
+                if (!user) throw new LogicError(`user with ${email} email does not exist`)
+
+                if (user.password !== password) throw new LogicError(`wrong password`)
 
                 return true
             })
-
     },
 
-    updateUserSettings() {
-        //TODO allow the user to update name, surname, email and password  
+    updatePassword(email, password, newPassword) {
+        return Promise.resolve()
+            .then(() => {
+                this._validateEmail(email)
+                this._validateStringField('password', password)
+                this._validateStringField('new password', newPassword)
+
+                return User.findOne({ email })
+            })
+            .then(user => {
+                if (!user) throw new LogicError(`user with ${email} email does not exist`)
+
+                if (user.password !== password) throw new LogicError(`wrong password`)
+
+                if (password === newPassword) throw new LogicError('new password must be different to old password')
+
+                user.password = newPassword
+
+                return user.save()
+            })
+            .then(() => true)
+    },
+
+    unregisterUser(email, password) {
+        return Promise.resolve()
+            .then(() => {
+                this._validateEmail(email)
+                this._validateStringField('password', password)
+
+                return User.findOne({ email })
+            })
+            .then(user => {
+                if (!user) throw new LogicError(`user with ${email} email does not exist`)
+
+                if (user.password !== password) throw new LogicError(`wrong password`)
+
+                return User.deleteOne({ _id: user._id })
+            })
+            .then(() => true)
+    },
+
+    addNote(email, date, text) {
+        return Promise.resolve()
+            .then(() => {
+                this._validateEmail(email)
+                this._validateDateField('date', date)
+                this._validateStringField('text', text)
+
+                return User.findOne({ email })
+            })
+            .then(user => {
+                if (!user) throw new LogicError(`user with ${email} email does not exist`)
+
+                const note = { date, text, user: user.id }
+
+                return Note.create(note)
+            })
+            .then(() => true)
     },
 
     listNotes(email, date) {
         return Promise.resolve()
             .then(() => {
-                this._validateEmailField(email)
-                this._validateStringField('date', date)
+                this._validateEmail(email)
 
-                return this._users.findOne({ email })
+                return User.findOne({ email })
             })
             .then(user => {
-                if (!user) throw new LogicError(`user with email ${email} does not exist`)
+                if (!user) throw new LogicError(`user with ${email} email does not exist`)
 
-                let result = user.notes.filter((note) => {
-                    return note.date === date
-                })
+                const mDate = moment(date)
 
-                return result
+                const minDate = mDate.startOf('day').toDate()
+                const maxDate = mDate.endOf('day').toDate()
+
+                return Note.find({ user: user._id, date: { $gte: minDate, $lte: maxDate } }, { __v: 0 }).lean()
+            })
+            .then(notes => {
+                if (notes) {
+                    notes.forEach(note => {
+                        note.id = note._id.toString()
+
+                        delete note._id
+
+                        delete note.user
+                    })
+                }
+
+                return notes || []
             })
     },
 
-    saveNote(email, date, text) {
+    removeNote(email, noteId) {
         return Promise.resolve()
             .then(() => {
-                this._validateEmailField(email)
-                this._validateStringField('date', date)
-                this._validateStringField('text', text)
+                this._validateEmail(email)
 
-                if (text.length > 350) throw new LogicError('text can not have more than 350 characters')
-
-                return this._users.findOne({ email })
-            })
-            .then(user => {
-                if (!user) throw new LogicError(`user with email ${email} does not exist`)
-
-                const notes = user.notes
-                const note = { date, text }
-
-                notes.push(note)
-
-                return this._users.updateOne({ email }, { $set: { notes } })
-            })
-            .then(() => true)
-    },
-
-    deleteNote(email, date, text) {
-        return Promise.resolve()
-            .then(() => {
-                this._validateEmailField(email)
-                this._validateStringField('date', date)
-                this._validateStringField('text', text)
-
-                if (text.length > 350) throw new LogicError('text can not have more than 350 characters')
-
-                return this._users.findOne({ email })
-            })
-            .then(user => {
-                if (!user) throw new LogicError(`user with email ${email} does not exist`)
-
-                let notes = user.notes.filter((note) => {
-                    return !(note.date === date && note.text === text)
-                })
-
-                return this._users.updateOne({ email }, { $set: { notes } })
-            })
-            .then(() => true)
-
-    },
-
-    listContacts(email) {
-        return Promise.resolve()
-            .then(() => {
-                this._validateEmailField(email)
-
-                return this._users.findOne({ email })
+                return User.findOne({ email })
             })
             .then((user) => {
-                if (!user) throw new LogicError(`user with email ${email} does not exist`)
+                if (!user) throw new LogicError(`user with ${email} email does not exist`)
 
-                return user.contacts
-            })
-    },
+                return Note.findOne({ _id: noteId })
+                    .then(note => {
+                        if (!note) throw new LogicError(`note with id ${noteId} does not exist`)
 
-    saveContact(userEmail, name, surname, phone, email, address) {
-        return Promise.resolve()
-            .then(() => {
-                this._validateEmailField(userEmail)
-                this._validateStringField('contact name', name)
-                this._validateStringField('contact surname', surname)
-                this._validateNumericField('contact phone', phone)
-                this._validateStringField('contact email', email)
-                this._validateStringField('contact address', address)
+                        if (note.user.toString() !== user.id) throw new LogicError('note does not belong to user')
 
-                return this._users.findOne({ email: userEmail })
-            })
-            .then(user => {
-                if (!user) throw new LogicError(`user with email ${userEmail} does not exist`)
-
-                const contacts = user.contacts
-                contacts.push({ name, surname, phone, email, address })
-
-                return this._users.updateOne({ email: userEmail }, { $set: { contacts } })
+                        return Note.deleteOne({ _id: noteId })
+                    })
             })
             .then(() => true)
-
-    },
-
-    deleteContact(email, cemail, cphone) {
-        return Promise.resolve()
-            .then(() => {
-                this._validateEmailField(email)
-                this._validateEmailField(cemail)
-                this._validateNumericField('contact phone', cphone)
-
-                return this._users.findOne({ email })
-            })
-            .then(user => {
-                if (!user) throw new LogicError(`user with email ${email} does not exist`)
-
-                let contacts = user.contacts.filter((contact) => {
-                    return !(contact.email === cemail && contact.phone === cphone)
-                })
-
-                return this._users.updateOne({ email }, { $set: { contacts } })
-            })
-            .then(() => true)
-
-    },
+    }
 
 }
 
