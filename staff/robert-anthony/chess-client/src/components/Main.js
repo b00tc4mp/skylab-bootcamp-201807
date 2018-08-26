@@ -3,26 +3,36 @@ import classNames from 'classnames'
 
 class Main extends Component {
 
-  onUserClick = (e,user) => {
-    console.log("onUserClick",user)
+  state = {
+    amConnected: this.props.amConnected,
+    messageToSend: "",
+  }
+
+  onUserClick = (e, user) => {
     e.preventDefault()
     this.props.onUserClick(user)
   }
 
+  keepMessageToSend = (e) => {
+    this.setState({messageToSend: e.target.value})
+  }
+
+  sendToUser = e => {
+    e.preventDefault()
+
+    this.props.sendToUser(this.state.messageToSend)
+    this.setState({messageToSend:""})
+  }
 
 
   render() {
-    let {props: {username,users}} = this
+    let {props: {amConnected, username, users,receivedMessage},state:{messageToSend}} = this
     let listo
     if (users.length) {
-      users = users.filter(user => user.username !== username)
+      users = users.filter(user => user !== username)
 
       listo = users.map(user => {
-        console.log(users)
-        if (user.hasPartner)
-          return  <li key={user + Math.random()}> {`${user.username}`}</li>
-       else
-        return  <li key={user + Math.random()}> <a  onClick={e => this.onUserClick(e,user.username)}> {`${user.username}`}</a></li>
+        return <li key={user + Math.random()}><a onClick={e => this.onUserClick(e, user)}> {`${user}`}</a></li>
       })
     }
     return <main>
@@ -30,9 +40,18 @@ class Main extends Component {
         <nav>
         </nav>
         <h1>{username}</h1>
-        <ul>
+        {!amConnected && <ul>
           {users.length ? listo : <li>no users available</li>}
-        </ul>
+        </ul>}
+        {amConnected &&
+        <div>
+          <form onSubmit={this.sendToUser}>
+            <input onChange={this.keepMessageToSend} value={messageToSend} id="main__text--sender" type="text"/>
+            <button type="submit">Send</button>
+          </form>
+          <p>{receivedMessage}</p>
+        </div>
+        }
       </div>
     </main>
 

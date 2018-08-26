@@ -5,7 +5,13 @@ const logic = {
 
   io: null,
 
-  loggedInUsers: [],
+  /*
+    loggedInUsers: [],
+  */
+
+  userToSocket: new Map,
+  userToUser: new Map,
+  availableUsers: new Set,
 
   _validateStringField(name, value) {
     if (typeof value !== 'string' || !value.length) throw new LogicError(`invalid ${name}`)
@@ -49,11 +55,15 @@ const logic = {
         if (!user) throw new LogicError(`user with ${email} email does not exist`)
 
         if (user.password !== password) throw new LogicError(`wrong password`)
-        if (this.loggedInUsers.findIndex(user => user.email === email) === -1) this.loggedInUsers.push({
-          email: user.email,
-          socket: null,
-          partner: null
-        })
+        /*   if (this.loggedInUsers.findIndex(user => user.email === email) === -1) this.loggedInUsers.push({
+             email: user.email,
+             socket: null,
+             partner: null
+           })*/
+        if (!this.availableUsers.has(user.email)) {
+          this.availableUsers.add(user.email)
+        }
+
       })
 
       .then(() => true)
@@ -103,14 +113,14 @@ const logic = {
 
 
   broadcastUsersState() {
-    const usersToSendToClient = this.loggedInUsers.map(user => ({
-      username: user.email,
-      hasPartner: user.partner !== null
-    }))
-    console.error("sending these users to client",usersToSendToClient)
+    /* const usersToSendToClient = this.loggedInUsers.map(user => ({
+       username: user.email,
+       hasPartner: user.partner !== null
+     }))*/
+    const usersToSendToClient = Array.from(this.availableUsers)
+    console.error("sending these users to client", usersToSendToClient)
     this.io.sockets.emit('all users', usersToSendToClient)
   },
-
 
 
   setIO(io) {
@@ -119,25 +129,60 @@ const logic = {
     io.on('connection', (socket) => {
 
       socket.on('disconnect', reason => {
-        this.loggedInUsers.forEach(user =>{
-          if (user.partner === socket) user.partner = null
-        })
-        const i = this.loggedInUsers.findIndex(user => user.socket === socket)
-        if (i !== -1) this.loggedInUsers.splice(i, 1)
+        /*   this.loggedInUsers.forEach(user => {
+             if (user.partner === socket) user.partner = null
+           })
+           const i = this.loggedInUsers.findIndex(user => user.socket === socket)
+           if (i !== -1) this.loggedInUsers.splice(i, 1)
+           this.broadcastUsersState()*/
+      })
+
+      socket.on('logout', username => {
+/*
+        this._validateEmail(email)
+*/
+
+        this.availableUsers.delete(username)
+        this.userToSocket.delete(username)
+        const connectedWith = this.userToUser.get(username)
+        if (connectedWith) this.availableUsers.add(connectedWith)
+        this.userToUser.delete(username)
+        this.userToUser.delete(connectedWith)
         this.broadcastUsersState()
       })
 
+      socket.on('sent message',(sender,message,cb) => {
+        debugger
+        const destination = this.userToUser.get(sender)
+        if (!destination) return cb(1,"Destination not found")
+        const toSocket = this.userToSocket.get(destination)
+        if (!toSocket) return cb(1,`Socket for user ${destination} not found`)
+        toSocket.emit('message received',message,cb)
+      })
 
 
       socket.on('establish connection', (requester, destination, cb) => {
-        const requestingUser = this.loggedInUsers.find(user => user.email === requester)
-        if (!requestingUser) return cb("Requesting user not found")
-        const userToConnect = this.loggedInUsers.find(user => user.email === destination)
-        if (!userToConnect) return cb("Requesting user not found")
-        requestingUser.partner = userToConnect.socket
-        userToConnect.partner = requestingUser.socket
-        debugger
-        cb(`Connection established between ${requestingUser.socket.id} and ${userToConnect.socket.id}`)
+      /*  this._validateStringField('requester', requester)
+        this._validateStringField('destination', destination)
+        if (typeof cb !== 'function') throw new LogicError(`invalid callback ${cb.toString()}`)*/
+
+        /* const requestingUser = this.loggedInUsers.find(user => user.email === requester)
+         if (!requestingUser) return cb("Requesting user not found")
+         const userToConnect = this.loggedInUsers.find(user => user.email === destination)
+         if (!userToConnect) return cb("Requesting user not found")
+         requestingUser.partner = userToConnect.socket
+         userToConnect.partner = requestingUser.socket*/
+        if (!this.availableUsers.has(requester)) return cb(1,`Requesting user ${requester} not available`)
+        if (!this.availableUsers.has(destination)) return cb(1,`Destination user ${destination} not available`)
+        if (!this.userToSocket.get(requester)) return cb(1,`Requesting user ${requester} does not have a socket`)
+        if (!this.userToSocket.get(destination)) return cb(1,`Destination user ${destination} does not have a socket`)
+        this.userToUser.set(requester, destination)
+        this.userToUser.set(destination, requester)
+        this.availableUsers.delete(requester)
+        this.availableUsers.delete(destination)
+
+        cb(null,`Connection established between ${requester} and ${destination}`)
+        this.userToSocket.get(destination).emit('connected remotely')
         this.broadcastUsersState()
       })
 
@@ -146,12 +191,18 @@ const logic = {
       })
 
       socket.on('authenticated', username => {
-        const userData = this.loggedInUsers.find(userdata => userdata.email === username)
-        if (userData) {
-          if (userData.socket) userData.socket.disconnect()
-          userData.socket = socket
-        }
-        else this.loggedInUsers.push({email: username, socket: socket, partner: null})
+/*
+        this._validateEmail(email)
+*/
+
+        /*  const userData = this.loggedInUsers.find(userdata => userdata.email === username)
+          if (userData) {
+            if (userData.socket) userData.socket.disconnect()
+            userData.socket = socket
+          }
+          else this.loggedInUsers.push({email: username, socket: socket, partner: null})*/
+        if (this.userToSocket.get(username)) this.userToSocket.delete(username)
+        this.userToSocket.set(username, socket)
         this.broadcastUsersState()
       })
 

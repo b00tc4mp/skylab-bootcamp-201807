@@ -10,6 +10,17 @@ import getToday from './helpers/getToday'
 
 class App extends Component {
 
+
+  state = {
+    username: sessionStorage.getItem('username') || '',
+    token: sessionStorage.getItem('token') || '',
+    users: JSON.parse(sessionStorage.getItem('users')) || [],
+    currentDate: getToday(),
+    amConnectedToUser: false,
+    receivedMessage: ""
+  }
+
+
   socket = null
 
 
@@ -31,15 +42,15 @@ class App extends Component {
 
       this.socket.on('error', message => console.error(message))
 
+      this.socket.on('message received',(receivedMessage,cb) => {
+        cb(null,`Message ${receivedMessage} received by ${this.state.username}`)
+        this.setState({receivedMessage})
+      })
+
+      this.socket.on('connected remotely', () => this.setState({amConnected:true}))
+
     } else console.error("Error establishing connection to socket server")
 
-  }
-
-  state = {
-    username: sessionStorage.getItem('username') || '',
-    token: sessionStorage.getItem('token') || '',
-    users: JSON.parse(sessionStorage.getItem('users')) || [],
-    currentDate: getToday(),
   }
 
 
@@ -50,9 +61,18 @@ class App extends Component {
     sessionStorage.setItem('token', token)
   }
 
+  sendToUser = message => {
+    this.socket.emit('sent message',this.state.username,message,(err,result) => {
+      if (err) console.error("Error on sending message",err)
+      else console.log(result)
+    })
+  }
+
   setUpUsersConnection = (user) => {
-    this.socket.emit('establish connection',this.state.username,user,result =>{
+    this.socket.emit('establish connection',this.state.username,user,(err,result) =>{
+
       console.log(result)
+      if (!err) this.setState({amConnected:true})
     })
   }
 
@@ -62,13 +82,13 @@ class App extends Component {
 
   onLogout = e => {
     e.preventDefault()
-    this.socket.close()
+    this.socket.emit('logout',this.state.username)
     this.setState({username: '', token: ''})
     sessionStorage.clear()
   }
 
   render() {
-    const {username, token, currentDate} = this.state
+    const {username, amConnected, users,receivedMessage,token} = this.state
 
     return <div className="full-height">
       <header>
@@ -82,7 +102,7 @@ class App extends Component {
       <Switch>
         <Route exact path="/" render={() => this.isLoggedIn() ? <Redirect to="/main"/> : <Landing/>}/>
         <Route path="/register" render={() => this.isLoggedIn() ? <Redirect to="/main"/> : <Register/>}/>
-        <Route path="/main" render={() => this.isLoggedIn() ? <Main username={this.state.username} onUserClick={this.setUpUsersConnection} users={this.state.users}/> : <Landing/>}/>
+        <Route path="/main" render={() => this.isLoggedIn() ? <Main receivedMessage={receivedMessage} sendToUser={this.sendToUser} amConnected={amConnected} username={username} onUserClick={this.setUpUsersConnection} users={users}/> : <Landing/>}/>
         <Route path="/login" render={() => this.isLoggedIn() ? <Redirect to="/main"/> :
           <Login onLoggedIn={this.onLoggedIn}/>}/>
       </Switch>
