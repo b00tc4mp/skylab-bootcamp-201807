@@ -530,13 +530,17 @@ describe('logic', () => {
         })
 
         it('should succeed on correct data', () => {
-            return logic.listContacts(email, 'm')
+            return logic.listContacts(email, 'M')
                 .then(_contacts => {
                     const expectedContacts = [contacts[4], contacts[7]]
 
                     expect(_contacts).to.deep.equal(expectedContacts)
                 })
         })
+    })
+
+    true && describe('remove contact', () => {
+        // TODO
     })
 
     after(() =>
