@@ -1,6 +1,6 @@
 'use strict'
 
-const { Doctor, Patients, Caretaker } = require('../data/models')
+const { Doctor, Patient, Cite, Treatment, Caretaker } = require('../data/models')
 
 const logic = {
 
@@ -9,11 +9,19 @@ const logic = {
     },
 
     _validateAgeField(age, value) {
-        if (typeof value !== 'number') throw new LogicError(`invalid ${age}`)
+        if (typeof value !== 'number' || value !== value) throw new LogicError(`invalid ${age}`)
+    },
+
+    _validateDniField(dni, value) {
+        if (typeof value !== 'number' || value !== value || value.toString().length !== 8) throw new LogicError(`invalid ${dni}`)
     },
 
     _validatePhoneField(phone, value) {
-        if (typeof value !== 'number') throw new LogicError(`invalid ${phone}`)
+        if (typeof value !== 'number' || value !== value || value.toString().length !== 9) throw new LogicError(`invalid ${phone}`)
+    },
+
+    _validateDateField(date, field) {
+        if (!(field instanceof Date)) throw new LogicError(`invalid ${date}`)
     },
 
     registerDoctor(code, password) {
@@ -48,83 +56,72 @@ const logic = {
             })
     },
 
-    addPatient(code, name, surname, age, gender, address, phone) {
+    addPatient(name, dni, surname, age, gender, address, phone) {
+
         return Promise.resolve()
             .then(() => {
-                this._validateStringField('code', code)
                 this._validateStringField('name', name)
+                this._validateDniField('dni', dni)
                 this._validateStringField('surname', surname)
                 this._validateAgeField('age', age)
                 this._validateStringField('gender', gender)
                 this._validateStringField('address', address)
                 this._validatePhoneField('phone', phone)
 
-                return Doctor.findOne({ code })
+                return Patient.findOne({ dni })
             })
-            .then(doctor => {
-                if (!doctor) throw new LogicError(`doctor with ${code} code does not exist`)
+            .then(patient => {
+                if (patient) throw new LogicError(`patient with ${dni} dni already exist`)
 
-                const patient = { name, surname, age, gender, address, phone }
+                const patientData = {name, dni, surname, age, gender, address, phone}
 
-                doctor.patients.push(new Patients(patient))
-
-                return doctor.save()
+                return Patient.create(patientData)
             })
             .then(() => true)
     },
     
-    listPatients(code, name, startWith) {
+    removePatient(dni) {
         return Promise.resolve()
             .then(() => {
-                this._validateStringField('code', code)
-                this._validateStringField('name', name)
-                this._validateStringField('startWith', startWith)
+                this._validateDniField('dni', dni)
 
-                return Doctor.findOne({ code })
+                return Patient.findOne({ dni })
             })
-            .then(doctor => {
-                if (!doctor) throw new Error(`doctor with ${code} code does not exist`)
-
-                let patients = doctor.patients.map(patient => patient._doc)
-
-                patients = patients.filter(({ name, surname }) => {
-                    if (name) return name.startsWith(startWith)
-                    if (surname) return surname.startsWith(startWith)
-
-                    return name.startsWith(startWith)
-                })
-
-                return patients.map(patient => {
-                    patient.id = patient._id.toString()
-                    delete patient._id
-
-                    return patient
-                })
-            })
-    },
-
-    removePatient(code, {name, surname, age, gender, address, phone}) {
-        const patient = {name, surname, age, gender, address, phone}
-        return Doctor.findOne({ code })
-            .then(doctor => {
-                if (!doctor) throw new LogicError(`doctor with ${code} code does not exist`)
-
-                const patients = doctor._doc.patients.map(patient => patient._doc.name)
-                const index = patients.indexOf(patient)
-
-                if (index === -1) throw new LogicError(`patient with ${patient.name} name was not found`)
-                doctor.patients.splice(index, 1)
+            .then(patient => {
+                if (!patient) throw new LogicError(`patient with ${dni} dni does not exist`)
                 
-                return doctor.save()
+                return Patient.deleteOne({ _id: patient._id })
             })
             .then(() => true)
     },
+
+    searchPatients(name, startWith) {
+        return Promise.resolve()
+            .then(() => {
+                this._validateStringField('name', name)
+                this._validateStringField('startWith', startWith)
+
+                return Patient.findOne({ name })
+            })
+            .then(patient => {
+                if (!patient) throw new Error(`patient with ${name} name does not exist`)
+
+                patients = patient.findOne(({ name }) => {
+                    if (name) return name.startsWith(startWith)
+                    return name.startsWith(startWith)
+                })
+                return patients
+            })
+    },
+
+    
+
 
     registerCaretaker(name, dni) {
         return Promise.resolve()
             .then(() => {
                 this._validateStringField('name', name)
-                this._validateStringField('dni', dni)
+                this._validateDniField('dni', dni)
 
                 return Caretaker.findOne({ name })
             })
@@ -140,9 +137,9 @@ const logic = {
         return Promise.resolve()
             .then(() => {
                 this._validateStringField('name', name)
-                this._validateStringField('dni', dni)
+                this._validateDniField('dni', dni)
 
-                return Caretaker.findOne({ name })
+                return Caretaker.findOne({ dni })
             })
             .then(caretaker => {
                 if (!caretaker) throw new LogicError(`caretaker ${name} does not exist`)

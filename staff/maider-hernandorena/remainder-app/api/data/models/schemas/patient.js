@@ -1,10 +1,16 @@
 'use strict'
 
 const { Schema } = require('mongoose')
+const Treatment = require('./treatment')
 
 module.exports = new Schema({
     name: {
         type: String,
+        required: true
+    },
+
+    dni: {
+        type: Number,
         required: true
     },
 
@@ -40,11 +46,5 @@ module.exports = new Schema({
         type: String
     },
 
-    pills: {
-        type: String
-    }, 
-
-    cites: {
-        type: Date
-    }
+    treatments: [Treatment]
 })

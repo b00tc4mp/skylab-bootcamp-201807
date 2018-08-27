@@ -2,6 +2,8 @@
 
 module.exports = {
     Doctor: require('./doctor'),
-    Patients: require('./patients'),
+    Patient: require('./patient'),
+    Cite: require('./cite'),
+    Treatment: require('./treatment'),
     Caretaker: require('./caretaker')
 }

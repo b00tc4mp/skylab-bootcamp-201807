@@ -13,7 +13,7 @@ module.exports = new Schema({
     },
 
     dni:{
-        type: String,
+        type: Number,
         required: true
     },
 
@@ -34,6 +34,6 @@ module.exports = new Schema({
 
     patients: {
         type: ObjectId,
-        ref: 'patients'
+        ref: 'Patient'
     }
 })
