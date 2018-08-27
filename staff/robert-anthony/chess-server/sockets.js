@@ -94,19 +94,21 @@ const socketLogic = {
 
       socket.on('move sent to chess engine', (sender, message, cb) => {
         const game = this.gameForUser(sender)
-        if (!game) return cb(1, `No game found for user ${destination} `)
-        console.error('game move',message)
-        cb(null,game.game.move(message))
+        if (!game) return cb(1, `No game found for user ${sender} `)
+        if (game.game.move(message)) {
+          debugger
+          const senderSocket = this.userToSocket.get(sender)
+          const destination = this.userToUser.get(sender)
+          const destinationSocket = this.userToSocket.get(destination)
+          senderSocket.emit('new position',game.game.fen()) /// WRONG!!!!!! need to emit only to some not to all
+          destinationSocket.emit('new position',game.game.fen()) /// WRONG!!!!!! need to emit only to some not to all
+         // io.sockets.emit('new position',game.game.fen()) /// WRONG!!!!!! need to emit only to some not to all
+          cb(null,"Move approved by game engine")
+        } else {
+          cb(5050,"Move not approved by game engine")
+        }
       })
 
-
-      socket.on('move confirmed by chess engine', (sender, message, cb) => {
-        const destination = this.userToUser.get(sender)
-        if (!destination) return cb(1, "Destination not found")
-        const toSocket = this.userToSocket.get(destination)
-        if (!toSocket) return cb(1, `Socket for user ${destination} not found`)
-        toSocket.emit('move received',message,cb)
-      })
 
       socket.on('establish connection', (requester, destination, cb) => {
         console.error("establish connection", requester, destination)

@@ -42,8 +42,7 @@ class App extends Component {
 
       this.socket.on('error', message => console.error(message))
 
-      this.socket.on('move received', (newGamePosition, cb) => {
-        cb(null, `Message ${newGamePosition} received by ${this.state.username}`)
+      this.socket.on('new position', (newGamePosition) => {
         this.setState({newGamePosition})
       })
 
@@ -91,17 +90,13 @@ class App extends Component {
 
   onGameMove = position => {
     this.socket.emit('move sent to chess engine', this.state.username, position, (err, result) => {
-      if (err) console.error("Error on sending move to chess engine from client", err)
+      if (err) {
+        if (err === 5050) console.error("Move not approved by chess engine")
+        else console.error("Error on sending move to chess engine from client", err)
+      }
       else {
-        if (result === null) console.log("Move not permitted by chess engine")
-        else {
-          console.log(position)
-          this.setState({newGamePosition:position})
-          this.socket.emit('move confirmed by chess engine', this.state.username, position, (err, result) => {
-            if (err) console.error("Error on confirming chess move")
-            else console.error(result)
-          })
-        }
+        console.error(result)
+
       }
     })
   }
