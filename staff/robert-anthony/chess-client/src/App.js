@@ -88,8 +88,8 @@ class App extends Component {
     sessionStorage.setItem('token', token)
   }
 
-  sendToUser = message => {
-    this.socket.emit('sent message', this.state.username, message, (err, result) => {
+  onUpdatePosition = position => {
+    this.socket.emit('sent message', this.state.username, position, (err, result) => {
       if (err) console.error("Error on sending message", err)
       else console.log(result)
     })
@@ -130,7 +130,7 @@ class App extends Component {
         <Route exact path="/" render={() => this.isLoggedIn() ? <Redirect to="/main"/> : <Landing/>}/>
         <Route path="/register" render={() => this.isLoggedIn() ? <Redirect to="/main"/> : <Register/>}/>
         <Route path="/main" render={() => this.isLoggedIn() ?
-          <Main receivedMessage={receivedMessage} sendToUser={this.sendToUser} amConnected={amConnected}
+          <Main onUpdatePosition={this.onUpdatePosition} amConnected={amConnected}
                 username={username} onUserClick={this.setUpUsersConnection} users={users}/> : <Landing/>}/>
         <Route path="/login" render={() => this.isLoggedIn() ? <Redirect to="/main"/> :
           <Login onLoggedIn={this.onLoggedIn}/>}/>

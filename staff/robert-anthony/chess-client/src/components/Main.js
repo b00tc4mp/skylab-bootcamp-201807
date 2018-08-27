@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import classNames from 'classnames'
+import ChessBoard from "./Chessboard"
 
 class Main extends Component {
 
@@ -13,20 +14,10 @@ class Main extends Component {
     this.props.onUserClick(user)
   }
 
-  keepMessageToSend = (e) => {
-    this.setState({messageToSend: e.target.value})
-  }
-
-  sendToUser = e => {
-    e.preventDefault()
-
-    this.props.sendToUser(this.state.messageToSend)
-    this.setState({messageToSend:""})
-  }
 
 
   render() {
-    let {props: {amConnected, username, users,receivedMessage},state:{messageToSend}} = this
+    let {props: {onUpdatePosition,amConnected, username, users}} = this
     let listo
     if (users.length) {
       users = users.filter(user => user !== username)
@@ -45,11 +36,8 @@ class Main extends Component {
         </ul>}
         {amConnected &&
         <div>
-          <form onSubmit={this.sendToUser}>
-            <input onChange={this.keepMessageToSend} value={messageToSend} id="main__text--sender" type="text"/>
-            <button type="submit">Send</button>
-          </form>
-          <p>{receivedMessage}</p>
+          <ChessBoard onUpdatePosition={onUpdatePosition}/>
+
         </div>
         }
       </div>

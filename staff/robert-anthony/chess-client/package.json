@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "chess.js": "^0.10.2",
+    "chessboardjsx": "^2.0.1",
     "classnames": "^2.2.6",
     "react": "^16.4.2",
     "react-dom": "^16.4.2",

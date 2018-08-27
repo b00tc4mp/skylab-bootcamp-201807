@@ -30,7 +30,7 @@ const socketLogic = {
       if (connectedWith) {
         if (this.userToUser.has(connectedWith)) this.userToUser.delete(connectedWith)
         const partnerSocket = this.userToSocket.get(connectedWith)
-        partnerSocket.emit('partner disconnected')
+        if (partnerSocket) partnerSocket.emit('partner disconnected')
         this.availableUsers.add(connectedWith)
       }
     }
