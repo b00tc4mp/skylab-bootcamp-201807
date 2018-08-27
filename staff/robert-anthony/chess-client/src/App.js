@@ -17,7 +17,7 @@ class App extends Component {
     users: JSON.parse(sessionStorage.getItem('users')) || [],
     currentDate: getToday(),
     amConnected: sessionStorage.getItem('amConnected') || false,
-    receivedMessage: ""
+    newGamePosition: "start"
   }
 
 
@@ -42,9 +42,9 @@ class App extends Component {
 
       this.socket.on('error', message => console.error(message))
 
-      this.socket.on('message received', (receivedMessage, cb) => {
-        cb(null, `Message ${receivedMessage} received by ${this.state.username}`)
-        this.setState({receivedMessage})
+      this.socket.on('move received', (newGamePosition, cb) => {
+        cb(null, `Message ${newGamePosition} received by ${this.state.username}`)
+        this.setState({newGamePosition})
       })
 
       this.socket.on('connected remotely', () => {
@@ -62,8 +62,9 @@ class App extends Component {
         this.socket.emit('client has reconnected', this.state.username, (err, result) => {
           if (err) console.error(`Error on reconnecting client with server: ${err}, ${result}`)
           else {
-            this.setState({amConnected:true})
-            console.log(result)}
+            this.setState({amConnected: true})
+            console.log(result)
+          }
         })
       });
 
@@ -88,10 +89,20 @@ class App extends Component {
     sessionStorage.setItem('token', token)
   }
 
-  onUpdatePosition = position => {
-    this.socket.emit('sent message', this.state.username, position, (err, result) => {
-      if (err) console.error("Error on sending message", err)
-      else console.log(result)
+  onGameMove = position => {
+    this.socket.emit('move sent to chess engine', this.state.username, position, (err, result) => {
+      if (err) console.error("Error on sending move to chess engine from client", err)
+      else {
+        if (result === null) console.log("Move not permitted by chess engine")
+        else {
+          console.log(position)
+          this.setState({newGamePosition:position})
+          this.socket.emit('move confirmed by chess engine', this.state.username, position, (err, result) => {
+            if (err) console.error("Error on confirming chess move")
+            else console.error(result)
+          })
+        }
+      }
     })
   }
 
@@ -115,7 +126,7 @@ class App extends Component {
   }
 
   render() {
-    const {username, amConnected, users, receivedMessage, token} = this.state
+    const {username, amConnected, users, token} = this.state
 
     return <div className="full-height">
       <header>
@@ -130,7 +141,7 @@ class App extends Component {
         <Route exact path="/" render={() => this.isLoggedIn() ? <Redirect to="/main"/> : <Landing/>}/>
         <Route path="/register" render={() => this.isLoggedIn() ? <Redirect to="/main"/> : <Register/>}/>
         <Route path="/main" render={() => this.isLoggedIn() ?
-          <Main onUpdatePosition={this.onUpdatePosition} amConnected={amConnected}
+          <Main onGameMove={this.onGameMove} newGamePosition={this.state.newGamePosition} amConnected={amConnected}
                 username={username} onUserClick={this.setUpUsersConnection} users={users}/> : <Landing/>}/>
         <Route path="/login" render={() => this.isLoggedIn() ? <Redirect to="/main"/> :
           <Login onLoggedIn={this.onLoggedIn}/>}/>

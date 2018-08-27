@@ -5,8 +5,6 @@ import ChessBoard from "./Chessboard"
 class Main extends Component {
 
   state = {
-    amConnected: this.props.amConnected,
-    messageToSend: "",
   }
 
   onUserClick = (e, user) => {
@@ -17,7 +15,7 @@ class Main extends Component {
 
 
   render() {
-    let {props: {onUpdatePosition,amConnected, username, users}} = this
+    let {props: {newGamePosition, onGameMove,amConnected, username, users}} = this
     let listo
     if (users.length) {
       users = users.filter(user => user !== username)
@@ -36,7 +34,7 @@ class Main extends Component {
         </ul>}
         {amConnected &&
         <div>
-          <ChessBoard onUpdatePosition={onUpdatePosition}/>
+          <ChessBoard onGameMove={onGameMove} newGamePosition={newGamePosition}/>
 
         </div>
         }

@@ -9,25 +9,22 @@ class ChessBoard extends Component {
   }
 
   onDrop = ({sourceSquare, targetSquare, piece}) => {
-    const result = this.game.move({from: sourceSquare, to: targetSquare, promotion: "q"})
-    if (result) {
-      this.setState({position: this.game.fen()})
-      this.props.onUpdatePosition(this.game.fen())
-    }
- 
+    const move = {from: sourceSquare, to: targetSquare, promotion: "q"}
+    this.props.onGameMove(move)
+
 }
 
 componentDidMount()
 {
   this.game = new Chess();
-
 }
 
 
-render()
-{
+render(){
+const {props:{newGamePosition}} = this
+
   return <div>>
-    <Chessboard onDrop={this.onDrop} position={this.state.position}/>
+    <Chessboard onDrop={this.onDrop} position={newGamePosition}/>
   </div>
 }
 

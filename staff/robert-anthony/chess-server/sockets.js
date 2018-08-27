@@ -1,4 +1,5 @@
 const chalk = require('chalk')
+const {Chess} = require('chess.js')
 
 const socketLogic = {
 
@@ -9,7 +10,21 @@ const socketLogic = {
   userToSocket: new Map,
   userToUser: new Map,
   availableUsers: new Set,
+  games: [],
 
+  makeGame(requester, destination) {
+    const game = new Chess();
+    this.games.push({game, white: requester, black: destination})
+  },
+
+  gameForUser(username) {
+    return this.games.find(game => (game.white === username || game.black === username))
+  },
+
+  removeGameForUser(username) {
+    const i = this.games.findIndex(game => (game.white === username || game.black === username))
+    if (i !== -1) this.games.splice(i, 1)
+  },
 
   broadcastUsersState() {
     const usersToSendToClient = Array.from(this.availableUsers)
@@ -77,14 +92,21 @@ const socketLogic = {
         this.onUserPermanentlyDisconnect(username)
       })
 
-      socket.on('sent message', (sender, message, cb) => {
+      socket.on('move sent to chess engine', (sender, message, cb) => {
+        const game = this.gameForUser(sender)
+        if (!game) return cb(1, `No game found for user ${destination} `)
+        console.error('game move',message)
+        cb(null,game.game.move(message))
+      })
+
+
+      socket.on('move confirmed by chess engine', (sender, message, cb) => {
         const destination = this.userToUser.get(sender)
         if (!destination) return cb(1, "Destination not found")
         const toSocket = this.userToSocket.get(destination)
         if (!toSocket) return cb(1, `Socket for user ${destination} not found`)
-        toSocket.emit('message received', message, cb)
+        toSocket.emit('move received',message,cb)
       })
-
 
       socket.on('establish connection', (requester, destination, cb) => {
         console.error("establish connection", requester, destination)
@@ -97,6 +119,7 @@ const socketLogic = {
         this.userToUser.set(destination, requester)
         this.availableUsers.delete(requester)
         this.availableUsers.delete(destination)
+        this.makeGame(requester, destination)
         cb(null, `Connection established between ${requester} and ${destination}`)
         this.userToSocket.get(destination).emit('connected remotely')
         this.broadcastUsersState()
