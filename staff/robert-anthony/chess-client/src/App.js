@@ -26,7 +26,7 @@ class App extends Component {
 
   componentDidMount = () => {
 
-  this.setupSocketListeners()
+    this.setupSocketListeners()
 
 
   }
@@ -35,37 +35,43 @@ class App extends Component {
     this.socket = socketIOClient('http://localhost:8080');
     if (this.socket) {
 
-      this.socket.on('all users',users => {
+      this.socket.on('all users', users => {
         this.setState({users})
-        sessionStorage.setItem('users',JSON.stringify(users))
+        sessionStorage.setItem('users', JSON.stringify(users))
       })
 
       this.socket.on('error', message => console.error(message))
 
-      this.socket.on('message received',(receivedMessage,cb) => {
-        cb(null,`Message ${receivedMessage} received by ${this.state.username}`)
+      this.socket.on('message received', (receivedMessage, cb) => {
+        cb(null, `Message ${receivedMessage} received by ${this.state.username}`)
         this.setState({receivedMessage})
       })
 
       this.socket.on('connected remotely', () => {
-        this.setState({amConnected:true})
-        sessionStorage.setItem('amConnected',true)
+        this.setState({amConnected: true})
+        sessionStorage.setItem('amConnected', true)
       })
 
       this.socket.on('partner disconnected', () => {
-        this.setState({amConnected:false})
-        sessionStorage.setItem('amConnected',false)
+        this.setState({amConnected: false})
+        sessionStorage.setItem('amConnected', false)
       })
 
       this.socket.on('reconnect', (attemptNumber) => {
         console.error(`socket reconnect on client side, attemptNumber = ${attemptNumber}`)
+        this.socket.emit('client has reconnected', this.state.username, (err, result) => {
+          if (err) console.error(`Error on reconnecting client with server: ${err}, ${result}`)
+          else {
+            this.setState({amConnected:true})
+            console.log(result)}
+        })
       });
 
       this.socket.on('disconnect', (reason) => {
         console.error(`socket disconnect on client side, reason = ${reason}`)
         if (reason === 'io server disconnect') {
           // the disconnection was initiated by the server, you need to reconnect manually
-       //   socket.connect();
+          //   socket.connect();
         }
         // else the socket will automatically try to reconnect
       });
@@ -77,23 +83,23 @@ class App extends Component {
 
   onLoggedIn = (username, token) => {
     this.setState({username, token})
-    this.socket.emit('authenticated',username)
+    this.socket.emit('authenticated', username)
     sessionStorage.setItem('username', username)
     sessionStorage.setItem('token', token)
   }
 
   sendToUser = message => {
-    this.socket.emit('sent message',this.state.username,message,(err,result) => {
-      if (err) console.error("Error on sending message",err)
+    this.socket.emit('sent message', this.state.username, message, (err, result) => {
+      if (err) console.error("Error on sending message", err)
       else console.log(result)
     })
   }
 
   setUpUsersConnection = (user) => {
-    this.socket.emit('establish connection',this.state.username,user,(err,result) =>{
+    this.socket.emit('establish connection', this.state.username, user, (err, result) => {
 
       console.log(result)
-      if (!err) this.setState({amConnected:true})
+      if (!err) this.setState({amConnected: true})
     })
   }
 
@@ -103,13 +109,13 @@ class App extends Component {
 
   onLogout = e => {
     e.preventDefault()
-    this.socket.emit('logout',this.state.username)
+    this.socket.emit('logout', this.state.username)
     this.setState({username: '', token: ''})
     sessionStorage.clear()
   }
 
   render() {
-    const {username, amConnected, users,receivedMessage,token} = this.state
+    const {username, amConnected, users, receivedMessage, token} = this.state
 
     return <div className="full-height">
       <header>
@@ -123,7 +129,9 @@ class App extends Component {
       <Switch>
         <Route exact path="/" render={() => this.isLoggedIn() ? <Redirect to="/main"/> : <Landing/>}/>
         <Route path="/register" render={() => this.isLoggedIn() ? <Redirect to="/main"/> : <Register/>}/>
-        <Route path="/main" render={() => this.isLoggedIn() ? <Main receivedMessage={receivedMessage} sendToUser={this.sendToUser} amConnected={amConnected} username={username} onUserClick={this.setUpUsersConnection} users={users}/> : <Landing/>}/>
+        <Route path="/main" render={() => this.isLoggedIn() ?
+          <Main receivedMessage={receivedMessage} sendToUser={this.sendToUser} amConnected={amConnected}
+                username={username} onUserClick={this.setUpUsersConnection} users={users}/> : <Landing/>}/>
         <Route path="/login" render={() => this.isLoggedIn() ? <Redirect to="/main"/> :
           <Login onLoggedIn={this.onLoggedIn}/>}/>
       </Switch>

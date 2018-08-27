@@ -4,11 +4,11 @@ const express = require('express')
 const cors = require('cors')
 const pkg = require('./package.json')
 const routes = require('./routes')
-var socketIO = require('socket.io');
+const socketIO = require('socket.io');
+const {sockets} = require('./sockets')
 const http = require('http')
 const {env: {MONGO_URL}} = process
 const mongoose = require('mongoose')
-const {logic} = require('./logic')
 
 mongoose.connect(MONGO_URL, {useNewUrlParser: true}, (err, conn) => {
   if (err) throw err
@@ -24,10 +24,15 @@ mongoose.connect(MONGO_URL, {useNewUrlParser: true}, (err, conn) => {
 
   const server = http.createServer(app);
   const io = socketIO(server);
-  logic.setIO(io)
-
+  sockets.setIO(io)
   server.listen(PORT, () => console.log(`${pkg.name} ${pkg.version} up and running on port ${PORT}`));
 // WARNING: app.listen(80) will NOT work here!
+
+
+
+
+
+
 
 
 
