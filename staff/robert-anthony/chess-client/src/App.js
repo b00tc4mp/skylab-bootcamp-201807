@@ -16,7 +16,7 @@ class App extends Component {
     token: sessionStorage.getItem('token') || '',
     users: JSON.parse(sessionStorage.getItem('users')) || [],
     currentDate: getToday(),
-    amConnectedToUser: false,
+    amConnected: sessionStorage.getItem('amConnected') || false,
     receivedMessage: ""
   }
 
@@ -47,7 +47,28 @@ class App extends Component {
         this.setState({receivedMessage})
       })
 
-      this.socket.on('connected remotely', () => this.setState({amConnected:true}))
+      this.socket.on('connected remotely', () => {
+        this.setState({amConnected:true})
+        sessionStorage.setItem('amConnected',true)
+      })
+
+      this.socket.on('partner disconnected', () => {
+        this.setState({amConnected:false})
+        sessionStorage.setItem('amConnected',false)
+      })
+
+      this.socket.on('reconnect', (attemptNumber) => {
+        console.error(`socket reconnect on client side, attemptNumber = ${attemptNumber}`)
+      });
+
+      this.socket.on('disconnect', (reason) => {
+        console.error(`socket disconnect on client side, reason = ${reason}`)
+        if (reason === 'io server disconnect') {
+          // the disconnection was initiated by the server, you need to reconnect manually
+       //   socket.connect();
+        }
+        // else the socket will automatically try to reconnect
+      });
 
     } else console.error("Error establishing connection to socket server")
 
