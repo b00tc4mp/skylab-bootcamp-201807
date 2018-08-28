@@ -87,9 +87,8 @@ router.get('/users', [validateJwt], (req, res) => {
 /*  get last game request for user */
 router.get('/users/:nickname/lastrequest', [validateJwt], (req, res) => {
 
-  const {nickname} = req
-
-  logic.getLastGameRequest()
+  const {params:{nickname}} = req
+  logic.getLastGameRequest(nickname)
     .then(result => res.json(result))
     .catch(err => {
       const {message} = err

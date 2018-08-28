@@ -23,10 +23,10 @@ const logic = {
         if (typeof fieldValue !== 'string' || !fieldValue.length) throw new Error(`invalid ${fieldName}`)
     },
 
-    register(username, password) {
+    register(nickname, password) {
         return Promise.resolve()
             .then(() => {
-                this._validateStringField('username', username)
+                this._validateStringField('username', nickname)
                 this._validateStringField('password', password)
 
                 return this._call('register', 'POST', {
@@ -50,15 +50,15 @@ const logic = {
             })
     },
 
-    updatePassword(username, password, newPassword, token) {
+    updatePassword(nickname, password, newPassword, token) {
 
         return Promise.resolve()
             .then(() => {
-                this._validateStringField('username', username)
+                this._validateStringField('nickname', nickname)
                 this._validateStringField('password', password)
                 this._validateStringField('newPassword', password)
 
-                return this._call(`user/${username}`, 'POST', {
+                return this._call(`user/${nickname}`, 'POST', {
                     'Content-Type': 'application/json',
                     'authorization': `bearer ${token}`
 

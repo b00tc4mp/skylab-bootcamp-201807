@@ -94,7 +94,7 @@ const socketLogic = {
       socket.on('authenticated', username => {
         console.error("authenticated user", username)
 
-        return Promise.resolve
+        return Promise.resolve()
           .then(_ => {
             this._userToSocket.set(username, socket)
             return logic.userConnected(username, socket)

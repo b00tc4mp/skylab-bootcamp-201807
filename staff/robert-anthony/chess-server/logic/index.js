@@ -256,7 +256,7 @@ const logic = {
       .then(_ => {
         this._validateStringField("confirmer", confirmer)
         this._validateStringField("destination", destination)
-        User.find({nickname: confirmer})
+        User.findOne({nickname: confirmer})
       })
       .then(user => {
         if (!user) throw new LogicError(`user with ${confirmer} nickname does not exist`)
@@ -270,14 +270,12 @@ const logic = {
     return Promise.resolve()
       .then(_ => {
         this._validateStringField("nickname", nickname)
-        User.find({nickname})
+       return User.findOne({nickname})
       })
       .then(user => {
         if (!user) throw new LogicError(`user with ${nickname} nickname does not exist`)
         return user.lastRequest
       })
-
-
   }
 
 }

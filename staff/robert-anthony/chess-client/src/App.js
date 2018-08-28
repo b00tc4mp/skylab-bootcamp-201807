@@ -81,10 +81,10 @@ class App extends Component {
   }
 
 
-  onLoggedIn = (username, token) => {
+  onLoggedIn = (nickname, token) => {
     this.setState({username: nickname, token})
-    this.socket.emit('authenticated', username)
-    sessionStorage.setItem('username', username)
+    this.socket.emit('authenticated', nickname)
+    sessionStorage.setItem('username', nickname)
     sessionStorage.setItem('token', token)
   }
 
