@@ -1,3 +1,0 @@
-<div contenteditable>
-    ST<span style="color: red">A</span>CK OVERFLOW
-</div>
