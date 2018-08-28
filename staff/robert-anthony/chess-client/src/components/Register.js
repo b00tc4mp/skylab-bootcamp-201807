@@ -9,7 +9,7 @@ class Register extends Component {
         error: ''
     }
 
-    onUsernameChanged = e => this.setState({ username: e.target.value })
+    onUsernameChanged = e => this.setState({ nickname: e.target.value })
 
     onPasswordChanged = e => this.setState({ password: e.target.value })
 

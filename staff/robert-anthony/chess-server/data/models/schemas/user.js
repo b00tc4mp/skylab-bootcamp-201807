@@ -24,7 +24,7 @@ module.exports = new Schema({
   },
   lastRequest:{
     type:String,
-    required:true
+    required:allowEmpty
   },
 
   online: {
@@ -35,3 +35,7 @@ module.exports = new Schema({
 
 
 })
+
+function allowEmpty () {
+  return typeof this.lastRequest !== 'string'
+}

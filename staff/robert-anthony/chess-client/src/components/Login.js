@@ -3,22 +3,22 @@ import logic from '../logic'
 
 class Login extends Component {
   state = {
-    username: '',
+    nickname: '',
     password: '',
     error: ''
   }
 
-  onUsernameChanged = e => this.setState({ username: e.target.value })
+  onNicknameChanged = e => this.setState({ nickname: e.target.value })
 
   onPasswordChanged = e => this.setState({ password: e.target.value })
 
   onLoginSubmitted = e => {
     e.preventDefault()
 
-    const { username, password } = this.state
+    const { nickname, password } = this.state
 
-    logic.authenticate(username, password)
-      .then(token => this.props.onLoggedIn(username, token))
+    logic.authenticate(nickname, password)
+      .then(token => this.props.onLoggedIn(nickname, token))
       .catch(({ message }) => this.setState({ error: message }))
   }
 
@@ -31,7 +31,7 @@ class Login extends Component {
          <a href="/#/register">register</a> or login
         </nav>
         <form onSubmit={this.onLoginSubmitted}>
-          <input type="text" name="username" placeholder="username" autoFocus onChange={this.onUsernameChanged} />
+          <input type="text" name="nickname" placeholder="username" autoFocus onChange={this.onNicknameChanged} />
           <input type="password" name="password" placeholder="password" onChange={this.onPasswordChanged} />
           <button type="submit">login</button>
         </form>

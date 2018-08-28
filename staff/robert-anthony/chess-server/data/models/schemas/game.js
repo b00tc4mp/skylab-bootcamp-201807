@@ -26,7 +26,7 @@ module.exports = new Schema({
     required:true
   },
   winner: {
-    type:User,
+    type:String,
     required:true
   },
 })

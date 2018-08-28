@@ -31,20 +31,20 @@ const logic = {
 
                 return this._call('register', 'POST', {
                     'Content-Type': 'application/json'
-                }, JSON.stringify({username, password}), 201)
+                }, JSON.stringify({username: nickname, password}), 201)
                     .then(() => true)
             })
     },
 
-    authenticate(username, password) {
+    authenticate(nickname, password) {
         return Promise.resolve()
             .then(() => {
-                this._validateStringField('username', username)
+                this._validateStringField('nickname', nickname)
                 this._validateStringField('password', password)
 
                 return this._call('authenticate', 'POST', {
                     'Content-Type': 'application/json'
-                }, JSON.stringify({username, password}), 200)
+                }, JSON.stringify({nickname, password}), 200)
                     .then(res => res.json())
                     .then(({token}) => token)
             })
@@ -62,7 +62,7 @@ const logic = {
                     'Content-Type': 'application/json',
                     'authorization': `bearer ${token}`
 
-                }, JSON.stringify({username, password, newPassword}), 200)
+                }, JSON.stringify({username: nickname, password, newPassword}), 200)
                     .then(res => res.json())
                     .then(res => res)
             })

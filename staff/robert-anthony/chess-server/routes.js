@@ -11,9 +11,9 @@ const validateJwt = require('./helpers/validate-jwt')
 const jsonBodyParser = bodyParser.json()
 
 router.post('/register', jsonBodyParser, (req, res) => {
-  const {body: {username, password, nickname}} = req
+  const {body: {email, password, nickname}} = req
 
-  logic.register(username, password, nickname)
+  logic.register(email, password, nickname)
     .then(() => res.status(201).json({message: 'user registered'}))
     .catch(err => {
       const {message} = err
@@ -23,7 +23,7 @@ router.post('/register', jsonBodyParser, (req, res) => {
 })
 
 router.post('/authenticate', jsonBodyParser, (req, res) => {
-  const {body: {username: nickname, password}} = req
+  const {body: { nickname, password}} = req
 
   logic.authenticate(nickname, password)
     .then(() => {

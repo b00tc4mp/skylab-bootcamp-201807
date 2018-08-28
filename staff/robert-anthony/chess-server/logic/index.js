@@ -24,6 +24,7 @@ const logic = {
   register(email, password, nickname) {
     return Promise.resolve()
       .then(() => {
+        console.log(email,password,nickname)
         this._validateEmail(email)
         this._validateStringField('password', password)
         this._validateStringField('nickname', nickname)
@@ -31,7 +32,7 @@ const logic = {
         return User.findOne({nickname})
       })
       .then(user => {
-        if (user) throw new LogicError(`user with ${email} email already exists`)
+        if (user) throw new LogicError(`user with ${nickname} nickname already exists`)
 
         user = new User({email, password, nickname, lastRequest: "", online: false})
         return user.save()
@@ -115,6 +116,7 @@ const logic = {
     return Promise.resolve()
       .then(_ => {
         this._validateStringField("nickname", nickname)
+        debugger
         return Game.find({$or: [{white: nickname}, {black: nickname}]}).lean()
           .then(games => games.filter(game => (!game.terminated)).map(game => {
               const obj = {}

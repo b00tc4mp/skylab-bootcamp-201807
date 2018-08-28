@@ -82,7 +82,7 @@ class App extends Component {
 
 
   onLoggedIn = (username, token) => {
-    this.setState({username, token})
+    this.setState({username: nickname, token})
     this.socket.emit('authenticated', username)
     sessionStorage.setItem('username', username)
     sessionStorage.setItem('token', token)
@@ -116,7 +116,7 @@ class App extends Component {
   onLogout = e => {
     e.preventDefault()
     this.socket.emit('logout', this.state.username)
-    this.setState({username: '', token: ''})
+    this.setState({nickname: '', token: ''})
     sessionStorage.clear()
   }
 
