@@ -306,9 +306,7 @@ describe('logic', () => {
     describe('add note', () => {
         const date = new Date(), text = 'my note'
 
-        beforeEach(() => {
-            _users.insertOne({ username, password })
-        })
+        beforeEach(() => _users.insertOne({ username, password }))
 
         it('should succeed on correct data', () =>
             logic.addNote(username, date, text)
@@ -318,12 +316,12 @@ describe('logic', () => {
                     return _users.findOne({ username })
                 })
                 .then(user => {
-                    return _notes.findOne({ user_id: user._id })
+                    return _notes.find({ user_id: user._id }).toArray()
                 })
-                .then(note => {
-                    // expect(user.notes.length).to.equal(1)
+                .then(notes => {
+                    expect(notes.length).to.equal(1)
 
-                    // const [note] = user.notes
+                    const [note] = notes
 
                     expect(note.text).to.equal(text)
                     expect(note.date).to.deep.equal(date)
@@ -383,6 +381,77 @@ describe('logic', () => {
                 .catch(err => err)
                 .then(({ message }) => expect(message).to.equal('invalid text'))
         )
+    })
+
+    describe('list notes', () => {
+
+        beforeEach(() => {
+
+            const notes = [
+                { date: new Date('2018-08-20T12:10:15.474Z'), text: 'text 1' },
+                { date: new Date('2018-08-23T13:00:00.000Z'), text: 'cumple jordi' },
+                { date: new Date('2018-08-24T13:15:00.000Z'), text: 'pizza' },
+                { date: new Date('2018-08-24T13:19:00.000Z'), text: 'la china' },
+                { date: new Date('2018-08-24T13:21:00.000Z'), text: 'party hard' }
+            ]
+
+            return _users.insertOne({ username, password })
+                .then(() => _users.findOne({ username }))
+                .then(user => notes.forEach(note => note.user_id = user._id))
+        })
+
+        it('should list all user notes', () => {
+            return logic.listNotes(username, new Date('2018-08-24'))
+                .then(notes => {
+
+                    const expectedNotes = notes.slice(2)
+
+                    expect(notes.length).to.equal(expectedNotes.length)
+
+                    const normalizedNotes = expectedNotes.map(note => {
+                        note.id = note._id.toString()
+
+                        delete note._id
+
+                        return note
+                    })
+
+                    expect(notes).to.deep.equal(normalizedNotes)
+                })
+        })
+    })
+
+    false && describe('remove note', () => {
+        const notes = [
+            { _id: ObjectId(), date: new Date(), text: 'text 1' },
+            { _id: ObjectId(), date: new Date(), text: 'text 2' },
+            { _id: ObjectId(), date: new Date(), text: 'text 3' },
+            { _id: ObjectId(), date: new Date(), text: 'text 4' }
+        ]
+
+        beforeEach(() => _users.insertOne({ email, password, notes }))
+
+        it('should succeed on correct note id', () =>
+            logic.removeNote(email, notes[0]._id.toString())
+                .then(res => {
+                    expect(res).to.be.true
+
+                    return _users.findOne({ email })
+                })
+                .then(user => {
+                    expect(user.notes.length).to.equal(3)
+
+                    expect(user.notes).to.deep.equal(notes.slice(1))
+                })
+        )
+
+        it('should fail on non existing note', () => {
+            const nonExistingId = ObjectId()
+
+            return logic.removeNote(email, nonExistingId)
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`note with id ${nonExistingId} does not exist`))
+        })
     })
 
     after(() => {

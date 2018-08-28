@@ -106,30 +106,64 @@ const logic = {
             .then(user => {
                 if (!user) throw new Error(`user with ${username} username does not exist`)
 
-                // const notes = user.notes || []
-
-                // notes.push({ date, text })
-
-                // return this._users.updateOne({ _id: user._id }, { $set: { notes } })
-
-                // ...
-
-                // const note = { date, text }
-
-                // return this._users.updateOne({ _id: user._id }, { $push: { notes: note } })
-
-                // ...
-
-                // _notes.findOne({ user_id: user._id })
-
-                this._notes.insertOne({ date, text, user_id: user._id })
+                return this._notes.insertOne({ date, text, user_id: user._id })
             })
             .then(res => {
-                if (res.result.nModified === 0) throw new Error('fail to add note')
-
+                if (!res.insertedId) throw new Error('fail to add note')
                 return true
             })
     },
+
+    listNotes(username, date) {
+        return Promise.resolve()
+            .then(() => {
+                this._validateEmail(username)
+
+                return this._users.findOne({ username })
+            })
+            .then(user => {
+                if (!user) throw new LogicError(`user ${user} does not exist`)
+
+                return this._notes.find({ user_id: user._id }).toArray()
+            })
+            .then(notes => {
+
+                debugger
+
+                let filteredNotes = []
+
+                if (notes) {
+                    filteredNotes = notes.filter(({ date: _date }) => date.getFullYear() === _date.getFullYear() && date.getMonth() === _date.getMonth() && date.getDate() === _date.getDate())
+
+                    filteredNotes.forEach(note => {
+                        note.id = note._id.toString()
+
+                        delete note._id
+                    })
+                }
+
+                return filteredNotes
+            })
+    },
+
+    removeNote(email, noteId) {
+        return Promise.resolve()
+            .then(() => {
+                this._validateEmail(email)
+
+                return this._users.findOne({ email, 'notes._id': ObjectId(noteId) })
+            })
+            .then((user) => {
+                if (!user) throw new LogicError(`note with id ${noteId} does not exist`)
+
+                return this._users.updateOne({ email }, { $pull: { notes: { _id: ObjectId(noteId) } } })
+            })
+            .then(res => {
+                if (res.result.nModified === 0) throw new LogicError('fail to remove note')
+
+                return true
+            })
+    }
 }
 
 class LogicError extends Error {
