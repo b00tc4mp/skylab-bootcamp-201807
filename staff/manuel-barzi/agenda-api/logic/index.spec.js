@@ -8,9 +8,6 @@ const { Contact, Note, User } = require('../data/models')
 
 const { env: { MONGO_URL } } = process
 
-// TODOs
-// test cases where email is not a valid e-mail
-
 describe('logic', () => {
     const email = `maider-${Math.random()}@mail.com`, password = `123-${Math.random()}`
     let _connection
@@ -377,7 +374,7 @@ describe('logic', () => {
         )
     })
 
-    true && describe('list notes', () => {
+    true && describe('list notes by date', () => {
         let notes = [
             { date: new Date('2018-08-20T12:10:15.474Z'), text: 'text 1' },
             { date: new Date('2018-08-23T13:00:00.000Z'), text: 'cumple jordi' },
@@ -401,8 +398,6 @@ describe('logic', () => {
         it('should list all user notes', () => {
             return logic.listNotes(email, new Date('2018-08-24'))
                 .then(_notes => {
-                    debugger
-
                     const expectedNotes = notes.slice(2)
 
                     expect(_notes.length).to.equal(expectedNotes.length)
@@ -476,6 +471,76 @@ describe('logic', () => {
                 .catch(err => err)
                 .then(({ message }) => expect(message).to.equal(`note with id ${nonExistingId} does not exist`))
         })
+    })
+
+    true && describe('add contact', () => {
+        const contact = { email: 'jd@mail.com', name: 'John', surname: 'Doe', phone: '123-456-789' }
+
+        beforeEach(() => User.create({ email, password }))
+
+        it('should succeed on correct data', () =>
+            logic.addContact(email, contact.email, contact.name, contact.surname, contact.phone)
+                .then(res => {
+                    expect(res).to.be.true
+
+                    return User.findOne({ email })
+                })
+                .then(user => {
+                    expect(user.contacts.length).to.equal(1)
+
+                    const [_contact] = user.contacts
+
+                    expect(_contact.email).to.equal(contact.email)
+                    expect(_contact.name).to.equal(contact.name)
+                    expect(_contact.surname).to.equal(contact.surname)
+                    expect(_contact.phone).to.equal(contact.phone)
+                })
+        )
+    })
+
+    true && describe('list contacts by letter', () => {
+        let contacts
+
+        beforeEach(() => {
+            contacts = [
+                { email: `jd@mail.com`, name: 'John', surname: 'Doe', phone: '123-456-789' },
+                { email: `ef@mail.com`, name: 'Ele', surname: 'Fante', phone: '123-456-789' },
+                { email: `cd@mail.com`, name: 'Coco', surname: 'Drilo', phone: '123-456-789' },
+                { email: `jf@mail.com`, name: 'Jira', surname: 'Fa', phone: '123-456-789' },
+                { email: `ml@mail.com`, name: 'Murcie', surname: 'Lago', phone: '123-456-789' },
+                { email: `hp@mail.com`, name: 'Hipo', surname: 'Potamo', phone: '123-456-789' },
+                { email: `og@mail.com`, name: 'Oran', surname: 'Gutan', phone: '123-456-789' },
+                { email: `mr@mail.com`, name: 'Mama', surname: 'Racho', phone: '123-456-789' },
+                { email: `pr@mail.com`, name: 'Paja', surname: 'Rito', phone: '123-456-789' }
+            ]
+
+            return new User({ email, password }).save()
+                .then(user => {
+                    contacts.map(contact => new Contact(contact)).forEach(contact => user.contacts.push(contact))
+                
+                    return user.save()
+                })
+                .then(user => {
+                    contacts = user.contacts.map(({_doc}) => {
+                        const { _id, email, name, surname, phone } = _doc
+
+                        return { id: _id.toString(), email, name, surname, phone }
+                    })
+                })
+        })
+
+        it('should succeed on correct data', () => {
+            return logic.listContacts(email, 'M')
+                .then(_contacts => {
+                    const expectedContacts = [contacts[4], contacts[7]]
+
+                    expect(_contacts).to.deep.equal(expectedContacts)
+                })
+        })
+    })
+
+    true && describe('remove contact', () => {
+        // TODO
     })
 
     after(() =>
