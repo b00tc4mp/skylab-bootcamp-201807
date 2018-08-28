@@ -16,9 +16,9 @@ describe('logic', () => {
             .then(conn => _connection = conn)
     )
 
-    beforeEach(() => Promise.all([Doctor.deleteMany(), Patient.deleteMany(), Caretaker.deleteMany()]))
+    beforeEach(() => Promise.all([Doctor.deleteMany(), Patient.deleteMany(), Caretaker.deleteMany(), Treatment.deleteMany(), Cite.deleteMany()]))
 
-    !true && describe('validate fields', () => {
+    true && describe('validate fields', () => {
 
         const name = `Maider${Math.random()}`
         const password = `123-${Math.random()}`
@@ -85,7 +85,7 @@ describe('logic', () => {
         })
     })
 
-    !true && describe('register doctor', () => {
+    true && describe('register doctor', () => {
 
         const code = `123A${Math.random()}`
         const password = `12-${Math.random()}`
@@ -146,7 +146,7 @@ describe('logic', () => {
         )
     })
 
-    !true && describe('authenticate doctor', () => {
+    true && describe('authenticate doctor', () => {
 
         const code = `123A${Math.random()}`
         const password = `12-${Math.random()}`
@@ -197,7 +197,7 @@ describe('logic', () => {
         )
     })
 
-    !true && describe('add patient', () => {
+    true && describe('add patient', () => {
 
         const patient = { name: 'John', dni: 12345678, surname: 'Doe', age: 78 , gender: 'male', address: 'Barcelona', phone: 123123123}
 
@@ -354,7 +354,7 @@ describe('logic', () => {
         )
     })
 
-    !true && describe('remove patient', () => {
+    true && describe('remove patient', () => {
 
         const patient = { name: 'Pepe', dni: 12345678, surname: 'Doe', age: 78 , gender: 'male', address: 'Barcelona', phone: 123123123}
 
@@ -375,37 +375,395 @@ describe('logic', () => {
         })
     })
 
-    true && describe('search patients by name', () => {
+    true && describe('update patient', () => {
 
-        const patientsList = [
-            { name: 'Pepe', dni: 12345678, surname: 'Doe', age: 78 , gender: 'male', address: 'Barcelona', phone: 123123123},
-            { name: 'Laura', dni: 12345677, surname: 'Lala', age: 78 , gender: 'female', address: 'Barcelona', phone: 123123123},
-            { name: 'Juana', dni: 12345676, surname: 'Ja', age: 78 , gender: 'female', address: 'Barcelona', phone: 123123123},
-            { name: 'Gorka', dni: 12345675, surname: 'Pala', age: 78 , gender: 'male', address: 'Barcelona', phone: 123123123}
-        ]
+        const patient1 = { name: 'Pepe', dni: 12345678, surname: 'Doe', age: 78 , gender: 'male', address: 'Barcelona', phone: 123123123}
 
-        beforeEach(() =>  Patient.create(patientsList))
+        const newAddress = 'Beasain'
+        const newPhone = 888999888
+        const dni = 12345678
 
-        it('should succeed on correct data', () => {
+        beforeEach(() => Patient.create(patient1))
+
+        it('should be update correctly the address or phone', () => 
+            Patient.findOne({ dni })
+                .then(patient => {
+                    expect(patient).to.exist
+
+                    return logic.updatePatient(dni, newAddress, newPhone)
+                })
+                .then(res => expect(res).to.be.true)
+        )
+
+        it('should fail on trying to register with an undefined dni', () =>
+            logic.updatePatient(undefined, newAddress, newPhone)
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`invalid dni`))
+        )
+
+        it('should fail on trying to register with an empty dni', () =>
+            logic.updatePatient('', newAddress, newPhone)
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`invalid dni`))
+        )
+
+        it('should fail on trying to register with a string dni', () =>
+            logic.updatePatient('123', newAddress, newPhone)
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`invalid dni`))
+        )
+
+        it('should fail on trying to register with an undefined address', () =>
+            logic.updatePatient(dni, undefined, newPhone)
+                .then(res => {
+                    expect(res).to.be.true
+
+                    return Patient.findOne({ dni })
+                })
+                .then(patient => {
+                    expect(patient.address).to.equal(patient1.address)
+                })
+        )
+
+        it('should fail on trying to register with an empty address', () =>
+            logic.updatePatient(dni, '', newPhone)
+                .then(res => {
+                    expect(res).to.be.true
+
+                    return Patient.findOne({ dni })
+                })
+                .then(patient => {
+                    expect(patient.address).to.equal(patient1.address)
+                })
+        )
+
+        it('should fail on trying to register with a numeric address', () =>
+            logic.updatePatient(dni, 123, newPhone)
+                .then(res => {
+                    expect(res).to.be.true
+
+                    return Patient.findOne({ dni })
+                })
+                .then(patient => {
+                    expect(patient.address).to.equal(patient1.address)
+                })
+        )
+
+        it('should fail on trying to register with an undefined phone', () =>
+            logic.updatePatient(dni, newAddress, undefined)
+                .then(res => {
+                    expect(res).to.be.true
+
+                    return Patient.findOne({ dni })
+                })
+                .then(patient => {
+                    expect(patient.phone).to.equal(patient1.phone)
+                })
+        )
+
+        it('should fail on trying to register with an empty phone', () =>
+            logic.updatePatient(dni, newAddress, '')
+                .then(res => {
+                    expect(res).to.be.true
+
+                    return Patient.findOne({ dni })
+                })
+                .then(patient => {
+                    expect(patient.phone).to.equal(patient1.phone)
+                })
+        )
+
+        it('should fail on trying to register with a string phone', () =>
+            logic.updatePatient(dni, newAddress, '12334546')
+                .then(res => {
+                    expect(res).to.be.true
+
+                    return Patient.findOne({ dni })
+                })
+                .then(patient => {
+                    expect(patient.phone).to.equal(patient1.phone)
+                })
+        )
+    })
+
+    true && describe('search and list patients by name', () => {
+
+        const patient1 = { name: 'Pepe', dni: 12345678, surname: 'Doe', age: 78 , gender: 'male', address: 'Barcelona', phone: 123123123}
+        const patient2 = { name: 'Laura', dni: 12345677, surname: 'Lala', age: 78 , gender: 'female', address: 'Barcelona', phone: 123123123}
+        const patient3 = { name: 'Juana', dni: 33334444, surname: 'JJ', age: 78 , gender: 'female', address: 'Barcelona', phone: 123123123}
+        const patient4 = { name: 'Gorka', dni: 12345675, surname: 'Pala', age: 78 , gender: 'male', address: 'Barcelona', phone: 123123123}
+        const patient5 = { name: 'Juana', dni: 81112222, surname: 'LL', age: 78 , gender: 'female', address: 'Barcelona', phone: 123123123}
+
+        beforeEach(() =>
+            Patient.create(patient1)
+                .then(() => Patient.create(patient2))
+                .then(() => Patient.create(patient3))
+                .then(() => Patient.create(patient4))
+                .then(() => Patient.create(patient5))
+        )
+
+        true && it('should succeed on correct data', () => {
 
             const name = 'Juana'
 
-            return logic.searchPatients(name, 'J')
+            return logic.searchPatients(name)
                 .then(patients => {
-                    expect(patients[0].name).to.equal(patientsList[2].name)
-                    expect(patients[0].dni).to.equal(patientsList[2].dni)
-                    expect(patients[0].surname).to.equal(patientsList[2].surname)
-                    expect(patients[0].age).to.equal(patientsList[2].age)
-                    expect(patients[0].gender).to.equal(patientsList[2].gender)
-                    expect(patients[0].address).to.equal(patientsList[2].address)
-                    expect(patients[0].phone).to.equal(patientsList[2].phone)
+                    expect(patients[0].name).to.equal(patient3.name)
+                    expect(patients[0].dni).to.equal(patient3.dni)
+                    expect(patients[0].surname).to.equal(patient3.surname)
+                    expect(patients[0].age).to.equal(patient3.age)
+                    expect(patients[0].gender).to.equal(patient3.gender)
+                    expect(patients[0].address).to.equal(patient3.address)
+                    expect(patients[0].phone).to.equal(patient3.phone)
+
+                    expect(patients[1].name).to.equal(patient5.name)
+                    expect(patients[1].dni).to.equal(patient5.dni)
+                    expect(patients[1].surname).to.equal(patient5.surname)
+                    expect(patients[1].age).to.equal(patient5.age)
+                    expect(patients[1].gender).to.equal(patient5.gender)
+                    expect(patients[1].address).to.equal(patient5.address)
+                    expect(patients[1].phone).to.equal(patient5.phone)
+                })
+        })
+
+        it('should fail on trying to register with an undefined name', () =>
+            logic.searchPatients(undefined)
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`invalid name`))
+        )
+
+        it('should fail on trying to register with an empty name', () =>
+            logic.searchPatients('')
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`invalid name`))
+        )
+
+        it('should fail on trying to register with a numeric name', () =>
+            logic.searchPatients(123)
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`invalid name`))
+        )
+    })
+
+    true && describe('add treatment', () => {
+
+        const patient = { name: 'Pepe', dni: 12345678, surname: 'Doe', age: 78 , gender: 'male', address: 'Barcelona', phone: 123123123}
+        const dni = 12345678
+
+        const pill = 'atarax'
+        const quantity = '3'
+        const frequency = 'mondays, fridays'
+
+        beforeEach(() => Patient.create(patient))
+
+        it('should succeed on correct data', () =>
+            Patient.findOne({ dni })
+                    .then(patient => {
+                        expect(patient).to.exist
+
+                        return logic.addTreatment(dni, pill, quantity, frequency)
+                    })
+                    .then(res => {
+                        expect(res).to.be.true
+
+                        return Patient.findOne({ dni })
+                    })
+                    .then(patient => {
+                        expect(patient.treatments.length).to.equal(1)
+                        
+                        const { treatments } = patient
+
+                        expect(treatments[0].pill).to.equal(pill)
+                        expect(treatments[0].quantity).to.equal(quantity)
+                        expect(treatments[0].frequency).to.equal(frequency)
+                    })
+        )
+    })
+
+    true && describe('remove treatment', () => {
+        let treatmentsList
+
+        const patient = { name: 'Pepe', dni: 12345678, surname: 'Doe', age: 78 , gender: 'male', address: 'Barcelona', phone: 123123123}
+        const dni = 12345678
+
+        beforeEach(() => {
+            treatmentsList = [
+                { pill: 'Atarax', quantity: '3', frequency: 'monday, thursday'},
+                { pill: 'Nolotil', quantity: '1', frequency: 'monday, wednesday'},
+                { pill: 'Ebastina', quantity: '2', frequency: 'friday, sunday'}
+            ]
+
+            return Patient.create(patient)
+                .then(patient => {
+                    treatmentsList.map(treatment => new Treatment(treatment)).forEach(treatment => patient.treatments.push(treatment))
+
+                    return patient.save()
+                })
+                .then(patient => {
+                    let treatments = patient.treatments.map(({ _doc }) => {
+                        const { pill, quantity, frequency } = _doc
+                        return { pill, quantity, frequency }
+                    })
+                    return treatments
+                })
+        })
+
+        it('should remove treatment correctly', () => {
+            const treatmentRemove = treatmentsList[2]
+
+            return logic.removeTreatment(dni, treatmentRemove)
+                .then(res => {
+                    expect(res).to.be.true
                 })
         })
     })
 
+    true && describe('list treatements by patient dni', () => {
 
+        let treatmentsList
 
-    !true && describe('register caretaker', () => {
+        const patient = { name: 'Pepe', dni: 12345678, surname: 'Doe', age: 78 , gender: 'male', address: 'Barcelona', phone: 123123123}
+        const dni = 12345678
+
+        beforeEach(() => {
+            treatmentsList = [
+                { pill: 'Atarax', quantity: '3', frequency: 'monday, thursday'},
+                { pill: 'Nolotil', quantity: '1', frequency: 'monday, wednesday'},
+                { pill: 'Ebastina', quantity: '2', frequency: 'friday, sunday'}
+            ]
+
+            return Patient.create(patient)
+                .then(patient => {
+                    treatmentsList.map(treatment => new Treatment(treatment)).forEach(treatment => patient.treatments.push(treatment))
+
+                    return patient.save()
+                })
+                .then(patient => {
+                    let treatments = patient.treatments.map(({ _doc }) => {
+                        const { pill, quantity, frequency } = _doc
+                        return { pill, quantity, frequency }
+                    })
+                    return treatments
+                })
+        })
+
+        it('should succeed on correct data', () => 
+            logic.listTreatments(dni)
+                .then(treatments => {
+                    expect(treatments[0].pill).to.equal('Atarax')
+                    expect(treatments[0].quantity).to.equal('3')
+                    expect(treatments[0].frequency).to.equal('monday, thursday')
+                    
+                    expect(treatments[1].pill).to.equal('Nolotil')
+                    expect(treatments[1].quantity).to.equal('1')
+                    expect(treatments[1].frequency).to.equal('monday, wednesday')
+
+                    expect(treatments[2].pill).to.equal('Ebastina')
+                    expect(treatments[2].quantity).to.equal('2')
+                    expect(treatments[2].frequency).to.equal('friday, sunday')
+                })
+        )
+    })
+
+    true && describe('add cite', () => {
+
+        const name = `cite${Math.random()}`
+        const date = new Date()
+
+        const patient = { name: 'Pepe', dni: 12345678, surname: 'Doe', age: 78 , gender: 'male', address: 'Barcelona', phone: 123123123}
+        const code = `123A${Math.random()}`
+        const password = `12-${Math.random()}`
+
+        beforeEach(() => 
+            Doctor.create({ code, password })
+                .then(() => Patient.create(patient))
+        )
+
+        it('should succeed on correct data', () => {
+
+            const { dni } = patient
+
+            return logic.addCite(code, dni, name, date)
+                .then(res => {
+                    expect(res).to.be.true
+
+                    return Cite.findOne({ date })
+                })
+                .then(cite => {
+                    expect(cite.doctor).to.exist
+                    expect(cite.patient).to.exist
+                    expect(cite.name).to.equal(name)
+                    expect(cite.date).to.deep.equal(date)
+
+                    return logic.addCite(code, dni, name, date)
+                })
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`cite with ${date} date already exist`))
+        })
+    })
+
+    true && describe('remove cite', () => {
+
+        const name = `cite${Math.random()}`
+        const date = new Date()
+
+        const patient = { name: 'Pepe', dni: 12345678, surname: 'Doe', age: 78 , gender: 'male', address: 'Barcelona', phone: 123123123}
+        const code = `123A${Math.random()}`
+        const password = `12-${Math.random()}`
+        const { dni } = patient
+
+        beforeEach(() => 
+            Doctor.create({ code, password })
+                .then(doctor => {
+                    return Patient.create(patient)
+                        .then(patient => Cite.create({name, date, doctor: doctor.id, patient: patient.id}))
+                })
+        )
+
+        it('should succeed on correct data', () => 
+            logic.removeCite(code, dni, name, date)
+                .then(res => expect(res).to.be.true)
+        )
+    })
+
+    true && describe('list cite by date', () => {
+
+        let cites
+
+        const patient = { name: 'Pepe', dni: 12345678, surname: 'Doe', age: 78 , gender: 'male', address: 'Barcelona', phone: 123123123}
+        const code = `123A${Math.random()}`
+        const password = `12-${Math.random()}`
+        const { dni } = patient
+
+        beforeEach(() => 
+            Doctor.create({ code, password })
+                .then(doctor => {
+                    return Patient.create(patient)
+                        .then(patient => {
+                            cites = [
+                                {name: 'cite1', date: new Date(), doctor: doctor.id, patient: patient.id},
+                                {name: 'cite2', date: new Date(), doctor: doctor.id, patient: patient.id},
+                                {name: 'cite3', date: new Date(), doctor: doctor.id, patient: patient.id},
+                                {name: 'cite4', date: new Date(), doctor: doctor.id, patient: patient.id}
+                            ]
+                            
+                            return Cite.create(cites)
+                        })
+                })
+        )
+
+        it('should succeed on correct data', () => 
+            logic.listCites(code, dni, cites[0].date)
+                .then(resultedCites => {
+                    expect(resultedCites[0].doctor).to.exist
+                    expect(resultedCites[0].patient).to.exist
+                    expect(resultedCites[0].name).to.exist
+                    expect(resultedCites[0].date).to.exist
+                })
+        )
+    })
+
+    true && describe('register caretaker', () => {
 
         const name = `Maider${Math.random()}`
         const dni = 12564878
@@ -466,7 +824,7 @@ describe('logic', () => {
         )
     })
 
-    !true && describe('authenticate caretaker', () => {
+    true && describe('authenticate caretaker', () => {
 
         const name = `Maider${Math.random()}`
         const dni = 12564878
@@ -517,8 +875,8 @@ describe('logic', () => {
         )
     })
 
-    after(() => {
-        Promise.all([Doctor.deleteMany(), Patient.deleteMany(), Caretaker.deleteMany()])
+    after(() =>
+        Promise.all([Doctor.deleteMany(), Patient.deleteMany(), Caretaker.deleteMany(), Treatment.deleteMany(), Cite.deleteMany()])
             .then(() => _connection.disconnect())
-    })
+    )
 })

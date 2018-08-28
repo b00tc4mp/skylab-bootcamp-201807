@@ -9,7 +9,7 @@ module.exports = new Schema({
     },
 
     quantity: {
-        type: Number,
+        type: String,
         required: true
     },
 
