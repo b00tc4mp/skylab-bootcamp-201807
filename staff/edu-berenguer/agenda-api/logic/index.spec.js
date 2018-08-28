@@ -38,7 +38,7 @@ describe('logic', () => {
             })
     )
 
-    true && describe('validate fields', () => {
+    !true && describe('validate fields', () => {
         it('should succeed on correct value', () => {
             expect(() => logic._validateStringField('email', email).to.equal(email))
             expect(() => logic._validateStringField('password', password).to.equal(password))
@@ -57,7 +57,7 @@ describe('logic', () => {
         })
     })
 
-    true && describe('register user', () => {
+    !true && describe('register user', () => {
         it('should register correctly', () =>
             User.findOne({ email })
                 .then(user => {
@@ -124,7 +124,7 @@ describe('logic', () => {
         )
     })
 
-    true && describe('authenticate user', () => {
+    !true && describe('authenticate user', () => {
         beforeEach(() => User.create({ email, password }))
 
         it('should login correctly', () =>
@@ -171,7 +171,7 @@ describe('logic', () => {
         )
     })
 
-    true && describe('update user', () => {
+    !true && describe('update user', () => {
         const newPassword = `${password}-${Math.random()}`
 
         beforeEach(() => User.create({ email, password }))
@@ -245,7 +245,7 @@ describe('logic', () => {
         )
     })
 
-    true && describe('unregister user', () => {
+    !true && describe('unregister user', () => {
         beforeEach(() => User.create({ email, password }))
 
         it('should unregister user correctly', () =>
@@ -297,7 +297,7 @@ describe('logic', () => {
         )
     })
 
-    true && describe('add note', () => {
+    !true && describe('add note', () => {
         const date = new Date(), text = 'my note'
 
         beforeEach(() => User.create({ email, password }))
@@ -377,7 +377,7 @@ describe('logic', () => {
         )
     })
 
-    true && describe('list notes', () => {
+    !true && describe('list notes', () => {
         let notes = [
             { date: new Date('2018-08-20T12:10:15.474Z'), text: 'text 1' },
             { date: new Date('2018-08-23T13:00:00.000Z'), text: 'cumple jordi' },
@@ -401,7 +401,6 @@ describe('logic', () => {
         it('should list all user notes', () => {
             return logic.listNotes(email, new Date('2018-08-24'))
                 .then(_notes => {
-                    debugger
 
                     const expectedNotes = notes.slice(2)
 
@@ -424,7 +423,7 @@ describe('logic', () => {
         })
     })
 
-    true && describe('remove note', () => {
+    !true && describe('remove note', () => {
         let notes = [
             { date: new Date(), text: 'text 1' },
             { date: new Date(), text: 'text 2' },
@@ -478,7 +477,7 @@ describe('logic', () => {
         })
     })
 
-    true && describe(' contact', () => {
+    !true && describe(' contact', () => {
 
         const contactMail ="gerard@gmail.com", name = 'gerard', surname = 'bas', phone='123456789'
 
@@ -518,7 +517,7 @@ describe('logic', () => {
 
     })
 
-    true && describe('delete a contact', () => {
+    !true && describe('delete a contact', () => {
         let contacts = []
         beforeEach(() => {
             let cnt = 10
