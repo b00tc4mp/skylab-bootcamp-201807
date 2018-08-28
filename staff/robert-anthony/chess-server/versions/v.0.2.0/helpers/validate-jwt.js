@@ -22,9 +22,7 @@ function validateJwt(req, res, next) {
 
         const payload = jwt.verify(token, JWT_SECRET)
 
-        if (username && payload.sub !== username) throw new Error('invalid token')
-
-        req.username = payload.sub
+        if (payload.sub !== username) throw new Error('invalid token')
 
         next()
     } catch ({ message }) {

@@ -11,9 +11,9 @@ const validateJwt = require('./helpers/validate-jwt')
 const jsonBodyParser = bodyParser.json()
 
 router.post('/register', jsonBodyParser, (req, res) => {
-  const {body: {username, password}} = req
+  const {body: {username, password, nickname}} = req
 
-  logic.register(username, password)
+  logic.register(username, password, nickname)
     .then(() => res.status(201).json({message: 'user registered'}))
     .catch(err => {
       const {message} = err
@@ -23,13 +23,13 @@ router.post('/register', jsonBodyParser, (req, res) => {
 })
 
 router.post('/authenticate', jsonBodyParser, (req, res) => {
-  const {body: {username, password}} = req
+  const {body: {username: nickname, password}} = req
 
-  logic.authenticate(username, password)
+  logic.authenticate(nickname, password)
     .then(() => {
       const {JWT_SECRET, JWT_EXP} = process.env
 
-      const token = jwt.sign({sub: username}, JWT_SECRET, {expiresIn: JWT_EXP})
+      const token = jwt.sign({sub: nickname}, JWT_SECRET, {expiresIn: JWT_EXP})
 
       res.json({message: 'user authenticated', token})
     })
@@ -41,11 +41,11 @@ router.post('/authenticate', jsonBodyParser, (req, res) => {
 })
 
 /*  update password */
-router.patch('/user/:username', [validateJwt, jsonBodyParser], (req, res) => {
+router.patch('/user/:nickname', [validateJwt, jsonBodyParser], (req, res) => {
 
-  const {params: {username}, body: {password, newPassword}} = req
+  const {params: {nickname}, body: {password, newPassword}} = req
 
-  logic.updatePassword(username, password, newPassword)
+  logic.updatePassword(nickname, password, newPassword)
     .then(() => res.json({message: 'user updated'}))
     .catch(err => {
       const {message} = err
@@ -54,6 +54,111 @@ router.patch('/user/:username', [validateJwt, jsonBodyParser], (req, res) => {
     })
 })
 
+/*  get all games for user */
+router.get('/user/:nickname/games', [validateJwt], (req, res) => {
+
+  const {params: {nickname}} = req
+
+  logic.gamesForUser(nickname)
+    .then(games => res.json(games))
+    .catch(err => {
+      const {message} = err
+      res.status(err instanceof LogicError ? 400 : 500).json({message})
+    })
+})
+
+
+
+
+/*  get all online users */
+router.get('/users', [validateJwt], (req, res) => {
+
+  const {nickname} = req
+
+  logic.getOnlineUsers()
+    .then(users => res.json(users))
+    .catch(err => {
+      const {message} = err
+      res.status(err instanceof LogicError ? 400 : 500).json({message})
+    })
+})
+
+
+/*  get last game request for user */
+router.get('/users/:nickname/lastrequest', [validateJwt], (req, res) => {
+
+  const {nickname} = req
+
+  logic.getLastGameRequest()
+    .then(result => res.json(result))
+    .catch(err => {
+      const {message} = err
+      res.status(err instanceof LogicError ? 400 : 500).json({message})
+    })
+})
+
+
+/* terminate game */
+router.patch('/user/:nickname/game/:gameID/', [validateJwt], (req, res) => {
+
+  const {params: {nickname, gameID}} = req
+
+  logic.terminateGame(nickname, gameID)
+    .then(_ => res.json({message: 'game terminated'}))
+    .catch(err => {
+      const {message} = err
+      res.status(err instanceof LogicError ? 400 : 500).json({message})
+    })
+})
+
+
+/* make a move  */
+router.post('/user/:nickname/game/:gameID/', [validateJwt, jsonBodyParser], (req, res) => {
+
+  const {params: {nickname, gameID}, body: {move, opponent}} = req
+  logic.move(nickname, gameID, move)
+    .then(_ => {
+        sockets.announceMoveMade(nickname, opponent)
+        res.json({message: 'successful move'})
+      }
+    )
+    .catch(err => {
+      const {message} = err
+      res.status(err instanceof LogicError ? 400 : 500).json({message})
+    })
+})
+
+/* request a game  */
+router.post('/user/:nickname/gamerequest/', [validateJwt, jsonBodyParser], (req, res) => {
+
+  const {params: {nickname}, body: { opponent}} = req
+  logic.requestNewGame(nickname, opponent)
+    .then(_ => {
+       sockets.requestConnection(opponent)
+      res.json({message: 'game requested'})
+      }
+    )
+    .catch(err => {
+      const {message} = err
+      res.status(err instanceof LogicError ? 400 : 500).json({message})
+    })
+})
+
+/* confirm a game request  */
+router.post('/user/:nickname/gameconfirm/', [validateJwt, jsonBodyParser], (req, res) => {
+
+  const {params: {nickname}, body: { opponent}} = req
+  logic.requestNewGame(nickname, opponent)
+    .then(_ => {
+       sockets.requestConnection(opponent)
+      res.json({message: 'game requested'})
+      }
+    )
+    .catch(err => {
+      const {message} = err
+      res.status(err instanceof LogicError ? 400 : 500).json({message})
+    })
+})
 
 
 
