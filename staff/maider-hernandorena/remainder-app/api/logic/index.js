@@ -1,7 +1,8 @@
 'use strict'
 
 const moment = require('moment')
-const { Doctor, Patient, Cite, Treatment, Caretaker } = require('../data/models')
+const { Doctor, Patient, Cite, Caretaker } = require('../data/models')
+const { Types: { ObjectId } } = require('mongoose')
 
 const logic = {
 
@@ -10,7 +11,7 @@ const logic = {
     },
 
     _validateAgeField(age, value) {
-        if (typeof value !== 'number' || value !== value) throw new LogicError(`invalid ${age}`)
+        if (typeof value !== 'number' || value !== value || value <= 0) throw new LogicError(`invalid ${age}`)
     },
 
     _validateDniField(dni, value) {
@@ -55,11 +56,9 @@ const logic = {
 
                 return doctor
             })
-            //change test
     },
 
     addPatient(name, dni, surname, age, gender, address, phone) {
-
         return Promise.resolve()
             .then(() => {
                 this._validateStringField('name', name)
@@ -79,37 +78,39 @@ const logic = {
 
                 return Patient.create(patientData)
             })
-            .then(() => true)
+            .then(patient => patient)
     },
     
-    removePatient(dni) {
+    removePatient(id, dni) {
         return Promise.resolve()
             .then(() => {
+                this._validateStringField('id', id)
                 this._validateDniField('dni', dni)
 
                 return Patient.findOne({ dni })
             })
             .then(patient => {
                 if (!patient) throw new LogicError(`patient with ${dni} dni does not exist`)
-                
-                return Patient.deleteOne({ _id: patient._id })
+
+                return Patient.deleteOne({ _id: ObjectId(id) })
             })
             .then(() => true)
     },
 
-    updatePatient(dni, newAddress, newPhone) {
+    updatePatient(id, dni, newAddress, newPhone) {
         return Promise.resolve()
             .then(() => {
+                this._validateStringField('id', id)
                 this._validateDniField('dni', dni)
 
                 return Patient.findOne({ dni })
             })
             .then(patient => {
                 if (!patient) throw new LogicError(`patient with ${dni} dni does not exist`)
-                if(typeof newAddress !== 'string' || !newAddress.length)
-                if(typeof newPhone !== 'number' || newPhone !== newPhone || newPhone.toString().length !== 9)
+                if(typeof newAddress !== 'string' || !newAddress.length) throw new LogicError(`invalid new address`)
+                if(typeof newPhone !== 'number' || newPhone !== newPhone || newPhone.toString().length !== 9) throw new LogicError(`invalid new phone`)
 
-                return Patient.updateOne({ _id: patient._id }, { $set: {address: newAddress, phone: newPhone} })
+                return Patient.updateOne({ _id: ObjectId(id) }, { $set: {address: newAddress, phone: newPhone} })
             })
             .then(() => true)
     },
@@ -119,18 +120,25 @@ const logic = {
             .then(() => {
                 this._validateStringField('name', name)
 
-                return Patient.find({ name })
+                return Patient.find({ name }).lean()
             })
             .then(patients => {
                 if (!patients) throw new LogicError(`patient with ${name} name does not exist`)
-                
-                return patients
+                if (patients) {
+                    patients.forEach(patient => {
+                        patient.id = patient._id.toString()
+                        delete patient._id
+                        delete patient.__v
+                    })
+                }
+                return patients || []
             })
     },
 
-    addTreatment(dni, pill, quantity, frequency) {
+    addTreatment(id, dni, pill, quantity, frequency) {
         return Promise.resolve()
             .then(() => {
+                this._validateStringField('id', id)
                 this._validateDniField('dni', dni)
                 this._validateStringField('pill', pill)
                 this._validateStringField('quantity', quantity)
@@ -140,49 +148,67 @@ const logic = {
             })
             .then(patient => {
                 if (!patient) throw new LogicError(`patient with ${dni} dni does not exist`)
+                if (quantity <= 0) throw new LogicError(`quantity ${quantity} not possible`)
 
                 const treatment = { pill, quantity, frequency }
+// TO TEST 
+                const existingPill = patient.treatments.find(elem => {
+                    elem.pill === pill})
 
-                patient.treatments.push(new Treatment(treatment))
+                if(existingPill){
+                    patient.treatments.forEach(ele =>{
+                        if(ele.pill === pill) {
+                            ele.quantity = quantity
+                        }
+                    })
+                    return patient.save()
+                }
 
-                return patient.save()
+                return Patient.updateOne({ _id: ObjectId(id) }, { $addToSet: {treatments: treatment} })
             })
             .then(() => true)
     },
 
-    removeTreatment(dni, treatment) {
+    removeTreatment(id, dni, pill) {
         return Promise.resolve()
             .then(() => {
+                this._validateStringField('id', id)
                 this._validateDniField('dni', dni)
+                this._validateStringField('pill', pill)
 
                 return Patient.findOne({ dni })
             })
             .then(patient => {
                 if (!patient) throw new LogicError(`patient with ${dni} dni does not exist`)
-                
-                const treatments = patient.treatments.map(treatment => treatment.pill)
-                const index = treatments.indexOf(treatment.pill)
 
-                if (index === -1) throw new LogicError(`treatment with ${treatment.pill} name was not found`)
-                patient.treatments.splice(index, 1)
-                return patient.save()
+                return Patient.updateOne({ _id: ObjectId(id) }, { $pull: {treatments: { pill } } })
             })
             .then(() => true)
     },
 
-    listTreatments(dni) {
+    listTreatments(id) {
         return Promise.resolve()
             .then(() => {
-                this._validateDniField('dni', dni)
+                this._validateStringField('id', id)
 
-                return Patient.findOne({ dni })
+                return Patient.findOne({ _id: ObjectId(id) }).lean()
             })
             .then(patient => {
-                if (!patient) throw new Error(`patient with ${dni} dni does not exist`)
+                if (!patient) throw new Error(`patient with ${id} id does not exist`)
 
                 let treatments = patient.treatments.map(treatment => treatment)
                 
                 return treatments
+            })
+            .then(treatments => {
+                if (treatments) {
+                    treatments.forEach(treatment => {
+                        treatment.id = treatment._id.toString()
+                        delete treatment._id
+                        delete treatment.__v
+                    })
+                }
+                return treatments || []
             })
     },
 
@@ -210,7 +236,7 @@ const logic = {
                         
                                         return Cite.create(newCite)
                                     })
-                                    .then(() => true)
+                                    .then(cite => cite)
                             })
                     })
             })
@@ -235,10 +261,8 @@ const logic = {
                                 return Cite.findOne({ date })
                                     .then(cite => {
                                         if (!cite) throw new LogicError(`cite with ${date} date does not exist`)
-                
-                                        const oldCite = { name, date, doctor: doctor.id, patient: patient.id }
-                        
-                                        return Cite.updateOne({ _id: cite._id }, { $pull: { cite: oldCite } })
+                                        
+                                        return Cite.deleteOne({ _id: cite._id })
                                     })
                                     .then(() => true)
                             })
@@ -246,32 +270,56 @@ const logic = {
             })
     },
 
-    listCites(code, dni, date) {
+    listCites(date) {
         return Promise.resolve()
             .then(() => {
-                this._validateStringField('code', code)
-                this._validateDniField('dni', dni)
                 this._validateDateField('date', date)
 
-                return Doctor.findOne({ code })
-                    .then(doctor => {
-                        if (!doctor) throw new LogicError(`doctor with ${code} code does not exist`)
-                        
-                        return Patient.findOne({ dni })
-                            .then(patient => {
-                                if (!patient) throw new LogicError(`patient with ${dni} dni does not exist`)
-                                
-                                const mDate = moment(date)
-                                const minDate = mDate.startOf('day').toDate()
-                                const maxDate = mDate.endOf('day').toDate() 
+                const mDate = moment(date)
+                const minDate = mDate.startOf('day').toDate()
+                const maxDate = mDate.endOf('day').toDate()
 
-                                return Cite.find({ date: { $gte: minDate, $lte: maxDate } }, { __v: 0 }).lean()
-                                    .then(cites => {
-                                        if (!cites) throw new LogicError(`cite with ${date} date does not exist`)
-                        
-                                        return cites = cites.map(cite => cite)
-                                    })
-                            })
+                return Cite.find({ date: { $gte: minDate, $lte: maxDate } }, { __v: 0 }).lean()
+                    .then(cites => {
+                        if (!cites) throw new LogicError(`cite with ${date} date does not exist`)
+        
+                        cites.forEach(cite => {
+                            cite.id = cite._id.toString()
+                            delete cite._id
+                            delete cite.__v
+                        })
+
+                        return cites || []
+                    })
+            })
+    },
+    
+    listPatientCites(id, date) {
+        return Promise.resolve()
+            .then(() => {
+                this._validateStringField('id', id)
+                this._validateDateField('date', date)
+
+                return Patient.findOne({ _id: ObjectId(id) })
+            })
+            .then(patient => {
+                if (!patient) throw new LogicError(`patient with ${id} id does not exist`)
+
+                const mDate = moment(date)
+                const minDate = mDate.startOf('month').toDate()
+                const maxDate = mDate.endOf('month').toDate()
+
+                return Cite.find({ date: { $gte: minDate, $lte: maxDate }, patient: ObjectId(id) }, { __v: 0 }).lean()
+                    .then(cites => {
+                        if (!cites) throw new LogicError(`cite with ${date} date does not exist`)
+        
+                        cites.forEach(cite => {
+                            cite.id = cite._id.toString()
+                            delete cite._id
+                            delete cite.__v
+                        })
+
+                        return cites || []
                     })
             })
     },
