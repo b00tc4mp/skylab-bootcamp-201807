@@ -1,0 +1,30 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "build": "webpack --env.mode production",
+    "start": "node build",
+    "watch": "concurrently -k npm:watch-ts npm:watch-node",
+    "watch-ts": "webpack --env.mode development --watch",
+    "watch-node": "nodemon build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Giorgio de la Barrera <giodelabarrera@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.16.3"
+  },
+  "devDependencies": {
+    "@types/express": "^4.16.0",
+    "awesome-typescript-loader": "^5.2.0",
+    "concurrently": "^4.0.1",
+    "nodemon": "^1.18.3",
+    "source-map-loader": "^0.2.4",
+    "typescript": "^3.0.1",
+    "webpack": "^4.17.1",
+    "webpack-cli": "^3.1.0",
+    "webpack-merge": "^4.1.4",
+    "webpack-node-externals": "^1.7.2"
+  }
+}
