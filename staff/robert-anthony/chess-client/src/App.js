@@ -99,8 +99,14 @@ class App extends Component {
 
       this.socket.on(`new game added ${nickname}`, () => {
         console.log(`%c new game added ${nickname}`, 'background: #222; color: #bada55');
+        logic.getGamesForUser(nickname,token)
+          .then(currentGames =>{
+            debugger
+            this.setState({currentGames})
+            sessionStorage.setItem('currentGames', JSON.stringify(currentGames))
 
-        console.log("time to get all games for", nickname)
+          })
+          .catch(({message}) => this.setState({error: message}))
 
       })
 

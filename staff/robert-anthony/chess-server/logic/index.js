@@ -112,15 +112,17 @@ const logic = {
   _currentEngines: new Map,
 
 
-  gamesForUser(nickname) {
+  getGamesForUser(nickname) {
+    console.log(chalk.yellow.black.bold(`Getting games for user ${nickname}`))
+
     return Promise.resolve()
       .then(_ => {
         this._validateStringField("nickname", nickname)
         debugger
-        return Game.find({$or: [{white: nickname}, {black: nickname}]}).lean()
+        return Game.find({$or: [{white: nickname}, {black: nickname}]})
           .then(games => games.filter(game => (!game.terminated)).map(game => {
               const obj = {}
-              obj.gameID = game.gameID
+              obj.gameID = game.id
               obj.opponent = game.white === nickname ? game.black : game.white
               return obj
             }

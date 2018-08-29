@@ -141,6 +141,21 @@ const logic = {
       })
   },
 
+  getGamesForUser( nickname,token) {
+
+    return Promise.resolve()
+      .then(() => {
+
+debugger
+        return this._call(`user/${nickname}/games`, 'GET', {
+          'Content-Type': 'application/json',
+          'authorization': `bearer ${token}`
+
+        }, undefined, 200)
+          .then(res => res.json())
+          .then(res => res)
+      })
+  },
 
 
 }

@@ -60,7 +60,7 @@ router.get('/user/:nickname/games', [validateJwt], (req, res) => {
 
   const {params: {nickname}} = req
 
-  logic.gamesForUser(nickname)
+  logic.getGamesForUser(nickname)
     .then(games => res.json(games))
     .catch(err => {
       const {message} = err
