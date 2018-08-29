@@ -6,6 +6,7 @@ const {logic, LogicError} = require('./logic')
 const jwt = require('jsonwebtoken')
 const router = express.Router()
 const validateJwt = require('./helpers/validate-jwt')
+const {sockets} = require('./sockets')
 
 
 const jsonBodyParser = bodyParser.json()
@@ -23,7 +24,7 @@ router.post('/register', jsonBodyParser, (req, res) => {
 })
 
 router.post('/authenticate', jsonBodyParser, (req, res) => {
-  const {body: { nickname, password}} = req
+  const {body: {nickname, password}} = req
 
   logic.authenticate(nickname, password)
     .then(() => {
@@ -68,8 +69,6 @@ router.get('/user/:nickname/games', [validateJwt], (req, res) => {
 })
 
 
-
-
 /*  get all online users */
 router.get('/users', [validateJwt], (req, res) => {
 
@@ -84,11 +83,23 @@ router.get('/users', [validateJwt], (req, res) => {
 })
 
 
-/*  get last game request for user */
-router.get('/users/:nickname/lastrequest', [validateJwt], (req, res) => {
+/*  get last game requester for user */
+router.get('/user/:nickname/lastrequester', [validateJwt], (req, res) => {
 
-  const {params:{nickname}} = req
-  logic.getLastGameRequest(nickname)
+  const {params: {nickname}} = req
+  logic.getLastGameRequester(nickname)
+    .then(result => res.json(result))
+    .catch(err => {
+      const {message} = err
+      res.status(err instanceof LogicError ? 400 : 500).json({message})
+    })
+})
+
+/*  get game request response for user */
+router.get('/user/:nickname/reqresponse', [validateJwt], (req, res) => {
+
+  const {params: {nickname}} = req
+  logic.getGameRequestResponse(nickname)
     .then(result => res.json(result))
     .catch(err => {
       const {message} = err
@@ -130,11 +141,11 @@ router.post('/user/:nickname/game/:gameID/', [validateJwt, jsonBodyParser], (req
 /* request a game  */
 router.post('/user/:nickname/gamerequest/', [validateJwt, jsonBodyParser], (req, res) => {
 
-  const {params: {nickname}, body: { opponent}} = req
+  const {params: {nickname}, body: {opponent}} = req
   logic.requestNewGame(nickname, opponent)
     .then(_ => {
-       sockets.requestConnection(opponent)
-      res.json({message: 'game requested'})
+        sockets.requestConnection(opponent)
+        res.json({message: 'game requested'})
       }
     )
     .catch(err => {
@@ -143,14 +154,15 @@ router.post('/user/:nickname/gamerequest/', [validateJwt, jsonBodyParser], (req,
     })
 })
 
-/* confirm a game request  */
-router.post('/user/:nickname/gameconfirm/', [validateJwt, jsonBodyParser], (req, res) => {
+/* respond to a game request  */
+router.post('/user/:nickname/respondtorequest', [validateJwt, jsonBodyParser], (req, res) => {
 
-  const {params: {nickname}, body: { opponent}} = req
-  logic.requestNewGame(nickname, opponent)
+  const {params: {nickname}, body: {destination, answer}} = req
+  logic.respondToGameRequest(nickname, destination, answer)
     .then(_ => {
-       sockets.requestConnection(opponent)
-      res.json({message: 'game requested'})
+        sockets.requestHasBeenRespondedTo(destination)
+        sockets.newGameAdded(nickname, destination)
+        res.json({message: 'game request response sent'})
       }
     )
     .catch(err => {
@@ -158,8 +170,6 @@ router.post('/user/:nickname/gameconfirm/', [validateJwt, jsonBodyParser], (req,
       res.status(err instanceof LogicError ? 400 : 500).json({message})
     })
 })
-
-
 
 
 module.exports = function () {

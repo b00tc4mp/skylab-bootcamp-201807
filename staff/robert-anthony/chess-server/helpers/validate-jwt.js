@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken')
 const { JWT_SECRET } = process.env
 
 function validateJwt(req, res, next) {
-    const { params: { username } } = req
+    const { params: { nickname } } = req
 
     try {
         const authorization = req.get('authorization')
@@ -22,9 +22,9 @@ function validateJwt(req, res, next) {
 
         const payload = jwt.verify(token, JWT_SECRET)
 
-        if (username && payload.sub !== username) throw new Error('invalid token')
+        if (nickname && payload.sub !== nickname) throw new Error('invalid token')
 
-        req.username = payload.sub
+        req.nickname = payload.sub
 
         next()
     } catch ({ message }) {

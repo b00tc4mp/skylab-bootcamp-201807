@@ -23,15 +23,16 @@ const logic = {
         if (typeof fieldValue !== 'string' || !fieldValue.length) throw new Error(`invalid ${fieldName}`)
     },
 
-    register(nickname, password) {
+    register(email,nickname, password) {
         return Promise.resolve()
             .then(() => {
-                this._validateStringField('username', nickname)
+                this._validateStringField('email', email)
+                this._validateStringField('nickname', nickname)
                 this._validateStringField('password', password)
 
                 return this._call('register', 'POST', {
                     'Content-Type': 'application/json'
-                }, JSON.stringify({username: nickname, password}), 201)
+                }, JSON.stringify({email,nickname, password}), 201)
                     .then(() => true)
             })
     },
@@ -50,7 +51,7 @@ const logic = {
             })
     },
 
-    updatePassword(nickname, password, newPassword, token) {
+  updatePassword(nickname, password, newPassword, token) {
 
         return Promise.resolve()
             .then(() => {
@@ -62,11 +63,83 @@ const logic = {
                     'Content-Type': 'application/json',
                     'authorization': `bearer ${token}`
 
-                }, JSON.stringify({username: nickname, password, newPassword}), 200)
+                }, JSON.stringify({nickname: nickname, password, newPassword}), 200)
                     .then(res => res.json())
                     .then(res => res)
             })
     },
+
+
+  getOnlineUsers( token) {
+
+    return Promise.resolve()
+      .then(() => {
+
+
+        return this._call(`users`, 'GET', {
+          'Content-Type': 'application/json',
+          'authorization': `bearer ${token}`
+
+        }, undefined, 200)
+          .then(res => res.json())
+          .then(res => res)
+      })
+  },
+
+  getLastRequester( nickname,token) {
+
+    return Promise.resolve()
+      .then(() => {
+
+
+        return this._call(`user/${nickname}/lastrequester`, 'GET', {
+          'Content-Type': 'application/json',
+          'authorization': `bearer ${token}`
+
+        }, undefined, 200)
+          .then(res => res.json())
+          .then(res => res)
+      })
+  },
+
+  requestGame( nickname,opponent, token) {
+    return Promise.resolve()
+      .then(() => {
+
+        return this._call(`user/${nickname}/gamerequest`, 'POST', {
+          'Content-Type': 'application/json',
+          'authorization': `bearer ${token}`
+        },  JSON.stringify({opponent}), 200)
+          .then(res => res.json())
+          .then(res => res)
+      })
+  },
+
+  respondToGameRequest(nickname, destination, answer, token) {
+    return Promise.resolve()
+      .then(() => {
+
+        return this._call(`user/${nickname}/respondtorequest`, 'POST', {
+          'Content-Type': 'application/json',
+          'authorization': `bearer ${token}`
+        },  JSON.stringify({destination,answer}), 200)
+          .then(res => res.json())
+          .then(res => res)
+      })
+  },
+
+ getLastGameRequestResponse( nickname, token) {
+    return Promise.resolve()
+      .then(() => {
+
+        return this._call(`user/${nickname}/reqresponse`, 'GET', {
+          'Content-Type': 'application/json',
+          'authorization': `bearer ${token}`
+        },  undefined, 200)
+          .then(res => res.json())
+          .then(res => res)
+      })
+  },
 
 
 

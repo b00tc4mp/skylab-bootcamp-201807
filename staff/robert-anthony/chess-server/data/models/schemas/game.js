@@ -18,7 +18,7 @@ module.exports = new Schema({
   },
   pgn: {
     type:String,
-    required:true
+    required:isString
   },
   terminated: {
     type:Boolean,
@@ -27,6 +27,15 @@ module.exports = new Schema({
   },
   winner: {
     type:String,
-    required:true
+    required:isString
+  },
+  lastMove: {
+    type:String,
+    required:isString
   },
 })
+
+
+function isString () {
+  return typeof this.pgn !== 'string'
+}

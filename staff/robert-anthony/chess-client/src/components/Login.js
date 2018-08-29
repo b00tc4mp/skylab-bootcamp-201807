@@ -31,7 +31,7 @@ class Login extends Component {
          <a href="/#/register">register</a> or login
         </nav>
         <form onSubmit={this.onLoginSubmitted}>
-          <input type="text" name="nickname" placeholder="username" autoFocus onChange={this.onNicknameChanged} />
+          <input type="text" name="nickname" placeholder="nickname" autoFocus onChange={this.onNicknameChanged} />
           <input type="password" name="password" placeholder="password" onChange={this.onPasswordChanged} />
           <button type="submit">login</button>
         </form>

@@ -6,65 +6,115 @@ import Login from './components/Login'
 import Main from './components/Main'
 import socketIOClient from 'socket.io-client';
 
-import getToday from './helpers/getToday'
+import logic from "./logic"
 
 class App extends Component {
 
 
   state = {
-    username: sessionStorage.getItem('username') || '',
+    nickname: sessionStorage.getItem('nickname') || '',
     token: sessionStorage.getItem('token') || '',
+    newGamePosition: "start",
     users: JSON.parse(sessionStorage.getItem('users')) || [],
-    currentDate: getToday(),
-    amConnected: sessionStorage.getItem('amConnected') || false,
-    newGamePosition: "start"
+    error: "",
+    gameRequester: sessionStorage.getItem('gameRequester') || '',
+    currentGames: JSON.parse(sessionStorage.getItem('currentGames')) || [],
   }
 
 
   socket = null
 
+  aliveInterval = null
 
-  componentDidMount = () => {
 
-    this.setupSocketListeners()
 
+  alivePing = () => {
+    this.socket.emit('client alive', this.state.nickname)
+  }
+
+  onGetAllOnlineUsers = (token) => {
+    logic.getOnlineUsers(token)
+      .then(users => {
+        sessionStorage.setItem('users', JSON.stringify(users))
+        this.setState({users})
+      })
+      .catch(({message}) => this.setState({error: message}))
 
   }
 
-  setupSocketListeners = () => {
+  respondToGameRequest = (destination, answer) => {
+    const {state: {nickname, token}} = this
+    this.setState({gameRequester: ''})
+    sessionStorage.setItem('gameRequester', '')
+    logic.respondToGameRequest(nickname, destination, answer, token)
+      .catch(({message}) => this.setState({error: message}))
+
+  }
+
+  onRequestGame = (destination) => {
+    logic.requestGame(this.state.nickname, destination, this.state.token)
+      .catch(({message}) => this.setState({error: message}))
+
+  }
+
+  componentDidMount = () => {
+  }
+
+  componentWillUnmount = () => {
+    if (this.aliveInterval) this.aliveInterval.clearInterval()
+  }
+
+  setupSocketListeners = (nickname,token) => {
+
+
     this.socket = socketIOClient('http://localhost:8080');
     if (this.socket) {
 
-      this.socket.on('all users', users => {
-        this.setState({users})
-        sessionStorage.setItem('users', JSON.stringify(users))
+
+      this.socket.on(`error ${nickname}`, message => console.error(message))
+
+      this.socket.on(`move made ${nickname}`, () => {
+        // move made
       })
 
-      this.socket.on('error', message => console.error(message))
+      this.socket.on(`game requested ${nickname}`, () => {
+        console.log(`%c game requested ${nickname}`, 'background: #222; color: #bada55');
 
-      this.socket.on('new position', (newGamePosition) => {
-        this.setState({newGamePosition})
+        logic.getLastRequester(nickname, token)
+          .then(gameRequester => {
+            this.setState({gameRequester})
+            sessionStorage.setItem('gameRequester', gameRequester)
+          })
+          .catch(({message}) => this.setState({error: message}))
+
       })
 
-      this.socket.on('connected remotely', () => {
-        this.setState({amConnected: true})
-        sessionStorage.setItem('amConnected', true)
+      this.socket.on(`request response ready ${nickname}`, () => {
+        console.log(`%c request response ready ${nickname}`, 'background: #222; color: #bada55');
+
+        logic.getLastGameRequestResponse(nickname, token)
+          .then(res => console.log(res))
+          .catch(({message}) => this.setState({error: message}))
       })
 
-      this.socket.on('partner disconnected', () => {
-        this.setState({amConnected: false})
-        sessionStorage.setItem('amConnected', false)
+      this.socket.on(`new game added ${nickname}`, () => {
+        console.log(`%c new game added ${nickname}`, 'background: #222; color: #bada55');
+
+        console.log("time to get all games for", nickname)
+
+      })
+
+      this.socket.on('user disconnected', () => {
+        if (this.state.token !== '') this.onGetAllOnlineUsers(this.state.token)
+      })
+
+      this.socket.on('user connected', () => {
+        if (this.state.token !== '') this.onGetAllOnlineUsers(this.state.token)
       })
 
       this.socket.on('reconnect', (attemptNumber) => {
         console.error(`socket reconnect on client side, attemptNumber = ${attemptNumber}`)
-        this.socket.emit('client has reconnected', this.state.username, (err, result) => {
-          if (err) console.error(`Error on reconnecting client with server: ${err}, ${result}`)
-          else {
-            this.setState({amConnected: true})
-            console.log(result)
-          }
-        })
+
       });
 
       this.socket.on('disconnect', (reason) => {
@@ -82,46 +132,36 @@ class App extends Component {
 
 
   onLoggedIn = (nickname, token) => {
-    this.setState({username: nickname, token})
+    this.setupSocketListeners(nickname,token)
+
+    this.setState({nickname: nickname, token})
     this.socket.emit('authenticated', nickname)
-    sessionStorage.setItem('username', nickname)
+    this.aliveInterval = setInterval(this.alivePing, 10 * 1000);
+    this.onGetAllOnlineUsers(token)
+    sessionStorage.setItem('nickname', nickname)
     sessionStorage.setItem('token', token)
+    this.setState({token})
   }
 
   onGameMove = position => {
-    this.socket.emit('move sent to chess engine', this.state.username, position, (err, result) => {
-      if (err) {
-        if (err === 5050) console.error("Move not approved by chess engine")
-        else console.error("Error on sending move to chess engine from client", err)
-      }
-      else {
-        console.error(result)
 
-      }
-    })
-  }
-
-  setUpUsersConnection = (user) => {
-    this.socket.emit('establish connection', this.state.username, user, (err, result) => {
-
-      console.log(result)
-      if (!err) this.setState({amConnected: true})
-    })
   }
 
   isLoggedIn() {
-    return !!this.state.username
+    return !!this.state.nickname
   }
 
   onLogout = e => {
     e.preventDefault()
-    this.socket.emit('logout', this.state.username)
+    // this.socket.emit('logout', this.state.nickname)
     this.setState({nickname: '', token: ''})
+    if (this.aliveInterval) clearInterval(this.aliveInterval)
+// removesocketlisteners!
     sessionStorage.clear()
   }
 
   render() {
-    const {username, amConnected, users, token} = this.state
+    const {nickname, users, error, token, gameRequester} = this.state
 
     return <div className="full-height">
       <header>
@@ -135,14 +175,17 @@ class App extends Component {
       <Switch>
         <Route exact path="/" render={() => this.isLoggedIn() ? <Redirect to="/main"/> : <Landing/>}/>
         <Route path="/register" render={() => this.isLoggedIn() ? <Redirect to="/main"/> : <Register/>}/>
-        <Route path="/main" render={() => this.isLoggedIn() ?
-          <Main onGameMove={this.onGameMove} newGamePosition={this.state.newGamePosition} amConnected={amConnected}
-                username={username} onUserClick={this.setUpUsersConnection} users={users}/> : <Landing/>}/>
+        <Route path="/main" users={users} render={() => this.isLoggedIn() ?
+          <Main onGameMove={this.onGameMove} gameRequester={gameRequester}
+                respondToGameRequest={this.respondToGameRequest} users={users} token={token}
+                newGamePosition={this.state.newGamePosition}
+                nickname={nickname} onRequestGame={this.onRequestGame}/> : <Landing/>}/>
         <Route path="/login" render={() => this.isLoggedIn() ? <Redirect to="/main"/> :
           <Login onLoggedIn={this.onLoggedIn}/>}/>
       </Switch>
 
       <footer>
+        {error && <p>{error}</p>}
       </footer>
     </div>
   }

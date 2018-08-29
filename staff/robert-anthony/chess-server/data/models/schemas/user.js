@@ -27,6 +27,11 @@ module.exports = new Schema({
     required:allowEmpty
   },
 
+  lastRequestResponse:{
+    type:String,
+    required:allowEmpty
+  },
+
   online: {
     type: Boolean,
     required: true,
