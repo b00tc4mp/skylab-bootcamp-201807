@@ -185,6 +185,7 @@ describe('logic', () => {
                     expect(user.email).to.equal(email)
                     expect(user.password).to.equal(newPassword)
                 })
+            const pepe = 'kekke'
         )
 
         it('should fail on trying to update password with an undefined email', () =>
