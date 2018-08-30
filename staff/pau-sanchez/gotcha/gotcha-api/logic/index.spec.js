@@ -39,7 +39,8 @@ describe('logic', () => {
 
     beforeEach(() =>
         Promise.all([
-            //Note.deleteMany(),
+            Notebook.deleteMany(),
+            Note.deleteMany(),
             User.deleteMany()
         ])
             .then(() => {
@@ -60,7 +61,7 @@ describe('logic', () => {
     //@@logic._validateNamefield
     //@@logic._validateYouTube
 
-    true && describe('validate fields', () => {
+    !true && describe('validate fields', () => {
         
         //@@should succed on correct value
         it('should succeed on correct value', () => {
@@ -106,7 +107,7 @@ describe('logic', () => {
     //@@register user
     //@@logic.register
 
-    true && describe('register user', () => {
+    !true && describe('register user', () => {
         it('should register correctly', () =>
             User.findOne({ email })
                 .then(user => {
@@ -175,15 +176,25 @@ describe('logic', () => {
     //@@authenticate user
     //@@logic.authenticate
 
-    true && describe('authenticate user', () => {
+    !true && describe('authenticate user', () => {
         beforeEach(() => User.create({ email, password, name }))
+        let userid
 
         //@@should login correctly
         it('should login correctly', () =>
             logic.authenticate(email, password)
+                
                 .then(res => {
-                    expect(res).to.be.true
+                    
+                    userid = res._id.toString()
                 })
+                .then( ()=> {
+                    return User.findOne({ email})
+                })
+                .then( res => {
+                    expect(res._id.toString()).to.equal(userid)
+                })
+                
         )
         //@@should fail on trying to login with an undefined email
         it('should fail on trying to login with an undefined email', () =>
@@ -227,10 +238,10 @@ describe('logic', () => {
     //@@update user Password
     //@@logic.updatePassword
 
-    true && describe('update user', () => {
+    !true && describe('update user', () => {
         const newPassword = `${password}-${Math.random()}`
 
-        beforeEach(() => User.create({ email, password, name }))
+        beforeEach(() => User.create({ name, email, password }))
 
         //@@should update password correctly
         it('should update password correctly', () =>
@@ -244,6 +255,7 @@ describe('logic', () => {
                     expect(user).to.exist
                     expect(user.email).to.equal(email)
                     expect(user.password).to.equal(newPassword)
+                    
                 })
         )
 
@@ -314,7 +326,7 @@ describe('logic', () => {
     //@@unregister user
     //@@logic.unresgisterUser
 
-    true && describe('unregister user', () => {
+    !true && describe('unregister user', () => {
         beforeEach(() => User.create({ email, password, name }))
 
         //@@should unregister user correctly
@@ -376,17 +388,22 @@ describe('logic', () => {
     //@@create notebook
     //@@logic.createNotebook
 
-    true && describe('create notebook', () => {
-        const notebooktitle = "notebooktitletext", videotitle = "videotitletext", videoid = "123abc", videourl = "https://www.youtube.com/watch?v=R54neaLznFA", date = new Date()
-        
-        beforeEach(() => User.create({ email, password, name}))
+    !true && describe('create notebook', () => {
+        const notebooktitle = "notebooktitletext", videoid = "R54neaLznFA", videourl = "https://www.youtube.com/watch?v=R54neaLznFA", date = new Date()
+        let userid
+        beforeEach(() => {
+            return User.create({ email, password, name})
+            .then( res => {
+                userid = res._id.toString() 
+            })
+        })
 
         it('should succed on correct data', () => 
-            logic.createNotebook( email, notebooktitle, videotitle, videoid, videourl, date)
+            logic.createNotebook( userid, notebooktitle, videourl)
                 .then(res => {
                     expect(res).to.be.true
 
-                    return User.findOne({ email })
+                    return User.findOne({ _id: userid })
                 })
                 .then(user => {
                     return Notebook.find({ user: user.id})
@@ -396,32 +413,33 @@ describe('logic', () => {
 
                     const [notebook] = notebooks
 
-                    expect(notebook.notebooktitle).to.equal(notebooktitle)
-                    expect(notebook.videotitle).to.equal(videotitle)
+                    
+                    expect(notebook.videotitle).to.equal("Learn The MERN Stack [3] - Client Setup & Reactstrap")
                     expect(notebook.videoid).to.equal(videoid)
                     expect(notebook.videourl).to.equal(videourl)
-                    expect(notebook.date).to.deep.equal(date)
+                    
                 })
     )})
 
     //@@list notebook
     //@@logic.listNotebook
 
-    true && describe('list notebook', () => {
+    !true && describe('list notebook', () => {
         let notebooks = [
-            {notebooktitle : "notebooktitletext1", videotitle : "videotitletext1", videoid : "123abc1", videourl : "https://www.youtube.com/watch?v=R54neaLznFA", date: new Date('2018-02-20T12:10:15.474Z')},
-            {notebooktitle : "notebooktitletext2", videotitle : "videotitletext2", videoid : "123abc2", videourl : "http://youtu.be/cCnrX1w5luM", date: new Date('2018-02-20T12:10:15.474Z')},
-            {notebooktitle : "notebooktitletext3", videotitle : "videotitletext3", videoid : "123abc3", videourl : "http://youtube/cCnrX1w5luM", date: new Date('2018-02-20T12:10:15.474Z')},
-            {notebooktitle : "notebooktitletext4", videotitle : "videotitletext4", videoid : "123abc4", videourl : "www.youtube.com/cCnrX1w5luM ", date: new Date('2018-02-20T12:10:15.474Z')},
-            {notebooktitle : "notebooktitletext5", videotitle : "videotitletext5", videoid : "123abc5", videourl : "youtu.be/cCnrX1w5luM", date: new Date('2018-02-20T12:10:15.474Z')}
+            {notebooktitle : "notebooktitletext1", videotitle : "videotitletext1", videoid : "123abc1", videourl : "https://www.youtube.com/watch?v=R54neaLznFA", videothumbnail: "http://img.youtube.com/vi/R54neaLznFA/0.jpg",date: new Date('2018-02-20T12:10:15.474Z')},
+            {notebooktitle : "notebooktitletext2", videotitle : "videotitletext2", videoid : "123abc2", videourl : "http://youtu.be/cCnrX1w5luM", videothumbnail: "http://img.youtube.com/vi/R54neaLznFA/0.jpg",date: new Date('2018-02-20T12:10:15.474Z')},
+            {notebooktitle : "notebooktitletext3", videotitle : "videotitletext3", videoid : "123abc3", videourl : "http://youtube/cCnrX1w5luM", videothumbnail: "http://img.youtube.com/vi/R54neaLznFA/0.jpg",date: new Date('2018-02-20T12:10:15.474Z')},
+            {notebooktitle : "notebooktitletext4", videotitle : "videotitletext4", videoid : "123abc4", videourl : "www.youtube.com/cCnrX1w5luM ", videothumbnail: "http://img.youtube.com/vi/R54neaLznFA/0.jpg",date: new Date('2018-02-20T12:10:15.474Z')},
+            {notebooktitle : "notebooktitletext5", videotitle : "videotitletext5", videoid : "123abc5", videourl : "youtu.be/cCnrX1w5luM", videothumbnail: "http://img.youtube.com/vi/R54neaLznFA/0.jpg",date: new Date('2018-02-20T12:10:15.474Z')}
         ]
+        let userId
     
 
         beforeEach(() =>
             new User({ email, password, name }).save()
                 .then(user => {
                     
-                    const userId = user.id
+                    userId = user.id
                     
                     notebooks.forEach(notebook => notebook.user = userId)
 
@@ -431,7 +449,7 @@ describe('logic', () => {
         )
 
         it('should list all user notebooks', () => {
-            return logic.listNotebooks( email )
+            return logic.listNotebooks( userId )
                 .then(_notebooks => {
 
                     expect(_notebooks.length).to.equal(notebooks.length)
@@ -444,14 +462,15 @@ describe('logic', () => {
     //@@list notebook by id
     //@@logic.listNotebookById
 
-    true && describe('list notebook by id', () => {
-        let _notebook = [{notebooktitle : "notebooktitletext1", videotitle : "videotitletext1", videoid : "123abc1", videourl : "https://www.youtube.com/watch?v=R54neaLznFA", date: new Date('2018-02-20T12:10:15.474Z')}]
+    !true && describe('list notebook by id', () => {
+        let _notebook = [{notebooktitle : "notebooktitletext1", videotitle : "videotitletext1", videoid : "123abc1", videourl : "https://www.youtube.com/watch?v=R54neaLznFA", videothumbnail: "http://img.youtube.com/vi/R54neaLznFA/0.jpg",date: new Date('2018-02-20T12:10:15.474Z')}]
         let _notebookid
+        let userId
 
         beforeEach(() =>
             new User({ email, password, name}).save()
                 .then(user => {
-                    const userId = user.id
+                    userId = user.id
                     _notebook.forEach(_notebook => _notebook.user = userId)
                     return Notebook.create(_notebook)
                 })
@@ -461,7 +480,7 @@ describe('logic', () => {
                 })
             )
         it('should list a notebook by its id', () => {
-            return logic.listNotebookById(_notebookid)
+            return logic.listNotebooksByNotebookId(userId, _notebookid)
                 .then(notebook => {
                     expect(notebook).to.exist
                     expect(notebook.notebooktitle).to.equal(_notebook[0].notebooktitle)
@@ -473,58 +492,20 @@ describe('logic', () => {
         })
     })
 
-    //@@remove notebook
-    //@@logic.deleteNotebook
-
-    true && describe('remove notebook by id', () => {
-
-        let notebook = [{notebooktitle : "notebooktitletext1", videotitle : "videotitletext1", videoid : "123abc1", videourl : "https://www.youtube.com/watch?v=R54neaLznFA", date: new Date('2018-02-20T12:10:15.474Z')}]
-        let _notebookid
-
-        beforeEach(() =>
-            new User({ email, password, name}).save()
-                .then(user => {
-                    const userId = user.id
-                    notebook.forEach(notebook => notebook.user = userId)
-                    return Notebook.create(notebook)
-                    
-                })
-                .then(_notebook => {
-                    notebook = _notebook.map(notebooks => notebooks._doc)
-                    _notebookid = notebook[0]._id.toString()
-                })
-        )
-        it('should remove a notebook correctly with the correct id', () => {
-            return logic.removeNotebook(_notebookid)
-                .then(res => {
-                    expect(res).to.be.true
-                    
-                })
-                .then( () => {
-                    return Notebook.findOne({_notebookid})
-                })
-                .then(res =>{
-                    expect(res).to.equal(null)
-                })
-                
-        })
-        
-
-    })
-
     //@@update notebook
     //@@logic.updateNotebook
 
-    true && describe('update notebook title', () => {
+    !true && describe('update notebook title', () => {
 
-        let _notebook = [{notebooktitle : "notebooktitletext1", videotitle : "videotitletext1", videoid : "123abc1", videourl : "https://www.youtube.com/watch?v=R54neaLznFA", date: new Date('2018-02-20T12:10:15.474Z')}]
+        let _notebook = [{notebooktitle : "notebooktitletext1", videotitle : "videotitletext1", videoid : "123abc1", videourl : "https://www.youtube.com/watch?v=R54neaLznFA", videothumbnail: "http://img.youtube.com/vi/R54neaLznFA/0.jpg",date: new Date('2018-02-20T12:10:15.474Z')}]
         const newTitle = "new title"
         let _notebookid
+        let userId
 
         beforeEach(() =>
             new User({ email, password, name}).save()
                 .then(user => {
-                    const userId = user.id
+                    userId = user.id
                     _notebook.forEach(_notebook => _notebook.user = userId)
                     return Notebook.create(_notebook)
                 })
@@ -534,44 +515,337 @@ describe('logic', () => {
                 })
             )
         it('should update title with correct id and title', () => {
-            return logic.updateTitleNotebook(_notebookid, newTitle)
-                .then( notebook => {
-                    expect(notebook.notebooktitle).to.equal(newTitle)
+            return logic.updateNotebook(userId, _notebookid, newTitle)
+                .then( () => {
+                    return Notebook.findOne({ _id: _notebookid})
                 })
+                .then( res => {
+                    expect(res.notebooktitle).to.equal(newTitle)
+                })
+                   
+                
         })
 
-    }) 
+    })
+
+    //@@remove notebook
+    //@@logic.deleteNotebook
+
+    !true && describe('remove notebook by id', () => {
+
+        let notebook = [{notebooktitle : "notebooktitletext1", videotitle : "videotitletext1", videoid : "123abc1", videourl : "https://www.youtube.com/watch?v=R54neaLznFA", videothumbnail: "http://img.youtube.com/vi/R54neaLznFA/0.jpg",date: new Date('2018-02-20T12:10:15.474Z')}]
+        let notebookid
+        let userId
+
+        beforeEach(() =>
+            new User({ email, password, name}).save()
+                .then(user => {
+                    userId = user.id
+                    notebook.forEach(notebook => notebook.user = userId)
+                    return Notebook.create(notebook)
+                    
+                })
+                .then(_notebook => {
+                   notebookid = _notebook[0]._doc._id.toString()
+                })
+        )
+        it('should remove a notebook correctly with the correct id', () => {
+            return logic.removeNotebook(userId, notebookid)
+                .then(res => {
+                    expect(res).to.be.true
+                 })
+                .then( () => {
+                    return Notebook.findOne({notebookid})
+                })
+                .then(res =>{
+                    expect(res).to.equal(null)
+                })
+                
+        })
+    })
+
+     
 
     //@@create note
     //@@logic.createNote
+
+
+    !true && describe('create note', () => {
+
+        let _notebook = [{notebooktitle : "notebooktitletext1", videotitle : "videotitletext1", videoid : "123abc1", videourl : "https://www.youtube.com/watch?v=R54neaLznFA", videothumbnail: "http://img.youtube.com/vi/R54neaLznFA/0.jpg",date: new Date('2018-02-20T12:10:15.474Z')}]
+        let _notebookid
+        let _note = [{seconds: 23, notetitle: "Note Title Test", notetext: "Note Text Title"}]
+
+        beforeEach(() => 
+            
+            new User({ email, password, name}).save()
+                .then(user => {
+                    const userId = user.id
+                    _notebook.forEach(_notebook => _notebook.user = userId)
+                    return Notebook.create(_notebook)
+                })
+                .then(_notebook => {
+                    _notebook = _notebook.map(notebooks => notebooks._doc)
+                    _notebookid = _notebook[0]._id.toString()
+                    _note.forEach(_note => _note.notebook = _notebookid)
+                })
+            )
+            it('should create a note with the correct data', () => {
+                return logic.createNote(_note[0].seconds, _note[0].notetitle, _note[0].notetext, _note[0].notebook)
                 
+                    .then( res => {
+                        expect(res).to.equal(true)
+                    })
+            })
+        
+    })
+
+    //@@list note by user id
+    //@@logic.listNotes
+
+    !true && describe('list notes by user id', () => {
+
+        let _notebook = [{notebooktitle : "notebooktitletext1", videotitle : "videotitletext1", videoid : "123abc1", videourl : "https://www.youtube.com/watch?v=R54neaLznFA", videothumbnail: "http://img.youtube.com/vi/R54neaLznFA/0.jpg",date: new Date('2018-02-20T12:10:15.474Z')}]
+        let _notebookid
+        let _note = [{seconds: 23, notetitle: "Note Title Test", notetext: "Note Text Title"}]
+        let _noteid
+        let userId
+
+        beforeEach(() => 
+            
+            new User({ email, password, name}).save()
+                .then(user => {
+                    userId = user.id
+                    _notebook.forEach(_notebook => _notebook.user = userId)
+                    return Notebook.create(_notebook)
+                })
+                .then(_notebook => {
+                    _notebook = _notebook.map(notebooks => notebooks._doc)
+                    _notebookid = _notebook[0]._id.toString()
+                    _note.forEach(_note => _note.notebook = _notebookid)
+                    return Note.create(_note[0])
+                })
+                .then(note => {
+                    _noteid = note._id.toString()
+                })
                 
+        )
 
-    
-    
+        it('should list the notes by email correctly', () => {
+            return logic.listNotesbyUser(userId)
+                .then( res => {
+                    expect(res[0]._doc.seconds).to.equal(_note[0].seconds)
+                    expect(res[0]._doc.notetitle).to.equal(_note[0].notetitle)
+                    expect(res[0]._doc.notetext).to.equal(_note[0].notetext)
+                    expect(res[0]._doc._id.toString()).to.equal(_noteid)
+          
+                })
+        })
+
+    })
+
+    //@@list note by notebookid
+    //@@logic.listNotebyNotebookId
+
+                   
+    !true && describe('list notes by notebookid', () => {
+
+        let _notebook = [{notebooktitle : "notebooktitletext1", videotitle : "videotitletext1", videoid : "123abc1", videourl : "https://www.youtube.com/watch?v=R54neaLznFA", videothumbnail: "http://img.youtube.com/vi/R54neaLznFA/0.jpg",date: new Date('2018-02-20T12:10:15.474Z')}]
+        let _notebookid
+        let _note = [{seconds: 23, notetitle: "Note Title Test", notetext: "Note Text Title"}]
+        let _noteid
+
+        beforeEach(() => 
+            
+            new User({ email, password, name}).save()
+                .then(user => {
+                    const userId = user.id
+                    _notebook.forEach(_notebook => _notebook.user = userId)
+                    return Notebook.create(_notebook)
+                })
+                .then(_notebook => {
+                    _notebook = _notebook.map(notebooks => notebooks._doc)
+                    _notebookid = _notebook[0]._id.toString()
+                    _note.forEach(_note => _note.notebook = _notebookid)
+                    return Note.create(_note[0])
+                })
+                .then(note => {
+                    _noteid = note._id.toString()
+                })
+                
+        )
+
+        it('should list the notes by notebookid correctly', () => {
+            return logic.listNotebyNotebookId(_notebookid)
+                .then( res => {
+                    expect(res[0]._doc.seconds).to.equal(_note[0].seconds)
+                    expect(res[0]._doc.notetitle).to.equal(_note[0].notetitle)
+                    expect(res[0]._doc.notetext).to.equal(_note[0].notetext)
+                    expect(res[0]._doc._id.toString()).to.equal(_noteid)
+          
+                })
+        })
+
+    })
+
+    //@@list note by noteid
+    //@@logic.listNotesbyNoteId
 
 
+    true && describe('list notes by noteId', () => {
 
-    
+        let _notebook = [{notebooktitle : "notebooktitletext1", videotitle : "videotitletext1", videoid : "123abc1", videourl : "https://www.youtube.com/watch?v=R54neaLznFA", videothumbnail: "http://img.youtube.com/vi/R54neaLznFA/0.jpg",date: new Date('2018-02-20T12:10:15.474Z')}]
+        let _notebookid
+        let _note = [{seconds: 23, notetitle: "Note Title Test", notetext: "Note Text Title"}]
+        let _noteid
+
+        beforeEach(() => 
+            
+            new User({ email, password, name}).save()
+                .then(user => {
+                    const userId = user.id
+                    _notebook.forEach(_notebook => _notebook.user = userId)
+                    return Notebook.create(_notebook)
+                })
+                .then(_notebook => {
+                    _notebook = _notebook.map(notebooks => notebooks._doc)
+                    _notebookid = _notebook[0]._id.toString()
+                    _note.forEach(_note => _note.notebook = _notebookid)
+                    return Note.create(_note[0])
+                })
+                .then(note => {
+                    _noteid = note._id.toString()
+                })
+                
+        )
+
+        it('should list the notes by notebookid correctly', () => {
+            return logic.listNotesbyNoteId(_noteid)
+                .then( res => {
+                    expect(res._doc.seconds).to.equal(_note[0].seconds)
+                    expect(res._doc.notetitle).to.equal(_note[0].notetitle)
+                    expect(res._doc.notetext).to.equal(_note[0].notetext)
+                    expect(res._doc._id.toString()).to.equal(_noteid)
+          
+                })
+        })
+
+    })
+
+        
+    //@@remove note
+    //@@logic.deleteNote
 
 
-    
+    true && describe('remove by noteId', () => {
 
+        let _notebook = [{notebooktitle : "notebooktitletext1", videotitle : "videotitletext1", videoid : "123abc1", videourl : "https://www.youtube.com/watch?v=R54neaLznFA", videothumbnail: "http://img.youtube.com/vi/R54neaLznFA/0.jpg",date: new Date('2018-02-20T12:10:15.474Z')}]
+        let _notebookid
+        let _note = [{seconds: 23, notetitle: "Note Title Test", notetext: "Note Text Title"}]
+        let _noteid
 
-    
+        beforeEach(() => 
+            
+            new User({ email, password, name}).save()
+                .then(user => {
+                    const userId = user.id
+                    _notebook.forEach(_notebook => _notebook.user = userId)
+                    return Notebook.create(_notebook)
+                })
+                .then(_notebook => {
+                    _notebook = _notebook.map(notebooks => notebooks._doc)
+                    _notebookid = _notebook[0]._id.toString()
+                    _note.forEach(_note => _note.notebook = _notebookid)
+                    return Note.create(_note[0])
+                })
+                .then(note => {
+                    _noteid = note._id.toString()
+                })
+                
+        )
 
+        it('should remove note correctly', () => {
+            return logic.removeNote(_noteid)
+                .then( res => {
+                    expect(res).to.be.true         
+                    
+                    return Note.findOne({ _id : _noteid })
+                })
+                .then( note => {
+                    expect(note).to.equal(null)
+                })
+        })
 
-    //@@list note
-    //@@logic.listNote
-
+    })
 
 
     //@@update note
-    //@@logic.updateNote
+    //@@logic.updateNote    
+
+    true && describe('update note', () => {
+
+        let _notebook = [{notebooktitle : "notebooktitletext1", videotitle : "videotitletext1", videoid : "123abc1", videourl : "https://www.youtube.com/watch?v=R54neaLznFA", videothumbnail: "http://img.youtube.com/vi/R54neaLznFA/0.jpg",date: new Date('2018-02-20T12:10:15.474Z')}]
+        let _notebookid
+        let _note = [{seconds: 23, notetitle: "Note Title Test", notetext: "Note Text Title"}]
+        let _noteid
+        const newNoteTitle = "newNoteTitle Text"
+        const newNoteText = "newNoteText Text"
+
+        beforeEach(() => 
+            
+            new User({ email, password, name}).save()
+                .then(user => {
+                    const userId = user.id
+                    _notebook.forEach(_notebook => _notebook.user = userId)
+                    return Notebook.create(_notebook)
+                })
+                .then(_notebook => {
+                    _notebook = _notebook.map(notebooks => notebooks._doc)
+                    _notebookid = _notebook[0]._id.toString()
+                    _note.forEach(_note => _note.notebook = _notebookid)
+                    return Note.create(_note[0])
+                })
+                .then(note => {
+                    _noteid = note._id.toString()
+                })
+                
+        )
+
+        it('should update a note correctly', () => {
+            return logic.updateNote(_noteid, newNoteTitle, newNoteTitle)
+            .then( res => {
+                expect(res).to.be.true         
+                return Note.findOne({ _id : _noteid })
+            })
+            .then( note => {
+                expect(note.notetitle).to.equal(newNoteTitle)
+            })
+        })
+
+    })
+    
+
+    
+    
 
 
-    //@@remove note
-    //@@logic.deleteNote
+
+    
+
+
+    
+
+    
+    
+
+
+
+
+
+
+
+
+
 
     
 
@@ -581,7 +855,8 @@ describe('logic', () => {
 
     after(() =>
         Promise.all([
-            //Note.deleteMany(),
+            Notebook.deleteMany(),
+            Note.deleteMany(),
             User.deleteMany()
         ])
             .then(() => _connection.disconnect())

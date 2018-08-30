@@ -22,6 +22,10 @@ module.exports = new Schema({
         type: String,
         required: true
     },
+    videothumbnail:{
+        type: String,
+        required: true
+    },
     date: {
         type: Date,
         default: Date.now

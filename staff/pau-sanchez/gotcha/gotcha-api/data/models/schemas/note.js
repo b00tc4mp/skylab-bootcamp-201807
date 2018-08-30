@@ -1,11 +1,6 @@
 const { Schema, Schema: { Types: { ObjectId } } } = require('mongoose')
 
 module.exports = new Schema({
-    notebook: {
-        type: ObjectId,
-        ref: 'Notebook',
-        required: true
-    },
     seconds: {
         type: Number,
         required: true
@@ -19,5 +14,10 @@ module.exports = new Schema({
     notetext: {
         type: String,
         required: false
+    },
+    notebook: {
+        type: ObjectId,
+        ref: 'Notebook',
+        required: true
     }
 })

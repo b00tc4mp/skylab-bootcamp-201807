@@ -1,16 +1,21 @@
+require('dotenv').config()
+const { env: { videokey } } = process
+
 const validateEmail = require('../utils/validate-email')
 const validateYouTube = require('../utils/validate-youtubeurl')
 const moment = require('moment')
 const { User, Notebook, Note } = require('../data/models')
 
+const axios = require('axios')
+
 const logic = {
-    
+
     _validateStringField(name, value) {
         if (typeof value !== 'string' || !value.length) throw new LogicError(`invalid ${name}`)
     },
 
     _validateNameField(name, value) {
-        if ( !value.length ) throw new LogicError(`invalid name`)
+        if (!value.length) throw new LogicError(`invalid name`)
     },
 
     _validateEmail(email) {
@@ -55,7 +60,7 @@ const logic = {
 
                 if (user.password !== password) throw new LogicError(`wrong password`)
 
-                return true
+                return user._id/*true*/
             })
     },
 
@@ -75,9 +80,10 @@ const logic = {
 
                 if (password === newPassword) throw new LogicError('new password must be different to old password')
 
-                user.password = newPassword
+                //user.password = newPassword
 
-                return user.save()
+                //return user.save
+                return User.findByIdAndUpdate({ "_id": user.id }, { "password": newPassword })
             })
             .then(() => true)
     },
@@ -102,186 +108,224 @@ const logic = {
 
     //@@create notebook
     //@@logic.createNotebook
-
-    createNotebook( email, notebooktitle, videotitle, videoid, videourl, date) {
+    
+    createNotebook(userid, notebooktitle, videourl) {
+        let videotitle
+        const regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
+        const match = videourl.match(regExp);
+        const videoid = (match&&match[7].length==11)? match[7] : false
+        let videothumbnail = `http://img.youtube.com/vi/${videoid}/0.jpg`
         return Promise.resolve()
             .then(() => {
-                this._validateEmail(email)
-                /*TODO ADD VALIDATIONS*/
-                this._validateStringField('notebooktitle',notebooktitle)
-
-                return User.findOne({ email })
+                this._validateStringField('notebooktitle', notebooktitle)
+                return User.findOne({ _id: userid })
             })
             .then(user => {
-                if (!user) throw new LogicError(`user with ${email} email does not exists`)
-
-                const notebook = { notebooktitle, videotitle, videoid, videourl, date, user: user.id }
-
+                if (!user) throw new LogicError(`user does not exists`)
+            })
+            .then(() => {
+                return axios.get(`https://www.googleapis.com/youtube/v3/videos?id=${videoid}&key=${videokey}&fields=items(id,snippet(title))&part=snippet,statistics`)
+            })
+            .then(res => {
+                videotitle = res.data.items[0].snippet.title
+                const notebook = { notebooktitle, videotitle, videoid, videourl, videothumbnail, user: userid }
                 return Notebook.create(notebook)
             })
             .then(() => true)
-        
     },
 
-    listNotebooks (email) {
+    //@@list user notebooks
+    //@@logic.listeNotebooks
+
+    listNotebooks(userId) {
         return Promise.resolve()
             .then(() => {
-                this._validateEmail(email)
+                //this._validateEmail(email)
+                //debugger
+                return User.findOne({ _id: userId })
 
-                return User.findOne({ email })
             })
             .then(user => {
-                if (!user) throw new LogicError(`user with ${email} email does not exists`)
+                if (!user) throw new LogicError(`user does not exists`)
 
-                return Notebook.find({ user: user._id})
+                return Notebook.find({ user: user._id }).sort({ date: -1 })
             })
     },
 
-    listNotebookById (notebookid) {
+    listNotebooksByNotebookId(userId, notebookid) {
         return Promise.resolve()
             .then(() => {
-                if(!notebookid) throw new LogicError(`notebook does not exist`)
-
-                return Notebook.findOne({ _id: notebookid})
+                return User.findOne({ _id: userId })
             })
+            .then(user => {
+                if (!user) throw new LogicError(`user does not exists`)
+            })
+            .then(() => {
+                if (!notebookid) throw new LogicError(`notebook does not exist`)
 
+                return Notebook.findOne({ _id: notebookid })
+            })
     },
 
-    updateTitleNotebook (notebookid, newNotebookTitle) {
+    updateNotebook(userId, notebookid, newnotebooktitle) {
         return Promise.resolve()
             .then(() => {
-                if(!notebookid) throw new LogicError(`notebook does not exist`)
+                return User.findOne({ _id: userId })
 
-                return Notebook.findOne({ _id: notebookid})
             })
-            .then(notebook => {
+            .then(user => {
+                if (!user) throw new LogicError(`user does not exists`)
+            })
+            .then(() => {
+                if (!notebookid) throw new LogicError(`notebook does not exist`)
 
-                if(newNotebookTitle.length = 0) throw new LogicError (`not a valid title`)
+                return Notebook.findOne({ _id: notebookid })
+            })
+            .then(() => {
+                if (newnotebooktitle.length = 0) throw new LogicError(`not a valid title`)
 
-                notebook.notebooktitle = newNotebookTitle
-                
-                return notebook.save()
-
+                return Notebook.findByIdAndUpdate({ "_id": notebookid }, { "notebooktitle": newnotebooktitle })
             })
     },
-    
-    removeNotebook(notebookid) {
+
+    removeNotebook(id, notebookid) {
         return Promise.resolve()
             .then(() => {
                 return Notebook.findOne({ _id: notebookid })
             })
             .then(notebook => {
-                if(!notebook) throw new LogicError(`notebook does not exist`)
+                if (!notebook) throw new LogicError(`notebook does not exist`)
 
-                return Notebook.deleteOne({ _id: notebookid})
+                return Notebook.deleteOne({ _id: notebookid })
             })
             .then(() => true)
     },
-    
-    /*
-    addNote(email, date, text) {
+
+    //@@create note
+    //@@logic.createNote
+
+    createNote(seconds, notetitle, notetext, notebook) {
         return Promise.resolve()
             .then(() => {
-                this._validateEmail(email)
-                this._validateDateField('date', date)
-                this._validateStringField('text', text)
-
-                return User.findOne({ email })
+                return Notebook.findOne({ _id: notebook })
             })
-            .then(user => {
-                if (!user) throw new LogicError(`user with ${email} email does not exist`)
-
-                const note = { date, text, user: user.id }
-
+            .then(notebook => {
+                if (!notebook) throw new LogicError(`notebook does not exists`)
+                const note = { seconds, notetitle, notetext, notebook }
                 return Note.create(note)
             })
             .then(() => true)
+
     },
 
-    listNotes(email, date) {
+    //@@list note by user
+    //@@logic.listNotesbyUser
+    
+   listNotesbyUser(userId) {
+    let notebooksids = []
+    let notes = []
+       return Promise.resolve()
+        .then(() => {
+            return User.findOne({ _id: userId })
+        })
+        .then(user => {
+            if (!user) throw new LogicError(`user does not exists`)
+            return Notebook.find({ user: user._id })
+        })
+        .then(_notebooks => {
+            (_notebooks).forEach(elem => notebooksids.push(elem._id))
+        })
+        .then(() => {
+
+            let notebooksbyids = notebooksids.map(elem => Note.find({ notebook: elem }))
+
+            return Promise.all(notebooksbyids)
+        }).then(res => {
+            let mergedNotes = [].concat.apply([], res)
+            return mergedNotes
+        })
+
+             
+},
+
+    //@@list note by noteid
+    //@@logic.listNotebyNotebookId
+
+    listNotebyNotebookId(notebookid) {
         return Promise.resolve()
             .then(() => {
-                this._validateEmail(email)
 
-                return User.findOne({ email })
+                return Notebook.findOne({ _id: notebookid })
             })
-            .then(user => {
-                if (!user) throw new LogicError(`user with ${email} email does not exist`)
+            .then(notebook => {
 
-                const mDate = moment(date)
+                if (!notebook) throw new LogicError(`notebook does not exists`)
 
-                const minDate = mDate.startOf('day').toDate()
-                const maxDate = mDate.endOf('day').toDate()
+                let notesbynotebooksids = Note.find({ notebook: notebook.id })
 
-                return Note.find({ user: user._id, date: { $gte: minDate, $lte: maxDate } }, { __v: 0 }).lean()
+                return notesbynotebooksids
             })
-            .then(notes => {
-                if (notes) {
-                    notes.forEach(note => {
-                        note.id = note._id.toString()
 
-                        delete note._id
-
-                        delete note.user
-                    })
-                }
-
-                return notes || []
-            })
     },
 
-    removeNote(email, noteId) {
+
+    //@@list note by noteid
+    //@@logic.listNotesbyNoteId
+
+    listNotesbyNoteId(noteId) {
         return Promise.resolve()
             .then(() => {
-                this._validateEmail(email)
-
-                return User.findOne({ email })
-            })
-            .then((user) => {
-                if (!user) throw new LogicError(`user with ${email} email does not exist`)
-
                 return Note.findOne({ _id: noteId })
-                    .then(note => {
-                        if (!note) throw new LogicError(`note with id ${noteId} does not exist`)
+            })
+    },
 
-                        if (note.user.toString() !== user.id) throw new LogicError('note does not belong to user')
 
-                        return Note.deleteOne({ _id: noteId })
-                    })
+    //@@remove note
+    //@@logic.deleteNote
+
+    removeNote(noteId) {
+        return Promise.resolve()
+            .then(() => {
+                return Note.deleteOne({ _id: noteId })
             })
             .then(() => true)
     },
 
-    
+    //@@update note
+    //@@logic.updateNote 
 
-    addContact(email, contactEmail, name, surname, phone){
+    updateNote(noteId, newnotetitle, newnotetext) {
+        let updatetitle
+        let updatetext
+        
         return Promise.resolve()
             .then(() => {
-                this._validateEmail(contactEmail)
-                this._validateStringField('name', name)
-                this._validateStringField('surname', surname)
-                this._validateStringField('phone', phone)
+                return Note.findOne({ _id: noteId })
             })
-            .then(user => {
-                if (!user) throw new LogicError(`user with ${email} does not exist`)
-                const newContact = {contactEmail, name, sruname, phone}
-                return User.Contact.push(newContact)
+            .then(note => {
+                updatetitle = (note.notetitle === newnotetitle) ? note.notetitle : newnotetitle
+
+                updatetext = (note.notetext === newnotetext) ? note.notetext : newnotetext
+
+                return Note.findByIdAndUpdate({ "_id": noteId }, { "notetitle": updatetitle, "notetext": updatetext})
+                
             })
-            .then((res)=> {
-                debugger
+            .then(() => {
+
                 return true
             })
-    }
 
-
-    
-    listContacts(email, contactEmail, name, surname, phone)
-
-    removeContact(email, contactId)
+    },
 
 
 
-    */
+
+
+
+
+
+
+
 
 }
 
