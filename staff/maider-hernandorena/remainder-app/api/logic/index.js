@@ -11,7 +11,7 @@ const logic = {
      * @param {String} name 
      * @param {String} value 
      * 
-     * @throws {Error} invalid name
+     * @throws {LogicError} invalid name
      */
     _validateStringField(name, value) {
         if (typeof value !== 'string' || !value.length) throw new LogicError(`invalid ${name}`)
@@ -22,7 +22,7 @@ const logic = {
      * @param {Number} age 
      * @param {Number} value 
      * 
-     * @throws {Error} invalid age
+     * @throws {LogicError} invalid age
      */
     _validateAgeField(age, value) {
         if (typeof value !== 'number' || value !== value || value <= 0) throw new LogicError(`invalid ${age}`)
@@ -33,7 +33,7 @@ const logic = {
      * @param {Number} dni 
      * @param {Number} value 
      * 
-     * @throws {Error} invalid dni
+     * @throws {LogicError} invalid dni
      */
     _validateDniField(dni, value) {
         if (typeof value !== 'number' || value !== value || value.toString().length !== 8) throw new LogicError(`invalid ${dni}`)
@@ -44,7 +44,7 @@ const logic = {
      * @param {Number} phone 
      * @param {Number} value 
      * 
-     * @throws {Error} invalid phone
+     * @throws {LogicError} invalid phone
      */
     _validatePhoneField(phone, value) {
         if (typeof value !== 'number' || value !== value || value.toString().length !== 9) throw new LogicError(`invalid ${phone}`)
@@ -55,18 +55,18 @@ const logic = {
      * @param {Date} date
      * @param {Date} fiels 
      * 
-     * @throws {Error} invalid date
+     * @throws {LogicError} invalid date
      */
     _validateDateField(date, field) {
         if (!(field instanceof Date)) throw new LogicError(`invalid ${date}`)
     },
 
     /**
-     * Registers a Doctor with a code and a password 
-     * @param {String} code 
-     * @param {String} password 
+     * Registers a doctor with a code and a password 
+     * @param {String} code //doctors code
+     * @param {String} password //doctors password
      * 
-     * @throws {Error} if doctor already exist
+     * @throws {LogicError} if doctor already exist
      * 
      * @returns {boolean} TRUE => if it is registered correctly
      */
@@ -87,14 +87,14 @@ const logic = {
     },
 
     /**
-     * Authenticates a Doctor with his/her code and a password 
-     * @param {String} code 
-     * @param {String} password 
+     * Authenticates a doctor with his/her code and a password 
+     * @param {String} code //doctors code
+     * @param {String} password //doctors password
      * 
-     * @throws {Error} if the Doctor does not exist
-     * @throws {Error} if password is wrong
+     * @throws {LogicError} if the doctor does not exist
+     * @throws {LogicError} if password is wrong
      * 
-     * @returns {Object} Doctor information
+     * @returns {Object} doctor information
      */
     authenticateDoctor(code, password) {
         return Promise.resolve()
@@ -113,18 +113,18 @@ const logic = {
     },
 
     /**
-     * Adds a Patient requiring different parameters
-     * @param {String} name 
-     * @param {Number} dni 
-     * @param {String} surname 
-     * @param {Number} age 
-     * @param {String} gender 
-     * @param {String} address 
-     * @param {Number} phone 
+     * Adds a patient requiring different parameters
+     * @param {String} name //patient name
+     * @param {Number} dni //patient dni (8 digits)
+     * @param {String} surname //patient surname
+     * @param {Number} age //patient age
+     * @param {String} gender //patient gender (male, female or other)
+     * @param {String} address //patient address
+     * @param {Number} phone //patient phone (9 digits)
      * 
-     * @throws {Error} if patient with the same DNI already exists
+     * @throws {LogicError} if patient with the same dni already exists
      * 
-     * @returns {Object} Patient information
+     * @returns {Object} patient information
      */
     addPatient(name, dni, surname, age, gender, address, phone) {
         return Promise.resolve()
@@ -150,13 +150,13 @@ const logic = {
     },
     
     /**
-     * Removes a Patient with his/her id and DNI
-     * @param {String} id
-     * @param {Number} dni
+     * Removes a patient with his/her id and dni
+     * @param {String} id //patient id
+     * @param {Number} dni //patient dni (8 digits)
      * 
-     * @throws {Error} if Patient with given DNI does not exist
+     * @throws {LogicError} if patient with given dni does not exist
      * 
-     * @returns {boolean} TRUE => if it removes Patient correctly
+     * @returns {boolean} TRUE => if it removes patient correctly
      */
     removePatient(id, dni) {
         return Promise.resolve()
@@ -175,18 +175,18 @@ const logic = {
     },
 
     /**
-     * Updates a Patients Address and/or Phone with his/her id and DNI
+     * Updates a patients address and/or phone with his/her id and dni
      * //if there is not any new address or phone should update the other correctly
-     * @param {String} id
-     * @param {Number} dni
-     * @param {String} newAddress
-     * @param {Number} newPhone
+     * @param {String} id //patient id
+     * @param {Number} dni //patient dni (8 digits)
+     * @param {String} newAddress //patient new address
+     * @param {Number} newPhone //patient new phone (9 digits)
      * 
-     * @throws {Error} if Patient with given DNI does not exist
-     * @throws {Error} if the new address given is not a String
-     * @throws {Error} if the new phone given is not a number or has no 9 digits
+     * @throws {LogicError} if patient with given dni does not exist
+     * @throws {LogicError} if the new address given is not a string
+     * @throws {LogicError} if the new phone given is not a number or has no 9 digits
      * 
-     * @returns {boolean} TRUE => if it updates Patient correctly
+     * @returns {boolean} TRUE => if it updates patient correctly
      */
     updatePatient(id, dni, newAddress, newPhone) {
         return Promise.resolve()
@@ -218,9 +218,9 @@ const logic = {
 
     /**
      * Search all patients by name
-     * @param {String} name
+     * @param {String} name //patient name
      * 
-     * @throws {Error} if patient name does not exist
+     * @throws {LogicError} if patient name does not exist
      * 
      * @returns {Array} all patients in an array or an empty array
      */
@@ -245,15 +245,15 @@ const logic = {
     },
 
     /**
-     * Adds a treatment (with pill name, quantity and frequency) to a patient with his/her id and DNI
-     * @param {String} id
-     * @param {Number} dni
+     * Adds a treatment (with pill name, quantity and frequency) to a patient with his/her id and dni
+     * @param {String} id //patient id
+     * @param {Number} dni //patient dni (8 digits)
      * @param {String} pill //pill name
-     * @param {String} quantity //pill quantity on a day
+     * @param {String} quantity //pill quantity on a day (up to 0)
      * @param {String} frequency //pill frequency: days should take them
      * 
-     * @throws {Error} if patient with DNI does not exist
-     * @throws {Error} if quantity is less or equal to 0
+     * @throws {LogicError} if patient with dni does not exist
+     * @throws {LogicError} if quantity is less or equal to 0
      * 
      * @returns {boolean} TRUE => if treatment was added correctly to the patient
      */
@@ -293,12 +293,12 @@ const logic = {
     },
 
     /**
-     * Removes patients treatment with his/her id and DNI and the name of the pill in the treatment
-     * @param {String} id
-     * @param {Number} dni
-     * @param {String} pill
+     * Removes patients treatment with his/her id and dni and the name of the pill in the treatment
+     * @param {String} id //patient id
+     * @param {Number} dni //patient dni (8 digits)
+     * @param {String} pill //pill name
      * 
-     * @throws {Error} if patient with the DNI does not exist
+     * @throws {LogicError} if patient with the dni does not exist
      * 
      * @returns {boolean} TRUE => if treatment was removed correctly from the patient
      */
@@ -321,9 +321,9 @@ const logic = {
 
     /**
      * Lists patients treatments by his/her id
-     * @param {String} id 
+     * @param {String} id //patients id
      * 
-     * @throws {Error} if patient does not exist
+     * @throws {LogicError} if patient does not exist
      * 
      * @returns {Array} a patients treatments in an array
      */
@@ -335,7 +335,7 @@ const logic = {
                 return Patient.findOne({ _id: ObjectId(id) }).lean()
             })
             .then(patient => {
-                if (!patient) throw new Error(`patient with ${id} id does not exist`)
+                if (!patient) throw new LogicError(`patient with ${id} id does not exist`)
 
                 let treatments = patient.treatments.map(treatment => treatment)
                 
@@ -355,16 +355,16 @@ const logic = {
 
     /**
      * Adds cites to patients relating them to his/her doctor
-     * @param {String} code //Doctors code => to asign his cites
-     * @param {Number} dni //Patients DNI => to asign cite to him
+     * @param {String} code //doctors code => to asign his cites
+     * @param {Number} dni //patients dni (8 digits) => to asign cite to him
      * @param {String} name //cite name
      * @param {Date} date //cite date
      * 
-     * @throws {Error} if Doctor with the code does not exist
-     * @throws {Error} if patient with the DNI does not exist
-     * @throws {Error} if given cite with the date already exist
+     * @throws {LogicError} if doctor with the code does not exist
+     * @throws {LogicError} if patient with the dni does not exist
+     * @throws {LogicError} if given cite with the date already exist
      * 
-     * @returns {Object} Cite information
+     * @returns {Object} cite information
      */
     addCite(code, dni, name, date) {
         return Promise.resolve()
@@ -398,14 +398,14 @@ const logic = {
 
     /**
      * Removes a patient cite with doctors code and patients DNI
-     * @param {String} code //Doctors code => to asign his cites
-     * @param {Number} dni //Patients DNI => to asign cite to him
+     * @param {String} code //doctors code => to asign his cites
+     * @param {Number} dni //patients dni (8 digits) => to asign cite to him
      * @param {String} name //cite name
      * @param {Date} date //cite date
      * 
-     * @throws {Error} if Doctor with the code does not exist
-     * @throws {Error} if patient with the DNI does not exist
-     * @throws {Error} if cite does not exist
+     * @throws {LogicError} if doctor with the code does not exist
+     * @throws {LogicError} if patient with the dni does not exist
+     * @throws {LogicError} if cite does not exist
      * 
      * @returns {boolean} TRUE => if cite was removed correctly
      */
@@ -438,12 +438,12 @@ const logic = {
     },
 
     /**
-     * Lists all cites of a day. Then Doctor could see all his/her cites on that day
+     * Lists all cites of a day. Then doctor could see all his/her cites on that day
      * @param {Date} date //day => example: 2018-08-22
      * 
-     * @throws {Error} if there is no cites that day
+     * @throws {LogicError} if there is no cites that day
      * 
-     * @returns {Array} All cites on that day
+     * @returns {Array} all cites on that day
      */
     listCites(date) {
         return Promise.resolve()
@@ -474,10 +474,10 @@ const logic = {
      * @param {String} id //pacient id
      * @param {Date} date //month => example: 2018-08
      * 
-     * @throws {Error} if patient with that id does not exist
-     * @throws {Error} if there is no cites on that month
+     * @throws {LogicError} if patient with that id does not exist
+     * @throws {LogicError} if there is no cites on that month
      * 
-     * @returns {Array} All cites the patient has on that month
+     * @returns {Array} all cites the patient has on that month
      */
     listPatientCites(id, date) {
         return Promise.resolve()
