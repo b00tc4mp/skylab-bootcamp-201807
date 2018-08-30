@@ -118,7 +118,6 @@ const logic = {
   respondToGameRequest(nickname, destination, answer, token) {
     return Promise.resolve()
       .then(() => {
-
         return this._call(`user/${nickname}/respondtorequest`, 'POST', {
           'Content-Type': 'application/json',
           'authorization': `bearer ${token}`
@@ -145,8 +144,6 @@ const logic = {
 
     return Promise.resolve()
       .then(() => {
-
-debugger
         return this._call(`user/${nickname}/games`, 'GET', {
           'Content-Type': 'application/json',
           'authorization': `bearer ${token}`
@@ -156,6 +153,20 @@ debugger
           .then(res => res)
       })
   },
+
+
+  makeAGameMove(nickname, opponent, move, gameID, token) {
+    return Promise.resolve()
+      .then(() => {
+        return this._call(`user/${nickname}/game/${gameID}`, 'POST', {
+          'Content-Type': 'application/json',
+          'authorization': `bearer ${token}`
+        },  JSON.stringify({ move, opponent}), 200)
+          .then(res => res.json())
+          .then(res => res)
+      })
+  },
+
 
 
 }

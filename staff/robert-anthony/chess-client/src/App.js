@@ -10,6 +10,19 @@ import logic from "./logic"
 
 class App extends Component {
 
+  constructor() {
+    super()
+    let nickname, token
+    if (nickname = sessionStorage.getItem('nickname')) // we are returning from a page refresh
+    {
+      token = sessionStorage.getItem('token')
+      console.log(`%c returning from page refresh and setting up socket listeners again ${nickname}`, 'background: blue; color: red');
+
+      this.setupSocketListeners(nickname, token)  // add socket listeners again
+
+    }
+  }
+
 
   state = {
     nickname: sessionStorage.getItem('nickname') || '',
@@ -26,6 +39,7 @@ class App extends Component {
 
   aliveInterval = null
 
+  currentOpponents = JSON.parse(sessionStorage.getItem('currentOpponents')) || []
 
 
   alivePing = () => {
@@ -37,12 +51,22 @@ class App extends Component {
       .then(users => {
         sessionStorage.setItem('users', JSON.stringify(users))
         this.setState({users})
+        this.currentOpponents = this.currentOpponents.filter(value => -1 !== users.indexOf(value));
+        sessionStorage.setItem('currentOpponents', JSON.stringify(this.currentOpponents))
+
       })
       .catch(({message}) => this.setState({error: message}))
 
   }
 
   respondToGameRequest = (destination, answer) => {
+    if (answer) {
+      console.log(`%c accepted game request from ${destination}`, 'background: darkcyan; color: white');
+      this.currentOpponents.push(destination)
+      console.log(`currentOpponents = ${this.currentOpponents}`)
+
+      sessionStorage.setItem('currentOpponents', JSON.stringify(this.currentOpponents))
+    }
     const {state: {nickname, token}} = this
     this.setState({gameRequester: ''})
     sessionStorage.setItem('gameRequester', '')
@@ -64,8 +88,9 @@ class App extends Component {
     if (this.aliveInterval) this.aliveInterval.clearInterval()
   }
 
-  setupSocketListeners = (nickname,token) => {
+  setupSocketListeners = (nickname, token) => {
 
+    console.log(`%c setting up socket listeners ${nickname}`, 'background: yellow; color: darkblue');
 
     this.socket = socketIOClient('http://localhost:8080');
     if (this.socket) {
@@ -93,15 +118,21 @@ class App extends Component {
         console.log(`%c request response ready ${nickname}`, 'background: #222; color: #bada55');
 
         logic.getLastGameRequestResponse(nickname, token)
-          .then(res => console.log(res))
+          .then(res => {
+            console.log(`%c last request response ${res}`, 'background: #222; color: #bada55')
+            if (res !== 'rejected') this.currentOpponents.push(res)
+          })
           .catch(({message}) => this.setState({error: message}))
       })
 
-      this.socket.on(`new game added ${nickname}`, () => {
-        console.log(`%c new game added ${nickname}`, 'background: #222; color: #bada55');
-        logic.getGamesForUser(nickname,token)
-          .then(currentGames =>{
-            debugger
+      this.socket.on(`update to games ${nickname}`, () => {
+        console.log(`%c update to games ${nickname}`, 'background: #222; color: #bada55');
+        logic.getGamesForUser(nickname, token)
+          .then(currentGames => {
+            // filter only show games for people we're currently playing with
+            currentGames = currentGames.filter(game => {
+              return this.currentOpponents.indexOf(game.opponent) !== -1
+            });
             this.setState({currentGames})
             sessionStorage.setItem('currentGames', JSON.stringify(currentGames))
 
@@ -138,7 +169,7 @@ class App extends Component {
 
 
   onLoggedIn = (nickname, token) => {
-    this.setupSocketListeners(nickname,token)
+    this.setupSocketListeners(nickname, token)
 
     this.setState({nickname: nickname, token})
     this.socket.emit('authenticated', nickname)
@@ -149,8 +180,11 @@ class App extends Component {
     this.setState({token})
   }
 
-  onGameMove = position => {
-
+  onGameMove = (move, gameID, opponent) => {
+    const {state: {nickname, token}} = this
+    logic.makeAGameMove(nickname, opponent, move, gameID, token)
+      .then(res => console.log(`game move returned with ${res}`))
+      .catch(({message}) => this.setState({error: message}))
   }
 
   isLoggedIn() {
@@ -167,7 +201,7 @@ class App extends Component {
   }
 
   render() {
-    const {nickname, users, error, token, gameRequester} = this.state
+    const {nickname, users, error, token, currentGames, gameRequester} = this.state
 
     return <div className="full-height">
       <header>
@@ -182,7 +216,7 @@ class App extends Component {
         <Route exact path="/" render={() => this.isLoggedIn() ? <Redirect to="/main"/> : <Landing/>}/>
         <Route path="/register" render={() => this.isLoggedIn() ? <Redirect to="/main"/> : <Register/>}/>
         <Route path="/main" users={users} render={() => this.isLoggedIn() ?
-          <Main onGameMove={this.onGameMove} gameRequester={gameRequester}
+          <Main onGameMove={this.onGameMove} currentGames={currentGames} gameRequester={gameRequester}
                 respondToGameRequest={this.respondToGameRequest} users={users} token={token}
                 newGamePosition={this.state.newGamePosition}
                 nickname={nickname} onRequestGame={this.onRequestGame}/> : <Landing/>}/>

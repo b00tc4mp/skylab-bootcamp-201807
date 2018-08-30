@@ -28,8 +28,8 @@ const socketLogic = {
   },
 
   newGameAdded(confirmer,asker) {
-    this.io.emit(`new game added ${confirmer}`)
-    this.io.emit(`new game added ${asker}`)
+    this.io.emit(`update to games ${confirmer}`)
+    this.io.emit(`update to games ${asker}`)
   },
 
   setNewUserTimeout(username) {

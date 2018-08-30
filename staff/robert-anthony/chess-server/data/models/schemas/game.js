@@ -20,11 +20,6 @@ module.exports = new Schema({
     type:String,
     required:isString
   },
-  terminated: {
-    type:Boolean,
-    default:false,
-    required:true
-  },
   winner: {
     type:String,
     required:isString

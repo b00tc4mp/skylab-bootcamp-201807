@@ -21,10 +21,10 @@ componentDidMount()
 
 
 render(){
-const {props:{newGamePosition}} = this
+const {props:{fen}} = this
 
   return <div>>
-    <Chessboard onDrop={this.onDrop} position={newGamePosition}/>
+    <Chessboard onDrop={this.onDrop} position={fen}/>
   </div>
 }
 

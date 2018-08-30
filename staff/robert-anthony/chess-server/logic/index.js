@@ -24,7 +24,7 @@ const logic = {
   register(email, password, nickname) {
     return Promise.resolve()
       .then(() => {
-        console.log(email,password,nickname)
+        console.log(email, password, nickname)
         this._validateEmail(email)
         this._validateStringField('password', password)
         this._validateStringField('nickname', nickname)
@@ -118,12 +118,18 @@ const logic = {
     return Promise.resolve()
       .then(_ => {
         this._validateStringField("nickname", nickname)
-        debugger
         return Game.find({$or: [{white: nickname}, {black: nickname}]})
-          .then(games => games.filter(game => (!game.terminated)).map(game => {
+          .then(games => games.filter(game => (game.winner === '')).map(game => {
               const obj = {}
-              obj.gameID = game.id
+              obj.id = game.id
               obj.opponent = game.white === nickname ? game.black : game.white
+              let engine = this._currentEngines.get(game.engineID)
+              if (!engine) {
+                engine = new Chess()
+                engine.load_pgn(game.pgn)
+                this._currentEngines.set(game.engineID,engine)
+              }
+              obj.fen = engine.fen()
               return obj
             }
           ))
@@ -200,14 +206,15 @@ const logic = {
       .then(user => {
         if (!user) throw new LogicError(`user with ${black} nickname does not exist`)
         const engine = new Chess()
-        const uuid =  uuidv1()
+        const uuid = uuidv1()
         this._currentEngines.set(uuid, engine)
+        engine.header('White', white, 'Black', black)
+        const pgn = engine.pgn()
         game = new Game({
           white,
           black,
           engineID: uuid,
-          pgn: "",
-          terminated: false,
+          pgn,
           winner: "",
           lastMove: ""
         })
@@ -225,8 +232,10 @@ const logic = {
         game = _game
         const engine = this._currentEngines.get(_game.engineID)
         const result = engine.move(move)
-        if (!result) throw new LogicError(`move ${move} is not allowed`)
+        if (!result) throw new LogicError(`move is not allowed`)
         else {
+          game.pgn = engine.pgn()
+          game.fen = engine.fen()
           return game.save()
             .then(_ => {
               return true
@@ -253,54 +262,54 @@ const logic = {
       })
   },
 
-  respondToGameRequest(confirmer, destination,answer) {
+  respondToGameRequest(confirmer, destination, answer) {
     return Promise.resolve()
       .then(_ => {
         this._validateStringField("confirmer", confirmer)
         this._validateStringField("destination", destination)
-       return User.findOne({nickname: confirmer})
+        return User.findOne({nickname: confirmer})
       })
       .then(user => {
         if (!user) throw new LogicError(`user with ${confirmer} nickname does not exist`)
         user.lastRequest = ''
         return user.save()
       })
-      .then( _ => User.findOne({nickname:destination}))
+      .then(_ => User.findOne({nickname: destination}))
       .then(user => {
         if (!user) throw new LogicError(`user with ${confirmer} nickname does not exist`)
-        user.lastRequestResponse = answer
+        user.lastRequestResponse = answer ? confirmer : 'rejected'
         return user.save()
       })
       .then(_ => {
         if (answer) return this._createGame(destination, confirmer)
-         else return true
+        else return true
       })
 
   },
 
-  getLastGameRequester(nickname){
+  getLastGameRequester(nickname) {
     return Promise.resolve()
       .then(_ => {
         this._validateStringField("nickname", nickname)
-       return User.findOne({nickname})
+        return User.findOne({nickname})
       })
       .then(user => {
         if (!user) throw new LogicError(`user with ${nickname} nickname does not exist`)
         return user.lastRequest
       })
   }
-,
+  ,
 
-  getGameRequestResponse(nickname){
+  getGameRequestResponse(nickname) {
     let response = ''
     return Promise.resolve()
       .then(_ => {
         this._validateStringField("nickname", nickname)
-       return User.findOne({nickname})
+        return User.findOne({nickname})
       })
       .then(user => {
         if (!user) throw new LogicError(`user with ${nickname} nickname does not exist`)
-         response = user.lastRequestResponse
+        response = user.lastRequestResponse
         user.lastRequestResponse = ''
         return user.save()
       })
