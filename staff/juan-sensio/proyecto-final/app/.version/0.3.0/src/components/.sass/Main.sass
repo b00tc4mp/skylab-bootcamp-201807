@@ -1,0 +1,23 @@
+@import 'Common'
+    
+.main 
+    background-color: lightgrey
+    
+    video
+        width: 300px
+        height: 300px
+
+    img 
+        max-width: 300px 
+        max-height: 300px 
+
+    &__nav
+        display: grid 
+        grid-template: 1fr / 1fr 1fr
+        justify-items: start
+        width: 100%
+        & img 
+            width: $icon-size
+            padding: $icon-padding
+        &__profile
+            justify-self: end

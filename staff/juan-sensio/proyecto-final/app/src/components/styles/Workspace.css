@@ -1,0 +1,38 @@
+.workspace {
+  background-color: #878787;
+  display: grid;
+  grid-template: 10vh 60vh 30vh/1fr;
+  grid-gap: 20px;
+  align-items: center;
+  justify-items: center;
+}
+.workspace__nav {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template: 1fr/20% 40% 40%;
+  justify-items: center;
+  align-items: center;
+  background-color: #B2B2B2;
+}
+.workspace__nav button {
+  color: #EA6848;
+  border-radius: 10px;
+  padding: 5px;
+  height: 50%;
+  margin: 2px;
+}
+.workspace__nav__upload {
+  width: 80%;
+}
+.workspace video, .workspace img {
+  max-width: 100%;
+  max-height: 60vh;
+}
+@media screen and (max-width: 700px) {
+  .workspace {
+    grid-template: 10vh 60vh 20vh/1fr;
+  }
+}
+
+/*# sourceMappingURL=Workspace.css.map */

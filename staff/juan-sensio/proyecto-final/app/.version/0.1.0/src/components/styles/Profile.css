@@ -1,0 +1,57 @@
+.profile {
+  border: 1px solid black;
+  width: 100%;
+}
+.profile__nav {
+  display: grid;
+  grid-template: 1fr/1fr 1fr;
+}
+.profile__nav__img {
+  width: 50px;
+  justify-self: end;
+  padding: 10px;
+}
+.profile__nav__btn {
+  background: none;
+  border: none;
+  color: brown;
+  align-self: start;
+  justify-self: start;
+  padding: 5px;
+  font-size: 16px;
+}
+.profile__nav__btn:hover {
+  color: red;
+}
+.profile__login {
+  display: grid;
+  grid-template: 1fr 1fr/1fr;
+  justify-items: center;
+}
+.profile__login__inputs {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.profile__login__inputs input {
+  width: 80%;
+}
+.profile__login__btns {
+  display: grid;
+  grid-template: 1fr/repeat(3, 1fr);
+  justify-items: center;
+  padding: 10px;
+}
+.profile__login__btns button {
+  width: 90%;
+}
+.profile__login__btns p {
+  font-size: 14px;
+}
+.profile__video {
+  width: 100px;
+  height: 100px;
+}
+
+/*# sourceMappingURL=Profile.css.map */

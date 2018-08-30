@@ -1,0 +1,32 @@
+@import 'Common'
+
+.workspace
+    background-color: $app-darkgray
+    display: grid 
+    grid-template: 10vh 60vh 30vh / 1fr
+    grid-gap: 20px
+    align-items: center 
+    justify-items: center
+    &__nav
+        width: 100%
+        height: 100%
+        display: grid 
+        grid-template: 1fr / 20% 40% 40%
+        justify-items: center 
+        align-items: center
+        background-color: $app-lightgray
+        & button
+            color: $app-red
+            border-radius: 10px
+            padding: 5px
+            height: 50%
+            margin: 2px
+        &__upload
+            width: 80%
+            
+    & video, img 
+        max-width: 100%
+        max-height: 60vh
+    
+    @media screen and (max-width: $break-screen)
+        grid-template: 10vh 60vh 20vh / 1fr

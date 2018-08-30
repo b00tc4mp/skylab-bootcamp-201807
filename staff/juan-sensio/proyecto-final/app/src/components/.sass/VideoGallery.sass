@@ -1,0 +1,20 @@
+.video-gallery
+    width: 100%
+    & h3 
+        padding: 10px
+    &__container
+        display: grid 
+        grid-template: auto / 1fr 1fr
+    &__video-container
+        width: 100%
+        margin: 0
+        display: grid 
+        grid-template: 15vh 5vh / 1fr
+        align-items: center 
+        justify-items: center
+        & video 
+            min-width: 60px
+            max-width: 90%
+            max-height: 100%
+        & button 
+            font-size: 12px

@@ -1,0 +1,31 @@
+.settings {
+  border: 1px solid black;
+  width: 100%;
+}
+.settings__nav {
+  display: grid;
+  grid-template: 1fr/1fr 1fr;
+}
+.settings__nav__img {
+  width: 50px;
+  justify-self: start;
+  padding: 10px;
+}
+.settings__nav__btn {
+  background: none;
+  border: none;
+  color: brown;
+  align-self: start;
+  justify-self: end;
+  padding: 5px;
+  font-size: 16px;
+}
+.settings__nav__btn:hover {
+  color: red;
+}
+
+.hidden {
+  display: none;
+}
+
+/*# sourceMappingURL=Settings.css.map */

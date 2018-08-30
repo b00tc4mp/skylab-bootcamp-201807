@@ -1,0 +1,11 @@
+.main-3by1 {
+  display: grid;
+  grid-template: 100vh/5% 25% auto;
+}
+
+.main-single {
+  display: grid;
+  grid-template: 1fr/1fr;
+}
+
+/*# sourceMappingURL=Main.css.map */
