@@ -90,7 +90,7 @@ router.delete('/remove-patient/:id', [verifyJwt, jsonBodyParser], (req, res) => 
     const { params: { id }, body: { dni } } = req
 
     logic.removePatient(id, dni)
-        .then(() => res.status(201).json({ message: 'patient removed correctly' }))
+        .then(() => res.status(200).json({ message: 'patient removed correctly' }))
         .catch(err => {
             const { message } = err
             res.status(err instanceof LogicError ? 400 : 500).json({ message })
@@ -109,7 +109,7 @@ router.patch('/update-patient/:id', [verifyJwt, jsonBodyParser], (req, res) => {
     const { params: { id }, body: { dni, newAddress, newPhone } } = req
 
     logic.updatePatient(id, dni, newAddress, newPhone)
-        .then(() => res.json({ message: 'patient data updated correctly' }))
+        .then(() => res.status(201).json({ message: 'patient data updated correctly' }))
         .catch(err => {
             const {message} = err
             res.status(400 || 500).json({message})
@@ -147,9 +147,7 @@ router.patch('/patient/:id/add-treatment', [verifyJwt, jsonBodyParser], (req, re
     const { params: { id }, body: { dni, pill, quantity, frequency } } = req
 
     logic.addTreatment(id, dni, pill, quantity, frequency)
-        .then(() => {
-            res.status(201).json({ message: 'treatment added correctly'})
-        })
+        .then(() => res.status(201).json({ message: 'treatment added correctly'}))
         .catch(err => {
             const { message } = err
             res.status(err instanceof LogicError ? 400 : 500).json({ message })
@@ -168,7 +166,7 @@ router.delete('/patient/:id/remove-treatment', [verifyJwt, jsonBodyParser], (req
     const { params: { id }, body: { dni, pill } } = req
 
     logic.removeTreatment(id, dni, pill)
-        .then(() => res.status(201).json({ message: 'treatment removed correctly' }))
+        .then(() => res.status(200).json({ message: 'treatment removed correctly' }))
         .catch(err => {
             const { message } = err
             res.status(err instanceof LogicError ? 400 : 500).json({ message })
@@ -229,7 +227,7 @@ router.delete('/remove-cite', jsonBodyParser, (req, res) => {
     let citeDate = new Date(date)
 
     logic.removeCite(code, dni, name, citeDate)
-        .then(() => res.status(201).json({ message: 'cite removed correctly' }))
+        .then(() => res.status(200).json({ message: 'cite removed correctly' }))
         .catch(err => {
             const { message } = err
             res.status(err instanceof LogicError ? 400 : 500).json({ message })
