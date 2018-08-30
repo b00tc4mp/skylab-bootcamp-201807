@@ -22,15 +22,6 @@ module.exports = new Schema({
     type: String,
     required: true
   },
-  lastRequest:{
-    type:String,
-    required:allowEmpty
-  },
-
-  lastRequestResponse:{
-    type:String,
-    required:allowEmpty
-  },
 
   online: {
     type: Boolean,

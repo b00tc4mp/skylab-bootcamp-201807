@@ -1,11 +1,7 @@
 import React, {Component} from 'react'
 import classNames from 'classnames'
-import ChessBoard from "./Chessboard"
-
-
-/*
-import { confirmAlert } from 'react-confirm-alert'; // Import
-import 'react-confirm-alert/src/react-confirm-alert.css' // Import css*/
+import ChessboardComponent from "./ChessboardComponent"
+import {ListGroup, ListGroupItem} from 'reactstrap'
 
 class Main extends Component {
 
@@ -19,27 +15,17 @@ class Main extends Component {
   }
 
 
-  onAcceptGame = (requester) => {
-    console.log("accepted game with", requester)
-  }
 
 
   render() {
-    let {props: {onGameMove, currentGames, gameRequester, users, nickname}} = this
-    let userList, chessBoardList
+    let {props: { users, nickname}} = this
+    let userList
     if (users.length) {
       users = users.filter(user => user !== nickname)
 
       userList = users.map(user => {
-        return <li key={user + Math.random()}><a onClick={e => this.onUserClick(e, user)}> {`${user}`}</a></li>
+        return <ListGroupItem  tag="a" href="#"  onClick={e => this.onUserClick(e, user)}> {`${user}`}</ListGroupItem>
       })
-      if (currentGames.length) {
-        chessBoardList = currentGames.map(game => {
-          return <li key={game.opponent + Math.random()}> <ChessBoard onGameMove={(move) => onGameMove(move,game.id,game.opponent)} fen={game.fen} /></li>
-        })
-      }
-
-
     }
     return <main>
       <div className="screen">
@@ -48,26 +34,16 @@ class Main extends Component {
         <h1>You are playing as {nickname}</h1>
         <div className="main__gamearea">
           <div className="main__userlist">
-            <ul>
+            <ListGroup>
               {users.length ? userList : <li>no users available</li>}
-            </ul>
+            </ListGroup>
           </div>
-          <div className="main__chessboardarea">
-            <ul>
-              {currentGames.length ? chessBoardList : <li>no games available</li>}
 
-            </ul>
-            {gameRequester &&
-            <div><h3>{gameRequester} wants to play a game with you</h3>
-              <button onClick={() => this.props.respondToGameRequest(gameRequester, "true")}>Accept</button>
-              <button onClick={() => this.props.respondToGameRequest(null, "false")}>Reject</button>
-            </div>
-            }
-          </div>
 
         </div>
       </div>
     </main>
+
 
 
   }

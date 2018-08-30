@@ -4,8 +4,9 @@ import Chess from "chess.js";
 
 class ChessBoard extends Component {
 
-  state = {
-    position: "start"
+
+  shouldComponentUpdate(nextProps, nextState) {
+      console.log("Chessboard: ",this.props.fen, nextProps.fen)
   }
 
   onDrop = ({sourceSquare, targetSquare, piece}) => {

@@ -16,7 +16,6 @@ class Login extends Component {
     e.preventDefault()
 
     const { nickname, password } = this.state
-
     logic.authenticate(nickname, password)
       .then(token => this.props.onLoggedIn(nickname, token))
       .catch(({ message }) => this.setState({ error: message }))

@@ -2,11 +2,11 @@ const {Schema} = require('mongoose')
 
 module.exports = new Schema({
 
-  white:  {
+  initiator:  {
     type:String,
     required:true
 },
-  black:  {
+  acceptor:  {
     type:String,
     required:true
   },
@@ -18,19 +18,32 @@ module.exports = new Schema({
   },
   pgn: {
     type:String,
-    required:isString
+    required:pgnString
   },
   winner: {
     type:String,
-    required:isString
+    required:winnerString
   },
   lastMove: {
     type:String,
-    required:isString
+    required:lastMoveString
   },
+  state: {
+    type:String,
+    required:true,
+    default:"invited",
+    enum: ['invited', 'playing','terminated'],
+  }
 })
 
 
-function isString () {
+function pgnString () {
   return typeof this.pgn !== 'string'
+}
+
+function winnerString () {
+  return typeof this.winner !== 'string'
+}
+function lastMoveString () {
+  return typeof this.lastMove !== 'string'
 }

@@ -83,29 +83,6 @@ router.get('/users', [validateJwt], (req, res) => {
 })
 
 
-/*  get last game requester for user */
-router.get('/user/:nickname/lastrequester', [validateJwt], (req, res) => {
-
-  const {params: {nickname}} = req
-  logic.getLastGameRequester(nickname)
-    .then(result => res.json(result))
-    .catch(err => {
-      const {message} = err
-      res.status(err instanceof LogicError ? 400 : 500).json({message})
-    })
-})
-
-/*  get game request response for user */
-router.get('/user/:nickname/reqresponse', [validateJwt], (req, res) => {
-
-  const {params: {nickname}} = req
-  logic.getGameRequestResponse(nickname)
-    .then(result => res.json(result))
-    .catch(err => {
-      const {message} = err
-      res.status(err instanceof LogicError ? 400 : 500).json({message})
-    })
-})
 
 
 /* terminate game */

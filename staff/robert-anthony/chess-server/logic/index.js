@@ -4,6 +4,7 @@ const chalk = require('chalk')
 const {Chess} = require('chess.js')
 const uuidv1 = require('uuid/v1');
 var debug = require('debug')('logic')
+const mongoose = require('mongoose')
 
 const logic = {
 
@@ -113,21 +114,22 @@ const logic = {
 
 
   getGamesForUser(nickname) {
-    console.log(chalk.yellow.black.bold(`Getting games for user ${nickname}`))
+    console.log(chalk.red.bgYellow.bold(`Getting games for user ${nickname}`))
 
     return Promise.resolve()
       .then(_ => {
         this._validateStringField("nickname", nickname)
-        return Game.find({$or: [{white: nickname}, {black: nickname}]})
+        return Game.find({$or: [{initiator: nickname}, {acceptor: nickname}]})
           .then(games => games.filter(game => (game.winner === '')).map(game => {
               const obj = {}
               obj.id = game.id
-              obj.opponent = game.white === nickname ? game.black : game.white
+              obj.opponent = game.initiator === nickname ? game.acceptor : game.initiator
+              obj.state = game.state
               let engine = this._currentEngines.get(game.engineID)
               if (!engine) {
                 engine = new Chess()
                 engine.load_pgn(game.pgn)
-                this._currentEngines.set(game.engineID,engine)
+                this._currentEngines.set(game.engineID, engine)
               }
               obj.fen = engine.fen()
               return obj
@@ -179,44 +181,46 @@ const logic = {
       .then(_ => {
         this._validateStringField("nickname", nickname)
         this._validateStringField("gameID", gameID)
-        return Game.findOne({_id: gameID})
+        return Game.findOne({_id: mongoose.Types.ObjectId(gameID)})
       })
       .then(game => {
         if (!game) throw new LogicError(`game with id ${gameID} does not exist`)
-        if (game.white !== nickname && game.black !== nickname) throw new LogicError(`game with id ${gameID} does not belong to user ${nickname}`)
+        if (game.initiator !== nickname && game.acceptor !== nickname) throw new LogicError(`game with id ${gameID} does not belong to user ${nickname}`)
         game.terminated = true
 
         return game.save()
       })
       .then(_ => true)
+
   },
 
-  _createGame(white, black) {
+  _createGame(requester, confirmer) {
     let game
     return Promise.resolve()
       .then(_ => {
-        this._validateStringField("white", white)
-        this._validateStringField("black", black)
-        return User.findOne({nickname: white})
+        this._validateStringField("requester", requester)
+        this._validateStringField("confirmer", confirmer)
+        return User.findOne({nickname: requester})
       })
       .then(user => {
-        if (!user) throw new LogicError(`user with ${white} nickname does not exist`)
-        return User.findOne({nickname: white})
+        if (!user) throw new LogicError(`user with ${requester} nickname does not exist`)
+        return User.findOne({nickname: requester})
       })
       .then(user => {
-        if (!user) throw new LogicError(`user with ${black} nickname does not exist`)
+        if (!user) throw new LogicError(`user with ${confirmer} nickname does not exist`)
         const engine = new Chess()
         const uuid = uuidv1()
         this._currentEngines.set(uuid, engine)
-        engine.header('White', white, 'Black', black)
+        engine.header('White', requester, 'Black', confirmer)
         const pgn = engine.pgn()
         game = new Game({
-          white,
-          black,
+          initiator: requester,
+          acceptor: confirmer,
           engineID: uuid,
           pgn,
           winner: "",
-          lastMove: ""
+          lastMove: "",
+          state: "invited"
         })
         return game.save()
       })
@@ -225,12 +229,13 @@ const logic = {
 
   move(nickname, gameID, move) {
     let game
-    return Game.findOne({_id: gameID})
+    return Game.findOne({_id: mongoose.Types.ObjectId(gameID)})
       .then(_game => {
-        if (!_game) throw new LogicError(`game with id ${gameID} does not exist`)
-        if (game.white !== nickname && game.black !== nickname) throw new LogicError(`game with id ${gameID} does not belong to user ${nickname}`)
         game = _game
-        const engine = this._currentEngines.get(_game.engineID)
+
+        if (!game) throw new LogicError(`game with id ${gameID} does not exist`)
+        if (game.initiator !== nickname && game.acceptor !== nickname) throw new LogicError(`game with id ${gameID} does not belong to user ${nickname}`)
+        const engine = this._currentEngines.get(game.engineID)
         const result = engine.move(move)
         if (!result) throw new LogicError(`move is not allowed`)
         else {
@@ -242,6 +247,7 @@ const logic = {
             })
         }
       })
+
   },
 
   requestNewGame(requester, destination) {
@@ -253,9 +259,7 @@ const logic = {
       })
       .then(user => {
         if (!user) throw new LogicError(`user with ${destination} nickname does not exist`)
-        if (user.lastRequest !== "") throw new LogicError(`user with ${destination} nickname is waiting to accept another request`)
-        user.lastRequest = requester
-        return user.save()
+        return this._createGame(requester, destination)
       })
       .then(_ => {
         return true
@@ -287,34 +291,6 @@ const logic = {
 
   },
 
-  getLastGameRequester(nickname) {
-    return Promise.resolve()
-      .then(_ => {
-        this._validateStringField("nickname", nickname)
-        return User.findOne({nickname})
-      })
-      .then(user => {
-        if (!user) throw new LogicError(`user with ${nickname} nickname does not exist`)
-        return user.lastRequest
-      })
-  }
-  ,
-
-  getGameRequestResponse(nickname) {
-    let response = ''
-    return Promise.resolve()
-      .then(_ => {
-        this._validateStringField("nickname", nickname)
-        return User.findOne({nickname})
-      })
-      .then(user => {
-        if (!user) throw new LogicError(`user with ${nickname} nickname does not exist`)
-        response = user.lastRequestResponse
-        user.lastRequestResponse = ''
-        return user.save()
-      })
-      .then(_ => response)
-  }
 
 }
 

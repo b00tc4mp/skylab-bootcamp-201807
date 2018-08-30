@@ -4,9 +4,11 @@ import Landing from './components/Landing'
 import Register from './components/Register'
 import Login from './components/Login'
 import Main from './components/Main'
+import Games from './components/Games'
 import socketIOClient from 'socket.io-client';
 
 import logic from "./logic"
+import NavBar from "./components/NavBar"
 
 class App extends Component {
 
@@ -183,7 +185,7 @@ class App extends Component {
   onGameMove = (move, gameID, opponent) => {
     const {state: {nickname, token}} = this
     logic.makeAGameMove(nickname, opponent, move, gameID, token)
-      .then(res => console.log(`game move returned with ${res}`))
+      .then(res => console.log(`game move returned with ${res.message}`))
       .catch(({message}) => this.setState({error: message}))
   }
 
@@ -203,23 +205,23 @@ class App extends Component {
   render() {
     const {nickname, users, error, token, currentGames, gameRequester} = this.state
 
-    return <div className="full-height">
+    return <div>
       <header>
-
-
-        {this.isLoggedIn() &&
-        <nav><Link to="" onClick={this.onLogout}>logout</Link>
-        </nav>}
+        <NavBar isLoggedIn={this.isLoggedIn()} onLogout={this.onLogout}/>
       </header>
 
       <Switch>
         <Route exact path="/" render={() => this.isLoggedIn() ? <Redirect to="/main"/> : <Landing/>}/>
         <Route path="/register" render={() => this.isLoggedIn() ? <Redirect to="/main"/> : <Register/>}/>
         <Route path="/main" users={users} render={() => this.isLoggedIn() ?
-          <Main onGameMove={this.onGameMove} currentGames={currentGames} gameRequester={gameRequester}
-                respondToGameRequest={this.respondToGameRequest} users={users} token={token}
-                newGamePosition={this.state.newGamePosition}
-                nickname={nickname} onRequestGame={this.onRequestGame}/> : <Landing/>}/>
+          <Main users={users} token={token}
+                onRequestGame={this.onRequestGame}
+                nickname={nickname}/> : <Landing/>}/>
+        <Route path="/games" users={users} render={() => this.isLoggedIn() ?
+          <Games onGameMove={this.onGameMove} currentGames={currentGames}
+                 token={token}
+                 newGamePosition={this.state.newGamePosition}
+                 nickname={nickname}/> : <Landing/>}/>
         <Route path="/login" render={() => this.isLoggedIn() ? <Redirect to="/main"/> :
           <Login onLoggedIn={this.onLoggedIn}/>}/>
       </Switch>

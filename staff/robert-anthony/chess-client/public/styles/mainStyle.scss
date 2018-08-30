@@ -1,15 +1,3 @@
-
-.main_gamearea {
-  width:80%;
-  display:flex;
-  flex-direction:row;
-  justify-content:space-evenly;
-  .main_userlist {
-    width:30%;
-  }
-  .main__chessboardarea {
-    width:70%;
-    border: rgba(178,34,34,0.7) solid 2px;
-    padding:1em;
-  }
+ul {
+  list-style: none;
 }

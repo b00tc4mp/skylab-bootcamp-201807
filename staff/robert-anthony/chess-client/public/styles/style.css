@@ -7,7 +7,7 @@ font-family: 'Vollkorn', serif;
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-size: 24px;
+  font-size: 18px;
   font-family: 'Vollkorn', serif; }
 
 html {
@@ -25,7 +25,6 @@ header, footer {
   height: 10%; }
 
 main {
-  background: url("./seamless-web-background-of-aged-grid-paper.jpg");
   background-repeat: repeat;
   border-color: rgba(173, 216, 230, 0.7);
   border-radius: .5em;
@@ -41,17 +40,6 @@ main {
   letter-spacing: .1em;
   color: #1492b2; }
 
-a, a:visited {
-  text-decoration: none;
-  margin-left: 1em;
-  margin-right: 1em;
-  font-size: 30px;
-  color: #ff6e1f; }
-
-a:hover, a:active {
-  text-decoration: underline;
-  color: #9e33ff; }
-
 input, button {
   background-color: inherit;
   border-style: solid;
@@ -66,45 +54,9 @@ input, button {
 ul {
   padding: 1em; }
 
-input:focus {
-  outline: none; }
-
-input[type="file"] {
-  display: none; }
-
-button:hover {
-  background-color: lime;
-  color: black;
-  cursor: pointer; }
-
 .screen {
   border-radius: 0.7em;
   padding: 1em;
   height: 100%; }
-  .screen a, .screen a:visited {
-    color: darkcyan;
-    margin: 0; }
-    .screen a:hover, .screen a:visited:hover {
-      color: orange; }
-  .screen a.internalLink {
-    font-size: 18px;
-    border-radius: 2em;
-    border: darkcyan solid 1px;
-    padding: .3em;
-    color: orange; }
-    .screen a.internalLink:hover {
-      text-decoration: none;
-      border-color: orange; }
-
-.notes_dateHeader {
-  font-size: 30px;
-  color: #1492b2;
-  letter-spacing: .2em; }
-
-.image {
-  border-radius: 50%;
-  width: 2em;
-  height: 2em;
-  float: right; }
 
 /*# sourceMappingURL=style.css.map */
