@@ -9,6 +9,14 @@ const jsonBodyParser = bodyParser.json()
 const router = express.Router()
 
 
+/**
+ * To register the doctor
+ * Must send on the body the code and password
+ * 
+ * @throws {LogicError} Message of status
+ * 
+ * @returns {Response} Message 'doctor registered correctly'
+ */
 router.post('/register', jsonBodyParser, (req, res) => {
     const { body: { code, password } } = req
 
@@ -20,6 +28,14 @@ router.post('/register', jsonBodyParser, (req, res) => {
         })
 })
 
+/**
+ * To authenticate the doctor
+ * Must send on the body the code and password
+ * 
+ * @throws {LogicError} Message of status
+ * 
+ * @returns {Response} Message 'doctor authenticated', doctors token and id
+ */
 router.post('/auth', jsonBodyParser, (req, res) => {
     const { body: { code, password } } = req
 
@@ -37,6 +53,14 @@ router.post('/auth', jsonBodyParser, (req, res) => {
         })
 })
 
+/**
+ * To add patient
+ * Must send on the body the name, DNI, surname, age, gender, address and phone of the patient
+ * 
+ * @throws {LogicError} Message of status
+ * 
+ * @returns {Response} Message 'patient added correctly', patients token and id
+ */
 router.post('/add-patient', jsonBodyParser, (req, res) => {
     const { body: { name, dni, surname, age, gender, address, phone } } = req
 
@@ -54,17 +78,33 @@ router.post('/add-patient', jsonBodyParser, (req, res) => {
         })
 })
 
+/**
+ * To remove patient
+ * Must send on the body the dni of the patient and on the route path the id of the patient
+ * 
+ * @throws {LogicError} Message of status
+ * 
+ * @returns {Response} Message 'patient removed correctly'
+ */
 router.delete('/remove-patient/:id', [verifyJwt, jsonBodyParser], (req, res) => {
     const { params: { id }, body: { dni } } = req
 
     logic.removePatient(id, dni)
-        .then(() => res.status(201).json({ message: 'patient deleted correctly' }))
+        .then(() => res.status(201).json({ message: 'patient removed correctly' }))
         .catch(err => {
             const { message } = err
             res.status(err instanceof LogicError ? 400 : 500).json({ message })
         })
 })
 
+/**
+ * To update patients address and/or phone
+ * Must send on the body the dni, new address and new phone of the patient and on the route path the id of the patient
+ * 
+ * @throws {LogicError} Message of status
+ * 
+ * @returns {Response} Message 'patient data updated correctly'
+ */
 router.patch('/update-patient/:id', [verifyJwt, jsonBodyParser], (req, res) => {
     const { params: { id }, body: { dni, newAddress, newPhone } } = req
 
@@ -76,6 +116,14 @@ router.patch('/update-patient/:id', [verifyJwt, jsonBodyParser], (req, res) => {
         })
 })
 
+/**
+ * To list all patients searched by name
+ * Must send on the route path the name of the patient to search
+ * 
+ * @throws {LogicError} Message of status
+ * 
+ * @returns {Response} Patients array
+ */
 router.get('/patients/:name', jsonBodyParser, (req, res) => {
     const { params: { name } } = req
 
@@ -87,6 +135,14 @@ router.get('/patients/:name', jsonBodyParser, (req, res) => {
         })
 })
 
+/**
+ * To add treatment to a patient
+ * Must send on the body the dni of the patient, the pill name, quantity and frequency of the treatment and on the route path the id of the patient
+ * 
+ * @throws {LogicError} Message of status
+ * 
+ * @returns {Response} Message 'treatment added correctly'
+ */
 router.patch('/patient/:id/add-treatment', [verifyJwt, jsonBodyParser], (req, res) => {
     const { params: { id }, body: { dni, pill, quantity, frequency } } = req
 
@@ -100,17 +156,33 @@ router.patch('/patient/:id/add-treatment', [verifyJwt, jsonBodyParser], (req, re
         })
 })
 
+/**
+ * To remove a patient treatment
+ * Must send on the body the dni of the patient and the pill name of the treatment and on the route path the id of the patient
+ * 
+ * @throws {LogicError} Message of status
+ * 
+ * @returns {Response} Message 'treatment removed correctly'
+ */
 router.delete('/patient/:id/remove-treatment', [verifyJwt, jsonBodyParser], (req, res) => {
     const { params: { id }, body: { dni, pill } } = req
 
     logic.removeTreatment(id, dni, pill)
-        .then(() => res.status(201).json({ message: 'treatment deleted correctly' }))
+        .then(() => res.status(201).json({ message: 'treatment removed correctly' }))
         .catch(err => {
             const { message } = err
             res.status(err instanceof LogicError ? 400 : 500).json({ message })
         })
 })
 
+/**
+ * To list a patient treatments
+ * Must send on the route path the id of the patient
+ * 
+ * @throws {LogicError} Message of status
+ * 
+ * @returns {Response} Treatments array
+ */
 router.get('/patient/:id/treatments', jsonBodyParser, (req, res) => {
     const { params: { id } } = req
 
@@ -122,6 +194,14 @@ router.get('/patient/:id/treatments', jsonBodyParser, (req, res) => {
         })
 })
 
+/**
+ * To add cite to a patient
+ * Must send on the body the doctors code, the dni of the patient and the cite name and date
+ * 
+ * @throws {LogicError} Message of status
+ * 
+ * @returns {Response} Message 'cite added correctly'
+ */
 router.post('/add-cite', jsonBodyParser, (req, res) => {
     const { body: { code, dni, name, date } } = req
 
@@ -135,6 +215,14 @@ router.post('/add-cite', jsonBodyParser, (req, res) => {
         })
 })
 
+/**
+ * To remove cite to a patient
+ * Must send on the body the doctors code, the dni of the patient and the cite name and date
+ * 
+ * @throws {LogicError} Message of status
+ * 
+ * @returns {Response} Message 'cite removed correctly'
+ */
 router.delete('/remove-cite', jsonBodyParser, (req, res) => {
     const { body: { code, dni, name, date } } = req
 
@@ -148,6 +236,14 @@ router.delete('/remove-cite', jsonBodyParser, (req, res) => {
         })
 })
 
+/**
+ * To list all cites on a day. Then the doctor could see his/her cites on that day
+ * Must send on the route path the date (day) => example: 2018-08-22
+ * 
+ * @throws {LogicError} Message of status
+ * 
+ * @returns {Response} Cites array
+ */
 router.get('/cites/:date', jsonBodyParser, (req, res) => {
     const { params: { date } } = req
 
@@ -161,6 +257,14 @@ router.get('/cites/:date', jsonBodyParser, (req, res) => {
         })
 })
 
+/**
+ * To list all cites a patient has on a month
+ * Must send on the route path the patient id and the date (month) => example: 2018-08
+ * 
+ * @throws {LogicError} Message of status
+ * 
+ * @returns {Response} Cites array
+ */
 router.get('/patient/:id/cites/:date', jsonBodyParser, (req, res) => {
     const { params: { id, date } } = req
 

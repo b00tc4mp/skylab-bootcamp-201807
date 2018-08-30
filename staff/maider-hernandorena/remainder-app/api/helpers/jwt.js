@@ -3,6 +3,17 @@
 const jwt = require('jsonwebtoken')
 const { JWT_SECRET } = process.env
 
+/**
+ * Function to verify the token given on any case by id
+ * @param {Request} req 
+ * @param {Response} res 
+ * @param {next} next 
+ * 
+ * @throws {Error} invalid token: if no bearer authorization or no length
+ * @throws {Error} invalid token: if the playload sub is different to the id given
+ * 
+ * @throws {Error} message if the function catches an error of status 500
+ */
 function verifyJwt(req, res, next) {
     const { params: { id } } = req
 
