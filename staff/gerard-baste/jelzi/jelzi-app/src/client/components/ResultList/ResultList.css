@@ -1,0 +1,15 @@
+.recipeCard{
+    margin-bottom: 20px;
+    
+    /* margin-left: 30px;
+    margin-right: 50px; */
+    
+    }
+    
+    .card-img-top {
+        width: 395px;
+        height: 263px;
+    }
+    .cardButton{
+        margin-top: 10px;
+    }

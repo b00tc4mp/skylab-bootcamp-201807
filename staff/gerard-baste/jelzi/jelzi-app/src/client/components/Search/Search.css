@@ -1,0 +1,10 @@
+
+
+#searchPanel{
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.form-control:focus {
+    outline: 0;
+}
