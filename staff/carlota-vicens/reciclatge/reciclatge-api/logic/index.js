@@ -1,8 +1,17 @@
-const moment = require('moment')
-const  User = require('../data/models/user')
+const User = require('../data/models/user')
+const validateEmail= require('../utils/validate-email')
 
 
 const logic = {
+    _validateStringField(name, value) {
+        if (typeof value !== 'string' || !value.length) throw new LogicError(`invalid ${name}`)
+    },
+
+    _validateEmail(email) {
+        if (!validateEmail(email)) throw new LogicError('invalid email')
+    },
+
+   
     register(email, password) {
         return Promise.resolve()
             .then(() => {
@@ -70,6 +79,8 @@ const logic = {
             .then(() => true)
     }
 }
+
+
 
 class LogicError extends Error {
     constructor(message) {

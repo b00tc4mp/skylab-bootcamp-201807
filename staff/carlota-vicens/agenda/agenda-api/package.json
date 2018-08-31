@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node . 8080",
     "debug": "node debug . 8080",
-    "test": "mocha logic",
+    "test": "mocha logic --timeout 20000",
     "dev": "nodemon .",
     "test-debug": "mocha debug logic/index.spec.js",
     "test-coverage": "nyc npm test",
