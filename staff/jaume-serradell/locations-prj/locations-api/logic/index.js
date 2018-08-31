@@ -1,16 +1,78 @@
 const validateEmail = require('../utils/validate-email')
-const moment = require('moment')
-const { Features, Property, User } = require('../data/models')
+const { Property, Owner } = require('../data/models')
+const cloudinary = require('cloudinary')
+
+cloudinary.config({
+    cloud_name: 'locationssky',
+    api_key: '669844342926842',
+    api_secret: 'RvGkuR632nomFrd-_NNYe2CXt60'
+})
 
 const logic = {
+
+    /** String field validator
+     * 
+     * @param {string} name The name of the value
+     * @param {string} value The value of the value
+     * 
+     * @throws {LogicError} If string input is invalid
+     * 
+     */
     _validateStringField(name, value) {
         if (typeof value !== 'string' || !value.length) throw new LogicError(`invalid ${name}`)
     },
 
+
+    /** Email validator
+     * 
+     * @param {string} email The owner's email
+     * 
+     * @throws {LogicError} If mail is invalid
+     * 
+     */
     _validateEmail(email) {
         if (!validateEmail(email)) throw new LogicError('invalid email')
     },
 
+
+    /** Number field validator
+     * 
+     * @param {string} name The name of the value
+     * @param {string} value The value of the value
+     * 
+     * @throws {LogicError} If number input is invalid
+     * 
+     */
+    _validateNumberField(name, value) {
+        if (typeof value !== 'number') throw new LogicError(`invalid ${name}`)
+    },
+
+    _saveImage(base64Image) {
+        return Promise.resolve()
+            .then(() => {
+                if (typeof base64Image !== 'string') new LogicError('base64Image is not a string')
+
+                return new Promise((resolve, reject) => {
+                    return cloudinary.v2.uploader.upload(base64Image, function (err, data) {
+                        if (err) return reject(err)
+
+                        resolve(data.url)
+                    })
+                })
+
+            })
+    },
+
+
+    /** Register owner with email, password and name
+     * 
+     * @param {string} email The owner's email
+     * @param {string} password The owner's password
+     * @param {string} name The owner's name
+     * 
+     * @throws {LogicError} If owner email is already exist
+     * 
+     */
     register(email, password, name) {
         return Promise.resolve()
             .then(() => {
@@ -18,33 +80,55 @@ const logic = {
                 this._validateStringField('password', password)
                 this._validateStringField('name', name)
 
-                return User.findOne({ email })
+                return Owner.findOne({ email })
             })
-            .then(user => {
-                if (user) throw new LogicError(`user with ${email} email already exist`)
+            .then(owner => {
+                if (owner) throw new LogicError(`owner with ${email} email already exist`)
 
-                return User.create({ email, password, name })
+                return Owner.create({ email, password, name })
             })
             .then(() => true)
     },
 
+
+    /** Authenticate owner with email and password
+     * 
+     * @param {string} email The owner's email
+     * @param {string} password The owner's password
+     * 
+     * @throws {LogicError} If owner email does not exist
+     * @throws {LogicError} If wrong password
+     * 
+     */
     authenticate(email, password) {
         return Promise.resolve()
             .then(() => {
                 this._validateEmail(email)
                 this._validateStringField('password', password)
 
-                return User.findOne({ email })
+                return Owner.findOne({ email })
             })
-            .then(user => {
-                if (!user) throw new LogicError(`user with ${email} email does not exist`)
+            .then(owner => {
+                if (!owner) throw new LogicError(`owner with ${email} email does not exist`)
 
-                if (user.password !== password) throw new LogicError(`wrong password`)
+                if (owner.password !== password) throw new LogicError(`wrong password`)
 
                 return true
             })
     },
 
+
+    /** Update owner password
+     * 
+     * @param {string} email The owner's email
+     * @param {string} password The owner's password
+     * @param {string} newPassword The owner's new password
+     * 
+     * @throws {LogicError} If owner email does not exist
+     * @throws {LogicError} If wrong password
+     * @throws {LogicError} If password is equal as the new password
+     * 
+     */
     updatePassword(email, password, newPassword) {
         return Promise.resolve()
             .then(() => {
@@ -52,171 +136,211 @@ const logic = {
                 this._validateStringField('password', password)
                 this._validateStringField('new password', newPassword)
 
-                return User.findOne({ email })
+                return Owner.findOne({ email })
             })
-            .then(user => {
-                if (!user) throw new LogicError(`user with ${email} email does not exist`)
+            .then(owner => {
+                if (!owner) throw new LogicError(`owner with ${email} email does not exist`)
 
-                if (user.password !== password) throw new LogicError(`wrong password`)
+                if (owner.password !== password) throw new LogicError(`wrong password`)
 
                 if (password === newPassword) throw new LogicError('new password must be different to old password')
 
-                user.password = newPassword
+                owner.password = newPassword
 
-                return user.save()
+                return owner.save()
             })
             .then(() => true)
     },
 
-    unregisterUser(email, password) {
+
+    /** Update owner password
+     * 
+     * @param {string} email The owner's email
+     * @param {string} password The owner's password
+     * 
+     * @throws {LogicError} If owner email does not exist
+     * @throws {LogicError} If wrong password
+     * 
+     */
+    unregisterOwner(email, password) {
         return Promise.resolve()
             .then(() => {
                 this._validateEmail(email)
                 this._validateStringField('password', password)
 
-                return User.findOne({ email })
+                return Owner.findOne({ email })
             })
-            .then(user => {
-                if (!user) throw new LogicError(`user with ${email} email does not exist`)
+            .then(owner => {
+                if (!owner) throw new LogicError(`owner with ${email} email does not exist`)
 
-                if (user.password !== password) throw new LogicError(`wrong password`)
+                if (owner.password !== password) throw new LogicError(`wrong password`)
 
-                return User.deleteOne({ _id: user._id })
+                return Owner.deleteOne({ _id: owner._id })
             })
             .then(() => true)
     },
 
-    addProperty(email, title, description, dimentions, type, event) {
+
+    /** Add new property
+     * 
+     * @param {string} email The owner's email
+     * @param {string} title The title of the property
+     * @param {string} photo The url of the photo
+     * @param {string} description The description of the property
+     * @param {number} dimentions THe dimentions of the property
+     * @param {string} categories The categories of the property
+     * @param {string} type The type of the property
+     * 
+     * @throws {LogicError} If owner email does not exist
+     * @throws {LogicError} If wrong password
+     * 
+     */
+    addProperty(email, title, photo, description, dimentions, categories, type) {
         return Promise.resolve()
             .then(() => {
                 this._validateEmail(email)
                 this._validateStringField('title', title)
+                this._validateStringField('photo', photo)
                 this._validateStringField('description', description)
-                this._validateStringField('dimentions', dimentions)
+                this._validateNumberField('dimentions', dimentions)
                 this._validateStringField('type', type)
-                this._validateStringField('event', event)
+                if (!(categories instanceof Array)) throw new LogicError('invalid categories')
 
-                return User.findOne({ email })
+                return Owner.findOne({ email })
             })
-            .then(user => {
-                if (!user) throw new LogicError(`user with ${email} email does not exist`)
+            .then(owner => {
+                if (!owner) throw new LogicError(`owner with ${email} email does not exist`)
+                if (!categories || !categories.length) throw new LogicError('at least one category')
 
-                const property = { title, description, dimentions, type, event, user: user.id }
+                return this._saveImage(photo)
+                    .then(imageCloudinary => {
+                        const property = { title, photo: imageCloudinary, description, dimentions, categories, type, owner: owner.id }
 
-                return Property.create(property)
+                        return Property.create(property)
+                    })
             })
             .then(() => true)
     },
 
-    // listProperty(email) {
-    //     return Promise.resolve()
-    //         .then(() => {
-    //             this._validateEmail(email)
+    /** List all properties
+     * 
+     * 
+     */
+    listProperty() {
+        return Promise.resolve()
+            .then(() => {
+                return Property.find().lean()
+            })
+            .then(properties => {
+                if (properties) {
+                    properties.forEach(property => {
+                        property.id = property._id.toString()
 
-    //             return User.findOne({ email })
-    //         })
-    //         .then(user => {
-    //             if (!user) throw new LogicError(`user with ${email} email does not exist`)
+                        delete property._id
 
-    //             return Property.find({ user: user._id})
-    //         })
-    //         .then(property => {
-    //             if (property) {
-    //                 properties.forEach(property => {
-    //                     property.id = property._id
+                        delete property.__v
+                    })
+                }
 
-    //                     // delete note._id
+                return properties || []
+            })
+    },
 
-    //                     // delete note.user
-    //                 })
-    //             }
+    listPropertyByQuery(type, categories) {
+        return Promise.resolve()
+            .then(() => {
+                let criteria = {}
 
-    //             return properties || []
-    //         })
-    // },
+                if(type) {
+                    this._validateStringField("type", type)    
+                    criteria.type = type
+                } 
+                    
+                if(categories) {
+                    if (!(categories instanceof Array)) throw new LogicError('invalid categories')
+                    criteria.categories = { $in: categories }
+                }
 
-    // removeNote(email, noteId) {
-    //     return Promise.resolve()
-    //         .then(() => {
-    //             this._validateEmail(email)
+                if(!Object.keys(criteria).length) throw new LogicError('Invalid search')
 
-    //             return User.findOne({ email })
-    //         })
-    //         .then((user) => {
-    //             if (!user) throw new LogicError(`user with ${email} email does not exist`)
+                return Property.find(criteria)
+                    .then(properties => {
+                        return properties
+                    })
+            })
+    },
 
-    //             return Note.findOne({ _id: noteId })
-    //                 .then(note => {
-    //                     if (!note) throw new LogicError(`note with id ${noteId} does not exist`)
+    /** Retrieve properties by ID
+     * 
+     * @param {string} email The owner's email
+     * @param {string} propertyId The ID of the property
+     * 
+     * @throws {LogicError} If owner email does not exist
+     * @throws {LogicError} If id property does not exist
+     * 
+     */
+    retrievePropertyById(email, propertyId) {
+        return Promise.resolve()
+            .then(() => {
+                this._validateEmail(email)
 
-    //                     if (note.user.toString() !== user.id) throw new LogicError('note does not belong to user')
+                return Owner.findOne({ email })
+            })
+            .then(owner => {
+                if (!owner) throw new LogicError(`Owner with ${email} email does not exist`)
 
-    //                     return Note.deleteOne({ _id: noteId })
-    //                 })
-    //         })
-    //         .then(() => true)
-    // },
+                return Property.findOne({ _id: propertyId }).lean()
+                    .then(property => {
+                        if (!property) throw new LogicError(`Property with id ${propertyId} does not exist`)
+                        property.id = property._id.toString()
 
-    // addContact(userEmail, email, name, surname, phone) {
-    //     return Promise.resolve()
-    //         .then(() => {
-    //             this._validateEmail(userEmail)
-    //             this._validateEmail(email)
+                        delete property._id
 
-    //             if (typeof name !== 'undefined') this._validateStringField('name', name)
-    //             if (typeof surname !== 'undefined') this._validateStringField('surname', surname)
-    //             if (typeof phone !== 'undefined') this._validateStringField('phone', phone)
+                        delete property.__v
 
-    //             return User.findOne({ email: userEmail })
-    //         })
-    //         .then(user => {
-    //             if (!user) throw new LogicError(`user with ${email} email does not exist`)
+                        return property
+                    })
+            })
+    },
 
-    //             const contact = { email }
 
-    //             if (name) contact.name = name
-    //             if (surname) contact.surname = surname
-    //             if (phone) contact.phone = phone
+    /** Update property
+     * 
+     * @param {string} email The owner's email
+     * @param {string} id The ID of the property
+     * @param {string} photo The photo of the property
+     * @param {string} description The description of the property
+     * @param {number} dimentions The dimentions of the property
+     * @param {string} categories The categories of the property
+     * @param {string} type The type of the property
+     * 
+     * @throws {LogicError} If owner email does not exist
+     * @throws {LogicError} If id property does not exist
+     * 
+     */
+    updatePropertyById(email, id, title, photo, description, dimentions, categories, type) {
+        return Promise.resolve()
+            .then(() => {
+                this._validateStringField("title", title)
+                this._validateStringField("photo", photo)
+                this._validateStringField("description", description)
+                this._validateNumberField('dimentions', dimentions)
+                this._validateStringField("type", type)
+                
+                return Owner.findOne({ email })
+                    .then(owner => {
+                        if (!owner) throw new LogicError(`Owner with ${email} email does not exist`)
+                        return Property.findOne({ _id: id, owner: owner.id })
+                            .then((property) => {
+                                if (!property) throw new LogicError(`cannot update property ${id}`)
 
-    //             user.contacts.push(new Contact(contact))
+                                return Property.updateOne({ _id: id }, { $set: { "title": title, "photo": photo, "description": description, "dimentions": dimentions, "categories": categories, "type": type } })
+                                    .then(() => true)
+                            })
+                    })
+            })
+    }
 
-    //             return user.save()
-    //         })
-    //         .then(() => true)
-    // },
-
-    // listContacts(email, startWith) {
-    //     return Promise.resolve()
-    //         .then(() => {
-    //             this._validateEmail(email)
-    //             this._validateStringField('start-with text', startWith)
-
-    //             return User.findOne({ email })
-    //         })
-    //         .then(user => {
-    //             if (!user) throw new Error(`user with ${email} email does not exist`)
-
-    //             let contacts = user.contacts.map(contact => contact._doc)
-
-    //             contacts = contacts.filter(({ email, name, surname }) => {
-    //                 if (name) return name.startsWith(startWith)
-
-    //                 if (surname)  return surname.startsWith(startWith)
-
-    //                 return email.startsWith(startWith)
-    //             })
-
-    //             return contacts.map(contact => {
-    //                 contact.id = contact._id.toString()
-
-    //                 delete contact._id
-
-    //                 return contact
-    //             })
-    //         })
-    // },
-
-    
 }
 
 class LogicError extends Error {

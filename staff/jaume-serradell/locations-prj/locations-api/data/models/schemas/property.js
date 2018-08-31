@@ -1,5 +1,4 @@
 const { Schema, Schema: { Types: { ObjectId } } } = require('mongoose')
-const Feature = require('./Feature')
 
 module.exports = new Schema({
     title: {
@@ -12,7 +11,8 @@ module.exports = new Schema({
     },
 
     photo: {
-        type: String
+        type: String,
+        requiered: true
     },
 
     description: {
@@ -22,27 +22,25 @@ module.exports = new Schema({
     },
 
     dimentions: {
-        type: String,
+        type: Number,
         required: true
     },
+
+    categories: [{
+        type: String,
+        enum: ['Balcony', 'Bathroom', 'Kitchen', 'Dinning room', 'Office', 'Adult Bedroom', 'Child\'s bedroom', 'Abandoned Style'],
+        required: true
+    }],
 
     type: {
         type: String,
-        enum: ['Apartment', 'Event Spaces', 'House', 'Loft', 'Penthouse', 'Showrooms'],
+        enum: ['Penthouse', 'Houses', 'Events Spaces', 'Singular Spaces', 'Loft', 'Flats'],
         required: true
     },
 
-    event: {
-        type: String,
-        enum: ['Movies', 'Showrooms', 'Spots', 'Shootings'],
-        required: true
-    },
-
-    user: {
+    owner: {
         type: ObjectId,
-        ref: 'User',
+        ref: 'Owner',
         required: true
-    },
-
-    features: [Feature]
+    }
 })

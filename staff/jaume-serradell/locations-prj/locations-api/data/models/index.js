@@ -1,5 +1,4 @@
 module.exports = {
-    Feature: require('./feature'),
-    User: require('./user'),
+    Owner: require('./owner'),
     Property: require('./property')
 }
