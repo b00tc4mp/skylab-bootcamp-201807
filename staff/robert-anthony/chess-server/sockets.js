@@ -11,8 +11,11 @@ const socketLogic = {
 
   onError(nickname, error) {
     this.io.emit(`error ${nickname}`, error)
-  }
-  ,
+  },
+
+  gameAcceptedOrRejected(destination) {
+    this.io.emit(`update to games ${destination}`)
+  },
 
   announceMoveMade(mover, receiver) {
     this.io.emit(`update to games ${mover}`)
@@ -20,12 +23,12 @@ const socketLogic = {
   },
 
   requestConnection(destination) {
-    this.io.emit(`game requested ${destination}`)
+    this.io.emit(`update to games ${destination}`)
   },
 
-  requestHasBeenRespondedTo(destination) {
+ /* requestHasBeenRespondedTo(destination) {
     this.io.emit(`request response ready ${destination}`)
-  },
+  },*/
 
   newGameAdded(confirmer,asker) {
     this.io.emit(`update to games ${confirmer}`)

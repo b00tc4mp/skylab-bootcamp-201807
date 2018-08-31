@@ -9,39 +9,52 @@ import socketIOClient from 'socket.io-client';
 
 import logic from "./logic"
 import NavBar from "./components/NavBar"
+import Invite from "./components/Invite"
 
 class App extends Component {
 
   constructor() {
     super()
+
+    this.state = {
+      nickname: sessionStorage.getItem('nickname') || '',
+
+      token: sessionStorage.getItem('token') || '',
+
+      users: JSON.parse(sessionStorage.getItem('users')) || [],
+
+      error: "",
+
+      currentGames: JSON.parse(sessionStorage.getItem('currentGames')) || [],
+    }
+
+
     let nickname, token
     if (nickname = sessionStorage.getItem('nickname')) // we are returning from a page refresh
     {
       token = sessionStorage.getItem('token')
       console.log(`%c returning from page refresh and setting up socket listeners again ${nickname}`, 'background: blue; color: red');
-
       this.setupSocketListeners(nickname, token)  // add socket listeners again
-
     }
   }
 
+  componentDidMount() {
+    const {state: {nickname, token}} = this
 
-  state = {
-    nickname: sessionStorage.getItem('nickname') || '',
-    token: sessionStorage.getItem('token') || '',
-    newGamePosition: "start",
-    users: JSON.parse(sessionStorage.getItem('users')) || [],
-    error: "",
-    gameRequester: sessionStorage.getItem('gameRequester') || '',
-    currentGames: JSON.parse(sessionStorage.getItem('currentGames')) || [],
+    logic.getGamesForUser(nickname, token)
+      .then(currentGames => {
+        this.setState({currentGames})
+        sessionStorage.setItem('currentGames', JSON.stringify(currentGames))
+
+      })
+      .catch(({message}) => this.setState({error: message}))
+
   }
 
 
   socket = null
 
   aliveInterval = null
-
-  currentOpponents = JSON.parse(sessionStorage.getItem('currentOpponents')) || []
 
 
   alivePing = () => {
@@ -53,37 +66,28 @@ class App extends Component {
       .then(users => {
         sessionStorage.setItem('users', JSON.stringify(users))
         this.setState({users})
-        this.currentOpponents = this.currentOpponents.filter(value => -1 !== users.indexOf(value));
-        sessionStorage.setItem('currentOpponents', JSON.stringify(this.currentOpponents))
 
       })
       .catch(({message}) => this.setState({error: message}))
 
   }
 
-  respondToGameRequest = (destination, answer) => {
-    if (answer) {
-      console.log(`%c accepted game request from ${destination}`, 'background: darkcyan; color: white');
-      this.currentOpponents.push(destination)
-      console.log(`currentOpponents = ${this.currentOpponents}`)
-
-      sessionStorage.setItem('currentOpponents', JSON.stringify(this.currentOpponents))
-    }
+  onRespondToGameRequest = (destination, gameID, answer) => {
     const {state: {nickname, token}} = this
-    this.setState({gameRequester: ''})
-    sessionStorage.setItem('gameRequester', '')
-    logic.respondToGameRequest(nickname, destination, answer, token)
-      .catch(({message}) => this.setState({error: message}))
 
+    logic.respondToGameRequest(nickname, destination, gameID, answer, token)
+      .then(_ => logic.getGamesForUser(nickname, token))
+      .then(currentGames => {
+        this.setState({currentGames})
+        sessionStorage.setItem('currentGames', JSON.stringify(currentGames))
+      })
+      .catch(({message}) => this.setState({error: message}))
   }
 
   onRequestGame = (destination) => {
     logic.requestGame(this.state.nickname, destination, this.state.token)
       .catch(({message}) => this.setState({error: message}))
 
-  }
-
-  componentDidMount = () => {
   }
 
   componentWillUnmount = () => {
@@ -100,41 +104,13 @@ class App extends Component {
 
       this.socket.on(`error ${nickname}`, message => console.error(message))
 
-      this.socket.on(`move made ${nickname}`, () => {
-        // move made
-      })
-
-      this.socket.on(`game requested ${nickname}`, () => {
-        console.log(`%c game requested ${nickname}`, 'background: #222; color: #bada55');
-
-        logic.getLastRequester(nickname, token)
-          .then(gameRequester => {
-            this.setState({gameRequester})
-            sessionStorage.setItem('gameRequester', gameRequester)
-          })
-          .catch(({message}) => this.setState({error: message}))
-
-      })
-
-      this.socket.on(`request response ready ${nickname}`, () => {
-        console.log(`%c request response ready ${nickname}`, 'background: #222; color: #bada55');
-
-        logic.getLastGameRequestResponse(nickname, token)
-          .then(res => {
-            console.log(`%c last request response ${res}`, 'background: #222; color: #bada55')
-            if (res !== 'rejected') this.currentOpponents.push(res)
-          })
-          .catch(({message}) => this.setState({error: message}))
-      })
 
       this.socket.on(`update to games ${nickname}`, () => {
         console.log(`%c update to games ${nickname}`, 'background: #222; color: #bada55');
         logic.getGamesForUser(nickname, token)
           .then(currentGames => {
             // filter only show games for people we're currently playing with
-            currentGames = currentGames.filter(game => {
-              return this.currentOpponents.indexOf(game.opponent) !== -1
-            });
+
             this.setState({currentGames})
             sessionStorage.setItem('currentGames', JSON.stringify(currentGames))
 
@@ -189,6 +165,12 @@ class App extends Component {
       .catch(({message}) => this.setState({error: message}))
   }
 
+  onInviteUser = user => {
+    logic.requestGame(this.state.nickname, user, this.state.token)
+      .catch(({message}) => this.setState({error: message}))
+  }
+
+
   isLoggedIn() {
     return !!this.state.nickname
   }
@@ -211,18 +193,29 @@ class App extends Component {
       </header>
 
       <Switch>
-        <Route exact path="/" render={() => this.isLoggedIn() ? <Redirect to="/main"/> : <Landing/>}/>
-        <Route path="/register" render={() => this.isLoggedIn() ? <Redirect to="/main"/> : <Register/>}/>
-        <Route path="/main" users={users} render={() => this.isLoggedIn() ?
-          <Main users={users} token={token}
-                onRequestGame={this.onRequestGame}
-                nickname={nickname}/> : <Landing/>}/>
-        <Route path="/games" users={users} render={() => this.isLoggedIn() ?
-          <Games onGameMove={this.onGameMove} currentGames={currentGames}
-                 token={token}
-                 newGamePosition={this.state.newGamePosition}
-                 nickname={nickname}/> : <Landing/>}/>
-        <Route path="/login" render={() => this.isLoggedIn() ? <Redirect to="/main"/> :
+        <Route exact path="/" render={() => this.isLoggedIn() ? <Redirect to="/games"/> : <Landing/>}/>
+        <Route path="/register" render={() => this.isLoggedIn() ? <Redirect to="/games"/> : <Register/>}/>
+        <Route path="/main" render={() => this.isLoggedIn() ?
+          <Main
+            users={users}
+            onRequestGame={this.onRequestGame}
+            nickname={nickname}
+          /> : <Landing/>}/>
+        <Route path="/games" render={() => this.isLoggedIn() ?
+          <Games
+            onGameMove={this.onGameMove}
+            currentGames={currentGames}
+            users={users}
+            onRespondToGameRequest={this.onRespondToGameRequest}
+            nickname={nickname}
+          /> : <Landing/>}/>
+        <Route path="/invite" render={() => this.isLoggedIn() ?
+          <Invite
+            onUserClick={this.onInviteUser}
+            users={users}
+            nickname={nickname}
+          /> : <Landing/>}/>
+        <Route path="/login" render={() => this.isLoggedIn() ? <Redirect to="/games"/> :
           <Login onLoggedIn={this.onLoggedIn}/>}/>
       </Switch>
 

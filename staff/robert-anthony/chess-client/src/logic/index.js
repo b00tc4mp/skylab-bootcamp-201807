@@ -115,13 +115,13 @@ const logic = {
       })
   },
 
-  respondToGameRequest(nickname, destination, answer, token) {
+  respondToGameRequest(nickname, destination, gameID,answer, token) {
     return Promise.resolve()
       .then(() => {
         return this._call(`user/${nickname}/respondtorequest`, 'POST', {
           'Content-Type': 'application/json',
           'authorization': `bearer ${token}`
-        },  JSON.stringify({destination,answer}), 200)
+        },  JSON.stringify({destination,answer,gameID}), 200)
           .then(res => res.json())
           .then(res => res)
       })

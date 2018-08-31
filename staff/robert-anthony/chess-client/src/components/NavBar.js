@@ -27,7 +27,10 @@ export default class NavBar extends Component {
                 <NavLink href="/#/main">Home</NavLink>
               </NavItem>
               <NavItem>
-                <NavLink href="/#/games">Games</NavLink>
+                {isLoggedIn && <NavLink href="/#/invite">Invite</NavLink>}
+              </NavItem>
+              <NavItem>
+                {isLoggedIn && <NavLink href="/#/games">Games</NavLink>}
               </NavItem>
               <NavItem>
                 {isLoggedIn &&<NavLink onClick={onLogout} href="#">Logout</NavLink>}

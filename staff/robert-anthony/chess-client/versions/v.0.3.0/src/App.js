@@ -50,7 +50,7 @@ class App extends Component {
     logic.getOnlineUsers(token)
       .then(users => {
         sessionStorage.setItem('users', JSON.stringify(users))
-        this.setState({users})
+        this.setState({users: games})
         this.currentOpponents = this.currentOpponents.filter(value => -1 !== users.indexOf(value));
         sessionStorage.setItem('currentOpponents', JSON.stringify(this.currentOpponents))
 
@@ -59,18 +59,9 @@ class App extends Component {
 
   }
 
-  respondToGameRequest = (destination, answer) => {
-    if (answer) {
-      console.log(`%c accepted game request from ${destination}`, 'background: darkcyan; color: white');
-      this.currentOpponents.push(destination)
-      console.log(`currentOpponents = ${this.currentOpponents}`)
-
-      sessionStorage.setItem('currentOpponents', JSON.stringify(this.currentOpponents))
-    }
+  onRespondToGameRequest = (destination, gameID, answer) => {
     const {state: {nickname, token}} = this
-    this.setState({gameRequester: ''})
-    sessionStorage.setItem('gameRequester', '')
-    logic.respondToGameRequest(nickname, destination, answer, token)
+    logic.respondToGameRequest(nickname, destination, gameID, answer, token)
       .catch(({message}) => this.setState({error: message}))
 
   }

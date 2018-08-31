@@ -5,9 +5,6 @@ import Chess from "chess.js";
 class ChessboardComponent extends Component {
 
 
-  shouldComponentUpdate(nextProps, nextState) {
-      console.log("Chessboard: ",this.props.fen, nextProps.fen)
-  }
 
   onDrop = ({sourceSquare, targetSquare, piece}) => {
     const move = {from: sourceSquare, to: targetSquare, promotion: "q"}
@@ -39,7 +36,7 @@ const boardsContainer = {
   justifyContent: "space-around",
   alignItems: "center",
   flexWrap: "wrap",
-  width: "300vw",
+  width: "100px",
   marginTop: 30,
   marginBottom: 50
 };

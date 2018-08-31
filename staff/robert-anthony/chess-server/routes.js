@@ -134,11 +134,10 @@ router.post('/user/:nickname/gamerequest/', [validateJwt, jsonBodyParser], (req,
 /* respond to a game request  */
 router.post('/user/:nickname/respondtorequest', [validateJwt, jsonBodyParser], (req, res) => {
 
-  const {params: {nickname}, body: {destination, answer}} = req
-  logic.respondToGameRequest(nickname, destination, answer)
+  const {params: {nickname}, body: {destination,gameID, answer}} = req
+  logic.respondToGameRequest(nickname, destination,gameID, answer)
     .then(_ => {
-        sockets.requestHasBeenRespondedTo(destination)
-        sockets.newGameAdded(nickname, destination)
+        sockets.gameAcceptedOrRejected(destination)
         res.json({message: 'game request response sent'})
       }
     )

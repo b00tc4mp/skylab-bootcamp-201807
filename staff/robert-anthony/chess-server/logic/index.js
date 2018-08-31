@@ -120,7 +120,7 @@ const logic = {
       .then(_ => {
         this._validateStringField("nickname", nickname)
         return Game.find({$or: [{initiator: nickname}, {acceptor: nickname}]})
-          .then(games => games.filter(game => (game.winner === '')).map(game => {
+          .then(games => games.filter(game => (game.state !== 'terminated')).map(game => {
               const obj = {}
               obj.id = game.id
               obj.opponent = game.initiator === nickname ? game.acceptor : game.initiator
@@ -220,7 +220,8 @@ const logic = {
           pgn,
           winner: "",
           lastMove: "",
-          state: "invited"
+          state: "invited",
+          toPlay: requester
         })
         return game.save()
       })
@@ -266,27 +267,23 @@ const logic = {
       })
   },
 
-  respondToGameRequest(confirmer, destination, answer) {
+  respondToGameRequest(confirmer, destination, gameID, answer) {
     return Promise.resolve()
       .then(_ => {
         this._validateStringField("confirmer", confirmer)
         this._validateStringField("destination", destination)
-        return User.findOne({nickname: confirmer})
+        this._validateStringField("gameID", gameID)
+        return Game.findOne({_id: mongoose.Types.ObjectId(gameID)})
       })
-      .then(user => {
-        if (!user) throw new LogicError(`user with ${confirmer} nickname does not exist`)
-        user.lastRequest = ''
-        return user.save()
-      })
-      .then(_ => User.findOne({nickname: destination}))
-      .then(user => {
-        if (!user) throw new LogicError(`user with ${confirmer} nickname does not exist`)
-        user.lastRequestResponse = answer ? confirmer : 'rejected'
-        return user.save()
+      .then(game => {
+        if (!game) throw new LogicError(`game with id ${gameID} does not exist`)
+        if (game.initiator !== destination) throw new LogicError(`game with id ${gameID} does not belong to ${destination}`)
+        if (game.acceptor !== confirmer) throw new LogicError(`game with id ${gameID} does not belong to ${confirmer}`)
+        game.state = answer ? 'playing' : 'terminated'
+        return game.save()
       })
       .then(_ => {
-        if (answer) return this._createGame(destination, confirmer)
-        else return true
+        return true
       })
 
   },

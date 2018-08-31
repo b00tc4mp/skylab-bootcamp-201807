@@ -33,6 +33,10 @@ module.exports = new Schema({
     required:true,
     default:"invited",
     enum: ['invited', 'playing','terminated'],
+  },
+  toPlay: {
+    type:String,
+    required:true,
   }
 })
 
