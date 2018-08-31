@@ -1,10 +1,18 @@
-import { Schema } from "mongoose";
+import { Schema, SchemaOptions } from "mongoose";
+import { followRequestSchema } from "../follow-request";
+import { followerSchema } from "../follower";
+import { followingSchema } from "../following";
+import { notificationSchema } from "../notification";
+import { savedPostSchema } from "../saved-post";
 import { emailValidator } from "../validators";
+
+const options: SchemaOptions = { timestamps: true };
 
 const userSchema: Schema = new Schema({
   username: {
     type: String,
     maxlength: 50,
+    unique: true,
     required: true,
   },
   password: {
@@ -18,6 +26,7 @@ const userSchema: Schema = new Schema({
   email: {
     type: String,
     maxlength: 255,
+    unique: true,
     required: true,
     validate: emailValidator,
   },
@@ -27,10 +36,8 @@ const userSchema: Schema = new Schema({
     maxlength: 30,
   },
   gender: {
-    type: Number,
-    min: 0,
-    max: 2,
-    default: 0,
+    type: String,
+    enum: ["male", "female"],
   },
   biography: String,
   avatar: String,
@@ -39,11 +46,11 @@ const userSchema: Schema = new Schema({
     type: Date,
   },
   enable: Boolean,
-  created: {
-    type: Date,
-    default: Date.now,
-  },
-  updated: Date,
-});
+  followers: [followerSchema],
+  followings: [followingSchema],
+  savedPosts: [savedPostSchema],
+  notifications: [notificationSchema],
+  followRequests: [followRequestSchema],
+}, options);
 
 export default userSchema;

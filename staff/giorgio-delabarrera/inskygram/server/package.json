@@ -8,6 +8,7 @@
     "watch": "concurrently -k npm:watch-ts npm:watch-node",
     "watch-ts": "webpack --env.mode development --watch",
     "watch-node": "nodemon build",
+    "debug-node": "node inspect build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Giorgio de la Barrera <giodelabarrera@gmail.com>",

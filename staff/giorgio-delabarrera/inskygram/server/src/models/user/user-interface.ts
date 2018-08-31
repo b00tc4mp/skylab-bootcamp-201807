@@ -1,3 +1,5 @@
+import { FollowerInterface } from "../follower";
+
 /**
  *
  *
@@ -10,14 +12,15 @@ interface UserInterface {
   email: string;
   website: string;
   phoneNumber: string;
-  gender: number;
+  gender: string;
   biography: string;
   avatar: string;
   privateAccount: boolean;
   lastLogin: Date;
   enable: boolean;
-  created: Date;
-  updated: Date;
+  createdAt: Date;
+  updatedAt: Date;
+  followers: FollowerInterface[];
 }
 
 export default UserInterface;
