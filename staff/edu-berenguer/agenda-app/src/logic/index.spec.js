@@ -12,8 +12,6 @@ describe('logic', () => {
     const title = 'title 1', content = 'content content content', date= 8 + '-' + 10 + '-' +2018
     const name = 'name', surname = 'surname', phone = 'mytelephone', contactmail = 'gerard@gmail.com', address = 'mi calle'
     
-
-
     beforeEach(() => {
         
         usermail = `user${Math.random()}@gmail.com`, password = '123'

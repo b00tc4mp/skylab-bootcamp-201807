@@ -21,7 +21,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "mocha src/logic",
+    "test": "mocha src/logic --timeout 15000",
     "eject": "react-scripts eject",
     "test-coverage": "nyc npm test",
     "test-coverage-report": "nyc report --reporter=html"

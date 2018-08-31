@@ -54,7 +54,7 @@ router.post('/shelter/:id/dog', [validateJwt, jsonBodyParser], (req, res) => {
     const { params: { id }, body: { name, gender, age, weight, photo, description } } = req
 
     logic.insertDog(id, name, gender, age, weight, photo, description)
-        .then(() => res.json({ message: 'Dog added correctly' }))
+        .then(id => res.json({ message: 'Dog added correctly' , id}))
         .catch(err => {
             const { message } = err
             res.status(err instanceof LogicError ? 400 : 500).json({ message })
@@ -66,7 +66,7 @@ router.post('/shelter/:id/dog', [validateJwt, jsonBodyParser], (req, res) => {
 router.put('/shelter/:id/dog/:dogId', [validateJwt, jsonBodyParser], (req, res) => {
     const { params: { id, dogId } } = req
     logic.dogAdopted(id, dogId)
-        .then(() => res.json({ message: "Dog adoted!", id }))
+        .then(() => res.json({ message: "Dog adopted!", id }))
         .catch(err => {
             const { message } = err
             res.status(err instanceof LogicError ? 418 : 500).json({ message })
@@ -149,7 +149,7 @@ router.delete('/remove/:id/dog/:dogId', [validateJwt], (req, res) => {
 router.put('/update/shelter/:id/dog/:dogId', [validateJwt, jsonBodyParser], (req, res) => {
     const { params: { id, dogId }, body: { newName, newGender, newAge, newWeight, newPhoto, newDescription } } = req
     logic.updateDog(id, dogId, newName, newGender, newAge, newWeight, newPhoto, newDescription)
-        .then(() => res.json({ message: 'Dog updated succesfully', id }))
+        .then(() => res.json({ message: 'Dog updated succesfully', dogId }))
         .catch(err => {
             const { message } = err
             res.status(err instanceof LogicError ? 400 : 500).json({ message })

@@ -41,9 +41,9 @@ const logic = {
                 this._validateStringField('adress', adress)
                 this._validateStringField('phone', phone)
                 this._validateStringField('password', password)
-                if(latitude)
+                if (latitude)
                     this._validateNumberField('latitude', latitude)
-                if(longitude)
+                if (longitude)
                     this._validateNumberField('longitude', longitude)
 
                 return Shelter.findOne({ email })
