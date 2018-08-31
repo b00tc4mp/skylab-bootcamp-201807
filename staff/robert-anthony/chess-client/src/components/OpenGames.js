@@ -11,6 +11,7 @@ class OpenGames extends Component {
     onUserClick:PropTypes.func,
     games:PropTypes.array,
     nickname:PropTypes.string,
+    currentGameViewed:PropTypes.object,
    // opponent:PropType.string,
   }
 
@@ -25,12 +26,16 @@ class OpenGames extends Component {
 
 
   render() {
-    let {props: {games,nickname}} = this
+    let {props: {games,nickname,currentGameViewed}} = this
     let userList
     if (games.length) {
 
+
       userList = games.map(game => {
-        return <ListGroupItem key={game + Math.random()} tag="a" href="#" onClick={e => this.onUserClick(e, game)}> {`${game.opponent}`}{game.state === "invited" ? " √" : ""}</ListGroupItem>
+        let isCurrent = false
+        if (currentGameViewed && (currentGameViewed.id === game.id)) isCurrent = true
+        console.log(currentGameViewed,isCurrent)
+        return <ListGroupItem key={game + Math.random()} tag="a" href="#" onClick={e => this.onUserClick(e, game)}>{`${game.opponent}`}{(game.state === 'invited') && <i className='far fa-envelope'></i> }{isCurrent && <i className='fas fa-chess'></i> } </ListGroupItem>
       })
     }
     return <main>

@@ -95,7 +95,7 @@ class App extends Component {
   }
 
   componentWillUnmount = () => {
-    if (this.aliveInterval) this.aliveInterval.clearInterval()
+    if (this.aliveInterval) clearInterval(this.aliveInterval)
   }
 
 

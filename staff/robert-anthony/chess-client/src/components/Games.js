@@ -18,7 +18,7 @@ class Games extends Component {
     }
 
     state = {
-      currentGameViewed: JSON.parse(sessionStorage.getItem('currentGameViewed')) || '',
+      currentGameViewed: JSON.parse(sessionStorage.getItem('currentGameViewed')) || null,
       error: '',
       inviter: '',
       invitedGameID: '',
@@ -58,7 +58,10 @@ class Games extends Component {
             <Col xs="12" md="3">
               {currentGames.length && <OpenGames onUserClick={this.onOpenGamesUserClick}
                                                  games={currentGames.filter(game => game.state !== 'terminated')}
-                                                 nickname={nickname}/>}
+                                                 nickname={nickname}
+                                                 currentGameViewed={currentGameViewed}/>
+
+              }
             </Col>
             <Col xs="12" md="9">
               {currentGames.length && <ChessboardGroup onGameMove={onGameMove}
