@@ -1,13 +1,14 @@
 import React from 'react'
+import '../styles/css/landing.css'
 
 function Landing() {
-    return <main>
-        <div>
-            <nav>
-                <p className="landing"><a href="/#/register">Register</a> or <a href="/#/login">Login</a></p>
-            </nav>
-        </div>
-    </main>
+    return <main className="main">  
+                <div className="main__group">
+                    <p className="main__group__text">
+                        <a className="main__group__text__link" href="/#/register">Register</a> or <a className="main__group__text__link" href="/#/login">Login</a>
+                    </p>
+                </div>          
+            </main>
 }
 
 export default Landing

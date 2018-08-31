@@ -1,10 +1,21 @@
 'use strict'
 
-
-
 const logic = {
+
     url: 'http://localhost:8080/api',
 
+    /**
+     * The call to the API which connects with the data base (on each function later, will be called and sent different parameter for each situation)
+     * @param {String} path //path to add to url
+     * @param {method} method //api method to do request (post, get, delete or patch)
+     * @param {Headers} headers //content-type (applicaiton json) and authorization of bearer token
+     * @param {String} body //the information sent
+     * @param {status} expectedStatus //status of the server on request or response
+     * 
+     * @throws {Error} if bad status on response
+     * 
+     * @returns {Response} response on each situation
+     */
     _call(path, method, headers, body, expectedStatus) {
         const config = { method }
 
@@ -116,6 +127,18 @@ const logic = {
             })
     },
 
+    /**
+     * Adds a patient requiring different parameters
+     * @param {String} name //patient name
+     * @param {Number} dni //patient dni (8 digits)
+     * @param {String} surname //patient surname
+     * @param {Number} age //patient age
+     * @param {String} gender //patient gender (male, female or other)
+     * @param {String} address //patient address
+     * @param {Number} phone //patient phone (9 digits)
+     *  
+     * @returns {Response} response with message notifying patient was added correctly
+     */
     addPatient(name, dni, surname, age, gender, address, phone) {
         return Promise.resolve()
             .then(() => {
@@ -129,15 +152,24 @@ const logic = {
 
                 return this._call('add-patient', 'post', {'Content-Type': 'application/json'}, JSON.stringify({ name, dni, surname, age, gender, address, phone }), 201)
                     .then(res => res.json())
-                    .then(({ id, token }) => {id, token})
+                    .then(res => res)
             })
     },
 
+    /**
+     * Removes a patient with his/her id and dni
+     * @param {String} id //patient id
+     * @param {Number} dni //patient dni (8 digits)
+     * @param {String} token //patient token 
+     * 
+     * @returns {boolean} TRUE => if it removes patient correctly
+     */
     removePatient(id, dni, token) {
         return Promise.resolve()
             .then(() => {
                 this._validateStringField('id', id)
                 this._validateDniField('dni', dni)
+                this._validateStringField('token', token)
 
                 return this._call(`remove-patient/${id}`, 'delete', {'Content-Type': 'application/json' , authorization: `bearer ${token}`}, JSON.stringify({ dni }), 200)
                     .then(res => res.json())
@@ -145,6 +177,17 @@ const logic = {
             })
     },
 
+    /**
+     * Updates a patients address and/or phone with his/her id and dni
+     * //if there is not any new address or phone should update the other correctly
+     * @param {String} id //patient id
+     * @param {Number} dni //patient dni (8 digits)
+     * @param {String} newAddress //patient new address
+     * @param {Number} newPhone //patient new phone (9 digits)
+     * @param {String} token //patient token 
+     * 
+     * @returns {boolean} TRUE => if it updates patient correctly
+     */
     updatePatient(id, dni, newAddress, newPhone, token) {
         return Promise.resolve()
             .then(() => {
@@ -159,6 +202,12 @@ const logic = {
             })
     },
 
+    /**
+     * Search all patients by name
+     * @param {String} name //patient name
+     * 
+     * @returns {Response} all patients in an array or an empty array
+     */
     searchPatients(name) {
         return Promise.resolve()
             .then(() => {
@@ -169,6 +218,29 @@ const logic = {
             })
     },
 
+    /**
+     * List all patients  
+     * @returns {Response} all patients in an array or an empty array
+     */
+    listPatients() {
+        return Promise.resolve()
+            .then(() => 
+                this._call(`patients`, 'get', {'Content-Type': 'application/json'}, undefined, 200)
+                    .then(res => res.json())
+            )
+    },
+
+    /**
+     * Adds a treatment (with pill name, quantity and frequency) to a patient with his/her id and dni
+     * @param {String} id //patient id
+     * @param {Number} dni //patient dni (8 digits)
+     * @param {String} pill //pill name
+     * @param {String} quantity //pill quantity on a day (up to 0)
+     * @param {String} frequency //pill frequency: days should take them
+     * @param {String} token //patient token 
+     * 
+     * @returns {Response} Treatment added correctly and its information
+     */
     addTreatment(id, dni, pill, quantity, frequency, token) {
         return Promise.resolve()
             .then(() => {
@@ -184,6 +256,15 @@ const logic = {
             })
     },
 
+    /**
+     * Removes patients treatment with his/her id and dni and the name of the pill in the treatment
+     * @param {String} id //patient id
+     * @param {Number} dni //patient dni (8 digits)
+     * @param {String} pill //pill name
+     * @param {String} token //patient token 
+     * 
+     * @returns {boolean} TRUE => if treatment was removed correctly from the patient
+     */
     removeTreatment(id, dni, pill, token) {
         return Promise.resolve()
             .then(() => {
@@ -197,6 +278,12 @@ const logic = {
             })
     },
 
+    /**
+     * Lists patients treatments by his/her id
+     * @param {String} id //patients id
+     * 
+     * @returns {Response} a patients treatments in an array
+     */
     listTreatments(id) {
         return Promise.resolve()
             .then(() => {
@@ -207,6 +294,15 @@ const logic = {
             })
     },
 
+    /**
+     * Adds cites to patients relating them to his/her doctor
+     * @param {String} code //doctors code => to asign his cites
+     * @param {Number} dni //patients dni (8 digits) => to asign cite to him
+     * @param {String} name //cite name
+     * @param {Date} date //cite date
+     * 
+     * @returns {Object} cite information
+     */
     addCite(code, dni, name, date) {
         return Promise.resolve()
             .then(() => {
@@ -221,6 +317,15 @@ const logic = {
             })
     },
 
+    /**
+     * Removes a patient cite with doctors code and patients DNI
+     * @param {String} code //doctors code => to asign his cites
+     * @param {Number} dni //patients dni (8 digits) => to asign cite to him
+     * @param {String} name //cite name
+     * @param {Date} date //cite date
+     * 
+     * @returns {boolean} TRUE => if cite was removed correctly
+     */
     removeCite(code, dni, name, date) {
         return Promise.resolve()
             .then(() => {
@@ -235,6 +340,12 @@ const logic = {
             })
     },
 
+    /**
+     * Lists all cites of a day. Then doctor could see all his/her cites on that day
+     * @param {Date} date //day => example: 2018-08-22
+     * 
+     * @returns {Response} all cites on that day
+     */
     listCites(date) {
         return Promise.resolve()
             .then(() => {
@@ -245,6 +356,13 @@ const logic = {
             })
     },
 
+    /**
+     * Lists all cites of a patient on a month
+     * @param {String} id //pacient id
+     * @param {Date} date //month => example: 2018-08
+     * 
+     * @returns {Response} all cites the patient has on that month
+     */
     listPatientCites(id, date) {
         return Promise.resolve()
             .then(() => {

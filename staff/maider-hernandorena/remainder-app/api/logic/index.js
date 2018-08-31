@@ -245,6 +245,28 @@ const logic = {
     },
 
     /**
+     * List all patients
+     * @throws {LogicError} if it does not exist any patient
+     * 
+     * @returns {Array} all patients in an array or an empty array
+     */
+    listPatients() {
+        return Promise.resolve()
+            .then(() => Patient.find().lean())
+            .then(patients => {
+                if (!patients) throw new LogicError(`patient with ${name} name does not exist`)
+                if (patients) {
+                    patients.forEach(patient => {
+                        patient.id = patient._id.toString()
+                        delete patient._id
+                        delete patient.__v
+                    })
+                }
+                return patients || []
+            })
+    },
+
+    /**
      * Adds a treatment (with pill name, quantity and frequency) to a patient with his/her id and dni
      * @param {String} id //patient id
      * @param {Number} dni //patient dni (8 digits)

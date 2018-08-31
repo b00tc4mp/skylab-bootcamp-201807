@@ -706,6 +706,58 @@ describe('logic', () => {
         )
     })
 
+    true && describe('list all patients', () => {
+
+        const patient1 = { name: 'Pepe', dni: 12345678, surname: 'Doe', age: 78 , gender: 'male', address: 'Barcelona', phone: 123123123}
+        const patient2 = { name: 'Laura', dni: 12345677, surname: 'Lala', age: 78 , gender: 'female', address: 'Barcelona', phone: 123123123}
+        const patient3 = { name: 'Juana', dni: 33334444, surname: 'JJ', age: 78 , gender: 'female', address: 'Barcelona', phone: 123123123}
+        const patient4 = { name: 'Gorka', dni: 12345675, surname: 'Pala', age: 78 , gender: 'male', address: 'Barcelona', phone: 123123123}
+
+        beforeEach(() =>
+            Patient.create(patient1)
+                .then(() => Patient.create(patient2))
+                .then(() => Patient.create(patient3))
+                .then(() => Patient.create(patient4))
+        )
+
+        true && it('should succeed on correct data', () => 
+            logic.listPatients()
+                .then(patients => {
+                    expect(patients[0].name).to.equal(patient1.name)
+                    expect(patients[0].dni).to.equal(patient1.dni)
+                    expect(patients[0].surname).to.equal(patient1.surname)
+                    expect(patients[0].age).to.equal(patient1.age)
+                    expect(patients[0].gender).to.equal(patient1.gender)
+                    expect(patients[0].address).to.equal(patient1.address)
+                    expect(patients[0].phone).to.equal(patient1.phone)
+
+                    expect(patients[1].name).to.equal(patient2.name)
+                    expect(patients[1].dni).to.equal(patient2.dni)
+                    expect(patients[1].surname).to.equal(patient2.surname)
+                    expect(patients[1].age).to.equal(patient2.age)
+                    expect(patients[1].gender).to.equal(patient2.gender)
+                    expect(patients[1].address).to.equal(patient2.address)
+                    expect(patients[1].phone).to.equal(patient2.phone)
+
+                    expect(patients[2].name).to.equal(patient3.name)
+                    expect(patients[2].dni).to.equal(patient3.dni)
+                    expect(patients[2].surname).to.equal(patient3.surname)
+                    expect(patients[2].age).to.equal(patient3.age)
+                    expect(patients[2].gender).to.equal(patient3.gender)
+                    expect(patients[2].address).to.equal(patient3.address)
+                    expect(patients[2].phone).to.equal(patient3.phone)
+
+                    expect(patients[3].name).to.equal(patient4.name)
+                    expect(patients[3].dni).to.equal(patient4.dni)
+                    expect(patients[3].surname).to.equal(patient4.surname)
+                    expect(patients[3].age).to.equal(patient4.age)
+                    expect(patients[3].gender).to.equal(patient4.gender)
+                    expect(patients[3].address).to.equal(patient4.address)
+                    expect(patients[3].phone).to.equal(patient4.phone)
+                })
+        )
+    })
+
     true && describe('add treatment', () => {
 
         const patient = { name: 'Pepe', dni: 12345678, surname: 'Doe', age: 78 , gender: 'male', address: 'Barcelona', phone: 123123123}

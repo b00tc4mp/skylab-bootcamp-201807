@@ -1,36 +1,50 @@
 import React, { Component } from 'react'
-import { Switch, Route, withRouter, Redirect } from 'react-router-dom'
 import logic from '../logic'
 
 class Patients extends Component {
 
     state = { 
+        patients: [],
         names: [],
         name: '',
-        error: ''
+        error: '',
+        search: false
     }
     
     keepName = e => this.setState({ name: e.target.value })
+    
+    goToAddPatient = e => {
+        e.preventDefault()
+        this.props.goToAddPatient()
+    }
+
+    componentWillMount() {
+        this.setState({ search: false })
+        this.listPatients()
+    }
+
+    listPatients = () => {
+        logic.listPatients()
+            .then(patients => {
+                this.setState({ patients, error: '' })
+            })
+            .then(() => this.state.patients)
+    }
 
     onSearch = e => {
         e.preventDefault()
         const { name } = this.state
         logic.searchPatients(name)
             .then(names => {
-                if(this.state.name === names[0].name) this.setState({ names, error: '' })
+                if(this.state.name === names[0].name) this.setState({ names, error: '', search: true })
                 else throw new Error(`cannot found any patient with ${this.state.name}`)
             })
             .then(() => this.state.names)
             .catch(({message}) => this.setState({ error: message }))
     }
 
-    goToAddPatient = e => {
-        e.preventDefault()
-        this.props.goToAddPatient()
-    }
-
     render() {
-        const { state: {error, names}, keepName, onSearch, goToAddPatient} = this
+        const { state: {error, names, patients, search}, keepName, onSearch, goToAddPatient } = this
 
         return <main>
             <div>
@@ -46,18 +60,22 @@ class Patients extends Component {
                     <button onClick={goToAddPatient}>Add Patient</button>
                 </div>
                 <div>
+                    <p><h4>Name || Username</h4> || Age || Phone</p>
+                </div>
+                {search ? <div>
                     <ul>
-                        {names.map(name => <li key={name.title}>
-                            {/* <a href="" onClick={e => deleteName(e, name)} >X</a> */}
-                            <h4>{name.name} {name.surname}</h4>
-                            <p>{name.dni}</p>
-                            <p>{name.age}</p>
-                            <p>{name.gender}</p>
-                            <p>{name.address}</p>
-                            <p>{name.phone}</p>
+                        {names.map(name => <li key={name.name}>
+                            <a href="/#/patient" ><p><h4>{name.name} {name.surname}</h4>, {name.age}, {name.phone}</p></a>
                         </li> )}
                     </ul>
-                </div>
+                </div> :
+                <div>
+                    <ul>
+                        {patients.map(patient => <li key={patient.name}>
+                            <a href="/#/patient" ><p><h4>{patient.name} {patient.surname}</h4>, {patient.age}, {patient.phone}</p></a>
+                        </li> )}
+                    </ul>
+                </div> }
             </div>
         </main>
     }

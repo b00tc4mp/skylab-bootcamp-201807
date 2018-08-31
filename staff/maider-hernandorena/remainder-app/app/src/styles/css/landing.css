@@ -1,0 +1,12 @@
+.main {
+  background-color: #333333;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; }
+  .main__group {
+    padding: 20%; }
+    .main__group__text {
+      color: #ffffff; }
+      .main__group__text__link {
+        color: #80CBC4;
+        text-decoration: none; }
+
+/*# sourceMappingURL=landing.css.map */

@@ -11,6 +11,7 @@ class AddPatient extends Component {
         gender: '',
         address: '',
         phone: null,
+        added: '',
         error: ''
     }
 
@@ -32,13 +33,16 @@ class AddPatient extends Component {
         phone = parseInt(phone)
 
         logic.addPatient(name, dni, surname, age, gender, address, phone)
-            .then(({ message }) => this.setState({ error: message })) //TO CHANGE
+            .then(({message, id, token}) => {
+                this.setState({ added: message})
+                this.props.onAddPatient( id, token, dni)
+            })
             .catch(({ message }) => this.setState({ error: message }))
     }
 
     render() {
 
-        const { state: { error }, addPatient, keepName, keepDni, keepSurname, keepAge, keepGender, keepAddress, keepPhone } = this
+        const { state: { added, error }, addPatient, keepName, keepDni, keepSurname, keepAge, keepGender, keepAddress, keepPhone } = this
 
         return <main>
             <div>
@@ -61,6 +65,7 @@ class AddPatient extends Component {
                     <input type="number" name="phone" placeholder="phone" onChange={keepPhone}/>
                     <button type="submit">Add Patient</button>
                 </form>
+                {added && <p className="added">{added}</p>}
                 {error && <p className="error">{error}</p>}
             </div>
         </main>

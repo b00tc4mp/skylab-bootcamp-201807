@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AAAA,KAAK;EACD,gBAAgB,EAAE,OAAO;EACzB,WAAW,EAAE,+CAA+C;EAE5D,YAAQ;IACJ,OAAO,EAAE,GAAG;IAEZ,kBAAO;MACH,KAAK,EAAE,OAAO;MAEd,wBAAO;QACH,KAAK,EAAE,OAAO;QACd,eAAe,EAAE,IAAI",
+"sources": ["../sass/landing.sass"],
+"names": [],
+"file": "landing.css"
+}

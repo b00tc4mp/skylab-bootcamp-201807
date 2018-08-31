@@ -111,8 +111,8 @@ router.patch('/update-patient/:id', [verifyJwt, jsonBodyParser], (req, res) => {
     logic.updatePatient(id, dni, newAddress, newPhone)
         .then(() => res.status(201).json({ message: 'patient data updated correctly' }))
         .catch(err => {
-            const {message} = err
-            res.status(400 || 500).json({message})
+            const { message } = err
+            res.status(400 || 500).json({ message })
         })
 })
 
@@ -130,8 +130,24 @@ router.get('/patients/:name', jsonBodyParser, (req, res) => {
     logic.searchPatients(name)
         .then(patients => res.json(patients)) 
         .catch(err => {
-            const {message} = err
-            res.status(400 || 500).json({message})
+            const { message } = err
+            res.status(400 || 500).json({ message })
+        })
+})
+
+/**
+ * To list all patients
+ *  
+ * @throws {LogicError} Message of status
+ * 
+ * @returns {Response} Patients array
+ */
+router.get('/patients', jsonBodyParser, (req, res) => {
+    logic.listPatients()
+        .then(patients => res.json(patients))
+        .catch(err => {
+            const { message } = err
+            res.status(400 || 500).json({ message })
         })
 })
 
@@ -187,8 +203,8 @@ router.get('/patient/:id/treatments', jsonBodyParser, (req, res) => {
     logic.listTreatments(id)
         .then(treatments => res.json(treatments)) 
         .catch(err => {
-            const {message} = err
-            res.status(400 || 500).json({message})
+            const { message } = err
+            res.status(400 || 500).json({ message })
         })
 })
 
@@ -250,8 +266,8 @@ router.get('/cites/:date', jsonBodyParser, (req, res) => {
     logic.listCites(citeDate)
         .then(cites => res.json(cites)) 
         .catch(err => {
-            const {message} = err
-            res.status(400 || 500).json({message})
+            const { message } = err
+            res.status(400 || 500).json({ message })
         })
 })
 
@@ -271,8 +287,8 @@ router.get('/patient/:id/cites/:date', jsonBodyParser, (req, res) => {
     logic.listPatientCites(id, citeDate)
         .then(cites => res.json(cites)) 
         .catch(err => {
-            const {message} = err
-            res.status(400 || 500).json({message})
+            const { message } = err
+            res.status(400 || 500).json({ message })
         })
 })
 
