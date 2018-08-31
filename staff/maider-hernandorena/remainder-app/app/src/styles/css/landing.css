@@ -1,12 +1,18 @@
 .main {
-  background-color: #333333;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; }
+  background-image: url("/images/landing.jpg");
+  height: 90vh; }
   .main__group {
-    padding: 20%; }
+    background-color: rgba(0, 0, 0, 0.8);
+    height: 90vh;
+    padding: 10% 40%; }
     .main__group__text {
-      color: #ffffff; }
+      width: 100%;
+      height: 200vh;
+      background-color: rgba(255, 255, 255, 0.8);
+      color: #ffffff;
+      text-align: cente; }
       .main__group__text__link {
-        color: #80CBC4;
+        color: #19375a;
         text-decoration: none; }
 
 /*# sourceMappingURL=landing.css.map */

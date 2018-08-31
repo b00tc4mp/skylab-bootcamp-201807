@@ -1,17 +1,17 @@
 .header {
   box-sizing: border-box;
-  color: #333333;
+  color: #ffffff;
   margin: 0;
   padding: 0;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   font-size: 20px;
   height: 100%; }
   .header__panel {
-    background-color: #4299a5;
-    height: 10%; }
+    background-color: #222222;
+    height: 120px; }
     .header__panel__logo {
       margin: 10px;
-      width: 100px;
+      width: 150px;
       height: 100px;
       float: left; }
   .header__nav {
