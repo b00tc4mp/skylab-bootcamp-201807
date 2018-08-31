@@ -9,8 +9,8 @@ import Settings from './Settings'
 import Help from './Help'
 import Workspace from './Workspace'
 
-const DEFAULT_MAX_DIM = 500
-const DEFAULT_FPS = 20
+const DEFAULT_MAX_DIM = 400
+const DEFAULT_FPS = 10
 const DEFAULT_ISF = 0.8
 const DEFAULT_OS = 16
 

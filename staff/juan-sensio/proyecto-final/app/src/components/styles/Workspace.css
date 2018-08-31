@@ -16,11 +16,14 @@
   background-color: #B2B2B2;
 }
 .workspace__nav button {
-  color: #EA6848;
-  border-radius: 10px;
   padding: 5px;
   height: 50%;
   margin: 2px;
+  background: none;
+  border: none;
+}
+.workspace__nav button img {
+  height: 5vh;
 }
 .workspace__nav__upload {
   width: 80%;
@@ -32,6 +35,19 @@
 @media screen and (max-width: 700px) {
   .workspace {
     grid-template: 10vh 60vh 20vh/1fr;
+  }
+  .workspace__nav {
+    grid-template: 1fr/30% 25% 45%;
+  }
+  .workspace button {
+    padding: 0;
+    height: 50%;
+    margin: 2px;
+    background: none;
+    border: none;
+  }
+  .workspace button img {
+    height: 5vh;
   }
 }
 

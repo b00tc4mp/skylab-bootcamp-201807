@@ -16,11 +16,13 @@
         align-items: center
         background-color: $app-lightgray
         & button
-            color: $app-red
-            border-radius: 10px
             padding: 5px
             height: 50%
             margin: 2px
+            background: none
+            border: none
+            & img 
+                height: 5vh
         &__upload
             width: 80%
             
@@ -30,3 +32,13 @@
     
     @media screen and (max-width: $break-screen)
         grid-template: 10vh 60vh 20vh / 1fr
+        &__nav
+            grid-template: 1fr / 30% 25% 45%
+        & button
+            padding: 0
+            height: 50%
+            margin: 2px
+            background: none
+            border: none
+            & img 
+                height: 5vh
