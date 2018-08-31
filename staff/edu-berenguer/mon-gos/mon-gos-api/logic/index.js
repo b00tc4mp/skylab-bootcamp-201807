@@ -1,5 +1,12 @@
 const validateEmail = require('../utils/validate-email')
 const { Shelter, Dog } = require('../data/models')
+const cloudinary = require('cloudinary')
+
+cloudinary.config({
+    cloud_name: 'eduberenguer',
+    api_key: '675355792715415',
+    api_secret: 'l36mLU5_GJ4PPXsdvXlAm7_H-gY'
+})
 
 const logic = {
     _validateStringField(name, value) {
@@ -12,6 +19,20 @@ const logic = {
         if (typeof value !== 'number') throw new LogicError(`invalid ${name}`)
     },
 
+    _saveImage(base64Image) {
+        return Promise.resolve().then(() => {
+            if (typeof base64Image !== 'string') throw new LogicError('base64Image is not a string')
+
+            return new Promise((resolve, reject) => {
+                return cloudinary.v2.uploader.upload(base64Image, function (err, data) {
+                    if (err) return reject(err)
+
+                    resolve(data.url)
+                })
+            })
+        })
+    },
+
     register(email, name, adress, phone, password, latitude, longitude) {
         return Promise.resolve()
             .then(() => {
@@ -20,8 +41,10 @@ const logic = {
                 this._validateStringField('adress', adress)
                 this._validateStringField('phone', phone)
                 this._validateStringField('password', password)
-                this._validateNumberField('latitude', latitude)
-                this._validateNumberField('longitude', longitude)
+                if(latitude)
+                    this._validateNumberField('latitude', latitude)
+                if(longitude)
+                    this._validateNumberField('longitude', longitude)
 
                 return Shelter.findOne({ email })
             })
@@ -45,31 +68,33 @@ const logic = {
 
                 if (shelter.password !== password) throw new LogicError(`wrong password`)
 
-                return true
+                return shelter.id
             })
     },
 
-    insertDog(email, name, gender, age, weight, photo, description) {
+    insertDog(id, name, gender, age, weight, photo, description) {
         return Promise.resolve()
             .then(() => {
-                this._validateEmail(email)
                 this._validateStringField('name', name)
                 this._validateStringField('gender', gender)
                 this._validateNumberField('age', age)
                 this._validateNumberField('weight', weight)
                 this._validateStringField('description', description)
 
-                return Shelter.findOne({ email })
+                return Shelter.findOne({ _id: id })
             })
             .then(shelter => {
-                if (!shelter) throw new LogicError(`Shelter with ${email} email does not exist`)
-
-                const dog = { name, gender, age, weight, photo, description, shelter: shelter.id }
+                if (!shelter) throw new LogicError(`Shelter with ${id} id does not exist`)
+                return this._saveImage(photo)
+            })
+            .then(imageCloudinary => {
+                const dog = { name, gender, age, weight, photo: imageCloudinary, description, shelter: id }
                 return Dog.create(dog)
             })
             .then(res => {
                 return res.id
             })
+
     },
 
     listDogsNotAdopteds() {
@@ -104,14 +129,12 @@ const logic = {
             })
     },
 
-    listDogsByShelter(email) {
+    listDogsByShelter(id) {
         return Promise.resolve()
             .then(() => {
-                this._validateEmail(email)
-                return Shelter.findOne({ email })
+                return Shelter.findOne({ _id: id })
             })
             .then(res => {
-
                 return Dog.find({ shelter: res.id })
             })
             .then(dogs => {
@@ -125,15 +148,14 @@ const logic = {
             })
     },
 
-    dogAdopted(email, dogId) {
+    dogAdopted(id, dogId) {
         return Promise.resolve()
             .then(() => {
-                this._validateEmail(email)
 
-                return Shelter.findOne({ email })
+                return Shelter.findOne({ _id: id })
             })
             .then(shelter => {
-                if (!shelter) throw new LogicError(`Shelter with ${email} email does not exist`)
+                if (!shelter) throw new LogicError(`Shelter with ${id} id does not exist`)
                 return Dog.findOne({ _id: dogId })
                     .then(dog => {
                         if (!dog) throw new LogicError(`Dog with id ${dogId} does not exist`)
@@ -146,34 +168,40 @@ const logic = {
             .then(() => true)
     },
 
-    retrieveDog(email, dogId) {
+    retrieveDog(dogId) {
         return Promise.resolve()
             .then(() => {
-                this._validateEmail(email)
-                return Shelter.findOne({ email })
-            })
-            .then(shelter => {
-                if (!shelter) throw new LogicError(`Shelter with ${email} email does not exist`)
-                return Dog.findOne({ _id: dogId })
-                    .then(dog => {
-                        if (!dog) throw new LogicError(`Dog with id ${dogId} does not exist`)
-                        if (dog.shelter.toString() !== shelter.id) throw new LogicError('dog does not belong to shelter')
-                        return dog
-                    })
+                return Dog.findOne({ _id: dogId }).lean()
             })
             .then(dog => {
+                if (!dog) throw new LogicError(`Dog with id ${dogId} does not exist`)
+                dog.id = dog._id.toString()
+                delete dog._id
+                delete dog.__v
                 return dog
             })
     },
 
-    removeDog(email, dogId) {
+    retrieveShelter(id) {
         return Promise.resolve()
             .then(() => {
-                this._validateEmail(email)
-                return Shelter.findOne({ email })
+                return Shelter.findOne({ _id: id }).lean()
             })
             .then(shelter => {
-                if (!shelter) throw new LogicError(`Shelter with ${email} email does not exist`)
+                shelter.id = shelter._id.toString()
+                delete shelter._id
+                delete shelter.__v
+                return shelter
+            })
+    },
+
+    removeDog(id, dogId) {
+        return Promise.resolve()
+            .then(() => {
+                return Shelter.findOne({ _id: id })
+            })
+            .then(shelter => {
+                if (!shelter) throw new LogicError(`Shelter with ${id} id does not exist`)
                 return Dog.findOne({ _id: dogId })
                     .then(dog => {
                         if (!dog) throw new LogicError(`Dog with id ${dogId} does not exist`)
@@ -187,22 +215,27 @@ const logic = {
             })
     },
 
-    updateDog(email, dogId, newName, newGender, newAge, newWeight, newPhoto, newDescription) {
+    updateDog(id, dogId, newName, newGender, newAge, newWeight, newPhoto, newDescription) {
         return Promise.resolve()
             .then(() => {
-                this._validateEmail(email)
                 this._validateStringField('newName', newName)
                 this._validateStringField('newGender', newGender)
                 this._validateNumberField('newAge', newAge)
                 this._validateNumberField('newWeight', newWeight)
                 this._validateStringField('newDescription', newDescription)
-                return Shelter.findOne({ email })
+                return Shelter.findOne({ _id: id })
             })
             .then(shelter => {
-                if (!shelter) throw new LogicError(`Shelter with ${email} email does not exist`)
+                if (!shelter) throw new LogicError(`Shelter with ${id} id does not exist`)
+            })
+            .then(() => {
+                return this._saveImage(newPhoto)
+            })
+            .then(imageCloudinary => {
                 return Dog.findOne({ _id: dogId })
                     .then(dog => {
                         if (!dog) throw new LogicError(`Dog with id ${dogId} does not exist`)
+                        debugger
                         return Dog.updateOne({
                             _id: dogId
                         }, {
@@ -210,18 +243,19 @@ const logic = {
                                 gender: newGender,
                                 age: newAge,
                                 weight: newWeight,
-                                photo: newPhoto,
+                                photo: imageCloudinary,
                                 description: newDescription
                             })
                     })
-                    .then(() => true)
             })
+            .then(() => true)
     },
 
     listDogsByQuery(gender, age, weight) {
         return Promise.resolve()
             .then(() => {
                 const filter = {}
+                filter.adopted = false
                 let minAge, maxAge
                 let minWeight, maxWeight
                 switch (age) {
@@ -283,10 +317,10 @@ const logic = {
 
                     filter.weight = weightDog
                 }
-                
-                if(gender == 'female')
+
+                if (gender == 'female')
                     filter.gender = 'female'
-                if(gender == 'male')
+                if (gender == 'male')
                     filter.gender = 'male'
 
                 return Dog.find(filter, { __v: 0, _id: 0 }, {

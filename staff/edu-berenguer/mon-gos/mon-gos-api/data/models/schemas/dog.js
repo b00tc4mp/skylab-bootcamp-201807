@@ -16,12 +16,12 @@ module.exports = new Schema({
 
     age: {
         type: Number,
-        required: true
+        required: false
     },
 
     weight: {
         type: Number,
-        required: true
+        required: false
     },
 
     photo:{
