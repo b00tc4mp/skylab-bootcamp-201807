@@ -1,24 +1,13 @@
-import React, { Component } from 'react'
-import { connect } from "react-redux"
-import { login } from './redux/actions'
+import React, { Component } from 'react';
+
 import logic from './logic'
 
 import Main from './components/Main'
 
-const mapStateToProps = state => {
-  return { loggedIn: state.user.loggedIn };
-}
-
-const mapDispatchToProps = dispatch => {
-  return {
-    login: loggedIn => dispatch(login(loggedIn))
-  }
-}
-
 class App extends Component {
 
-  componentWillMount = () => {
-    this.props.login(logic.loggedIn())
+  state = {
+    loggedIn: logic.loggedIn()
   }
 
   register = (username, password) =>
@@ -26,11 +15,11 @@ class App extends Component {
 
   login = (username, password) =>
     logic.loginUser(username, password)
-      .then(() => this.props.login(true))
+      .then(() => this.setState({ loggedIn: true }))
 
   logout = () => {
     logic.logout()
-    this.props.login(false)
+    this.setState({ loggedIn: false })
   }
 
   unregister = password =>
@@ -38,7 +27,7 @@ class App extends Component {
       .then(() => this.logout())
 
   render() {
-    const { loggedIn } = this.props
+    const { loggedIn } = this.state
     const { register, login, logout, unregister } = this
     return (
       <div className='app'>
@@ -54,4 +43,4 @@ class App extends Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default App;

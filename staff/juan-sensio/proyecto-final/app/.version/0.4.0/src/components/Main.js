@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import logic from '../logic'
-import { connect } from "react-redux"
-import { setLayout } from '../redux/actions'
 
 import './styles/Main.css'
 
@@ -18,26 +16,15 @@ const DEFAULT_OS = 16
 
 const BREAK_SCREEN = 700
 
-const mapStateToProps = state => {
-    return {
-        layout: state.layout.layout,
-        workspace: state.layout.workspace,
-        profile: state.layout.profile,
-        settings: state.layout.settings,
-        help: state.layout.help
-    };
-}
-
-const mapDispatchToProps = dispatch => {
-    return {
-        setLayout: layout => dispatch(setLayout(layout))
-    }
-}
-
 class Main extends Component {
 
     state = {
-        mainVideoSrc: ''
+        layout: (window.innerWidth > BREAK_SCREEN),
+        profile: (window.innerWidth > BREAK_SCREEN),
+        settings: false,
+        help: false,
+        mainVideoSrc: '',
+        workspace: true
     }
 
     _settings = {
@@ -50,38 +37,42 @@ class Main extends Component {
     }
 
     setLayout = () => {
-        const { layout } = this.props
+        const { layout } = this.state
         const newLayout = (window.innerWidth > BREAK_SCREEN)
         if (layout !== newLayout) {
             if (layout)
-                this.props.setLayout({
-                    layout: newLayout,
-                    workspace: true,
-                    profile: false,
-                    settings: false,
-                    help: false
-                })
+                this.setState({ layout: newLayout, workspace: true, profile: false, settings: false, help: false })
             else
-                this.props.setLayout({
-                    layout: newLayout,
-                    profile: true,
-                    settings: false,
-                    help: false,
-                    workspace: true
-                })
+                this.setState({ layout: newLayout, profile: true, settings: false, help: false, workspace: true })
         }
     }
     componentWillMount = () => this.setLayout()
     componentDidMount = () => window.addEventListener('resize', this.setLayout)
     componentWillUnmount = () => window.removeEventListener('resize', this.setLayout)
- 
+
+    showProfile = () => {
+        if (this.state.layout)
+            this.setState({ profile: true, settings: false, help: false })
+        else
+            this.setState({ profile: !this.state.profile, settings: false, help: false, workspace: this.state.profile ? true : false })
+    }
+    showSettings = () => {
+        if (this.state.layout)
+            this.setState({ profile: false, settings: true, help: false })
+        else
+            this.setState({ profile: false, settings: !this.state.settings, help: false, workspace: this.state.settings ? true : false })
+    }
+    showHelp = () => {
+        if (this.state.layout)
+            this.setState({ profile: false, settings: false, help: true })
+        else
+            this.setState({ profile: false, settings: false, help: !this.state.help, workspace: this.state.help ? true : false })
+    }
     setVideoSrc = src => {
-        if (this.props.layout)
+        if (this.state.layout)
             this.setState({ mainVideoSrc: src })
-        else {
-            this.setState({ mainVideoSrc: src})
-            this.props.setLayout({workspace: true, profile: false })
-        }
+        else 
+            this.setState({ mainVideoSrc: src, workspace: true, profile: false })
     }
 
     saveVideo = file => logic.saveVideo(file).then(() => window.location.reload())
@@ -95,12 +86,12 @@ class Main extends Component {
     updateSetting = (key, value) => this._settings[key] = value
 
     render() {
-        const { mainVideoSrc } = this.state
-        const { loggedIn, login, register, layout,profile, settings, help, workspace } = this.props
+        const { profile, settings, help, mainVideoSrc, layout, workspace } = this.state
+        const { loggedIn, login, register } = this.props
         const { updateSetting, _settings, logout, showProfile, showSettings, showHelp, setVideoSrc, saveVideo, deleteVideo } = this
         return (
             <div className={'main-' + (layout ? '3by1' : 'single')}>
-                <Nav />
+                <Nav profile={showProfile} settings={showSettings} help={showHelp} />
                 {profile && <Profile
                     loggedIn={loggedIn}
                     login={login}
@@ -122,4 +113,4 @@ class Main extends Component {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Main);
+export default Main
