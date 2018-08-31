@@ -71,8 +71,8 @@ router.get('/listProperties', (req, res) => {
     const query = req.query
 
     if(query.hasOwnProperty('type') || query.hasOwnProperty('categories')) {
-        const type = req.query.type || undefined
-        const categories = req.query.categories.split('|') || undefined
+        const type = req.query.type
+        const categories = req.query.categories ? req.query.categories.split('|') : undefined
     
         logic.listPropertyByQuery(type, categories)
             .then(properties => {
@@ -122,24 +122,6 @@ router.patch('/updatePropertyById/:email/property/:id', [validateJwt, jsonBodyPa
             res.status(err instanceof LogicError ? 400 : 500).json({ message })
         })
 })
-
-// router.get('/listAllProperties?type=Penthouse&categories=Bathroom|Kitchen', (req, res) =>{
-
-//     const query = req.query
-    
-//     if(query.hasOwnProperty('type') && query.hasOwnProperty('categories')) {
-//         const type = req.query.type
-//         const categories = req.query.categories
-    
-//         logic.listPropertiesByQuery(type, categories)
-//             .then(properties => {
-//             res.status(200).json({status: 'OK', properties})
-//         })
-//     } else {
-//         logic.listProperty()
-            
-//     }
-// })
 
 module.exports = router
 

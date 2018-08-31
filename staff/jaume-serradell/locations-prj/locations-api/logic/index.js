@@ -1,6 +1,7 @@
 const validateEmail = require('../utils/validate-email')
 const { Property, Owner } = require('../data/models')
 const cloudinary = require('cloudinary')
+const mongoose = require('mongoose')
 
 cloudinary.config({
     cloud_name: 'locationssky',
@@ -20,6 +21,10 @@ const logic = {
      */
     _validateStringField(name, value) {
         if (typeof value !== 'string' || !value.length) throw new LogicError(`invalid ${name}`)
+    },
+
+    _validateObjectId(id) {
+        if(!mongoose.Types.ObjectId.isValid(id)) throw new LogicError(`invalid ObjectId ${id}`)
     },
 
 
@@ -263,8 +268,16 @@ const logic = {
 
                 if(!Object.keys(criteria).length) throw new LogicError('Invalid search')
 
-                return Property.find(criteria)
+                return Property.find(criteria).lean()
                     .then(properties => {
+                        if(properties) {
+                            properties.forEach(property => {
+                                property.id = property._id.toString()
+
+                                delete property._id
+                                delete property.__v
+                            })
+                        }
                         return properties
                     })
             })
@@ -279,18 +292,44 @@ const logic = {
      * @throws {LogicError} If id property does not exist
      * 
      */
+    // retrievePropertyById(email, propertyId) {
+    //     return Promise.resolve()
+    //         .then(() => {
+    //             this._validateEmail(email)
+
+    //             return Owner.findOne({ email })
+    //         })
+    //         .then(owner => {
+    //             if (!owner) throw new LogicError(`Owner with ${email} email does not exist`)
+
+    //             return Property.findOne({ _id: propertyId }).lean()
+    //                 .then(property => {
+    //                     if (!property) throw new LogicError(`Property with id ${propertyId} does not exist`)
+    //                     property.id = property._id.toString()
+
+    //                     delete property._id
+
+    //                     delete property.__v
+
+    //                     return property
+    //                 })
+    //         })
+    // },
+
     retrievePropertyById(email, propertyId) {
         return Promise.resolve()
             .then(() => {
                 this._validateEmail(email)
+                this._validateObjectId(propertyId)
 
                 return Owner.findOne({ email })
             })
             .then(owner => {
                 if (!owner) throw new LogicError(`Owner with ${email} email does not exist`)
 
-                return Property.findOne({ _id: propertyId }).lean()
+                return Property.findById( propertyId )
                     .then(property => {
+                        debugger
                         if (!property) throw new LogicError(`Property with id ${propertyId} does not exist`)
                         property.id = property._id.toString()
 

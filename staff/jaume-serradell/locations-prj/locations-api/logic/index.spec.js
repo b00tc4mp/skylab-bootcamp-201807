@@ -447,7 +447,7 @@ describe('logic', () => {
         )
     })
 
-    true && describe('list property', () => {
+    !true && describe('list property', () => {
 
         const title = `New Apartment`
         const photo = 'http://cci10.com/blog/wp-content/uploads/2017/11/%C3%A1ticos-680x365.jpg'
@@ -475,7 +475,7 @@ describe('logic', () => {
         })
     })
 
-    true && describe('update property', () => {
+    !true && describe('update property', () => {
         const title = `New Apartment`
         const photo = 'http://cci10.com/blog/wp-content/uploads/2017/11/%C3%A1ticos-680x365.jpg'
         const description = 'new Blablabla'
@@ -543,92 +543,87 @@ describe('logic', () => {
                     expect(property.type).to.equal(type)
                 })
         })
+
+        it('should fail with invalid propertyId', () => {
+            let propertyId = '123456789'
+
+            return logic.retrievePropertyById(email, propertyId)
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`invalid ObjectId ${propertyId}`))
+        })
+
+        it('should fail with not found propertyId', () => {
+            let propertyId = ObjectId()
+
+            return logic.retrievePropertyById(email, propertyId)
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`Property with id ${propertyId} does not exist`))
+        })
     })
 
-    // !true && describe('search properties', () => {
-    //     let type = "Events Spaces"
-    //     let categories = ['Adult Bedroom', 'Office', 'Bathroom']
+    true && describe('list properties', () => {
+        let type = "Events Spaces"
+        let categories = ['Adult Bedroom', 'Office']
 
-    //     const properties = [
-    //         {
-    //             title: `title 1`,
-    //             photo: 'http://cci10.com/blog/wp-content/uploads/2017/11/%C3%A1ticos-680x365.jpg',
-    //             description: 'description 1',
-    //             dimentions: 100,
-    //             categories: ['Adult Bedroom', 'Office'],
-    //             type: 'Events Spaces'
-    //         },
-    //         {
-    //             title: `title 2`,
-    //             photo: 'http://cci10.com/blog/wp-content/uploads/2017/11/%C3%A1ticos-680x365.jpg',
-    //             description: 'description 2',
-    //             dimentions: 200,
-    //             categories: ['Bathroom'],
-    //             type: 'Events Spaces'
-    //         },
-    //         {
-    //             title: `title 3`,
-    //             photo: 'http://cci10.com/blog/wp-content/uploads/2017/11/%C3%A1ticos-680x365.jpg',
-    //             description: 'description 3',
-    //             dimentions: 300,
-    //             categories: ['Abandoned Style'],
-    //             type: 'Events Spaces'
-    //         },
-    //         {
-    //             title: `title 4`,
-    //             photo: 'http://cci10.com/blog/wp-content/uploads/2017/11/%C3%A1ticos-680x365.jpg',
-    //             description: 'description 4',
-    //             dimentions: 400,
-    //             categories: ['Abandoned Style'],
-    //             type: 'Houses'
-    //         },
-    //         {
-    //             title: `title 5`,
-    //             photo: 'http://cci10.com/blog/wp-content/uploads/2017/11/%C3%A1ticos-680x365.jpg',
-    //             description: 'description 5',
-    //             dimentions: 500,
-    //             categories: ['Adult Bedroom'],
-    //             type: 'Singular Spaces'
-    //         }
-    //     ]
+        const properties = [
+            {
+                title: `title 1`,
+                photo: 'http://cci10.com/blog/wp-content/uploads/2017/11/%C3%A1ticos-680x365.jpg',
+                description: 'description 1',
+                dimentions: 100,
+                categories: ['Adult Bedroom', 'Office'],
+                type: "Events Spaces"
+            }
+            // {
+            //     title: `title 2`,
+            //     photo: 'http://cci10.com/blog/wp-content/uploads/2017/11/%C3%A1ticos-680x365.jpg',
+            //     description: 'description 2',
+            //     dimentions: 200,
+            //     categories: undefined,
+            //     type: 'Events Spaces'
+            // },
+            // {
+            //     title: `title 3`,
+            //     photo: 'http://cci10.com/blog/wp-content/uploads/2017/11/%C3%A1ticos-680x365.jpg',
+            //     description: 'description 3',
+            //     dimentions: 300,
+            //     categories: undefined,
+            //     type: undefined
+            // },
+            // {
+            //     title: `title 4`,
+            //     photo: 'http://cci10.com/blog/wp-content/uploads/2017/11/%C3%A1ticos-680x365.jpg',
+            //     description: 'description 4',
+            //     dimentions: 400,
+            //     categories: undefined,
+            //     type: 'Little House'
+            // }
+        ]
 
-    //     beforeEach(() => {
-    //         return Owner.create({ email, password, name })
-    //             .then(() => {
-    //                 return Owner.findOne({ email })
-    //             })
-    //             .then(owner => {
-    //                 return Promise.all([
-    //                     Property.create({ ...properties[0], owner: owner.id }),
-    //                     Property.create({ ...properties[1], owner: owner.id }),
-    //                     Property.create({ ...properties[2], owner: owner.id }),
-    //                     Property.create({ ...properties[3], owner: owner.id }),
-    //                     Property.create({ ...properties[4], owner: owner.id })
-    //                 ])
-    //             })
-    //     })
+        beforeEach(() => {
+           return Owner.create({ email, password, name })
+                .then(() => {
+                    return Owner.findOne({ email })
+                })
+                .then(owner => {
+                    debugger
+                    return Promise.all([
+                        Property.create({ ...properties[0], owner: owner.id })
+                        // Property.create({ ...properties[1], owner: owner.id }),
+                        // Property.create({ ...properties[2], owner: owner.id }),
+                        // Property.create({ ...properties[3], owner: owner.id })
+                    ])
+                })
+        })
 
-    //     // it('should filter by categories properlly', () => {
-    //     //     debugger
-    //     //     return logic.listPropertyByQuery(type, categories)
-    //     //         .then(properties => {
-    //     //             // expect(properties[0].categories).to.deep.equal(['Adult Bedroom', 'Office'])
-    //     //             // expect(properties[1].categories).to.deep.equal(['Bathroom'])
-    //     //             // expect(properties[2].categories).to.deep.equal(['Abandoned Style'])
-    //     //             // expect(properties[3].categories).to.deep.equal(['Abandoned Style'])
-    //     //             // expect(properties[4].categories).to.deep.equal(['Adult Bedroom'])
-    //     //         })
-    //     // })
-
-    //     // it('should fail when filter does not match', () => {
-    //     //     return logic.listPropertyByQuery(type, categories)
-    //     //         .then(properties => {
-    //     //             expect()
-    //     //         })
-         
-    //     // })
-
-    // })
+        it('should filter', () => {
+            debugger
+            return logic.listPropertyByQuery(type, categories)
+                .then(properties => {
+                    expect(properties[0].type).to.be.undefined
+                })
+        })
+    })
 
     after(() =>
         Promise.all([
