@@ -5,7 +5,7 @@ import {ListGroup, ListGroupItem} from 'reactstrap'
 import PropTypes from 'prop-types'; // ES6
 
 
-class GamesOpen extends Component {
+class OpenGames extends Component {
 
   static propTypes = {
     onUserClick:PropTypes.func,
@@ -18,9 +18,9 @@ class GamesOpen extends Component {
     error: "",
   }
 
-  onUserClick = (e, user) => {
+  onUserClick = (e, game) => {
     e.preventDefault()
-    this.props.onUserClick(user)
+    this.props.onUserClick(game)
   }
 
 
@@ -29,9 +29,8 @@ class GamesOpen extends Component {
     let userList
     if (games.length) {
 
-
       userList = games.map(game => {
-        return <ListGroupItem key={game.id} tag="a" href="#" onClick={e => this.onUserClick(e, game)}> {`${game.opponent}`}</ListGroupItem>
+        return <ListGroupItem key={game + Math.random()} tag="a" href="#" onClick={e => this.onUserClick(e, game)}> {`${game.opponent}`}{game.state === "invited" ? " √" : ""}</ListGroupItem>
       })
     }
     return <main>
@@ -52,4 +51,4 @@ class GamesOpen extends Component {
 
 }
 
-export default GamesOpen
+export default OpenGames

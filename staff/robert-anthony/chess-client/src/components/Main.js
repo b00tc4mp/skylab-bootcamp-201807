@@ -28,7 +28,7 @@ class Main extends Component {
       })
     }
     return <main>
-      <div className="screen">
+      <div >
         <nav>
         </nav>
         <h1>You are playing as {nickname}</h1>

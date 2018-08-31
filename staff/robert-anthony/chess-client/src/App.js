@@ -41,13 +41,7 @@ class App extends Component {
   componentDidMount() {
     const {state: {nickname, token}} = this
 
-    logic.getGamesForUser(nickname, token)
-      .then(currentGames => {
-        this.setState({currentGames})
-        sessionStorage.setItem('currentGames', JSON.stringify(currentGames))
-
-      })
-      .catch(({message}) => this.setState({error: message}))
+    if (this.isLoggedIn()) this.getCurrentGamesForUser(nickname,token)
 
   }
 
@@ -56,6 +50,20 @@ class App extends Component {
 
   aliveInterval = null
 
+
+  getCurrentGamesForUser = (nickname, token) => {
+   return logic.getGamesForUser(nickname, token)
+      .then(currentGames => {
+        this.setState({currentGames})
+        sessionStorage.setItem('currentGames', JSON.stringify(currentGames))
+      })
+      .catch(({message}) => this.setState({error: message}))
+  }
+
+  getUsersNotPlayingWith() {
+    const usersAmPlayingWith = this.state.currentGames.map(game => game.opponent)
+    return this.users.filter(user => usersAmPlayingWith.indexOf(user) === -1)
+  }
 
   alivePing = () => {
     this.socket.emit('client alive', this.state.nickname)
@@ -76,12 +84,8 @@ class App extends Component {
     const {state: {nickname, token}} = this
 
     logic.respondToGameRequest(nickname, destination, gameID, answer, token)
-      .then(_ => logic.getGamesForUser(nickname, token))
-      .then(currentGames => {
-        this.setState({currentGames})
-        sessionStorage.setItem('currentGames', JSON.stringify(currentGames))
-      })
-      .catch(({message}) => this.setState({error: message}))
+      .then(_ => this.getCurrentGamesForUser(nickname, token))
+
   }
 
   onRequestGame = (destination) => {
@@ -94,6 +98,7 @@ class App extends Component {
     if (this.aliveInterval) this.aliveInterval.clearInterval()
   }
 
+
   setupSocketListeners = (nickname, token) => {
 
     console.log(`%c setting up socket listeners ${nickname}`, 'background: yellow; color: darkblue');
@@ -101,21 +106,11 @@ class App extends Component {
     this.socket = socketIOClient('http://localhost:8080');
     if (this.socket) {
 
-
       this.socket.on(`error ${nickname}`, message => console.error(message))
-
 
       this.socket.on(`update to games ${nickname}`, () => {
         console.log(`%c update to games ${nickname}`, 'background: #222; color: #bada55');
-        logic.getGamesForUser(nickname, token)
-          .then(currentGames => {
-            // filter only show games for people we're currently playing with
-
-            this.setState({currentGames})
-            sessionStorage.setItem('currentGames', JSON.stringify(currentGames))
-
-          })
-          .catch(({message}) => this.setState({error: message}))
+        this.getCurrentGamesForUser(nickname,token)
 
       })
 
@@ -166,7 +161,9 @@ class App extends Component {
   }
 
   onInviteUser = user => {
+    const {state:{nickname,token}} = this
     logic.requestGame(this.state.nickname, user, this.state.token)
+      .then(_ => this.getCurrentGamesForUser(nickname,token))
       .catch(({message}) => this.setState({error: message}))
   }
 
@@ -212,7 +209,8 @@ class App extends Component {
         <Route path="/invite" render={() => this.isLoggedIn() ?
           <Invite
             onUserClick={this.onInviteUser}
-            users={users}
+            currentGames={currentGames}
+            allUsers={users}
             nickname={nickname}
           /> : <Landing/>}/>
         <Route path="/login" render={() => this.isLoggedIn() ? <Redirect to="/games"/> :

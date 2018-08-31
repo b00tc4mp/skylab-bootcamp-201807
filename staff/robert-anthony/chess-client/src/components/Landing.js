@@ -2,7 +2,7 @@ import React from 'react'
 
 function Landing() {
     return <main>
-        <div className="screen">
+        <div >
             <nav>
                 <a href="/#/register">register</a> or <a href="/#/login">login</a>
             </nav>

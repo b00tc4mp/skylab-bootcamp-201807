@@ -10,9 +10,8 @@ class ChessboardGroup extends Component {
 
   static propTypes = {
     onGameMove:PropTypes.func,
-    currentGames:PropTypes.array,
+    currentGame:PropTypes.object,
     nickname:PropTypes.string,
-  //  opponent:PropType.string,
   }
 
   state = {
@@ -26,30 +25,16 @@ class ChessboardGroup extends Component {
 
 
   render() {
-    let {props: {onGameMove, currentGames, nickname,opponent}} = this
-    let chessBoardList
-    if (currentGames.length) {
+    let {props: {onGameMove, currentGame, nickname}} = this
 
-      chessBoardList = currentGames.map(game => {
-        return <ListGroupItem><ChessboardComponent
-          onGameMove={(move) => onGameMove(move, game.id, game.opponent)} fen={game.fen}/></ListGroupItem>
-      })
-
-
-    }
     return <main>
       <div className="screen">
         <nav>
         </nav>
-        <h1>You are playing as {nickname} against {opponent}</h1>
               <div className="main__chessboardarea">
-                {currentGames.length && <ListGroup>
-                  {currentGames.length && currentGames.map(game => {
-                    return <ListGroupItem key={game.id}><ChessboardComponent
-                      onGameMove={(move) => onGameMove(move, game.id, game.opponent)} fen={game.fen}/></ListGroupItem>
-                  })
+                  {currentGame &&
+                   <ChessboardComponent  onGameMove={(move) => onGameMove(move, currentGame.id, currentGame.opponent)} nickname={nickname} opponent={currentGame.opponent} fen={currentGame.fen}/>
                   }
-                </ListGroup>}
               </div>
       </div>
     </main>

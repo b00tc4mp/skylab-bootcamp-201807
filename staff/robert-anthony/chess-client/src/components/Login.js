@@ -25,7 +25,7 @@ class Login extends Component {
     const { error } = this.state
 
     return <main>
-      <div className="screen">
+      <div >
         <nav>
          <a href="/#/register">register</a> or login
         </nav>

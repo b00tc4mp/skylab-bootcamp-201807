@@ -9,12 +9,14 @@ class Invite extends Component {
 
   static propTypes = {
     onUserClick:PropTypes.func,
-    users:PropTypes.array,
+    currentGames:PropTypes.array,
     nickname:PropTypes.string,
+    allUsers:PropTypes.array,
   }
 
   state = {
     error: "",
+    usersNotPlayingWith: []
   }
 
   onUserClick = (e, user) => {
@@ -22,15 +24,21 @@ class Invite extends Component {
     this.props.onUserClick(user)
   }
 
+  static getDerivedStateFromProps(props, state) {
+    const {currentGames,allUsers} = props
+    const usersPlayingWith = currentGames.map(game => game.opponent)
+    const usersNotPlayingWith = allUsers.filter(user => usersPlayingWith.indexOf(user) === -1)
+    return {usersNotPlayingWith}
+  }
 
   render() {
-    let {props: {users,nickname}} = this
+    let {props: {nickname},state:{usersNotPlayingWith}} = this
     let userList
-    if (users.length) {
+    if (usersNotPlayingWith.length) {
 
 
-      userList = users.map(user => {
-        return <ListGroupItem tag="a" href="#" key={user + Math.random()} onClick={e => this.onUserClick(e, user)}> {`${user}`}</ListGroupItem>
+      userList = usersNotPlayingWith.map(user => {
+      if (user !== nickname)  return <ListGroupItem tag="a" href="#" key={user + Math.random()} onClick={e => this.onUserClick(e, user)}> {`${user}`}</ListGroupItem>
       })
     }
     return <main>
@@ -39,7 +47,7 @@ class Invite extends Component {
 
         <div className="main__userlist">
           <ListGroup>
-            {users.length ? userList : <li>There is no-one to invite at the moment</li>}
+            {usersNotPlayingWith.length ? userList : <li>There is no-one to invite at the moment</li>}
           </ListGroup>
         </div>
 

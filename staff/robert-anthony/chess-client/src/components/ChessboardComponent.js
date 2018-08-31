@@ -1,30 +1,39 @@
 import React, {Component} from 'react'
 import Chessboard from 'chessboardjsx'
 import Chess from "chess.js";
+import PropTypes from 'prop-types'
 
 class ChessboardComponent extends Component {
 
+
+  static propTypes = {
+    onGameMove: PropTypes.func,
+    fen: PropTypes.string,
+    nickname: PropTypes.string,
+    opponent: PropTypes.string,
+  }
 
 
   onDrop = ({sourceSquare, targetSquare, piece}) => {
     const move = {from: sourceSquare, to: targetSquare, promotion: "q"}
     this.props.onGameMove(move)
 
-}
+  }
 
-componentDidMount()
-{
-  this.game = new Chess();
-}
+  componentDidMount() {
+    this.game = new Chess();
+  }
 
 
-render(){
-const {props:{fen}} = this
+  render() {
+    const {props: {fen,nickname,opponent}} = this
 
-  return <div>>
-    <Chessboard onDrop={this.onDrop} position={fen}/>
-  </div>
-}
+    return <div>>
+      <h1> {nickname} vs {opponent}</h1>
+
+      <Chessboard onDrop={this.onDrop} position={fen}/>
+    </div>
+  }
 
 
 }
