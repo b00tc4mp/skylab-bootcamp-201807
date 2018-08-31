@@ -10,38 +10,50 @@ import PropTypes from 'prop-types'
 
 class Games extends Component {
 
-    static propTypes = {
-      onGameMove: PropTypes.func,
-      currentGames: PropTypes.array,
-      nickname: PropTypes.string,
-      onRespondToGameRequest: PropTypes.func,
+  static propTypes = {
+    onGameMove: PropTypes.func,
+    currentGames: PropTypes.array,
+    nickname: PropTypes.string,
+    onRespondToGameRequest: PropTypes.func,
+  }
+
+  state = {
+    currentGameViewed: JSON.parse(sessionStorage.getItem('currentGameViewedID')) || null,
+    error: '',
+    inviter: '',
+    invitedGameID: '',
+    modal: false,
+  }
+
+/*
+  getDerivedStateFromProps(props, state) {
+    debugger
+    if (this.state.currentGameViewed.id) {
+      const id = this.state.currentGameViewed.id
+      const currentGameViewed = props.currentGames.find(game => game.id === id)
+      return {currentGameViewed}
     }
+    else return null
+  }
+*/
 
-    state = {
-      currentGameViewed: JSON.parse(sessionStorage.getItem('currentGameViewed')) || null,
-      error: '',
-      inviter: '',
-      invitedGameID: '',
-      modal: false,
+
+  onRespondToGameRequest = (destination, gameID, answer) => {
+    const {props: {onRespondToGameRequest}} = this
+    this.setState({modal: false, inviter: '', invitedGameID: ''})
+
+    onRespondToGameRequest(destination, gameID, answer)
+  }
+
+  onOpenGamesUserClick = (game) => {
+
+    if (game.state === "invited") {
+      this.setState({modal: true, inviter: game.opponent, invitedGameID: game.id})
+    } else {
+      sessionStorage.setItem('currentGameViewed', JSON.stringify(game))
+      this.setState({currentGameViewed: game})
     }
-
-
-    onRespondToGameRequest = (destination, gameID, answer) => {
-      const {props: {onRespondToGameRequest}} = this
-      this.setState({modal: false, inviter: '', invitedGameID: ''})
-
-      onRespondToGameRequest(destination, gameID, answer)
-    }
-
-    onOpenGamesUserClick = (game) => {
-
-      if (game.state === "invited") {
-        this.setState({modal: true, inviter: game.opponent, invitedGameID: game.id})
-      } else {
-        sessionStorage.setItem('currentGameViewed',JSON.stringify(game))
-        this.setState({currentGameViewed: game})
-      }
-    }
+  }
 
 
   render() {

@@ -41,7 +41,7 @@ class App extends Component {
   componentDidMount() {
     const {state: {nickname, token}} = this
 
-    if (this.isLoggedIn()) this.getCurrentGamesForUser(nickname,token)
+    if (this.isLoggedIn()) this.getCurrentGamesForUser(nickname, token)
 
   }
 
@@ -52,7 +52,8 @@ class App extends Component {
 
 
   getCurrentGamesForUser = (nickname, token) => {
-   return logic.getGamesForUser(nickname, token)
+    console.log("getting games for ", nickname)
+    return logic.getGamesForUser(nickname, token)
       .then(currentGames => {
         this.setState({currentGames})
         sessionStorage.setItem('currentGames', JSON.stringify(currentGames))
@@ -110,7 +111,7 @@ class App extends Component {
 
       this.socket.on(`update to games ${nickname}`, () => {
         console.log(`%c update to games ${nickname}`, 'background: #222; color: #bada55');
-        this.getCurrentGamesForUser(nickname,token)
+        this.getCurrentGamesForUser(nickname, token)
 
       })
 
@@ -143,14 +144,13 @@ class App extends Component {
 
   onLoggedIn = (nickname, token) => {
     this.setupSocketListeners(nickname, token)
-
+    this.getCurrentGamesForUser(nickname, token)
     this.setState({nickname: nickname, token})
     this.socket.emit('authenticated', nickname)
     this.aliveInterval = setInterval(this.alivePing, 10 * 1000);
     this.onGetAllOnlineUsers(token)
     sessionStorage.setItem('nickname', nickname)
     sessionStorage.setItem('token', token)
-    this.setState({token})
   }
 
   onGameMove = (move, gameID, opponent) => {
@@ -161,9 +161,9 @@ class App extends Component {
   }
 
   onInviteUser = user => {
-    const {state:{nickname,token}} = this
+    const {state: {nickname, token}} = this
     logic.requestGame(this.state.nickname, user, this.state.token)
-      .then(_ => this.getCurrentGamesForUser(nickname,token))
+      .then(_ => this.getCurrentGamesForUser(nickname, token))
       .catch(({message}) => this.setState({error: message}))
   }
 

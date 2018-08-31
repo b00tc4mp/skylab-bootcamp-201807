@@ -26,7 +26,7 @@ class ChessboardGroup extends Component {
 
   render() {
     let {props: {onGameMove, currentGame, nickname}} = this
-
+console.log("chessboardgroup","currentgame",currentGame)
     return <main>
       <div className="screen">
         <nav>

@@ -7,16 +7,12 @@ font-family: 'Vollkorn', serif;
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-size: 18px;
   font-family: 'Vollkorn', serif; }
 
 html {
   height: 100%; }
 
 body {
-  color: navy;
-  background: url("./seamless-web-background-of-aged-grid-paper.jpg");
-  background-repeat: repeat;
   height: 100%; }
 
 header, footer {
@@ -28,10 +24,10 @@ main {
   border-radius: .5em;
   margin-left: 1em;
   margin-right: 1em;
-  height: 80%; }
+  height: 80%;
+  font-size: 20px; }
 
 .nav_headerTitle {
-  font-size: 48px;
   margin: 20px;
   letter-spacing: .1em;
   color: #1492b2; }

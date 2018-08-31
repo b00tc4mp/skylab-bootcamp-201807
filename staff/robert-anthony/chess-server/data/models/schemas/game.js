@@ -20,6 +20,10 @@ module.exports = new Schema({
     type:String,
     required:pgnString
   },
+  fen: {
+    type:String,
+    required:fenString
+  },
   winner: {
     type:String,
     required:winnerString
@@ -42,6 +46,10 @@ module.exports = new Schema({
 
 
 function pgnString () {
+  return typeof this.pgn !== 'string'
+}
+
+function fenString () {
   return typeof this.pgn !== 'string'
 }
 

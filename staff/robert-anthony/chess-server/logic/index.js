@@ -241,7 +241,7 @@ const logic = {
         if (!result) throw new LogicError(`move is not allowed`)
         else {
           game.pgn = engine.pgn()
-          game.fen = engine.fen()
+         // game.fen = engine.fen()
           return game.save()
             .then(_ => {
               return true

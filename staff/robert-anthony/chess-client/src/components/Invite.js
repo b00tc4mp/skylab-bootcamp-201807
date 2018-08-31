@@ -24,7 +24,7 @@ class Invite extends Component {
     this.props.onUserClick(user)
   }
 
-  static getDerivedStateFromProps(props, state) {
+   getDerivedStateFromProps(props, state) {
     const {currentGames,allUsers} = props
     const usersPlayingWith = currentGames.map(game => game.opponent)
     const usersNotPlayingWith = allUsers.filter(user => usersPlayingWith.indexOf(user) === -1)
