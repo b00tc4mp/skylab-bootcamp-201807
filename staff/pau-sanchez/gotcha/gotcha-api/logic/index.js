@@ -91,9 +91,6 @@ const logic = {
     unregisterUser(email, password) {
         return Promise.resolve()
             .then(() => {
-                this._validateEmail(email)
-                this._validateStringField('password', password)
-
                 return User.findOne({ email })
             })
             .then(user => {
@@ -108,7 +105,7 @@ const logic = {
 
     //@@create notebook
     //@@logic.createNotebook
-    
+    //€€
     createNotebook(userid, notebooktitle, videourl) {
         let videotitle
         const regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
@@ -131,7 +128,7 @@ const logic = {
                 const notebook = { notebooktitle, videotitle, videoid, videourl, videothumbnail, user: userid }
                 return Notebook.create(notebook)
             })
-            .then(() => true)
+            //.then(() => true)
     },
 
     //@@list user notebooks
@@ -167,8 +164,12 @@ const logic = {
             })
     },
 
-    updateNotebook(userId, notebookid, newnotebooktitle) {
+    //€€
+    updateNotebook(userId, sessionUserId, notebookid, newnotebooktitle) {
         return Promise.resolve()
+            .then(() => {
+                if(userId !== sessionUserId) throw new LogicError(`Permission Not Granted`)
+            })
             .then(() => {
                 return User.findOne({ _id: userId })
 
@@ -188,8 +189,16 @@ const logic = {
             })
     },
 
-    removeNotebook(id, notebookid) {
+    
+    //@@remove notebook
+    //@@logic.removeNotebook
+
+    //€€
+    removeNotebook(id, sessionUserId, notebookid) {
         return Promise.resolve()
+            .then(() => {
+                if(id !== sessionUserId) throw new LogicError(`Permission Not Granted`)
+            })
             .then(() => {
                 return Notebook.findOne({ _id: notebookid })
             })
@@ -203,7 +212,7 @@ const logic = {
 
     //@@create note
     //@@logic.createNote
-
+    
     createNote(seconds, notetitle, notetext, notebook) {
         return Promise.resolve()
             .then(() => {
@@ -211,7 +220,7 @@ const logic = {
             })
             .then(notebook => {
                 if (!notebook) throw new LogicError(`notebook does not exists`)
-                const note = { seconds, notetitle, notetext, notebook }
+                const note = { seconds, notetitle, notetext, notebook, user: notebook.user }
                 return Note.create(note)
             })
             .then(() => true)
@@ -279,12 +288,17 @@ const logic = {
             })
     },
 
-
+    
     //@@remove note
     //@@logic.deleteNote
 
-    removeNote(noteId) {
+    
+    //€€
+    removeNote(id, sessionUserId, noteId) {
         return Promise.resolve()
+            .then(() => {
+                if(id !== sessionUserId) throw new LogicError(`Permission Not Granted`)
+            })
             .then(() => {
                 return Note.deleteOne({ _id: noteId })
             })
@@ -294,11 +308,15 @@ const logic = {
     //@@update note
     //@@logic.updateNote 
 
-    updateNote(noteId, newnotetitle, newnotetext) {
+    //€€
+    updateNote(id, sessionUserId, noteId, newnotetitle, newnotetext) {
         let updatetitle
         let updatetext
         
         return Promise.resolve()
+            .then(() => {
+                if(id !== sessionUserId) throw new LogicError(`Permission Not Granted`)
+            })
             .then(() => {
                 return Note.findOne({ _id: noteId })
             })

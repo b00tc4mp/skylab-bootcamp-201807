@@ -77,7 +77,7 @@ router.delete('/unregister/:id', [validateJwt, jsonBodyParser], (req, res) => {
 
 
 router.post('/user/:id', [validateJwt, jsonBodyParser], (req, res) => {
-    const { /*params: { id },*/ body: { email, password, newPassword } } = req
+    const { /*params: { id },*/ body: { email, password, newPassword, id } } = req
 
     logic.updatePassword(email, password, newPassword)
         .then(() => res.json({ message: 'user updated' }))
@@ -95,9 +95,13 @@ router.post('/user/:id', [validateJwt, jsonBodyParser], (req, res) => {
 
 router.post('/:id/notebook', [validateJwt, jsonBodyParser], (req, res) => {
     const { params: { id }, body: {notebooktitle, videourl} } = req
-
+    let notebookdId
     logic.createNotebook( id, notebooktitle, videourl)
-        .then(() => res.json({ message: 'Notebook created correctly' }))
+        
+        .then(res => {
+            notebookdId = res._id
+        })
+        .then(() =>res.json({ message: 'Notebook created correctly', notebookdId}))
         .catch(err => {
             const { message } = err
 
@@ -125,10 +129,10 @@ router.get('/:id/notebooks', [validateJwt, jsonBodyParser], (req, res) => {
 })
 
 //@@    GET api/:id/notebooks/:notebookid
-//@@    List user notebooks by id
-//@@    Private-Token
+//@@    List notebook by id
+//@@    Public-Share
 
-router.get('/:id/notebooks/:notebookid', [validateJwt, jsonBodyParser], (req, res) => {
+router.get('/:id/notebooks/:notebookid', jsonBodyParser, (req, res) => {
     const { params: {id, notebookid} } = req
 
     logic.listNotebooksByNotebookId(id, notebookid)
@@ -142,15 +146,16 @@ router.get('/:id/notebooks/:notebookid', [validateJwt, jsonBodyParser], (req, re
 })
 
 
-//@@    GET api/:id/notebooks/:notebookid/update
+//@@    GET api/:id/notebooks/:notebookid/update/:sessionuserid
 //@@    Update notebook
 //@@    Private-Token
+//€€
+router.patch('/:id/notebooks/:notebookid/update/:sessionuserid', [validateJwt, jsonBodyParser], (req, res) => {
+    const {params: { id, notebookid, sessionuserid}, body : {newnotebooktitle}} = req
 
-router.patch('/:id/notebooks/:notebookid/update', [validateJwt, jsonBodyParser], (req, res) => {
-    const {params: { id, notebookid}, body : {newnotebooktitle}} = req
+    logic.updateNotebook(id, sessionuserid, notebookid, newnotebooktitle)
 
-    logic.updateNotebook(id, notebookid, newnotebooktitle)
-
+        .then(() => logic.listNotebooksByNotebookId(id, notebookid))
         .then(updatednotebook => res.json(updatednotebook))
         .catch(err => {
             const { message } = err
@@ -159,16 +164,17 @@ router.patch('/:id/notebooks/:notebookid/update', [validateJwt, jsonBodyParser],
         })
 })
 
-//@@    DELETE api/:id/notebooks/:notebookid/delete
+//@@    DELETE api/:id/notebooks/:notebookid/delete/:sessionuserid
 //@@    Delete notebook
 //@@    Private-Token
+//€€
+router.delete('/:id/notebooks/:notebookid/delete/:sessionuserid', [validateJwt, jsonBodyParser], (req, res) => {
+    const {params: { id, sessionuserid, notebookid} } = req
 
-router.delete('/:id/notebooks/:notebookid/delete', [validateJwt, jsonBodyParser], (req, res) => {
-    const {params: { id, notebookid} } = req
-
-    logic.removeNotebook( id, notebookid)
+    logic.removeNotebook( id, sessionuserid, notebookid)
         .then(() => res.json({ message: 'Notebook removed correctly' }))
         .catch(err => {
+            debugger
             const { message } = err
 
             res.status(err instanceof LogicError ? 401 : 500).json({ message })
@@ -211,9 +217,9 @@ router.get('/:id/notes', [validateJwt, jsonBodyParser] , (req, res) => {
 
 //@@    GET api/:id/:notebookdid/notes
 //@@    List notes by notebook id
-//@@    Private-Token
+//@@    Public/Share
 
-router.get('/:id/:notebookid/notes', [validateJwt, jsonBodyParser] , (req, res) => {
+router.get('/:id/:notebookid/notes', jsonBodyParser , (req, res) => {
     const {params: {id, notebookid} } = req
 
     logic.listNotebyNotebookId(notebookid)
@@ -228,9 +234,9 @@ router.get('/:id/:notebookid/notes', [validateJwt, jsonBodyParser] , (req, res) 
 
 //@@    GET api/:id/note/:noteid
 //@@    List note by note id
-//@@    Private-Token
+//@@    Public-Share
 
-router.get('/:id/note/:noteid', [validateJwt, jsonBodyParser], (req, res) => {
+router.get('/:id/note/:noteid', jsonBodyParser, (req, res) => {
     const {params: {id, noteid} } = req
 
     logic.listNotesbyNoteId(noteid)
@@ -242,14 +248,14 @@ router.get('/:id/note/:noteid', [validateJwt, jsonBodyParser], (req, res) => {
         })
 })
 
-//@@    DELETE api/:id/removenote/:noteid
+//@@    DELETE api/:id/removenote/:noteid/:sessionUserId
 //@@    Remove note
 //@@    Private-Token
+//€€
+router.delete('/:id/removenote/:noteid/:sessionuserid', [validateJwt, jsonBodyParser] , (req, res) => {
+    const {params: { id, sessionuserid, noteid} } = req
 
-router.delete('/:id/removenote/:noteid', [validateJwt, jsonBodyParser] , (req, res) => {
-    const {params: { id, noteid} } = req
-
-    logic.removeNote(noteid)
+    logic.removeNote(id, sessionuserid, noteid)
         .then(() => res.json({ message: 'Note removed succesfully' }))
         .catch(err => {
             const { message } = err
@@ -257,14 +263,14 @@ router.delete('/:id/removenote/:noteid', [validateJwt, jsonBodyParser] , (req, r
         })
 })
 
-//@@    UPDATE api/:id/updatenote/:noteid
+//@@    UPDATE api/:id/updatenote/:noteid/:sessionuserid
 //@@    Remove note
 //@@    Private-Token
+//€€
+router.patch('/:id/updatenote/:noteid/:sessionuserid', [validateJwt, jsonBodyParser], (req, res) => {
+    const {params: { id, sessionuserid, noteid}, body:{ newnotetitle, newnotetext} } = req
 
-router.patch('/:id/updatenote/:noteid', [validateJwt, jsonBodyParser], (req, res) => {
-    const {params: { id, noteid}, body:{ newnotetitle, newnotetext} } = req
-
-    logic.updateNote(noteid, newnotetitle, newnotetext)
+    logic.updateNote(id, sessionuserid, noteid, newnotetitle, newnotetext)
         .then(updatednote => res.json(updatednote))
         .catch(err => {
             const { message } = err
