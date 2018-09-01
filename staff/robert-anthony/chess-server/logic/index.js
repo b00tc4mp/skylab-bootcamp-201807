@@ -35,7 +35,7 @@ const logic = {
       .then(user => {
         if (user) throw new LogicError(`user with ${nickname} nickname already exists`)
 
-        user = new User({email, password, nickname, lastRequest: "", online: false})
+        user = new User({email, password, nickname})
         return user.save()
       })
       .then(() => true)
@@ -122,10 +122,19 @@ const logic = {
           .then(games => games.filter(game => (game.state !== 'terminated')).map(game => {
               const obj = {}
               obj.id = game.id
-              obj.opponent = game.initiator === nickname ? game.acceptor : game.initiator
               obj.state = game.state
               obj.toPlay = game.toPlay
-              let engine = this._currentEngines.get(game.engineID)
+              obj.initiator = game.initiator
+              obj.acceptor = game.acceptor
+              obj.inCheck = game.inCheck
+              obj.inDraw = game.inDraw
+              obj.inStalemate = game.inStalemate
+              obj.inCheckmate = game.inCheckmate
+              obj.inThreefoldRepetition = game.inThreefoldRepetition
+              obj.insufficientMaterial = game.insufficientMaterial
+              obj.inDraw = game.inDraw
+              obj.opponent = game.initiator === nickname ? game.acceptor : game.initiator
+              engine = this._currentEngines.get(game.engineID)
               if (!engine) {
                 engine = new Chess()
                 engine.load_pgn(game.pgn)
@@ -147,8 +156,6 @@ const logic = {
       })
       .then(user => {
         if (!user) throw new LogicError(`user with ${nickname} nickname does not exist`)
-        user.online = true
-        return user.save()
       })
       .then(() => true)
 
@@ -163,14 +170,13 @@ const logic = {
       })
       .then(user => {
         if (!user) throw new LogicError(`user with ${nickname} nickname does not exist`)
-        user.online = false
         return user.save()
       })
       .then(() => true)
   },
 
-  getOnlineUsers() {
-    return User.find({online: true}).lean()
+  getAllUsers() {
+    return User.find({}).lean()
       .then(users => {
         return users.map(user => user.nickname)
       })
@@ -221,7 +227,13 @@ const logic = {
           winner: "",
           lastMove: "",
           state: "invited",
-          toPlay: requester
+          toPlay: requester,
+          inCheck: false,
+          inDraw: false,
+          inStalemate: false,
+          inCheckmate: false,
+          inThreefoldRepetition: false,
+          insufficientMaterial: false,
         })
         return game.save()
       })
@@ -237,18 +249,23 @@ const logic = {
         if (!game) throw new LogicError(`game with id ${gameID} does not exist`)
         if (game.initiator !== nickname && game.acceptor !== nickname) throw new LogicError(`game with id ${gameID} does not belong to user ${nickname}`)
         const engine = this._currentEngines.get(game.engineID)
-        const result = engine.move(move)
-        if (!result) throw new LogicError(`move is not allowed`)
-        else {
+        if (engine.game_over()) {
+          game.inThreefoldRepetition = engine.in_threefold_repetition()
+          game.inDraw = engine.in_draw()
+          game.insuffcientMaterial = engine.insufficient_material()
+          game.inStalemate = engine.in_stalemate()
+          game.inCheckmate = engine.in_checkmate()
+          game.winner = nickname === game.initiator ? game.acceptor : game.initiator
+        } else {
+          const result = engine.move(move)
+          if (!result) throw new LogicError(`move is not allowed`)
+          game.inCheck = engine.in_check()
           game.pgn = engine.pgn()
           game.toPlay = nickname === game.initiator ? game.acceptor : game.initiator
-          // game.fen = engine.fen()
-          return game.save()
-            .then(_ => {
-              return true
-            })
         }
+        return game.save()
       })
+      .then(_ => true)
 
   },
 
@@ -261,6 +278,14 @@ const logic = {
       })
       .then(user => {
         if (!user) throw new LogicError(`user with ${destination} nickname does not exist`)
+        return Game.findOne({
+          $or: [{$and: [{"initiator": requester}, {"acceptor": destination}]}, {$and: [{"initiator": destination}, {"acceptor": requester}]}],
+          "state": {$ne: "terminated"}
+        })
+
+      })
+      .then(game => {
+        if (game) throw new LogicError(`game between ${game.initiator} and ${game.acceptor} already exists`)
         return this._createGame(requester, destination)
       })
       .then(_ => {

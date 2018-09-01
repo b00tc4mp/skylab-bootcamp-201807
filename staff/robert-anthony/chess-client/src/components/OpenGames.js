@@ -8,11 +8,11 @@ import PropTypes from 'prop-types'; // ES6
 class OpenGames extends Component {
 
   static propTypes = {
-    onUserClick:PropTypes.func,
-    games:PropTypes.array,
-    nickname:PropTypes.string,
-    currentGameViewed:PropTypes.object,
-   // opponent:PropType.string,
+    onUserClick: PropTypes.func,
+    games: PropTypes.array,
+    nickname: PropTypes.string,
+    currentGameViewed: PropTypes.object,
+    // opponent:PropType.string,
   }
 
   state = {
@@ -26,26 +26,27 @@ class OpenGames extends Component {
 
 
   render() {
-    let {props: {games,nickname,currentGameViewed}} = this
+    let {props: {games, nickname, currentGameViewed}} = this
     let userList
     if (games.length) {
-
-
+      games = games.filter(game => !(game.state === 'invited' && game.initiator === nickname))
       userList = games.map(game => {
         let isCurrent = false
         if (currentGameViewed && (currentGameViewed.id === game.id)) isCurrent = true
-        return <ListGroupItem key={game + Math.random()} tag="a" href="#" onClick={e => this.onUserClick(e, game)}>{`${game.opponent}`}{(game.state === 'invited') && <i className='far fa-envelope'></i> }{isCurrent && <i className='fas fa-chess'></i> } </ListGroupItem>
+        return <ListGroupItem key={game + Math.random()} tag="a" href="#"
+                              onClick={e => this.onUserClick(e, game)}>{`${game.opponent}`}{(game.state === 'invited') &&
+        <i className='far fa-envelope'></i>}{isCurrent && <i className='fas fa-chess'></i>} </ListGroupItem>
       })
     }
     return <main>
       <div className="screen">
 
 
-              <div className="main__userlist">
-                <ListGroup>
-                  {games.length ? userList : <li>You are not playing any games with anyone at the moment</li>}
-                </ListGroup>
-              </div>
+        <div className="main__userlist">
+          <ListGroup>
+            {games.length ? userList : <li>You are not playing any games with anyone at the moment</li>}
+          </ListGroup>
+        </div>
 
       </div>
     </main>

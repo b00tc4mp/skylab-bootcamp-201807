@@ -41,9 +41,43 @@ module.exports = new Schema({
   toPlay: {
     type:String,
     required:true,
+  },
+  inCheck: {
+    type:Boolean,
+    required:true,
+    default:false
+  },
+  inDraw: {
+    type:Boolean,
+    required:true,
+    default:false
+  },
+  inStalemate: {
+    type:Boolean,
+    required:true,
+    default:false
+  },
+  inCheckmate: {
+    type:Boolean,
+    required:true,
+    default:false
+  },
+  inThreefoldRepetition: {
+    type:Boolean,
+    required:true,
+    default:false
+  },
+  insufficientMaterial: {
+    type:Boolean,
+    required:true,
+    default:false
   }
 })
 
+
+function reasonForWinString () {
+  return typeof this.reasonForWin !== 'string'
+}
 
 function pgnString () {
   return typeof this.pgn !== 'string'

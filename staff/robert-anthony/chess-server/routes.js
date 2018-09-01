@@ -69,12 +69,12 @@ router.get('/user/:nickname/games', [validateJwt], (req, res) => {
 })
 
 
-/*  get all online users */
+/*  get all users */
 router.get('/users', [validateJwt], (req, res) => {
 
   const {nickname} = req
 
-  logic.getOnlineUsers()
+  logic.getAllUsers()
     .then(users => res.json(users))
     .catch(err => {
       const {message} = err
@@ -117,8 +117,9 @@ router.post('/user/:nickname/game/:gameID/', [validateJwt, jsonBodyParser], (req
 
 /* request a game  */
 router.post('/user/:nickname/gamerequest/', [validateJwt, jsonBodyParser], (req, res) => {
-
   const {params: {nickname}, body: {opponent}} = req
+  console.error(`router.post('/user/:nickname/gamerequest/ -- nickname: ${nickname}, opponent: ${opponent}`)
+
   logic.requestNewGame(nickname, opponent)
     .then(_ => {
         sockets.requestConnection(opponent)

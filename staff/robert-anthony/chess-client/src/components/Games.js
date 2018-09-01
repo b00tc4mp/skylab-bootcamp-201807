@@ -86,7 +86,7 @@ class Games extends Component {
         <Container>
           <Row>
             <Col xs="12" md="3">
-              <h1>You are playing as {nickname}</h1>
+              <h3>You are playing as {nickname}</h3>
             </Col>
             <Col xs="12" md="8">
               {error && <Alert color="warning"> {error}</Alert>}

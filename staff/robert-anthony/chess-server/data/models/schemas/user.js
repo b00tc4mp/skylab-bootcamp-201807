@@ -23,11 +23,6 @@ module.exports = new Schema({
     required: true
   },
 
-  online: {
-    type: Boolean,
-    required: true,
-    default: false
-  }
 
 
 })

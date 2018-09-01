@@ -9,9 +9,9 @@ import PropTypes from 'prop-types'
 class ChessboardGroup extends Component {
 
   static propTypes = {
-    onGameMove:PropTypes.func,
-    currentGame:PropTypes.object,
-    nickname:PropTypes.string,
+    onGameMove: PropTypes.func,
+    currentGame: PropTypes.object,
+    nickname: PropTypes.string,
   }
 
   state = {
@@ -26,16 +26,17 @@ class ChessboardGroup extends Component {
 
   render() {
     let {props: {onGameMove, currentGame, nickname}} = this
-console.log("chessboardgroup","currentgame",currentGame)
+
     return <main>
       <div className="screen">
-        <nav>
-        </nav>
-              <div className="main__chessboardarea">
-                  {currentGame &&
-                   <ChessboardComponent  onGameMove={(move) => onGameMove(move, currentGame.id, currentGame.opponent)} nickname={nickname} opponent={currentGame.opponent} fen={currentGame.fen}/>
-                  }
-              </div>
+       {currentGame &&  <h3>{currentGame.toPlay} to play</h3>}
+
+        <div className="main__chessboardarea">
+          {currentGame &&
+          <ChessboardComponent onGameMove={(move) => onGameMove(move, currentGame.id, currentGame.opponent)}
+                               nickname={nickname} opponent={currentGame.opponent} fen={currentGame.fen}/>
+          }
+        </div>
       </div>
     </main>
 

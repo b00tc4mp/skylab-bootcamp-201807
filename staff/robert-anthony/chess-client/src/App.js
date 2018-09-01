@@ -70,15 +70,14 @@ class App extends Component {
     this.socket.emit('client alive', this.state.nickname)
   }
 
-  onGetAllOnlineUsers = (token) => {
-    logic.getOnlineUsers(token)
+  getAllUsers = (token) => {
+    logic.getAllUsers(token)
       .then(users => {
         sessionStorage.setItem('users', JSON.stringify(users))
         this.setState({users})
 
       })
       .catch(({message}) => this.setState({error: message}))
-
   }
 
   onRespondToGameRequest = (destination, gameID, answer) => {
@@ -86,13 +85,11 @@ class App extends Component {
 
     logic.respondToGameRequest(nickname, destination, gameID, answer, token)
       .then(_ => this.getCurrentGamesForUser(nickname, token))
-
   }
 
   onRequestGame = (destination) => {
     logic.requestGame(this.state.nickname, destination, this.state.token)
       .catch(({message}) => this.setState({error: message}))
-
   }
 
   componentWillUnmount = () => {
@@ -116,11 +113,11 @@ class App extends Component {
       })
 
       this.socket.on('user disconnected', () => {
-        if (this.state.token !== '') this.onGetAllOnlineUsers(this.state.token)
+        if (this.state.token !== '') this.getAllUsers(this.state.token)
       })
 
       this.socket.on('user connected', () => {
-        if (this.state.token !== '') this.onGetAllOnlineUsers(this.state.token)
+        if (this.state.token !== '') this.getAllUsers(this.state.token)
       })
 
       this.socket.on('reconnect', (attemptNumber) => {
@@ -148,7 +145,7 @@ class App extends Component {
     this.setState({nickname: nickname, token})
     this.socket.emit('authenticated', nickname)
     this.aliveInterval = setInterval(this.alivePing, 10 * 1000);
-    this.onGetAllOnlineUsers(token)
+    this.getAllUsers(token)
     sessionStorage.setItem('nickname', nickname)
     sessionStorage.setItem('token', token)
   }
@@ -156,7 +153,11 @@ class App extends Component {
   onGameMove = (move, gameID, opponent) => {
     const {state: {nickname, token}} = this
     logic.makeAGameMove(nickname, opponent, move, gameID, token)
-      .then(res => console.log(`game move returned with ${res.message}`))
+      .then(res =>{
+        const game = this.state.currentGames.find(game => game.id === gameID)
+        console.log(`game move returned with ${res.message}`)
+       if (game) console.log(`in_draw: ${game.inDraw}, in_check: ${game.inCheck}, in_stalemate: ${game.inStalemate}, in_checkmate: ${game.inCheckmate}, insufficientMaterial: ${game.insufficientMaterial}`)
+      })
       .catch(({message}) => this.setState({error: message}))
   }
 
