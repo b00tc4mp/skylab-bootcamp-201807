@@ -165,33 +165,107 @@ const logic = {
                 200)
                 .then(res => res.json())
             })
-    }
+    },
         
 
     //@@    POST api/:id/note
     //@@    Create note
     //@@    Private-Token
 
+    createNote(seconds, notetitle, notetext, notebook, userId, token) {
+        return Promise.resolve()
+            .then(() => {
+                return this._call(`${userId}/${notebook}/note`,
+                'post',
+                {'Content-Type': 'application/json', authorization: `bearer ${token}`},
+                JSON.stringify({ seconds, notetitle, notetext, notebook }),
+                200)
+                .then(res => res.json())
+            })
+    },
+
 
     //@@    GET api/:id/notes
     //@@    List notes by user id
     //@@    Private-Token
 
+    listNotesbyUser(userId, token) {
+        return Promise.resolve()
+            .then(() => {
+                return this._call(`${userId}/notes`,
+                'get',
+                {authorization: `bearer ${token}`},
+                undefined,
+                200)
+                .then(res => res.json())
+            })
+    },
+
     //@@    GET api/:id/:notebookdid/notes
     //@@    List notes by notebook id
     //@@    Public/Share
+
+    listNotebyNotebookId(userId, notebookid) {
+        return Promise.resolve()
+            .then(() => {
+                    return this._call(`${userId}/${notebookid}/notes`,
+                    'get',
+                    undefined,
+                    undefined,
+                    200)
+                    .then(res => res.json())
+                })
+            
+    },
 
     //@@    GET api/:id/note/:noteid
     //@@    List note by note id
     //@@    Public-Share
 
+    listNotesbyNoteId(userId, noteId) {
+        return Promise.resolve()
+            .then(() => {
+                return this._call(`${userId}/note/${noteId}`,
+                'get',
+                undefined,
+                undefined,
+                200)
+                .then(res => res.json())
+            })
+    },
+
     //@@    DELETE api/:id/removenote/:noteid
     //@@    Remove note
     //@@    Private-Token
 
+    removeNote(userId, sessionuserid, noteid, token) {
+        return Promise.resolve()
+            .then(() => {
+                return this._call(`${userId}/removenote/${noteid}/${sessionuserid}`,
+                'delete',
+                {authorization: `bearer ${token}`},
+                undefined,
+                200)
+                .then(res => res.json())
+            
+            })
+    },
+
     //@@    UPDATE api/:id/updatenote/:noteid
     //@@    Update note
     //@@    Private-Token
+
+    updateNote(userId, sessionuserid, noteId, newnotetitle, newnotetext, token) {
+        return Promise.resolve()
+            .then(() => {
+                return this._call(`${userId}/updatenote/${noteId}/${sessionuserid}`,
+                'patch',
+                {'Content-Type': 'application/json', authorization: `bearer ${token}`},
+                JSON.stringify({ newnotetitle, newnotetext }),
+                200)
+                .then(res => res.json())
+            })
+    }
 
 
 

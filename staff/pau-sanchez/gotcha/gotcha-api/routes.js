@@ -174,7 +174,6 @@ router.delete('/:id/notebooks/:notebookid/delete/:sessionuserid', [validateJwt, 
     logic.removeNotebook( id, sessionuserid, notebookid)
         .then(() => res.json({ message: 'Notebook removed correctly' }))
         .catch(err => {
-            debugger
             const { message } = err
 
             res.status(err instanceof LogicError ? 401 : 500).json({ message })
@@ -188,9 +187,12 @@ router.delete('/:id/notebooks/:notebookid/delete/:sessionuserid', [validateJwt, 
 
 router.post('/:id/:notebook/note', [validateJwt, jsonBodyParser] , (req, res) => {
     const {params: {id, notebook }, body: { seconds, notetitle, notetext }} = req
-
-    logic.createNote(seconds, notetitle, notetext, notebook)
-        .then(() => res.json({ message: 'Note created correctly'}))
+    let noteId
+    logic.createNote(seconds, notetitle, notetext, notebook, id)
+        .then(res=> {
+            noteId = res.id
+        })
+        .then(() => res.json({ message: 'Note created correctly', noteId}))
         .catch(err => {
             const { message } = err
 
@@ -203,7 +205,7 @@ router.post('/:id/:notebook/note', [validateJwt, jsonBodyParser] , (req, res) =>
 //@@    List notes by user id
 //@@    Private-Token
 
-router.get('/:id/notes', [validateJwt, jsonBodyParser] , (req, res) => {
+router.get('/:id/notes', [validateJwt] , (req, res) => {
     const {params: {id} } = req
 
     logic.listNotesbyUser(id)

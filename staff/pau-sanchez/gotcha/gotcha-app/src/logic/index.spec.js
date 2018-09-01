@@ -13,7 +13,7 @@ describe('logic', () => {
     const email = `gotcha${Math.random()}@mail.com`, password = `pass${Math.random()}`, name = `name${Math.random()}`
     const newPassword = 'newPassword'
     
-    true && describe('register user', () => {
+     describe('register user', () => {
         //@@should succedd on new user
         it('should succedd on new user', () => 
              logic.register(email, password, name)
@@ -58,7 +58,7 @@ describe('logic', () => {
         )
     })
 
-    true && describe('authenticate user', () => {
+     describe('authenticate user', () => {
         const noRegisteredEmail = 'email@email.com', noRegisteredPassword = 'fakepass'
 
         //@@should succed on authentic user with correct data
@@ -106,7 +106,7 @@ describe('logic', () => {
     
     //@@update user Password
     //@@logic.updatePassword
-    true && describe('update user Password', () => { 
+     describe('update user Password', () => { 
         
         //@@should update password correctly
         it('should update password correctly', () => {
@@ -285,7 +285,7 @@ describe('logic', () => {
     //@@unregister user
     //@@logic.unresgisterUser
 
-    true && describe('unregister user', () => { 
+     describe('unregister user', () => { 
         //@@should unregister user correctly
         it('should unregister user correctly', () => {
             const email = `gotcha${Math.random()}@mail.com`, password = `pass${Math.random()}`, name = `name${Math.random()}`
@@ -401,7 +401,7 @@ describe('logic', () => {
     //@@create notebook
     //@@logic.createNotebook
 
-    !true && describe('create notebook', () => {
+     describe('create notebook', () => {
         
         //@@should create a notebook succesfully with correct data
         it('should create a notebook succesfully with correct data', () => {
@@ -516,7 +516,7 @@ describe('logic', () => {
     //@@list notebook
     //@@logic.listNotebook
 
-    !true && describe('list notebook', () => {
+     describe('list notebook', () => {
         
         //@@should list all user notebooks
         it('should list all user notebooks', () =>  {
@@ -546,7 +546,7 @@ describe('logic', () => {
     //@@list notebook by id
     //@@logic.listNotebookById
 
-    !true && describe('list notebook by id', () => { 
+     describe('list notebook by id', () => { 
 
         //@@should list a notebook by its id
         it('should list a notebook by its id', () =>  {
@@ -578,7 +578,7 @@ describe('logic', () => {
     
     //@@update notebook
     //@@logic.updateNotebook
-    true && describe('update notebook title', () => {
+     describe('update notebook title', () => {
         
 
         //@@should update title with correct id and title
@@ -637,11 +637,11 @@ describe('logic', () => {
     //@@remove notebook
     //@@logic.deleteNotebook
 
-    true && describe('remove notebook by id', () => {
+     describe('remove notebook by id', () => {
 
     //@@should remove a notebook correctly with the correct id
     it('should remove a notebook correctly with the correct id', () => {
-        const email = `gotcha${Math.random()}@mail.com`, password = `pass${Math.random()}`, name = `name${Math.random()}`
+            const email = `gotcha${Math.random()}@mail.com`, password = `pass${Math.random()}`, name = `name${Math.random()}`
             const notebooktitle = "notebook title", videourl = "https://www.youtube.com/watch?v=jHPOzQzk9Qo"
             const newnotebooktitle = "new notebook title"
             let token
@@ -668,7 +668,7 @@ describe('logic', () => {
     })
     //@@should fail to remove a notebook with a different user
     it('should fail to remove a notebook with a different user', () => {
-        const email = `gotcha${Math.random()}@mail.com`, password = `pass${Math.random()}`, name = `name${Math.random()}`
+            const email = `gotcha${Math.random()}@mail.com`, password = `pass${Math.random()}`, name = `name${Math.random()}`
             const notebooktitle = "notebook title", videourl = "https://www.youtube.com/watch?v=jHPOzQzk9Qo"
             const newnotebooktitle = "new notebook title"
             let token
@@ -696,81 +696,334 @@ describe('logic', () => {
 
     })
 
-    /*
+    
 
     //@@create note
     //@@logic.createNote
 
-    !true && describe('create note', () => { }
+     describe('create note', () => { 
 
     //@@should create a note with the correct data
-    //@@should fail to create a note without title
+    it('should create a note with the correct data',  () => {
+            const email = `gotcha${Math.random()}@mail.com`, password = `pass${Math.random()}`, name = `name${Math.random()}`
+            const notebooktitle = "notebook title", videourl = "https://www.youtube.com/watch?v=jHPOzQzk9Qo"
+            const seconds = 23, notetitle = "note title", notetext = "note text"
+            let token
+            let userId
+            let notebookid
+            return logic.register(email, password, name)
+                .then(() => logic.authenticate(email, password))
+                .then(res => {
+                    token = res.token
+                    userId = res.id
+                })
+                .then(() => logic.createNotebook(userId, notebooktitle, videourl, token))
+                .then(res => {
+                    notebookid = res.notebookdId
+                })
+                .then(() => logic.createNote(seconds, notetitle, notetext, notebookid, userId, token))
+                .then(res => {
+                    expect(res.message).to.equal('Note created correctly')
+                })
+
+        })
+
+    //@@should fail to create a note without a title
+    it('should fail to create a note without a title', () => {
+            const email = `gotcha${Math.random()}@mail.com`, password = `pass${Math.random()}`, name = `name${Math.random()}`
+            const notebooktitle = "notebook title", videourl = "https://www.youtube.com/watch?v=jHPOzQzk9Qo"
+            const seconds = 23, notetitle = '', notetext = "note text"
+            let token
+            let userId
+            let notebookid
+            return logic.register(email, password, name)
+                .then(() => logic.authenticate(email, password))
+                .then(res => {
+                    token = res.token
+                    userId = res.id
+                })
+                .then(() => logic.createNotebook(userId, notebooktitle, videourl, token))
+                .then(res => {
+                    notebookid = res.notebookdId
+                })
+                .then(() => logic.createNote(seconds, notetitle, notetext, notebookid, userId, token))
+                .catch(err => err)
+                .then(err => {
+                    expect(err.message).to.equal('Note validation failed: notetitle: Path `notetitle` is required.')
+                })
+        })
     
 
-    */
-
-    /*
+    
+    })   
+    
     //@@list note by user id
     //@@logic.listNotes
 
-    !true && describe('list notes by user id', () => { }
+     describe('list notes by user id', () => { 
 
     //@@should list the notes by user id correctly
+    it('should list the notes by user id correctly', () => {
+            const email = `gotcha${Math.random()}@mail.com`, password = `pass${Math.random()}`, name = `name${Math.random()}`
+            const notebooktitle = "notebook title", videourl = "https://www.youtube.com/watch?v=jHPOzQzk9Qo"
+            const seconds = 23, notetitle = 'note title', notetext = 'note text'
+            let token
+            let userId
+            let notebookid
+            return logic.register(email, password, name)
+                .then(() => logic.authenticate(email, password))
+                .then(res => {
+                    token = res.token
+                    userId = res.id
+                })
+                .then(() => logic.createNotebook(userId, notebooktitle, videourl, token))
+                .then(res => {
+                    notebookid = res.notebookdId
+                })
+                .then(() => logic.createNote(seconds, notetitle, notetext, notebookid, userId, token))
+                .then(() => logic.listNotesbyUser(userId, token))
+                .then(res => {
+                    expect(res[0].seconds).to.equal(23)
+                    expect(res[0].notetitle).to.equal('note title')
+                    expect(res[0].notetext).to.equal('note text')
+                })
+    })
 
-    */
+    })
 
 
-    /*
+    
     //@@list note by notebookid
     //@@logic.listNotebyNotebookId
 
-    !true && describe('list notes by notebookid', () => { }
+     describe('list notes by notebook id', () => { 
 
-    //@@list the notes by notebooid correctly
+        //@@should list the notes by notebook id correctly
+        it('should list the notes by notebook id correctly', () => {
+            const email = `gotcha${Math.random()}@mail.com`, password = `pass${Math.random()}`, name = `name${Math.random()}`
+            const notebooktitle = "notebook title", videourl = "https://www.youtube.com/watch?v=jHPOzQzk9Qo"
+            const seconds = 23, notetitle = 'note title', notetext = 'note text'
+            let token
+            let userId
+            let notebookid
+            return logic.register(email, password, name)
+                .then(() => logic.authenticate(email, password))
+                .then(res => {
+                    token = res.token
+                    userId = res.id
+                })
+                .then(() => logic.createNotebook(userId, notebooktitle, videourl, token))
+                .then(res => {
+                    notebookid = res.notebookdId
+                })
+                .then(() => logic.createNote(seconds, notetitle, notetext, notebookid, userId, token))
+                .then(() => logic.listNotebyNotebookId(userId, notebookid))
+                .then(res => {
+                    expect(res[0].seconds).to.equal(23)
+                    expect(res[0].notetitle).to.equal('note title')
+                    expect(res[0].notetext).to.equal('note text')
+                })
+        })
 
 
-    */
+    })
 
 
-    /*
+    
     //@@list note by noteid
     //@@logic.listNotesbyNoteId
 
-    true && describe('list notes by noteId', () => {  }
+     describe('list notes by noteId', () => {  
 
-    //@@should list the notes by noteid correctly
+        //@@should list the notes by note id correctly
+        it('should list the notes by note id correctly', () => {
+            const email = `gotcha${Math.random()}@mail.com`, password = `pass${Math.random()}`, name = `name${Math.random()}`
+            const notebooktitle = "notebook title", videourl = "https://www.youtube.com/watch?v=jHPOzQzk9Qo"
+            const seconds = 23, notetitle = 'note title', notetext = 'note text'
+            let token
+            let userId
+            let notebookid
+            let noteId
+            return logic.register(email, password, name)
+                .then(() => logic.authenticate(email, password))
+                .then(res => {
+                    token = res.token
+                    userId = res.id
+                })
+                .then(() => logic.createNotebook(userId, notebooktitle, videourl, token))
+                .then(res => {
+                    notebookid = res.notebookdId
+                })
+                .then(() => logic.createNote(seconds, notetitle, notetext, notebookid, userId, token))
+                .then(res => {
+                    noteId = res.noteId
+                })
+                .then(() => logic.listNotesbyNoteId(userId, noteId))
+                .then(res => {
+                    expect(res.seconds).to.equal(23)
+                    expect(res.notetitle).to.equal('note title')
+                    expect(res.notetext).to.equal('note text')
+                })
+        })
 
 
 
-    */
+    })
 
 
-    /*
+    
 
     //@@remove note
     //@@logic.deleteNote
 
-    true && describe('remove by noteId', () => { }
+     describe('remove by noteId', () => { 
 
     //@@should remove note correctly
-    */
+    it('should list the notes by note id correctly', () => {
+            const email = `gotcha${Math.random()}@mail.com`, password = `pass${Math.random()}`, name = `name${Math.random()}`
+            const notebooktitle = "notebook title", videourl = "https://www.youtube.com/watch?v=jHPOzQzk9Qo"
+            const seconds = 23, notetitle = 'note title', notetext = 'note text'
+            let token
+            let userId
+            let notebookid
+            let noteId
+            let sessionuserid
+            return logic.register(email, password, name)
+                .then(() => logic.authenticate(email, password))
+                .then(res => {
+                    token = res.token
+                    userId = res.id
+                    sessionuserid = res.id
+                })
+                .then(() => logic.createNotebook(userId, notebooktitle, videourl, token))
+                .then(res => {
+                    notebookid = res.notebookdId
+                })
+                .then(() => logic.createNote(seconds, notetitle, notetext, notebookid, userId, token))
+                .then(res => {
+                    noteId = res.noteId
+                })
+                .then(() => logic.removeNote(userId, sessionuserid, noteId, token))
+                .then(() => logic.listNotesbyNoteId(userId, noteId))
+                .then(res => {
+                    expect(res).to.be.null
+                    
+                })
+        })
 
-    /*
+    })
+
+    
     
     //@@update note
     //@@logic.updateNote
 
-    true && describe('update note', () => {  }
+    true && describe('update note', () => {  
 
     //@@should update a note correctly
+    it('should update a note correctly', () => {
+            const email = `gotcha${Math.random()}@mail.com`, password = `pass${Math.random()}`, name = `name${Math.random()}`
+            const notebooktitle = "notebook title", videourl = "https://www.youtube.com/watch?v=jHPOzQzk9Qo"
+            const seconds = 23, notetitle = 'note title', notetext = 'note text'
+            let token
+            let userId
+            let notebookid
+            let noteId
+            let sessionuserid
+            const newNoteTitle = 'new note title', newNoteText = 'new note text'
+            return logic.register(email, password, name)
+                .then(() => logic.authenticate(email, password))
+                .then(res => {
+                    token = res.token
+                    userId = res.id
+                    sessionuserid = res.id
+                })
+                .then(() => logic.createNotebook(userId, notebooktitle, videourl, token))
+                .then(res => {
+                    notebookid = res.notebookdId
+                })
+                .then(() => logic.createNote(seconds, notetitle, notetext, notebookid, userId, token))
+                .then(res => {
+                    noteId = res.noteId
+                })
+                .then(() => logic.updateNote(userId, sessionuserid, noteId, newNoteTitle, newNoteText, token))
+                .then(() => logic.listNotesbyNoteId(userId, noteId))
+                .then(res => {
+                    expect(res.notetitle).to.equal(newNoteTitle)
+                    expect(res.notetext).to.equal(newNoteText)
+                    
+                })
+        })
+
     
-
-    */
-
-
-
-
-
-
+    //@@should update only the title of the note correctly
+    it('should update only the title of the note correctly', () => {
+        const email = `gotcha${Math.random()}@mail.com`, password = `pass${Math.random()}`, name = `name${Math.random()}`
+        const notebooktitle = "notebook title", videourl = "https://www.youtube.com/watch?v=jHPOzQzk9Qo"
+        const seconds = 23, notetitle = 'note title', notetext = 'note text'
+        let token
+        let userId
+        let notebookid
+        let noteId
+        let sessionuserid
+        const newNoteTitle = 'new note title', newNoteText = ''
+        return logic.register(email, password, name)
+            .then(() => logic.authenticate(email, password))
+            .then(res => {
+                token = res.token
+                userId = res.id
+                sessionuserid = res.id
+            })
+            .then(() => logic.createNotebook(userId, notebooktitle, videourl, token))
+            .then(res => {
+                notebookid = res.notebookdId
+            })
+            .then(() => logic.createNote(seconds, notetitle, notetext, notebookid, userId, token))
+            .then(res => {
+                noteId = res.noteId
+            })
+            .then(() => logic.updateNote(userId, sessionuserid, noteId, newNoteTitle, newNoteText, token))
+            .then(() => logic.listNotesbyNoteId(userId, noteId))
+            .then(res => {
+                expect(res.notetitle).to.equal(newNoteTitle)
+                               
+            })
+    })
+    //@@should update only the text of the note correctly
+    it('should update only the text of the note correctly', () => {
+        const email = `gotcha${Math.random()}@mail.com`, password = `pass${Math.random()}`, name = `name${Math.random()}`
+        const notebooktitle = "notebook title", videourl = "https://www.youtube.com/watch?v=jHPOzQzk9Qo"
+        const seconds = 23, notetitle = 'note title', notetext = 'note text'
+        let token
+        let userId
+        let notebookid
+        let noteId
+        let sessionuserid
+        const newNoteTitle = '', newNoteText = 'new note text'
+        return logic.register(email, password, name)
+            .then(() => logic.authenticate(email, password))
+            .then(res => {
+                token = res.token
+                userId = res.id
+                sessionuserid = res.id
+            })
+            .then(() => logic.createNotebook(userId, notebooktitle, videourl, token))
+            .then(res => {
+                notebookid = res.notebookdId
+            })
+            .then(() => logic.createNote(seconds, notetitle, notetext, notebookid, userId, token))
+            .then(res => {
+                noteId = res.noteId
+            })
+            .then(() => logic.updateNote(userId, sessionuserid, noteId, newNoteTitle, newNoteText, token))
+            .then(() => logic.listNotesbyNoteId(userId, noteId))
+            .then(res => {
+                expect(res.notetext).to.equal(newNoteText)
+                
+            })
+    
+    })
 })
+})
+
 

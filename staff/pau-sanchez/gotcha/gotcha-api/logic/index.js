@@ -213,24 +213,24 @@ const logic = {
     //@@create note
     //@@logic.createNote
     
-    createNote(seconds, notetitle, notetext, notebook) {
+    createNote(seconds, notetitle, notetext, notebook, user) {
         return Promise.resolve()
             .then(() => {
                 return Notebook.findOne({ _id: notebook })
             })
             .then(notebook => {
                 if (!notebook) throw new LogicError(`notebook does not exists`)
-                const note = { seconds, notetitle, notetext, notebook, user: notebook.user }
+                const note = { seconds, notetitle, notetext, notebook, user }
                 return Note.create(note)
             })
-            .then(() => true)
+            //.then(() => true)
 
     },
 
     //@@list note by user
     //@@logic.listNotesbyUser
     
-   listNotesbyUser(userId) {
+   /*listNotesbyUser(userId) {
     let notebooksids = []
     let notes = []
        return Promise.resolve()
@@ -253,6 +253,22 @@ const logic = {
             let mergedNotes = [].concat.apply([], res)
             return mergedNotes
         })
+
+             
+   },*/
+   listNotesbyUser(userId) {
+        return Promise.resolve()
+            .then(() => {
+                return User.findOne({ _id: userId })
+            })
+            .then(user => {
+                if (!user) throw new LogicError(`user does not exists`)
+                
+                let notesByUser = Note.find({ user: userId })
+                
+                return notesByUser
+            })
+            
 
              
 },
@@ -314,6 +330,7 @@ const logic = {
         let updatetext
         
         return Promise.resolve()
+            
             .then(() => {
                 if(id !== sessionUserId) throw new LogicError(`Permission Not Granted`)
             })
@@ -329,9 +346,13 @@ const logic = {
                 
             })
             .then(() => {
+                return Note.find({"_id": noteId})
+            })
+            
+            /*.then(() => {
 
                 return true
-            })
+            })*/
 
     },
 
