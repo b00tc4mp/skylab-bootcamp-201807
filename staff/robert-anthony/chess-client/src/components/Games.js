@@ -24,7 +24,7 @@ class Games extends Component {
     modal: false,
   }
 
-  getDerivedStateFromProps(props, state) {
+  static getDerivedStateFromProps(props, state) {
     console.log('getDerivedStateFromProps in Game')
     /*  debugger
       if (this.state.currentGameViewed.id) {
@@ -80,8 +80,6 @@ class Games extends Component {
 
     return <main>
       <div>
-        <nav>
-        </nav>
 
         <Container>
           <Row>
@@ -112,7 +110,7 @@ class Games extends Component {
         <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
           <ModalHeader toggle={this.toggle}>Invitation</ModalHeader>
           <ModalBody>
-            ${inviter} has invited you to a game.
+            {inviter} has invited you to a game.
           </ModalBody>
           <ModalFooter>
             <Button color="primary"

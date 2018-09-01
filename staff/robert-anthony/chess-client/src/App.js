@@ -10,6 +10,7 @@ import socketIOClient from 'socket.io-client';
 import logic from "./logic"
 import NavBar from "./components/NavBar"
 import Invite from "./components/Invite"
+import {Alert} from 'reactstrap'
 
 class App extends Component {
 
@@ -189,16 +190,17 @@ class App extends Component {
       <header>
         <NavBar isLoggedIn={this.isLoggedIn()} onLogout={this.onLogout}/>
       </header>
+      {error && <Alert color="warning"> {error}</Alert>}
 
       <Switch>
         <Route exact path="/" render={() => this.isLoggedIn() ? <Redirect to="/games"/> : <Landing/>}/>
         <Route path="/register" render={() => this.isLoggedIn() ? <Redirect to="/games"/> : <Register/>}/>
-        <Route path="/main" render={() => this.isLoggedIn() ?
+      {/*  <Route path="/main" render={() => this.isLoggedIn() ?
           <Main
             users={users}
             onRequestGame={this.onRequestGame}
             nickname={nickname}
-          /> : <Landing/>}/>
+          /> : <Landing/>}/>*/}
         <Route path="/games" render={() => this.isLoggedIn() ?
           <Games
             onGameMove={this.onGameMove}
@@ -219,7 +221,6 @@ class App extends Component {
       </Switch>
 
       <footer>
-        {error && <p>{error}</p>}
       </footer>
     </div>
   }

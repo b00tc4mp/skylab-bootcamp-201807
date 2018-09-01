@@ -33,7 +33,7 @@ class ChessboardGroup extends Component {
 
         <div className="main__chessboardarea">
           {currentGame &&
-          <ChessboardComponent onGameMove={(move) => onGameMove(move, currentGame.id, currentGame.opponent)}
+          <ChessboardComponent isWhite={currentGame.initiator === nickname} onGameMove={(move) => onGameMove(move, currentGame.id, currentGame.opponent)}
                                nickname={nickname} opponent={currentGame.opponent} fen={currentGame.fen}/>
           }
         </div>

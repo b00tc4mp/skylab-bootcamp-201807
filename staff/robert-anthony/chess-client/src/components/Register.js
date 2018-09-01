@@ -42,7 +42,7 @@ class Register extends Component {
                 {error && <p>{error}</p>}
             </div> : <div className="screen">
                     <nav>
-                        &gt; User register successfully, now you can proceed to <a href="/#/login">login</a> <span className="blink">_</span>
+                        User register successfully, now you can proceed to <a href="/#/login">login</a>
                     </nav>
                 </div>}
         </main>

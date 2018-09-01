@@ -11,8 +11,12 @@ class ChessboardComponent extends Component {
     fen: PropTypes.string,
     nickname: PropTypes.string,
     opponent: PropTypes.string,
+    isWhite:PropTypes.string,
   }
 
+  chessboardjsxCalcWidth = ({screenWidth,screenHeight}) => {
+   return screenWidth/2
+  }
 
   onDrop = ({sourceSquare, targetSquare, piece}) => {
     const move = {from: sourceSquare, to: targetSquare, promotion: "q"}
@@ -26,12 +30,12 @@ class ChessboardComponent extends Component {
 
 
   render() {
-    const {props: {fen,nickname,opponent}} = this
+    const {props: {fen,isWhite,nickname,opponent}} = this
 
-    return <div>>
+    return <div>
       <h1> {nickname} vs {opponent}</h1>
 
-      <Chessboard onDrop={this.onDrop} position={fen}/>
+      <Chessboard orientation={isWhite ? 'white' : 'black'} onDrop={this.onDrop} calcWidth={this.chessboardjsxCalcWidth} position={fen}/>
     </div>
   }
 
