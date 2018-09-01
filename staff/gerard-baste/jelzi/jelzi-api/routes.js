@@ -73,16 +73,17 @@ router.post('/user/:email/menus', [validateJwt, jsonBodyParser], (req, res) => {
     const { params: { email }, body: { title }} = req
     
     logic.addMenu(email, title)
-        .then((id) => res.json({ message: 'Menu added correctly', id }))
+        .then(menus => res.json({ message: 'Menu added correctly', menus}))
         .catch(err => {
             const { message } = err
+            
             res.status(err instanceof LogicError ? 400 : 500).json({ message })
         })
 })
 
 // List Menus
 
-router.get('/user/:email/menus', validateJwt, (req, res) =>{
+router.get('/user/:email/menus', [validateJwt, jsonBodyParser], (req, res) =>{
     const { params: { email } } = req
 
     logic.listMenus(email)
@@ -108,7 +109,6 @@ router.delete('/user/:email/menus/:id', validateJwt, (req, res) => {
 })
 
 
-
 //DISHES RUTES//
 
 //Add dishes//
@@ -126,7 +126,7 @@ router.post('/user/:email/menus/:menuId/dishes', [validateJwt, jsonBodyParser], 
 
 // List dishes //
 
-router.get('/user/:email/menus/:menuId/dishes', validateJwt, (req, res) =>{
+router.get('/user/:email/menus/:menuId/dishes', [validateJwt, jsonBodyParser], (req, res) =>{
     const { params: { email, menuId } } = req
 
     logic.listDishes(email, menuId)
@@ -140,7 +140,7 @@ router.get('/user/:email/menus/:menuId/dishes', validateJwt, (req, res) =>{
 
 // Remove Dish //
 
-router.delete('/user/:email/menus/:menuId/dishes/:id', validateJwt, (req, res) => {
+router.delete('/user/:email/menus/:menuId/dishes/:id', [validateJwt, jsonBodyParser], (req, res) => {
     const{ params: { email, menuId, id }} = req
 
     logic.removeDish(email, menuId, id)
@@ -169,7 +169,7 @@ router.get('/search/:query', (req, res) =>{
 
 // User search with allergens //
 
-router.get('/user/:email/search/:query' , validateJwt,  (req, res) =>{
+router.get('/user/:email/search/:query' , [validateJwt, jsonBodyParser],  (req, res) =>{
     const { params: { query, email } } = req
     debugger
     return logic.searchRecipeAllergens(query, email)
@@ -183,7 +183,7 @@ router.get('/user/:email/search/:query' , validateJwt,  (req, res) =>{
 
 // Search recipe ID //
 
-router.get('/user/:email/search/menus/:menuId' , validateJwt,  (req, res) =>{
+router.get('/user/:email/search/menus/:menuId' , [validateJwt, jsonBodyParser],  (req, res) =>{
     const { params: { email, menuId } } = req
     debugger
     return logic.searchRecipeById(email, menuId)
@@ -193,72 +193,6 @@ router.get('/user/:email/search/menus/:menuId' , validateJwt,  (req, res) =>{
 
         res.status(err instanceof LogicError ? 400 : 500).json({ message })
     })
-})
-
-
-
-
-
-//, JSON.stringify({ password, newPassword }), 200)
-
-
-
-
-//CONTACTS ROUTES//
-
-// Add contacts
-
-router.post('/user/:usermail/contacts', [validateJwt, jsonBodyParser], (req, res) => {
-    const { params: { usermail }, body: { name, surname, phone, contactmail, address }} = req
-
-    logic.addContact(usermail, name, surname, phone, contactmail, address)
-    .then((id)=> res.json({ message : 'Contact added correctly',id}))
-    .catch(err => {
-        const { message } = err
-
-        res.status(err instanceof SuperError ? 400 : 500).json({ message })
-    })
-    
-})
-
-// Delete contacts
-
-router.delete('/user/:usermail/contacts/:id',validateJwt, (req, res) => {
-    const { params: { usermail, id }} = req
-    logic.deleteContact(usermail,id)
-    .then(() => res.json({ message: 'Contact deleted correctly'}))
-    .catch(err => {
-        const { message } = err
-
-        res.status(err instanceof SuperError ? 400 : 500).json({ message })
-    })
-
-})
-
-// Edit contacts
-
-router.put('/user/:usermail/contacts/:id',[validateJwt, jsonBodyParser], (req, res) => {
-    const {params : {id,usermail}, body: { name, surname, phone, contactmail, address }} = req
-    logic.updateContact(usermail, id, name, surname, phone, contactmail, address)
-        .then(() => res.json({message: "Contact updated successfully!"}))
-        .catch(err => {
-            const { message } = err
-            res.status(err instanceof SuperError ? 418 : 500).json({ message })
-        })
-
-})
-
-// List contacts
-
-router.get('/user/:usermail/contacts', validateJwt, (req, res) =>{
-    const { params: { usermail }} = req
-    logic.listContacts(usermail)
-        // .then(res.json.bind(res))
-        .then(contacts => res.json({contacts}))
-        .catch(err => {
-            const { message } = err
-            res.status(err instanceof SuperError ? 429 : 500).json({ message })
-        })
 })
 
 

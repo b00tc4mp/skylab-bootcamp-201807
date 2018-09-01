@@ -13,7 +13,16 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
+    "test": "mocha src/client/logic --timeout 15000",
+    "test-debug": "mocha debug src/client/logic/index.spec.js ",
     "eject": "react-scripts eject"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "dotenv": "^6.0.0",
+    "es6-promise": "^4.2.4",
+    "isomorphic-fetch": "^2.2.1",
+    "jsonwebtoken": "^8.3.0",
+    "mocha": "^5.2.0"
   }
 }

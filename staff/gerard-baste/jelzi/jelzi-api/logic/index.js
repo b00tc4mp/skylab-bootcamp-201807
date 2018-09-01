@@ -83,6 +83,7 @@ const logic = {
             .then(() => {
                 this._validateEmail(email)
                 this._validateStringField('password', password)
+                this._validateArrayField('new allergens', newAllergens)
 
                 return User.findOne({ email })
             })
@@ -119,7 +120,7 @@ const logic = {
 
                 return user.save()
             })
-            .then(() => true)
+            .then(user => user.menus )
     },
 
     addDish(email, titleDish, recipeId, order, menuId) {
@@ -128,7 +129,7 @@ const logic = {
                 this._validateEmail(email)
                 this._validateStringField('title Dish', titleDish)
                 this._validateStringField('recipe Id', recipeId)
-                // this._validateStringField('menuId', menuId)
+                this._validateStringField('menuId', menuId)
                 this._validateNumberField('order', order)
 
                 return User.findOne({ email })
@@ -146,14 +147,6 @@ const logic = {
                 
                 let menuExists = user.menus.find(elem => elem._id.toString() === menuId)
                 if (!menuExists) throw new LogicError(`Menu not found`)
-                // {
-                //     const menu = {titleMenu, dish}
-                
-                //     user.menus.push(new Menu({title:titleMenu,dish}))
-
-                //     return user.save()
-                // } else {
-                    // return user.menus.push(new Dish(dish))
                     user.menus.forEach(element => {
                         
                         if (element._id.toString() === menuId) {
@@ -161,9 +154,8 @@ const logic = {
                             return user.save()
                         }
                     });
-                return user //CUTRE 
+                return user 
             })
-            // .then(user => user)
     },
 
     removeDish(email, menuId, id) {
@@ -220,7 +212,7 @@ const logic = {
                     return User.findOne({ email })
                 })
                     .then(user => {
-                        if(!user) throw new SuperError (`user ${user} does not exist`)
+                        if(!user) throw new LogicError (`user ${user} does not exist`)
                         return menus = user.menus.map(menu => menu)
                         })
     },
@@ -228,6 +220,7 @@ const logic = {
     listDishes(email, menuId) { 
         return Promise.resolve()
             .then(() => {
+                debugger
                 this._validateEmail(email)
                 this._validateStringField('menu ID', menuId)
                 
@@ -237,7 +230,7 @@ const logic = {
                     if(!user) throw new LogicError(`user ${user} does not exist`)
 
                     if(!menuId) throw new LogicError('Invalid menu ID')
-
+                    debugger
                     return user.menus.find(menu => menu.id === menuId).dishes
                 })
     },
@@ -251,7 +244,8 @@ const logic = {
         return Promise.resolve()
             .then(() => {
                 this._validateEmail(email)
-                this._validateStringField('Menu Id', menuId)
+                this._validateStringField('Menu ID', menuId)
+                
                 return User.findOne({ email, "menus._id": ObjectId(menuId) }) 
                 
             })
@@ -367,7 +361,7 @@ const logic = {
         return Promise.resolve()
             .then(() => {
                 this._validateStringField('query', query)
-        
+
                 return fetch(`https://api.edamam.com/search?q=${query}&app_id=${appId}&app_key=${appKey}&from=0&to=100`)
 
             })
