@@ -47,7 +47,6 @@ const logic = {
       .then(() => {
         this._validateStringField('nickname', nickname)
         this._validateStringField('password', password)
-
         return User.findOne({nickname})
       })
       .then(user => {
@@ -125,6 +124,7 @@ const logic = {
               obj.id = game.id
               obj.opponent = game.initiator === nickname ? game.acceptor : game.initiator
               obj.state = game.state
+              obj.toPlay = game.toPlay
               let engine = this._currentEngines.get(game.engineID)
               if (!engine) {
                 engine = new Chess()
@@ -241,7 +241,8 @@ const logic = {
         if (!result) throw new LogicError(`move is not allowed`)
         else {
           game.pgn = engine.pgn()
-         // game.fen = engine.fen()
+          game.toPlay = nickname === game.initiator ? game.acceptor : game.initiator
+          // game.fen = engine.fen()
           return game.save()
             .then(_ => {
               return true

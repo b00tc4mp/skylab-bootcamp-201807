@@ -19,7 +19,7 @@ const socketLogic = {
 
   announceMoveMade(mover, receiver) {
     this.io.emit(`update to games ${mover}`)
-    this.io.emit(`update to games ${mover}`)
+    this.io.emit(`update to games ${receiver}`)
   },
 
   requestConnection(destination) {

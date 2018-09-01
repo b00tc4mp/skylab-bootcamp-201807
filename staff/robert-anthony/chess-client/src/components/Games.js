@@ -1,10 +1,9 @@
 import React, {Component} from 'react'
 import classNames from 'classnames'
-import {Container, Row, Col} from 'reactstrap';
+import {Container, Row, Col, Alert} from 'reactstrap';
 import {Button, Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap';
 import OpenGames from "./OpenGames"
 import ChessboardGroup from "./ChessboardGroup"
-import GamesInvited from "./GamesInvited"
 import PropTypes from 'prop-types'
 
 
@@ -18,66 +17,93 @@ class Games extends Component {
   }
 
   state = {
-    currentGameViewed: JSON.parse(sessionStorage.getItem('currentGameViewedID')) || null,
+    currentGameID: sessionStorage.getItem('currentGameID') || '',
     error: '',
     inviter: '',
     invitedGameID: '',
     modal: false,
   }
 
-/*
   getDerivedStateFromProps(props, state) {
-    debugger
-    if (this.state.currentGameViewed.id) {
-      const id = this.state.currentGameViewed.id
-      const currentGameViewed = props.currentGames.find(game => game.id === id)
-      return {currentGameViewed}
-    }
-    else return null
+    console.log('getDerivedStateFromProps in Game')
+    /*  debugger
+      if (this.state.currentGameViewed.id) {
+        const id = this.state.currentGameViewed.id
+        const currentGameViewed = props.currentGames.find(game => game.id === id)
+        return {currentGameViewed}
+      }
+      else return null*/
   }
-*/
 
+  clearError = () => {
+    const {state:{error}} = this
+    this.setState({error:''})
+  }
 
   onRespondToGameRequest = (destination, gameID, answer) => {
     const {props: {onRespondToGameRequest}} = this
+    this.clearError()
     this.setState({modal: false, inviter: '', invitedGameID: ''})
 
     onRespondToGameRequest(destination, gameID, answer)
   }
 
-  onOpenGamesUserClick = (game) => {
+  onGameMove = (move, gameID, opponent) => {
+    const {props: {onGameMove, nickname, currentGames}, state: { currentGameID}} = this
+    this.clearError()
+    if (gameID === currentGameID) {
+      const game = currentGames.find(game => game.id === gameID)
+      if (game) {
+        if (game.toPlay === nickname) {
+          onGameMove(move, gameID, opponent)
+        } else {
+          this.setState({error: "It's not your turn"})
+        }
+      }
+    }
+  }
 
+
+  onOpenGamesUserClick = (game) => {
+    this.clearError()
     if (game.state === "invited") {
       this.setState({modal: true, inviter: game.opponent, invitedGameID: game.id})
     } else {
-      sessionStorage.setItem('currentGameViewed', JSON.stringify(game))
-      this.setState({currentGameViewed: game})
+      sessionStorage.setItem('currentGameID', game.id)
+      this.setState({currentGameID: game.id})
     }
   }
 
 
   render() {
-    let {props: {onGameMove, currentGames, nickname}, state: {currentGameViewed, inviter, invitedGameID}} = this
-
+    let {props: {currentGames, nickname}, state: {error, currentGameID, inviter, invitedGameID}, onGameMove} = this
 
     return <main>
       <div>
         <nav>
         </nav>
-        <h1>You are playing as {nickname}</h1>
+
         <Container>
+          <Row>
+            <Col xs="12" md="3">
+              <h1>You are playing as {nickname}</h1>
+            </Col>
+            <Col xs="12" md="8">
+              {error && <Alert color="warning"> {error}</Alert>}
+            </Col>
+          </Row>
           <Row>
             <Col xs="12" md="3">
               {currentGames.length && <OpenGames onUserClick={this.onOpenGamesUserClick}
                                                  games={currentGames.filter(game => game.state !== 'terminated')}
                                                  nickname={nickname}
-                                                 currentGameViewed={currentGameViewed}/>
+                                                 currentGameViewed={currentGames.find(game => game.id === currentGameID)}/>
 
               }
             </Col>
             <Col xs="12" md="9">
               {currentGames.length && <ChessboardGroup onGameMove={onGameMove}
-                                                       currentGame={currentGameViewed}
+                                                       currentGame={currentGames.find(game => game.id === currentGameID)}
                                                        nickname={nickname}/>}
             </Col>
 
@@ -95,7 +121,6 @@ class Games extends Component {
                     onClick={() => this.onRespondToGameRequest(inviter, invitedGameID, false)}> Reject </Button>
           </ModalFooter>
         </Modal>
-
 
       </div>
     </main>

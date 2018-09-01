@@ -34,7 +34,6 @@ class OpenGames extends Component {
       userList = games.map(game => {
         let isCurrent = false
         if (currentGameViewed && (currentGameViewed.id === game.id)) isCurrent = true
-        console.log(currentGameViewed,isCurrent)
         return <ListGroupItem key={game + Math.random()} tag="a" href="#" onClick={e => this.onUserClick(e, game)}>{`${game.opponent}`}{(game.state === 'invited') && <i className='far fa-envelope'></i> }{isCurrent && <i className='fas fa-chess'></i> } </ListGroupItem>
       })
     }
