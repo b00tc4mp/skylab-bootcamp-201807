@@ -1,0 +1,30 @@
+.register {
+  display: grid;
+  grid-template: 40px repeat(3, 30px) auto repeat(2, 30px)/1fr;
+  justify-items: center;
+  grid-gap: 10px;
+}
+.register h3 {
+  justify-self: start;
+  padding: 5%;
+  color: #EA6848;
+}
+.register p {
+  color: #EA6848;
+}
+.register button {
+  width: 50%;
+  height: 100%;
+  background: none;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+.register input {
+  border: none;
+  background-color: rgba(178, 178, 178, 0.3);
+  border-radius: 10px;
+  padding: 5px;
+  width: 80%;
+}
+
+/*# sourceMappingURL=Register.css.map */

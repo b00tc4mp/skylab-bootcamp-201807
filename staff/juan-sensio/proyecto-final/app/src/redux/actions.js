@@ -1,26 +1,20 @@
-// actions
-    // user
-const LOGIN = "LOGIN"
-    // layout
+const LOGIN = 'LOGIN'
+const LOGOUT = 'LOGOUT'
 const SET_LAYOUT = 'SET_LAYOUT'
+const UPDATE_SETTING = 'UPDATE_SETTING'
 
-// action creators
-    // user
-const login = loggedIn => ({ type: LOGIN, loggedIn })
-    // layout
+const login = () => ({ type: LOGIN })
+const logout = () => ({ type: LOGOUT })
 const setLayout = layout => ({type: SET_LAYOUT, layout})
-
-// exports
+const updateSetting = (key, value) => ({type: UPDATE_SETTING, key, value})
 
 export {
-    // actions
-        // user
     LOGIN,
-        // layout
+    LOGOUT,
     SET_LAYOUT,
-    // creators
-        //user
+    UPDATE_SETTING,
     login,
-        // layout
-    setLayout
+    logout,
+    setLayout,
+    updateSetting
 }

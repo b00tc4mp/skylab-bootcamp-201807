@@ -1,10 +1,25 @@
-import React from 'react';
+import React from 'react'
+import { connect } from 'react-redux'
+import { updateSetting } from '../redux/actions'
 
 import './styles/Settings.css'
 
+const mapStateToProps = ({settings}) => ({
+    FPS: settings.FPS,
+    MAX_DIM: settings.MAX_DIM,
+    ISF: settings.ISF,
+    OS: settings.OS
+})
+
+const mapDispatchToProps = dispatch => ({
+    updateSetting: (key, value) => dispatch(updateSetting(key, value))
+})
+
 function Settings(props) {
-    const { FPS, MAX_DIM, ISF, OS } = props.settings
+
+    const { FPS, MAX_DIM, ISF, OS } = props
     const { updateSetting } = props
+
     return (
         <div className='settings'>
             <div className='setting'>
@@ -32,4 +47,4 @@ function Settings(props) {
     )
 }
 
-export default Settings
+export default connect(mapStateToProps, mapDispatchToProps)(Settings)

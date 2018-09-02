@@ -1,4 +1,7 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { updateSetting } from '../redux/actions'
+import logic from '../logic'
 
 import './styles/Workspace.css'
 
@@ -12,6 +15,21 @@ import playIcon from './pics/play-icon.svg'
 import stopIcon from './pics/stop-icon.svg'
 import dancerIcon from './pics/dancer-icon.svg'
 import starsIcon from './pics/stars-icon.svg'
+
+const mapStateToProps = ({user, settings}) => ({
+    loggedIn: user.loggedIn,
+    FPS: settings.FPS,
+    REF_RATE: settings.REF_RATE,
+    MAX_DIM: settings.MAX_DIM,
+    ISF: settings.ISF,
+    OS: settings.OS,
+    FH: settings.FH,
+    videoSrc: settings.mainVideoSrc
+})
+
+const mapDispatchToProps = dispatch => ({
+    updateSetting: (key, value) => dispatch(updateSetting(key, value))
+})
 
 class Workspace extends Component {
 
@@ -75,7 +93,7 @@ class Workspace extends Component {
         const w = video.videoWidth
         const h = video.videoHeight
         const ar = w / h
-        const MAX_DIM = this.props.settings.MAX_DIM
+        const MAX_DIM = this.props.MAX_DIM
         if (w < h) {
             video.height = Math.min(MAX_DIM, h)
             video.width = ar * video.height
@@ -96,7 +114,8 @@ class Workspace extends Component {
         //video.onloadedmetadata = event => {
         let cb = () => {
             this.adjustVideoSize(video)
-            this.setState({ save: true, video: true, pose: false, frame: false })
+            clearInterval(this.id)
+            this.setState({ save: true, video: true, pose: false, frame: false, showVideo: true })
         }
         video.addEventListener('loadeddata', cb)
     }
@@ -112,8 +131,9 @@ class Workspace extends Component {
 
     saveVideo = () => {
         this.setState({ msg: 'saving ... (this could take a while)' })
-        this.props.saveVideo(this.file)
+        logic.saveVideo(this.file)
             .then(() => this.setState({ msg: 'video saved !', save: false }))
+            .then(() => window.location.reload())
             .catch(err => this.setState({ msg: err.message }))
     }
 
@@ -123,8 +143,8 @@ class Workspace extends Component {
         const ctx = canvas.getContext('2d')
         let frames = this.frames = []
         this.poses = this.poses2 = []
-        const REF_RATE = this.props.settings.REF_RATE
-        const FPS = this.props.settings.FPS
+        const REF_RATE = this.props.REF_RATE
+        const FPS = this.props.FPS
         this.setState({ msg: `taking frames at ${FPS} fps` })
         video.addEventListener('play', () => {
             (function loop() {
@@ -148,7 +168,7 @@ class Workspace extends Component {
     playFrames = frames => {
         this.setState({ showVideo: false, msg: '' })
         const image = this.refs.image
-        const REF_RATE = this.props.settings.REF_RATE
+        const REF_RATE = this.props.REF_RATE
         let cnt = this.cnt
         clearInterval(this.id)
         this.id = setInterval(() => {
@@ -167,9 +187,9 @@ class Workspace extends Component {
         let poses = this.poses = []
         let poses2 = this.poses2 = []
         let cnt = 0
-        const ISF = this.props.settings.ISF
-        const FH = this.props.settings.FH
-        const OS = this.props.settings.OS
+        const ISF = this.props.ISF
+        const FH = this.props.FH
+        const OS = this.props.OS
         const net = this.net
         const image = this.refs.image2
         const canvas = this.refs.canvas
@@ -258,4 +278,4 @@ class Workspace extends Component {
     }
 }
 
-export default Workspace
+export default connect(mapStateToProps, mapDispatchToProps)(Workspace)

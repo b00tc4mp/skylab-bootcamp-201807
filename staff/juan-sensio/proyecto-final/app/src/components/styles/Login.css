@@ -1,3 +1,13 @@
+.app {
+  display: grid;
+  grid-template: 100vh/5% 25% auto;
+}
+
+.app-mobile {
+  display: grid;
+  grid-template: 1fr/1fr;
+}
+
 .login {
   display: grid;
   grid-template: 40px repeat(2, 30px) auto repeat(2, 30px)/1fr;

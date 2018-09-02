@@ -1,71 +1,41 @@
-import * as actions from "./actions"
-import { combineReducers } from "redux";
+import * as actions from './actions'
+import { combineReducers } from 'redux'
 
-// user
-
-const userInitialState = {
-  loggedIn: false
-}
-
-const userReducer = (state = userInitialState, action) => {
+const userReducer = (state = {}, action) => {
   switch (action.type) {
     case actions.LOGIN:
-      return Object.assign({}, state, { loggedIn: action.loggedIn })
+      return Object.assign({}, state, { loggedIn: true })
+    case actions.LOGOUT:
+      return Object.assign({}, state, { loggedIn: false })
     default:
       return state
   }
-};
-
-// layout
-
-const initialLayout = {
-  layout: true,
-  workspace: true,
-  profile: true,
-  settings: false,
-  help: false
 }
 
-const layoutReducer = (state = initialLayout, action) => {
+const layoutReducer = (state = false, action) => {
   switch (action.type) {
     case actions.SET_LAYOUT:
-      return Object.assign({}, state, { 
-          layout: action.layout.layout,
-          workspace: action.layout.workspace,
-          profile: action.layout.profile,
-          settings: action.layout.settings,
-          help: action.layout.help,
-        })
+      return action.layout
     default:
       return state
   }
-};
-
-// app
-
-const appInitialState = {
-  mainVideoSrc: '',
-  ISF: 0,
-  OS: 0,
-  FH: false, 
-  MAX_DIM: 0,
-  FPS: 0,
-  REF_RATE: 0
 }
 
-const appReducer = (state = appInitialState, action) => {
+const settingsReducer = (state = {}, action) => {
   switch (action.type) {
+    case actions.UPDATE_SETTING:
+      const newSetting = {}
+      newSetting[action.key] = action.value
+      return Object.assign({}, state, newSetting)
     default:
       return state
   }
 }
-
-// combine reducers
 
 const rootReducer = combineReducers({
   user: userReducer,
   layout: layoutReducer,
-  app: appReducer
+  settings: settingsReducer
 })
 
 export default rootReducer
