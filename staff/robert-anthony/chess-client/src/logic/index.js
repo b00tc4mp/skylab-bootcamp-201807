@@ -70,13 +70,11 @@ const logic = {
     },
 
 
-  getAllUsers(token) {
+  getUsersForString(nickname,str, token) {
 
     return Promise.resolve()
       .then(() => {
-
-
-        return this._call(`users`, 'GET', {
+        return this._call(`user/${nickname}/users?term=${str}`, 'GET', {
           'Content-Type': 'application/json',
           'authorization': `bearer ${token}`
 

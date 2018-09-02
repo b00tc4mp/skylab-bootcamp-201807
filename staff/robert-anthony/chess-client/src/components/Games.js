@@ -26,13 +26,7 @@ class Games extends Component {
 
   static getDerivedStateFromProps(props, state) {
     console.log('getDerivedStateFromProps in Game')
-    /*  debugger
-      if (this.state.currentGameViewed.id) {
-        const id = this.state.currentGameViewed.id
-        const currentGameViewed = props.currentGames.find(game => game.id === id)
-        return {currentGameViewed}
-      }
-      else return null*/
+
   }
 
   clearError = () => {

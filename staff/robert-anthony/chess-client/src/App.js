@@ -62,17 +62,13 @@ class App extends Component {
       .catch(({message}) => this.setState({error: message}))
   }
 
-  getUsersNotPlayingWith() {
-    const usersAmPlayingWith = this.state.currentGames.map(game => game.opponent)
-    return this.users.filter(user => usersAmPlayingWith.indexOf(user) === -1)
-  }
-
   alivePing = () => {
     this.socket.emit('client alive', this.state.nickname)
   }
 
-  getAllUsers = (token) => {
-    logic.getAllUsers(token)
+  getUsersForString = (str, token) => {
+    const {state:{nickname}} = this
+    logic.getUsersForString(nickname,str,token)
       .then(users => {
         sessionStorage.setItem('users', JSON.stringify(users))
         this.setState({users})
@@ -80,6 +76,16 @@ class App extends Component {
       })
       .catch(({message}) => this.setState({error: message}))
   }
+/*
+  getOpponents = (nickname,token) => {
+    logic.getOpponents(nickname,token)
+      .then(users => {
+        sessionStorage.setItem('users', JSON.stringify(users))
+        this.setState({users})
+
+      })
+      .catch(({message}) => this.setState({error: message}))
+  }*/
 
   onRespondToGameRequest = (destination, gameID, answer) => {
     const {state: {nickname, token}} = this
@@ -114,11 +120,13 @@ class App extends Component {
       })
 
       this.socket.on('user disconnected', () => {
-        if (this.state.token !== '') this.getAllUsers(this.state.token)
+        const {state:{token}} = this
+        if (token ) this.getUsersForString('',token)
       })
 
       this.socket.on('user connected', () => {
-        if (this.state.token !== '') this.getAllUsers(this.state.token)
+        const {state:{token}} = this
+        if (token ) this.getUsersForString('',token)
       })
 
       this.socket.on('reconnect', (attemptNumber) => {
@@ -146,7 +154,6 @@ class App extends Component {
     this.setState({nickname: nickname, token})
     this.socket.emit('authenticated', nickname)
     this.aliveInterval = setInterval(this.alivePing, 10 * 1000);
-    this.getAllUsers(token)
     sessionStorage.setItem('nickname', nickname)
     sessionStorage.setItem('token', token)
   }
@@ -195,17 +202,11 @@ class App extends Component {
       <Switch>
         <Route exact path="/" render={() => this.isLoggedIn() ? <Redirect to="/games"/> : <Landing/>}/>
         <Route path="/register" render={() => this.isLoggedIn() ? <Redirect to="/games"/> : <Register/>}/>
-      {/*  <Route path="/main" render={() => this.isLoggedIn() ?
-          <Main
-            users={users}
-            onRequestGame={this.onRequestGame}
-            nickname={nickname}
-          /> : <Landing/>}/>*/}
+
         <Route path="/games" render={() => this.isLoggedIn() ?
           <Games
             onGameMove={this.onGameMove}
             currentGames={currentGames}
-            users={users}
             onRespondToGameRequest={this.onRespondToGameRequest}
             nickname={nickname}
           /> : <Landing/>}/>
@@ -215,6 +216,7 @@ class App extends Component {
             currentGames={currentGames}
             allUsers={users}
             nickname={nickname}
+            onUserSearchByString={term =>this.getUsersForString(term,token)}
           /> : <Landing/>}/>
         <Route path="/login" render={() => this.isLoggedIn() ? <Redirect to="/games"/> :
           <Login onLoggedIn={this.onLoggedIn}/>}/>

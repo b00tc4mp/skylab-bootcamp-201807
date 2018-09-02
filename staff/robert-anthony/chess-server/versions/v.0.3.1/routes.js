@@ -69,17 +69,19 @@ router.get('/user/:nickname/games', [validateJwt], (req, res) => {
 })
 
 
-/*  get users for string */
-router.get('/user/:nickname/users', [validateJwt], (req, res) => {
-  const {query:{term},params:{nickname}} = req
+/*  get all users */
+router.get('/users', [validateJwt], (req, res) => {
 
-  logic.getUsersForString(nickname,term)
+  const {nickname} = req
+
+  logic.getAllUsers()
     .then(users => res.json(users))
     .catch(err => {
       const {message} = err
       res.status(err instanceof LogicError ? 400 : 500).json({message})
     })
 })
+
 
 
 

@@ -12,11 +12,13 @@ class Invite extends Component {
     currentGames:PropTypes.array,
     nickname:PropTypes.string,
     allUsers:PropTypes.array,
+    onUserSearchByString:PropTypes.func
   }
 
   state = {
     error: "",
-    usersNotPlayingWith: []
+    usersNotPlayingWith: [],
+    userSearchTerm: ''
   }
 
   onUserClick = (e, user) => {
@@ -31,8 +33,16 @@ class Invite extends Component {
     return {usersNotPlayingWith}
   }
 
+  onKeepUserSearchTermAndDoSearch = e => {
+    const {props:{onUserSearchByString}} = this
+    const term = e.target.value
+    this.setState({userSearchTerm:term})
+    onUserSearchByString(term)
+
+  }
+
   render() {
-    let {props: {nickname},state:{usersNotPlayingWith}} = this
+    let {props: {nickname},state:{userSearchTerm,usersNotPlayingWith}} = this
     let userList
     if (usersNotPlayingWith.length) {
 
@@ -46,8 +56,11 @@ class Invite extends Component {
 
 
         <div className="main__userlist">
+          <form >
+            <input autoFocus placeholder="Enter a search term" value={userSearchTerm} onChange={this.onKeepUserSearchTermAndDoSearch} type="text"/>
+          </form>
           <ListGroup>
-            {usersNotPlayingWith.length ? userList : <li>There is no-one to invite at the moment</li>}
+            {usersNotPlayingWith.length ? userList : <li>Please search for users</li>}
           </ListGroup>
         </div>
 

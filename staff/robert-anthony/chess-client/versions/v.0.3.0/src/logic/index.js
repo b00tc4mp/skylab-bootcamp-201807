@@ -70,7 +70,7 @@ const logic = {
     },
 
 
-  getAllUsers(token) {
+  getUsersForString(token) {
 
     return Promise.resolve()
       .then(() => {

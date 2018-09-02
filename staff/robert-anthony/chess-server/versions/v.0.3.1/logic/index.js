@@ -175,42 +175,12 @@ const logic = {
       .then(() => true)
   },
 
-  getUsersForString(nickname, term) {
-    return Promise.resolve()
-      .then(_ => {
-        if (!term) return []
-        else {
-          return User.find({nickname: {"$regex": term, $options: "i"}}).lean()
-            .then(users => {
-              users = users.map(user => user.nickname)
-              userSet = new Set
-              users.forEach(user => userSet.add(user))
-              userSet.delete(nickname)
-              return Array.from(userSet)
-            })
-        }
+  getAllUsers() {
+    return User.find({}).lean()
+      .then(users => {
+        return users.map(user => user.nickname)
       })
   },
-
-  /*
-
-    getOpponentsForUser(nickname) {
-      return Promise.resolve()
-        .then(_ => {
-          this._validateStringField("nickname", nickname)
-          return Game.find({$or: [{initiator: nickname}, {acceptor: nickname}]}).lean()
-        })
-        .then(games => {
-          const users = new Set
-          games.forEach(game => {
-            users.add(game.initiator)
-            users.add(game.acceptor)
-          })
-          users.delete(nickname)
-          return Array.from(users)
-        })
-    },
-  */
 
   terminateGame(nickname, gameID) {
     return Promise.resolve()
@@ -272,14 +242,7 @@ const logic = {
 
   move(nickname, gameID, move) {
     let game
-
-    return Promise.resolve()
-      .then(_ => {
-        this._validateStringField("nickname", nickname)
-        this._validateStringField("gameID", gameID)
-        if (typeof move !== 'object' || !move.from || !move.to || !move.promotion) throw new LogicError('move was of wrong format')
-        return Game.findOne({_id: mongoose.Types.ObjectId(gameID)})
-      })
+    return Game.findOne({_id: mongoose.Types.ObjectId(gameID)})
       .then(_game => {
         game = _game
 
@@ -335,7 +298,6 @@ const logic = {
         this._validateStringField("confirmer", confirmer)
         this._validateStringField("destination", destination)
         this._validateStringField("gameID", gameID)
-        if (typeof answer !== 'boolean') throw LogicError('answer is not type boolean')
         return Game.findOne({_id: mongoose.Types.ObjectId(gameID)})
       })
       .then(game => {
