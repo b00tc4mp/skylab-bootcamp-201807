@@ -44,13 +44,7 @@ class Invite extends Component {
   render() {
     let {props: {nickname},state:{userSearchTerm,usersNotPlayingWith}} = this
     let userList
-    if (usersNotPlayingWith.length) {
-
-
-      userList = usersNotPlayingWith.map(user => {
-      if (user !== nickname)  return <ListGroupItem tag="a" href="#" key={user + Math.random()} onClick={e => this.onUserClick(e, user)}> {`${user}`}</ListGroupItem>
-      })
-    }
+    
     return <main>
       <div className="screen">
 
@@ -60,7 +54,9 @@ class Invite extends Component {
             <input autoFocus placeholder="Enter a search term" value={userSearchTerm} onChange={this.onKeepUserSearchTermAndDoSearch} type="text"/>
           </form>
           <ListGroup>
-            {usersNotPlayingWith.length ? userList : <li>Please search for users</li>}
+            {usersNotPlayingWith.length ? usersNotPlayingWith.map(user => {
+              if (user !== nickname)  return <ListGroupItem tag="a" href="#" key={user + Math.random()} onClick={e => this.onUserClick(e, user)}> {`${user}`}</ListGroupItem>
+            }) : <li>Please search for users</li>}
           </ListGroup>
         </div>
 

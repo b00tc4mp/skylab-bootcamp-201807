@@ -34,8 +34,9 @@ class OpenGames extends Component {
         let isCurrent = false
         if (currentGameViewed && (currentGameViewed.id === game.id)) isCurrent = true
         return <ListGroupItem key={game + Math.random()} tag="a" href="#"
-                              onClick={e => this.onUserClick(e, game)}>{`${game.opponent}`}{(game.state === 'invited') &&
-        <i className='far fa-envelope'></i>}{isCurrent && <i className='fas fa-chess'></i>} </ListGroupItem>
+                              onClick={e => this.onUserClick(e, game)}>{`${game.opponent}`}&nbsp;{(game.state === 'invited') &&
+        <i className='far fa-user-circle'></i>}&nbsp;{(game.toPlay === nickname) &&
+        <i className='fas fa-chess-pawn'></i>}&nbsp;{isCurrent && <i className='far fa-eye'></i>} </ListGroupItem>
       })
     }
     return <main>
