@@ -1,4 +1,4 @@
-import { Document } from "mongoose";
+import { Document, Types } from "mongoose";
 import CommentInterface from "./comment-interface";
 
 /**
@@ -8,6 +8,8 @@ import CommentInterface from "./comment-interface";
  * @extends {CommentInterface}
  * @extends {Document}
  */
-interface CommentModelInterface extends CommentInterface, Document { }
+interface CommentModelInterface extends CommentInterface, Document {
+  user: Types.ObjectId;
+}
 
 export default CommentModelInterface;

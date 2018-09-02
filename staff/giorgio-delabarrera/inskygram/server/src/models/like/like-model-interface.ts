@@ -1,4 +1,4 @@
-import { Document } from "mongoose";
+import { Document, Types } from "mongoose";
 import LikeInterface from "./like-interface";
 
 /**
@@ -8,6 +8,8 @@ import LikeInterface from "./like-interface";
  * @extends {LikeInterface}
  * @extends {Document}
  */
-interface LikeModelInterface extends LikeInterface, Document { }
+interface LikeModelInterface extends LikeInterface, Document {
+  user: Types.ObjectId;
+}
 
 export default LikeModelInterface;

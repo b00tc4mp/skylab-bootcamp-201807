@@ -1,4 +1,4 @@
-import { Document } from "mongoose";
+import { Document, Types } from "mongoose";
 import NotificationInterface from "./notification-interface";
 
 /**
@@ -8,6 +8,9 @@ import NotificationInterface from "./notification-interface";
  * @extends {NotificationInterface}
  * @extends {Document}
  */
-interface NotificationModelInterface extends NotificationInterface, Document { }
+interface NotificationModelInterface extends NotificationInterface, Document {
+  user: Types.ObjectId;
+  post: Types.ObjectId;
+}
 
 export default NotificationModelInterface;

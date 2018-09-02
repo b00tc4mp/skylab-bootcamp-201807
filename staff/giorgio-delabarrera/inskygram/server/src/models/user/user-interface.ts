@@ -1,5 +1,3 @@
-import { FollowerInterface } from "../follower";
-
 /**
  *
  *
@@ -20,7 +18,6 @@ interface UserInterface {
   enable: boolean;
   createdAt: Date;
   updatedAt: Date;
-  followers: FollowerInterface[];
 }
 
 export default UserInterface;

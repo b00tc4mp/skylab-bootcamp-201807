@@ -1,4 +1,4 @@
-import { Document } from "mongoose";
+import { Document, Types } from "mongoose";
 import UserTagInterface from "./user-tag-interface";
 
 /**
@@ -8,6 +8,8 @@ import UserTagInterface from "./user-tag-interface";
  * @extends {UserTagInterface}
  * @extends {Document}
  */
-interface UserTagModelInterface extends UserTagInterface, Document { }
+interface UserTagModelInterface extends UserTagInterface, Document {
+  user: Types.ObjectId;
+}
 
 export default UserTagModelInterface;

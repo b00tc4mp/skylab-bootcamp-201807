@@ -1,4 +1,4 @@
-import { Document } from "mongoose";
+import { Document, Types } from "mongoose";
 import FollowingInterface from "./following-interface";
 
 /**
@@ -8,6 +8,8 @@ import FollowingInterface from "./following-interface";
  * @extends {FollowingInterface}
  * @extends {Document}
  */
-interface FollowingModelInterface extends FollowingInterface, Document { }
+interface FollowingModelInterface extends FollowingInterface, Document {
+  user: Types.ObjectId;
+}
 
 export default FollowingModelInterface;
