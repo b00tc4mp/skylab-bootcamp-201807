@@ -47,9 +47,8 @@ describe("user", () => {
       return User.create({ username, email, password })
         .then(() => userLogic.register(username, otherEmail, password))
         .catch(err => err)
-        .then(({ errors }) => {
-          expect(errors.username.kind).toBe("unique");
-          expect(errors.username.message).toBe(`user with username ${username} already exist`);
+        .then(({ message }) => {
+          expect(message).toBe(`user with username ${username} already exists`);
         });
     });
 
@@ -59,63 +58,56 @@ describe("user", () => {
       return User.create({ username, email, password })
         .then(() => userLogic.register(otherUsername, email, password))
         .catch(err => err)
-        .then(({ errors }) => {
-          expect(errors.email.kind).toBe("unique");
-          expect(errors.email.message).toBe(`user with email ${email} already exist`);
+        .then(({ message }) => {
+          expect(message).toBe(`user with email ${email} already exists`);
         });
     });
 
     test("should fail on trying to register with an undefined username", () => {
       return userLogic.register(undefined, email, password)
         .catch(err => err)
-        .then(({ errors }) => {
-          expect(errors.username.kind).toBe("required");
-          expect(errors.username.message).toBe("username is required");
+        .then(({ message }) => {
+          expect(message).toBe("invalid username");
         });
     });
 
     test("should fail on trying to register with an undefined email", () => {
       return userLogic.register(username, undefined, password)
         .catch(err => err)
-        .then(({ errors }) => {
-          expect(errors.email.kind).toBe("required");
-          expect(errors.email.message).toBe("email is required");
+        .then(({ message }) => {
+          expect(message).toBe("invalid email");
         });
     });
 
     test("should fail on trying to register with an undefined password", () => {
       return userLogic.register(username, email, undefined)
         .catch(err => err)
-        .then(({ errors }) => {
-          expect(errors.password.kind).toBe("required");
-          expect(errors.password.message).toBe("password is required");
+        .then(({ message }) => {
+          expect(message).toBe("invalid password");
         });
     });
 
     test("should fail on trying to register with an empty username", () => {
       return userLogic.register("", email, password)
         .catch(err => err)
-        .then(({ errors }) => {
-          expect(errors.username.kind).toBe("required");
-          expect(errors.username.message).toBe("username is required");
+        .then(({ message }) => {
+          expect(message).toBe("invalid username");
         });
     });
 
     test("should fail on trying to register with an empty email", () => {
       return userLogic.register(username, "", password)
         .catch(err => err)
-        .then(({ errors }) => {
-          expect(errors.email.kind).toBe("required");
-          expect(errors.email.message).toBe("email is required");
+        .then(({ message }) => {
+          expect(message).toBe("invalid email");
         });
     });
 
     test("should fail on trying to register with an empty password", () => {
       return userLogic.register(username, email, "")
         .catch(err => err)
-        .then(({ errors }) => {
-          expect(errors.password.kind).toBe("required");
-          expect(errors.password.message).toBe("password is required");
+        .then(({ message }) => {
+          expect(message).toBe("invalid password");
         });
     });
 
@@ -202,6 +194,61 @@ describe("user", () => {
         });
     });
 
+    test("should update correctly without email parameter", () => {
+      const name = `name-${Math.random()}`;
+      const website = `https://www.${Math.random()}.com`;
+      const phoneNumber = `${Math.random()}`;
+      const gender = "male";
+      const biography = `bio-${Math.random()}`;
+      const privateAccount = false;
+
+      return userLogic.update(username, undefined, name, website, phoneNumber, gender, biography, privateAccount)
+        .then((res: boolean) => {
+          expect(res).toBeTruthy();
+
+          return User.findOne({ username });
+        })
+        .then((user: UserModelInterface) => {
+          expect(user.name).toBe(name);
+          expect(user.website).toBe(website);
+          expect(user.phoneNumber).toBe(phoneNumber);
+          expect(user.gender).toBe(gender);
+          expect(user.biography).toBe(biography);
+          expect(user.privateAccount).toBe(privateAccount);
+
+          expect(user.username).toBe(username);
+          expect(user.email).toBe(email);
+          expect(user.password).toBe(password);
+        });
+    });
+
+    test("should update correctly without name parameter", () => {
+      const website = `https://www.${Math.random()}.com`;
+      const phoneNumber = `${Math.random()}`;
+      const gender = "male";
+      const biography = `bio-${Math.random()}`;
+      const privateAccount = false;
+
+      return userLogic.update(username, undefined, undefined, website, phoneNumber, gender, biography, privateAccount)
+        .then((res: boolean) => {
+          expect(res).toBeTruthy();
+
+          return User.findOne({ username });
+        })
+        .then((user: UserModelInterface) => {
+          expect(user.name).toBeUndefined();
+          expect(user.website).toBe(website);
+          expect(user.phoneNumber).toBe(phoneNumber);
+          expect(user.gender).toBe(gender);
+          expect(user.biography).toBe(biography);
+          expect(user.privateAccount).toBe(privateAccount);
+
+          expect(user.username).toBe(username);
+          expect(user.email).toBe(email);
+          expect(user.password).toBe(password);
+        });
+    });
+
     test("should fail on trying to update an email that is already in use", () => {
       const newUsername = `user-${Math.random()}`;
       const newEmail = `user-${Math.random()}@inskygram.com`;
@@ -210,9 +257,8 @@ describe("user", () => {
       return userLogic.register(newUsername, newEmail, newPassword)
         .then((res: boolean) => userLogic.update(newUsername, email))
         .catch(err => err)
-        .then(({ errors }) => {
-          expect(errors.email.kind).toBe("unique");
-          expect(errors.email.message).toBe(`user with email ${email} already exist`);
+        .then(({ message }) => {
+          expect(message).toBe(`user with email ${email} already exists`);
         });
     });
 

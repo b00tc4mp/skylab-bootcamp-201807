@@ -9,8 +9,24 @@ const userLogic = {
 
     return Promise.resolve()
       .then(() => {
-        return User.create({ username, email, password });
+        if (!username) { throw new LogicError("invalid username"); }
+        if (!email) { throw new LogicError("invalid email"); }
+        if (!validator.isEmail(email)) { throw new LogicError("invalid email"); }
+        if (!password) { throw new LogicError("invalid password"); }
+
+        return User.findOne({ username });
       })
+      .then((user: UserModelInterface) => {
+        if (user) { throw new LogicError(`user with username ${username} already exists`); }
+
+        return User.findOne({ email });
+      })
+      .then((user: UserModelInterface) => {
+        if (user) { throw new LogicError(`user with email ${email} already exists`); }
+
+        return User.findOne({ email });
+      })
+      .then(() => User.create({ username, email, password }))
       .then(() => true);
   },
 
@@ -24,7 +40,7 @@ const userLogic = {
         return User.findOne({ username });
       })
       .then((user: UserModelInterface) => {
-        if (!user) { throw new LogicError(`user with username ${username} does not exist`); }
+        if (!user) { throw new LogicError(`user with username ${username} does not exists`); }
 
         if (user.password !== password) { throw new LogicError(`wrong password`); }
 
@@ -50,7 +66,7 @@ const userLogic = {
     phoneNumber?: string,
     gender?: string,
     biography?: string,
-    privateAccount?: boolean | undefined,
+    privateAccount?: boolean,
   ): Promise<boolean> | never {
     return Promise.resolve()
       .then(() => {
@@ -59,10 +75,22 @@ const userLogic = {
         return User.findOne({ username });
       })
       .then((user: UserModelInterface) => {
-        if (!user) { throw new LogicError(`user with username ${username} does not exist`); }
+        if (!user) { throw new LogicError(`user with username ${username} does not exists`); }
 
+        if (newEmail) {
+          return User.findOne({ email: newEmail })
+            .then((_user: UserModelInterface) => {
+              if (_user) { throw new LogicError(`user with email ${newEmail} already exists`); }
+
+              user.email = newEmail;
+
+              return user;
+            });
+        }
+        return user;
+      })
+      .then((user: UserModelInterface) => {
         if (name) { user.name = name; }
-        if (newEmail) { user.email = newEmail; }
         if (website) { user.website = website; }
         if (phoneNumber) { user.phoneNumber = phoneNumber; }
         if (gender) { user.gender = gender; }
@@ -78,11 +106,13 @@ const userLogic = {
     return Promise.resolve()
       .then(() => {
         if (!username) { throw new LogicError("invalid username"); }
+        if (!password) { throw new LogicError("invalid password"); }
+        if (!newPassword) { throw new LogicError("invalid new password"); }
 
         return User.findOne({ username });
       })
       .then((user: UserModelInterface) => {
-        if (!user) { throw new LogicError(`user with ${username} email does not exist`); }
+        if (!user) { throw new LogicError(`user with ${username} email does not exists`); }
 
         if (user.password !== password) { throw new LogicError(`wrong password`); }
 
@@ -103,7 +133,7 @@ const userLogic = {
         return User.findOne({ username });
       })
       .then((user: UserModelInterface) => {
-        if (!user) { throw new LogicError(`user with ${username} email does not exist`); }
+        if (!user) { throw new LogicError(`user with ${username} email does not exists`); }
 
         user.enable = false;
 

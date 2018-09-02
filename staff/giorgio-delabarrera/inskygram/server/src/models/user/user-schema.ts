@@ -17,30 +17,25 @@ const emailValidator = validate({
 const userSchema: Schema = new Schema({
   username: {
     type: String,
-    minlength: 1,
-    maxlength: 50,
     unique: true,
-    required: [true, "{PATH} is required"],
+    required: true,
   },
   password: {
     type: String,
-    required: [true, "{PATH} is required"],
+    required: true,
   },
   name: {
     type: String,
-    maxlength: 255,
   },
   email: {
     type: String,
-    maxlength: 255,
     unique: true,
-    required: [true, "{PATH} is required"],
+    required: true,
     validate: emailValidator,
   },
   website: String,
   phoneNumber: {
     type: String,
-    maxlength: 30,
   },
   gender: {
     type: String,
@@ -49,9 +44,7 @@ const userSchema: Schema = new Schema({
   biography: String,
   avatar: String,
   privateAccount: Boolean,
-  lastLogin: {
-    type: Date,
-  },
+  lastLogin: Date,
   enable: { type: Boolean, default: true },
   followers: [followerSchema],
   followings: [followingSchema],
@@ -60,6 +53,6 @@ const userSchema: Schema = new Schema({
   followRequests: [followRequestSchema],
 }, options);
 
-userSchema.plugin(uniqueValidator, { message: `user with {PATH} {VALUE} already exist` });
+userSchema.plugin(uniqueValidator, { message: `user with {PATH} {VALUE} already exists` });
 
 export default userSchema;
