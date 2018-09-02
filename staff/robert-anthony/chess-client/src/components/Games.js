@@ -75,16 +75,9 @@ class Games extends Component {
     return <main>
       <div>
 
-        <Container>
-          <Row>
-            <Col xs="12" md="3">
-              <h3>You are playing as {nickname}</h3>
-            </Col>
-            <Col xs="12" md="8">
-              {error && <Alert color="warning"> {error}</Alert>}
-            </Col>
-          </Row>
-          <Row>
+        <Container className="main__mainChessContainer">
+
+          <Row className="main__mainChessRow">
             <Col xs="12" md="3">
               {currentGames.length && <OpenGames onUserClick={this.onOpenGamesUserClick}
                                                  games={currentGames.filter(game => game.state !== 'terminated')}
@@ -99,7 +92,14 @@ class Games extends Component {
                                                        nickname={nickname}/>}
             </Col>
 
-          </Row>
+          </Row> <Row>
+          <Col xs="0" md="4">
+
+          </Col>
+          <Col xs="12" md="4">
+            {error && <Alert color="warning"> {error}</Alert>}
+          </Col>
+        </Row>
         </Container>
         <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
           <ModalHeader toggle={this.toggle}>Invitation</ModalHeader>

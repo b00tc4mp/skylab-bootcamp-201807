@@ -15,7 +15,7 @@ class ChessboardComponent extends Component {
   }
 
   chessboardjsxCalcWidth = ({screenWidth,screenHeight}) => {
-   return screenWidth/2
+   return screenWidth/2 < screenHeight/1.5 ? screenWidth/2:  screenHeight/1.5
   }
 
   onDrop = ({sourceSquare, targetSquare, piece}) => {
@@ -33,7 +33,6 @@ class ChessboardComponent extends Component {
     const {props: {fen,isWhite,nickname,opponent}} = this
 
     return <div>
-      <h1> {nickname} vs {opponent}</h1>
 
       <Chessboard orientation={isWhite ? 'white' : 'black'} onDrop={this.onDrop} calcWidth={this.chessboardjsxCalcWidth} position={fen}/>
     </div>

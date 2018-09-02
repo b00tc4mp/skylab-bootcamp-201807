@@ -27,18 +27,25 @@ class ChessboardGroup extends Component {
   render() {
     let {props: {onGameMove, currentGame, nickname}} = this
 
-    return <main>
-      <div className="screen">
-       {currentGame &&  <h3>{currentGame.toPlay} to play</h3>}
+    return <Container>
+      <Row>
+        <Col xs="12" md="9">
 
-        <div className="main__chessboardarea">
-          {currentGame &&
-          <ChessboardComponent isWhite={currentGame.initiator === nickname} onGameMove={(move) => onGameMove(move, currentGame.id, currentGame.opponent)}
-                               nickname={nickname} opponent={currentGame.opponent} fen={currentGame.fen}/>
-          }
-        </div>
-      </div>
-    </main>
+
+          <div className="main__chessboardarea">
+            {currentGame &&
+            <ChessboardComponent isWhite={currentGame.initiator === nickname}
+                                 onGameMove={(move) => onGameMove(move, currentGame.id, currentGame.opponent)}
+                                 nickname={nickname} opponent={currentGame.opponent} fen={currentGame.fen}/>
+            }
+          </div>
+        </Col>
+        <Col xs="12" md="3">
+          {currentGame && <h1> {nickname} vs {currentGame.opponent}</h1>}
+          {currentGame && <h3>{currentGame.toPlay} to play</h3>}
+        </Col>
+      </Row>
+    </Container>
 
 
   }

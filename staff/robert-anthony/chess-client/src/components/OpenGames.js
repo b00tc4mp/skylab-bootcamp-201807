@@ -40,16 +40,14 @@ class OpenGames extends Component {
       })
     }
     return <main>
-      <div className="screen">
 
 
-        <div className="main__userlist">
+        <div className="main__userList">
           <ListGroup>
             {games.length ? userList : <li>You are not playing any games with anyone at the moment</li>}
           </ListGroup>
         </div>
 
-      </div>
     </main>
 
 

@@ -6,14 +6,33 @@ font-family: 'Vollkorn', serif;
 * {
   box-sizing: border-box;
   margin: 0;
-  padding: 0;
-  font-family: 'Vollkorn', serif; }
+  padding: 0; }
 
 html {
   height: 100%; }
 
+.main__mainChessContainer {
+  color: white;
+  font-family: 'Vollkorn', serif;
+  font-family: 'Merriweather', serif; }
+  .main__mainChessContainer .main__mainChessRow {
+    position: relative;
+    margin-top: 5%; }
+
+div.main__mainChessRow.row div.main__userList .list-group .list-group-item {
+  background-color: rgba(118, 61, 5, 0.7); }
+  div.main__mainChessRow.row div.main__userList .list-group .list-group-item:link, div.main__mainChessRow.row div.main__userList .list-group .list-group-item:visited {
+    color: #ffd95a;
+    text-decoration: none; }
+  div.main__mainChessRow.row div.main__userList .list-group .list-group-item:hover, div.main__mainChessRow.row div.main__userList .list-group .list-group-item:active {
+    color: #ffa400;
+    text-decoration: none; }
+
 body {
-  height: 100%; }
+  height: 100%;
+  background: url(../images/side-shot-of-a-chess-board-over-a-black-background-and-the-chess-pieces-lin_v0iu7ixol__F0000.png);
+  background-repeat: no-repeat;
+  background-size: cover; }
 
 header, footer {
   display: table;

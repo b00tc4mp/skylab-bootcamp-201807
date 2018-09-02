@@ -9,16 +9,40 @@ font-family: 'Vollkorn', serif;
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family:'Vollkorn', serif;
 }
 
 html {
   height: 100%;
 }
 
+.main__mainChessContainer {
+  color: white;
+  font-family: 'Vollkorn', serif;
+  font-family: 'Merriweather', serif;
+
+  .main__mainChessRow {
+    position: relative;
+    margin-top: 5%;
+  }
+}
+
+div.main__mainChessRow.row div.main__userList .list-group .list-group-item {
+  background-color: rgba(118, 61, 5,0.7);
+  &:link, &:visited {
+    color: #ffd95a;
+    text-decoration:none
+  }
+  &:hover, &:active {
+    color: #ffa400;
+    text-decoration:none
+  }
+}
+
 body {
   height: 100%;
-
+  background: url(../images/side-shot-of-a-chess-board-over-a-black-background-and-the-chess-pieces-lin_v0iu7ixol__F0000.png);
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 header, footer {
@@ -32,17 +56,14 @@ main {
   margin-left: 1em;
   margin-right: 1em;
   height: 80%;
-  font-size:20px
+  font-size: 20px
 }
 
 .nav_headerTitle {
-  margin:20px;
+  margin: 20px;
   letter-spacing: .1em;
   color: #1492b2;
 }
-
-
-
 
 input, button {
   background-color: inherit;
@@ -60,11 +81,9 @@ ul {
   padding: 1em;
 }
 
-
-
 .screen {
   border-radius: 0.7em;
   padding: 1em;
   height: 100%;
 
-  }
+}
