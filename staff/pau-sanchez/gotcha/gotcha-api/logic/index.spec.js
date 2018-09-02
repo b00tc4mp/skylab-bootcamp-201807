@@ -327,6 +327,7 @@ describe('logic', () => {
     //@@logic.unresgisterUser
 
     true && describe('unregister user', () => {
+        const numericEmail = 123
         beforeEach(() => User.create({ email, password, name }))
 
         //@@should unregister user correctly
@@ -358,12 +359,12 @@ describe('logic', () => {
 
         //@@should fail on trying to unregister user with a numeric email
         it('should fail on trying to unregister user with a numeric email', () =>
-            logic.unregisterUser(123, password)
+            logic.unregisterUser(numericEmail, password)
                 .catch(err => err)
-                .then(({ message }) => expect(message).to.equal(`invalid email`))
+                .then(({ message }) => expect(message).to.equal(`user with ${numericEmail} email does not exist`))
         )
 
-        //@@should fail on trying to unregister user with an undefiend password
+        //@@should fail on trying to unregister user with an undefined password
         it('should fail on trying to unregister user with an undefined password', () =>
             logic.unregisterUser(email, undefined)
                 .catch(err => err)
@@ -377,12 +378,7 @@ describe('logic', () => {
                 .then(({ message }) => expect(message).to.equal(`invalid password`))
         )
 
-        //@@should fail on trying to unregister user with a numeric password
-        it('should fail on trying to unregister user with a numeric password', () =>
-            logic.unregisterUser(email, 123)
-                .catch(err => err)
-                .then(({ message }) => expect(message).to.equal(`invalid password`))
-        )
+        
     })
 
     //@@create notebook
@@ -402,9 +398,9 @@ describe('logic', () => {
         it('should create a notebook succesfully on correct data', () => 
             logic.createNotebook( userid, notebooktitle, videourl)
                 .then(res => {
-                    expect(res).to.be.true
+                    expect(res._doc.notebooktitle).to.equal(notebooktitle)
 
-                    return User.findOne({ _id: userid })
+                    return User.findOne({ _id: res._doc.user })
                 })
                 .then(user => {
                     return Notebook.find({ user: user.id})
@@ -589,6 +585,7 @@ describe('logic', () => {
         let _notebookid
         let _note = [{seconds: 23, notetitle: "Note Title Test", notetext: "Note Text Title"}]
         let userId
+        const noTitle = ''
 
         beforeEach(() => 
             
@@ -607,13 +604,26 @@ describe('logic', () => {
             )
             //@@should create a note with the correct data
             it('should create a note with the correct data', () => {
-                return logic.createNote(_note[0].seconds, _note[0].notetitle, _note[0].notetext, _note[0].notebook)
+                return logic.createNote(_note[0].seconds, _note[0].notetitle, _note[0].notetext, _notebookid, userId)
                 
                     .then( res => {
-                        expect(res).to.equal(true)
+                        expect(res._doc.seconds).to.equal(_note[0].seconds)
+                        expect(res._doc.notetitle).to.equal(_note[0].notetitle)
+                        expect(res._doc.notetext).to.equal(_note[0].notetext)
+                        expect(res._doc.notebook.toString()).to.equal(_notebookid)
+                        expect(res._doc.user.toString()).to.equal(userId)
+
+
                     })
             })
-            //@@should fail to create a note without title
+            //@@should fail to create a note without a title
+            it('should fail to create a note without a title', () => { 
+            return logic.createNote(_note[0].seconds, noTitle, _note[0].notetext, _notebookid, userId)
+                    .catch(err => err)
+                    .then( err => {
+                        expect(err).to.exist
+                    })
+            })
         
     })
 
@@ -820,6 +830,9 @@ describe('logic', () => {
         const newNoteText = "newNoteText Text"
         let userId
         let sessionUserId
+        let inputEmpty = ''
+        let inputUndefined = undefined
+        let inputNull = null
 
         beforeEach(() => 
             
@@ -841,18 +854,80 @@ describe('logic', () => {
                 })
                 
         )
+        
         //@@should update a note correctly
         it('should update a note correctly', () => {
             sessionUserId = userId
-            return logic.updateNote(userId, sessionUserId, _noteid, newNoteTitle, newNoteTitle)
+            return logic.updateNote(userId, sessionUserId, _noteid, newNoteTitle, newNoteText)
             .then( res => {
-                expect(res).to.be.true         
-                return Note.findOne({ _id : _noteid })
-            })
-            .then( note => {
-                expect(note.notetitle).to.equal(newNoteTitle)
-            })
+                expect(res[0]._doc.notetitle).to.equal(newNoteTitle)       
+                expect(res[0]._doc.notetext).to.equal(newNoteText) 
+            })            
         })
+        
+        //@@should update only the title (& text empty) of the note correctly
+        it('should update only the title (& text empty) of the note correctly', () => {
+            sessionUserId = userId
+            return logic.updateNote(userId, sessionUserId, _noteid, newNoteTitle, inputEmpty)
+            .then( res => {
+                
+                expect(res[0]._doc.notetitle).to.equal(newNoteTitle)       
+                expect(res[0]._doc.notetext).to.equal(_note[0].notetext) 
+            })            
+        })
+        
+        //@@should update a only the text (& title empty) of the note correctly
+        it('should update a only the text (& title empty) of the note correctly', () => {
+            sessionUserId = userId
+            return logic.updateNote(userId, sessionUserId, _noteid, inputEmpty, newNoteText)
+            .then( res => {
+                expect(res[0]._doc.notetitle).to.equal(_note[0].notetitle)       
+                expect(res[0]._doc.notetext).to.equal(newNoteText) 
+            })            
+        })
+
+        //@@should update only the title (& text undefined) of the note correctly
+        it('should update only the title (& text undefined) of the note correctly', () => {
+            sessionUserId = userId
+            return logic.updateNote(userId, sessionUserId, _noteid, newNoteTitle, inputUndefined)
+            .then( res => {
+                
+                expect(res[0]._doc.notetitle).to.equal(newNoteTitle)       
+                expect(res[0]._doc.notetext).to.equal(_note[0].notetext) 
+            })            
+        })
+        
+        //@@should update a only the text (& title undefined) of the note correctly
+        it('should update a only the text (& title undefined) of the note correctly', () => {
+            sessionUserId = userId
+            return logic.updateNote(userId, sessionUserId, _noteid, inputUndefined, newNoteText)
+            .then( res => {
+                expect(res[0]._doc.notetitle).to.equal(_note[0].notetitle)       
+                expect(res[0]._doc.notetext).to.equal(newNoteText) 
+            })            
+        })
+
+        //@@should update only the title (& text null) of the note correctly
+        it('should update only the title (& text null) of the note correctly', () => {
+            sessionUserId = userId
+            return logic.updateNote(userId, sessionUserId, _noteid, newNoteTitle, inputNull)
+            .then( res => {
+                
+                expect(res[0]._doc.notetitle).to.equal(newNoteTitle)       
+                expect(res[0]._doc.notetext).to.equal(_note[0].notetext) 
+            })            
+        })
+        
+        //@@should update a only the text (& title null) of the note correctly
+        it('should update a only the text (& title null) of the note correctly', () => {
+            sessionUserId = userId
+            return logic.updateNote(userId, sessionUserId, _noteid, inputNull, newNoteText)
+            .then( res => {
+                expect(res[0]._doc.notetitle).to.equal(_note[0].notetitle)       
+                expect(res[0]._doc.notetext).to.equal(newNoteText) 
+            })            
+        })
+        
 
     })
     

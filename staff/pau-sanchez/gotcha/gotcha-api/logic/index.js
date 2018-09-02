@@ -91,6 +91,17 @@ const logic = {
     unregisterUser(email, password) {
         return Promise.resolve()
             .then(() => {
+                if (email === undefined) throw new LogicError(`invalid email`)
+                if (password === undefined) throw new LogicError(`invalid password`)
+
+                if (email === '') throw new LogicError(`invalid email`)
+                if (password === '') throw new LogicError(`invalid password`) 
+                
+                if (email instanceof Number) throw new LogicError(`invalid email`)
+                
+
+            })        
+            .then(() => {    
                 return User.findOne({ email })
             })
             .then(user => {
@@ -218,8 +229,8 @@ const logic = {
             .then(() => {
                 return Notebook.findOne({ _id: notebook })
             })
-            .then(notebook => {
-                if (!notebook) throw new LogicError(`notebook does not exists`)
+            .then(res => {
+                if (!res) throw new LogicError(`notebook does not exists`)
                 const note = { seconds, notetitle, notetext, notebook, user }
                 return Note.create(note)
             })
@@ -230,32 +241,7 @@ const logic = {
     //@@list note by user
     //@@logic.listNotesbyUser
     
-   /*listNotesbyUser(userId) {
-    let notebooksids = []
-    let notes = []
-       return Promise.resolve()
-        .then(() => {
-            return User.findOne({ _id: userId })
-        })
-        .then(user => {
-            if (!user) throw new LogicError(`user does not exists`)
-            return Notebook.find({ user: user._id })
-        })
-        .then(_notebooks => {
-            (_notebooks).forEach(elem => notebooksids.push(elem._id))
-        })
-        .then(() => {
-
-            let notebooksbyids = notebooksids.map(elem => Note.find({ notebook: elem }))
-
-            return Promise.all(notebooksbyids)
-        }).then(res => {
-            let mergedNotes = [].concat.apply([], res)
-            return mergedNotes
-        })
-
-             
-   },*/
+   
    listNotesbyUser(userId) {
         return Promise.resolve()
             .then(() => {
@@ -338,10 +324,27 @@ const logic = {
                 return Note.findOne({ _id: noteId })
             })
             .then(note => {
-                updatetitle = (note.notetitle === newnotetitle) ? note.notetitle : newnotetitle
+                
+                if (newnotetitle === '') {
+                    updatetitle = note.notetitle
+                } else if (newnotetitle === undefined) {
+                    updatetitle = note.notetitle
+                } else if (newnotetitle === null) {
+                    updatetitle = note.notetitle
+                } else if (newnotetitle === note.notetitle) {
+                    updatetitle = note.notetitle
+                } else {updatetitle = newnotetitle}
 
-                updatetext = (note.notetext === newnotetext) ? note.notetext : newnotetext
-
+                if (newnotetext === '') {
+                    updatetext = note.notetext
+                } else if (newnotetext === undefined) {
+                    updatetext = note.notetext
+                } else if (newnotetext === null) {
+                    updatetext = note.notetext
+                } else if (newnotetext === note.notetext) {
+                    updatetext = note.notetext
+                } else { updatetext = newnotetext}
+                
                 return Note.findByIdAndUpdate({ "_id": noteId }, { "notetitle": updatetitle, "notetext": updatetext})
                 
             })
@@ -349,10 +352,7 @@ const logic = {
                 return Note.find({"_id": noteId})
             })
             
-            /*.then(() => {
-
-                return true
-            })*/
+            
 
     },
 
