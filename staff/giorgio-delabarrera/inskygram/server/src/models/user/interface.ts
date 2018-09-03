@@ -12,7 +12,8 @@ interface UserInterface {
   phoneNumber: string;
   gender: string;
   biography: string;
-  avatar: string;
+  imageId: string;
+  imageUrl: string;
   privateAccount: boolean;
   lastLogin: Date;
   enable: boolean;

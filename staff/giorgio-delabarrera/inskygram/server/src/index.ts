@@ -1,15 +1,15 @@
 import cors from "cors";
 import { config } from "dotenv";
 import express from "express";
-import { connect } from "mongoose";
 import { userRouter, postRouter } from "./routes";
+import { connect } from "./db";
 
 config();
 
 const { DATABASE_URL, PORT } = process.env;
 
-connect(DATABASE_URL, { useNewUrlParser: true })
-  .then(() => {
+connect(DATABASE_URL)
+  .then(db => {
 
     const app = express();
 

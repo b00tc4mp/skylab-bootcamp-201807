@@ -1,5 +1,5 @@
 import { Document, Types } from "mongoose";
-import NotificationInterface from "./notification-interface";
+import NotificationInterface from "./interface";
 
 /**
  *

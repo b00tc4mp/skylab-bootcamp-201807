@@ -1,10 +1,11 @@
 // import { config } from "dotenv";
 // import "jest";
-// import { connect, Types } from "mongoose";
+// import { Types } from "mongoose";
 // import { Post } from "../../models";
 // import User, { UserModelInterface } from "../../models/user";
 // import userLogic from "../user";
 // import postLogic from "./post";
+// import { connect } from "../../db";
 
 // config();
 // const { DATABASE_URL_TEST } = process.env;
@@ -12,7 +13,7 @@
 // let db: any;
 
 // beforeAll(async () => {
-//   db = await connect(DATABASE_URL_TEST, { useNewUrlParser: true });
+//   db = await connect(DATABASE_URL_TEST);
 // });
 
 // beforeEach(async () => {

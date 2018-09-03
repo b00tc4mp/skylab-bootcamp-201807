@@ -1,5 +1,5 @@
 import { Document, Types } from "mongoose";
-import FollowingInterface from "./following-interface";
+import FollowingInterface from "./interface";
 
 /**
  *

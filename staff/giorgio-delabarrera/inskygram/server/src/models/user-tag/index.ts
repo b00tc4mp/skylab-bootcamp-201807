@@ -1,7 +1,9 @@
-import UserTag from "./user-tag";
-import UserTagInterface from "./user-tag-interface";
-import UserTagModelInterface from "./user-tag-model-interface";
-import userTagSchema from "./user-tag-schema";
+import { model, Model } from "mongoose";
+import UserTagInterface from "./interface";
+import UserTagModelInterface from "./model-interface";
+import userTagSchema from "./schema";
+
+const UserTag: Model<UserTagModelInterface> = model("UserTag", userTagSchema);
 
 export default UserTag;
 export { UserTagInterface, UserTagModelInterface, userTagSchema };

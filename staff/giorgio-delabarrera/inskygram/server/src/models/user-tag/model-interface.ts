@@ -1,5 +1,5 @@
 import { Document, Types } from "mongoose";
-import UserTagInterface from "./user-tag-interface";
+import UserTagInterface from "./interface";
 
 /**
  *

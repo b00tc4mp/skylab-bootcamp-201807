@@ -4,7 +4,7 @@ import { FollowerModelInterface } from "../follower";
 import { FollowingModelInterface } from "../following";
 import { NotificationModelInterface } from "../notification";
 import { SavedPostModelInterface } from "../saved-post";
-import UserInterface from "./user-interface";
+import UserInterface from "./interface";
 
 /**
  *

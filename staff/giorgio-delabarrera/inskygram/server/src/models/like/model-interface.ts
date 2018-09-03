@@ -1,5 +1,5 @@
 import { Document, Types } from "mongoose";
-import LikeInterface from "./like-interface";
+import LikeInterface from "./interface";
 
 /**
  *

@@ -1,8 +1,12 @@
 import { config } from "dotenv";
 import "jest";
-import { connect, Types } from "mongoose";
+import { Types } from "mongoose";
 import User, { UserModelInterface } from "../../models/user";
-import userLogic from "./user";
+import userLogic from ".";
+import { connect } from "../../db";
+const Jimp: any = require("jimp");
+import fs, { ReadStream } from "fs";
+import { Stream } from "stream";
 
 config();
 const { DATABASE_URL_TEST } = process.env;
@@ -11,7 +15,7 @@ let db: any;
 const { ObjectId } = Types;
 
 beforeAll(async () => {
-  db = await connect(DATABASE_URL_TEST, { useNewUrlParser: true });
+  db = await connect(DATABASE_URL_TEST);
 });
 
 beforeEach(async () => {
@@ -303,6 +307,45 @@ describe("user", () => {
     });
   });
 
+  describe("update avatar", () => {
+    const filename = "avatar.png";
+    let buffer: Buffer;
+
+    beforeEach(() => {
+      return User.create({ username, email, password })
+        .then(() => {
+          return new Promise((resolve, reject) => {
+            return new Jimp(256, 256, 0xff0000ff, (err: any, image: any) => {
+              if (err) { return reject(err); }
+
+              image.write(`${__dirname}/${filename}`, resolve);
+            });
+          });
+        })
+        .then(() => {
+          buffer = fs.readFileSync(`${__dirname}/${filename}`);
+        });
+    });
+
+    afterEach(() => {
+      fs.unlinkSync(`${__dirname}/${filename}`);
+    });
+
+    test("should update avatar correctly", () => {
+      return userLogic.updateAvatar(username, filename, buffer)
+        .then((res: boolean) => {
+          expect(res).toBeTruthy();
+
+          return User.findOne({ username });
+        })
+        .then((user: UserModelInterface) => {
+          expect(user).toBeInstanceOf(User);
+          expect(user.imageId).toBeDefined();
+          expect(user.imageUrl).toBeDefined();
+        });
+    });
+  });
+
   describe("disable", () => {
     beforeEach(() => User.create({ username, email, password }));
 
@@ -319,7 +362,6 @@ describe("user", () => {
           expect(user.enable).toBeFalsy();
         });
     });
-
   });
 
 });

@@ -5,7 +5,7 @@ import logic from "../logic";
 import LogicError from "../logic/error/logic-error";
 import jwt from "jsonwebtoken";
 import { UserModelInterface } from "../models/user";
-import validateJwt from "../helpers/validate-jwt";
+import validateJwt from "./helpers/validate-jwt";
 
 config();
 

@@ -4,8 +4,6 @@ import { Request, Response, NextFunction } from "express";
 
 config();
 
-const { JWT_SECRET } = process.env;
-
 function validateJwt(req: Request, res: Response, next: NextFunction) {
     const { params: { username } } = req;
 
@@ -21,6 +19,8 @@ function validateJwt(req: Request, res: Response, next: NextFunction) {
         if (parts[0].toLowerCase() !== "bearer") { throw new Error("invalid token"); }
 
         const token = parts[1];
+
+        const { JWT_SECRET } = process.env;
 
         const payload: any = jwt.verify(token, JWT_SECRET);
 

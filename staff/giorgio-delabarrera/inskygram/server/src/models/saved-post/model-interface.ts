@@ -1,5 +1,5 @@
 import { Document, Types } from "mongoose";
-import SavedPostInterface from "./saved-post-interface";
+import SavedPostInterface from "./interface";
 
 /**
  *

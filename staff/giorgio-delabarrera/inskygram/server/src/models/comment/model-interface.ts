@@ -1,5 +1,5 @@
 import { Document, Types } from "mongoose";
-import CommentInterface from "./comment-interface";
+import CommentInterface from "./interface";
 
 /**
  *
