@@ -96,7 +96,7 @@ router.post('/portfolio/list', jsonBodyParser, (req, res) => {
     const { body: { email } } = req 
 
     logic.listCoins(email)
-        .then(() => res.status(201).json({ message: 'coins are available to be listed correctly'}))
+        .then(() => res.status(201).json({ message: 'coins retrieved correctly'}))
         .catch(err => {
             const { message } = err
     
@@ -131,9 +131,9 @@ router.post('/portfolio/remove', jsonBodyParser, (req, res) => {
 })
 
 
-//////////////////////
-//COINMARKET ROUTES//
-////////////////////
+//////////////////////////
+//COINMARKET API ROUTES//
+////////////////////////
 
 // GET MARKET COINS
 router.get('/market/list', (req, res) => {
@@ -149,9 +149,9 @@ router.get('/market/list', (req, res) => {
 })
 
 
-/////////////////////////
-//CRYPTOCOMPARE ROUTES//
-///////////////////////
+/////////////////////////////
+//CRYPTOCOMPARE API ROUTES//
+///////////////////////////
 
 //GET VALUE
 router.get('/market/value', (req, res) => {

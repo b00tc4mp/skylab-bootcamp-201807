@@ -2,7 +2,7 @@
 
 const validateEmail = require('../utils/validate-email')
 const { User } = require('../data/models')
-var uuid = require('uuid4');
+var uuid = require('uuid4')
 const axios = require('axios')
 
 const logic = {
@@ -19,6 +19,7 @@ const logic = {
     _validateDateField(name, field) {
         if (!(field instanceof Date) || isNaN(field.valueOf())) throw new LogicError (`invalid ${name}`)
     },
+
 
     ///////////////
     //LOGIC USER//
@@ -106,6 +107,8 @@ const logic = {
                 return true
             })
     },
+
+
     ////////////////////
     //LOGIC PORTFOLIO//
     //////////////////
@@ -128,7 +131,7 @@ const logic = {
                 if (!user) throw new LogicError(`user with ${email} email does not exist`)
 
                 let coinId = uuid();
-                
+                //FORMAT WITH MOMENT NPM? moment().format("MMM Do YY")
                 let _coin = {name, quantity, date, value, coinId}
                 
                 user.portfolio.push(_coin)
@@ -145,9 +148,8 @@ const logic = {
         return Promise.resolve()
             .then(() => {
                 this._validateEmail(email)
-                this._validateDateField('date', date)
 
-                return User.findOne({email})
+                return User.findOne({email}).sort({'portfolio.date': 1})
             })
             .then(user => {
                 if (!user) throw new LogicError(`user with ${email} email does not exist`)
@@ -201,6 +203,7 @@ const logic = {
             .then(() => true)
     },
     
+    
     //////////////////////
     //COINMARKETCAP API//
     ////////////////////
@@ -214,10 +217,11 @@ const logic = {
             .then(res => {
                 if (!res.data) throw new LogicError(`Something has failed, it was not possible to load the ${limit} cryptocurrencies, try later`)
             })
+            .then(() => true)
     },
 
     ///////////////////////
-    // CRYPTOCOMPARE API//
+    //CRYPTOCOMPARE API///
     /////////////////////
 
     //COMPARE CURRENCIES
@@ -236,13 +240,24 @@ const logic = {
     getCryptoNews(site){
         return axios.get(`https://min-api.cryptocompare.com/data/v2/news/?feeds=${site}`)
             .then(res => {
-                return res.data
                 
+                const cryptoNews = res.data.Data.map((news) => {
+                    const filterNews = {}
+                    
+                    filterNews.imageurl = news.imageurl
+                    filterNews.title = news.title
+                    filterNews.url = news.url
+                    filterNews.body = news.body
+                    filterNews.source = news.source
+
+                    return cryptoNews;
+                })
                 // imageurl , title , url , body , source
             }) 
             .then(res => {
-                if(!res.data) throw new LogicError(`Right now no news available here: ${site}, try later`)
+                if(cryptoNews) throw new LogicError(`Right now no news are available in this site: ${site}, try later`)
             })
+            .then(() => true)
     }
 }
 
