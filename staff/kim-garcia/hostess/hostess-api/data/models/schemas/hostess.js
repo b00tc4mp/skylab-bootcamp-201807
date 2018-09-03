@@ -43,7 +43,7 @@ module.exports = new Schema({
         trim: true
     },
 
-    lenguages: [String],
+    languages: [String],
 
     jobType: {
         type: String,
@@ -52,7 +52,7 @@ module.exports = new Schema({
 
     skills: [String],
 
-    tall: {
+    height: {
         type: Number,
         min: 120,
         max: 250
