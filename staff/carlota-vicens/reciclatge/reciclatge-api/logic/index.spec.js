@@ -121,178 +121,54 @@ describe('logic', () => {
         )
     })
 
-    describe('authenticate user', () => {
+    describe('login user', () => {
         beforeEach(() => User.create({ email, password }))
 
         it('should login correctly', () =>
-            logic.authenticate(email, password)
+            logic.login(email, password)
                 .then(res => {
                     expect(res).to.be.true
                 })
         )
 
         it('should fail on trying to login with an undefined email', () =>
-            logic.authenticate(undefined, password)
+            logic.login(undefined, password)
                 .catch(err => err)
                 .then(({ message }) => expect(message).to.equal('user with undefined email does not exist'))
         )
 
         it('should fail on trying to login with an empty email', () =>
-            logic.authenticate('', password)
+            logic.login('', password)
                 .catch(err => err)
                 .then(({ message }) => expect(message).to.equal('user with  email does not exist'))
         )
 
         it('should fail on trying to login with a numeric email', () =>
-            logic.authenticate(123, password)
+            logic.login(123, password)
                 .catch(err => err)
                 .then(({ message }) => expect(message).to.equal('user with 123 email does not exist'))
         )
 
         it('should fail on trying to login with an undefined password', () =>
-            logic.authenticate(email, undefined)
+            logic.login(email, undefined)
                 .catch(err => err)
                 .then(({ message }) => expect(message).to.equal('wrong password'))
         )
 
         it('should fail on trying to login with an empty password', () =>
-            logic.authenticate(email, '')
+            logic.login(email, '')
                 .catch(err => err)
                 .then(({ message }) => expect(message).to.equal('wrong password'))
         )
 
         it('should fail on trying to login with a numeric password', () =>
-            logic.authenticate(email, 123)
+            logic.login(email, 123)
                 .catch(err => err)
                 .then(({ message }) => expect(message).to.equal('wrong password'))
         )
     })
 
-    describe('update user', () => {
-        const newPassword = `${password}-${Math.random()}`
-
-        beforeEach(() => User.create({ email, password }))
-
-        it('should update password correctly', () =>
-            logic.updatePassword(email, password, newPassword)
-                .then(res => {
-                    expect(res).to.be.true
-
-                    return User.findOne({ email })
-                })
-                .then(user => {
-                    expect(user).to.exist
-                    expect(user.email).to.equal(email)
-                    expect(user.password).to.equal(newPassword)
-                })
-        )
-
-        it('should fail on trying to update password with an undefined email', () =>
-            logic.updatePassword(undefined, password, newPassword)
-                .catch(err => err)
-                .then(({ message }) => expect(message).to.equal('user with undefined email does not exist'))
-        )
-
-        it('should fail on trying to update password with an empty email', () =>
-            logic.updatePassword('', password, newPassword)
-                .catch(err => err)
-                .then(({ message }) => expect(message).to.equal('user with  email does not exist'))
-        )
-
-        it('should fail on trying to update password with a numeric email', () =>
-            logic.updatePassword(123, password, newPassword)
-                .catch(err => err)
-                .then(({ message }) => expect(message).to.equal('user with 123 email does not exist'))
-        )
-
-        it('should fail on trying to update password with an undefined password', () =>
-            logic.updatePassword(email, undefined, newPassword)
-                .catch(err => err)
-                .then(({ message }) => expect(message).to.equal('wrong password'))
-        )
-
-        it('should fail on trying to update password with an empty password', () =>
-            logic.updatePassword(email, '', newPassword)
-                .catch(err => err)
-                .then(({ message }) => expect(message).to.equal('wrong password'))
-        )
-
-        it('should fail on trying to update password with a numeric password', () =>
-            logic.updatePassword(email, 123, newPassword)
-                .catch(err => err)
-                .then(({ message }) => expect(message).to.equal('wrong password'))
-        )
-
-        it('should fail on trying to update password with an undefined new password', () =>
-            logic.updatePassword(email, password, undefined)
-                .catch(err => err)
-                .then(({ message }) => expect(message).to.equal('User validation failed: password: Path `password` is required.'))
-        )
-
-        it('should fail on trying to update password with an empty new password', () =>
-            logic.updatePassword(email, password, '')
-                .catch(err => err)
-                .then(({ message }) => expect(message).to.equal('User validation failed: password: Path `password` is required.'))
-        )
-
-        it('should fail on trying to update password with a numeric new password', () =>
-            logic.updatePassword(email, password, 123)
-                .catch(err => err)
-                .then(({ message }) => expect(message).to.equal('User validation failed: password: password length is too short'))
-        )
-    })
-
-    describe('unregister user', () => {
-        beforeEach(() => User.create({ email, password }))
-
-        it('should unregister user correctly', () =>
-            logic.unregisterUser(email, password)
-                .then(res => {
-                    expect(res).to.be.true
-
-                    return User.findOne({ email })
-                })
-                .then(user => {
-                    expect(user).not.to.exist
-                })
-        )
-
-        it('should fail on trying to unregister user with an undefined email', () =>
-            logic.unregisterUser(undefined, password)
-                .catch(err => err)
-                .then(({ message }) => expect(message).to.equal('user with undefined email does not exist'))
-        )
-
-        it('should fail on trying to unregister user with an empty email', () =>
-            logic.unregisterUser('', password)
-                .catch(err => err)
-                .then(({ message }) => expect(message).to.equal('user with  email does not exist'))
-        )
-
-        it('should fail on trying to unregister user with a numeric email', () =>
-            logic.unregisterUser(123, password)
-                .catch(err => err)
-                .then(({ message }) => expect(message).to.equal('user with 123 email does not exist'))
-        )
-
-        it('should fail on trying to unregister user with an undefined password', () =>
-            logic.unregisterUser(email, undefined)
-                .catch(err => err)
-                .then(({ message }) => expect(message).to.equal('wrong password'))
-        )
-
-        it('should fail on trying to unregister user with an empty password', () =>
-            logic.unregisterUser(email, '')
-                .catch(err => err)
-                .then(({ message }) => expect(message).to.equal('wrong password'))
-        )
-
-        it('should fail on trying to unregister user with a numeric password', () =>
-            logic.unregisterUser(email, 123)
-                .catch(err => err)
-                .then(({ message }) => expect(message).to.equal('wrong password'))
-        )
-    })
+    
     after(() =>
         Promise.all([
 
