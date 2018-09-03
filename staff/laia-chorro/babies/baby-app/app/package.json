@@ -10,7 +10,9 @@
     "build:prod": "npm run build && npm run build:client",
     "start": "npm run build:prod && NODE_ENV=production node ./build/server/index.js",
     "start:dev": "parallelshell 'npm run build:watch' 'npm run build:watch:client' 'nodemon ./build/server/index.js'",
-    "test": "react-scripts test --env=jsdom"
+    "test": "react-scripts test --env=jsdom",
+    "test-logic": "mocha src/logic",
+    "start:debug": "parallelshell 'npm run build:watch' 'npm run build:watch:client' 'node inspect ./build/server/index.js'"
   },
   "author": "laia89",
   "dependencies": {
@@ -42,6 +44,14 @@
     "parallelshell": "^3.0.1",
     "redux-mock-store": "^1.2.3",
     "webpack": "^3.4.1",
-    "webpack-dev-server": "^2.6.1"
+    "webpack-dev-server": "^2.6.1",
+    "chai": "^4.1.2",
+    "core-js": "^2.5.7",
+    "dotenv": "^6.0.0",
+    "form-data": "^2.3.2",
+    "isomorphic-fetch": "^2.2.1",
+    "jimp": "^0.3.5",
+    "jsonwebtoken": "^8.3.0",
+    "rimraf": "^2.6.2"
   }
 }

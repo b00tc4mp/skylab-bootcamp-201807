@@ -1,287 +1,362 @@
 'use strict'
 
-describe('logic (skybet-app)', () => {
+require('dotenv').config()
 
-    describe('kiwi Api', () => {
-        
-        describe('Results from api', () => {
-            it('should return data', () => {
-                return logic._callKiwiApi('BCN', 'MAD', '08/09/2018', '09/09/2018')
-                    .then(flights => {
-                        expect(flights).toBeDefined()
-                    })
-            })
+require('isomorphic-fetch')
+const { expect } = require('chai')
+const logic = require('.')
+const fs = require('fs')
+const rimraf = require('rimraf')
+const FormData = require('form-data')
+const Jimp = require('jimp')
+const jwt = require('jsonwebtoken')
+
+global.FormData = FormData
+
+describe('logic', () => {
+    const { JWT_SECRET } = process.env
+    let username, password
+
+    before(() => {
+        if (fs.existsSync('tests'))
+            rimraf.sync('tests')
+
+        fs.mkdirSync('tests')
+    })
+
+    beforeEach(() => {
+        username = `user-${Math.random()}`, password = '123'
+    })
+
+    describe('register user', () => {
+        it('should succeed on new user', () =>
+            logic.register(username, password)
+                .then(res => expect(res).to.be.true)
+        )
+
+        it('should fail on already existing user', () =>
+            logic.register(username, password)
+                .then(() => logic.register(username, password))
+                .catch(err => err)
+                .then(err => {
+                    expect(err).to.exist
+                    expect(err.message).to.equal(`user ${username} already exists`)
+                })
+        )
+
+        it('should fail on empty username', () =>
+            logic.register('', password)
+                .catch(err => err)
+                .then(err => {
+                    expect(err).to.exist
+                    expect(err.message).to.equal(`invalid username`)
+                })
+        )
+
+        it('should fail on password user', () =>
+            logic.register(username, '')
+                .catch(err => err)
+                .then(err => {
+                    expect(err).to.exist
+                    expect(err.message).to.equal(`invalid password`)
+                })
+        )
+    })
+
+    describe('authenticate user', () => {
+        it('should succeed on existing user', () =>
+            logic.register(username, password)
+                .then(() => logic.authenticate(username, password))
+                .then(token => {
+                    expect(token).to.be.a('string')
+
+                    let payload
+
+                    expect(() => payload = jwt.verify(token, JWT_SECRET)).not.to.throw()
+                    expect(payload.sub).to.equal(username)
+                })
+        )
+
+        it('should fail on unregistered user', () =>
+            logic.authenticate(username, password)
+                .catch(err => err)
+                .then(err => {
+                    expect(err).to.exist
+                    expect(err.message).to.equal(`user ${username} does not exist`)
+                })
+        )
+
+        it('should fail on empty username', () =>
+            logic.authenticate('', password)
+                .catch(err => err)
+                .then(err => {
+                    expect(err).to.exist
+                    expect(err.message).to.equal(`invalid username`)
+                })
+        )
+
+        it('should fail on password user', () =>
+            logic.authenticate(username, '')
+                .catch(err => err)
+                .then(err => {
+                    expect(err).to.exist
+                    expect(err.message).to.equal(`invalid password`)
+                })
+        )
+    })
+
+    describe('save file', () => {
+        beforeEach(() => {
+            fs.writeFileSync('tests/hello-world.txt', 'hola mundo!')
         })
 
-        describe('Results from api', () => {
-            it('should return valid price', () => {
-                return logic._callKiwiApi('BCN', 'MAD', '08/09/2018', '09/09/2018')
-                    .then(flights => {
-                        const price = flights[0].price
-                        expect(price).toBeDefined()
-                        expect(typeof price == 'number').toBeTruthy()
-                        expect(price).toBeGreaterThan(0);
-                    })
-            })
-        })
+        it('should succeed on correct file', () =>
+            logic.register(username, password)
+                .then(() => logic.authenticate(username, password))
+                .then(token => {
+                    const file = fs.createReadStream('tests/hello-world.txt')
 
-        describe('Results from api', () => {
-            it('should return input cities', () => {
-                const inputFrom = 'BCN'
-                const inputTo = 'IBZ'
-                
-                return logic._callKiwiApi(inputFrom, inputTo, '10/10/2018', '10/11/2018')
-                    .then(flights => {
-                        const flyFrom = flights[0].route[0].flyFrom
-                        const flyTo = flights[0].route[1].flyFrom
-                        expect(flyFrom).toBeDefined()
-                        expect(flyTo).toBeDefined()
-                        expect(flyFrom).toBe(inputFrom)
-                        expect(flyTo).toBe(inputTo)
-                    })
-            })
-        })
+                    return logic.saveFile(username, file, token)
+                })
+                .catch(res => res)
+                .then(res => expect(res).to.be.true)
+        )
 
-        describe('Results from api', () => {
-            it('should return input dates', () => {
-                const inputDateFrom = '20/8/2018'
-                const inputDateTo = '23/9/2018'
-                
-                const convertFromEpoch = (timestamp) => {
-                    const date = new Date(timestamp*1000)
+        it('should fail on empty username', () =>
+            logic.saveFile('', 'whatever')
+                .catch(err => err)
+                .then(err => {
+                    expect(err).to.exist
+                    expect(err.message).to.equal(`invalid username`)
+                })
+        )
 
-                    const year = date.getFullYear()
-                    const month = date.getMonth() + 1
-                    const day = date.getDate()
+        it('should fail on empty file', () =>
+            logic.saveFile(username, undefined)
+                .catch(err => err)
+                .then(err => {
+                    expect(err).to.exist
+                    expect(err.message).to.equal(`invalid file`)
+                })
+        )
 
-                    return `${day}/${month}/${year}`
-                }
-
-
-                return logic._callKiwiApi('LGW', 'MUC', inputDateFrom, inputDateTo)
-                    .then(flights => {
-                        const dateFrom = convertFromEpoch(flights[0].route[0].aTimeUTC)
-                        const dateTo = convertFromEpoch(flights[0].route[1].aTimeUTC)
-                        
-                        expect(dateFrom).toBeDefined()
-                        expect(dateTo).toBeDefined()
-                        expect(dateFrom).toBe(inputDateFrom)
-                        expect(dateTo).toBe(inputDateTo)
-                    })
-            })
+        afterEach(() => {
+            fs.unlinkSync('tests/hello-world.txt')
         })
     })
 
-    describe('Bets Api', () => {
-
-        describe('Results from api', () => {
-            it('should return data', () => {
-                return logic._callBetsApi()
-                    .then(bets => {
-                        expect(bets).toBeDefined()
-                    })
-            })
+    describe('retrieve text file', () => {
+        beforeEach(() => {
+            fs.writeFileSync('tests/hello-world.txt', 'hola mundo!')
         })
 
-        describe('Results from api', () => {
-            it('should return competition', () => {
-                return logic._callBetsApi()
-                    .then(bets => {
-                        const competition = bets[0].competition
-                        console.log(competition)
-                        expect(competition).toBeDefined()
-                    })
-            })
-        })
+        it('should succeed on correct file', () =>
+            logic.register(username, password)
+                .then(() => logic.authenticate(username, password))
+                .then(token => {
+                    const file = fs.createReadStream('tests/hello-world.txt')
 
-        describe('Results from api', () => {
-            it('should return date match', () => {
-                return logic._callBetsApi()
-                    .then(bets => {
-                        const dates = bets[0].date
-                        console.log(dates)
-                        expect(dates).toBeDefined()
-                    })
-            })
-        })
+                    return logic.saveFile(username, file, token)
+                        .then(() => logic.retrieveFile(username, 'hello-world.txt', token))
+                })
+                .then(res => {
+                    expect(res).to.exist
 
-        describe('Results from api', () => {
-            it('should return time', () => {
-                return logic._callBetsApi()
-                    .then(bets => {
-                        const times = bets[0].time
-                        console.log(times)
-                        expect(times).toBeDefined()
-                    })
-            })
-        })
-        
-        describe('Results from api', () => {
-            it('should return match', () => {
-                return logic._callBetsApi()
-                    .then(bets => {
-                        const teams = bets[0].team
-                        console.log(teams)
-                        expect(teams).toBeDefined()
-                    })
-            })
-        })
+                    return new Promise((resolve, reject) => {
+                        const ws = fs.createWriteStream('tests/hello-world-retrieved.txt')
 
-        describe('Results from api', () => {
-            it('should return links', () => {
-                return logic._callBetsApi()
-                    .then(bets => {
-                        const links = bets[0].url
-                        console.log(links)
-                        expect(links).toBeDefined()
-                    })
-            })
-        })
-        
-        describe('Results from api', () => {
-            it('should return odd', () => {
-                return logic._callBetsApi()
-                    .then(bets => {
-                        const odd = bets[0].odds
-                        console.log(odd)
-                        expect(odd).toBeDefined()
-                    })
-            })
-        })
+                        res.pipe(ws)
 
-        describe('Results from api', () => {
-            it('should return results 1 X 2', () => {
-                return logic._callBetsApi()
-                    .then(bets => {
-                        const results1x2 = bets[0].results
-                        console.log(results1x2)
-                        expect(results1x2).toBeDefined()
-                    })
-            })
-        })
+                        ws.on('finish', () => resolve())
 
+                        ws.on('error', () => reject())
+                    })
+                })
+                .then(() => {
+                    const from = fs.readFileSync('tests/hello-world.txt')
+                    const to = fs.readFileSync('tests/hello-world-retrieved.txt')
+
+                    expect(from.equals(to)).to.be.true
+                })
+        )
+
+        it('should fail on empty username', () =>
+            logic.retrieveFile('', 'whatever')
+                .catch(err => err)
+                .then(err => {
+                    expect(err).to.exist
+                    expect(err.message).to.equal(`invalid username`)
+                })
+        )
+
+        it('should fail on empty file', () =>
+            logic.retrieveFile(username)
+                .catch(err => err)
+                .then(err => {
+                    expect(err).to.exist
+                    expect(err.message).to.equal(`invalid file`)
+                })
+        )
+
+        afterEach(() => {
+            fs.unlinkSync('tests/hello-world.txt')
+        })
     })
 
-    describe('User Api', () => {
+    describe('retrieve binary file', () => {
+        beforeEach(done => {
+            new Jimp(256, 256, 0xff0000ff, function (err, image) {
+                if (err) return done(err)
 
-        describe('register user', () => {
-            const username = 'los-shawarma-' + Math.random(), password = '123'
-
-            it('should register on correct data', () => {
-                return logic.registerUser(username, password)
-                    .then(id => {
-                        expect(id).toBeDefined()
-                    })
+                image.write('tests/hello-world.png', done)
             })
         })
 
-        describe('login user', () => {
-            const username = 'los-shawarma-' + Math.random(), password = '123'
-            let userId
+        it('should succeed on correct file', () =>
+            logic.register(username, password)
+                .then(() => logic.authenticate(username, password))
+                .then(token => {
+                    const file = fs.createReadStream('tests/hello-world.png')
 
-            beforeEach(() => {
-                return logic.registerUser(username, password)
-                    .then(id => userId = id)
-            })
+                    return logic.saveFile(username, file, token)
+                        .then(() => logic.retrieveFile(username, 'hello-world.png', token))
+                })
+                .then(res => {
+                    expect(res).to.exist
 
-            it('should login on correct data', () => {
-                return logic.loginUser(username, password)
-                    .then(res => {
-                        expect(res).toBeTruthy()
+                    return new Promise((resolve, reject) => {
+                        const ws = fs.createWriteStream('tests/hello-world-retrieved.png')
 
-                        expect(logic._userId).toBe(userId)
-                        expect(logic._userToken).toBeDefined()
-                        expect(logic.userUsername).toBe(username)
+                        res.pipe(ws)
+
+                        ws.on('finish', () => resolve())
+
+                        ws.on('error', () => reject())
                     })
-            })
+                })
+                .then(() => {
+                    debugger
+                    const from = fs.readFileSync('tests/hello-world.png')
+                    const to = fs.readFileSync('tests/hello-world-retrieved.png')
+
+                    expect(from.equals(to)).to.be.true
+                })
+        )
+
+        afterEach(() => {
+            fs.unlinkSync('tests/hello-world.png')
+        })
+    })
+
+    describe('list files', () => {
+        beforeEach(() => {
+            fs.writeFileSync('tests/hello-world.txt', 'hola mundo!')
+            fs.writeFileSync('tests/hello-world-2.txt', 'hola mundo!')
+            fs.writeFileSync('tests/hello-world-3.txt', 'hola mundo!')
         })
 
-        describe('unregister user', () => {
-            const username = 'los-shawarma-' + Math.random(), password = '123'
+        it('should succeed', () =>
+            logic.register(username, password)
+                .then(() => logic.authenticate(username, password))
+                .then(token => {
+                    const file = fs.createReadStream('tests/hello-world.txt')
 
-            beforeEach(() => {
-                return logic.registerUser(username, password)
-                    .then(() => logic.loginUser(username, password))
-            })
+                    return logic.saveFile(username, file, token)
+                        .then(() => {
+                            const file = fs.createReadStream('tests/hello-world-2.txt')
 
-            it('should unregister on correct data', () => {
-                return logic.unregisterUser(password)
-                    .then(res => {
-                        expect(res).toBeTruthy()
-                    })
-            })
+                            return logic.saveFile(username, file, token)
+                        })
+                        .then(() => {
+                            const file = fs.createReadStream('tests/hello-world-3.txt')
+
+                            return logic.saveFile(username, file, token)
+                        })
+                        .then(() => logic.listFiles(username, token))
+                })
+                .then(files => {
+                    expect(files.length).to.equal(3)
+                    expect(files.includes('hello-world.txt'))
+                    expect(files.includes('hello-world-2.txt'))
+                    expect(files.includes('hello-world-3.txt'))
+                })
+        )
+
+        it('should fail on empty username', () =>
+            logic.saveFile('', 'whatever')
+                .catch(err => err)
+                .then(err => {
+                    expect(err).to.exist
+                    expect(err.message).to.equal(`invalid username`)
+                })
+        )
+
+        it('should fail on empty username', () =>
+            logic.listFiles()
+                .catch(err => err)
+                .then(err => {
+                    expect(err).to.exist
+                    expect(err.message).to.equal(`invalid username`)
+                })
+        )
+    })
+
+    describe('remove file', () => {
+        beforeEach(() => {
+            fs.writeFileSync('tests/hello-world.txt', 'hola mundo!')
+            fs.writeFileSync('tests/hello-world-2.txt', 'hola mundo!')
+            fs.writeFileSync('tests/hello-world-3.txt', 'hola mundo!')
         })
 
-        describe('logout user', () => {
-            const username = 'los-shawarma-' + Math.random(), password = '123'
+        it('should succeed', () =>
+            logic.register(username, password)
+                .then(() => logic.authenticate(username, password))
+                .then(token => {
+                    const file = fs.createReadStream('tests/hello-world.txt')
 
-            beforeEach(() => {
-                return logic.registerUser(username, password)
-                    .then(() => logic.loginUser(username, password))
-            })
+                    return logic.saveFile(username, file, token)
+                        .then(() => {
+                            const file = fs.createReadStream('tests/hello-world-2.txt')
 
-            it('should logout correctly', () => {
-                expect(logic._userId).toBeDefined()
-                expect(logic._userToken).toBeDefined()
-                expect(logic.userUsername).toBeDefined()
+                            return logic.saveFile(username, file, token)
+                        })
+                        .then(() => {
+                            const file = fs.createReadStream('tests/hello-world-3.txt')
 
-                logic.logout()
+                            return logic.saveFile(username, file, token)
+                        })
+                        .then(() => logic.removeFile(username, 'hello-world.txt', token))
+                        .then(() => logic.listFiles(username, token))
+                })
+                .then(files => {
+                    expect(files.length).to.equal(2)
+                    expect(files.includes('hello-world-2.txt'))
+                    expect(files.includes('hello-world-3.txt'))
+                })
+        )
 
-                expect(logic._userId).toBeNull()
-                expect(logic._userToken).toBeNull()
-                expect(logic.userUsername).toBeNull()
-            })
-        })
+        it('should fail on empty username', () =>
+            logic.removeFile('', 'whatever')
+                .catch(err => err)
+                .then(err => {
+                    expect(err).to.exist
+                    expect(err.message).to.equal(`invalid username`)
+                })
+        )
 
-        describe('update user', () => {
-            let username
-            const password = '123'
+        it('should fail on empty file', () =>
+            logic.removeFile(username)
+                .catch(err => err)
+                .then(err => {
+                    expect(err).to.exist
+                    expect(err.message).to.equal(`invalid file`)
+                })
+        )
+    })
 
-            beforeEach(() => {
-                username = 'los-shawarma-' + Math.random()
-
-                return logic.registerUser(username, password)
-                    .then(() => logic.loginUser(username, password))
-            })
-
-            it('should update username and password correctly', () => {
-                const newUsername = username + '-' + Math.random()
-                const newPassword = password + '-' + Math.random()
-
-                return logic.updateUser(password, newUsername, newPassword)
-                    // .then(res => expect(res).toBeTruthy())
-                    .then(res => {
-                        expect(res).toBeTruthy()
-
-                        return logic.loginUser(newUsername, newPassword)
-                    })
-                    .then(res => expect(res).toBeTruthy())
-            })
-
-            it('should update username correctly', () => {
-                const newUsername = username + '-' + Math.random()
-
-                return logic.updateUser(password, newUsername)
-                    .then(res => {
-                        expect(res).toBeTruthy()
-
-                        return logic.loginUser(newUsername, password)
-                    })
-                    .then(res => expect(res).toBeTruthy())
-            })
-
-            it('should update password correctly', () => {
-                const newPassword = password + '-' + Math.random()
-
-                return logic.updateUser(password, undefined, newPassword)
-                    .then(res => {
-                        expect(res).toBeTruthy()
-
-                        return logic.loginUser(username, newPassword)
-                    })
-                    .then(res => expect(res).toBeTruthy())
-            })
-    
-        })
+    after(() => {
+        if (fs.existsSync('tests'))
+            rimraf.sync('tests')
     })
 })
+

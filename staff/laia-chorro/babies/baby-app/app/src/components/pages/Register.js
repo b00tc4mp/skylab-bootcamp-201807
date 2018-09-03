@@ -7,24 +7,10 @@ class Register extends Component {
     state = {
         username: null,
         password: null,
-        errorMsg: null,
-        showFeedback: false
     }
 
     componentDidMount() {
         this.props.hideFeedback()
-    }
-
-    static getDerivedStateFromProps(props, state) {
-        if (props.errorMsg !== state.errorMsg || 
-            props.showFeedback !== state.showFeedback) {
-          return {
-            errorMsg: props.errorMsg,
-            showFeedback: props.showFeedback,
-          };
-        }
-    
-        return null; // Return null to indicate no change to state.
     }
 
     keepUsername = e => this.setState({username: e.target.value})
@@ -35,12 +21,12 @@ class Register extends Component {
         e.preventDefault()
 
         const {username, password} = this.state
-        this.props.onRegisterProp(username, password)
+        this.props.onRegister(username, password)
     }
 
     render () {
-        const {submitRegistration, keepUsername, keepPassword } = this
-        const {errorMsg, showFeedback} = this.state
+        
+        const { submitRegistration, keepUsername, keepPassword, props: { errorMsg, showFeedback } } = this
 
         return (
             <section>

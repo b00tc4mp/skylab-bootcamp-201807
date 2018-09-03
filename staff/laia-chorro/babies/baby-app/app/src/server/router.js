@@ -16,11 +16,12 @@ import App from '../components/App'
 const router = (req, res, next) => {
 
     const activeRoute = routes.find((route) => matchPath(req.url, route)) || {}
-debugger;
+
     const promise = activeRoute.fetchInitialData
       ? activeRoute.fetchInitialData(req.path)
       : Promise.resolve()
   
+
     promise.then((data) => {
       const context = { data }
   
