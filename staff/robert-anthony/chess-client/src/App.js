@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {Switch, Route, withRouter, Redirect} from 'react-router-dom'
-import Landing from './components/Landing'
 import Register from './components/Register'
+import Main from './components/Main'
 import Login from './components/Login'
 import Games from './components/Games'
 import socketIOClient from 'socket.io-client';
@@ -36,10 +36,10 @@ class App extends Component {
     }
   }
 
-  onAcknowledgeGameOver = (nickname,gameID) => {
-    const {state:{token}} = this
-    logic.onAcknowledgeGameOver(nickname,gameID,token)
-      .then(_ => this.getCurrentGamesForUser(nickname,token))
+  onAcknowledgeGameOver = (nickname, gameID) => {
+    const {state: {token}} = this
+    logic.onAcknowledgeGameOver(nickname, gameID, token)
+      .then(_ => this.getCurrentGamesForUser(nickname, token))
       .catch(({message}) => this.setState({error: message}))
   }
 
@@ -64,7 +64,6 @@ class App extends Component {
       .then(users => {
         sessionStorage.setItem('users', JSON.stringify(users))
         this.setState({users})
-
       })
       .catch(({message}) => this.setState({error: message}))
   }
@@ -157,7 +156,7 @@ class App extends Component {
   onLogout = () => {
     // this.socket.emit('logout', this.state.nickname)
     this.setState({nickname: '', token: ''})
-// removesocketlisteners!
+// removesocketlisteners ??
     sessionStorage.clear()
   }
 
@@ -169,31 +168,32 @@ class App extends Component {
         <NavBar isLoggedIn={this.isLoggedIn()} onLogout={this.onLogout}/>
       </header>
       {error && <Alert color="warning"> {error}</Alert>}
+      <main>
+        <Switch>
+          <Route exact path="/" render={() => <Main/>}/>
+          <Route path="/main" render={() => <Main/>}/>
+          <Route path="/register" render={() => this.isLoggedIn() ? <Redirect to="/main"/> : <Register/>}/>
 
-      <Switch>
-        <Route exact path="/" render={() => this.isLoggedIn() ? <Redirect to="/games"/> : <Landing/>}/>
-        <Route path="/register" render={() => this.isLoggedIn() ? <Redirect to="/games"/> : <Register/>}/>
-
-        <Route path="/games" render={() => this.isLoggedIn() ?
-          <Games
-            onAcknowledgeGameOver={this.onAcknowledgeGameOver}
-            onGameMove={this.onGameMove}
-            currentGames={currentGames}
-            onRespondToGameRequest={this.onRespondToGameRequest}
-            nickname={nickname}
-          /> : <Landing/>}/>
-        <Route path="/invite" render={() => this.isLoggedIn() ?
-          <Invite
-            onUserClick={this.onInviteUser}
-            currentGames={currentGames}
-            allUsers={users}
-            nickname={nickname}
-            onUserSearchByString={term => this.getUsersForString(term, token)}
-          /> : <Landing/>}/>
-        <Route path="/login" render={() => this.isLoggedIn() ? <Redirect to="/games"/> :
-          <Login onLoggedIn={this.onLoggedIn}/>}/>
-      </Switch>
-
+          <Route path="/games" render={() => this.isLoggedIn() ?
+            <Games
+              onAcknowledgeGameOver={this.onAcknowledgeGameOver}
+              onGameMove={this.onGameMove}
+              currentGames={currentGames}
+              onRespondToGameRequest={this.onRespondToGameRequest}
+              nickname={nickname}
+            /> : <Redirect to="/main"/>}/>
+          <Route path="/invite" render={() => this.isLoggedIn() ?
+            <Invite
+              onUserClick={this.onInviteUser}
+              currentGames={currentGames}
+              allUsers={users}
+              nickname={nickname}
+              onUserSearchByString={term => this.getUsersForString(term, token)}
+            /> : <Redirect to="/main"/>}/>
+          <Route path="/login" render={() => this.isLoggedIn() ? <Redirect to="/main"/> :
+            <Login onLoggedIn={this.onLoggedIn}/>}/>
+        </Switch>
+      </main>
       <footer>
       </footer>
     </div>

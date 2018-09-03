@@ -10,7 +10,7 @@ class OpenGames extends Component {
     games: PropTypes.array,
     nickname: PropTypes.string,
     currentGameViewed: PropTypes.object,
-    // opponent:PropType.string,
+    userList:[],
   }
 
   state = {
@@ -37,16 +37,13 @@ class OpenGames extends Component {
         <i className='fas fa-chess-pawn'></i>}&nbsp;{isCurrent && <i className='far fa-eye'></i>} </ListGroupItem>
       })
     }
-    return <main>
-
-
-        <div className="main__userList">
+    return   <div className="userList opengames_userList">
           <ListGroup>
             {games.length ? userList : <li>You are not playing any games with anyone at the moment</li>}
           </ListGroup>
         </div>
 
-    </main>
+
 
 
   }

@@ -68,11 +68,11 @@ class Games extends Component {
   render() {
     let {props: {currentGames, nickname,onAcknowledgeGameOver}, state: {error, currentGameID, inviter, invitedGameID}, onGameMove} = this
 
-    return <main>
-      <div>
-        <Container className="main__mainChessContainer">
+    return  <div className="mainContainer games__container">
 
-          <Row className="main__mainChessRow">
+    <Container className="games__mainChessContainer">
+
+          <Row className="games__mainChessRow">
             <Col xs="12" md="3">
               {currentGames.length && <OpenGames onUserClick={this.onOpenGamesUserClick}
                                                  games={currentGames.filter(game => game.state !== 'terminated')}
@@ -112,7 +112,6 @@ class Games extends Component {
         </Modal>
 
       </div>
-    </main>
 
 
   }

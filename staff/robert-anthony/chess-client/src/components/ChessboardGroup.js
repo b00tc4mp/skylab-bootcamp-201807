@@ -28,10 +28,7 @@ class ChessboardGroup extends Component {
   render() {
     let {props: {onGameMove, currentGame, nickname,onAcknowledgeGameOver}} = this
 
-    return <div>
-
-
-          <div className="main__chessboardarea">
+    return <div className="chessBoardGroup__chessBoardArea">
             {currentGame &&
             <ChessboardComponent isWhite={currentGame.initiator === nickname}
                                  onAcknowledgeGameOver={onAcknowledgeGameOver}
@@ -41,9 +38,6 @@ class ChessboardGroup extends Component {
                                  nickname={nickname} />
             }
           </div>
-
-    </div>
-
 
   }
 

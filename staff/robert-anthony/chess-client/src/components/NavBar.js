@@ -60,7 +60,7 @@ export default class NavBar extends Component {
               {!isLoggedIn && <NavLink onClick={this.closeNavBar} href="/#/login">Login</NavLink>}
             </NavItem>
             <NavItem>
-              {!isLoggedIn && <NavLink onClick={this.closeNavBar} href="/#/login">Register</NavLink>}
+              {!isLoggedIn && <NavLink onClick={this.closeNavBar} href="/#/register">Register</NavLink>}
             </NavItem>
           </Nav>
           </Collapse>

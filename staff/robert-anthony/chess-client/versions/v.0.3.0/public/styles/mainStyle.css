@@ -5,7 +5,7 @@
   justify-content: space-evenly; }
   .main_gamearea .main_userlist {
     width: 30%; }
-  .main_gamearea .main__chessboardarea {
+  .main_gamearea .chessBoardGroup__chessBoardArea {
     width: 70%;
     border: rgba(178, 34, 34, 0.7) solid 2px;
     padding: 1em; }

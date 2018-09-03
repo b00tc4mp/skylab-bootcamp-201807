@@ -79,7 +79,7 @@ class ChessboardComponent extends Component {
       <Row>
         <Col xs="12" md="9">
 
-          <div className="main__chessboardarea">
+          <div className="chessBoardGroup__chessBoardArea">
             {currentGame && <Chessboard orientation={isWhite ? 'white' : 'black'} onDrop={this.onDrop}
                                         calcWidth={this.chessboardjsxCalcWidth} position={currentGame.fen}/>}
           </div>

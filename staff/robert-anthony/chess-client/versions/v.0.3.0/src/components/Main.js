@@ -60,7 +60,7 @@ class Main extends Component {
               {users.length ? userList : <li>no users available</li>}
             </ul>
           </div>
-          <div className="main__chessboardarea">
+          <div className="chessBoardGroup__chessBoardArea">
             <ul>
               {currentGames.length && currentGames.map(game => {
                 return <li key={game.opponent + Math.random()}><ChessBoard

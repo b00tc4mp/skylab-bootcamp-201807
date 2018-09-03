@@ -48,40 +48,37 @@ class Invite extends Component {
   render() {
     let {props: {nickname}, state: {usersInvited,userSearchTerm, usersNotPlayingWith}} = this
 
-    return <main>
-      <div >
+    return   <div className="invite__mainContainer" >
 
         <Container>
-          <Row>
-            <Col xs="12" md="4">
-              <form className="invite__searchForm">
-                <input autoFocus className="invite__searchInput" placeholder="Enter a search term" value={userSearchTerm}
-                       onChange={this.onKeepUserSearchTermAndDoSearch} type="text"/>
-              </form>
-            </Col>
-          </Row>
+
           <Row> <Col className="invite__explainText" xs="12" md="6">
             Users you can invite
+
+            <form className="invite__searchForm">
+              <input autoFocus className="invite__searchInput" placeholder="Enter a search term" value={userSearchTerm}
+                     onChange={this.onKeepUserSearchTermAndDoSearch} type="text"/>
+            </form>
           </Col>
-            <Col className="invite__explainText"t xs="12" md="6">
+            <Col className="invite__explainText invite__explainText-explain" xs="12" md="6">
               Users you have invited
             </Col>
           </Row>
           <Row>
 
             <Col xs="12" md="6">
-              <div className="main__userlist">
+              <div className="userList invite__searchedUsers">
 
                 <ListGroup>
                   {usersNotPlayingWith.length ? usersNotPlayingWith.map(user => {
                    return user !== nickname ? <ListGroupItem tag="a" href="#" key={user + Math.random()}
                                                                  onClick={e => this.onUserClick(e, user)}> {`${user}`}</ListGroupItem>: null
-                  }) : <li>Please search for users</li>}
+                  }) : <ListGroupItem>No match</ListGroupItem>}
                 </ListGroup>
               </div>
             </Col>
             <Col xs="12" md="6">
-              <div className="main__userlist">
+              <div className="userList invite__invitedUsers">
 
                 <ListGroup>
                   {usersInvited.length ? usersInvited.map(user => {
@@ -93,7 +90,7 @@ class Invite extends Component {
           </Row>
         </Container>
       </div>
-    </main>
+
 
 
   }

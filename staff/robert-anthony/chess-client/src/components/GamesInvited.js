@@ -9,10 +9,10 @@ import InvitationDialog from "./InvitationDialog" // ES6
 class GamesInvited extends Component {
 
   static propTypes = {
-    onRespondToGameRequest:PropTypes.func,
-    games:PropTypes.array,
-    nickname:PropTypes.string,
-   // opponent:PropType.string,
+    onRespondToGameRequest: PropTypes.func,
+    games: PropTypes.array,
+    nickname: PropTypes.string,
+    // opponent:PropType.string,
   }
 
   state = {
@@ -20,30 +20,27 @@ class GamesInvited extends Component {
   }
 
 
-
   render() {
-    let {props: {games,nickname}} = this
+    let {props: {games, nickname}} = this
     let userList
     if (games.length) {
 
 
       userList = games.map(game => {
-        return <ListGroupItem key={game.opponent + Math.random()}><InvitationDialog opponent={game.opponent} gameID={game.id} onRespondToGameRequest={this.props.onRespondToGameRequest}/></ListGroupItem>
+        return <ListGroupItem key={game.opponent + Math.random()}><InvitationDialog opponent={game.opponent}
+                                                                                    gameID={game.id}
+                                                                                    onRespondToGameRequest={this.props.onRespondToGameRequest}/></ListGroupItem>
       })
     }
-    return <main>
-      <div className="screen">
+    return <div className="screen">
 
 
-              <div className="main__userlist">
-                <ListGroup>
-                  {games.length ? userList : <li>You have no invitations at the moment</li>}
-                </ListGroup>
-              </div>
-
+      <div className="userList gamesinvited_userList"><ListGroup>
+        {games.length ? userList : <li>You have no invitations at the moment</li>}
+      </ListGroup>
       </div>
-    </main>
 
+    </div>
 
   }
 

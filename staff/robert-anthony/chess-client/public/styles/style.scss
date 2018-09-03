@@ -6,6 +6,8 @@ font-family: 'Vollkorn', serif;
 */
 
 $text_color1: #ffeb86;
+$text_color2: #ffa400;
+$background_color1: rgba(118, 61, 5, 0.7);
 
 * {
   box-sizing: border-box;
@@ -15,33 +17,48 @@ $text_color1: #ffeb86;
 
 html {
   height: 100%;
+  font-family: 'Merriweather', serif;
+
 }
 
 .main__mainChessContainer {
   color: white;
-  font-family: 'Merriweather', serif;
 
-  .main__mainChessRow {
+  .games__mainChessRow {
     position: relative;
     margin-top: 5%;
   }
 }
 
-main div.main__userList ul.list-group a.list-group-item {
-  background-color: rgba(118, 61, 5,0.7);
+main div.userList ul.list-group a.list-group-item, main div.userList ul.list-group li.list-group-item {
+  background-color: $background_color1;
+  color: #ffa400;
+
   &:link, &:visited {
     color: $text_color1;
-  text-decoration:none
+    text-decoration: none
   }
   &:hover, &:active {
-    color: #ffa400;
-    text-decoration:none
+    color: $text_color2;
+    text-decoration: none
   }
 }
 
+main {
+  margin: 2em;
+
+  .main__mainText {
+    color: $text_color1;
+    font-size: 1em;
+    letter-spacing: 0.1em;
+    background: $background_color1;
+  }
+
+}
+
 .invite__searchInput {
-  margin-top:3em;
-  margin-bottom:3em;
+  margin-top: 3em;
+  margin-bottom: 3em;
   color: $text_color1;
   border-color: rgba(255, 75, 5, 0.7);
   &:focus {
@@ -51,9 +68,12 @@ main div.main__userList ul.list-group a.list-group-item {
 }
 
 .invite__explainText {
-  color:$text_color1;
-  size:1.2em;
+  color: $text_color1;
+  size: 1.2em;
   font-weight: 700;
+  &.invite__explainText-explain {
+    color: $text_color2;
+  }
 }
 
 body {
@@ -61,6 +81,7 @@ body {
   background: url(../images/side-shot-of-a-chess-board-over-a-black-background-and-the-chess-pieces-lin_v0iu7ixol__F0000.png);
   background-repeat: no-repeat;
   background-size: cover;
+  background-attachment: fixed;
 }
 
 header, footer {
@@ -69,25 +90,10 @@ header, footer {
   height: 10%;
 }
 
-main {
-  border-radius: .5em;
-  margin-left: 1em;
-  margin-right: 1em;
-  height: 80%;
-  font-size: 20px
-}
-
-.nav_headerTitle {
-  margin: 20px;
-  letter-spacing: .1em;
-  color: #1492b2;
-}
-
-input, button {
+input {
   background-color: inherit;
   border-style: solid;
   border-width: 1px;
-  border-color: darkcyan;
   color: inherit;
   font-size: inherit;
   border-radius: 0.5em;
@@ -99,9 +105,3 @@ ul {
   padding: 1em;
 }
 
-.screen {
-  border-radius: 0.7em;
-  padding: 1em;
-  height: 100%;
-
-}

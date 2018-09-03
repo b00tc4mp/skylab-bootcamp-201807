@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import { InputGroup, InputGroupText, InputGroupAddon,Col,Row,Container, Input } from 'reactstrap';
+
 import logic from '../logic'
 
 class Login extends Component {
@@ -24,19 +26,33 @@ class Login extends Component {
   render() {
     const { error } = this.state
 
-    return <main>
-      <div >
-        <nav>
-         <a href="/#/register">register</a> or login
-        </nav>
+    return  <Container className="mainContainer login__container">
+    <Col xs="12" md="3">
         <form onSubmit={this.onLoginSubmitted}>
-          <input type="text" name="nickname" placeholder="nickname" autoFocus onChange={this.onNicknameChanged} />
-          <input type="password" name="password" placeholder="password" onChange={this.onPasswordChanged} />
+          <Row className="mb-2">
+          <InputGroup>
+            <InputGroupAddon addonType="prepend">
+              <InputGroupText>Nickname</InputGroupText>
+            </InputGroupAddon>
+            <Input autoFocus placeholder="nickname"  onChange={this.onNicknameChanged} />
+          </InputGroup>
+          </Row>
+          <Row className="mb-2">
+            <InputGroup>
+              <InputGroupAddon addonType="prepend">
+                <InputGroupText>Password</InputGroupText>
+              </InputGroupAddon>
+              <Input  type="password"  placeholder="password"  onChange={this.onPasswordChanged} />
+            </InputGroup>
+          </Row>
+          <Row>
           <button type="submit">login</button>
+          </Row>
         </form>
         {error && <p>{error}</p>}
-      </div>
-    </main>
+    </Col>
+      </Container>
+
   }
 }
 
