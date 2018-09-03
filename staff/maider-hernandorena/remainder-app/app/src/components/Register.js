@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import logic from '../logic'
+import '../styles/css/register.css'
 
 class Register extends Component {
     state = {
@@ -37,21 +38,21 @@ class Register extends Component {
     }
 
     render() {
-        const { state: {registered, error}, keepCode, keepPassword, onRegister } = this
+        const { state: { code, password, registered, error }, keepCode, keepPassword, onRegister } = this
 
-        return <main>
-            <div>
-                <nav>
-                    <p>Register or go to <a href="/#/login">Login</a></p>
-                </nav>
-                <form onSubmit={onRegister}>
-                    <input type="text" name="code" placeholder="code" autoFocus onChange={keepCode} />
-                    <input type="password" name="password" placeholder="password" onChange={keepPassword} />
-                    <button type="submit">Register</button>
+        return <main className="register">
+            <div className="register__group">
+                {!registered ? <p className="register__group__text">Register or go to 
+                    <a className="register__group__text__link" href="/#/login"> Login</a>
+                </p> : <p className="register__group__text register__group__goToLogin">You have registered successfully, now you can go to 
+                    <a className="register__group__text__link" href="/#/login" onClick={this.props.linkToLogin}> Login</a>
+                </p>}
+                <form className="register__group__form" onSubmit={onRegister}>
+                    <input className="register__group__form__input" type="text"value={code} name="code" placeholder="code" autoFocus onChange={keepCode} />
+                    <input className="register__group__form__input" type="password" value={password} name="password" placeholder="password" onChange={keepPassword} />
+                    <button className="register__group__form__button" type="submit">Register</button>
                 </form>
-                {error && <p className="error">{error}</p>}
-                {!registered ? <p></p> :
-                <p className="gotologin">You have registered successfully, now you can go to <a href="/#/login" onClick={this.props.linkToLogin}>Login</a></p>}
+                {error && <p className="register__group__error">{error}</p>}           
             </div>
         </main>
     }

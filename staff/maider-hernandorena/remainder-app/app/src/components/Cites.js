@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
 import logic from '../logic'
+import '../styles/css/cites.css'
 
 class Cites extends Component {
 
     state = { 
         cites: [],
-        date: '',
+        date: new Date(),
         error: '',
     }
 
@@ -17,23 +18,20 @@ class Cites extends Component {
 
     listCites = () => {
         const { date } = this.state
-
         const day = new Date(date)
 
         logic.listCites(day)
-            .then(cites => {
-                this.setState({ cites, error: '' })
-            })
+            .then(cites => this.setState({ cites, error: '' }))
             .then(() => this.state.cites)
     }
 
     render() {
-        const { state: { cites }, keepDay, listCites } = this
+        const { state: { date, cites }, keepDay, listCites } = this
 
         return <main>
             <div>
                 <form onSubmit={listCites}>
-                    <input type="date" onChange={keepDay} />
+                    <input type="date" value={date} onChange={keepDay} />
                     <button type="submit">Choose Day</button>
                 </form>
                 <div>

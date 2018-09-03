@@ -1,3 +1,46 @@
-
+.register {
+  background: linear-gradient(left, #55bf9f 0%, #2fbdbb 100%);
+  height: 60vh;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 20px; }
+  .register__group {
+    padding: 2% 35%;
+    margin: 0 auto;
+    width: 30%; }
+    .register__group__text {
+      padding: 0%;
+      text-align: left;
+      color: #ffffff; }
+      .register__group__text__link {
+        color: #308079;
+        text-decoration: none; }
+        .register__group__text__link:hover {
+          color: #215b63; }
+    .register__group__goToLogin {
+      width: 90%; }
+    .register__group__form__input {
+      display: block;
+      padding: 15px;
+      margin-top: 10px;
+      border: none;
+      border-radius: 10px;
+      font-size: 20px;
+      width: 80%; }
+      .register__group__form__input:focus {
+        outline: 0px; }
+    .register__group__form__button {
+      padding: 15px;
+      margin-top: 10px;
+      background-color: #308079;
+      color: #ffffff;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 20px;
+      width: 88%; }
+      .register__group__form__button:hover {
+        background-color: #215b63; }
+    .register__group__error {
+      color: #ca6262; }
 
 /*# sourceMappingURL=register.css.map */

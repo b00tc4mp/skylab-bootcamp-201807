@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import logic from '../logic'
+import '../styles/css/patients.css'
 
 class Patients extends Component {
 
@@ -18,17 +19,19 @@ class Patients extends Component {
         this.props.goToAddPatient()
     }
 
+    patientData = dni => {
+        this.props.patientData(dni)
+    }
+
     componentWillMount() {
-        this.setState({ search: false })
         this.listPatients()
     }
 
     listPatients = () => {
         logic.listPatients()
-            .then(patients => {
-                this.setState({ patients, error: '' })
-            })
+            .then(patients => this.setState({ patients, error: '', search: false }))
             .then(() => this.state.patients)
+            .catch(({message}) => this.setState({ error: message }))
     }
 
     onSearch = e => {
@@ -44,14 +47,14 @@ class Patients extends Component {
     }
 
     render() {
-        const { state: {error, names, patients, search}, keepName, onSearch, goToAddPatient } = this
+        const { state: { error, name, names, patients, search }, keepName, onSearch, goToAddPatient, patientData } = this
 
         return <main>
             <div>
                 <div className="search">
                     <p>Search patients:</p>
                     <form onSubmit={onSearch}>
-                        <input type="text" name="name" placeholder="type here..." onChange={keepName}/>
+                        <input type="text" value={name} name="name" placeholder="type here..." onChange={keepName}/>
                         <button type="submit">Search</button>
                         {error && <p className="error">{error}</p>}
                     </form>
@@ -64,15 +67,15 @@ class Patients extends Component {
                 </div>
                 {search ? <div>
                     <ul>
-                        {names.map(name => <li key={name.name}>
-                            <a href="/#/patient" ><p><h4>{name.name} {name.surname}</h4>, {name.age}, {name.phone}</p></a>
+                        {names.map(patient => <li key={patient.name} onClick={() => patientData(patient.dni)}>
+                            <a href={`/#/patient/${patient.dni}`}><p><h4>{patient.name} {patient.surname}</h4>, {patient.dni}</p></a>
                         </li> )}
                     </ul>
                 </div> :
                 <div>
                     <ul>
-                        {patients.map(patient => <li key={patient.name}>
-                            <a href="/#/patient" ><p><h4>{patient.name} {patient.surname}</h4>, {patient.age}, {patient.phone}</p></a>
+                        {patients.map(patient => <li key={patient.name} onClick={() => patientData(patient.dni)}>
+                            <a href={`/#/patient/${patient.dni}`}><p><h4>{patient.name} {patient.surname}</h4>, {patient.dni}</p></a>
                         </li> )}
                     </ul>
                 </div> }

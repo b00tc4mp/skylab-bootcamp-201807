@@ -647,6 +647,48 @@ describe('logic', () => {
         )
     })
 
+    true && describe('return patient data', () => {
+
+        const patient1 = { name: 'Pepe', dni: 12345678, surname: 'Doe', age: 78 , gender: 'male', address: 'Barcelona', phone: 123123123}
+        const dni = 12345678
+
+        beforeEach(() => 
+            Patient.create(patient1)
+        )
+
+        it('should be return correctly the patient data', () => 
+            logic.patientData(dni)
+                .then(patient => {
+                    expect(patient).to.exist
+                    expect(patient.name).to.equal(patient1.name)
+                    expect(patient.surname).to.equal(patient1.surname)
+                    expect(patient.dni).to.equal(patient1.dni)
+                    expect(patient.age).to.equal(patient1.age)
+                    expect(patient.gender).to.equal(patient1.gender)
+                    expect(patient.address).to.equal(patient1.address)
+                    expect(patient.phone).to.equal(patient1.phone)
+                })
+        )
+
+        it('should fail on trying to return patient data with an undefined dni', () =>
+            logic.patientData(undefined)
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`invalid dni`))
+        )
+
+        it('should fail on trying to return patient data with an empty dni', () =>
+            logic.patientData('')
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`invalid dni`))
+        )
+
+        it('should fail on trying to return patient data with a string dni', () =>
+            logic.patientData(123)
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`invalid dni`))
+        )
+    })
+
     true && describe('search and list patients by name', () => {
 
         const patient1 = { name: 'Pepe', dni: 12345678, surname: 'Doe', age: 78 , gender: 'male', address: 'Barcelona', phone: 123123123}

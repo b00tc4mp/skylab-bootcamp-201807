@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import logic from '../logic'
+import '../styles/css/addpatient.css'
 
 class AddPatient extends Component {
     
@@ -15,13 +16,13 @@ class AddPatient extends Component {
         error: ''
     }
 
-    keepName = e => this.setState({ name: e.target.value, error: '' })
-    keepDni = e => this.setState({ dni: e.target.value, error: '' })
-    keepSurname = e => this.setState({ surname: e.target.value, error: '' })
-    keepAge = e => this.setState({ age: e.target.value, error: '' })
-    keepGender = e => this.setState({ gender: e.target.value, error: '' })
-    keepAddress = e => this.setState({ address: e.target.value, error: '' })
-    keepPhone = e => this.setState({ phone: e.target.value, error: '' })
+    keepName = e => this.setState({ name: e.target.value, error: '', added: '' })
+    keepDni = e => this.setState({ dni: e.target.value, error: '', added: '' })
+    keepSurname = e => this.setState({ surname: e.target.value, error: '', added: '' })
+    keepAge = e => this.setState({ age: e.target.value, error: '', added: '' })
+    keepGender = e => this.setState({ gender: e.target.value, error: '', added: '' })
+    keepAddress = e => this.setState({ address: e.target.value, error: '', added: '' })
+    keepPhone = e => this.setState({ phone: e.target.value, error: '', added: '' })
 
     addPatient = e => {
         e.preventDefault()
@@ -33,36 +34,33 @@ class AddPatient extends Component {
         phone = parseInt(phone)
 
         logic.addPatient(name, dni, surname, age, gender, address, phone)
-            .then(({message, id, token}) => {
-                this.setState({ added: message})
-                this.props.onAddPatient( id, token, dni)
-            })
+            .then(({ message }) => this.setState({ added: message }))
             .catch(({ message }) => this.setState({ error: message }))
     }
 
     render() {
 
-        const { state: { added, error }, addPatient, keepName, keepDni, keepSurname, keepAge, keepGender, keepAddress, keepPhone } = this
+        const { state: { name, surname, dni, age, gender, address, phone, added, error }, addPatient, keepName, keepDni, keepSurname, keepAge, keepGender, keepAddress, keepPhone } = this
 
         return <main>
             <div>
                 <form onSubmit={addPatient}>
                     <p>Patient Name:</p>
-                    <input type="text" name="name" placeholder="name" onChange={keepName}/>
+                    <input type="text" value={name} name="name" placeholder="name" onChange={keepName}/>
                     <p>Patient Surname:</p>
-                    <input type="text" name="surname" placeholder="surname" onChange={keepSurname}/>
+                    <input type="text" value={surname} name="surname" placeholder="surname" onChange={keepSurname}/>
                     <p>Patient DNI:</p>
-                    <input type="number" name="dni" placeholder="dni" onChange={keepDni}/>
+                    <input type="number" value={dni} name="dni" placeholder="dni" onChange={keepDni}/>
                     <p>Patient Age:</p>
-                    <input type="number" name="age" placeholder="age" onChange={keepAge}/>
+                    <input type="number" value={age} name="age" placeholder="age" onChange={keepAge}/>
                     <p>Patient Gender:</p>
-                    <input type="radio" name="gender" value="male" onChange={keepGender}/>Male
-                    <input type="radio" name="gender" value="female" onChange={keepGender}/>Female
-                    <input type="radio" name="gender" value="other" onChange={keepGender}/>Other
+                    <input type="radio" value={gender} name="gender" value="male" onChange={keepGender}/>Male
+                    <input type="radio" value={gender} name="gender" value="female" onChange={keepGender}/>Female
+                    <input type="radio" value={gender} name="gender" value="other" onChange={keepGender}/>Other
                     <p>Patient Address:</p>
-                    <input type="text" name="address" placeholder="address" onChange={keepAddress}/>
+                    <input type="text" value={address} name="address" placeholder="address" onChange={keepAddress}/>
                     <p>Patient Phone:</p>
-                    <input type="number" name="phone" placeholder="phone" onChange={keepPhone}/>
+                    <input type="number" value={phone} name="phone" placeholder="phone" onChange={keepPhone}/>
                     <button type="submit">Add Patient</button>
                 </form>
                 {added && <p className="added">{added}</p>}

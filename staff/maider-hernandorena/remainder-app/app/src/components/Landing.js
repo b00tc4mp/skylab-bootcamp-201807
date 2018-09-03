@@ -7,7 +7,7 @@ function Landing() {
                     <p className="main__group__text">
                         <a className="main__group__text__link" href="/#/register">Register</a> or <a className="main__group__text__link" href="/#/login">Login</a>
                     </p>
-                </div>          
+                </div>
             </main>
 }
 

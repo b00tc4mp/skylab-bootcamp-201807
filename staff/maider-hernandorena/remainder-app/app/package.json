@@ -21,8 +21,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "test-logic": "mocha src/logic"
+    "test": "mocha src/logic --timeout 15000",
+    "test-debug": "mocha debug src/logic --timeout 15000"
   }
 }

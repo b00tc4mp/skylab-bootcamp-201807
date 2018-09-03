@@ -1,6 +1,6 @@
 .header
     box-sizing: border-box
-    color: #ffffff
+    color: #333333
     margin: 0
     padding: 0
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
@@ -8,7 +8,6 @@
     height: 100%
 
     &__panel
-        background-color: #222222
         height: 120px
 
         &__logo
@@ -22,7 +21,7 @@
         flex-direction: row
         flex-wrap: wrap
         justify-content: flex-end
-        background-color: #215b63
+        background: linear-gradient(left, rgba(85,191,159,1) 0%, rgba(47,189,187,1) 100%)
 
         &__link
             color: #ffffff
@@ -30,4 +29,13 @@
             margin: 10px 20px
 
             &:hover
-                color: #4299a5
+                color: #215b63
+
+.noHome
+    background: linear-gradient(left, rgba(85,191,159,1) 0%, rgba(47,189,187,1) 100%)
+
+    &__logo
+        margin: 0 auto 0% auto
+        padding-top: 5%
+        display: block
+        width: 200px

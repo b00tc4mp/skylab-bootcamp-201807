@@ -1,13 +1,12 @@
 .header {
   box-sizing: border-box;
-  color: #ffffff;
+  color: #333333;
   margin: 0;
   padding: 0;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   font-size: 20px;
   height: 100%; }
   .header__panel {
-    background-color: #222222;
     height: 120px; }
     .header__panel__logo {
       margin: 10px;
@@ -19,12 +18,20 @@
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: flex-end;
-    background-color: #215b63; }
+    background: linear-gradient(left, #55bf9f 0%, #2fbdbb 100%); }
     .header__nav__link {
       color: #ffffff;
       text-decoration: none;
       margin: 10px 20px; }
       .header__nav__link:hover {
-        color: #4299a5; }
+        color: #215b63; }
+
+.noHome {
+  background: linear-gradient(left, #55bf9f 0%, #2fbdbb 100%); }
+  .noHome__logo {
+    margin: 0 auto 0% auto;
+    padding-top: 5%;
+    display: block;
+    width: 200px; }
 
 /*# sourceMappingURL=app.css.map */

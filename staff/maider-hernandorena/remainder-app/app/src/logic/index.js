@@ -160,18 +160,16 @@ const logic = {
      * Removes a patient with his/her id and dni
      * @param {String} id //patient id
      * @param {Number} dni //patient dni (8 digits)
-     * @param {String} token //patient token 
      * 
      * @returns {boolean} TRUE => if it removes patient correctly
      */
-    removePatient(id, dni, token) {
+    removePatient(id, dni) {
         return Promise.resolve()
             .then(() => {
                 this._validateStringField('id', id)
                 this._validateDniField('dni', dni)
-                this._validateStringField('token', token)
 
-                return this._call(`remove-patient/${id}`, 'delete', {'Content-Type': 'application/json' , authorization: `bearer ${token}`}, JSON.stringify({ dni }), 200)
+                return this._call(`remove-patient/${id}`, 'delete', {'Content-Type': 'application/json'}, JSON.stringify({ dni }), 200)
                     .then(res => res.json())
                     .then(() => true)
             })
@@ -184,11 +182,10 @@ const logic = {
      * @param {Number} dni //patient dni (8 digits)
      * @param {String} newAddress //patient new address
      * @param {Number} newPhone //patient new phone (9 digits)
-     * @param {String} token //patient token 
      * 
      * @returns {boolean} TRUE => if it updates patient correctly
      */
-    updatePatient(id, dni, newAddress, newPhone, token) {
+    updatePatient(id, dni, newAddress, newPhone) {
         return Promise.resolve()
             .then(() => {
                 this._validateStringField('id', id)
@@ -196,9 +193,25 @@ const logic = {
                 this._validateStringField('newAddress', newAddress)
                 this._validatePhoneField('newPhone', newPhone)
 
-                return this._call(`update-patient/${id}`, 'PATCH', {'Content-Type': 'application/json' , authorization: `bearer ${token}`}, JSON.stringify({ dni, newAddress, newPhone }), 201)
+                return this._call(`update-patient/${id}`, 'PATCH', {'Content-Type': 'application/json'}, JSON.stringify({ dni, newAddress, newPhone }), 201)
                     .then(res => res.json())
                     .then(() => true)
+            })
+    },
+
+    /**
+     * Returns a patient data
+     * @param {Number} dni //patient id
+     * 
+     * @returns {Object} patients data
+     */
+    patientData(dni) {
+        return Promise.resolve()
+            .then(() => {
+                this._validateDniField('dni', dni)
+
+                return this._call(`patient/${dni}`, 'get', {'Content-Type': 'application/json'}, undefined, 200)
+                    .then(res => res.json())
             })
     },
 
@@ -237,22 +250,20 @@ const logic = {
      * @param {String} pill //pill name
      * @param {String} quantity //pill quantity on a day (up to 0)
      * @param {String} frequency //pill frequency: days should take them
-     * @param {String} token //patient token 
      * 
      * @returns {Response} Treatment added correctly and its information
      */
-    addTreatment(id, dni, pill, quantity, frequency, token) {
+    addTreatment(id, dni, pill, quantity, frequency) {
         return Promise.resolve()
             .then(() => {
                 this._validateStringField('id', id)
                 this._validateDniField('dni', dni)
                 this._validateStringField('pill', pill)
-                this._validatePhoneField('quantity', quantity)
-                this._validatePhoneField('frequency', frequency)
+                this._validateStringField('quantity', quantity)
+                this._validateStringField('frequency', frequency)
 
-                return this._call(`patient/${id}/add-treatment`, 'PATCH', {'Content-Type': 'application/json' , authorization: `bearer ${token}`}, JSON.stringify({ dni, pill, quantity, frequency }), 201)
+                return this._call(`patient/${id}/add-treatment`, 'PATCH', {'Content-Type': 'application/json'}, JSON.stringify({ dni, pill, quantity, frequency }), 201)
                     .then(res => res.json())
-                    .then(({ treatment }) => treatment)
             })
     },
 
@@ -261,18 +272,17 @@ const logic = {
      * @param {String} id //patient id
      * @param {Number} dni //patient dni (8 digits)
      * @param {String} pill //pill name
-     * @param {String} token //patient token 
      * 
      * @returns {boolean} TRUE => if treatment was removed correctly from the patient
      */
-    removeTreatment(id, dni, pill, token) {
+    removeTreatment(id, dni, pill) {
         return Promise.resolve()
             .then(() => {
                 this._validateStringField('id', id)
                 this._validateDniField('dni', dni)
                 this._validateStringField('pill', pill)
-
-                return this._call(`patient/${id}/remove-treatment`, 'delete', {'Content-Type': 'application/json' , authorization: `bearer ${token}`}, JSON.stringify({ dni }), 200)
+                
+                return this._call(`patient/${id}/remove-treatment`, 'delete', {'Content-Type': 'application/json'}, JSON.stringify({ dni, pill }), 200)
                     .then(res => res.json())
                     .then(() => true)
             })
@@ -313,7 +323,6 @@ const logic = {
 
                 return this._call('add-cite', 'post', {'Content-Type': 'application/json'}, JSON.stringify({ code, dni, name, date }), 201)
                     .then(res => res.json())
-                    .then(({ cite }) => cite)
             })
     },
 

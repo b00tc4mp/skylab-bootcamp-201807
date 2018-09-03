@@ -66,11 +66,9 @@ router.post('/add-patient', jsonBodyParser, (req, res) => {
 
     logic.addPatient(name, dni, surname, age, gender, address, phone)
         .then(patient => {
-            const { JWT_SECRET, JWT_EXP } = process.env
-            const token = jwt.sign({ sub: patient.id }, JWT_SECRET, { expiresIn: JWT_EXP })
             const id = patient.id
 
-            res.status(201).json({ message: 'patient added correctly', token, id })
+            res.status(201).json({ message: 'patient added correctly', id })
         })
         .catch(err => {
             const { message } = err
@@ -86,7 +84,7 @@ router.post('/add-patient', jsonBodyParser, (req, res) => {
  * 
  * @returns {Response} Message 'patient removed correctly'
  */
-router.delete('/remove-patient/:id', [verifyJwt, jsonBodyParser], (req, res) => {
+router.delete('/remove-patient/:id', jsonBodyParser, (req, res) => {
     const { params: { id }, body: { dni } } = req
 
     logic.removePatient(id, dni)
@@ -105,11 +103,31 @@ router.delete('/remove-patient/:id', [verifyJwt, jsonBodyParser], (req, res) => 
  * 
  * @returns {Response} Message 'patient data updated correctly'
  */
-router.patch('/update-patient/:id', [verifyJwt, jsonBodyParser], (req, res) => {
+router.patch('/update-patient/:id', jsonBodyParser, (req, res) => {
     const { params: { id }, body: { dni, newAddress, newPhone } } = req
 
     logic.updatePatient(id, dni, newAddress, newPhone)
         .then(() => res.status(201).json({ message: 'patient data updated correctly' }))
+        .catch(err => {
+            const { message } = err
+            res.status(400 || 500).json({ message })
+        })
+})
+
+/**
+ * Returns a patient data
+ * 
+ * @throws {LogicError} Message of status
+ * 
+ * @returns {Response} Patients array
+ */
+router.get('/patient/:dni', jsonBodyParser, (req, res) => {
+    let { params: { dni } } = req
+
+    dni = parseInt(dni)
+
+    logic.patientData(dni)
+        .then(patients => res.json(patients)) 
         .catch(err => {
             const { message } = err
             res.status(400 || 500).json({ message })
@@ -159,7 +177,7 @@ router.get('/patients', jsonBodyParser, (req, res) => {
  * 
  * @returns {Response} Message 'treatment added correctly'
  */
-router.patch('/patient/:id/add-treatment', [verifyJwt, jsonBodyParser], (req, res) => {
+router.patch('/patient/:id/add-treatment', jsonBodyParser, (req, res) => {
     const { params: { id }, body: { dni, pill, quantity, frequency } } = req
 
     logic.addTreatment(id, dni, pill, quantity, frequency)
@@ -178,7 +196,7 @@ router.patch('/patient/:id/add-treatment', [verifyJwt, jsonBodyParser], (req, re
  * 
  * @returns {Response} Message 'treatment removed correctly'
  */
-router.delete('/patient/:id/remove-treatment', [verifyJwt, jsonBodyParser], (req, res) => {
+router.delete('/patient/:id/remove-treatment', jsonBodyParser, (req, res) => {
     const { params: { id }, body: { dni, pill } } = req
 
     logic.removeTreatment(id, dni, pill)

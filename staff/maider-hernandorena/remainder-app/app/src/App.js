@@ -13,9 +13,7 @@ class App extends Component {
   state = {
     code: sessionStorage.getItem('code') || '',
     token: sessionStorage.getItem('token') || '',
-    patientId: sessionStorage.getItem('patientId') || '',
-    patientToken: sessionStorage.getItem('patientToken') || '',
-    patientDni: ''
+    dni: sessionStorage.getItem('dni') || ''
   }
 
   onLoggedIn = (code, token) => {
@@ -46,35 +44,38 @@ class App extends Component {
 
   goToAddPatient = () => this.props.history.push('/addpatient')
 
-  onAddPatient = (patientId, patientToken, patientDni) => {
-    this.setState({ patientId, patientToken, patientDni })
-
-    sessionStorage.setItem('patientId', patientId)
-    sessionStorage.setItem('patientToken', patientToken)
+  patientData = dni => {
+    this.setState({ dni })
+    sessionStorage.setItem('dni', dni)
   }
 
   render() {
-    const { state: { code, patientDni }, onLoggedIn, onLogout, listPatients, goToAddPatient, onAddPatient } = this
+    const { state: { code, dni }, onLoggedIn, onLogout, listPatients, goToAddPatient, patientData } = this
 
-    return <div className="header">
-            <header className="header__panel">
-              <img className="header__panel__logo" src="/images/logo.svg"/>
-            </header>
+    return <div>
 
-            { this.isLoggedIn() ? <nav className="header__nav">
-              <a className="header__nav__link" href="/#/patients" onClick={listPatients}>Patients</a>
-              <a className="header__nav__link" href="/#/cites">Cites</a>
-              <a className="header__nav__link" href="" onClick={onLogout}>Logout</a>
-        </nav> : <nav></nav> }
+            { this.isLoggedIn() ? 
+            <div className="header">
+              <header className="header__panel">
+                <img className="header__panel__logo" src="/images/logoHome.svg"/>
+              </header>
+              <nav className="header__nav">
+                <a className="header__nav__link" href="/#/patients" onClick={listPatients}>Patients</a>
+                <a className="header__nav__link" href="/#/cites">Cites</a>
+                <a className="header__nav__link" href="" onClick={onLogout}>Logout</a>
+              </nav>
+            </div> : <div className="noHome">
+                <img className="noHome__logo" src="/images/logo.svg"/>
+            </div> }
 
             <Switch>
               <Route exact path="/" render={() => this.isLoggedIn() ? <Redirect to="/patients" /> : <Landing />} />
               <Route path="/register" render={() => this.isLoggedIn() ? <Redirect to="/patients" /> : <Register />} />
               <Route path="/login" render={() => this.isLoggedIn() ? <Redirect to="/patients" /> : <Login onLoggedIn={onLoggedIn} />} />
               <Route path="/cites" render={() => this.isLoggedIn() ? <Cites/> : <Redirect to="/" />} />
-              <Route path="/patients" render={() => this.isLoggedIn() ? <Patients goToAddPatient={goToAddPatient}/> : <Redirect to="/" />} />
-              <Route path="/addpatient" render={() => this.isLoggedIn() ? <AddPatient onAddPatient={onAddPatient}/> : <Redirect to="/" />} />
-              <Route path="/patient" render={() => this.isLoggedIn() ? <PatientData code={code} patientDni={patientDni}/> : <Redirect to="/" />} />
+              <Route path="/patients" render={() => this.isLoggedIn() ? <Patients goToAddPatient={goToAddPatient} patientData={patientData}/> : <Redirect to="/" />} />
+              <Route path="/addpatient" render={() => this.isLoggedIn() ? <AddPatient/> : <Redirect to="/" />} />
+              <Route path="/patient/:dni" render={() => this.isLoggedIn() ? <PatientData code={code} dni={dni}/> : <Redirect to="/" />} />
             </Switch>
     </div>
   }

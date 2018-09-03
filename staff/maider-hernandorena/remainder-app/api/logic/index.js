@@ -217,6 +217,32 @@ const logic = {
     },
 
     /**
+     * Returns a patient data
+     * @param {Numer} dni //patient dni
+     * 
+     * @throws {LogicError} //if patient does not exits
+     * 
+     * @returns {Object} patient data
+     */
+    patientData(dni) {
+        return Promise.resolve()
+            .then(() => {
+                this._validateDniField('dni', dni)
+                
+                return Patient.findOne({ dni }).lean()
+            })
+            .then(patient => {
+                if (!patient) throw new LogicError(`patient with ${dni} dni does not exist`)
+
+                patient.id = patient._id.toString()
+                delete patient._id
+                delete patient.__v
+                   
+                return patient
+            })
+    },
+
+    /**
      * Search all patients by name
      * @param {String} name //patient name
      * 

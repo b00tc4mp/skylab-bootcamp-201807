@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import logic from '../logic'
+import '../styles/css/login.css'
 
 class Login extends Component {
   state = {
@@ -21,19 +22,17 @@ class Login extends Component {
   }
 
   render() {
-    const { state: {error}, keepCode, keepPassword, onLogin } = this
+    const { state: { code, password, error }, keepCode, keepPassword, onLogin } = this
 
-    return <main>
-      <div>
-        <nav>
-          <p>Login or go to <a href="/#/register">Register</a></p>
-        </nav>
-        <form onSubmit={onLogin}>
-          <input type="text" name="code" placeholder="code" autoFocus onChange={keepCode} />
-          <input type="password" name="password" placeholder="password" onChange={keepPassword} />
-          <button type="submit">Login</button>
+    return <main className="login">
+      <div className="login__group">
+        <p className="login__group__text">Login or go to <a className="login__group__text__link" href="/#/register">Register</a></p>
+        <form className="login__group__form" onSubmit={onLogin}>
+          <input className="login__group__form__input" type="text" value={code} name="code" placeholder="code" autoFocus onChange={keepCode} />
+          <input className="login__group__form__input" type="password" value={password} name="password" placeholder="password" onChange={keepPassword} />
+          <button className="login__group__form__button" type="submit">Login</button>
         </form>
-        {error && <p className="error">{error}</p>}
+        {error && <p className="login__group__error">{error}</p>}
       </div>
     </main>
   }
