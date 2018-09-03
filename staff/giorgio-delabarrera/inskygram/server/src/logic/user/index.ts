@@ -2,7 +2,6 @@ import validator from "validator";
 import User, { UserModelInterface } from "../../models/user";
 import LogicError from "../error/logic-error";
 import cloudinary from "../../config/cloudinary";
-import { Stream } from "stream";
 
 const userLogic = {
 

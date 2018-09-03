@@ -5,10 +5,10 @@ import User, { UserModelInterface } from "../../models/user";
 import userLogic from ".";
 import { connect } from "../../db";
 const Jimp: any = require("jimp");
-import fs, { ReadStream } from "fs";
-import { Stream } from "stream";
+import fs from "fs";
 
 config();
+
 const { DATABASE_URL_TEST } = process.env;
 
 let db: any;

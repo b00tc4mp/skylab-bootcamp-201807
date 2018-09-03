@@ -1,10 +1,8 @@
 import { config } from "dotenv";
 import { Router, Response, Request } from "express";
-// import bodyParser from "body-parser";
 import logic from "../logic";
 import LogicError from "../logic/error/logic-error";
 import validateJwt from "./helpers/validate-jwt";
-import fileUpload from "express-fileupload";
 import { PostModelInterface } from "../models/post";
 const multer = require("multer");
 

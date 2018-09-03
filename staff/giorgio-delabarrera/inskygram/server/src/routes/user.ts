@@ -6,12 +6,15 @@ import LogicError from "../logic/error/logic-error";
 import jwt from "jsonwebtoken";
 import { UserModelInterface } from "../models/user";
 import validateJwt from "./helpers/validate-jwt";
+const multer = require("multer");
 
 config();
 
 const router: Router = Router();
 
 const jsonBodyParser = bodyParser.json();
+
+const upload = multer();
 
 router.post("/register", jsonBodyParser, (req: Request, res: Response) => {
   const { body: { username, email, password } } = req;
@@ -71,13 +74,32 @@ router.patch("/users/:username/update-password", [validateJwt, jsonBodyParser], 
   const { params: { username }, body: { password, newPassword } } = req;
 
   logic.user.updatePassword(username, password, newPassword)
-    .then(() => res.json({ message: "user updated" }))
+    .then(() => res.json({ message: "user password updated" }))
     .catch(err => {
       const { message } = err;
 
       res.status(err instanceof LogicError ? 400 : 500).json({ message });
     });
 });
+
+router.patch(
+  "/users/:username/update-avatar",
+  [validateJwt, upload.single("avatar")],
+  (req: Request | any, res: Response) => {
+    const { params: { username }, file } = req;
+
+    if (file) {
+      logic.user.updateAvatar(username, file.originalname, file.buffer)
+        .then(() => res.json({ message: "user avatar updated" }))
+        .catch((err: any) => {
+          const { message } = err;
+
+          res.status(err instanceof LogicError ? 400 : 500).json({ message });
+        });
+    } else {
+      res.status(400).json({ message: "no image received" });
+    }
+  });
 
 router.patch("/users/:username/disable", [validateJwt, jsonBodyParser], (req: Request, res: Response) => {
   const { params: { username } } = req;
