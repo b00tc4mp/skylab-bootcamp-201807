@@ -12,10 +12,28 @@ const { PORT } = process.env
 
 const app = express()
 
-app.use(cors())
+// app.use(cors())
 
-app.use('/api', routes)
+// app.use('/api', routes)
 
-app.listen(PORT, () => console.log(`${package.name} ${package.version} up and running on port ${PORT}`))
+// app.listen(PORT, () => console.log(`${package.name} ${package.version} up and running on port ${PORT}`))
 
-mongoose.connect(MONGO_URL, () => console.log('DB IS CONNECTED!'))
+// mongoose.connect(MONGO_URL, { useNewUrlParser: true }, () => console.log('DB IS CONNECTED!'))
+
+mongoose.connect(MONGO_URL, { useNewUrlParser: true })
+    .then(() => {
+        app.use(cors())
+
+        app.use('/api', routes)
+
+        app.listen(PORT, () => console.log(`${package.name} ${package.version} up and running on port ${PORT}`))
+
+        process.on('SIGINT', () => {
+            console.log('\n stoping server');
+            process.exit();
+        })
+    })
+    .catch(err => {
+        console.error('App started error:', err.stack);
+        process.exit();
+    })

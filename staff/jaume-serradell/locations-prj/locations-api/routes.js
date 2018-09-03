@@ -28,7 +28,6 @@ router.post('/register', jsonBodyParser, (req, res) => {
 
 })
 
-
 // AUTHENTICATE OWNER
 
 router.post('/authenticate', jsonBodyParser, (req, res) => {
@@ -49,13 +48,41 @@ router.post('/authenticate', jsonBodyParser, (req, res) => {
         })
 })
 
+// UPDATE OWNER PASSWORD
+
+router.patch('/owner/:email', [validateJwt, jsonBodyParser], (req, res) => {
+    const { params: { email }, body: { password, newPassword } } = req
+    debugger
+    logic.updatePassword(email, password, newPassword)
+        .then(() => res.json({ message: 'owner password updated succesfully' }))
+        .catch(err => {
+            const { message } = err
+
+            res.status(err instanceof LogicError ? 400 : 500).json({ message })
+        })
+})
+
+//DELETE OWNER
+
+router.delete('/owner/:email', [validateJwt, jsonBodyParser], (req, res) => {
+    const { body: { email, password } } = req
+
+    logic.unregisterOwner(email, password)
+        .then(() => res.json({ message: 'owner deleted succesfully' }))
+        .catch(err => {
+            const { message } = err
+
+            res.status(err instanceof LogicError ? 400 : 500).json({ message })
+        })
+
+})
 
 // ADD PROPERTY
 
 router.post('/owner/:email/property', [validateJwt, jsonBodyParser], (req, res) => {
-    const { params: { email }, body: { title, photo, description, dimentions, categories, type } } = req
+    const { params: { email }, body: { title, subtitle, photo, description, dimentions, categories, type } } = req
 
-    logic.addProperty(email, title, photo, description, dimentions, categories, type)
+    logic.addProperty(email, title, subtitle, photo, description, dimentions, categories, type)
         .then(() => res.json({ message: 'property added' }))
         .catch(err => {
             const { message } = err
@@ -70,13 +97,13 @@ router.post('/owner/:email/property', [validateJwt, jsonBodyParser], (req, res) 
 router.get('/listProperties', (req, res) => {
     const query = req.query
 
-    if(query.hasOwnProperty('type') || query.hasOwnProperty('categories')) {
+    if (query.hasOwnProperty('type') || query.hasOwnProperty('categories')) {
         const type = req.query.type
         const categories = req.query.categories ? req.query.categories.split('|') : undefined
-    
+
         logic.listPropertyByQuery(type, categories)
             .then(properties => {
-                res.status(200).json({status: 'OK', properties})
+                res.status(200).json({ status: 'OK', properties })
             })
             .catch(err => {
                 const { message } = err
@@ -86,11 +113,11 @@ router.get('/listProperties', (req, res) => {
     } else {
         logic.listProperty()
             .then(properties => {
-                res.status(200).json({status: 'OK', properties})
+                res.status(200).json({ status: 'OK', properties })
             })
             .catch(err => {
                 const { message } = err
-    
+
                 res.status(err instanceof LogicError ? 400 : 500).json({ message })
             })
     }
@@ -113,14 +140,29 @@ router.get('/retrievePropertyById/:email/property/:id', validateJwt, (req, res) 
 // UPDATE PROPERTY
 
 router.patch('/updatePropertyById/:email/property/:id', [validateJwt, jsonBodyParser], (req, res) => {
-    const { params: { email, id }, body: { title, photo, description, dimentions, categories, type } } = req
-    logic.updatePropertyById(email, id, title, photo, description, dimentions, categories, type)
+    const { params: { email, id }, body: { title, subtitle, photo, description, dimentions, categories, type } } = req
+    logic.updatePropertyById(email, id, title, subtitle, photo, description, dimentions, categories, type)
         .then(() => res.json({ message: 'property updated' }))
         .catch(err => {
             const { message } = err
 
             res.status(err instanceof LogicError ? 400 : 500).json({ message })
         })
+})
+
+//DELETE PROPERTY
+
+router.delete('/deletePropertyById/:email/property/:id', [validateJwt], (req, res) => {
+    const { params: { email, id } } = req
+
+    logic.deletePropertyById(email, id)
+        .then(() => res.json({ message: 'property deleted succesfully' }))
+        .catch(err => {
+            const { message } = err
+
+            res.status(err instanceof LogicError ? 400 : 500).json({ message })
+        })
+
 })
 
 module.exports = router

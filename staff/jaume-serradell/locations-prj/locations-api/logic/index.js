@@ -23,8 +23,15 @@ const logic = {
         if (typeof value !== 'string' || !value.length) throw new LogicError(`invalid ${name}`)
     },
 
+    /** ObjectId validator
+     * 
+     * @param {string} id The Id of the value
+     * 
+     * @throws {LogicError} If ObjectId is invalid
+     * 
+     */
     _validateObjectId(id) {
-        if(!mongoose.Types.ObjectId.isValid(id)) throw new LogicError(`invalid ObjectId ${id}`)
+        if (!mongoose.Types.ObjectId.isValid(id)) throw new LogicError(`invalid property id: ${id}`)
     },
 
 
@@ -39,7 +46,6 @@ const logic = {
         if (!validateEmail(email)) throw new LogicError('invalid email')
     },
 
-
     /** Number field validator
      * 
      * @param {string} name The name of the value
@@ -52,6 +58,11 @@ const logic = {
         if (typeof value !== 'number') throw new LogicError(`invalid ${name}`)
     },
 
+    
+    /**
+     * 
+     * @param {*} base64Image 
+     */
     _saveImage(base64Image) {
         return Promise.resolve()
             .then(() => {
@@ -64,7 +75,6 @@ const logic = {
                         resolve(data.url)
                     })
                 })
-
             })
     },
 
@@ -144,6 +154,7 @@ const logic = {
                 return Owner.findOne({ email })
             })
             .then(owner => {
+                debugger
                 if (!owner) throw new LogicError(`owner with ${email} email does not exist`)
 
                 if (owner.password !== password) throw new LogicError(`wrong password`)
@@ -158,7 +169,7 @@ const logic = {
     },
 
 
-    /** Update owner password
+    /** Unregister owner
      * 
      * @param {string} email The owner's email
      * @param {string} password The owner's password
@@ -190,6 +201,7 @@ const logic = {
      * 
      * @param {string} email The owner's email
      * @param {string} title The title of the property
+     * @param {string} subtitle The subtitle of the property
      * @param {string} photo The url of the photo
      * @param {string} description The description of the property
      * @param {number} dimentions THe dimentions of the property
@@ -200,15 +212,16 @@ const logic = {
      * @throws {LogicError} If wrong password
      * 
      */
-    addProperty(email, title, photo, description, dimentions, categories, type) {
+    addProperty(email, title, subtitle, photo, description, dimentions, categories, type) {
         return Promise.resolve()
             .then(() => {
+                
                 this._validateEmail(email)
-                this._validateStringField('title', title)
-                this._validateStringField('photo', photo)
-                this._validateStringField('description', description)
-                this._validateNumberField('dimentions', dimentions)
-                this._validateStringField('type', type)
+                this._validateStringField("title", title)
+                this._validateStringField("photo", photo)
+                this._validateNumberField("dimentions", dimentions)
+                this._validateStringField("type", type)
+
                 if (!(categories instanceof Array)) throw new LogicError('invalid categories')
 
                 return Owner.findOne({ email })
@@ -219,7 +232,7 @@ const logic = {
 
                 return this._saveImage(photo)
                     .then(imageCloudinary => {
-                        const property = { title, photo: imageCloudinary, description, dimentions, categories, type, owner: owner.id }
+                        const property = { title, subtitle, photo: imageCloudinary, description, dimentions, categories, type, owner: owner.id }
 
                         return Property.create(property)
                     })
@@ -256,21 +269,21 @@ const logic = {
             .then(() => {
                 let criteria = {}
 
-                if(type) {
-                    this._validateStringField("type", type)    
+                if (type) {
+                    this._validateStringField("type", type)
                     criteria.type = type
-                } 
-                    
-                if(categories) {
+                }
+
+                if (categories) {
                     if (!(categories instanceof Array)) throw new LogicError('invalid categories')
                     criteria.categories = { $in: categories }
                 }
 
-                if(!Object.keys(criteria).length) throw new LogicError('Invalid search')
+                if (!Object.keys(criteria).length) throw new LogicError('Invalid search')
 
                 return Property.find(criteria).lean()
                     .then(properties => {
-                        if(properties) {
+                        if (properties) {
                             properties.forEach(property => {
                                 property.id = property._id.toString()
 
@@ -292,30 +305,6 @@ const logic = {
      * @throws {LogicError} If id property does not exist
      * 
      */
-    // retrievePropertyById(email, propertyId) {
-    //     return Promise.resolve()
-    //         .then(() => {
-    //             this._validateEmail(email)
-
-    //             return Owner.findOne({ email })
-    //         })
-    //         .then(owner => {
-    //             if (!owner) throw new LogicError(`Owner with ${email} email does not exist`)
-
-    //             return Property.findOne({ _id: propertyId }).lean()
-    //                 .then(property => {
-    //                     if (!property) throw new LogicError(`Property with id ${propertyId} does not exist`)
-    //                     property.id = property._id.toString()
-
-    //                     delete property._id
-
-    //                     delete property.__v
-
-    //                     return property
-    //                 })
-    //         })
-    // },
-
     retrievePropertyById(email, propertyId) {
         return Promise.resolve()
             .then(() => {
@@ -327,9 +316,8 @@ const logic = {
             .then(owner => {
                 if (!owner) throw new LogicError(`Owner with ${email} email does not exist`)
 
-                return Property.findById( propertyId )
+                return Property.findById(propertyId).lean()
                     .then(property => {
-                        debugger
                         if (!property) throw new LogicError(`Property with id ${propertyId} does not exist`)
                         property.id = property._id.toString()
 
@@ -346,7 +334,9 @@ const logic = {
     /** Update property
      * 
      * @param {string} email The owner's email
-     * @param {string} id The ID of the property
+     * @param {string} propertyId The ID of the property
+     * @param {string} title The title of the property
+     * @param {string} subtitle The Subtitle of the property
      * @param {string} photo The photo of the property
      * @param {string} description The description of the property
      * @param {number} dimentions The dimentions of the property
@@ -357,29 +347,45 @@ const logic = {
      * @throws {LogicError} If id property does not exist
      * 
      */
-    updatePropertyById(email, id, title, photo, description, dimentions, categories, type) {
+    updatePropertyById(email, propertyId, title, subtitle, photo, description, dimentions, categories, type) {
         return Promise.resolve()
             .then(() => {
+                this._validateEmail(email)
+                this._validateObjectId(propertyId)
                 this._validateStringField("title", title)
                 this._validateStringField("photo", photo)
-                this._validateStringField("description", description)
                 this._validateNumberField('dimentions', dimentions)
                 this._validateStringField("type", type)
-                
+
                 return Owner.findOne({ email })
                     .then(owner => {
                         if (!owner) throw new LogicError(`Owner with ${email} email does not exist`)
-                        return Property.findOne({ _id: id, owner: owner.id })
+                        return Property.findOne({ _id: propertyId, owner: owner.id })
                             .then((property) => {
-                                if (!property) throw new LogicError(`cannot update property ${id}`)
+                                if (!property) throw new LogicError(`cannot update property ${propertyId}`)
 
-                                return Property.updateOne({ _id: id }, { $set: { "title": title, "photo": photo, "description": description, "dimentions": dimentions, "categories": categories, "type": type } })
+                                return Property.updateOne({ _id: propertyId }, { $set: { "title": title, "subtitle": subtitle, "photo": photo, "description": description, "dimentions": dimentions, "categories": categories, "type": type } })
                                     .then(() => true)
                             })
                     })
             })
-    }
+    },
 
+    
+    /** Delete property
+     * 
+     * @param {string} email 
+     * @param {string} propertyId 
+     */
+    deletePropertyById(email, propertyId) {
+        return Promise.resolve()
+            .then(() => {
+                this._validateEmail(email)
+                this._validateObjectId(propertyId)
+
+                return Property.findByIdAndRemove({ email, _id: propertyId })
+            })
+    }
 }
 
 class LogicError extends Error {

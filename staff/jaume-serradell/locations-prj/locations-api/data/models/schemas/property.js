@@ -7,7 +7,7 @@ module.exports = new Schema({
     },
 
     subtitle: {
-        type: String
+        type: String,
     },
 
     photo: {
@@ -17,7 +17,6 @@ module.exports = new Schema({
 
     description: {
         type: String,
-        required: true,
         maxlength: 1000
     },
 
@@ -28,13 +27,51 @@ module.exports = new Schema({
 
     categories: [{
         type: String,
-        enum: ['Balcony', 'Bathroom', 'Kitchen', 'Dinning room', 'Office', 'Adult Bedroom', 'Child\'s bedroom', 'Abandoned Style'],
+        enum: [
+            'Balcony', 
+            'Bathroom',
+            'Kitchen',
+            'Dinning room',
+            'Office',
+            'Adult Bedroom',
+            'Child\'s bedroom', 
+            'Abandoned Style',
+            'Clasic Style',
+            'Industrial Style',
+            'Modernist Style',
+            'Modern Style',
+            'Events',
+            'Parking',
+            'Garden',
+            'Office',
+            'Pool',
+            'Films',
+            'Meeting Room',
+            'Living room',
+            'Shootings',
+            'Ceramic floor / Stoneware',
+            'Industrial floor',
+            'Wood floor',
+            'Terrace / Exterior Zone',
+            'Forest Views',
+            'Views City',
+            'Sea views',
+            'Movies',
+            'Spots'
+        ],
         required: true
     }],
 
     type: {
         type: String,
-        enum: ['Penthouse', 'Houses', 'Events Spaces', 'Singular Spaces', 'Loft', 'Flats'],
+        enum: [
+            'Penthouse',
+            'Houses',
+            'Events Spaces',
+            'Singular Spaces',
+            'Loft',
+            'Flats'
+        ],
         required: true
     },
 
