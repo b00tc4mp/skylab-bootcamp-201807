@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Container,Col,Row} from 'reactstrap'
+import {Container, Col, Row} from 'reactstrap'
 
 class Main extends Component {
 
@@ -11,14 +11,14 @@ class Main extends Component {
   render() {
 
 
-    return <Container >
+    return <Container>
       <Row>
 
         <Col className="main__mainText" xs="12" md="6">
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam eu dignissim massa, a cursus mi. Phasellus
-          ultricies volutpat rutrum. Nulla et aliquam orci. Ut vel euismod lorem. Suspendisse finibus, sapien vitae
-          volutpat lacinia, sapien leo sodales metus, sit amet semper elit diam at massa. Morbi a ligula at turpis
-          luctus tristique. Fusce dictum a elit at mattis.
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam eu dignissim massa, a cursus mi. Phasellus
+            ultricies volutpat rutrum. Nulla et aliquam orci. Ut vel euismod lorem. Suspendisse finibus, sapien vitae
+            volutpat lacinia, sapien leo sodales metus, sit amet semper elit diam at massa. Morbi a ligula at turpis
+            luctus tristique. Fusce dictum a elit at mattis.</p>
 
           <p> Sed tristique posuere nulla, porttitor ullamcorper augue fringilla eget. Vivamus finibus nisi ac orci
             fringilla egestas. Vestibulum elementum id eros vel venenatis. Maecenas varius hendrerit erat, nec aliquam
@@ -43,8 +43,7 @@ class Main extends Component {
             dolor vestibulum quis. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis
             egestas. Nullam tincidunt eros quis justo aliquam, et sagittis lorem lobortis. Etiam sagittis vestibulum
             dictum.</p>
-        </p>
-        </Col>        <Col xs="0" md="6">
+        </Col> <Col xs="0" md="6">
       </Col>
       </Row>
     </Container>

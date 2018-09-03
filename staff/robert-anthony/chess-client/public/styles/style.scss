@@ -5,9 +5,9 @@ font-family: 'Uncial Antiqua', cursive;
 font-family: 'Vollkorn', serif;
 */
 
-$text_color1: #ffeb86;
-$text_color2: #ffa400;
-$background_color1: rgba(118, 61, 5, 0.7);
+$text_color1: #ff002d;
+$text_color2: #2e00ff;
+$background_color1: rgba(50, 50, 60, 0.8);
 
 * {
   box-sizing: border-box;
@@ -18,6 +18,18 @@ $background_color1: rgba(118, 61, 5, 0.7);
 html {
   height: 100%;
   font-family: 'Merriweather', serif;
+
+}
+
+.navbar__brand.navbar-brand{
+  font-family: 'Uncial Antiqua', cursive;
+  font-size: 1.8em;
+  letter-spacing:.2em;
+  font-weight:700;
+
+  img {
+    max-width: 50px;
+  }
 
 }
 
@@ -32,7 +44,7 @@ html {
 
 main div.userList ul.list-group a.list-group-item, main div.userList ul.list-group li.list-group-item {
   background-color: $background_color1;
-  color: #ffa400;
+  color: #ff0024;
 
   &:link, &:visited {
     color: $text_color1;
@@ -78,7 +90,7 @@ main {
 
 body {
   height: 100%;
-  background: url(../images/side-shot-of-a-chess-board-over-a-black-background-and-the-chess-pieces-lin_v0iu7ixol__F0000.png);
+  background: url(../images/darkwoodchess.jpg);
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;

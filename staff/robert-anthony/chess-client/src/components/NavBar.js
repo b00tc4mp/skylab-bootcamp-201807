@@ -41,7 +41,7 @@ export default class NavBar extends Component {
     return (
       <div>
         <Navbar color="dark" dark expand="md">
-          <NavbarBrand href="/">¡Ajedrez!</NavbarBrand>
+          <NavbarBrand className="navbar__brand" href="/">¡Ajedrez! <img src="images/redknight.png"/></NavbarBrand>
           <NavbarToggler onClick={this.toggle}/>
           <Collapse isOpen={this.state.isOpen} navbar>
 

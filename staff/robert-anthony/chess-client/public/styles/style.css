@@ -12,6 +12,14 @@ html {
   height: 100%;
   font-family: 'Merriweather', serif; }
 
+.navbar__brand.navbar-brand {
+  font-family: 'Uncial Antiqua', cursive;
+  font-size: 1.8em;
+  letter-spacing: .2em;
+  font-weight: 700; }
+  .navbar__brand.navbar-brand img {
+    max-width: 50px; }
+
 .main__mainChessContainer {
   color: white; }
   .main__mainChessContainer .games__mainChessRow {
@@ -19,41 +27,41 @@ html {
     margin-top: 5%; }
 
 main div.userList ul.list-group a.list-group-item, main div.userList ul.list-group li.list-group-item {
-  background-color: rgba(118, 61, 5, 0.7);
-  color: #ffa400; }
+  background-color: rgba(50, 50, 60, 0.8);
+  color: #ff0024; }
   main div.userList ul.list-group a.list-group-item:link, main div.userList ul.list-group a.list-group-item:visited, main div.userList ul.list-group li.list-group-item:link, main div.userList ul.list-group li.list-group-item:visited {
-    color: #ffeb86;
+    color: #ff002d;
     text-decoration: none; }
   main div.userList ul.list-group a.list-group-item:hover, main div.userList ul.list-group a.list-group-item:active, main div.userList ul.list-group li.list-group-item:hover, main div.userList ul.list-group li.list-group-item:active {
-    color: #ffa400;
+    color: #2e00ff;
     text-decoration: none; }
 
 main {
   margin: 2em; }
   main .main__mainText {
-    color: #ffeb86;
+    color: #ff002d;
     font-size: 1em;
     letter-spacing: 0.1em;
-    background: rgba(118, 61, 5, 0.7); }
+    background: rgba(50, 50, 60, 0.8); }
 
 .invite__searchInput {
   margin-top: 3em;
   margin-bottom: 3em;
-  color: #ffeb86;
+  color: #ff002d;
   border-color: rgba(255, 75, 5, 0.7); }
   .invite__searchInput:focus {
     outline: none !important; }
 
 .invite__explainText {
-  color: #ffeb86;
+  color: #ff002d;
   size: 1.2em;
   font-weight: 700; }
   .invite__explainText.invite__explainText-explain {
-    color: #ffa400; }
+    color: #2e00ff; }
 
 body {
   height: 100%;
-  background: url(../images/side-shot-of-a-chess-board-over-a-black-background-and-the-chess-pieces-lin_v0iu7ixol__F0000.png);
+  background: url(../images/darkwoodchess.jpg);
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed; }

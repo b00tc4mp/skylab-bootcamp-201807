@@ -10,7 +10,7 @@ class OpenGames extends Component {
     games: PropTypes.array,
     nickname: PropTypes.string,
     currentGameViewed: PropTypes.object,
-    userList:[],
+    userList:PropTypes.array,
   }
 
   state = {
