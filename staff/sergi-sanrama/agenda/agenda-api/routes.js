@@ -43,7 +43,7 @@ router.post('/login', jsonBodyParser, (req, res) => {
             res.json({ message: 'user authenticated', token })
         })
         .catch(err => {
-            debugger
+            
             const { message } = err
 
             res.status(err instanceof SuperError ? 401 : 500).json({ message })
