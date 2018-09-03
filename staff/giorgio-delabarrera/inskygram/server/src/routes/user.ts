@@ -34,7 +34,7 @@ router.post("/auth", jsonBodyParser, (req: Request, res: Response) => {
 
       const token = jwt.sign({ sub: username }, JWT_SECRET, { expiresIn: JWT_EXP });
 
-      return res.json({ message: "user authenticated", token });
+      res.json({ message: "user authenticated", token });
     })
     .catch((err: Error) => {
       const { message } = err;

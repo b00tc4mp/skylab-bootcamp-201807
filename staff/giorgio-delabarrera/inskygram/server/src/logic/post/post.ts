@@ -1,10 +1,10 @@
 import { config } from "dotenv";
 import { Types } from "mongoose";
-import { Post } from "../../models";
-import { PostModelInterface } from "../../models/post";
+import Post, { PostModelInterface } from "../../models/post";
 import User, { UserModelInterface } from "../../models/user";
 import { UserTagModelInterface } from "../../models/user-tag";
 import LogicError from "../error/logic-error";
+import { resolve } from "path";
 const cloudinary = require("cloudinary");
 
 config();
@@ -17,24 +17,57 @@ cloudinary.config({
 });
 
 const postLogic = {
-  create(
-    user: Types.ObjectId,
-    caption?: string,
-  ): Promise<boolean> | never {
+
+  create(username: string, filename: string, buffer: Buffer, caption?: string) {
     return Promise.resolve()
       .then(() => {
-        const post = new Post();
-        post.user = user;
-        if (caption) { post.caption = caption; }
+        if (!filename) { throw new LogicError("invalid filename"); }
+        if (!buffer) { throw new LogicError("invalid buffer"); }
 
-        // TODO: cloudinary
-        { post.image = "TODO/image"; }
-
-        // post.save();
-        return Post.create(post);
+        return User.findOne({ username });
       })
-      .then(() => true);
+      .then((user: UserModelInterface) => {
+        if (!user) { throw new LogicError(`user with username ${username} does not exists`); }
+
+        return new Promise((resolve, reject) => {
+          cloudinary.v2.uploader.upload_stream((error: any, result: any) => {
+            if (error) {
+              return reject(new LogicError(`the file could not be uploaded ${filename}`));
+            }
+
+            const post = new Post();
+
+            post.imageId = result.public_id;
+            post.imageUrl = result.secure_url;
+            post.user = user._id;
+            if (caption) { post.caption = caption; }
+
+            post.save();
+
+            resolve(true);
+          }).end(buffer);
+        });
+      });
   },
+
+  // create(
+  //   user: Types.ObjectId,
+  //   caption?: string,
+  // ): Promise<boolean> | never {
+  //   return Promise.resolve()
+  //     .then(() => {
+  //       const post = new Post();
+  //       post.user = user;
+  //       if (caption) { post.caption = caption; }
+
+  //       // TODO: cloudinary
+  //       { post.image = "TODO/image"; }
+
+  //       // post.save();
+  //       return Post.create(post);
+  //     })
+  //     .then(() => true);
+  // },
 
   retrieve(userId: Types.ObjectId, id: Types.ObjectId): Promise<PostModelInterface> | never {
     return Promise.resolve()

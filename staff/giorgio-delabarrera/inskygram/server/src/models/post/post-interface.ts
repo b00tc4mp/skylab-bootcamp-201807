@@ -4,7 +4,8 @@
  * @interface PostInterface
  */
 interface PostInterface {
-  image: string;
+  imageId: string;
+  imageUrl: string;
   caption: string;
   location: string;
   createdAt: Date;

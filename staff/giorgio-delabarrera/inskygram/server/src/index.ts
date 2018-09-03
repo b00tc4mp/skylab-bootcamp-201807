@@ -2,7 +2,7 @@ import cors from "cors";
 import { config } from "dotenv";
 import express from "express";
 import { connect } from "mongoose";
-import { userRouter } from "./routes";
+import { userRouter, postRouter } from "./routes";
 
 config();
 
@@ -16,6 +16,8 @@ connect(DATABASE_URL, { useNewUrlParser: true })
     app.use(cors());
 
     app.use("/api", userRouter);
+
+    app.use("/api", postRouter);
 
     app.listen(PORT, () => console.log(`inskygram up and running on port ${PORT}`));
   });

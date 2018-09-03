@@ -8,7 +8,11 @@ const { Types: ObjectId } = Schema;
 const options: SchemaOptions = { timestamps: true };
 
 const postSchema: Schema = new Schema({
-  image: {
+  imageId: {
+    type: String,
+    required: true,
+  },
+  imageUrl: {
     type: String,
     required: true,
   },
