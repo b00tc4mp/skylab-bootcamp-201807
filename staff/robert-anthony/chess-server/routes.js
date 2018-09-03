@@ -88,7 +88,7 @@ router.patch('/user/:nickname/game/:gameID/', [validateJwt], (req, res) => {
 
   const {params: {nickname, gameID}} = req
 
-  logic.terminateGame(nickname, gameID)
+  logic.acknowledgeGameOverForUser(nickname, gameID)
     .then(_ => res.json({message: 'game terminated'}))
     .catch(err => {
       const {message} = err
@@ -145,6 +145,25 @@ router.post('/user/:nickname/respondtorequest', [validateJwt, jsonBodyParser], (
       res.status(err instanceof LogicError ? 400 : 500).json({message})
     })
 })
+
+/*
+
+/!* set user ended games to terminated  *!/
+router.post('/user/:nickname/', [validateJwt, jsonBodyParser], (req, res) => {
+
+  const {params: {nickname}, body: {destination,gameID, answer}} = req
+  logic.respondToGameRequest(nickname, destination,gameID, answer)
+    .then(_ => {
+        sockets.gameAcceptedOrRejected(destination)
+        res.json({message: 'game request response sent'})
+      }
+    )
+    .catch(err => {
+      const {message} = err
+      res.status(err instanceof LogicError ? 400 : 500).json({message})
+    })
+})
+*/
 
 
 module.exports = function () {

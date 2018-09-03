@@ -8,10 +8,6 @@ import {
   Nav,
   NavItem,
   NavLink,
-  UncontrolledDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem
 } from 'reactstrap';
 
 export default class NavBar extends Component {
@@ -27,13 +23,21 @@ export default class NavBar extends Component {
   }
 
   closeNavBar = () => {
+
     this.setState({
       isOpen: false
     })
   }
 
+  onLogout = e => {
+    const {props:{onLogout}} = this
+    e.preventDefault()
+    this.closeNavBar()
+    onLogout()
+  }
+
   render() {
-    const {props: {isLoggedIn, onLogin, onLogout}} = this
+    const {props: {isLoggedIn, onLogout}} = this
     return (
       <div>
         <Navbar color="dark" dark expand="md">
@@ -52,7 +56,7 @@ export default class NavBar extends Component {
               {isLoggedIn && <NavLink onClick={this.closeNavBar} href="/#/games">Games</NavLink>}
             </NavItem>
             <NavItem>
-              {isLoggedIn && <NavLink onClick={this.closeNavBar} onClick={onLogout} href="#">Logout</NavLink>}
+              {isLoggedIn && <NavLink  onClick={onLogout} href="#">Logout</NavLink>}
               {!isLoggedIn && <NavLink onClick={this.closeNavBar} href="/#/login">Login</NavLink>}
             </NavItem>
             <NavItem>

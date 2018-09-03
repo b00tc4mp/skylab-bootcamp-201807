@@ -166,6 +166,19 @@ const logic = {
   },
 
 
+  onAcknowledgeGameOver(nickname, gameID, token) {
+    return Promise.resolve()
+      .then(() => {
+        return this._call(`user/${nickname}/game/${gameID}`, 'PATCH', {
+          'Content-Type': 'application/json',
+          'authorization': `bearer ${token}`
+        },  undefined, 200)
+          .then(res => res.json())
+          .then(res => res)
+      })
+  },
+
+
 
 }
 

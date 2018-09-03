@@ -1,9 +1,8 @@
 import React, {Component} from 'react'
-import classNames from 'classnames'
 import ChessboardComponent from "./ChessboardComponent"
 import {Container, Row, Col} from 'reactstrap';
-import {ListGroup, ListGroupItem} from 'reactstrap'
 import PropTypes from 'prop-types'
+import OpenGames from "./OpenGames"
 
 
 class ChessboardGroup extends Component {
@@ -12,6 +11,8 @@ class ChessboardGroup extends Component {
     onGameMove: PropTypes.func,
     currentGame: PropTypes.object,
     nickname: PropTypes.string,
+    onError:PropTypes.func,
+    onAcknowledgeGameOver:PropTypes.func,
   }
 
   state = {
@@ -25,27 +26,23 @@ class ChessboardGroup extends Component {
 
 
   render() {
-    let {props: {onGameMove, currentGame, nickname}} = this
+    let {props: {onGameMove, currentGame, nickname,onAcknowledgeGameOver}} = this
 
-    return <Container>
-      <Row>
-        <Col xs="12" md="9">
+    return <div>
 
 
           <div className="main__chessboardarea">
             {currentGame &&
             <ChessboardComponent isWhite={currentGame.initiator === nickname}
+                                 onAcknowledgeGameOver={onAcknowledgeGameOver}
+              currentGame={currentGame}
+                                 onError={this.onError}
                                  onGameMove={(move) => onGameMove(move, currentGame.id, currentGame.opponent)}
-                                 nickname={nickname} opponent={currentGame.opponent} fen={currentGame.fen}/>
+                                 nickname={nickname} />
             }
           </div>
-        </Col>
-        <Col xs="12" md="3">
-          {currentGame && <h1> {nickname} vs {currentGame.opponent}</h1>}
-          {currentGame && <h3>{currentGame.toPlay} to play</h3>}
-        </Col>
-      </Row>
-    </Container>
+
+    </div>
 
 
   }

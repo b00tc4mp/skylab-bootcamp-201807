@@ -71,6 +71,10 @@ module.exports = new Schema({
     type:Boolean,
     required:true,
     default:false
+  },
+  hasAcknowledgedGameOver: {
+    type:Array,
+    required:true
   }
 })
 

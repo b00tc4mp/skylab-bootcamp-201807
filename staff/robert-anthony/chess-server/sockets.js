@@ -7,7 +7,6 @@ const socketLogic = {
 
   io: null,
 
-  _timers: [],
 
   onError(nickname, error) {
     this.io.emit(`error ${nickname}`, error)
@@ -35,20 +34,7 @@ const socketLogic = {
     this.io.emit(`update to games ${asker}`)
   },
 
-  setNewUserTimeout(username) {
-    const timer = setTimeout(this.onUserPermanentlyDisconnect.bind(this), 10000 * 1000, username)
-    this._timers.push({username, timer})
-  },
 
-  onUserPermanentlyDisconnect(username) {
-    console.log(chalk.white.bgMagenta.bold(`User ${username} disconnected`))
-
-    logic.userDisconnected(username)
-      .then(res => {
-        if (res) this.io.emit('user disconnected')
-      })
-
-  },
 
   setIO(io) {
     this.io = io
@@ -90,22 +76,13 @@ const socketLogic = {
       socket.on('client alive', nickname => {
        // console.log(chalk.white.bgGreen.bold(`User ${nickname} client alive message received`))
 
-        // clear any timers related to user (should only be one
-        // so that user is not permanently disconnected
-        if (nickname === '' || nickname === undefined || nickname === null) return
-        this._timers.forEach(timer => {
-          if (timer.username === nickname) clearTimeout(timer.timer)
-        })
-        this._timers = this._timers.filter(timer => timer.username !== nickname)
-        // now start a new timer for user
-        this.setNewUserTimeout(nickname)
-      })
+           })
 
-      socket.on('logout', username => {
+ /*     socket.on('logout', username => {
         console.log(chalk.white.bgBlue.bold(`User ${username} has logged out`))
         this.onUserPermanentlyDisconnect(username)
       })
-
+*/
 
       socket.on('error', client => {
         console.log(chalk.white.bgRed.bold("There was an error with client", client.id))

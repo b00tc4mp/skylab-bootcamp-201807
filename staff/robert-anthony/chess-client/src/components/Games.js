@@ -1,5 +1,4 @@
 import React, {Component} from 'react'
-import classNames from 'classnames'
 import {Container, Row, Col, Alert} from 'reactstrap';
 import {Button, Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap';
 import OpenGames from "./OpenGames"
@@ -14,6 +13,8 @@ class Games extends Component {
     currentGames: PropTypes.array,
     nickname: PropTypes.string,
     onRespondToGameRequest: PropTypes.func,
+    onAcknowledgeGameOver:PropTypes.func,
+
   }
 
   state = {
@@ -24,26 +25,23 @@ class Games extends Component {
     modal: false,
   }
 
-  static getDerivedStateFromProps(props, state) {
-    console.log('getDerivedStateFromProps in Game')
-
+  onError = error => {
+    this.setState({error})
   }
 
   clearError = () => {
-    const {state:{error}} = this
-    this.setState({error:''})
+    this.setState({error: ''})
   }
 
   onRespondToGameRequest = (destination, gameID, answer) => {
     const {props: {onRespondToGameRequest}} = this
     this.clearError()
     this.setState({modal: false, inviter: '', invitedGameID: ''})
-
     onRespondToGameRequest(destination, gameID, answer)
   }
 
   onGameMove = (move, gameID, opponent) => {
-    const {props: {onGameMove, nickname, currentGames}, state: { currentGameID}} = this
+    const {props: {onGameMove, nickname, currentGames}, state: {currentGameID}} = this
     this.clearError()
     if (gameID === currentGameID) {
       const game = currentGames.find(game => game.id === gameID)
@@ -51,12 +49,11 @@ class Games extends Component {
         if (game.toPlay === nickname) {
           onGameMove(move, gameID, opponent)
         } else {
-          this.setState({error: "It's not your turn"})
+          this.onError("It's not your turn")
         }
       }
     }
   }
-
 
   onOpenGamesUserClick = (game) => {
     this.clearError()
@@ -68,13 +65,11 @@ class Games extends Component {
     }
   }
 
-
   render() {
-    let {props: {currentGames, nickname}, state: {error, currentGameID, inviter, invitedGameID}, onGameMove} = this
+    let {props: {currentGames, nickname,onAcknowledgeGameOver}, state: {error, currentGameID, inviter, invitedGameID}, onGameMove} = this
 
     return <main>
       <div>
-
         <Container className="main__mainChessContainer">
 
           <Row className="main__mainChessRow">
@@ -88,7 +83,9 @@ class Games extends Component {
             </Col>
             <Col xs="12" md="9">
               {currentGames.length && <ChessboardGroup onGameMove={onGameMove}
+                                                       onError={this.onError}
                                                        currentGame={currentGames.find(game => game.id === currentGameID)}
+                                                       onAcknowledgeGameOver={onAcknowledgeGameOver}
                                                        nickname={nickname}/>}
             </Col>
 

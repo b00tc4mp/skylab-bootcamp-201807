@@ -1,5 +1,4 @@
 import React, {Component} from 'react'
-import classNames from 'classnames'
 import {Container, Row, Col} from 'reactstrap';
 import {ListGroup, ListGroupItem} from 'reactstrap'
 import PropTypes from 'prop-types'; // ES6
@@ -48,24 +47,23 @@ class Invite extends Component {
 
   render() {
     let {props: {nickname}, state: {usersInvited,userSearchTerm, usersNotPlayingWith}} = this
-    let userList
 
     return <main>
-      <div className="screen">
+      <div >
 
         <Container>
           <Row>
             <Col xs="12" md="4">
-              <form>
-                <input autoFocus placeholder="Enter a search term" value={userSearchTerm}
+              <form className="invite__searchForm">
+                <input autoFocus className="invite__searchInput" placeholder="Enter a search term" value={userSearchTerm}
                        onChange={this.onKeepUserSearchTermAndDoSearch} type="text"/>
               </form>
             </Col>
           </Row>
-          <Row> <Col xs="12" md="6">
+          <Row> <Col className="invite__explainText" xs="12" md="6">
             Users you can invite
           </Col>
-            <Col xs="12" md="6">
+            <Col className="invite__explainText"t xs="12" md="6">
               Users you have invited
             </Col>
           </Row>
@@ -76,8 +74,8 @@ class Invite extends Component {
 
                 <ListGroup>
                   {usersNotPlayingWith.length ? usersNotPlayingWith.map(user => {
-                    if (user !== nickname) return <ListGroupItem tag="a" href="#" key={user + Math.random()}
-                                                                 onClick={e => this.onUserClick(e, user)}> {`${user}`}</ListGroupItem>
+                   return user !== nickname ? <ListGroupItem tag="a" href="#" key={user + Math.random()}
+                                                                 onClick={e => this.onUserClick(e, user)}> {`${user}`}</ListGroupItem>: null
                   }) : <li>Please search for users</li>}
                 </ListGroup>
               </div>

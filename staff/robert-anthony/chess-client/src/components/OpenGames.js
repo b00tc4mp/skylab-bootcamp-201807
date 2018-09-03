@@ -1,6 +1,4 @@
 import React, {Component} from 'react'
-import classNames from 'classnames'
-import {Container, Row, Col} from 'reactstrap';
 import {ListGroup, ListGroupItem} from 'reactstrap'
 import PropTypes from 'prop-types'; // ES6
 

@@ -119,7 +119,7 @@ const logic = {
       .then(_ => {
         this._validateStringField("nickname", nickname)
         return Game.find({$or: [{initiator: nickname}, {acceptor: nickname}]})
-          .then(games => games.filter(game => (game.state !== 'terminated')).map(game => {
+          .then(games => games.filter(game => (game.state !== 'terminated')).filter(game => game.hasAcknowledgedGameOver.indexOf(nickname) === -1).map(game => {
               const obj = {}
               obj.id = game.id
               obj.state = game.state
@@ -133,6 +133,7 @@ const logic = {
               obj.inThreefoldRepetition = game.inThreefoldRepetition
               obj.insufficientMaterial = game.insufficientMaterial
               obj.inDraw = game.inDraw
+              obj.winner = game.winner
               obj.opponent = game.initiator === nickname ? game.acceptor : game.initiator
               engine = this._currentEngines.get(game.engineID)
               if (!engine) {
@@ -159,20 +160,6 @@ const logic = {
       })
       .then(() => true)
 
-  },
-
-  /* called from sockets */
-  userDisconnected(nickname) {
-    return Promise.resolve()
-      .then(_ => {
-        this._validateStringField("nickname", nickname)
-        return User.findOne({nickname})
-      })
-      .then(user => {
-        if (!user) throw new LogicError(`user with ${nickname} nickname does not exist`)
-        return user.save()
-      })
-      .then(() => true)
   },
 
   getUsersForString(nickname, term) {
@@ -212,7 +199,7 @@ const logic = {
     },
   */
 
-  terminateGame(nickname, gameID) {
+  acknowledgeGameOverForUser(nickname, gameID) {
     return Promise.resolve()
       .then(_ => {
         this._validateStringField("nickname", nickname)
@@ -222,12 +209,12 @@ const logic = {
       .then(game => {
         if (!game) throw new LogicError(`game with id ${gameID} does not exist`)
         if (game.initiator !== nickname && game.acceptor !== nickname) throw new LogicError(`game with id ${gameID} does not belong to user ${nickname}`)
-        game.terminated = true
-
+        if (game.hasAcknowledgedGameOver.length === 1 && game.hasAcknowledgedGameOver.indexOf(nickname) === -1)  // other user has acknowledged
+          game.state = 'terminated'
+        game.hasAcknowledgedGameOver.push(nickname)
         return game.save()
       })
       .then(_ => true)
-
   },
 
   _createGame(requester, confirmer) {
@@ -264,6 +251,7 @@ const logic = {
           inCheckmate: false,
           inThreefoldRepetition: false,
           insufficientMaterial: false,
+          hasAcknowledgedGameOver: [],
         })
         return game.save()
       })
@@ -286,17 +274,20 @@ const logic = {
         if (!game) throw new LogicError(`game with id ${gameID} does not exist`)
         if (game.initiator !== nickname && game.acceptor !== nickname) throw new LogicError(`game with id ${gameID} does not belong to user ${nickname}`)
         const engine = this._currentEngines.get(game.engineID)
+        if (engine.game_over()) throw new LogicError('game is over, cannot move')
+        const result = engine.move(move)
+        if (!result) throw new LogicError(`move is not allowed`)
         if (engine.game_over()) {
           game.inThreefoldRepetition = engine.in_threefold_repetition()
           game.inDraw = engine.in_draw()
-          game.insuffcientMaterial = engine.insufficient_material()
+          game.insufficientMaterial = engine.insufficient_material()
           game.inStalemate = engine.in_stalemate()
           game.inCheckmate = engine.in_checkmate()
-          game.winner = nickname === game.initiator ? game.acceptor : game.initiator
+          if (game.inCheckmate) game.winner = nickname
+          else game.winner = "no winner"
         } else {
-          const result = engine.move(move)
-          if (!result) throw new LogicError(`move is not allowed`)
           game.pgn = engine.pgn()
+          game.inCheck = engine.in_check()
           game.toPlay = nickname === game.initiator ? game.acceptor : game.initiator
         }
         return game.save()

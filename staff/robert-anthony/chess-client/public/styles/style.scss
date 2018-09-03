@@ -5,6 +5,8 @@ font-family: 'Uncial Antiqua', cursive;
 font-family: 'Vollkorn', serif;
 */
 
+$text_color1: #ffeb86;
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -17,7 +19,6 @@ html {
 
 .main__mainChessContainer {
   color: white;
-  font-family: 'Vollkorn', serif;
   font-family: 'Merriweather', serif;
 
   .main__mainChessRow {
@@ -26,16 +27,33 @@ html {
   }
 }
 
-div.main__mainChessRow.row div.main__userList .list-group .list-group-item {
+main div.main__userList ul.list-group a.list-group-item {
   background-color: rgba(118, 61, 5,0.7);
   &:link, &:visited {
-    color: #ffd95a;
-    text-decoration:none
+    color: $text_color1;
+  text-decoration:none
   }
   &:hover, &:active {
     color: #ffa400;
     text-decoration:none
   }
+}
+
+.invite__searchInput {
+  margin-top:3em;
+  margin-bottom:3em;
+  color: $text_color1;
+  border-color: rgba(255, 75, 5, 0.7);
+  &:focus {
+    outline: none !important;
+
+  }
+}
+
+.invite__explainText {
+  color:$text_color1;
+  size:1.2em;
+  font-weight: 700;
 }
 
 body {

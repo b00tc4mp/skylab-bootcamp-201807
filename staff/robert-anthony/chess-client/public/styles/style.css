@@ -13,20 +13,32 @@ html {
 
 .main__mainChessContainer {
   color: white;
-  font-family: 'Vollkorn', serif;
   font-family: 'Merriweather', serif; }
   .main__mainChessContainer .main__mainChessRow {
     position: relative;
     margin-top: 5%; }
 
-div.main__mainChessRow.row div.main__userList .list-group .list-group-item {
+main div.main__userList ul.list-group a.list-group-item {
   background-color: rgba(118, 61, 5, 0.7); }
-  div.main__mainChessRow.row div.main__userList .list-group .list-group-item:link, div.main__mainChessRow.row div.main__userList .list-group .list-group-item:visited {
-    color: #ffd95a;
+  main div.main__userList ul.list-group a.list-group-item:link, main div.main__userList ul.list-group a.list-group-item:visited {
+    color: #ffeb86;
     text-decoration: none; }
-  div.main__mainChessRow.row div.main__userList .list-group .list-group-item:hover, div.main__mainChessRow.row div.main__userList .list-group .list-group-item:active {
+  main div.main__userList ul.list-group a.list-group-item:hover, main div.main__userList ul.list-group a.list-group-item:active {
     color: #ffa400;
     text-decoration: none; }
+
+.invite__searchInput {
+  margin-top: 3em;
+  margin-bottom: 3em;
+  color: #ffeb86;
+  border-color: rgba(255, 75, 5, 0.7); }
+  .invite__searchInput:focus {
+    outline: none !important; }
+
+.invite__explainText {
+  color: #ffeb86;
+  size: 1.2em;
+  font-weight: 700; }
 
 body {
   height: 100%;
