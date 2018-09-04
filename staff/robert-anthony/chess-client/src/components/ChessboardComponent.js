@@ -84,7 +84,8 @@ class ChessboardComponent extends Component {
                                         lightSquareStyle={{backgroundColor: 'rgba(180, 180, 180,0.85)' }}
                                         darkSquareStyle={{backgroundColor: 'rgba(120, 120, 120,0.85)' }}
 
-                                        calcWidth={this.chessboardjsxCalcWidth} position={currentGame.fen}/>}
+                                        calcWidth={this.chessboardjsxCalcWidth}
+                                        position={currentGame.fen}/>}
           </div>
         </Col>
         <Col xs="12" md="3">
