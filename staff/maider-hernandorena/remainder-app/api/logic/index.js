@@ -502,7 +502,7 @@ const logic = {
                 const minDate = mDate.startOf('day').toDate()
                 const maxDate = mDate.endOf('day').toDate()
 
-                return Cite.find({ date: { $gte: minDate, $lte: maxDate } }, { __v: 0 }).lean()
+                return Cite.find({ date: { $gte: minDate, $lte: maxDate } }, { __v: 0 }).sort({ date: 1 }).lean()
                     .then(cites => {
                         if (!cites) throw new LogicError(`cite with ${date} date does not exist`)
         
@@ -542,7 +542,7 @@ const logic = {
                 const minDate = mDate.startOf('month').toDate()
                 const maxDate = mDate.endOf('month').toDate()
 
-                return Cite.find({ date: { $gte: minDate, $lte: maxDate }, patient: ObjectId(id) }, { __v: 0 }).lean()
+                return Cite.find({ date: { $gte: minDate, $lte: maxDate }, patient: ObjectId(id) }, { __v: 0 }).sort({ date: 1 }).lean()
                     .then(cites => {
                         if (!cites) throw new LogicError(`cite with ${date} date does not exist`)
         

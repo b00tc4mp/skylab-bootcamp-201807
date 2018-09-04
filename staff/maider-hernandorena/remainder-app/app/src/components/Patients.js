@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { withRouter } from 'react-router-dom'
 import logic from '../logic'
 import '../styles/css/patients.css'
 
@@ -6,13 +7,12 @@ class Patients extends Component {
 
     state = { 
         patients: [],
-        names: [],
         name: '',
         error: '',
         search: false
     }
     
-    keepName = e => this.setState({ name: e.target.value })
+    keepName = e => this.setState({ name: e.target.value, error: '' })
     
     goToAddPatient = e => {
         e.preventDefault()
@@ -23,65 +23,58 @@ class Patients extends Component {
         this.props.patientData(dni)
     }
 
-    componentWillMount() {
+    componentDidMount() {
         this.listPatients()
+
+        this.unlisten = this.props.history.listen(() => this.listPatients())
+    }
+
+    componentWillUnmount() {
+        this.unlisten()
     }
 
     listPatients = () => {
         logic.listPatients()
-            .then(patients => this.setState({ patients, error: '', search: false }))
-            .then(() => this.state.patients)
-            .catch(({message}) => this.setState({ error: message }))
+            .then(patients => this.setState({ patients, name: '', error: '' }))
+            .catch(({ message }) => this.setState({ error: message }))
     }
 
     onSearch = e => {
         e.preventDefault()
         const { name } = this.state
         logic.searchPatients(name)
-            .then(names => {
-                if(this.state.name === names[0].name) this.setState({ names, error: '', search: true })
-                else throw new Error(`cannot found any patient with ${this.state.name}`)
+            .then(patients => {
+                this.setState({ patients, name: '', error: '', search: true })
             })
-            .then(() => this.state.names)
-            .catch(({message}) => this.setState({ error: message }))
+            .catch(({ message }) => this.setState({ error: message }))
     }
 
     render() {
-        const { state: { error, name, names, patients, search }, keepName, onSearch, goToAddPatient, patientData } = this
+        const { state: { error, name, patients }, keepName, onSearch, goToAddPatient, patientData } = this
 
-        return <main>
-            <div>
-                <div className="search">
-                    <p>Search patients:</p>
-                    <form onSubmit={onSearch}>
-                        <input type="text" value={name} name="name" placeholder="type here..." onChange={keepName}/>
-                        <button type="submit">Search</button>
-                        {error && <p className="error">{error}</p>}
+        return <main className="patients">
+            <div className="patients__group">
+                <div className="patients__group__search">
+                    <form className="patients__group__search__form" onSubmit={onSearch}>
+                        <input className="patients__group__search__form__input" type="text" value={name} name="name" placeholder="Patient name..." onChange={keepName}/>
+                        <button className="patients__group__search__form__button" type="submit">Search</button>
                     </form>
+                    {error && <p className="patients__group__search__error">{error}</p>}
                 </div>
-                <div>
-                    <button onClick={goToAddPatient}>Add Patient</button>
+                <div className="patients__group__add">
+                    <button className="patients__group__add__button" onClick={goToAddPatient}>Add Patient</button>
                 </div>
-                <div>
-                    <p><h4>Name || Username</h4> || Age || Phone</p>
-                </div>
-                {search ? <div>
-                    <ul>
-                        {names.map(patient => <li key={patient.name} onClick={() => patientData(patient.dni)}>
-                            <a href={`/#/patient/${patient.dni}`}><p><h4>{patient.name} {patient.surname}</h4>, {patient.dni}</p></a>
+                <h2 className="patients__group__title">Patients</h2>
+                <div className="patients__group__all">
+                    <ul className="patients__group__all__list">
+                        {patients.map(patient => <li className="patients__group__all__list__item" key={patient.dni} onClick={() => patientData(patient.dni)}>
+                            <a className="patients__group__all__list__item__link" href={`/#/patient/${patient.dni}`}><p><strong>{patient.name} {patient.surname}</strong>. DNI: {patient.dni}. {patient.age} years old, {patient.gender}.</p></a>
                         </li> )}
                     </ul>
-                </div> :
-                <div>
-                    <ul>
-                        {patients.map(patient => <li key={patient.name} onClick={() => patientData(patient.dni)}>
-                            <a href={`/#/patient/${patient.dni}`}><p><h4>{patient.name} {patient.surname}</h4>, {patient.dni}</p></a>
-                        </li> )}
-                    </ul>
-                </div> }
+                </div>
             </div>
         </main>
     }
 }
 
-export default Patients
+export default withRouter(Patients)

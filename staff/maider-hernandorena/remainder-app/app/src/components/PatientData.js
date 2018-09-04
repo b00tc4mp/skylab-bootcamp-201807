@@ -8,9 +8,7 @@ class PatientData extends Component {
         cites: [],
         citeName: '',
         date: new Date(),
-        addedCite: '',
         errorCite: '',
-        addedTreatment: '',
         errorTreatment: '',
         name: '',
         surname: '',
@@ -47,8 +45,8 @@ class PatientData extends Component {
                     address: address,
                     phone: phone,
                     id: id.toString(),
-                    error: '',
-                    added: ''
+                    errorCite: '',
+                    errorTreatment: ''
                 })
             })
             .then(() => this.listCites())
@@ -65,9 +63,8 @@ class PatientData extends Component {
         date = new Date(date)
 
         logic.addCite(code, dni, citeName, date)
-            .then(({ message }) => this.setState({ addedCite: message, error: '' }))
             .then(() => this.listCites())
-            .catch(({ message }) => this.setState({ errorCite: message, addCite: '' }))
+            .catch(({ message }) => this.setState({ errorCite: message }))
     }
 
     listCites = () => {
@@ -75,7 +72,7 @@ class PatientData extends Component {
         date = new Date(date)
 
         logic.listPatientCites(id, date)
-            .then(cites => this.setState({ cites, errorCite: '', addedCite: '' }))
+            .then(cites => this.setState({ cites, errorCite: '' }))
             .then(() => this.state.cites)
     }
 
@@ -98,16 +95,15 @@ class PatientData extends Component {
         const { id, dni, pill, quantity, frequency } = this.state
 
         logic.addTreatment(id, dni, pill, quantity, frequency)
-            .then(({ message }) => this.setState({ added: message, errorTreatment: '' }))
             .then(() => this.listTreatments())
-            .catch(({ message }) => this.setState({ errorTreatment: message, addCite: '' }))
+            .catch(({ message }) => this.setState({ errorTreatment: message }))
     }
 
     listTreatments = () => {
         const { id } = this.state
 
         logic.listTreatments(id)
-            .then(treatments => this.setState({ treatments, errorTreatment: '', addedCite: '' }))
+            .then(treatments => this.setState({ treatments, errorTreatment: '' }))
             .then(() => this.state.treatments)
     }
 
@@ -121,51 +117,59 @@ class PatientData extends Component {
 
     render() {
 
-        const { state: { cites, citeName, date, addedCite, errorCite, name, surname, age, gender, dni, address, phone,treatments, pill, quantity, frequency, addedTreatment, errorTreatment }, addCite, keepName, keepDate, addTreatment, keepPill, keepQuantity, keepFrequency } = this
+        const { state: { cites, citeName, date, errorCite, name, surname, age, gender, dni, address, phone,treatments, pill, quantity, frequency, errorTreatment }, addCite, keepName, keepDate, addTreatment, keepPill, keepQuantity, keepFrequency } = this
 
-        return <main>
-            <div>
-                <h3>{name} {surname}</h3>
-                <p>Age: {age}, {gender}</p>
-                <p>DNI: {dni}</p>
-                <p>Address: {address}</p>
-                <p>Phone: {phone}</p>
-            </div>
-            <div>
-                <div>
-                    <form onSubmit={addCite}>
-                        <input type="text" value={citeName} name="name" placeholder="name" onChange={keepName}/>
-                        <input type="datetime-local" value={date} name="name" onChange={keepDate}/>
-                        <button type="submit">Add Cite</button>
-                    </form>
-                    {addedCite && <p className="added">{addedCite}</p>}
-                    {errorCite && <p className="error">{errorCite}</p>}
+        return <main className="all">
+            <div className="all__data">
+                <div className="all__data__patient">
+                    <h3>{name} {surname}</h3>
+                    <p>{age} years old, {gender}</p>
+                    <p>DNI: {dni}</p>
+                    <p>Address: {address}</p>
+                    <p>Phone: {phone}</p>
                 </div>
-                <div>
-                    <ul>
-                        {cites.map(cite => <li key={cite.name}>
-                            <button onClick={() => this.removeCite(cite.name, cite.date)}>X</button>
-                            <p>{cite.name}, {cite.date}</p>
+                <div className="all__data__forms">
+                    <div className="all__data__forms__each">
+                        <h3>Add Cite</h3>
+                        <form className="all__data__forms__each__form" onSubmit={addCite}>
+                            <input className="all__data__forms__each__form__input" type="text" value={citeName} name="name" placeholder="cite name" onChange={keepName}/>
+                            <input className="all__data__forms__each__form__input" type="datetime-local" value={date} name="name" onChange={keepDate}/>
+                            <button className="all__data__forms__each__form__button" type="submit">Add Cite</button>
+                        </form>
+                        {errorCite && <p className="all__data__forms__each__error">{errorCite}</p>}
+                    </div>
+                </div>
+                <div className="all__data__forms">
+                    <div className="all__data__forms__each">
+                        <h3>Add Treatment</h3>
+                        <form className="all__data__forms__each__form" onSubmit={addTreatment}>
+                            <input className="all__data__forms__each__form__input" type="text" value={pill} name="pill name" placeholder="pill name" onChange={keepPill}/>
+                            <input className="all__data__forms__each__form__input" type="text" value={quantity} name="quantity" placeholder="quantity" onChange={keepQuantity}/>
+                            <input className="all__data__forms__each__form__input" type="text" value={frequency} name="frequency" placeholder="frequency" onChange={keepFrequency}/>
+                            <button className="all__data__forms__each__form__button" type="submit">Add Treatment</button>
+                        </form>
+                        {errorTreatment && <p className="all__data__forms__each__error">{errorTreatment}</p>}
+                    </div>
+                </div>
+            </div>
+            <div className="all__list">
+                <div className="all__list__each">
+                    <h3 className="all__list__each__title">Cites</h3>
+                    <ul className="all__list__each__list">
+                        {cites.map(cite => <li className="all__list__each__list__item" key={cite.name}>
+                            <p>{cite.name}, {new Date(cite.date).toLocaleString()}. 
+                                 <a className="all__list__each__list__item__link" href={`/#/patient/${dni}`} onClick={() => this.removeCite(cite.name, cite.date)}>Delete</a>
+                            </p>
                         </li> )}
                     </ul>
                 </div>
-            </div>
-            <div>
-                <div>
-                    <form onSubmit={addTreatment}>
-                        <input type="text" value={pill} name="pill" placeholder="pill name" onChange={keepPill}/>
-                        <input type="text" value={quantity} name="quantity" placeholder="quantity" onChange={keepQuantity}/>
-                        <input type="text" value={frequency} name="frequency" placeholder="frequency" onChange={keepFrequency}/>
-                        <button type="submit">Add Treatment</button>
-                    </form>
-                    {addedTreatment && <p className="added">{addedTreatment}</p>}
-                    {errorTreatment && <p className="error">{errorTreatment}</p>}
-                </div>
-                <div>
-                    <ul>
-                        {treatments.map(treatment => <li key={treatment.pill}>
-                            <button onClick={() => this.removeTreatment(treatment.pill)}>X</button>
-                            <p>{treatment.pill}, {treatment.quantity}, {treatment.frequency}</p>
+                <div className="all__list__each">
+                    <h3 className="all__list__each__title">Treatments</h3>
+                    <ul className="all__list__each__list">
+                        {treatments.map(treatment => <li className="all__list__each__list__item" key={treatment.pill}>
+                            <p>{treatment.pill}, {treatment.quantity}, {treatment.frequency}.
+                                <a className="all__list__each__list__item__link" href={`/#/patient/${dni}`} onClick={() => this.removeTreatment(treatment.pill)}>Delete</a>
+                            </p>
                         </li> )}
                     </ul>
                 </div>

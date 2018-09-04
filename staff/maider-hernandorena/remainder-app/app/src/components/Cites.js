@@ -14,6 +14,11 @@ class Cites extends Component {
         this.listCites()
     }
 
+    onSubmit = e => {
+        e.preventDefault()
+        this.listCites()
+    }
+
     keepDay = e => this.setState({ date: e.target.value, error: '' })
 
     listCites = () => {
@@ -26,26 +31,20 @@ class Cites extends Component {
     }
 
     render() {
-        const { state: { date, cites }, keepDay, listCites } = this
+        const { state: { date, cites }, keepDay, onSubmit } = this
 
-        return <main>
-            <div>
-                <form onSubmit={listCites}>
-                    <input type="date" value={date} onChange={keepDay} />
-                    <button type="submit">Choose Day</button>
-                </form>
-                <div>
-                    <p>Name || Date</p>
-                </div>
-                <div>
-                    <ul>
-                        {cites.map(cite => <li key={cite.name}>
-                            <p>{cite.name}, {cite.date}</p>
+        return <main className="cites">
+                    <form className="cites__form" onSubmit={onSubmit}>
+                        <input className="cites__form__input" type="date" value={date} onChange={keepDay} />
+                        <button className="cites__form__button" type="submit">Choose Day</button>
+                    </form>
+                    <h2 className="cites__title">Cites</h2>
+                    <ul className="cites__list">
+                        {cites.map(cite => <li className="cites__list__item" key={cite.date}>
+                            <p>{cite.name}, {new Date(cite.date).toLocaleString()}</p>
                         </li> )}
                     </ul>
-                </div>
-            </div>
-        </main>
+                </main>
     }
 }
 

@@ -1,12 +1,12 @@
 .register {
   background: linear-gradient(left, #55bf9f 0%, #2fbdbb 100%);
-  height: 60vh;
+  height: 70vh;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  font-size: 20px; }
+  font-size: 16px; }
   .register__group {
-    padding: 2% 35%;
+    padding: 5% 0;
     margin: 0 auto;
-    width: 30%; }
+    width: 20%; }
     .register__group__text {
       padding: 0%;
       text-align: left;
@@ -20,26 +20,27 @@
       width: 90%; }
     .register__group__form__input {
       display: block;
-      padding: 15px;
+      padding: 10px;
       margin-top: 10px;
       border: none;
       border-radius: 10px;
-      font-size: 20px;
-      width: 80%; }
+      width: 90%; }
       .register__group__form__input:focus {
         outline: 0px; }
     .register__group__form__button {
-      padding: 15px;
+      padding: 10px;
       margin-top: 10px;
       background-color: #308079;
       color: #ffffff;
       border: none;
       border-radius: 10px;
       cursor: pointer;
-      font-size: 20px;
-      width: 88%; }
+      font-size: 18px;
+      width: 98%; }
       .register__group__form__button:hover {
         background-color: #215b63; }
+      .register__group__form__button:focus {
+        outline: 0px; }
     .register__group__error {
       color: #ca6262; }
 

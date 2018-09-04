@@ -1,0 +1,78 @@
+.all
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+    font-size: 18px
+    color: #333333
+    padding: 5% 10%
+    width: 80%
+    
+    &__data
+        display: grid
+        grid-template-columns: 40% 30% 30%
+
+        &__forms
+
+            &__each
+                margin-top: 5%
+                margin-left: 15%
+
+                &__form
+
+                    &__input
+                        border: none
+                        border-bottom: solid 1px #999999
+                        font-size: 16px
+                        color: #777777
+                        display: block
+                        margin-top: 25px
+                        width: 90%
+
+                        &:focus
+                            outline: 0px
+                        
+                    &__button
+                        padding: 0px 20px
+                        height: 40px
+                        background-color: #2fbdbb
+                        color: #ffffff
+                        border: none
+                        border-radius: 10px
+                        cursor: pointer
+                        font-size: 18px
+                        margin-top: 30px
+
+                        &:hover
+                            background-color: #308079
+
+                        &:focus
+                            outline: 0px
+
+                &__error
+                    color: #ca6262
+                    font-size: 20px
+    
+    &__list
+        display: grid
+        grid-template-columns: 1fr 1fr
+        margin-top: 5%
+
+        &__each
+
+            &__title
+                margin-bottom: 0
+
+            &__list
+                margin-top: 5%
+                list-style-type: circle
+                padding: 0 4%
+
+                &__item
+
+                    &__link
+                        text-decoration: none
+                        color: #2fbdbb
+                        cursor: pointer
+                        font-size: 14px
+                        margin-left: 3%
+
+                        &:hover
+                            color: #308079

@@ -38,7 +38,6 @@ class App extends Component {
 
   listPatients = e => {
     e.preventDefault()
-    window.location.reload()
     this.props.history.push('/patients')
   }
 

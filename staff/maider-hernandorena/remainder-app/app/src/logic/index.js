@@ -228,6 +228,7 @@ const logic = {
 
                 return this._call(`patients/${name}`, 'get', {'Content-Type': 'application/json'}, undefined, 200)
                     .then(res => res.json())
+                    .then(patients => patients)
             })
     },
 
@@ -240,6 +241,7 @@ const logic = {
             .then(() => 
                 this._call(`patients`, 'get', {'Content-Type': 'application/json'}, undefined, 200)
                     .then(res => res.json())
+                    .then(patients => patients)
             )
     },
 

@@ -34,37 +34,46 @@ class AddPatient extends Component {
         phone = parseInt(phone)
 
         logic.addPatient(name, dni, surname, age, gender, address, phone)
-            .then(({ message }) => this.setState({ added: message }))
-            .catch(({ message }) => this.setState({ error: message }))
+            .then(({ message }) => this.setState({ added: message, error: '' }))
+            .catch(({ message }) => this.setState({ error: message, added: '' }))
     }
 
     render() {
 
         const { state: { name, surname, dni, age, gender, address, phone, added, error }, addPatient, keepName, keepDni, keepSurname, keepAge, keepGender, keepAddress, keepPhone } = this
 
-        return <main>
-            <div>
-                <form onSubmit={addPatient}>
-                    <p>Patient Name:</p>
-                    <input type="text" value={name} name="name" placeholder="name" onChange={keepName}/>
-                    <p>Patient Surname:</p>
-                    <input type="text" value={surname} name="surname" placeholder="surname" onChange={keepSurname}/>
-                    <p>Patient DNI:</p>
-                    <input type="number" value={dni} name="dni" placeholder="dni" onChange={keepDni}/>
-                    <p>Patient Age:</p>
-                    <input type="number" value={age} name="age" placeholder="age" onChange={keepAge}/>
-                    <p>Patient Gender:</p>
-                    <input type="radio" value={gender} name="gender" value="male" onChange={keepGender}/>Male
-                    <input type="radio" value={gender} name="gender" value="female" onChange={keepGender}/>Female
-                    <input type="radio" value={gender} name="gender" value="other" onChange={keepGender}/>Other
-                    <p>Patient Address:</p>
-                    <input type="text" value={address} name="address" placeholder="address" onChange={keepAddress}/>
-                    <p>Patient Phone:</p>
-                    <input type="number" value={phone} name="phone" placeholder="phone" onChange={keepPhone}/>
-                    <button type="submit">Add Patient</button>
+        return <main className="add">
+            <div className="add__group">
+                <h2 className="add__group__title">Add Patient</h2>
+                {added && <p className="add__group__added">{added}</p>}
+                {error && <p className="add__group__error">{error}</p>}
+                <form className="add__group__form" onSubmit={addPatient}>
+                    <div className="add__group__form__row">
+                        <p className="add__group__form__row__text">Name:</p>
+                        <input className="add__group__form__row__input" type="text" value={name} name="name" placeholder="name" onChange={keepName}/>
+                        <p className="add__group__form__row__text">Surname:</p>
+                        <input className="add__group__form__row__input" type="text" value={surname} name="surname" placeholder="surname" onChange={keepSurname}/>
+                        <p className="add__group__form__row__text">DNI:</p>
+                        <input className="add__group__form__row__num" type="number" value={dni} name="dni" placeholder="8 digits" onChange={keepDni}/>
+                    </div>
+                    <div className="add__group__form__row">
+                        <p className="add__group__form__row__text">Gender:</p>
+                        <div className="add__group__form__row__rad">
+                            <input className="add__group__form__row__rad__item" type="radio" value={gender} name="gender" value="male" onChange={keepGender}/>Male
+                            <input className="add__group__form__row__rad__item" type="radio" value={gender} name="gender" value="female" onChange={keepGender}/>Female
+                            <input className="add__group__form__row__rad__item" type="radio" value={gender} name="gender" value="other" onChange={keepGender}/>Other
+                        </div>
+                        <p className="add__group__form__row__text">Phone:</p>
+                        <input className="add__group__form__row__num" type="number" value={phone} name="phone" placeholder="9 digits" onChange={keepPhone}/>
+                        <p className="add__group__form__row__text">Age:</p>
+                        <input className="add__group__form__row__age" type="number" value={age} name="age" placeholder="70" onChange={keepAge}/>
+                    </div>
+                    <div className="add__group__form__row">
+                        <p className="add__group__form__row__text">Address:</p>
+                        <input className="add__group__form__row__address" type="text" value={address} name="address" placeholder="address" onChange={keepAddress}/>
+                        <button className="add__group__form__row__button" type="submit">Add Patient</button>
+                    </div>
                 </form>
-                {added && <p className="added">{added}</p>}
-                {error && <p className="error">{error}</p>}
             </div>
         </main>
     }
