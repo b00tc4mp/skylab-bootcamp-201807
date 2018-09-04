@@ -261,7 +261,7 @@ const logic = {
 
     //@@list note by noteid
     //@@logic.listNotebyNotebookId
-
+    
     listNotebyNotebookId(notebookid) {
         return Promise.resolve()
             .then(() => {
@@ -272,13 +272,33 @@ const logic = {
 
                 if (!notebook) throw new LogicError(`notebook does not exists`)
 
-                let notesbynotebooksids = Note.find({ notebook: notebook.id })
+                let notesbynotebooksids = Note.find({ notebook: notebook.id }).sort({ seconds: 1})
 
                 return notesbynotebooksids
             })
 
-    },
+            
 
+    },
+    
+    /*
+    listNotebyNotebookId(notebookid) {
+        return Promise.resolve()
+            .then(() => {
+
+                return Notebook.findOne({ _id: notebookid })
+            })
+            .then(notebook => {
+
+                if (!notebook) throw new LogicError(`notebook does not exists`)
+
+                return Note.find({ notebook: notebook.id })
+            }).sort({ seconds: 1})
+            .then(notes => {
+                return notes
+            })
+    },
+    */
 
     //@@list note by noteid
     //@@logic.listNotesbyNoteId

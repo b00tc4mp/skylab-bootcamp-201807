@@ -259,7 +259,7 @@ const logic = {
         return Promise.resolve()
             .then(() => {
                 return this._call(`${userId}/updatenote/${noteId}/${sessionuserid}`,
-                'patch',
+                'PATCH',
                 {'Content-Type': 'application/json', authorization: `bearer ${token}`},
                 JSON.stringify({ newnotetitle, newnotetext }),
                 200)

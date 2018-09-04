@@ -5,7 +5,9 @@ import Register from '../pages/register'
 import Login from '../pages/login'
 import Profile from '../pages/profile'
 import Home from '../pages/home'
-import Editor from '../pages/editor'
+import NotebookEditor from '../pages/notebookeditor'
+import NotebookPlayer from '../pages/notebookplayer'
+import NotebookUpdate from '../pages/notebookupdate'
 import Notebooks from '../pages/notebooks'
 import Faq from '../pages/faq'
 import About from '../pages/about'
@@ -53,7 +55,9 @@ class App extends Component {
               <Route path='/login' render={() => this.isLoggedIn() ? <Redirect to='/home' /> : <Login onLoggedIn={this.onLoggedIn} />} />
               <Route path='/profile' render={() => this.isLoggedIn() ? <Profile /> : <Redirect to='/' /> }/>
               <Route path='/home' render={() => this.isLoggedIn() ? <Home userId={userId} token={token}/> : <Redirect to='/' />} />
-              <Route path='/editor'  render={() => this.isLoggedIn() ? <Editor userId={userId} token={token}/> : <Redirect to='/'/>} />
+              <Route path='/editor'  render={() => this.isLoggedIn() ? <NotebookEditor userId={userId} token={token}/> : <Redirect to='/'/>} />
+              <Route path='/editnotebook/:id/:editor'  render={(props) => this.isLoggedIn() ? <NotebookUpdate id={props.match.params.id} editor={props.match.params.editor} userId={userId} token={token}/> : <Redirect to='/'/>} />
+              <Route path='/player/:id/:editor'  render={(props) => this.isLoggedIn() ? <NotebookPlayer id={props.match.params.id} editor={props.match.params.editor} userId={userId} token={token}/> : <Redirect to='/'/>} />
               <Route path='/notebooks' render={() => this.isLoggedIn() ? <Notebooks userId={userId} token={token}/> : <Redirect to='/'/>} />
               <Route path='/faq' component={Faq} />
               <Route path='/about' component={About} />
