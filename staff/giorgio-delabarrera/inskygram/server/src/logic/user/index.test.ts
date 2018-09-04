@@ -341,7 +341,6 @@ describe("user", () => {
         .then((user: UserModelInterface) => {
           expect(user).toBeInstanceOf(User);
           expect(user.imageId).toBeDefined();
-          expect(user.imageUrl).toBeDefined();
         });
     });
   });

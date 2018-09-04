@@ -13,7 +13,6 @@ interface UserInterface {
   gender: string;
   biography: string;
   imageId: string;
-  imageUrl: string;
   privateAccount: boolean;
   lastLogin: Date;
   enable: boolean;

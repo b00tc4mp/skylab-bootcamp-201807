@@ -44,8 +44,11 @@ const userLogic = {
 
         if (user.password !== password) { throw new LogicError(`wrong password`); }
 
-        return true;
-      });
+        user.lastLogin = new Date();
+
+        return user.save();
+      })
+      .then((user: UserModelInterface) => true);
   },
 
   retrieve(username: string): Promise<UserModelInterface> | never {
@@ -146,7 +149,6 @@ const userLogic = {
             }
 
             user.imageId = result.public_id;
-            user.imageUrl = result.secure_url;
 
             resolve(user.save());
 

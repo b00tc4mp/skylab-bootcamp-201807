@@ -2,15 +2,17 @@ import { config } from "dotenv";
 import { Router, Response, Request } from "express";
 import logic from "../logic";
 import LogicError from "../logic/error/logic-error";
-import validateJwt from "./helpers/validate-jwt";
 import { PostModelInterface } from "../models/post";
 const multer = require("multer");
+import passport from "passport";
 
 config();
 
 const router: Router = Router();
 
 const upload = multer();
+
+const validateJwt = passport.authenticate("jwt", { session: false });
 
 router.post(
   "/users/:username/posts/create",

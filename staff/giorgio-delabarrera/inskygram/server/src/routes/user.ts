@@ -5,8 +5,8 @@ import logic from "../logic";
 import LogicError from "../logic/error/logic-error";
 import jwt from "jsonwebtoken";
 import { UserModelInterface } from "../models/user";
-import validateJwt from "./helpers/validate-jwt";
 const multer = require("multer");
+import passport from "passport";
 
 config();
 
@@ -15,6 +15,8 @@ const router: Router = Router();
 const jsonBodyParser = bodyParser.json();
 
 const upload = multer();
+
+const validateJwt = passport.authenticate("jwt", { session: false });
 
 router.post("/register", jsonBodyParser, (req: Request, res: Response) => {
   const { body: { username, email, password } } = req;
@@ -28,23 +30,26 @@ router.post("/register", jsonBodyParser, (req: Request, res: Response) => {
     });
 });
 
-router.post("/auth", jsonBodyParser, (req: Request, res: Response) => {
-  const { body: { username, password } } = req;
+router.post(
+  "/auth",
+  [jsonBodyParser, passport.authenticate("local", { session: false })],
+  (req: Request, res: Response) => {
+    const { body: { username, password } } = req;
 
-  logic.user.authenticate(username, password)
-    .then(() => {
-      const { JWT_SECRET, JWT_EXP } = process.env;
+    logic.user.authenticate(username, password)
+      .then(() => {
+        const { JWT_SECRET, JWT_EXP } = process.env;
 
-      const token = jwt.sign({ sub: username }, JWT_SECRET, { expiresIn: JWT_EXP });
+        const token = jwt.sign({ sub: username }, JWT_SECRET, { expiresIn: JWT_EXP });
 
-      res.json({ message: "user authenticated", token });
-    })
-    .catch((err: Error) => {
-      const { message } = err;
+        res.json({ message: "user authenticated", token });
+      })
+      .catch((err: Error) => {
+        const { message } = err;
 
-      res.status(err instanceof LogicError ? 401 : 500).json({ message });
-    });
-});
+        res.status(err instanceof LogicError ? 401 : 500).json({ message });
+      });
+  });
 
 router.get("/users/:username", validateJwt, (req: Request, res: Response) => {
   const { params: { username } } = req;

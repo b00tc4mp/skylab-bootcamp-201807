@@ -81,7 +81,6 @@ describe("post", () => {
           expect(post._id).toBeInstanceOf(ObjectId);
           expect(post.user).toBeInstanceOf(ObjectId);
           expect(post.imageId).toBeDefined();
-          expect(post.imageUrl).toBeDefined();
           expect(post.caption).toBeUndefined();
         });
     });
@@ -99,7 +98,6 @@ describe("post", () => {
           expect(post._id).toBeInstanceOf(ObjectId);
           expect(post.user).toBeInstanceOf(ObjectId);
           expect(post.imageId).toBeDefined();
-          expect(post.imageUrl).toBeDefined();
           expect(post.caption).toBe(caption);
         });
     });
@@ -140,7 +138,6 @@ describe("post", () => {
           expect(post._id).toBeInstanceOf(ObjectId);
           expect(post.user).toBeInstanceOf(ObjectId);
           expect(post.imageId).toBeDefined();
-          expect(post.imageUrl).toBeDefined();
           expect(post.caption).toBe(caption);
         });
     });
@@ -223,7 +220,6 @@ describe("post", () => {
   //         expect(post._id).toBeInstanceOf(ObjectId);
   //         expect(post.user).toBeInstanceOf(ObjectId);
   //         expect(post.imageId).toBeDefined();
-  //         expect(post.imageUrl).toBeDefined();
   //         expect(post.caption).toBeUndefined();
   //       });
   //   });

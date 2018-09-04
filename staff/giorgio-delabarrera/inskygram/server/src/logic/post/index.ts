@@ -29,7 +29,6 @@ const postLogic = {
             const post = new Post();
 
             post.imageId = result.public_id;
-            post.imageUrl = result.secure_url;
             post.user = user._id;
             if (caption) { post.caption = caption; }
 

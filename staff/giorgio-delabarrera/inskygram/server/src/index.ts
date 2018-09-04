@@ -1,8 +1,10 @@
 import cors from "cors";
 import { config } from "dotenv";
 import express from "express";
-import { userRouter, postRouter } from "./routes";
+import "./config/passport";
+import { userRouter, postRouter, passportTestRouter } from "./routes";
 import { connect } from "./db";
+import passport from "passport";
 
 config();
 
@@ -15,9 +17,13 @@ connect(DATABASE_URL)
 
     app.use(cors());
 
+    app.use(passport.initialize());
+
     app.use("/api", userRouter);
 
-    app.use("/api", postRouter);
+    // app.use("/api", postRouter);
+
+    // app.use("/api", passportTestRouter);
 
     app.listen(PORT, () => console.log(`inskygram up and running on port ${PORT}`));
   });
