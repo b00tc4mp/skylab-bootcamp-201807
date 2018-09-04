@@ -235,7 +235,7 @@ const logic = {
         const engine = new Chess()
         const uuid = uuidv1()
         this._currentEngines.set(uuid, engine)
-       // engine.header('White', requester, 'Black', confirmer)
+        engine.header('White', requester, 'Black', confirmer)
         const pgn = engine.pgn()
         game = new Game({
           initiator: requester,
@@ -289,8 +289,7 @@ const logic = {
         } else {
           game.pgn = engine.pgn()
           game.inCheck = engine.in_check()
-          const turn = engine.turn()
-          game.toPlay = (turn === 'w') ? game.initiator : game.acceptor // because the initiator is always white (for now)
+          game.toPlay = nickname === game.initiator ? game.acceptor : game.initiator
         }
         return game.save()
       })

@@ -8,7 +8,6 @@ class ChessboardComponent extends Component {
 
   state = {
     modal: false,
-    inCheckText:'',
     endOfGameText: '',
     haveAcknowledgedGameOver:false,
   }
@@ -35,7 +34,6 @@ class ChessboardComponent extends Component {
     const {haveAcknowledged} = state
     let endOfGameText = ''
     let modal = false
-    let inCheckText = ''
     if (currentGame && currentGame.winner && !haveAcknowledged) {
       switch (true) {
         case currentGame.inCheckmate:
@@ -56,12 +54,11 @@ class ChessboardComponent extends Component {
       }
       modal = true
     }
-    if (currentGame && currentGame.inCheck ) inCheckText = `${currentGame.toPlay} `
-    return {endOfGameText, inCheckText,modal}
+    return {endOfGameText, modal}
   }
 
   chessboardjsxCalcWidth = ({screenWidth, screenHeight}) => {
-    return screenWidth / 2 < screenHeight / 1.5 ? screenWidth / 2 : screenHeight / 1.55
+    return screenWidth / 2 < screenHeight / 1.5 ? screenWidth / 2 : screenHeight / 1.5
   }
 
   onDrop = ({sourceSquare, targetSquare, piece}) => {
@@ -75,12 +72,12 @@ class ChessboardComponent extends Component {
 
 
   render() {
-    const {props: {currentGame,  nickname, isWhite},state:{inCheckText,endOfGameText}} = this
+    const {props: {currentGame,  nickname, isWhite},state:{endOfGameText}} = this
 
 
     return <Container>
       <Row>
-        <Col xs="12" md="8">
+        <Col xs="12" md="9">
 
           <div className="chessBoardGroup__chessBoardArea">
             {currentGame && <Chessboard orientation={isWhite ? 'white' : 'black'} onDrop={this.onDrop}
@@ -91,13 +88,9 @@ class ChessboardComponent extends Component {
                                         position={currentGame.fen}/>}
           </div>
         </Col>
-        <Col xs="0" md="1">
-        </Col>
         <Col className="chessBoardGroup__gameInfoArea" xs="12" md="3">
-         {currentGame && <h3 className="chessBoardGroup__players"><span>White: </span>{currentGame.initiator} </h3>}
-         {currentGame && <h3 className="chessBoardGroup__players"><span>Black: </span>{currentGame.acceptor} </h3>}
+          {currentGame && <h3 className="chessBoardGroup__players"> {nickname} <span>vs</span> {currentGame.opponent}</h3>}
           {currentGame && !endOfGameText && <h3  className="chessBoardGroup__toPlay">{currentGame.toPlay} <span>to play</span></h3>}
-          {currentGame && !endOfGameText &&  inCheckText && <h3  className="chessBoardGroup__inCheck">{inCheckText} <span>is in check</span></h3>}
           {currentGame && !endOfGameText && <p  className="chessBoardGroup__pgn">{currentGame.pgn} </p>}
 
         </Col>

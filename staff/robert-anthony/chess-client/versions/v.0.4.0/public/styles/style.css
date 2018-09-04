@@ -38,9 +38,6 @@ main div.games__mainChessRow.row div.chessBoardGroup__gameInfoArea.col-12.col-md
   main div.games__mainChessRow.row div.chessBoardGroup__gameInfoArea.col-12.col-md-3 h3.chessBoardGroup__players span {
     color: #a5a5a5; }
 
-main div.games__mainChessRow.row div.chessBoardGroup__gameInfoArea.col-12.col-md-3 {
-  background-color: rgba(50, 50, 60, 0.8); }
-
 main div.games__mainChessRow.row div.chessBoardGroup__gameInfoArea.col-12.col-md-3 h3.chessBoardGroup__toPlay {
   font-size: 1.2em;
   color: #ff002d; }
@@ -49,13 +46,7 @@ main div.games__mainChessRow.row div.chessBoardGroup__gameInfoArea.col-12.col-md
 
 main div.games__mainChessRow.row div.chessBoardGroup__gameInfoArea.col-12.col-md-3 p.chessBoardGroup__pgn {
   font-size: 1em;
-  color: #a5a5a5; }
-
-main div.games__mainChessRow.row div.chessBoardGroup__gameInfoArea.col-12.col-md-3 h3.chessBoardGroup__inCheck {
-  font-size: 1.2em;
   color: #ff002d; }
-  main div.games__mainChessRow.row div.chessBoardGroup__gameInfoArea.col-12.col-md-3 h3.chessBoardGroup__inCheck span {
-    color: #a5a5a5; }
 
 main div.userList ul.list-group a.list-group-item {
   background-color: rgba(50, 50, 60, 0.8); }

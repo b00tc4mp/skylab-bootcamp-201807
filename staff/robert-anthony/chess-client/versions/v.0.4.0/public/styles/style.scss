@@ -9,7 +9,6 @@ $text_color1: #ff002d;
 $text_color15: #890017;
 $text_color2: #ac9319;
 $text_color3: #a5a5a5;
-$text_color4: #e3e3e3;
 $background_color1: rgba(50, 50, 60, 0.8);
 
 * {
@@ -63,10 +62,6 @@ main div.games__mainChessRow.row div.chessBoardGroup__gameInfoArea.col-12.col-md
   }
 }
 
-main div.games__mainChessRow.row div.chessBoardGroup__gameInfoArea.col-12.col-md-3 {
-  background-color: $background_color1;
-}
-
 main div.games__mainChessRow.row div.chessBoardGroup__gameInfoArea.col-12.col-md-3 h3.chessBoardGroup__toPlay {
   font-size: 1.2em;
   color: $text_color1;
@@ -77,17 +72,8 @@ main div.games__mainChessRow.row div.chessBoardGroup__gameInfoArea.col-12.col-md
 
 main div.games__mainChessRow.row div.chessBoardGroup__gameInfoArea.col-12.col-md-3 p.chessBoardGroup__pgn {
   font-size: 1em;
-  color: $text_color3;
-
-}
-
-
-main div.games__mainChessRow.row div.chessBoardGroup__gameInfoArea.col-12.col-md-3 h3.chessBoardGroup__inCheck {
-  font-size: 1.2em;
   color: $text_color1;
-  span {
-    color:$text_color3;
-  }
+
 }
 
 
