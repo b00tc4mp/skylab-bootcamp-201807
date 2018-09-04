@@ -3,22 +3,18 @@
 const { Schema, Schema: { Types: { ObjectId } } } = require('mongoose')
 
 module.exports = new Schema({
-    name: {
+    email: {
+        type: String,
+        required: true
+    },
+
+    password: {
         type: String,
         required: true
     },
 
     surname: {
         type: String
-    },
-
-    dni:{
-        type: Number,
-        required: true
-    },
-
-    age: {
-        type: Number
     },
 
     gender: {

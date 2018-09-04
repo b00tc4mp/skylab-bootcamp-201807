@@ -1,7 +1,8 @@
 'use strict'
 
+const validateEmail = require('../utils/validate-email')
 const moment = require('moment')
-const { Doctor, Patient, Cite } = require('../data/models')
+const { Doctor, Patient, Cite, Caretaker } = require('../data/models')
 const { Types: { ObjectId } } = require('mongoose')
 
 const logic = {
@@ -59,6 +60,16 @@ const logic = {
      */
     _validateDateField(date, field) {
         if (!(field instanceof Date)) throw new LogicError(`invalid ${date}`)
+    },
+
+    /**
+     * Validates a email with a RegExp on a imported function
+     * @param {String} email
+     * 
+     * @throws {LogicError} invalid email
+     */
+    _validateEmail(email) {
+        if (!validateEmail(email)) throw new LogicError('invalid email')
     },
 
     /**
@@ -555,7 +566,150 @@ const logic = {
                         return cites || []
                     })
             })
-    }    
+    },
+    
+    /**
+     * Registers a caretaker with a email and a password 
+     * @param {String} email //caretakers email
+     * @param {String} password //caretakers password
+     * 
+     * @throws {LogicError} if caretaker already exist
+     * 
+     * @returns {boolean} TRUE => if it is registered correctly
+     */
+    registerCaretaker(email, password) {
+        return Promise.resolve()
+            .then(() => {
+                this._validateEmail(email)
+                this._validateStringField('password', password)
+
+                return Caretaker.findOne({ email })
+            })
+            .then(caretaker => {
+                if (caretaker) throw new LogicError(`caretaker ${email} already exist`)
+
+                return Caretaker.create({ email, password })
+            })
+            .then(() => true)
+    },
+
+    /**
+     * Authenticates a caretaker with his/her email and a password 
+     * @param {String} email //caretakers email
+     * @param {String} password //caretakers password
+     * 
+     * @throws {LogicError} if the caretaker does not exist
+     * @throws {LogicError} if password is wrong
+     * 
+     * @returns {Object} caretaker information
+     */
+    authenticateCaretaker(email, password) {
+        return Promise.resolve()
+            .then(() => {
+                this._validateEmail(email)
+                this._validateStringField('password', password)
+
+                return Caretaker.findOne({ email }).lean()
+            })
+            .then(caretaker => {
+                if (!caretaker) throw new LogicError(`caretaker ${email} does not exist`)
+                if (caretaker.password !== password) throw new LogicError(`wrong password`)
+
+                return caretaker
+            })
+    },
+
+    /**
+     * Updates a caretaker password with his/her email and a password 
+     * @param {String} email //caretakers email
+     * @param {String} password //caretakers password
+     * @param {String} newPassword //caretakers new password
+     * 
+     * @throws {LogicError} if the caretaker does not exist
+     * @throws {LogicError} if password is wrong
+     * @throws {LogicError} if old password and new password are the same
+     * 
+     * @returns {boolean} TRUE => if it is updated correctly
+     */
+    updateCaretakerPassword(email, password, newPassword) {
+        return Promise.resolve()
+            .then(() => {
+                this._validateEmail(email)
+                this._validateStringField('password', password)
+                this._validateStringField('new password', newPassword)
+
+                return Caretaker.findOne({ email })
+            })
+            .then(caretaker => {
+                if (!caretaker) throw new LogicError(`caretaker ${email} does not exist`)
+                if (caretaker.password !== password) throw new LogicError(`wrong password`)
+                if (password === newPassword) throw new LogicError('new password must be different to old password')
+
+                return Caretaker.updateOne({ _id: caretaker._id }, { $set: { password: newPassword } })
+            })
+            .then(() => true)
+    },
+
+    /**
+     * Removes a caretaker with his/her email and a password 
+     * @param {String} email //caretakers email
+     * @param {String} password //caretakers password
+     * 
+     * @throws {LogicError} if the caretaker does not exist
+     * @throws {LogicError} if password is wrong
+     * 
+     * @returns {boolean} TRUE => if it is updated correctly
+     */
+    unregisterCaretaker(email, password) {
+        return Promise.resolve()
+            .then(() => {
+                this._validateEmail(email)
+                this._validateStringField('password', password)
+
+                return Caretaker.findOne({ email })
+            })
+            .then(caretaker => {
+                if (!caretaker) throw new LogicError(`caretaker ${email} does not exist`)
+                if (caretaker.password !== password) throw new LogicError(`wrong password`)
+
+                return Caretaker.deleteOne({ _id: caretaker._id })
+            })
+            .then(() => true)
+    },
+
+    /**
+     * caretakers patients
+     * @param {String} email //caretakers email
+     * @param {Number} dni //patient dni
+     * 
+     * @throws {LogicError} if caretaker does not exist
+     * @throws {LogicError} if patient does not exist
+     * 
+     * @returns {Object} with the patient and his/hers data
+     */
+    caretakerPatient(email, dni) {
+        return Promise.resolve()
+            .then(() => {
+                this._validateEmail(email)
+                this._validateDniField('dni', dni)
+
+                return Caretaker.findOne({ email })
+            })
+            .then(caretaker => {
+                if (!caretaker) throw new LogicError(`caretaker ${email} does not exist`)
+
+                return Patient.findOne({ dni }).lean()                
+            })
+            .then(patient => {
+                if (!patient) throw new LogicError(`patient with ${dni} dni does not exist`)
+
+                patient.id = patient._id.toString()
+                delete patient._id
+                delete patient.__v
+                   
+                return patient
+            })
+    }
 }
 
 /**
