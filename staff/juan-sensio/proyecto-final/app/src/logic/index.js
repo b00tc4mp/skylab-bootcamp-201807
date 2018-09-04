@@ -1,28 +1,17 @@
 const logic = {
-    _data: null,
+
     set _userId(userId) {
         sessionStorage.setItem('userId', userId)
     },
     get _userId() {
         return sessionStorage.getItem('userId')
     },
-    set _username(username) {
-        sessionStorage.setItem('username', username)
-    },
-    get _username() {
-        return sessionStorage.getItem('username')
-    },
+
     set _userToken(userToken) {
         sessionStorage.setItem('userToken', userToken)
     },
     get _userToken() {
         return sessionStorage.getItem('userToken')
-    },
-    set _userData(data) {
-        this._data = data
-    },
-    get _userData() {
-        return this._data
     },
 
     _callApi(path, method, headers, body, expectedStatus) {
@@ -41,10 +30,13 @@ const logic = {
             })
     },
 
+    _validateStringField(fieldName, fieldValue) {
+        if (typeof fieldValue !== 'string' || !fieldValue.length)
+            throw new Error(`invalid ${fieldName}`)
+    },
+
     _validateEmail(email) {
         var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-        //var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-
         const validEmail = re.test(String(email).toLowerCase());
         if (!validEmail) throw new Error('username must be a valid email')
     },
@@ -52,32 +44,48 @@ const logic = {
     registerUser(username, password) {
         return Promise.resolve()
             .then(() => {
+                this._validateStringField('username', username)
                 this._validateEmail(username)
+                this._validateStringField('password', password)
                 return this._callApi('register', 'post', { 'content-type': 'application/json' }, JSON.stringify({ username, password }), 201)
             })
             .then(() => true)
     },
 
     unregisterUser(password) {
-        const headers = {
-            'content-type': 'application/json',
-            'authorization': `bearer ${this._userToken}`
-        }
-        return this._callApi(`users/${this._userId}`, 'delete', headers, JSON.stringify({ password }), 200)
+        return Promise.resolve()
             .then(() => {
-                this.logout()
-                return true
+                this._validateStringField('password', password)
+                const headers = {
+                    'content-type': 'application/json',
+                    'authorization': `bearer ${this._userToken}`
+                }
+                const body = JSON.stringify({ password })
+                return this._callApi(`users/${this._userId}`, 'delete', headers, body, 200)
+                    .then(() => {
+                        this.logout()
+                        return true
+                    })
             })
     },
 
     loginUser(username, password) {
-        return this._callApi('auth', 'post', { 'content-type': 'application/json' }, JSON.stringify({ username, password }), 200)
-            .then(res => res.json())
-            .then(res => {
-                this._userId = res.id
-                this._userToken = res.token
-                this._username = username
-                return this.retrieveData()
+        return Promise.resolve()
+            .then(() => {
+                this._validateStringField('username', username)
+                this._validateEmail(username)
+                this._validateStringField('password', password)
+                const headers = { 'content-type': 'application/json' }
+                const body = JSON.stringify({ username, password })
+                return this._callApi('auth', 'post', headers, body, 200)
+                    .then(res => res.json())
+                    .then(res => {
+                        this._userId = res.id
+                        this._userToken = res.token
+                        //this._username = username
+                        return true
+                        //return this.retrieveData()
+                    })
             })
     },
 
@@ -88,8 +96,31 @@ const logic = {
     logout() {
         this._userId = null
         this._userToken = null
-        this._userData = null
         sessionStorage.clear()
+    },
+
+    updateUsername(password, newUsername) {
+        return Promise.resolve()
+            .then(() => {
+                this._validateEmail(newUsername)
+                const headers = {
+                    'content-type': 'application/json',
+                    'authorization': `bearer ${this._userToken}`
+                }
+                const body = JSON.stringify({ password, newUsername })
+                return this._callApi(`users/${this._userId}/updateUsername`, 'put', headers, body, 200)
+                    .then(res => true)
+            })
+    },
+
+    updatePassword(password, newPassword) {
+        const headers = {
+            'content-type': 'application/json',
+            'authorization': `bearer ${this._userToken}`
+        }
+        const body = JSON.stringify({ password, newPassword })
+        return this._callApi(`users/${this._userId}/updatePassword`, 'put', headers, body, 200)
+            .then(res => res.json())
     },
 
     saveData(data) {
@@ -193,7 +224,7 @@ const logic = {
                 })
         },
     */
-    
+
 }
 
 if (typeof module !== 'undefined')

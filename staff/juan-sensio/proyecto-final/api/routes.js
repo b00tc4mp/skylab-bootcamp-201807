@@ -35,9 +35,8 @@ router.post('/auth', jsonBodyParser, (req, res) => {
         })
 })
 
-router.patch('/users/:id/updateUsername', [validateJwt, jsonBodyParser], (req, res) => {
+router.put('/users/:id/updateUsername', [validateJwt, jsonBodyParser], (req, res) => {
     const { params: { id }, body: { newUsername, password } } = req
-
     logic.updateUsername(id, password, newUsername)
         .then(() => {
             res.status(200).json({ message: 'username updated correctly.' })
@@ -48,9 +47,8 @@ router.patch('/users/:id/updateUsername', [validateJwt, jsonBodyParser], (req, r
         })
 })
 
-router.patch('/users/:id/updatePassword', [validateJwt, jsonBodyParser], (req, res) => {
+router.put('/users/:id/updatePassword', [validateJwt, jsonBodyParser], (req, res) => {
     const { params: { id }, body: { newPassword, password } } = req
-
     logic.updatePassword(id, password, newPassword)
         .then(() => {
             res.status(200).json({ message: 'password updated correctly.' })

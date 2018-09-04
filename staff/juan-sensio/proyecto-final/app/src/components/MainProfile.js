@@ -21,7 +21,7 @@ class MainProfile extends Component {
 
     setVideoSrc = src => this.props.updateSetting('mainVideoSrc', src)
 
-    componentWillMount = () => logic.retrieveData().then(() => this.setState({ videos: logic._userData.videos }))
+    //componentWillMount = () => logic.retrieveData().then(() => this.setState({ videos: logic._userData.videos }))
 
     deleteVideo = id => {
         logic.deleteVideo(id)
