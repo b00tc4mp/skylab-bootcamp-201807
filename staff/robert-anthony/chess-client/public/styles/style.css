@@ -25,16 +25,33 @@ html {
   .main__mainChessContainer .games__mainChessRow {
     position: relative;
     margin-top: 5%; }
+  .main__mainChessContainer .chessBoardGroup__chessBoardArea {
+    margin-bottom: 20px; }
 
-main div.userList ul.list-group a.list-group-item, main div.userList ul.list-group li.list-group-item {
-  background-color: rgba(50, 50, 60, 0.8);
-  color: #ff0024; }
-  main div.userList ul.list-group a.list-group-item:link, main div.userList ul.list-group a.list-group-item:visited, main div.userList ul.list-group li.list-group-item:link, main div.userList ul.list-group li.list-group-item:visited {
+main div.games__mainChessRow.row div.chessBoardGroup__gameInfoArea.col-12.col-md-3 h3.chessBoardGroup__players {
+  font-size: 1.2em;
+  color: #ff002d; }
+  main div.games__mainChessRow.row div.chessBoardGroup__gameInfoArea.col-12.col-md-3 h3.chessBoardGroup__players span {
+    color: #a5a5a5; }
+
+main div.games__mainChessRow.row div.chessBoardGroup__gameInfoArea.col-12.col-md-3 h3.chessBoardGroup__toPlay {
+  font-size: 1.2em;
+  color: #ff002d; }
+  main div.games__mainChessRow.row div.chessBoardGroup__gameInfoArea.col-12.col-md-3 h3.chessBoardGroup__toPlay span {
+    color: #a5a5a5; }
+
+main div.userList ul.list-group a.list-group-item {
+  background-color: rgba(50, 50, 60, 0.8); }
+  main div.userList ul.list-group a.list-group-item:link, main div.userList ul.list-group a.list-group-item:visited {
     color: #ff002d;
     text-decoration: none; }
-  main div.userList ul.list-group a.list-group-item:hover, main div.userList ul.list-group a.list-group-item:active, main div.userList ul.list-group li.list-group-item:hover, main div.userList ul.list-group li.list-group-item:active {
-    color: #2e00ff;
+  main div.userList ul.list-group a.list-group-item:hover, main div.userList ul.list-group a.list-group-item:active {
+    color: #890017;
     text-decoration: none; }
+
+main div.userList ul.list-group li.list-group-item {
+  background-color: rgba(50, 50, 60, 0.8);
+  color: #ff002d; }
 
 main {
   margin: 2em; }
@@ -57,7 +74,7 @@ main {
   size: 1.2em;
   font-weight: 700; }
   .invite__explainText.invite__explainText-explain {
-    color: #2e00ff; }
+    color: #ac9319; }
 
 body {
   height: 100%;

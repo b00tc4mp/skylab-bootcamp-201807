@@ -37,7 +37,7 @@ class ChessboardComponent extends Component {
     if (currentGame && currentGame.winner && !haveAcknowledged) {
       switch (true) {
         case currentGame.inCheckmate:
-          endOfGameText = `Game has ended: ${currentGame.opponent} has won and ${nickname} has been checkmated`
+          endOfGameText = `Game has ended: ${currentGame.winner} has won and ${currentGame.opponent} has been checkmated`
           break;
         case currentGame.inDraw:
           endOfGameText = `Game has ended: game is in a draw`
@@ -83,14 +83,14 @@ class ChessboardComponent extends Component {
             {currentGame && <Chessboard orientation={isWhite ? 'white' : 'black'} onDrop={this.onDrop}
                                         lightSquareStyle={{backgroundColor: 'rgba(180, 180, 180,0.85)' }}
                                         darkSquareStyle={{backgroundColor: 'rgba(120, 120, 120,0.85)' }}
-
+                                        id={currentGame.id}
                                         calcWidth={this.chessboardjsxCalcWidth}
                                         position={currentGame.fen}/>}
           </div>
         </Col>
-        <Col xs="12" md="3">
-          {currentGame && <h1> {nickname} vs {currentGame.opponent}</h1>}
-          {currentGame && !endOfGameText && <h3>{currentGame.toPlay} to play</h3>}
+        <Col className="chessBoardGroup__gameInfoArea" xs="12" md="3">
+          {currentGame && <h3 className="chessBoardGroup__players"> {nickname} <span>vs</span> {currentGame.opponent}</h3>}
+          {currentGame && !endOfGameText && <h3  className="chessBoardGroup__toPlay">{currentGame.toPlay} <span>to play</span></h3>}
 
         </Col>
       </Row>

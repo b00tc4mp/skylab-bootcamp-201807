@@ -67,20 +67,20 @@ class Invite extends Component {
           <Row>
 
             <Col xs="12" md="6">
-              <div className="userList invite__searchedUsers">
+              <div className="userList">
 
                 <ListGroup>
                   {usersNotPlayingWith.length ? usersNotPlayingWith.map(user => {
-                   return user !== nickname ? <ListGroupItem tag="a" href="#" key={user + Math.random()}
+                   return user !== nickname ? <ListGroupItem   className="userList__invitedUsers" tag="a" href="#" key={user + Math.random()}
                                                                  onClick={e => this.onUserClick(e, user)}> {`${user}`}</ListGroupItem>: null
-                  }) : <ListGroupItem>No match</ListGroupItem>}
+                  }) : <ListGroupItem   className="userList__searchedUsers" >No match</ListGroupItem>}
                 </ListGroup>
               </div>
             </Col>
             <Col xs="12" md="6">
-              <div className="userList invite__invitedUsers">
+              <div className="userList">
 
-                <ListGroup>
+                <ListGroup >
                   {usersInvited.length ? usersInvited.map(user => {
                     return <ListGroupItem  key={user + Math.random()}> {`${user}`}</ListGroupItem>
                   }) : <li>You have no invited users</li>}

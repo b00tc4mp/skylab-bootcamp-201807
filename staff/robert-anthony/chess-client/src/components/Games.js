@@ -84,6 +84,7 @@ class Games extends Component {
             <Col xs="12" md="9">
               {currentGames.length && <ChessboardGroup onGameMove={onGameMove}
                                                        onError={this.onError}
+                                                       currentGames={currentGames}
                                                        currentGame={currentGames.find(game => game.id === currentGameID)}
                                                        onAcknowledgeGameOver={onAcknowledgeGameOver}
                                                        nickname={nickname}/>}

@@ -12,6 +12,7 @@ class ChessboardGroup extends Component {
     currentGame: PropTypes.object,
     nickname: PropTypes.string,
     onError:PropTypes.func,
+    currentGames:PropTypes.array,
     onAcknowledgeGameOver:PropTypes.func,
   }
 
@@ -26,18 +27,20 @@ class ChessboardGroup extends Component {
 
 
   render() {
-    let {props: {onGameMove, currentGame, nickname,onAcknowledgeGameOver}} = this
+    let {props: {onGameMove, currentGame,currentGames, nickname,onAcknowledgeGameOver}} = this
 
-    return <div className="chessBoardGroup__chessBoardArea">
-            {currentGame &&
-            <ChessboardComponent isWhite={currentGame.initiator === nickname}
-                                 onAcknowledgeGameOver={onAcknowledgeGameOver}
-              currentGame={currentGame}
-                                 onError={this.onError}
-                                 onGameMove={(move) => onGameMove(move, currentGame.id, currentGame.opponent)}
-                                 nickname={nickname} />
-            }
-          </div>
+    const gamesList = currentGames.map(game => <div key={game.id}>
+      {game && currentGame && (game.id === currentGame.id) &&
+      <ChessboardComponent isWhite={game.initiator === nickname}
+                           onAcknowledgeGameOver={onAcknowledgeGameOver}
+                           currentGame={game}
+                           onError={this.onError}
+                           onGameMove={(move) => onGameMove(move, game.id, game.opponent)}
+                           nickname={nickname}  />
+      }
+    </div>)
+
+    return <div className="chessBoardGroup__chessBoardArea">{currentGames.length && gamesList} </div>
 
   }
 
