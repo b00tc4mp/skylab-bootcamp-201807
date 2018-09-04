@@ -15,10 +15,18 @@ describe('logic', () => {
     const newPassword = `newpassword`
     let _connection
 
+    const failEvents = {
+        location: "Barcelona",
+        date: "01/01/2000",
+        title: "The event",
+        description: "Description of the event"
+    }
+
     const business1 = {
         email: 'business1@mail.com',
         password: password,
         favs: [],
+        philosophy: "Go slow to go fast"
     }
 
     const host1 = {
@@ -310,71 +318,8 @@ describe('logic', () => {
         )
     })
 
-    // false && describe('search by gender', () => {
-    //     beforeEach(() => Hostess.insertMany(hostesses))
 
-    //     it('should search all host', () =>
-    //         logic.searchByGender('M')
-    //             .then(hosts => {
-    //                 expect(hosts).to.exist
-    //                 expect(hosts.length).to.equal(2)
-    //                 expect(hosts[0].gender).to.equal('M')
-    //             })
-    //     )
-
-    // })
-
-    // false && describe('search by type of job', () => {
-    //     beforeEach(() => Hostess.insertMany(hostesses))
-
-    //     it('should search by the type of job', () =>
-
-    //         logic.searchByJobType('info')
-    //             .then(hosts => {
-    //                 expect(hosts).to.exist
-    //                 expect(hosts.length).to.equal(1)
-    //                 expect(hosts[0].email).to.equal('host4@mail.com')
-    //             })
-    //     )
-    // })
-
-    // false && describe('search by height', () => {
-    //     beforeEach(() => Hostess.insertMany(hostesses))
-
-    //     it('should search by height', () =>
-    //         logic.searchByHeight(170)
-    //             .then(hosts => {
-    //                 expect(hosts).to.exist
-    //                 expect(hosts.length).to.equal(2)
-    //             })
-    //     )
-    // })
-
-    // false && describe('search by lenguage', () => {
-    //     beforeEach(() => Hostess.insertMany(hostesses))
-
-    //     it('should find by languages', () =>
-
-    //         logic.searchByLenguage(['catalan'])
-    //             .then(hosts => {
-    //                 expect(hosts).to.exist
-    //                 expect(hosts.length).to.equal(2)
-    //             })
-    //     )
-
-    //     it('should find by exact languages', () =>
-    //         logic.searchByLenguage(['catalan', 'english'])
-    //             .then(hosts => {
-    //                 expect(hosts).to.exist
-    //                 expect(hosts.length).to.equal(1)
-    //                 expect(hosts[0].email).to.equal('host4@mail.com')
-    //             })
-    //     )
-
-    // })
-
-    
-    true && describe('search hostesses', () => {
+    false && describe('search hostesses', () => {
         beforeEach(() => Hostess.insertMany(hostesses))
         beforeEach(() => Business.insertMany(business1))
 
@@ -410,7 +355,7 @@ describe('logic', () => {
 
     false && describe('add to favorites', () => {
         beforeEach(() =>
-        Promise.all([
+            Promise.all([
                 Hostess.insertMany(hostesses),
                 Business.insertMany(business1)])
         )
@@ -482,6 +427,29 @@ describe('logic', () => {
         )
     })
 
+    false && describe('return all details of the event', () => {
+        let id
+
+        beforeEach(() => {
+            return Events.insertMany(failEvents)
+            .then(() => {
+                return Events.findOne({"location": "Barcelona"})
+            })
+            .then((event) => {
+                return id = event._id                
+            })
+        })
+
+        it('should retrieve an event', () =>
+            logic.retrieveEventById(id)
+            
+            .then(event => {
+                expect(event).to.exist
+                expect(event.title).to.equal("The event")
+            })
+
+        )
+    })
 
     after(() =>
         Promise.all([

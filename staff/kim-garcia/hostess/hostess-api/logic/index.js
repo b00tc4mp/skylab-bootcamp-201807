@@ -25,14 +25,12 @@ const logic = {
                 return Hostess.findOne({ email })
             })
             .then(hostess => {
-                if (hostess) throw new LogicError(`We allready have and acount with this email`)
+                if (hostess) throw new LogicError(`We allready have and acount with this email ${email}`)
 
                 return Hostess.create({ email, password })
             })
             .then(() => true)
     },
-
-
 
     registerBusiness(email, password) {
         return Promise.resolve()
@@ -220,7 +218,6 @@ const logic = {
     searchWorkers(email, gender, jobType, height, languages) {
         return Promise.resolve()
             .then(() => {
-                debugger
                 let criteria = {}
 
                 this._validateEmail(email)
@@ -249,10 +246,9 @@ const logic = {
 
                 return Hostess.find(criteria).lean()
                     .then(hostesses => {
-                        debugger
                         if (this.hostesses) {
                             hostesses.forEach(hostess => {
-                                hostess.id = hostess._id.toString()
+                                hostess.id = hostess.id.toString()
                                 delete hostess._id
                                 delete hostess._v
                             })
@@ -262,60 +258,7 @@ const logic = {
             })
     },
 
-    // searchByGender(gender) {
-    //     return Promise.resolve()
-    //         .then(() => {
-    //             return Hostess.find({ gender })
-    //         })
-    //         .then(matchedGender => {
-    //             let hostesses = matchedGender.map(host => host._doc)
-    //             return hostesses
-    //         })
-    // },
-
-    // searchByJobType(jobType) {
-    //     return Promise.resolve()
-    //         .then(() => {
-    //             return Hostess.find({ jobType })
-    //         })
-    //         .then((matchedJobType) => {
-    //             let hostesses = matchedJobType.map(host => host._doc)
-    //             return hostesses
-    //         })
-    // },
-
-    // searchByHeight(tall) {
-    //     return Promise.resolve()
-    //         .then(() => {
-    //             return Hostess.find({ tall: { $gte: tall } })
-    //         })
-    //         .then((taller) => {
-    //             let hostesses = taller.map(host => host._doc)
-    //             return hostesses
-    //         })
-    // },
-
-    // searchByLenguage(requiredLenguages) {
-    //     return Promise.resolve()
-    //         .then(() => {
-    //             return Hostess.find({ languages: { $all: requiredLenguages } })
-    //         })
-    //         .then(speakers => {
-    //             return speakers
-    //         })
-    // },
-
-    // hostesDetails(email) {
-    //     return Promise.resolve()
-    //         .then(() => {
-    //             if (!email) throw new LogicError('There is no hostess selected')
-    //             return Hostess.find({ email })
-    //         })
-    //         .then((hostess) => {
-    //             return hostess
-    //         })
-    // },
-
+  
     addFavs(emailHost, emailBus) {
 
         let idHost
@@ -350,6 +293,7 @@ const logic = {
                 return Business.findOne({ email: emailBus })
             })
             .then(business => {
+                if({$indexOfArray: [emailHost]}) throw new LogicError('Already selected')
                 business._doc.selected.push(idHost)
                 return business.save()
             })
@@ -380,20 +324,31 @@ const logic = {
                     description
                 }
 
-                return Events.create(event)
+                Events.create(event)
             })
-            .then(event => {
-                return event
+            .then(() => {
+                return Business.findOne({ email })
             })
+            .then(business => {
+                business.selected = []
+
+                return business.save()
+            })
+            .then(() => true)
 
     },
 
+    retrieveEventById(id) {
+        return Promise.resolve()
+        .then(() => {
+            return Events.findById(id).populate('business').populate('hostesses')
+        })
+        .then(event => {
+            if(!event) throw new LogicError('can not find the event')
+            return event           
+        })
 
-
-
-
-
-
+    },
 
 
 }
@@ -405,3 +360,4 @@ class LogicError extends Error {
 }
 
 module.exports = { logic, LogicError }
+

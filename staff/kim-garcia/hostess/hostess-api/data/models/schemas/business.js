@@ -19,15 +19,6 @@ module.exports = new Schema({
 
     phone: String,
 
-    // contact: {
-    //     type: Object,
-    //     name: String,
-    //     phone: {
-    //         type: String,
-    //         trim: true
-    //     },
-    // },
-
     email: {
         type: String,
         required: true,

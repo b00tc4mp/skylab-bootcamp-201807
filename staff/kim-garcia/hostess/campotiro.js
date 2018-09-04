@@ -569,3 +569,73 @@ router.delete('/deletePropertyById/:email/property/:id', [validateJwt], (req, re
 })
 
 module.exports = router
+
+
+
+
+///////////////////////////////////KKKKKKKKKKKKKKKKK
+// intento de crear hostessts
+createForPlay(hostesses) {
+
+
+    const business1 = {
+        email: 'business1@mail.com',
+        password: password,
+        favs: [],
+    }
+
+    const host1 = {
+        email: 'host1@mail.com',
+        password: password,
+        gender: 'M',
+        jobType: 'sells',
+        languages: ['catalan', 'spanish'],
+        height: 150
+    }
+
+    const host2 = {
+        email: 'host2@mail.com',
+        password: password,
+        gender: 'M',
+        jobType: 'animation',
+        languages: ['english', 'spanish'],
+        height: 160
+    }
+
+    const host3 = {
+        email: 'host3@mail.com',
+        password: password,
+        gender: 'W',
+        jobType: 'image',
+        languages: ['english', 'german'],
+        height: 170
+    }
+
+    const host4 = {
+        email: 'host4@mail.com',
+        password: password,
+        gender: 'W',
+        jobType: 'info',
+        languages: ['english', 'catalan'],
+        height: 180
+    }
+
+    const host5 = {
+        email: 'host5@mail.com',
+        password: password,
+        gender: 'W',
+        jobType: 'info',
+        languages: ['spanish', 'catalan'],
+        height: 180
+    }
+
+    const hostesses = [host1, host2, host3, host4, host5, business1]
+
+    return Promise.resolve()
+        .then(() => {
+            const host = hostesses
+            return Hostess.create(host)
+        })
+
+        createForPlay()
+},

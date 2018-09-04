@@ -11,7 +11,7 @@ const router = express.Router()
 
 const jsonBodyParser = bodyParser.json()
 
-router.post('/hostessregister', jsonBodyParser, (req, res) => {
+router.post('/hostess-register', jsonBodyParser, (req, res) => {
     const { body: { email, password } } = req
 
     logic.registerHostess(email, password)
@@ -23,7 +23,7 @@ router.post('/hostessregister', jsonBodyParser, (req, res) => {
         })
 })
 
-router.post('/businessregister', jsonBodyParser, (req, res) => {
+router.post('/business-register', jsonBodyParser, (req, res) => {
     const { body: { email, password } } = req
 
     logic.registerBusiness(email, password)
@@ -35,7 +35,7 @@ router.post('/businessregister', jsonBodyParser, (req, res) => {
         })
 })
 
-router.post('/hostessauth', jsonBodyParser, (req, res) => {
+router.post('/hostess-auth', jsonBodyParser, (req, res) => {
     const { body: { email, password } } = req
 
     logic.authenticateHostess(email, password)
@@ -53,7 +53,7 @@ router.post('/hostessauth', jsonBodyParser, (req, res) => {
         })
 })
 
-router.post('/businessauth', jsonBodyParser, (req, res) => {
+router.post('/business-auth', jsonBodyParser, (req, res) => {
     const { body: { email, password } } = req
 
     logic.authenticateBusiness(email, password)
@@ -71,7 +71,7 @@ router.post('/businessauth', jsonBodyParser, (req, res) => {
         })
 })
 
-router.patch('/hostessEdit/:email', [validateJwt, jsonBodyParser], (req, res) => {
+router.patch('/hostess-edit/:email', [validateJwt, jsonBodyParser], (req, res) => {
     const { params: { email }, body: { password, newPassword } } = req
 
     logic.updatePasswordHostess(email, password, newPassword)
@@ -83,7 +83,7 @@ router.patch('/hostessEdit/:email', [validateJwt, jsonBodyParser], (req, res) =>
         })
 })
 
-router.patch('/businessEdit/:email', [validateJwt, jsonBodyParser], (req, res) => {
+router.patch('/business-edit/:email', [validateJwt, jsonBodyParser], (req, res) => {
     const { params: { email }, body: { password, newPassword } } = req
 
     logic.updatePasswordBusiness(email, password, newPassword)
@@ -119,7 +119,7 @@ router.patch('/business/:email', [validateJwt, jsonBodyParser], (req, res) => {
         })
 })
 
-router.delete('/unregisterHostess/:email', [validateJwt, jsonBodyParser], (req, res) => {
+router.delete('/unregister-hostess/:email', [validateJwt, jsonBodyParser], (req, res) => {
     const { params: { email }, body: { password } } = req
 
     logic.unregisterHostess(email, password)
@@ -130,7 +130,7 @@ router.delete('/unregisterHostess/:email', [validateJwt, jsonBodyParser], (req, 
         })
 })
 
-router.delete('/unregisterBusiness/:email', [validateJwt, jsonBodyParser], (req, res) => {
+router.delete('/unregister-business/:email', [validateJwt, jsonBodyParser], (req, res) => {
     const { params: { email }, body: { password } } = req
 
     logic.unregisterBusiness(email, password)
@@ -144,9 +144,6 @@ router.delete('/unregisterBusiness/:email', [validateJwt, jsonBodyParser], (req,
 
 router.get('/:email/search', [validateJwt, jsonBodyParser], (req, res) => {
     const email = req.params.email
-    // const query = req.query
-
-    // if(query.hasOwnProperty('gender') || query.hasOwnProperty('jobType') || query.hasOwnProperty('height') || query.hasOwnProperty('languages')) {
     const gender = req.query.gender
     const jobType = req.query.jobType
     const height = req.query.height
@@ -161,8 +158,66 @@ router.get('/:email/search', [validateJwt, jsonBodyParser], (req, res) => {
 
             res.status(err instanceof LogicError ? 400 : 500).json({ message })
         })
-    // } 
 })
+
+
+router.post('/favorites/:email', [validateJwt, jsonBodyParser], (req, res) => {
+    const { params: { email }, body: { emailHost } } = req
+
+    logic.addFavs(emailHost, email)
+        .then(() => {
+            res.status(200).json({ status: 'OK' })
+        })
+        .catch(err => {
+            const { message } = err
+
+            res.status(err instanceof LogicError ? 400 : 500).json({ message })
+        })
+})
+
+
+router.post('/select/:email', [validateJwt, jsonBodyParser], (req, res) => {
+    const { params: { email }, body: { emailHost } } = req
+
+    logic.addHostess(email, emailHost)
+        .then(() => {
+            res.status(200).json({ status: 'OK' })
+        })
+        .catch(err => {
+            const { message } = err
+
+            res.status(err instanceof LogicError ? 400 : 500).json({ message })
+        })
+})
+
+router.post('/create-event/:email', [validateJwt, jsonBodyParser], (req, res) => {
+    const { params: { email }, body: { date, location, title, description } } = req
+
+    logic.createEvent(email, date, location, title, description)
+        .then(() => {
+            res.status(200).json({ status: 'OK' })
+        })
+        .catch(err => {
+            const { message } = err
+
+            res.status(err instanceof LogicError ? 400 : 500).json({ message })
+        })
+})
+
+router.get('/event/:id', (req, res) => {
+    const { params: { id } } = req
+
+    logic.retrieveEventById(id)
+    .then(event => {
+        res.status(200).json({ status: 'OK', event })
+    })
+    .catch(err => {
+        const { message } = err
+
+        res.status(err instanceof LogicError ? 400 : 500).json({ message })
+    })    
+})
+
 
 
 
