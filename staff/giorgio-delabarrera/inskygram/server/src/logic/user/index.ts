@@ -51,7 +51,7 @@ const userLogic = {
       .then((user: UserModelInterface) => true);
   },
 
-  retrieve(username: string): Promise<UserModelInterface> | never {
+  retrieve(username?: string, targetUsername: string): Promise<UserModelInterface> | never {
     return Promise.resolve()
       .then(() => {
         if (!username) { throw new LogicError("invalid username"); }
@@ -60,6 +60,16 @@ const userLogic = {
       })
       .then((user: UserModelInterface) => user);
   },
+
+  follow(username: string, targetUsername: string) {},
+
+  listFollowers(username?: string, targetUsername: string) {},
+
+  listFollowings(username?: string, targetUsername: string) {},
+
+  listPosts(username?: string, targetUsername: string) {},
+
+  listSaved(username?: string, targetUsername: string) {},
 
   update(
     username: string,
@@ -158,22 +168,24 @@ const userLogic = {
       .then((user: UserModelInterface) => true);
   },
 
-  disable(username: string): Promise<boolean> | never {
-    return Promise.resolve()
-      .then(() => {
-        if (!username) { throw new LogicError("invalid username"); }
+  wall(username: string, limit: number = 10, offset: number = 1) {},
 
-        return User.findOne({ username });
-      })
-      .then((user: UserModelInterface) => {
-        if (!user) { throw new LogicError(`user with ${username} email does not exists`); }
+  // disable(username: string): Promise<boolean> | never {
+  //   return Promise.resolve()
+  //     .then(() => {
+  //       if (!username) { throw new LogicError("invalid username"); }
 
-        user.enable = false;
+  //       return User.findOne({ username });
+  //     })
+  //     .then((user: UserModelInterface) => {
+  //       if (!user) { throw new LogicError(`user with ${username} email does not exists`); }
 
-        return user.save();
-      })
-      .then(() => true);
-  },
+  //       user.enable = false;
+
+  //       return user.save();
+  //     })
+  //     .then(() => true);
+  // },
 
 };
 

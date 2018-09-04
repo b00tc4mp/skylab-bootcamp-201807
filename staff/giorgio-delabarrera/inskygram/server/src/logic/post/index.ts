@@ -40,16 +40,16 @@ const postLogic = {
       .then((post: PostModelInterface) => post.id);
   },
 
-  retrieve(username: string, id: string): Promise<PostModelInterface> | never {
+  retrieve(username: string, postId: string): Promise<PostModelInterface> | never {
     let post: PostModelInterface;
     return Promise.resolve()
       .then(() => {
-        if (!id) { throw new LogicError("invalid post id"); }
+        if (!postId) { throw new LogicError("invalid post id"); }
 
-        return Post.findOne({ _id: id }, { __v: 0 });
+        return Post.findOne({ _id: postId }, { __v: 0 });
       })
       .then((foundPost: PostModelInterface) => {
-        if (!foundPost) { throw new LogicError(`post with id ${id} does not exists`); }
+        if (!foundPost) { throw new LogicError(`post with id ${postId} does not exists`); }
 
         post = foundPost;
 
@@ -60,7 +60,7 @@ const postLogic = {
 
         // if (user.privateAccount)
 
-        return Post.findOne({ _id: id, user: user._id }, { __v: 0 });
+        return Post.findOne({ _id: postId, user: user._id }, { __v: 0 });
       });
 
     // .then((user: UserModelInterface) => {
@@ -75,28 +75,7 @@ const postLogic = {
     // });
   },
 
-  remove(username: string, id: string) {
-    return Promise.resolve()
-      .then(() => {
-        if (!username) { throw new LogicError("invalid username"); }
-        if (!id) { throw new LogicError("invalid post id"); }
-
-        return User.findOne({ username });
-      })
-      .then((user: UserModelInterface) => {
-        if (!user) { throw new LogicError(`user with username ${username} does not exists`); }
-
-        return Post.findOne({ _id: id, user: user._id });
-      })
-      .then((post: PostModelInterface) => {
-        if (!post) { throw new LogicError(`post with id ${id} does not exists`); }
-
-        return post.remove();
-      })
-      .then(res => true);
-  },
-
-  addComment(username: string, postId: string, commentUsername: string, description: string): Promise<boolean> | never {
+  addComment(username: string, postId: string, description: string): Promise<boolean> | never {
     let post: PostModelInterface;
 
     return Promise.resolve()
@@ -134,18 +113,34 @@ const postLogic = {
       .then((post: PostModelInterface) => true);
   },
 
-  // TODO
-  // removeComment(username: string, postId: string, commentId: string) {}
+  like(username: string, postId: string) {},
 
-  // TODO
-  // update(user: username, id: string, caption?: string) { },
+  save(username: string, postId: string) {},
 
-  // TODO
-  // addUserTag(user: username, id: string, users: number[]) { },
+  explore() {},
 
-  // TODO
-  // removeUserTag(user: username, id: string, userTagId: string) { },
+  search(query: string) {},
 
+    // remove(username: string, id: string) {
+  //   return Promise.resolve()
+  //     .then(() => {
+  //       if (!username) { throw new LogicError("invalid username"); }
+  //       if (!id) { throw new LogicError("invalid post id"); }
+
+  //       return User.findOne({ username });
+  //     })
+  //     .then((user: UserModelInterface) => {
+  //       if (!user) { throw new LogicError(`user with username ${username} does not exists`); }
+
+  //       return Post.findOne({ _id: id, user: user._id });
+  //     })
+  //     .then((post: PostModelInterface) => {
+  //       if (!post) { throw new LogicError(`post with id ${id} does not exists`); }
+
+  //       return post.remove();
+  //     })
+  //     .then(res => true);
+  // },
 };
 
 export default postLogic;

@@ -1,0 +1,48 @@
+import { config } from "dotenv";
+import { Router, Request, Response } from "express";
+import bodyParser from "body-parser";
+import logic from "../logic";
+import LogicError from "../logic/error/logic-error";
+import jwt from "jsonwebtoken";
+import passport from "passport";
+
+config();
+
+const router: Router = Router();
+
+const jsonBodyParser = bodyParser.json();
+
+router.post("/register", jsonBodyParser, (req: Request, res: Response) => {
+  const { body: { username, email, password } } = req;
+
+  logic.user.register(username, email, password)
+    .then(() => res.status(201).json({ message: "user registered" }))
+    .catch((err: Error) => {
+      const { message } = err;
+
+      res.status(err instanceof LogicError ? 400 : 500).json({ message });
+    });
+});
+
+router.post(
+  "/auth",
+  [jsonBodyParser, passport.authenticate("local", { session: false })],
+  (req: Request, res: Response) => {
+    const { body: { username, password } } = req;
+
+    logic.user.authenticate(username, password)
+      .then(() => {
+        const { JWT_SECRET, JWT_EXP } = process.env;
+
+        const token = jwt.sign({ sub: username }, JWT_SECRET, { expiresIn: JWT_EXP });
+
+        res.json({ message: "user authenticated", token });
+      })
+      .catch((err: Error) => {
+        const { message } = err;
+
+        res.status(err instanceof LogicError ? 401 : 500).json({ message });
+      });
+  });
+
+export default router;
