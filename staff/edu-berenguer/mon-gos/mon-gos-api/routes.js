@@ -66,7 +66,7 @@ router.post('/shelter/:id/dog', [validateJwt, jsonBodyParser], (req, res) => {
 router.put('/shelter/:id/dog/:dogId', [validateJwt, jsonBodyParser], (req, res) => {
     const { params: { id, dogId } } = req
     logic.dogAdopted(id, dogId)
-        .then(() => res.json({ message: "Dog adopted!", id }))
+        .then(() => res.json({ message: "Dog adopted!", dogId }))
         .catch(err => {
             const { message } = err
             res.status(err instanceof LogicError ? 418 : 500).json({ message })

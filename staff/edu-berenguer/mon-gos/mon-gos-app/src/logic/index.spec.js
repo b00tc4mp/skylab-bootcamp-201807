@@ -72,6 +72,121 @@ describe('logic', () => {
                     expect(err.message).to.equal('invalid email')
                 })
         })
+
+        it('should fail on numeric email', () => {
+            logic.register(123, name, adress, phone, password, latitude, longitude)
+                .catch(err => err)
+                .then(err => {
+                    expect(err).to.exist
+                    expect(err.message).to.equal('invalid email')
+                })
+        })
+
+        it('should fail on numeric name', () => {
+            logic.register(email, 123, adress, phone, password, latitude, longitude)
+                .catch(err => err)
+                .then(err => {
+                    expect(err).to.exist
+                    expect(err.message).to.equal('invalid name')
+                })
+        })
+
+        it('should fail on empty adress', () => {
+            logic.register(email, name, '', phone, password, latitude, longitude)
+                .catch(err => err)
+                .then(err => {
+                    expect(err).to.exist
+                    expect(err.message).to.equal('invalid adress')
+                })
+        })
+        it('should fail on undefined adress', () => {
+            logic.register(email, name, undefined, phone, password, latitude, longitude)
+                .catch(err => err)
+                .then(err => {
+                    expect(err).to.exist
+                    expect(err.message).to.equal('invalid adress')
+                })
+        })
+        it('should fail on numeric adress', () => {
+            logic.register(email, name, 123, phone, password, latitude, longitude)
+                .catch(err => err)
+                .then(err => {
+                    expect(err).to.exist
+                    expect(err.message).to.equal('invalid adress')
+                })
+        })
+
+        it('should fail on empty phone', () => {
+            logic.register(email, name, adress, '', password, latitude, longitude)
+                .catch(err => err)
+                .then(err => {
+                    expect(err).to.exist
+                    expect(err.message).to.equal('invalid phone')
+                })
+        })
+
+        it('should fail on undefined phone', () => {
+            logic.register(email, name, adress, undefined, password, latitude, longitude)
+                .catch(err => err)
+                .then(err => {
+                    expect(err).to.exist
+                    expect(err.message).to.equal('invalid phone')
+                })
+        })
+
+        it('should fail on numeric phone', () => {
+            logic.register(email, name, adress, 123, password, latitude, longitude)
+                .catch(err => err)
+                .then(err => {
+                    expect(err).to.exist
+                    expect(err.message).to.equal('invalid phone')
+                })
+        })
+
+        it('should fail on empty phone', () => {
+            logic.register(email, name, adress, phone, '', latitude, longitude)
+                .catch(err => err)
+                .then(err => {
+                    expect(err).to.exist
+                    expect(err.message).to.equal('invalid password')
+                })
+        })
+
+        it('should fail on undefined password', () => {
+            logic.register(email, name, adress, phone, undefined, latitude, longitude)
+                .catch(err => err)
+                .then(err => {
+                    expect(err).to.exist
+                    expect(err.message).to.equal('invalid password')
+                })
+        })
+
+        it('should fail on numeric password', () => {
+            logic.register(email, name, adress, phone, 123, latitude, longitude)
+                .catch(err => err)
+                .then(err => {
+                    expect(err).to.exist
+                    expect(err.message).to.equal('invalid password')
+                })
+        })
+
+        it('should fail on string latitude', () => {
+            logic.register(email, name, adress, phone, password, '123.32', longitude)
+                .catch(err => err)
+                .then(err => {
+                    expect(err).to.exist
+                    expect(err.message).to.equal('invalid latitude')
+                })
+        })
+
+        it('should fail on string longitude', () => {
+            logic.register(email, name, adress, phone, password, latitude, '23.322')
+                .catch(err => err)
+                .then(err => {
+                    expect(err).to.exist
+                    expect(err.message).to.equal('invalid longitude')
+                })
+        })
     })
 
     !true && describe('login shelter', () => {
@@ -99,7 +214,7 @@ describe('logic', () => {
                 })
         )
 
-        it('should fail on empty usermail', () =>
+        it('should fail on empty email', () =>
             logic.authenticate('', password)
                 .catch(err => err)
                 .then(err => {
@@ -108,8 +223,44 @@ describe('logic', () => {
                 })
         )
 
-        it('should fail on password user', () =>
+        it('should fail on undefined email', () =>
+            logic.authenticate(undefined, password)
+                .catch(err => err)
+                .then(err => {
+                    expect(err).to.exist
+                    expect(err.message).to.equal(`invalid email`)
+                })
+        )
+
+        it('should fail on numeric email', () =>
+            logic.authenticate(123, password)
+                .catch(err => err)
+                .then(err => {
+                    expect(err).to.exist
+                    expect(err.message).to.equal(`invalid email`)
+                })
+        )
+
+        it('should fail on empty password', () =>
             logic.authenticate(email, '')
+                .catch(err => err)
+                .then(err => {
+                    expect(err).to.exist
+                    expect(err.message).to.equal(`invalid password`)
+                })
+        )
+
+        it('should fail on undefined password', () =>
+            logic.authenticate(email, undefined)
+                .catch(err => err)
+                .then(err => {
+                    expect(err).to.exist
+                    expect(err.message).to.equal(`invalid password`)
+                })
+        )
+
+        it('should fail on numeric password', () =>
+            logic.authenticate(email, 123)
                 .catch(err => err)
                 .then(err => {
                     expect(err).to.exist
@@ -247,6 +398,84 @@ describe('logic', () => {
                 })
 
         })
+
+        it('should return an error at insert dog with an undefined weight', () => {
+            return logic.register(email, name, adress, phone, password, latitude, longitude)
+                .then(() => logic.authenticate(email, password))
+                .then(res => logic.insertDog(res.id, name, gender, age, undefined, photo, description, res.token))
+                .catch(err => err)
+                .then(err => {
+                    expect(err).to.exist
+                    expect(err).to.throw
+                    expect(err.message).to.equal('invalid weight')
+                })
+
+        })
+
+        it('should return an error at insert dog with an empty weight', () => {
+            return logic.register(email, name, adress, phone, password, latitude, longitude)
+                .then(() => logic.authenticate(email, password))
+                .then(res => logic.insertDog(res.id, name, gender, age, '', photo, description, res.token))
+                .catch(err => err)
+                .then(err => {
+                    expect(err).to.exist
+                    expect(err).to.throw
+                    expect(err.message).to.equal('invalid weight')
+                })
+
+        })
+
+        it('should return an error at insert dog with an string weight', () => {
+            return logic.register(email, name, adress, phone, password, latitude, longitude)
+                .then(() => logic.authenticate(email, password))
+                .then(res => logic.insertDog(res.id, name, gender, age, '12', photo, description, res.token))
+                .catch(err => err)
+                .then(err => {
+                    expect(err).to.exist
+                    expect(err).to.throw
+                    expect(err.message).to.equal('invalid weight')
+                })
+
+        })
+
+        it('should return an error at insert dog with an numeric description', () => {
+            return logic.register(email, name, adress, phone, password, latitude, longitude)
+                .then(() => logic.authenticate(email, password))
+                .then(res => logic.insertDog(res.id, name, gender, age, weight, photo, 123, res.token))
+                .catch(err => err)
+                .then(err => {
+                    expect(err).to.exist
+                    expect(err).to.throw
+                    expect(err.message).to.equal('invalid description')
+                })
+
+        })
+
+        it('should return an error at insert dog with an empty description', () => {
+            return logic.register(email, name, adress, phone, password, latitude, longitude)
+                .then(() => logic.authenticate(email, password))
+                .then(res => logic.insertDog(res.id, name, gender, age, weight, photo, '', res.token))
+                .catch(err => err)
+                .then(err => {
+                    expect(err).to.exist
+                    expect(err).to.throw
+                    expect(err.message).to.equal('invalid description')
+                })
+
+        })
+
+        it('should return an error at insert dog with an undefined description', () => {
+            return logic.register(email, name, adress, phone, password, latitude, longitude)
+                .then(() => logic.authenticate(email, password))
+                .then(res => logic.insertDog(res.id, name, gender, age, weight, photo, undefined, res.token))
+                .catch(err => err)
+                .then(err => {
+                    expect(err).to.exist
+                    expect(err).to.throw
+                    expect(err.message).to.equal('invalid description')
+                })
+
+        })
     })
 
     !true && describe('remove dogs', () => {
@@ -281,28 +510,6 @@ describe('logic', () => {
         })
     })
 
-    !true && describe('dog adopted', () => {
-        const name = `max-${Math.random()}`
-        const gender = 'male'
-        const age = 1
-        const weight = 10
-        const photo = 'http://res.cloudinary.com/eduberenguer/image/upload/v1535653568/lexgoyjnwrmaoqmo1syw.jpg'
-        const description = 'bla bla bla bla'
-
-        it('should dog adopted', () => {
-            return logic.register(email, name, adress, phone, password, latitude, longitude)
-                .then(() => logic.authenticate(email, password))
-                .then(data => logic.insertDog(data.id, name, gender, age, weight, photo, description, data.token)
-                    .then(dogId => {
-                        return logic.dogAdopted(data.id, dogId.id, data.token)
-                            .then(({ message }) => {
-                                expect(message).to.equal('Dog adopted!')
-                            })
-                    })
-                )
-        })
-    })
-
     !true && describe('list dogs not adopted', () => {
         const name = `max-${Math.random()}`
         const gender = 'male'
@@ -325,6 +532,32 @@ describe('logic', () => {
                     expect(res[0].weight).to.equal(10)
                     expect(res[0].description).to.equal(description)
                 })
+        })
+    })
+
+    !true && describe('dog adopted', () => {
+        const name = `max-${Math.random()}`
+        const gender = 'male'
+        const age = 1
+        const weight = 10
+        const photo = 'http://res.cloudinary.com/eduberenguer/image/upload/v1535653568/lexgoyjnwrmaoqmo1syw.jpg'
+        const description = 'bla bla bla bla'
+
+        it('should dog adopted', () => {
+            return logic.register(email, name, adress, phone, password, latitude, longitude)
+                .then(() => logic.authenticate(email, password))
+                .then(data => logic.insertDog(data.id, name, gender, age, weight, photo, description, data.token)
+                    .then(dogId => {
+                        return logic.dogAdopted(data.id, dogId.id, data.token)
+                            .then(res => {
+                                expect(res.message).to.equal('Dog adopted!')
+                                return logic.retrieveDog(res.dogId)
+                            })
+                            .then(dog => {
+                                expect(dog.adopted).to.be.true
+                            })
+                    })
+                )
         })
     })
 
@@ -410,7 +643,6 @@ describe('logic', () => {
                 .then(() => logic.authenticate(email, password))
                 .then(data => logic.retrieveShelter(data.id))
                 .then((res) => {
-                    debugger
                     expect(res.email).to.equal(email)
                     expect(res.name).to.equal(name)
                     expect(res.adress).to.equal(adress)
@@ -419,4 +651,76 @@ describe('logic', () => {
                 })
         })
     })
+
+    !true && describe('update dog', () => {
+        const name = `max-${Math.random()}`
+        const gender = 'male'
+        const age = 1
+        const weight = 10
+        const photo = 'http://res.cloudinary.com/eduberenguer/image/upload/v1535653568/lexgoyjnwrmaoqmo1syw.jpg'
+        const description = 'bla bla bla bla'
+
+        const newName = `pepita-${Math.random()}`
+        const newGender = 'female'
+        const newAge = 12
+        const newWeight = 1
+        const newPhoto = 'http://res.cloudinary.com/eduberenguer/image/upload/v1535653568/lexgoyjnwrmaoqmo1syw.jpg'
+        const newDescription = 'bli bli bli bli'
+
+        it('should list dogs by shelter', () => {
+            return logic.register(email, name, adress, phone, password, latitude, longitude)
+                .then(() => logic.authenticate(email, password))
+                .then(data => logic.insertDog(data.id, name, gender, age, weight, photo, description, data.token)
+                    .then(dog => {
+                        return logic.updateDog(data.id, dog.id, newName, newGender, newAge, newWeight, newPhoto, newDescription, data.token)
+                    })
+                )
+                .then(res => {
+                    expect(res.message).to.equal('Dog updated succesfully')
+                    return logic.retrieveDog(res.dogId)
+                })
+                .then(dog => {
+                    expect(dog.name).to.equal(newName)
+                    expect(dog.gender).to.equal('female')
+                    expect(dog.age).to.equal(12)
+                    expect(dog.weight).to.equal(newWeight)
+                    expect(dog.description).to.equal(newDescription)
+                })
+        })
+    })
+
+    true && describe('list dogs by query', () => {
+        const name = `max-${Math.random()}`
+        const gender = 'female'
+        const age = 1
+        const weight = 10
+        const photo = 'http://res.cloudinary.com/eduberenguer/image/upload/v1535653568/lexgoyjnwrmaoqmo1syw.jpg'
+        const description = 'bla bla bla bla'
+
+        const searchFemale = 'female'
+        const searchMale = 'male'
+
+        const searchCachorro = 'cachorro'
+        const searchJoven = 'joven'
+        const searchAdulto = 'adulto'
+        const searchSenior = 'senior'
+
+        const searchPequeno = 'pequeno'
+        const searchMediano = 'mediano'
+        const searchGrande = 'grande'
+
+        it('should list dogs not adopteds', () => {
+            return logic.register(email, name, adress, phone, password, latitude, longitude)
+                .then(() => logic.authenticate(email, password))
+                .then(data => logic.insertDog(data.id, name, gender, age, weight, photo, description, data.token))
+                .then(() => {
+                    return logic.listDogsByQuery(searchFemale, undefined,searchGrande)
+                })
+                .then((res) => {
+                    expect(res.length).to.be.equal(1)
+                })
+        })
+    })
 })
+
+

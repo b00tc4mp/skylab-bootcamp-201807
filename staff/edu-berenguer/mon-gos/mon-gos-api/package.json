@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": " mocha logic/",
+    "test": " mocha logic/ --timeout 15000",
     "test-debug": "mocha debug logic/index.spec.js"
   },
   "author": "",

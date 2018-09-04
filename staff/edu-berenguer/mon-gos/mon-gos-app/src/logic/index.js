@@ -39,8 +39,10 @@ const logic = {
                 this._validateStringField('adress', adress)
                 this._validateStringField('phone', phone)
                 this._validateStringField('password', password)
-                this._validateNumberField('latitude', latitude)
-                this._validateNumberField('longitude', longitude)
+                if (latitude)
+                    this._validateNumberField('latitude', latitude)
+                if (longitude)
+                    this._validateNumberField('longitude', longitude)
 
 
                 return this._call('register', 'post', {
@@ -132,6 +134,29 @@ const logic = {
         return Promise.resolve()
             .then(() => {
                 return this._call(`/retrieveShelter/${id}`, 'get', undefined, undefined, 200)
+            })
+            .then(res => res.json())
+    },
+
+    updateDog(id, dogId, newName, newGender, newAge, newWeight, newPhoto, newDescription, token) {
+        return Promise.resolve()
+            .then(() => {
+                this._validateStringField('newName', newName)
+                this._validateStringField('newGender', newGender)
+                this._validateNumberField('newAge', newAge)
+                this._validateNumberField('newWeight', newWeight)
+                this._validateStringField('newDescription', newDescription)
+                return this._call(`/update/shelter/${id}/dog/${dogId}`, 'put',
+                    { authorization: `bearer ${token}`, 'content-type': 'application/json' }
+                    , JSON.stringify({ newName, newGender, newAge, newWeight, newPhoto, newDescription }), 200)
+            })
+            .then(res => res.json())
+    },
+
+    listDogsByQuery(gender, age, weight) {
+        return Promise.resolve()
+            .then(() => {
+                return this._call(`/listByQuery/?gender=${gender}&age=${age}&weight=${weight}`, 'get', { 'content-type': 'application/json' }, undefined, 200)
             })
             .then(res => res.json())
     }
