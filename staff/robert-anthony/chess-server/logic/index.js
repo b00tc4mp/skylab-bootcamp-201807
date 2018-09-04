@@ -142,6 +142,7 @@ const logic = {
                 this._currentEngines.set(game.engineID, engine)
               }
               obj.fen = engine.fen()
+              obj.pgn = engine.pgn()
               return obj
             }
           ))
@@ -209,7 +210,7 @@ const logic = {
       .then(game => {
         if (!game) throw new LogicError(`game with id ${gameID} does not exist`)
         if (game.initiator !== nickname && game.acceptor !== nickname) throw new LogicError(`game with id ${gameID} does not belong to user ${nickname}`)
-        if (game.hasAcknowledgedGameOver.length >0 && game.hasAcknowledgedGameOver.indexOf(nickname) === -1)  // other user has acknowledged
+        if (game.hasAcknowledgedGameOver.length > 0 && game.hasAcknowledgedGameOver.indexOf(nickname) === -1)  // other user has acknowledged
           game.state = 'terminated'
         game.hasAcknowledgedGameOver.push(nickname)
         return game.save()

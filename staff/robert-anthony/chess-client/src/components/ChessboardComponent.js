@@ -91,6 +91,7 @@ class ChessboardComponent extends Component {
         <Col className="chessBoardGroup__gameInfoArea" xs="12" md="3">
           {currentGame && <h3 className="chessBoardGroup__players"> {nickname} <span>vs</span> {currentGame.opponent}</h3>}
           {currentGame && !endOfGameText && <h3  className="chessBoardGroup__toPlay">{currentGame.toPlay} <span>to play</span></h3>}
+          {currentGame && !endOfGameText && <p  className="chessBoardGroup__pgn">{currentGame.pgn} </p>}
 
         </Col>
       </Row>

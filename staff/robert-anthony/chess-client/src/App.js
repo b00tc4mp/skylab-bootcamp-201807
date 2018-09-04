@@ -36,8 +36,13 @@ class App extends Component {
     }
   }
 
+  clearError = () => {
+    this.setState({error:''})
+  }
+
   onAcknowledgeGameOver = (nickname, gameID) => {
     const {state: {token}} = this
+    this.clearError()
     logic.onAcknowledgeGameOver(nickname, gameID, token)
       .then(_ => this.getCurrentGamesForUser(nickname, token))
       .catch(({message}) => this.setState({error: message}))
@@ -45,7 +50,7 @@ class App extends Component {
 
   componentDidMount() {
     const {state: {nickname, token}} = this
-
+    this.clearError()
     if (this.isLoggedIn()) this.getCurrentGamesForUser(nickname, token)
   }
 
@@ -70,11 +75,13 @@ class App extends Component {
 
   onRespondToGameRequest = (destination, gameID, answer) => {
     const {state: {nickname, token}} = this
+    this.clearError()
     logic.respondToGameRequest(nickname, destination, gameID, answer, token)
       .then(_ => this.getCurrentGamesForUser(nickname, token))
   }
 
   onRequestGame = (destination) => {
+    this.clearError()
     logic.requestGame(this.state.nickname, destination, this.state.token)
       .catch(({message}) => this.setState({error: message}))
   }
@@ -133,16 +140,15 @@ class App extends Component {
 
   onGameMove = (move, gameID, opponent) => {
     const {state: {nickname, token}} = this
+    this.clearError()
     logic.makeAGameMove(nickname, opponent, move, gameID, token)
-      .then(res => {
-        const game = this.state.currentGames.find(game => game.id === gameID)
-        if (game) console.log(`in_draw: ${game.inDraw}, in_check: ${game.inCheck}, in_stalemate: ${game.inStalemate}, in_checkmate: ${game.inCheckmate}, insufficientMaterial: ${game.insufficientMaterial}`)
-      })
+      .then(_ =>  this.getCurrentGamesForUser(nickname,token))
       .catch(({message}) => this.setState({error: message}))
   }
 
   onInviteUser = user => {
     const {state: {nickname, token}} = this
+    this.clearError()
     logic.requestGame(this.state.nickname, user, this.state.token)
       .then(_ => this.getCurrentGamesForUser(nickname, token))
       .catch(({message}) => this.setState({error: message}))
@@ -165,7 +171,7 @@ class App extends Component {
 
     return <div>
       <header>
-        <NavBar isLoggedIn={this.isLoggedIn()} onLogout={this.onLogout}/>
+        <NavBar nickname={nickname} isLoggedIn={this.isLoggedIn()} onLogout={this.onLogout}/>
       </header>
       {error && <Alert color="warning"> {error}</Alert>}
       <main>

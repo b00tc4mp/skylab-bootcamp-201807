@@ -20,6 +20,10 @@ html {
   .navbar__brand.navbar-brand img {
     max-width: 50px; }
 
+h2.navbar__nickname {
+  font-size: 1.2em;
+  color: #ff002d; }
+
 .main__mainChessContainer {
   color: white; }
   .main__mainChessContainer .games__mainChessRow {
@@ -39,6 +43,10 @@ main div.games__mainChessRow.row div.chessBoardGroup__gameInfoArea.col-12.col-md
   color: #ff002d; }
   main div.games__mainChessRow.row div.chessBoardGroup__gameInfoArea.col-12.col-md-3 h3.chessBoardGroup__toPlay span {
     color: #a5a5a5; }
+
+main div.games__mainChessRow.row div.chessBoardGroup__gameInfoArea.col-12.col-md-3 p.chessBoardGroup__pgn {
+  font-size: 1em;
+  color: #ff002d; }
 
 main div.userList ul.list-group a.list-group-item {
   background-color: rgba(50, 50, 60, 0.8); }

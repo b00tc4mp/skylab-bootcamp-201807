@@ -35,6 +35,11 @@ html {
 
 }
 
+h2.navbar__nickname {
+  font-size:1.2em;
+  color:$text_color1;
+}
+
 
 .main__mainChessContainer {
   color: white;
@@ -64,6 +69,13 @@ main div.games__mainChessRow.row div.chessBoardGroup__gameInfoArea.col-12.col-md
     color:$text_color3;
   }
 }
+
+main div.games__mainChessRow.row div.chessBoardGroup__gameInfoArea.col-12.col-md-3 p.chessBoardGroup__pgn {
+  font-size: 1em;
+  color: $text_color1;
+
+}
+
 
 
 main div.userList ul.list-group a.list-group-item {
