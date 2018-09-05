@@ -34,8 +34,10 @@ const logic = {
       })
       .then(user => {
         if (user) throw new LogicError(`user with ${nickname} nickname already exists`)
-
-        user = new User({email, password, nickname})
+        return User.findOne({email})
+      })
+      .then(user => {
+        if (user) throw new LogicError(`user with ${email} email already exists`)
         return user.save()
       })
       .then(() => true)
