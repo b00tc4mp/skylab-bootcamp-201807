@@ -60,7 +60,7 @@ class Invite extends Component {
             </form>
           </Col>
             <Col className="invite__explainText invite__explainText-explain" xs="12" md="6">
-              Users you have invited
+              Users you have invited who are waiting to accept
             </Col>
           </Row>
           <Row>
@@ -82,7 +82,7 @@ class Invite extends Component {
                 <ListGroup >
                   {usersInvited.length ? usersInvited.map(user => {
                     return <ListGroupItem  key={user + Math.random()}> {`${user}`}</ListGroupItem>
-                  }) : <li>You have no invited users</li>}
+                  }) : <li className="invite__explainText invite__noinvitedUsers">You have no invited users</li>}
                 </ListGroup>
               </div>
             </Col>

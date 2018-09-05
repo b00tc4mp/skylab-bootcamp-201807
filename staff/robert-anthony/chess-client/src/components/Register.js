@@ -49,7 +49,7 @@ class Register extends Component {
   }
 
   render() {
-    const {succeeded} = this.state
+    const {succeeded,nickname} = this.state
 
     return <div className="mainContainer login__container">
 
@@ -70,7 +70,7 @@ class Register extends Component {
                   <InputGroupAddon addonType="prepend">
                     <InputGroupText>Nickname</InputGroupText>
                   </InputGroupAddon>
-                  <Input autoFocus placeholder="nickname" onChange={this.onNicknameChanged}/>
+                  <Input  placeholder="nickname" onChange={this.onNicknameChanged}/>
                 </InputGroup>
               </Row>
               <Row className="mb-2">
@@ -85,8 +85,8 @@ class Register extends Component {
                 <button type="submit">login</button>
               </Row>
             </form> :
-            <nav>
-              User register successfully, now you can proceed to <a href="/#/login">login</a>
+            <nav className="register__navAfterRegister">
+              User <span>{nickname}</span> registered successfully, now you can proceed to <a href="/#/login">login</a>
             </nav>}
 
 

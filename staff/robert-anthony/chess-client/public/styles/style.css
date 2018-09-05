@@ -24,13 +24,11 @@ h2.navbar__nickname {
   font-size: 1.2em;
   color: #ff002d; }
 
-.main__mainChessContainer {
-  color: white; }
-  .main__mainChessContainer .games__mainChessRow {
-    position: relative;
-    margin-top: 5%; }
-  .main__mainChessContainer .chessBoardGroup__chessBoardArea {
-    margin-bottom: 20px; }
+.main__mainChessContainer .games__mainChessRow {
+  position: relative;
+  margin-top: 5%; }
+.main__mainChessContainer .chessBoardGroup__chessBoardArea {
+  margin-bottom: 20px; }
 
 main div.games__mainChessRow.row div.chessBoardGroup__gameInfoArea.col-12.col-md-3 h3.chessBoardGroup__players {
   font-size: 1.2em;
@@ -92,6 +90,19 @@ main {
     letter-spacing: 0.1em;
     background: rgba(50, 50, 60, 0.8); }
 
+nav.register__navAfterRegister {
+  color: #a5a5a5;
+  font-size: 1em;
+  letter-spacing: 0.1em;
+  background: rgba(50, 50, 60, 0.8);
+  padding: 1em; }
+  nav.register__navAfterRegister span {
+    color: #ff002d; }
+  nav.register__navAfterRegister a:visited, nav.register__navAfterRegister a:link {
+    color: #ff002d; }
+  nav.register__navAfterRegister a:hover, nav.register__navAfterRegister a:active {
+    color: #890017; }
+
 .invite__searchInput {
   margin-top: 3em;
   margin-bottom: 3em;
@@ -105,7 +116,11 @@ main {
   size: 1.2em;
   font-weight: 700; }
   .invite__explainText.invite__explainText-explain {
-    color: #ac9319; }
+    color: #a5a5a5; }
+  .invite__explainText.invite__noinvitedUsers {
+    background: rgba(50, 50, 60, 0.8);
+    color: #a5a5a5;
+    padding: 1em; }
 
 body {
   height: 100%;
