@@ -3,7 +3,6 @@ const {User, Game} = require('../data/models')
 const chalk = require('chalk')
 const {Chess} = require('chess.js')
 const uuidv1 = require('uuid/v1');
-var debug = require('debug')('logic')
 const mongoose = require('mongoose')
 
 const logic = {
@@ -38,6 +37,7 @@ const logic = {
       })
       .then(user => {
         if (user) throw new LogicError(`user with ${email} email already exists`)
+        user = new User({email,password,nickname})
         return user.save()
       })
       .then(() => true)
@@ -237,7 +237,7 @@ const logic = {
         const engine = new Chess()
         const uuid = uuidv1()
         this._currentEngines.set(uuid, engine)
-        engine.header('White', requester, 'Black', confirmer)
+     //   engine.header('White', requester, 'Black', confirmer)
         const pgn = engine.pgn()
         game = new Game({
           initiator: requester,
