@@ -13,7 +13,7 @@ const logic = {
     },
 
     _validateEmail(email){
-        if(!validateEmail(email)) throw new LogicError('invalid email')
+        if(!validateEmail(email)) throw new LogicError(`invalid ${email}`)
     },
 
     _validateDateField(name, field) {
@@ -114,25 +114,23 @@ const logic = {
     //////////////////
 
     //ADD A COIN TO PORTFOLIO
-    addCoin(email, name, quantity, value){
-        const date = new Date()
-
+    addCoin(email, name, quantity, value, date){
+        
         return Promise.resolve()
-            .then(() => {
-
-                this._validateEmail(email)
-                this._validateStringField('name', name)
-                this._validateDateField('date', date)
-                if(typeof quantity !== 'number') throw new LogicError(`Quantity ${quantity} must be a valid number`)
-                
-                return User.findOne({email})
-            })
-            .then(user => {
+        .then(() => {
+            
+            this._validateEmail(email)
+            this._validateStringField('name', name)
+            
+            return User.findOne({email})
+        })
+        .then(user => {
+            
                 if (!user) throw new LogicError(`user with ${email} email does not exist`)
 
                 let coinId = uuid();
-                //FORMAT WITH MOMENT NPM? moment().format("MMM Do YY")
-                let _coin = {name, quantity, date, value, coinId}
+                
+                let _coin = {name, quantity, date: date || Date.now(), value, coinId}
                 
                 user.portfolio.push(_coin)
 
@@ -159,12 +157,11 @@ const logic = {
     },
 
     //UPDATE COIN AMOUNT
-    updateCoin(email, coinId, newQuantity){
+    updateCoin(email, coinId, newValue, newDate, newName, newQuantity){
         return Promise.resolve()
             .then(() => {
                 this._validateEmail(email)
-                if(typeof newQuantity !== 'number') throw new LogicError(`Quantity ${newQuantity} must be a valid number`)
-
+                
                 return User.findOne({email})
             })
             .then((user) => {
@@ -173,6 +170,9 @@ const logic = {
                 user.portfolio.forEach(coin => {
                     if(coin.coinId === coinId) {
                         coin.quantity = newQuantity
+                        coin.value = newValue
+                        coin.date = newDate
+                        coin.name = newName
                     }
                 })
 
@@ -224,6 +224,24 @@ const logic = {
     //CRYPTOCOMPARE API///
     /////////////////////
 
+    //PORTFOLIO CKECK
+    checkValidateCoin(symbol){
+        return axios.get(`https://min-api.cryptocompare.com/data/pricemulti?fsyms=${symbol}&tsyms=USD`)
+            .then(res => {
+                const result = res.map((results) => {
+                    const { symbol } = results
+                    debugger
+                    return symbol
+                })
+                .then(res => {
+                    if (result.length) throw new LogicError(`query with ${name} failed`)
+                })
+                // return res.data
+            })
+    },
+    // https://min-api.cryptocompare.com/data/pricemulti?fsyms=ETH,BTC&tsyms=USD
+
+
     //COMPARE CURRENCIES
     getValue(coin, fiduciary){
         return axios.get(`https://min-api.cryptocompare.com/data/price?fsym=${coin}&tsyms=${fiduciary}`)
@@ -240,24 +258,17 @@ const logic = {
     getCryptoNews(site){
         return axios.get(`https://min-api.cryptocompare.com/data/v2/news/?feeds=${site}`)
             .then(res => {
-                
                 const cryptoNews = res.data.Data.map((news) => {
-                    const filterNews = {}
-                    
-                    filterNews.imageurl = news.imageurl
-                    filterNews.title = news.title
-                    filterNews.url = news.url
-                    filterNews.body = news.body
-                    filterNews.source = news.source
 
-                    return cryptoNews;
+                    const {imageurl, title, url, body, source} = news
+
+                    return { title, imageurl, url, body, source}
                 })
-                // imageurl , title , url , body , source
+
+                if(!cryptoNews.length) throw new LogicError(`Right now no news are available in this site: ${site}, try later`)
+                
+                return cryptoNews
             }) 
-            .then(res => {
-                if(cryptoNews) throw new LogicError(`Right now no news are available in this site: ${site}, try later`)
-            })
-            .then(() => true)
     }
 }
 

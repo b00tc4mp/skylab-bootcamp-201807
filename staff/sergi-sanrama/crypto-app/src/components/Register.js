@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import {withRouter} from 'react-router-dom'
-// import logic from '../logic'
+import logic from '../logic/logic'
 
 class Register extends Component {
 
@@ -10,10 +10,19 @@ class Register extends Component {
         password: ''
     }
 
+    handleChange = (e) => {
+        const { name, value } = e.target
+        this.setState({
+            [name]: value
+        })
+    }
+
     handleSubmit = (e) => {
         e.preventDefault()
         const {username, email, password} = this.state
-        
+         logic.register(username, email, password)
+            .then(() => this.props.history.push('/user/authenticate'))
+            .catch(({message}) => console.log(message))
     }
 
     render() {
@@ -21,19 +30,21 @@ class Register extends Component {
         <div>
            <h1>REGISTER</h1>
             <form onSubmit={this.handleSubmit}>
-                <label htmlFor='username'>Username:</label>
-                <input id='username' name='username' type='text' placeholder='Username' /><br/>
+                <label>Username:</label>
+                <input onChange={this.handleChange} name='username' type='text' placeholder='username' />
 
-                <label htmlFor='email'>Email:</label>
-                <input id='email' name='email' type='text' placeholder='Email'/><br/>
+                <label>Email:</label>
+                <input onChange={this.handleChange} name='email' type='text' placeholder='email'/>
 
-                <label htmlFor='password'>Password:</label>
-                <input id='password' name='password' type='password' placeholder='Password'/><br/>
+                <label>Password:</label>
+                <input onChange={this.handleChange} name='password' type='password' placeholder='password'/>
 
-                 <button type='submit'>Register</button>
+                <button type='submit'>Register</button>
+                <br/>
+                <a href='/#/user/authenticate'>return to Login</a>
             </form>
         </div>
-        );
+        )
     }
 }
 

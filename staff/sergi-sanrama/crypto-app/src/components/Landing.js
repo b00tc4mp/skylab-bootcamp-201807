@@ -1,16 +1,20 @@
 import React from 'react'
+import Login from './Login'
+import Register from './Register'
 
 function Landing() {
     return <div>
+    <p>LANDING PAGE</p>
     <nav>
         <li>
-            <a href="/#/register">Register</a>
+            <a href="/#/user/register">Register</a>
         </li>
         <li>
-           <a href="/#/login">Login</a>
+           <a href="/#/user/authenticate">Login</a>
         </li>
+        {/* <Login />
+        <Register /> */}
     </nav>
-    <h1>LANDING</h1>
    </div>
 }
 

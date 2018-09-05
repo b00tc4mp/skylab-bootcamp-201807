@@ -15,6 +15,8 @@ describe('logic', () => {
     const value = 1000
     const date = new Date()
 
+    const symbol = 'BTC'
+
     const username = 'sergi'
     const email = `sergi-${Math.random()}@gmail.com`
     const password = `123-${Math.random()}`
@@ -279,12 +281,16 @@ describe('logic', () => {
 
     !true && describe('update coin quantity', () => {
         const coinId = "123456"
+        const newDate = new Date()
+        const newValue = 5000
+        const newName = "ETH"
+        const newQuantity = 15
         beforeEach(() => {
             return User.create({username, email, password, portfolio: {name, quantity, value, date, coinId}})
         })
 
-        it('should update a coin quantity correctly', () =>{
-            return logic.updateCoin(email, coinId, 15)
+        it('should update a coin correctly', () =>{
+            return logic.updateCoin(email, coinId, newValue, newDate, newName, newQuantity)
                 .then(res => {
                     expect(res).to.be.true
 
@@ -292,7 +298,10 @@ describe('logic', () => {
                 })
                 .then(user => {
                     expect(user.portfolio.length).to.equal(1)
-                    expect(user.portfolio[0].quantity).to.equal(15)
+                    expect(user.portfolio[0].quantity).to.equal(newQuantity)
+                    expect(user.portfolio[0].name).to.equal(newName)
+                    expect(user.portfolio[0].value).to.equal(newValue)
+                    expect(user.portfolio[0].date).to.deep.equal(newDate)
                 })
         })
     })
@@ -320,7 +329,7 @@ describe('logic', () => {
         })
     })
 
-    true && describe('get news', () => {
+    !true && describe('get crypto news', () => {
         it('retrieve news correctly', () =>{
             return logic.getCryptoNews('cointelegraph')
             .then(res => {
@@ -328,6 +337,17 @@ describe('logic', () => {
             })
         })
     })
+
+    true && describe('check symbol correctly', () => {
+        it('retrieve symbol correctly', () => {
+            return logic.checkValidateCoin(symbol)
+            .then(res => {
+                debugger
+                expect(res.map).to.exist
+            })
+        })
+    })
+
 
     after(() =>
         Promise.all([

@@ -3,6 +3,8 @@ require('dotenv').config()
 const express = require('express')
 const bodyParser = require('body-parser')
 const { logic, LogicError} = require('./logic')
+const jwt = require('jsonwebtoken')
+const validateJwt = require('./helpers/validate-jwt')
 
 const router = express.Router()
 
@@ -14,7 +16,6 @@ router.get('/test/sayhello', (req, res) => {
     res.send('Hello World');
 
 })
-
 
 ////////////////
 //USER ROUTES//
@@ -35,20 +36,23 @@ router.post('/user/register', jsonBodyParser, (req, res) => {
 })
 
 //AUTHENTICATE USER
-router.post('/user/authenticate', jsonBodyParser, (req, res) => {
+router.post('/user/authenticate',  jsonBodyParser, (req, res) => {
     const { body: { email, password } } = req
 
     logic.authenticate(email, password)
-        .then(() => res.status(201).json({message: 'user authenticated'}))
+        .then(() => {
+            const { JWT_SECRET, JWT_EXP } = process.env
+            const token = jwt.sign({ sub: email }, JWT_SECRET, { expiresIn: JWT_EXP})
+            res.json({ message: 'user authenticated', token })
+        })
         .catch(err => {
             const { message } = err
-
-            res.status(err instanceof LogicError ? 400 : 500).json({ message })
+            res.status(err instanceof LogicError ? 401 : 500).json({ message })
         })
-}) // se queda colgado en postman si se introducen mal las creedenciales, check
+})
 
 //UPDATE PASSWORD
-router.post('/user/update', jsonBodyParser, (req, res) => {
+router.post('/user/update',  [validateJwt, jsonBodyParser], (req, res) => {
     const { body: { email, password, newPassword} } = req
 
     logic.updatePassword(email, password, newPassword)
@@ -58,10 +62,10 @@ router.post('/user/update', jsonBodyParser, (req, res) => {
 
             res.status(err instanceof LogicError ? 400 : 500).json({ message })
         })
-})
+})  
 
 //UNREGISTER USER
-router.post('/user/unregister', jsonBodyParser, (req, res) => {
+router.post('/user/unregister',  [validateJwt, jsonBodyParser], (req, res) => {
     const { body: { email, password} } = req
 
     logic.unregisterUser(email, password)
@@ -79,10 +83,10 @@ router.post('/user/unregister', jsonBodyParser, (req, res) => {
 ///////////////////
 
 //ADD A COIN TO PORTFOLIO
-router.post('/portfolio/add', jsonBodyParser, (req, res) => {
-    const { body: { email, name, quantity, value } } = req
+router.post('/user/:email/portfolio/add', [validateJwt, jsonBodyParser], (req, res) => {
+    const { params: { email }, body: { name, quantity, value, date } } = req
 
-    logic.addCoin(email, name, quantity, value)
+    logic.addCoin(email, name, quantity, value, date)
         .then(() => res.status(201).json({ message: 'coin added correctly' }))
         .catch(err => {
             const { message } = err
@@ -92,11 +96,11 @@ router.post('/portfolio/add', jsonBodyParser, (req, res) => {
 })
 
 //LIST THE CURRENCIES OF THE PORTFOLIO
-router.post('/portfolio/list', jsonBodyParser, (req, res) => {
-    const { body: { email } } = req 
+router.get('/user/:email/portfolio/list', [validateJwt, jsonBodyParser], (req, res) => {
+    const { params: { email } } = req 
 
     logic.listCoins(email)
-        .then(() => res.status(201).json({ message: 'coins retrieved correctly'}))
+        .then(portfolio => res.status(200).json({ message: 'coins retrieved correctly', portfolio}))
         .catch(err => {
             const { message } = err
     
@@ -105,11 +109,11 @@ router.post('/portfolio/list', jsonBodyParser, (req, res) => {
 })
 
 //UPDATE COIN AMOUNT
-router.post('/portfolio/update', jsonBodyParser, (req, res) => {
-    const { body: { email, coinId, newQuantity } } = req
+router.patch('/user/:email/portfolio/update/', [validateJwt, jsonBodyParser], (req, res) => {
+    const { params: { email }, body: { coinId, newValue, newDate, newName, newQuantity } } = req
     
-    logic.updateCoin(email, coinId, newQuantity)
-        .then(() => res.status(201).json({ message: 'amount update correctly'}))
+    logic.updateCoin(email, coinId, newValue, newDate, newName, newQuantity)
+        .then(() => res.status(201).json({ message: 'coin updated correctly'}))
         .catch(err => {
             const { message } = err
 
@@ -118,8 +122,8 @@ router.post('/portfolio/update', jsonBodyParser, (req, res) => {
 })
 
 //REMOVE A COIN
-router.post('/portfolio/remove', jsonBodyParser, (req, res) => {
-    const { body: { email, coinId } } = req
+router.delete('/user/:email/portfolio/remove', [validateJwt, jsonBodyParser], (req, res) => {
+    const { params: { email }, body: { coinId } } = req
 
     logic.removeCoin(email, coinId)
         .then(() => res.status(201).json({ message: 'successful remove'}))

@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken')
 const { JWT_SECRET } = process.env
 
 function validateJwt(req, res, next) {
-    const { params: { usermail } } = req
+    const { params: { email } } = req
     debugger
     
     try {
@@ -22,7 +22,7 @@ function validateJwt(req, res, next) {
 
         const payload = jwt.verify(token, JWT_SECRET)
 
-        if (payload.sub !== usermail) throw new Error('invalid token')
+        if (payload.sub !== email) throw new Error('invalid token')
 
         next()
     } catch ({ message }) {
