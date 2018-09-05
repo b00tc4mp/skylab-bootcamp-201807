@@ -16,7 +16,6 @@ class Invite extends Component {
   }
 
   state = {
-    error: "",
     usersNotPlayingWith: [],
     usersInvited:[],
     userSearchTerm: ''

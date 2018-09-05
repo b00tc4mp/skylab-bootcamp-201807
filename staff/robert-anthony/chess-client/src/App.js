@@ -9,7 +9,7 @@ import socketIOClient from 'socket.io-client';
 import logic from "./logic"
 import NavBar from "./components/NavBar"
 import Invite from "./components/Invite"
-import {Alert} from 'reactstrap'
+import {UncontrolledAlert} from 'reactstrap'
 
 class App extends Component {
 
@@ -36,16 +36,16 @@ class App extends Component {
     }
   }
 
-  clearError = () => {
-    this.setState({error:''})
-  }
+  clearError = () =>  this.setState({error:''})
+
+  onError = error => this.setState({error})
 
   onAcknowledgeGameOver = (nickname, gameID) => {
     const {state: {token}} = this
     this.clearError()
     logic.onAcknowledgeGameOver(nickname, gameID, token)
       .then(_ => this.getCurrentGamesForUser(nickname, token))
-      .catch(({message}) => this.setState({error: message}))
+      .catch(({message}) => this.onError(message))
   }
 
   componentDidMount() {
@@ -60,7 +60,7 @@ class App extends Component {
         this.setState({currentGames})
         sessionStorage.setItem('currentGames', JSON.stringify(currentGames))
       })
-      .catch(({message}) => this.setState({error: message}))
+      .catch(({message}) => this.onError(message))
   }
 
   getUsersForString = (str, token) => {
@@ -70,7 +70,7 @@ class App extends Component {
         sessionStorage.setItem('users', JSON.stringify(users))
         this.setState({users})
       })
-      .catch(({message}) => this.setState({error: message}))
+      .catch(({message}) => this.onError(message))
   }
 
   onRespondToGameRequest = (destination, gameID, answer) => {
@@ -83,7 +83,7 @@ class App extends Component {
   onRequestGame = (destination) => {
     this.clearError()
     logic.requestGame(this.state.nickname, destination, this.state.token)
-      .catch(({message}) => this.setState({error: message}))
+      .catch(({message}) => this.onError(message))
   }
 
 
@@ -143,7 +143,7 @@ class App extends Component {
     this.clearError()
     logic.makeAGameMove(nickname, opponent, move, gameID, token)
       .then(_ =>  this.getCurrentGamesForUser(nickname,token))
-      .catch(({message}) => this.setState({error: message}))
+      .catch(({message}) => this.onError(message))
   }
 
   onInviteUser = user => {
@@ -151,7 +151,7 @@ class App extends Component {
     this.clearError()
     logic.requestGame(this.state.nickname, user, this.state.token)
       .then(_ => this.getCurrentGamesForUser(nickname, token))
-      .catch(({message}) => this.setState({error: message}))
+      .catch(({message}) => this.onError(message))
   }
 
 
@@ -173,15 +173,21 @@ class App extends Component {
       <header>
         <NavBar nickname={nickname} isLoggedIn={this.isLoggedIn()} onLogout={this.onLogout}/>
       </header>
-      {error && <Alert color="warning"> {error}</Alert>}
+      {error && <UncontrolledAlert color="dark"> {error}</UncontrolledAlert>}
       <main>
         <Switch>
           <Route exact path="/" render={() => <Main/>}/>
           <Route path="/main" render={() => <Main/>}/>
-          <Route path="/register" render={() => this.isLoggedIn() ? <Redirect to="/main"/> : <Register/>}/>
+          <Route path="/register" render={() => this.isLoggedIn() ? <Redirect to="/main"/> : <Register
+            onError={this.onError}
+            clearError={this.clearError}
+
+          />}/>
 
           <Route path="/games" render={() => this.isLoggedIn() ?
             <Games
+              onError={this.onError}
+              clearError={this.clearError}
               onAcknowledgeGameOver={this.onAcknowledgeGameOver}
               onGameMove={this.onGameMove}
               currentGames={currentGames}
@@ -190,6 +196,7 @@ class App extends Component {
             /> : <Redirect to="/main"/>}/>
           <Route path="/invite" render={() => this.isLoggedIn() ?
             <Invite
+
               onUserClick={this.onInviteUser}
               currentGames={currentGames}
               allUsers={users}
@@ -197,7 +204,10 @@ class App extends Component {
               onUserSearchByString={term => this.getUsersForString(term, token)}
             /> : <Redirect to="/main"/>}/>
           <Route path="/login" render={() => this.isLoggedIn() ? <Redirect to="/main"/> :
-            <Login onLoggedIn={this.onLoggedIn}/>}/>
+            <Login
+              onError={this.onError}
+              clearError={this.clearError}
+              onLoggedIn={this.onLoggedIn}/>}/>
         </Switch>
       </main>
       <footer>

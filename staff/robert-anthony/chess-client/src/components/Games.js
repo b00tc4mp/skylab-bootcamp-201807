@@ -14,7 +14,8 @@ class Games extends Component {
     nickname: PropTypes.string,
     onRespondToGameRequest: PropTypes.func,
     onAcknowledgeGameOver:PropTypes.func,
-
+    onError:PropTypes.func,
+    clearError:PropTypes.func,
   }
 
   state = {
@@ -26,11 +27,13 @@ class Games extends Component {
   }
 
   onError = error => {
-    this.setState({error})
+    const {props:{onError}} = this
+    onError(error)
   }
 
   clearError = () => {
-    this.setState({error: ''})
+    const {props:{clearError}} = this
+    clearError()
   }
 
   onRespondToGameRequest = (destination, gameID, answer) => {

@@ -12,6 +12,7 @@ $text_color3: #a5a5a5;
 $text_color4: #e3e3e3;
 $background_color1: rgba(50, 50, 60, 0.8);
 $background_color2: rgba(87, 87, 87, 0.8);
+$dark_menu_background_color:rgb(51,58,64);
 
 * {
   box-sizing: border-box;
@@ -71,6 +72,12 @@ main div.games__mainChessRow.row div.chessBoardGroup__gameInfoArea.col-12.col-md
   padding-left:1em;
   padding-right:1em;
   background-color: $background_color1;
+}
+
+div.alert.alert-dark.alert-dismissible.fade.show {
+  background:$dark_menu_background_color;
+  border-color:$text_color1;
+  color:$text_color3;
 }
 
 main div.games__mainChessRow.row div.chessBoardGroup__gameInfoArea.col-12.col-md-3 h3.chessBoardGroup__toPlay {

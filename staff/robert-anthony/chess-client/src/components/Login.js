@@ -1,30 +1,43 @@
 import React, { Component } from 'react'
 import { InputGroup, InputGroupText, InputGroupAddon,Col,Row,Container, Input } from 'reactstrap';
-
+import PropTypes from 'prop-types'
 import logic from '../logic'
 
 class Login extends Component {
   state = {
     nickname: '',
     password: '',
-    error: ''
   }
 
-  onNicknameChanged = e => this.setState({ nickname: e.target.value })
+  static propTypes = {
+    clearError: PropTypes.func,
+    onError: PropTypes.func,
+  }
 
-  onPasswordChanged = e => this.setState({ password: e.target.value })
+
+  onNicknameChanged = e => {
+    const {props:{clearError}} = this
+    clearError()
+    this.setState({ nickname: e.target.value })
+  }
+
+  onPasswordChanged = e => {
+    const {props:{clearError}} = this
+    clearError()
+    this.setState({ password: e.target.value })
+  }
 
   onLoginSubmitted = e => {
     e.preventDefault()
-
+    const {props:{clearError,onError}} = this
+    clearError()
     const { nickname, password } = this.state
     logic.authenticate(nickname, password)
       .then(token => this.props.onLoggedIn(nickname, token))
-      .catch(({ message }) => this.setState({ error: message }))
+      .catch(({ message }) => onError(message))
   }
 
   render() {
-    const { error } = this.state
 
     return  <Container className="mainContainer login__container">
     <Col xs="12" md="3">
@@ -49,7 +62,6 @@ class Login extends Component {
           <button type="submit">login</button>
           </Row>
         </form>
-        {error && <p>{error}</p>}
     </Col>
       </Container>
 

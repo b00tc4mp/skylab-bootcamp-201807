@@ -1,41 +1,62 @@
 import React, {Component} from 'react'
 import logic from '../logic'
+import PropTypes from 'prop-types'
+import {InputGroup, InputGroupText, InputGroupAddon, Col, Row, Container, Input} from 'reactstrap';
 
-import { InputGroup, InputGroupText, InputGroupAddon,Col,Row,Container, Input } from 'reactstrap';
+
+
 
 class Register extends Component {
+
+  static propTypes = {
+    clearError: PropTypes.func,
+    onError: PropTypes.func,
+  }
+
   state = {
     nickname: '',
     email: '',
     password: '',
     succeeded: false,
-    error: ''
   }
 
-  onEmailChanged = e => this.setState({email: e.target.value})
-  onNicknameChanged = e => this.setState({nickname: e.target.value})
+  onEmailChanged = e => {
+    const {props:{clearError}} = this
+    clearError()
+    this.setState({email: e.target.value})
+  }
+  onNicknameChanged = e =>{
+    const {props:{clearError}} = this
+    clearError()
+    this.setState({nickname: e.target.value})
+  }
 
-  onPasswordChanged = e => this.setState({password: e.target.value})
+  onPasswordChanged = e => {
+    const {props:{clearError}} = this
+    clearError()
+    this.setState({password: e.target.value})
+  }
 
   onRegisterSubmitted = e => {
+    const {props:{clearError,onError}} = this
     e.preventDefault()
-
+    clearError()
     const {nickname, password, email} = this.state
 
     logic.register(email, nickname, password)
       .then(() => this.setState({succeeded: true}))
-      .catch(({message}) => this.setState({error: message}))
+      .catch(({message}) => onError(message))
   }
 
   render() {
-    const {succeeded, error} = this.state
+    const {succeeded} = this.state
 
     return <div className="mainContainer login__container">
 
 
       <Container className="mainContainer login__container">
         <Col xs="12" md="3">
-          {!succeeded ?  <form onSubmit={this.onRegisterSubmitted}>
+          {!succeeded ? <form onSubmit={this.onRegisterSubmitted}>
               <Row className="mb-2">
                 <InputGroup>
                   <InputGroupAddon addonType="prepend">
@@ -63,12 +84,12 @@ class Register extends Component {
               <Row>
                 <button type="submit">login</button>
               </Row>
-            </form>:
+            </form> :
             <nav>
               User register successfully, now you can proceed to <a href="/#/login">login</a>
             </nav>}
 
-          {error && <p>{error}</p>}
+
         </Col>
       </Container>
     </div>

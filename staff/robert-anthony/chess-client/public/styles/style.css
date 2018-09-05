@@ -46,6 +46,11 @@ main div.games__mainChessRow.row div.chessBoardGroup__gameInfoArea.col-12.col-md
   padding-right: 1em;
   background-color: rgba(50, 50, 60, 0.8); }
 
+div.alert.alert-dark.alert-dismissible.fade.show {
+  background: #333a40;
+  border-color: #ff002d;
+  color: #a5a5a5; }
+
 main div.games__mainChessRow.row div.chessBoardGroup__gameInfoArea.col-12.col-md-3 h3.chessBoardGroup__toPlay {
   font-size: 1.2em;
   color: #ff002d;
