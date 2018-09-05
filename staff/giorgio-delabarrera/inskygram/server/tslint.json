@@ -12,6 +12,7 @@
     "no-var-requires": false,
     "interface-name": false,
     "no-shadowed-variable": false,
-    "ordered-imports": false
+    "ordered-imports": false,
+    "no-trailing-whitespace": [true, "ignore-blank-lines"]
   }
 }

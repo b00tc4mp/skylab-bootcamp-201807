@@ -1,9 +1,15 @@
 import validator from "validator";
-import User, { UserModelInterface } from "../../models/user";
-import LogicError from "../error/logic-error";
-import cloudinary from "../../config/cloudinary";
+import User, { UserModelInterface } from "../models/user";
+import { LogicError, AccessDeniedError, NotFoundError, UniqueConstraintError } from "./errors";
+import cloudinary from "../config/cloudinary";
 
 const logic = {
+
+  isPrivateUser(username: string) { },
+
+  isFollowingUser(username: string, targetUsername: string) { },
+
+  hasPermissionOverUser(username: string, targetUsername: string) { },
 
   register(username: string, email: string, password: string): Promise<boolean> | never {
 
@@ -17,12 +23,12 @@ const logic = {
         return User.findOne({ username });
       })
       .then((user: UserModelInterface) => {
-        if (user) { throw new LogicError(`user with username ${username} already exists`); }
+        if (user) { throw new UniqueConstraintError(`user with username ${username} already exists`); }
 
         return User.findOne({ email });
       })
       .then((user: UserModelInterface) => {
-        if (user) { throw new LogicError(`user with email ${email} already exists`); }
+        if (user) { throw new UniqueConstraintError(`user with email ${email} already exists`); }
 
         return User.findOne({ email });
       })
@@ -40,7 +46,7 @@ const logic = {
         return User.findOne({ username });
       })
       .then((user: UserModelInterface) => {
-        if (!user) { throw new LogicError(`user with username ${username} does not exists`); }
+        if (!user) { throw new NotFoundError(`user with username ${username} does not exists`); }
 
         if (user.password !== password) { throw new LogicError(`wrong password`); }
 
@@ -51,7 +57,7 @@ const logic = {
       .then((user: UserModelInterface) => true);
   },
 
-  retrieveUser(username?: string, targetUsername: string): Promise<UserModelInterface> | never {
+  retrieveUser(username?: string, targetUsername?: string): Promise<UserModelInterface> | never {
     return Promise.resolve()
       .then(() => {
         if (!username) { throw new LogicError("invalid username"); }
@@ -60,16 +66,6 @@ const logic = {
       })
       .then((user: UserModelInterface) => user);
   },
-
-  followUser(username: string, targetUsername: string) {},
-
-  listUserFollowers(username?: string, targetUsername: string) {},
-
-  listUserFollowings(username?: string, targetUsername: string) {},
-
-  listUserPosts(username?: string, targetUsername: string) {},
-
-  listUserPostsSaved(username?: string, targetUsername: string) {},
 
   updateUser(
     username: string,
@@ -88,13 +84,15 @@ const logic = {
         return User.findOne({ username });
       })
       .then((user: UserModelInterface) => {
-        if (!user) { throw new LogicError(`user with username ${username} does not exists`); }
+        if (!user) { throw new NotFoundError(`user with username ${username} does not exists`); }
 
         if (newEmail) {
           return new Promise((resolve, reject) => {
             User.findOne({ email: newEmail })
               .then((foundUser: UserModelInterface) => {
-                if (foundUser) { reject(new LogicError(`user with email ${newEmail} already exists`)); }
+                if (foundUser) {
+                  return reject(new UniqueConstraintError(`user with email ${newEmail} already exists`));
+                }
 
                 user.email = newEmail;
 
@@ -127,7 +125,7 @@ const logic = {
         return User.findOne({ username });
       })
       .then((user: UserModelInterface) => {
-        if (!user) { throw new LogicError(`user with email ${username} does not exists`); }
+        if (!user) { throw new NotFoundError(`user with email ${username} does not exists`); }
 
         if (user.password !== password) { throw new LogicError(`wrong password`); }
 
@@ -150,7 +148,7 @@ const logic = {
         return User.findOne({ username });
       })
       .then((user: UserModelInterface) => {
-        if (!user) { throw new LogicError(`user with username ${username} does not exists`); }
+        if (!user) { throw new NotFoundError(`user with username ${username} does not exists`); }
 
         return new Promise((resolve, reject) => {
           cloudinary.v2.uploader.upload_stream((error: any, result: any) => {
@@ -168,7 +166,11 @@ const logic = {
       .then((user: UserModelInterface) => true);
   },
 
-  listUserWall(username: string, limit: number = 10, offset: number = 1) {},
+  toggleFollowUser(username: string, targetUsername: string) { return true; },
+
+  listUserFollowers(username?: string, targetUsername?: string) { },
+
+  listUserFollowings(username?: string, targetUsername?: string) { },
 
   createPost(username: string, filename: string, buffer: Buffer, caption?: string): Promise<string> | never {
     return Promise.resolve()
@@ -179,7 +181,7 @@ const logic = {
         return User.findOne({ username });
       })
       .then((user: UserModelInterface) => {
-        if (!user) { throw new LogicError(`user with username ${username} does not exists`); }
+        if (!user) { throw new NotFoundError(`user with username ${username} does not exists`); }
 
         return new Promise((resolve, reject) => {
           cloudinary.v2.uploader.upload_stream((error: any, result: any) => {
@@ -201,7 +203,7 @@ const logic = {
       .then((post: PostModelInterface) => post.id);
   },
 
-  retrievePost(username: string, postId: string): Promise<PostModelInterface> | never {
+  retrievePost(username?: string, postId: string): Promise<PostModelInterface> | never {
     let post: PostModelInterface;
     return Promise.resolve()
       .then(() => {
@@ -210,14 +212,14 @@ const logic = {
         return Post.findOne({ _id: postId }, { __v: 0 });
       })
       .then((foundPost: PostModelInterface) => {
-        if (!foundPost) { throw new LogicError(`post with id ${postId} does not exists`); }
+        if (!foundPost) { throw new NotFoundError(`post with id ${postId} does not exists`); }
 
         post = foundPost;
 
         return User.findById(post.user);
       })
       .then((user: UserModelInterface) => {
-        if (!user) { throw new LogicError(`user with id ${post.user} does not exists`); }
+        if (!user) { throw new NotFoundError(`user with id ${post.user} does not exists`); }
 
         // if (user.privateAccount)
 
@@ -236,6 +238,12 @@ const logic = {
     // });
   },
 
+  listUserPosts(username?: string, targetUsername?: string) { },
+
+  listUserSavedPosts(username?: string, targetUsername?: string) { },
+
+  listUserWall(username: string, limit: number = 10, offset: number = 1) { },
+
   addCommentToPost(username: string, postId: string, description: string): Promise<boolean> | never {
     let post: PostModelInterface;
 
@@ -249,19 +257,19 @@ const logic = {
         return User.findOne({ username });
       })
       .then((user: UserModelInterface) => {
-        if (!user) { throw new LogicError(`user with username ${username} does not exists`); }
+        if (!user) { throw new NotFoundError(`user with username ${username} does not exists`); }
 
         return Post.findOne({ _id: postId, user: user._id });
       })
       .then((foundPost: PostModelInterface) => {
-        if (!foundPost) { throw new LogicError(`post with id ${postId} does not exists`); }
+        if (!foundPost) { throw new NotFoundError(`post with id ${postId} does not exists`); }
 
         post = foundPost;
 
         return User.findOne({ commentUsername });
       })
       .then((commentUser: UserModelInterface) => {
-        if (!commentUser) { throw new LogicError(`comment user with username ${username} does not exists`); }
+        if (!commentUser) { throw new NotFoundError(`comment user with username ${username} does not exists`); }
 
         const comment = new Comment();
         comment.description = description;
@@ -274,13 +282,13 @@ const logic = {
       .then((post: PostModelInterface) => true);
   },
 
-  toggleLikePost(username: string, postId: string) {},
+  toggleLikePost(username: string, postId: string) { },
 
-  toggleSavePost(username: string, postId: string) {},
+  toggleSavePost(username: string, postId: string) { },
 
-  listPopularPublicPosts() {},
+  listPopularPosts(limit: number = 10, offset: number = 1) { },
 
-  search(query: string) {},
+  search(query: string) { },
 };
 
 export default logic;
