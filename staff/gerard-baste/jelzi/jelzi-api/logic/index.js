@@ -39,24 +39,29 @@ const logic = {
                 return User.findOne({ email })
             })
             .then(user => {
+                
                 if (user) throw new LogicError(`user with ${email} email already exist`)
+                return User.findOne({ username })
+                .then(user => {
+                    if (user) throw new LogicError(`user with ${username} already exist`)
+                    let newUser = {};
+                    if (allergens) newUser = {
+                        email,
+                        username,
+                        password,
+                        allergens
+                    }
+                    else newUser = {
+                        email,
+                        username,
+                        password
+                    }
+    
+                    return User.create(newUser)
+                })
 
-                let newUser = {};
-                if (allergens) newUser = {
-                    email,
-                    username,
-                    password,
-                    allergens
-                }
-                else newUser = {
-                    email,
-                    username,
-                    password
-                }
-
-                return User.create(newUser)
+                .then(() => true)
             })
-            .then(() => true)
     },
 
     authenticate(email, password) {
@@ -65,10 +70,9 @@ const logic = {
                 this._validateEmail(email)
                 this._validateStringField('password', password)
 
-                return User.findOne({
-                    email
-                })
+                return User.findOne({email})
             })
+
             .then(user => {
                 if (!user) throw new LogicError(`user with ${email} email does not exist`)
 
@@ -77,6 +81,22 @@ const logic = {
                 return user.id
             })
     },
+
+    retrieveProfileUser(email) {
+        return Promise.resolve()
+            .then(() => {
+                this._validateEmail(email)
+
+                return User.findOne({email})
+            })
+            
+            .then(user => {
+                if (!user) throw new LogicError(`user with ${email} email does not exist`)
+
+                return user.allergens
+            })
+    },
+
 
     updateAllergens(email, password, allergens, newAllergens) {
         return Promise.resolve()
@@ -88,6 +108,7 @@ const logic = {
                 return User.findOne({ email })
             })
             .then(user => {
+                debugger
                 if (!user) throw new LogicError(`user with ${email} email does not exist`)
 
                 if (user.password !== password) throw new LogicError(`wrong password`)
@@ -289,6 +310,50 @@ const logic = {
                     return recipesData
                 })
             })
+},
+
+basicSearchRecipeById(recipeId){
+    const appId = '6b5aa10e',
+    appKey = 'ecc14d0ee3cece665188f76abb1ad5ab',
+    recipesData = []
+
+    return Promise.resolve()
+        .then(() => {
+        return fetch (`https://api.edamam.com/search?r=http%3A%2F%2Fwww.edamam.com%2Fontologies%2Fedamam.owl%23recipe_${recipeId}&app_id=${appId}&app_key=${appKey}`)
+        })
+        .then(function(response) {
+            return response.json();
+          })
+        .then(recipe => {
+                    const recipeData = {
+                        
+                            uri: recipe[0].uri,
+                            label: recipe[0].label,
+                            image: recipe[0].image,
+                            source: recipe[0].source,
+                            url: recipe[0].url,
+                            yield: recipe[0].yield,
+                            ingredients: recipe[0].ingredientLines,
+                            calories: recipe[0].calories,
+                            time: recipe[0].totalTime,
+                            fat: recipe[0].totalNutrients.FAT,
+                            fasat: recipe[0].totalNutrients.FASAT,
+                            fatrn: recipe[0].totalNutrients.FATRN,
+                            carbs: recipe[0].totalNutrients.CHOCDF,
+                            fiber: recipe[0].totalNutrients.FIBTG,
+                            sugar: recipe[0].totalNutrients.SUGAR,
+                            protein: recipe[0].totalNutrients.PROCNT,
+                            cholesterol: recipe[0].totalNutrients.CHOLE
+                        }
+        
+                    recipesData.push(recipeData)
+                    
+                }).then(()=> {
+
+                    return recipesData
+
+                })
+                
 },
 
     searchRecipeAllergens(query, email){

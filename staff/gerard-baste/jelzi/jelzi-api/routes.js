@@ -50,6 +50,21 @@ router.post('/authenticate', jsonBodyParser, (req, res) => {
         })
 })
 
+// Retrieve profile user //
+
+router.get('/user/:email/profile', [validateJwt, jsonBodyParser], (req, res) =>{
+    const { params: { email } } = req
+
+    logic.retrieveProfileUser(email)
+    .then(res.json.bind(res))
+    .catch(err => {
+        const { message } = err
+
+        res.status(err instanceof LogicError ? 400 : 500).json({ message })
+    })
+})
+
+
 // Update allergens
 
 router.patch('/user/:email/profile', [validateJwt, jsonBodyParser], (req, res) => {
@@ -58,7 +73,7 @@ router.patch('/user/:email/profile', [validateJwt, jsonBodyParser], (req, res) =
     logic.updateAllergens(email, password, allergens, newAllergens)
         .then(() => res.json({ message: 'allergens updated'}))
         .catch(err => {
-            const { mesage } = err
+            const { message } = err
 
             res.status(err instanceof LogicError ? 400 : 500).json({ message })
         })
@@ -108,8 +123,8 @@ router.delete('/user/:email/menus/:id', validateJwt, (req, res) => {
         })
 })
 
-
-//DISHES RUTES//
+/
+/DISHES RUTES//
 
 //Add dishes//
 
@@ -181,12 +196,26 @@ router.get('/user/:email/search/:query' , [validateJwt, jsonBodyParser],  (req, 
     })
 })
 
-// Search recipe ID //
+// Search recipe ID Menu //
 
 router.get('/user/:email/search/menus/:menuId' , [validateJwt, jsonBodyParser],  (req, res) =>{
     const { params: { email, menuId } } = req
     debugger
     return logic.searchRecipeById(email, menuId)
+    .then(res.json.bind(res))
+    .catch(err => {
+        const { message } = err
+
+        res.status(err instanceof LogicError ? 400 : 500).json({ message })
+    })
+})
+
+// Search recipe ID //
+
+router.get('/user/recipe/:id' , jsonBodyParser,  (req, res) =>{
+    const { params: { id } } = req
+    debugger
+    return logic.basicSearchRecipeById(id)
     .then(res.json.bind(res))
     .catch(err => {
         const { message } = err

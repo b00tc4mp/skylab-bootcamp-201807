@@ -2,22 +2,54 @@ import React, {Component} from 'react';
 import {withRouter} from 'react-router-dom'
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import "./Login.css"
+import {logic} from '../../logic'
+import UserSuccesful from '../SuccedPanel/UserSuccesful'
+import UserError from '../ErrorPanel/UserError'
 
 
 export default class Login extends React.Component {
 
+state = {
+  email: "",
+  password: "",
+  title:"Login",
+  errorLogin: null
+}
+
+keepEmail = event => this.setState({ email: event.target.value })
+  
+keepPassword = event => this.setState({ password: event.target.value })
+
+handleSubmit = event => {
+  event.preventDefault()
+
+  const {state: {email, password}} = this
+
+  logic.authenticate(email, password)
+    .then(token => {
+      this.props.handleLogin(email, token, this.state.title)
+    })
+    .catch(({message}) => {
+      UserError(message)
+
+    })
+}
+
+
+
 render() {
     return (
         <div  className="mt-5" id="RecipeLogin">
-      <Form id="LoginForm">
+      <Form id="LoginForm" onSubmit={this.handleSubmit}>
         <FormGroup>
-          <Label for="exampleUsername">Username</Label>
-          <Input type="text" name="Username" placeholder="Username" required autoFocus="true"/>
+          <Label for="exampleEmail">Email</Label>
+          <Input type="text" onChange={this.keepEmail} name="Email" placeholder="Email" required autoFocus="true"/>
         </FormGroup>
         <FormGroup>
           <Label for="examplePassword">Password</Label>
-          <Input type="password" name="password" placeholder="Password" required/>
+          <Input type="password" onChange={this.keepPassword} name="password" placeholder="Password" required/>
         </FormGroup>
+        {/* {this.state.errorLogin && <UserError message={this.state.errorLogin}/>} */}
         <Button>Login</Button>
       </Form>
       </div>

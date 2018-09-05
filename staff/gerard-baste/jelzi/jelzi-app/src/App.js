@@ -1,14 +1,34 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import {NavBar, Home, ResultList, Login, Register} from './client/index.js'
+import {NavBar, Home, ResultList, Login, Register, Profile, DetailRecipe, Menus} from './client/index.js'
 import { Route, Redirect, withRouter } from 'react-router-dom'
+import UserSuccesful from './client/components/SuccedPanel/UserSuccesful'
 
 class App extends Component {
 
   state = {
-    loggedIn: false
+    email: sessionStorage.getItem('email') || '',
+    token: sessionStorage.getItem('token') || '',
+  } 
+
+  handleLogin = (email,token, title) => {
+    this.setState({
+      email,
+      token
+    })
+    sessionStorage.setItem('email',email)
+    sessionStorage.setItem('token',token)
+    UserSuccesful(title).then(() => {
+      this.props.history.push('/home')
+    })
   }
+
+
+  isLoggedIn = () => {
+    return !!this.state.email
+  }
+
   
   render() {
     return (
@@ -16,20 +36,13 @@ class App extends Component {
       <NavBar/>
       <Route exact path="/" component={Home}/>
       <Route path="/home" component={Home} />
-      <Route path="/register" render={() => this.state.loggedIn ? <Redirect to="/home" /> : <Register />} />
-      <Route path="/login" render={() => this.state.loggedIn ? <Redirect to="/home" /> : <Login />} />
-     
+      <Route path="/menus" render={() => !this.state.email ? <Redirect to="/register"/> : <Menus email={this.state.email} token={this.state.token}/>} />
+      <Route path="/register" render={() => this.state.email ? <Redirect to="/home" /> : <Register />} />
+      <Route path="/login" render={() => this.state.email ? <Redirect to="/home" /> : <Login handleLogin={this.handleLogin} />} />
+      <Route path="/profile" render={() => !this.state.email ? <Redirect to="/register" /> : <Profile email={this.state.email} token={this.state.token} />} />
+      <Route path="/recipe/:recipeId" render={props => !this.state.email ? <Redirect to="/home" /> : <DetailRecipe recipeId={props.match.params.recipeId} email={this.state.email} token={this.state.token} />} />
       </div>
     );
-
-    // return(
-    //   <div>
-    //     <NavBar isLoggedIn={loggedIn}  onLogout={onLogout}/>
-    //     <Route  path="/user" render={() => loggedIn ? <UserPage/> : <Redirect to="/home" /> } />
-    //     <Route  path="/register" render={() => loggedIn ? <Redirect to="/home" /> : <UserRegister/>} />
-    //     <Route  path="/favourites" render={() => loggedIn ?  <FavouritesPage/> : <Redirect to="/user" /> } />
-    //     <Route  path="/login" render={() => loggedIn ? <Redirect to="/home" /> : <UserLogin errorLogin={this.state.errorLogin} onLogin={this.onLogin}/>} />
-    //   </div>)
   }
 }
 

@@ -234,6 +234,51 @@ describe('logic', () => {
 
     })
 
+    !!true && describe('retrieve profile user', () => {
+        it('should succeed on existing user', () =>
+            logic.register(email, username, password, allergens)
+                .then(() => logic.authenticate(email, password))
+                .then(token => {logic.retrieveProfileUser(email, token)
+                    .then(res => {
+                        expect(res[0]).to.equal('egg-free')
+                    })
+                })
+        )
+
+        it('should fail on undefined email', () =>
+            logic.register(email, username, password, allergens)
+                .then(() => logic.authenticate(email, password))
+                .then(token => {logic.retrieveProfileUser(undefined, token)
+                .catch(err => err)
+                    .then(( err ) => {
+                        expect(err.message).to.equal('invalid email')
+                    })
+                })
+        )
+
+        it('should fail on empty email', () =>
+            logic.register(email, username, password, allergens)
+                .then(() => logic.authenticate(email, password))
+                .then(token => {logic.retrieveProfileUser('', token)
+                .catch(err => err)
+                    .then(( err ) => {
+                        expect(err.message).to.equal('invalid email')
+                    })
+                })
+        )
+
+        it('should fail on number email', () =>
+            logic.register(email, username, password, allergens)
+                .then(() => logic.authenticate(email, password))
+                .then(token => {logic.retrieveProfileUser(123, token)
+                .catch(err => err)
+                    .then(( err ) => {
+                        expect(err.message).to.equal('invalid email')
+                    })
+                })
+        )
+    })
+
     !!true && describe('update allergens', () => {
         it('should succeed on existing user', () =>
             logic.register(email, username, password, allergens)

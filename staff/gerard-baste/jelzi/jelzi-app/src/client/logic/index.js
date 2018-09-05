@@ -1,4 +1,4 @@
-const validateEmail = require('../../../utils/validate-email')
+const validateEmail = require('../../utils/validate-email')
 
 const logic = {
     url: 'http://localhost:8080/api',
@@ -16,12 +16,12 @@ const logic = {
                     return res
                 } else
                     return res.json()
-                        .then(({message}) => {throw new Error(message)})
+                        .then(({message}) => {throw new LogicError(message)})
             })
     },
 
     _validateStringField(fieldName, fieldValue) {
-        if (typeof fieldValue !== 'string' || !fieldValue.length) throw new Error(`invalid ${fieldName}`)
+        if (typeof fieldValue !== 'string' || !fieldValue.length) throw new LogicError(`invalid ${fieldName}`)
     },
 
     _validateEmail(email) {
@@ -33,7 +33,7 @@ const logic = {
     },
 
     _validateArrayField(name, value) {
-        if (!Array.isArray(value) || !value.length) throw new LogicError(`invalid ${name}`)
+        if (!Array.isArray(value)) throw new LogicError(`invalid ${name}`)
     },
 
     register(email, username, password, allergens) {
@@ -64,6 +64,16 @@ const logic = {
                     .then(res => res.json())
                     .then(({token}) => token)
             })
+    },
+
+    retrieveProfileUser(email, token){
+        return Promise.resolve()
+            .then(() => {
+                this._validateEmail(email)
+
+                return this._call(`user/${email}/profile`, 'get', { authorization: `bearer ${token}`}, undefined, 200)
+            })
+            .then(res => res.json())
     },
 
     updateAllergens(email, password, allergens, newAllergens, token){
@@ -169,6 +179,14 @@ const logic = {
                 this._validateStringField('menu ID', menuId)
 
                 return this._call(`user/${email}/search/menus/${menuId}`, 'get', { authorization: `bearer ${token}`},undefined, 200)
+            })
+            .then(res => res.json())
+    },
+
+    basicSearchRecipeById(recipeId){
+        return Promise.resolve()
+            .then(() => {
+                return this._call(`user/recipe/${recipeId}`, 'get', undefined ,undefined, 200)
             })
             .then(res => res.json())
     },

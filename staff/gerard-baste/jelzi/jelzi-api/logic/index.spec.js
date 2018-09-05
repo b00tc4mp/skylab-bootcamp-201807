@@ -58,7 +58,7 @@ describe('logic', () => {
         .then(() => _connection.disconnect())
     )
 
-    !!true && describe('validate fields', () => {
+    !true && describe('validate fields', () => {
         it('should succeed on correct value', () => {
             expect(() => logic._validateStringField('email', email).to.equal(email))
             expect(() => logic._validateStringField('username', username).to.equal(username))
@@ -78,7 +78,7 @@ describe('logic', () => {
         })
     })
 
-    !!true && describe('register user', () => {
+    !true && describe('register user', () => {
         it('should register correctly', () =>
             User.findOne({ email })
             .then(user => {
@@ -194,7 +194,7 @@ describe('logic', () => {
         )
     })
 
-    !!true && describe('authenticate user', () => {
+    !true && describe('authenticate user', () => {
         beforeEach(() => User.create({
             email,
             username,
@@ -258,7 +258,49 @@ describe('logic', () => {
         )
     })
 
-    !!true && describe('update allergens', () => {
+    !true && describe('retrieve allergens', () => {
+        beforeEach(() => User.create({
+            email,
+            username,
+            password,
+            allergens
+        }))
+
+        it('should retrieve allergens correctly', () =>
+            logic.retrieveProfileUser(email)
+            .then(res => {
+                expect(res.length).to.equal(2)
+                expect(res[0]).to.deep.equal('egg-free')
+                expect(res[1]).to.deep.equal('gluten-free')
+            })
+        )
+
+        it('should fail on trying to retrieve allergens with an undefined email', () =>
+            logic.retrieveProfileUser(undefined)
+            .catch(err => err)
+            .then(({
+                message
+            }) => expect(message).to.equal(`invalid email`))
+        )
+
+        it('should fail on trying to retrieve allergens with an empty email', () =>
+            logic.retrieveProfileUser('')
+            .catch(err => err)
+            .then(({
+                message
+            }) => expect(message).to.equal(`invalid email`))
+        )
+
+        it('should fail on trying to retrieve allergens with a number email', () =>
+            logic.retrieveProfileUser(123)
+            .catch(err => err)
+            .then(({
+                message
+            }) => expect(message).to.equal(`invalid email`))
+        )
+    })
+
+    !true && describe('update allergens', () => {
         const newAllergens = ["soy-free"]
 
         beforeEach(() => User.create({
@@ -273,9 +315,7 @@ describe('logic', () => {
             .then(res => {
                 expect(res).to.be.true
 
-                return User.findOne({
-                    email
-                })
+                return User.findOne({email})
             })
             .then(user => {
                 expect(user).to.exist
@@ -339,7 +379,7 @@ describe('logic', () => {
             .catch(err => err)
             .then(({
                 message
-            }) => expect(message).to.equal(`Wrong allergens`))
+            }) => expect(message).to.equal(`invalid new allergens`))
         )
 
         it('should fail on trying to update allergens with an empty new allergens', () =>
@@ -347,7 +387,7 @@ describe('logic', () => {
             .catch(err => err)
             .then(({
                 message
-            }) => expect(message).to.equal(`Wrong allergens`))
+            }) => expect(message).to.equal(`invalid new allergens`))
         )
 
         it('should fail on trying to update allergens with a numeric new allergens', () =>
@@ -355,11 +395,11 @@ describe('logic', () => {
             .catch(err => err)
             .then(({
                 message
-            }) => expect(message).to.equal(`Wrong allergens`))
+            }) => expect(message).to.equal(`invalid new allergens`))
         )
     })
 
-    !!true && describe('save menu', () => {
+    !true && describe('save menu', () => {
 
         beforeEach(() => User.create({
             email,
@@ -371,7 +411,7 @@ describe('logic', () => {
         it('should create menu', () =>
             logic.addMenu(email, title)
             .then(res => {
-                expect(res).to.be.true
+                expect(res.length).to.equal(1)
                 
                 return User.findOne({
                     email
@@ -434,7 +474,7 @@ describe('logic', () => {
         )
     })
 
-    !!true && describe('save dish to menu', () => {
+    !true && describe('save dish to menu', () => {
 
         beforeEach(() => User.create({
             email,
@@ -583,12 +623,12 @@ describe('logic', () => {
             .then(user => {
                 return logic.addDish(email, titleDish, recipeId, order,undefined)
                     .catch((err) => err) 
-                    .then(({message}) => expect(message).to.equal('Menu not found'))
+                    .then(({message}) => expect(message).to.equal('invalid menuId'))
             })
         )
     })
    
-    !!true && describe('remove dish', () => {
+    !true && describe('remove dish', () => {
         beforeEach(() => User.create({
             email,
             username,
@@ -718,7 +758,7 @@ describe('logic', () => {
 
     })
 
-    !!true && describe('remove menu', () => {
+    !true && describe('remove menu', () => {
         
         beforeEach(() => User.create({
             email,
@@ -795,7 +835,7 @@ describe('logic', () => {
         )
     })
 
-    !!true && describe('List menus', () => {
+    !true && describe('List menus', () => {
         
         beforeEach(() => User.create({
             email,
@@ -838,7 +878,7 @@ describe('logic', () => {
 
     })
 
-    !!true && describe('List menu and dish', () => {
+    !true && describe('List menu and dish', () => {
         const newMenu = new Menu(menu)
         const menuId = newMenu.id;
         newMenu.dishes.push(new Dish(dishes[0]), new Dish(dishes[0]))
@@ -901,7 +941,7 @@ describe('logic', () => {
             }) => expect(message).to.equal('invalid menu ID'))})
     })
 
-    !!true && describe('Search with allergens', () => {
+    !true && describe('Search with allergens', () => {
 
         beforeEach(() => User.create({
             email,
@@ -959,7 +999,7 @@ describe('logic', () => {
             }) => expect(message).to.equal(`invalid query`))})
     })
 
-    !!true && describe('Basic search', () => {
+    !true && describe('Basic search', () => {
 
         it('Basic search with query', () => {
             return logic.basicSearch('cake')
@@ -990,7 +1030,7 @@ describe('logic', () => {
             }) => expect(message).to.equal(`invalid query`))})
     })
 
-    !!true && describe('Search recipe by Id', () => {
+    !true && describe('Search recipe by Id', () => {
         beforeEach(() => User.create({
             email,
             username,
@@ -1061,24 +1101,35 @@ describe('logic', () => {
             .catch(err => err)
             .then(({
                 message
-            }) => expect(message).to.equal(`invalid Menu Id`))})
+            }) => expect(message).to.equal(`invalid Menu ID`))})
 
         it('should fail on search recipe by ID with empty Menu ID', () =>{
             return logic.searchRecipeById(email, '')
             .catch(err => err)
             .then(({
                 message
-            }) => expect(message).to.equal(`invalid Menu Id`))})
+            }) => expect(message).to.equal(`invalid Menu ID`))})
 
         it('should fail on search recipe by ID with undefined Menu ID', () =>{
             return logic.searchRecipeById(email, undefined)
             .catch(err => err)
             .then(({
                 message
-            }) => expect(message).to.equal(`invalid Menu Id`))})
+            }) => expect(message).to.equal(`invalid Menu ID`))})
 
     })
 
+    !!true && describe('Basic search recipe ID', () => {
+    it('Basic search with query', () => {
+        debugger
+        return logic.basicSearchRecipeById('b66666d5c882ca199f43def8f1b8a03f')
+            .then(recipesData => {
+                debugger
+                expect(recipesData).to.exist
+            })
+    })
+})
+    
 })
 
 
