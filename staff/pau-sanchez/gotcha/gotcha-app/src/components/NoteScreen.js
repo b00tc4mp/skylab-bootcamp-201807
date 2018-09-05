@@ -1,13 +1,15 @@
 import React, {Component} from 'react';
 //import {Container, ListGroup, ListGroupItem, Button, FormGroup, FormControl, ControlLabel} from 'reactstrap';
 import ReactPlayer from 'react-player'
-import EditorNotesBar from './EditorNotesBar';
+import PlayerNotesBar from './PlayerNotesBar';
 import {logic} from '../logic'
 import { withRouter } from 'react-router-dom'
+ 
 
 
 
-class EditorPlayer extends Component {
+class NoteScreen extends Component {
+
     state = {
         seconds: '',
         notetitle: '',
@@ -35,17 +37,35 @@ class EditorPlayer extends Component {
         newNoteSeconds: '',
         videoTitle:'',
         noteBookId: '',
-        isLoggedin: false
+        notebookTitle: '',
     }
-    
-    componentDidMount () {
-        const url = sessionStorage.getItem('landingUrl')
-        this.setState({ url : url})
-        console.log(url)
-    }
-    
 
-    
+    componentDidMount() {
+        const {editor, noteid} = this.props.match.params
+        
+        
+        return logic.listNotesbyNoteId(editor, noteid)
+        .then(res => {
+            console.log(res)
+            this.setState({ seconds: res.seconds })
+            this.setState({ noteBookId: res.notebook })
+        })
+        .then(() => {
+            return logic.listNotebooksByNotebookId(editor, this.state.noteBookId)
+        })
+        .then(res => {
+            console.log(res)
+            this.setState({ url : res.videourl})
+        })        
+        .then( () => {
+            console.log(this.state.seconds)
+            this.setSeekToPlay(this.state.seconds)
+        } )
+        
+        
+        
+        
+    }
 
                      
   
@@ -165,7 +185,7 @@ class EditorPlayer extends Component {
             .then(() => {
                 return logic.createNote(playedSeconds, notetitle, notetext, notebook, userId, token)
             })
-            .then(() => this.child.method(userId, notebook) )
+            
         
     
         
@@ -178,6 +198,7 @@ class EditorPlayer extends Component {
 
     //
     setSeekToPlay = (seconds) => {
+        console.log(seconds)
         this.player.seekTo(seconds)
     }
     //
@@ -222,6 +243,7 @@ class EditorPlayer extends Component {
                         <table><tbody>
                         <tr>
                             <p>{this.state.videoTitle}</p>  
+                            <h3>{this.state.notebookTitle}</h3> 
                             <th>Controls</th>
                             <td>
                             <button onClick={this.stop}>Stop</button>
@@ -310,27 +332,7 @@ class EditorPlayer extends Component {
                     
                     
                     
-                    <div id="NOTEBOOK CREATOR">
-                        <form onSubmit={this.buildNotebook}>
-                            <input type="text" name="videourl" placeholder="www.youtube.com/..." onChange={this.inputVideoUrl} />
-                            <input type="text" name="notebooktitle" placeholder="Notebook Title" onChange={this.inputTitle} />
-                            <button type="submit">Submit</button>
-                        </form>
-                    </div>
-
-
-
-
-
-                    <div  id="NOTECREATOR">
-                                <form onSubmit={this.buildNote}>
-                                    <input type="text" name="notetitle" placeholder="notetitle" onChange={this.inputNoteTitle} />
-                                    <input type="text" name="notetext" placeholder="notext" onChange={this.inputNoteText} />
-                                    <button type="submit">Submit</button>
-                                </form>
-                    </div>
-
-                    <EditorNotesBar onRef={ref => (this.child = ref)} seektoPass={this.setSeekToPlay}/>
+                    <PlayerNotesBar onRef={ref => (this.child = ref)} seektoPass={this.setSeekToPlay}/>
 
                     </section>
           
@@ -342,4 +344,4 @@ class EditorPlayer extends Component {
 
 }
 
-export default withRouter(EditorPlayer)
+export default withRouter(NoteScreen)

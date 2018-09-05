@@ -9,6 +9,8 @@ import NotebookEditor from '../pages/notebookeditor'
 import NotebookPlayer from '../pages/notebookplayer'
 import NotebookUpdate from '../pages/notebookupdate'
 import Notebooks from '../pages/notebooks'
+import Listnotes from '../pages/listnotes'
+import NotePlayer from '../pages/noteplayer'
 import Faq from '../pages/faq'
 import About from '../pages/about'
 
@@ -56,9 +58,13 @@ class App extends Component {
               <Route path='/profile' render={() => this.isLoggedIn() ? <Profile /> : <Redirect to='/' /> }/>
               <Route path='/home' render={() => this.isLoggedIn() ? <Home userId={userId} token={token}/> : <Redirect to='/' />} />
               <Route path='/editor'  render={() => this.isLoggedIn() ? <NotebookEditor userId={userId} token={token}/> : <Redirect to='/'/>} />
+              <Route path='/editorlanding'  render={() => <NotebookEditor />} />
               <Route path='/editnotebook/:id/:editor'  render={(props) => this.isLoggedIn() ? <NotebookUpdate id={props.match.params.id} editor={props.match.params.editor} userId={userId} token={token}/> : <Redirect to='/'/>} />
-              <Route path='/player/:id/:editor'  render={(props) => this.isLoggedIn() ? <NotebookPlayer id={props.match.params.id} editor={props.match.params.editor} userId={userId} token={token}/> : <Redirect to='/'/>} />
+            {/*<Route path='/player/:id/:editor'  render={(props) => this.isLoggedIn() ? <NotebookPlayer id={props.match.params.id} editor={props.match.params.editor} userId={userId} token={token}/> : <Redirect to='/'/>} /> */}
+              <Route path='/player/:id/:editor'  render={(props) => <NotebookPlayer id={props.match.params.id} editor={props.match.params.editor} />} />
               <Route path='/notebooks' render={() => this.isLoggedIn() ? <Notebooks userId={userId} token={token}/> : <Redirect to='/'/>} />
+              <Route path='/notes' render={() => this.isLoggedIn() ? <Listnotes userId={userId} token={token}/> : <Redirect to='/'/>}/>
+              <Route path='/noteplayer/:noteid/:editor' render={(props) => <NotePlayer noteid={props.match.params.noteid} editor={props.match.params.editor} />} />
               <Route path='/faq' component={Faq} />
               <Route path='/about' component={About} />
               <Route render={() => <h1>404</h1>} />
