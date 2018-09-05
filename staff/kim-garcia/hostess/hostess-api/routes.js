@@ -96,9 +96,9 @@ router.patch('/business-edit/:email', [validateJwt, jsonBodyParser], (req, res) 
 })
 
 router.patch('/hostess/:email', [validateJwt, jsonBodyParser], (req, res) => {
-    const { params: { email }, body: { name, birth, origin, gender, phone, languages, jobType, skills, tall, myself, photo } } = req
+    const { params: { email }, body: { name, birth, origin, gender, phone, languages, jobType, skills, height, myself, photo } } = req
 
-    logic.editHostessProfile(email, name, birth, origin, gender, phone, languages, jobType, tall, myself, skills, photo)
+    logic.editHostessProfile(email, name, birth, origin, gender, phone, languages, jobType, height, myself, skills, photo)
         .then(() => res.json({ message: 'hostess profile updated' }))
         .catch(err => {
             const { message } = err
@@ -146,7 +146,8 @@ router.get('/:email/search', [validateJwt, jsonBodyParser], (req, res) => {
     const email = req.params.email
     const gender = req.query.gender
     const jobType = req.query.jobType
-    const height = req.query.height
+    const height = JSON.parse(req.query.height) 
+
     const languages = req.query.languages ? req.query.languages.split('|') : undefined
 
     logic.searchWorkers(email, gender, jobType, height, languages)

@@ -1,5 +1,4 @@
 const validateEmail = require('../utils/validate-email')
-const moment = require('moment')
 const { Hostess, Business, Events } = require('../data/models')
 
 const logic = {
@@ -41,7 +40,7 @@ const logic = {
                 return Business.findOne({ email })
             })
             .then(business => {
-                if (business) throw new LogicError(`We allready have and acount with this email`)
+                if (business) throw new LogicError(`We allready have and acount with this email ${email}`)
 
                 return Business.create({ email, password })
             })
@@ -57,7 +56,7 @@ const logic = {
                 return Hostess.findOne({ email })
             })
             .then(hostess => {
-                if (!hostess) throw new LogicError(`Does not existe a hostess with this email ${email}`)
+                if (!hostess) throw new LogicError(`Does not exist a hostess with this email: ${email}`)
 
                 if (hostess.password !== password) throw new LogicError('Wrong password')
 
@@ -74,7 +73,7 @@ const logic = {
                 return Business.findOne({ email })
             })
             .then(business => {
-                if (!business) throw new LogicError(`Does not existe a company with this email: ${email}`)
+                if (!business) throw new LogicError(`Does not exist a company with this email: ${email}`)
 
                 if (business.password !== password) throw new LogicError('Wrong password')
 
@@ -101,7 +100,7 @@ const logic = {
 
                 return hostess.save()
             })
-            .then((res) => {
+            .then(() => {
                 return true
             })
     },
@@ -131,7 +130,7 @@ const logic = {
             .then(() => true)
     },
 
-    editHostessProfile(email, name, birth, origin, gender, phone, languages, jobType, tall, myself, skills, photo) {
+    editHostessProfile(email, name, birth, origin, gender, phone, languages, jobType, height, myself, skills, photo) {
         return Promise.resolve()
             .then(() => {
                 this._validateEmail(email)
@@ -140,7 +139,7 @@ const logic = {
                 this._validateStringField('gender', gender)
                 this._validateStringField('phone number', phone)
                 this._validateStringField('job type', jobType)
-                this._validateNumberField('height', tall)
+                this._validateNumberField('height', height)
                 this._validateStringField('description of myself', myself)
 
                 if (!(languages instanceof Array)) throw new LogicError('invalid languages')
@@ -151,7 +150,7 @@ const logic = {
             .then(hostess => {
                 if (!hostess) throw new LogicError(`hostess with ${email} email does not exist`)
 
-                return Hostess.updateOne({ email }, { $set: { name, birth, origin, gender, phone, languages, jobType, tall, myself, skills, photo } })
+                return Hostess.updateOne({ email }, { $set: { name, birth, origin, gender, phone, languages, jobType, height, myself, skills, photo } })
 
             })
             .then(() => true)
@@ -258,7 +257,7 @@ const logic = {
             })
     },
 
-  
+
     addFavs(emailHost, emailBus) {
 
         let idHost
@@ -290,15 +289,19 @@ const logic = {
             })
             .then(host => {
                 idHost = host.id
+                debugger
                 return Business.findOne({ email: emailBus })
             })
             .then(business => {
-                if({$indexOfArray: [emailHost]}) throw new LogicError('Already selected')
+                debugger
+                business._doc.selected.map(selectedId => {
+                    if (selectedId = idHost) throw new LogicError('Hostess already selected')
+                })
+
                 business._doc.selected.push(idHost)
                 return business.save()
             })
             .then(() => true)
-
     },
 
     createEvent(email, date, location, title, description) {
@@ -335,19 +338,17 @@ const logic = {
                 return business.save()
             })
             .then(() => true)
-
     },
 
     retrieveEventById(id) {
         return Promise.resolve()
-        .then(() => {
-            return Events.findById(id).populate('business').populate('hostesses')
-        })
-        .then(event => {
-            if(!event) throw new LogicError('can not find the event')
-            return event           
-        })
-
+            .then(() => {
+                return Events.findById(id).populate('business').populate('hostesses')
+            })
+            .then(event => {
+                if (!event) throw new LogicError('can not find the event')
+                return event
+            })
     },
 
 

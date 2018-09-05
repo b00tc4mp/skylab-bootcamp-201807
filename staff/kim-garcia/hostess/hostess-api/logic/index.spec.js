@@ -367,7 +367,7 @@ describe('logic', () => {
         )
     })
 
-    false && describe('select hostesses', () => {
+    true && describe('select hostesses', () => {
         beforeEach(() =>
             Promise.all([
                 Hostess.insertMany(hostesses),
@@ -376,15 +376,14 @@ describe('logic', () => {
 
         it('should select hostess for an event', () =>
             logic.addHostess('business1@mail.com', 'host1@mail.com')
-                .then(res => expect(res).to.be.true)
+                .then(res => {
+                    expect(res).to.be.true
+                })
         )
 
         it('should fail if the business email is missing', () =>
             logic.addHostess()
-                .catch(err => {
-                    return err
-                })
-
+                .catch(err => err)
                 .then(({ message }) => {
                     expect(message).to.equal('Missing the business in charge of this event')
                 })
@@ -396,6 +395,20 @@ describe('logic', () => {
                 .then(({ message }) => expect(message).to.equal('You should select at least one hostess for your event'))
         )
 
+        it('should fail if the hostess is already selected', () =>
+            logic.addHostess('business1@mail.com', 'host1@mail.com')
+                .then(() => {
+                    return logic.addHostess('business1@mail.com', 'host1@mail.com')
+                        .catch(err => {
+                            debugger
+                            return err
+                        })
+                        .then(({ message }) => {
+                            debugger
+                            expect(message).to.equal('Hostess already selected')
+                        })
+                })
+        )
     })
 
     false && describe('create event', () => {
@@ -432,21 +445,21 @@ describe('logic', () => {
 
         beforeEach(() => {
             return Events.insertMany(failEvents)
-            .then(() => {
-                return Events.findOne({"location": "Barcelona"})
-            })
-            .then((event) => {
-                return id = event._id                
-            })
+                .then(() => {
+                    return Events.findOne({ "location": "Barcelona" })
+                })
+                .then((event) => {
+                    return id = event._id
+                })
         })
 
         it('should retrieve an event', () =>
             logic.retrieveEventById(id)
-            
-            .then(event => {
-                expect(event).to.exist
-                expect(event.title).to.equal("The event")
-            })
+
+                .then(event => {
+                    expect(event).to.exist
+                    expect(event.title).to.equal("The event")
+                })
 
         )
     })
