@@ -1,5 +1,12 @@
 const { Schema } = require('mongoose')
 
+const Video = new Schema({
+    name: {
+        type: String,
+        required: true
+    }
+})
+
 const User = new Schema({
     username: {
         type: String,
@@ -9,8 +16,10 @@ const User = new Schema({
     password: {
         type: String,
         required: true
-    }
-    // videos: [Videos]
+    },
+    videos: []
 })
 
-module.exports = { User }
+
+
+module.exports = { Video, User }

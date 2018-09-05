@@ -13,6 +13,8 @@ mongoose.connect(MONGO_URL, { useNewUrlParser: true }, (err, conn) => {
 
     const app = express()
 
+    app.use(express.static('public'))
+
     app.use(cors())
 
     app.use('/api', routes)

@@ -22,35 +22,70 @@ describe('update-username', () => {
             .then(() => logic.unregisterUser(password))
     })
 
-/*
-    it('should fail unregister on empty password', () => {
-        return logic.unregisterUser('')
+    it('should fail update username on empty password', () => {
+        return logic.updateUsername('', newUsername)
             .catch(({ message }) => message)
             .then(message => expect(message).to.equal('invalid password'))
     })
 
-    it('should fail unregister on numeric password', () => {
-        return logic.unregisterUser(123)
+    it('should fail update username on numeric password', () => {
+        return logic.updateUsername(123, newUsername)
             .catch(({ message }) => message)
             .then(message => expect(message).to.equal('invalid password'))
     })
 
-    it('should fail unregister on undefined password', () => {
-        return logic.unregisterUser()
+    it('should fail update username on undefined password', () => {
+        return logic.updateUsername(undefined, newUsername)
             .catch(({ message }) => message)
             .then(message => expect(message).to.equal('invalid password'))
     })
 
-    it('should fail unregister on null password', () => {
-        return logic.unregisterUser(null)
+    it('should fail update username on null password', () => {
+        return logic.updateUsername(null, newUsername)
             .catch(({ message }) => message)
             .then(message => expect(message).to.equal('invalid password'))
     })
 
-    it('should fail unregister on boolean password', () => {
-        return logic.unregisterUser(true)
+    it('should fail update username on boolean password', () => {
+        return logic.updateUsername(true, newUsername)
             .catch(({ message }) => message)
             .then(message => expect(message).to.equal('invalid password'))
     })
-    */
+
+    it('should fail update username on not email new username', () => {
+        return logic.updateUsername(password, 'not-an-email')
+            .catch(({ message }) => message)
+            .then(message => expect(message).to.equal('username must be a valid email'))
+    })
+
+    it('should fail update username on empty new username', () => {
+        return logic.updateUsername(password, '')
+            .catch(({ message }) => message)
+            .then(message => expect(message).to.equal('invalid new username'))
+    })
+
+    it('should fail update username on numeric new username', () => {
+        return logic.updateUsername(password, 123)
+            .catch(({ message }) => message)
+            .then(message => expect(message).to.equal('invalid new username'))
+    })
+
+    it('should fail update username on undefined new username', () => {
+        return logic.updateUsername(password)
+            .catch(({ message }) => message)
+            .then(message => expect(message).to.equal('invalid new username'))
+    })
+
+    it('should fail update username on null new username', () => {
+        return logic.updateUsername(password, null)
+            .catch(({ message }) => message)
+            .then(message => expect(message).to.equal('invalid new username'))
+    })
+
+    it('should fail update username on boolean new username', () => {
+        return logic.updateUsername(password, false)
+            .catch(({ message }) => message)
+            .then(message => expect(message).to.equal('invalid new username'))
+    })
+    
 })

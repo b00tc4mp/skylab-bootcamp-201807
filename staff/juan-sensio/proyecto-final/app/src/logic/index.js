@@ -1,4 +1,8 @@
+const API_BASE_URL = 'http://localhost:8080/api/'
+
 const logic = {
+
+    // user management
 
     set _userId(userId) {
         sessionStorage.setItem('userId', userId)
@@ -18,7 +22,7 @@ const logic = {
         const config = { method }
         if (headers) config.headers = headers
         if (body) config.body = body
-        return fetch('http://localhost:8080/api/' + path, config)
+        return fetch(API_BASE_URL + path, config)
             .then(res => {
                 if (res.status === expectedStatus)
                     return res
@@ -102,6 +106,8 @@ const logic = {
     updateUsername(password, newUsername) {
         return Promise.resolve()
             .then(() => {
+                this._validateStringField('password', password)
+                this._validateStringField('new username', newUsername)
                 this._validateEmail(newUsername)
                 const headers = {
                     'content-type': 'application/json',
@@ -109,122 +115,62 @@ const logic = {
                 }
                 const body = JSON.stringify({ password, newUsername })
                 return this._callApi(`users/${this._userId}/updateUsername`, 'put', headers, body, 200)
-                    .then(res => true)
+                    .then(() => this.loginUser(newUsername, password))
             })
     },
 
     updatePassword(password, newPassword) {
-        const headers = {
-            'content-type': 'application/json',
-            'authorization': `bearer ${this._userToken}`
-        }
-        const body = JSON.stringify({ password, newPassword })
-        return this._callApi(`users/${this._userId}/updatePassword`, 'put', headers, body, 200)
-            .then(res => res.json())
-    },
-
-    saveData(data) {
-        const headers = {
-            'content-type': 'application/json',
-            'authorization': `bearer ${this._userToken}`
-        }
-        return this._callApi(`users/${this._userId}`, 'post', headers, JSON.stringify({ data }), 201)
-            .then(() => true)
-    },
-
-    retrieveData() {
-        const headers = {
-            'content-type': 'application/json',
-            'authorization': `bearer ${this._userToken}`
-        }
-        return this._callApi(`users/${this._userId}`, 'get', headers, undefined, 200)
-            .then(res => res.json())
-            .then(({ data }) => {
-                this._userData = data
-
-                if (!data.videos)
-                    this._userData.videos = []
-
-                return true
+        return Promise.resolve()
+            .then(() => {
+                this._validateStringField('password', password)
+                this._validateStringField('new password', newPassword)
+                if (password === newPassword) throw new Error('passwords must be different')
+                const headers = {
+                    'content-type': 'application/json',
+                    'authorization': `bearer ${this._userToken}`
+                }
+                const body = JSON.stringify({ password, newPassword })
+                return this._callApi(`users/${this._userId}/updatePassword`, 'put', headers, body, 200)
+                    .then(() => true)
             })
     },
 
-    addVideo(id, url) {
-        let videos = this._userData.videos
-        videos.push({ id, url })
-        return this.saveData(this._userData)
-    },
-
-    removeVideo(id) {
-        let videos = this._userData.videos
-        const ids = videos.map(({ id }) => id)
-        let index = ids.indexOf(id)
-        if (index === -1) throw new Error('video not found in deletion')
-        videos.splice(index, 1)
-        return this.saveData(this._userData)
-    },
-
-    // CLOUDINARY
-    API_KEY: '311749718863248',
-    API_SECRET: 'C_067ivTpTUyXOLV5kt1D1MPdfQ',
-    CLOUD_NAME: 'galleryapp',
-    PRESET: 'wx6qdpjo',
-
-    _callCloudinaryApi(path, method, video = undefined) {
-        const myUrl = `https://${this.API_KEY}:${this.API_SECRET}@api.cloudinary.com/v1_1/${this.CLOUD_NAME}${path}`
-        const config = {
-            method
-        }
-        if (method === 'post') {
-            let formData = new FormData()
-            formData.append('file', video)
-            formData.append('upload_preset', this.PRESET)
-            formData.append('folder', this._username)
-            config.body = formData
-        }
-        return fetch(`https://skylabcoders.herokuapp.com/proxy?url=${myUrl}`, config)
-            .then(res => res.json())
-            .catch(err => err)
-    },
+    // video management
 
     saveVideo(video) {
-        return this._callCloudinaryApi('/upload', 'post', video)
-            .then(({ public_id, url }) => this.addVideo(public_id, url))
+        const headers = {
+            'authorization': `bearer ${this._userToken}`
+        }
+        const formData = new FormData()
+        formData.append('file', video)
+        const body = formData
+        return this._callApi(`users/${this._userId}/videos`, 'put', headers, body, 200)
+            .then(() => true)
+    },
+
+    retrieveVideos() {
+        const headers = {
+            'authorization': `bearer ${this._userToken}`
+        }
+        return this._callApi(`users/${this._userId}/videos`, 'get', headers, undefined, 200)
+            .then(res => res.json())
+            .then(({ videos }) => {
+                return videos.map(video => {
+                    return {
+                        url: `${API_BASE_URL}/users/${this._userId}/videos/${video}?token=${this._userToken}`,
+                        id: video
+                    }
+                })
+            })
     },
 
     deleteVideo(id) {
-        return this._callCloudinaryApi(`/resources/video/upload/?public_ids=${id}`, 'delete')
-            .then(() => this.removeVideo(id))
+        const headers = {
+            'authorization': `bearer ${this._userToken}`
+        }
+        return this._callApi(`users/${this._userId}/videos/${id}`, 'delete', headers, undefined, 200)
+            .then(() => true)
     }
-
-    /*
-        retrieveVideos() {
-            return this._callCloudinaryApi(`/resources/video/upload/?prefix=${this.userUsername}`, 'get')
-                .then(res => res.resources)
-                .then(res => res.map(item => ({ url: item.url, id: item.public_id })))
-                .then(res => {
-                    this._userImages = res
-                    return true
-                })
-        },
-    
-        deleteAll() {
-            return this._callCloudinaryApi(`/resources/videos/upload/?prefix=${this.username}`, 'delete')
-                .then(() => {
-                    this._userData.videos = []
-                    return true
-                })
-        },
-    
-        deleteFolder() {
-            return this._callCloudinaryApi(`/folders/${this.username}`, 'delete')
-                .then(res => {
-                    this.userImages = res
-                    return true
-                })
-        },
-    */
-
 }
 
 if (typeof module !== 'undefined')
