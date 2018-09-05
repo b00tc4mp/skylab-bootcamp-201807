@@ -42,7 +42,7 @@ export default class NavBar extends Component {
       <div>
         <Navbar color="dark" dark expand="md">
           <NavbarBrand className="navbar__brand" href="/">¡Ajedrez! <img src="images/redknight.png"/></NavbarBrand>
-          {nickname && <h2 className="navbar__nickname">{nickname}</h2>}
+          {nickname && <h2 className="navbar__nickname">nickname</h2>}
           <NavbarToggler onClick={this.toggle}/>
           <Collapse isOpen={this.state.isOpen} navbar>
 

@@ -235,7 +235,7 @@ const logic = {
         const engine = new Chess()
         const uuid = uuidv1()
         this._currentEngines.set(uuid, engine)
-       // engine.header('White', requester, 'Black', confirmer)
+        engine.header('White', requester, 'Black', confirmer)
         const pgn = engine.pgn()
         game = new Game({
           initiator: requester,

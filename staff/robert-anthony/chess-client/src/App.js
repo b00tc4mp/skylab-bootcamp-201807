@@ -161,7 +161,7 @@ class App extends Component {
 
   onLogout = () => {
     // this.socket.emit('logout', this.state.nickname)
-    this.setState({nickname: '', token: ''})
+    this.setState({nickname: '', token: '',users:[],currentGames:[]})
 // removesocketlisteners ??
     sessionStorage.clear()
   }

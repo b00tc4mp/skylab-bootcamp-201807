@@ -34,16 +34,23 @@ h2.navbar__nickname {
 
 main div.games__mainChessRow.row div.chessBoardGroup__gameInfoArea.col-12.col-md-3 h3.chessBoardGroup__players {
   font-size: 1.2em;
-  color: #ff002d; }
+  color: #ff002d;
+  padding-bottom: 10px;
+  border-bottom: solid 1px rgba(87, 87, 87, 0.8); }
   main div.games__mainChessRow.row div.chessBoardGroup__gameInfoArea.col-12.col-md-3 h3.chessBoardGroup__players span {
     color: #a5a5a5; }
 
 main div.games__mainChessRow.row div.chessBoardGroup__gameInfoArea.col-12.col-md-3 {
+  padding: .5em;
+  padding-left: 1em;
+  padding-right: 1em;
   background-color: rgba(50, 50, 60, 0.8); }
 
 main div.games__mainChessRow.row div.chessBoardGroup__gameInfoArea.col-12.col-md-3 h3.chessBoardGroup__toPlay {
   font-size: 1.2em;
-  color: #ff002d; }
+  color: #ff002d;
+  padding-bottom: 10px;
+  border-bottom: solid 1px rgba(87, 87, 87, 0.8); }
   main div.games__mainChessRow.row div.chessBoardGroup__gameInfoArea.col-12.col-md-3 h3.chessBoardGroup__toPlay span {
     color: #a5a5a5; }
 
@@ -53,7 +60,9 @@ main div.games__mainChessRow.row div.chessBoardGroup__gameInfoArea.col-12.col-md
 
 main div.games__mainChessRow.row div.chessBoardGroup__gameInfoArea.col-12.col-md-3 h3.chessBoardGroup__inCheck {
   font-size: 1.2em;
-  color: #ff002d; }
+  color: #ff002d;
+  padding-bottom: 10px;
+  border-bottom: solid 1px rgba(87, 87, 87, 0.8); }
   main div.games__mainChessRow.row div.chessBoardGroup__gameInfoArea.col-12.col-md-3 h3.chessBoardGroup__inCheck span {
     color: #a5a5a5; }
 
