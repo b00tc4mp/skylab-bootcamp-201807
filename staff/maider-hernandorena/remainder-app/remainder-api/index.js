@@ -5,7 +5,7 @@ const cors = require('cors')
 const package = require('./package.json')
 const routesDoctor = require('./routesDoctor')
 const routesCaretaker = require('./routesCaretaker')
-const mongoose = require('mongoose')
+const { mongoose } = require('remainder-data')
 
 const { env: { MONGO_URL, PORT } } = process
 

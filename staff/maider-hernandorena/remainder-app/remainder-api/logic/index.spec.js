@@ -2,8 +2,7 @@ require('dotenv').config()
 
 const { logic } = require('.')
 const { expect } = require('chai')
-const mongoose = require('mongoose')
-const { Doctor, Patient, Cite, Treatment, Caretaker } = require('../data/models')
+const { mongoose, models: { Doctor, Patient, Cite, Caretaker, Treatment } } = require('remainder-data')
 
 const { env: { MONGO_URL } } = process
 
