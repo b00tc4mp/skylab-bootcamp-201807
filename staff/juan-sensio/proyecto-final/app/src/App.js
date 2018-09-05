@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import { withRouter, Route } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { login, setLayout } from './redux/actions'
-import logic from './logic'
+import { setLayout } from './redux/actions'
 
 import Nav from './components/Nav'
 import Profile from './components/Profile'
@@ -16,15 +15,12 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  login: () => dispatch(login()),
   setLayout: layout => dispatch(setLayout(layout))
 })
 
 class App extends Component {
 
   componentWillMount = () => {
-    if (logic.loggedIn())
-      this.props.login()
     this.setLayout()
     if (this.props.layout)
       this.props.history.push('/profile')

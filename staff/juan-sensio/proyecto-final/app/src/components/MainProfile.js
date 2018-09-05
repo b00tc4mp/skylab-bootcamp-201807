@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { updateSetting } from '../redux/actions'
+import { setVideo, setVideos, setDatasets } from '../redux/actions'
 
 import logic from '../logic'
 
@@ -8,42 +8,70 @@ import './styles/MainProfile.css'
 
 import VideoGallery from './VideoGallery'
 
+const mapStateToProps = ({ user }) => ({
+    videos: user.videos,
+    datasets: user.datasets
+})
+
 const mapDispatchToProps = dispatch => ({
-    updateSetting: (key, value) => dispatch(updateSetting(key, value))
+    setVideo: video => dispatch(setVideo(video)),
+    setVideos: videos => dispatch(setVideos(videos)),
+    setDatasets: datasets => dispatch(setDatasets(datasets))
 })
 
 class MainProfile extends Component {
 
     state = {
-        videos: [],
         msg: ''
     }
 
-    setVideoSrc = src => this.props.updateSetting('mainVideoSrc', src)
+    setVideo = video => this.props.setVideo(video)
 
-    componentWillMount = () => 
+    retrieveVideos = () =>
         logic.retrieveVideos()
-            .then(videos => this.setState({ videos }))
+            .then(videos => this.props.setVideos(videos))
 
-    deleteVideo = id => {
-        logic.deleteVideo(id)
-            .then(this.setState({ msg: 'deleted !', videos: logic.retrieveVideos() }))
-            .then(() => window.location.reload())
+    retrieveDatasets = () =>
+        logic.retrieveDatasets()
+            .then(datasets => this.props.setDatasets(datasets))
+
+    componentWillMount = () => {
+        this.retrieveVideos()
+        this.retrieveDatasets()
     }
 
+    deleteVideo = id =>
+        logic.deleteVideo(id)
+            .then(() => {
+                this.setState({ msg: 'video deleted !' })
+                return this.retrieveVideos()
+            })
+
+    deleteDataset = id =>
+        logic.deleteDataset(id)
+            .then(() => {
+                this.setState({ msg: 'dataset deleted !' })
+                return this.retrieveDatasets()
+            })
+
     render() {
-        const { videos } = this.state
-        const { setVideoSrc, deleteVideo } = this
+        const { videos, datasets } = this.props
+        const { setVideo, deleteVideo, deleteDataset } = this
         return (
             <div className='main-profile'>
                 <VideoGallery
                     title={'My Videos'}
                     videos={videos}
-                    setVideoSrc={setVideoSrc}
+                    setVideo={setVideo}
                     deleteVideo={deleteVideo} />
+                <VideoGallery
+                    title={'My Datasets'}
+                    videos={datasets}
+                    setVideo={setVideo}
+                    deleteVideo={deleteDataset} />
             </div>
         )
     }
 }
 
-export default connect(null, mapDispatchToProps)(MainProfile)
+export default connect(mapStateToProps, mapDispatchToProps)(MainProfile)

@@ -8,12 +8,16 @@ const DEFAULT_OS = 16
 const BREAK_SCREEN = 700
 
 const initialState = {
-    layout: true,
     user: {
-        loggedIn: false
+        videos: [],
+        datasets: []
     },
+    video: {
+        url: '',
+        id: ''
+    },
+    layout: true,
     settings: {
-        mainVideoSrc: '',
         ISF: DEFAULT_ISF,
         OS: DEFAULT_OS,
         FH: false,

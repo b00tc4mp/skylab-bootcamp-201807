@@ -1,6 +1,6 @@
 'use strict'
 
-const { User, Video } = require('../mongoose/models')
+const { User, Video, Dataset } = require('../mongoose/models')
 const fs = require('fs')
 var rimraf = require('rimraf');
 
@@ -103,8 +103,10 @@ const logic = {
             .then(user => {
                 if (!user) throw new LogicError(`user ${username} does not exist`)
                 if (user.password !== password) throw new LogicError('wrong credentials')
-                return User.findByIdAndRemove(id)
+                return Promise.all(user.videos.map(id => Video.findByIdAndRemove(id)))
+                    .then(() => Promise.all(user.datasets.map(id => Dataset.findByIdAndRemove(id))))
             })
+            .then(() => User.findByIdAndRemove(id))
             .then(() => {
                 rimraf(`${dataPath}/${id}`, () => { })
                 return true
@@ -113,8 +115,8 @@ const logic = {
 
     // video management
 
-    getVideoPath(id, name) {
-        return `${dataPath}/${id}/videos/${name}`
+    getVideoPath(userId, videoName) {
+        return `${dataPath}/${userId}/videos/${videoName}`
     },
 
     saveVideo(id, name, file) {
@@ -175,7 +177,84 @@ const logic = {
                 else
                     throw new Error('video not found')
             })
-    }
+    },
+
+    // dataset management
+
+    getDatasetPath(userId, datasetName) {
+        return `${dataPath}/${userId}/data-sets/${datasetName}`
+    },
+
+    buildDataset(userId, videoId) {
+        // for now: copy video
+        return User.findById(userId)
+            .then(user => {
+                if (!user) throw new LogicError(`user ${username} does not exist`)
+                if (user.videos.indexOf(videoId) > -1)
+                    return Video.findById(videoId)
+                        .then(video => {
+                            if (!video) throw new LogicError(`video not found`)
+                            return Dataset.create({ name: video.name })
+                                .then(dataset => {
+                                    const videoPath = this.getVideoPath(userId, video.name)
+                                    // posenet.builDataset(videoPath)
+                                    const datasetPath = this.getDatasetPath(userId, dataset.name)
+                                    fs.copyFileSync(videoPath, datasetPath)
+                                    user.datasets.push(dataset.id)
+                                    user.save()
+                                })
+                        })
+
+                else
+                    throw new Error('video not found')
+            })
+    },
+
+    retrieveDatasets(userId) {
+        return User.findById(userId)
+            .then(user => {
+                if (!user) throw new LogicError(`user ${username} does not exist`)
+                return user.datasets
+            })
+    },
+
+    deleteDataset(userId, datasetId) {
+        return User.findById(userId)
+            .then(user => {
+                if (!user) throw new LogicError(`user ${username} does not exist`)
+                const index = user.datasets.indexOf(datasetId)
+                if (index > -1) {
+                    user.datasets.splice(index, 1)
+                    user.save()
+                    return Dataset.findById(datasetId)
+                        .then(dataset => {
+                            const path = this.getDatasetPath(userId, dataset.name)
+                            fs.unlink(path, err => {
+                                if (err)
+                                    throw new Error('dataset not found')
+                            })
+                            dataset.remove()
+                        })
+                } else {
+                    throw new Error('dataset not found')
+                }
+            })
+    },
+
+    retrieveDataset(id, datasetId) {
+        return User.findById(id)
+            .then(user => {
+                if (!user) throw new LogicError(`user ${username} does not exist`)
+                if (user.datasets.indexOf(datasetId) > -1)
+                    return Dataset.findById(datasetId)
+                        .then(dataset => {
+                            if (!dataset) throw new LogicError(`dataset not found`)
+                            return this.getDatasetPath(id, dataset.name)
+                        })
+                else
+                    throw new Error('dataset not found')
+            })
+    },
 
 }
 

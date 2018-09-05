@@ -2,6 +2,17 @@ const API_BASE_URL = 'http://localhost:8080/api/'
 
 const logic = {
 
+    _validateStringField(fieldName, fieldValue) {
+        if (typeof fieldValue !== 'string' || !fieldValue.length)
+            throw new Error(`invalid ${fieldName}`)
+    },
+
+    _validateEmail(email) {
+        var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+        const validEmail = re.test(String(email).toLowerCase());
+        if (!validEmail) throw new Error('username must be a valid email')
+    },
+
     // user management
 
     set _userId(userId) {
@@ -32,17 +43,6 @@ const logic = {
                             throw new Error(message)
                         })
             })
-    },
-
-    _validateStringField(fieldName, fieldValue) {
-        if (typeof fieldValue !== 'string' || !fieldValue.length)
-            throw new Error(`invalid ${fieldName}`)
-    },
-
-    _validateEmail(email) {
-        var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-        const validEmail = re.test(String(email).toLowerCase());
-        if (!validEmail) throw new Error('username must be a valid email')
     },
 
     registerUser(username, password) {
@@ -144,7 +144,7 @@ const logic = {
         const formData = new FormData()
         formData.append('file', video)
         const body = formData
-        return this._callApi(`users/${this._userId}/videos`, 'put', headers, body, 200)
+        return this._callApi(`users/${this._userId}/videos`, 'put', headers, body, 201)
             .then(() => true)
     },
 
@@ -157,7 +157,7 @@ const logic = {
             .then(({ videos }) => {
                 return videos.map(video => {
                     return {
-                        url: `${API_BASE_URL}/users/${this._userId}/videos/${video}?token=${this._userToken}`,
+                        url: `${API_BASE_URL}users/${this._userId}/videos/${video}?token=${this._userToken}`,
                         id: video
                     }
                 })
@@ -170,7 +170,43 @@ const logic = {
         }
         return this._callApi(`users/${this._userId}/videos/${id}`, 'delete', headers, undefined, 200)
             .then(() => true)
-    }
+    },
+
+    // dataset management
+
+    buildDataset(id) {
+        const headers = {
+            'content-type': 'application/json',
+            'authorization': `bearer ${this._userToken}`
+        }
+        const body = JSON.stringify({videoId: id})
+        return this._callApi(`users/${this._userId}/dataset`, 'put', headers, body, 201)
+            .then(() => true)
+    },
+
+    retrieveDatasets() {
+        const headers = {
+            'authorization': `bearer ${this._userToken}`
+        }
+        return this._callApi(`users/${this._userId}/datasets`, 'get', headers, undefined, 200)
+            .then(res => res.json())
+            .then(({ datasets }) => {
+                return datasets.map(dataset => {
+                    return {
+                        url: `${API_BASE_URL}users/${this._userId}/datasets/${dataset}?token=${this._userToken}`,
+                        id: dataset
+                    }
+                })
+            })
+    },
+
+    deleteDataset(id) {
+        const headers = {
+            'authorization': `bearer ${this._userToken}`
+        }
+        return this._callApi(`users/${this._userId}/datasets/${id}`, 'delete', headers, undefined, 200)
+            .then(() => true)
+    },
 }
 
 if (typeof module !== 'undefined')

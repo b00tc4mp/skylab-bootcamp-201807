@@ -120,4 +120,49 @@ router.get('/users/:id/videos/:videoId', validateJwt, (req, res) => {
         .then(filename => res.download(filename))
 })
 
+// dataset management
+
+router.put('/users/:id/dataset', [validateJwt, jsonBodyParser], (req, res) => {
+    const { params: { id }, body: { videoId } } = req
+    debugger
+    logic.buildDataset(id, videoId)
+        .then(() => {
+            res.status(201).json({ message: 'dataset built correctly' })
+        })
+        .catch(err => {
+            const { message } = err
+            res.status(err instanceof LogicError ? 401 : 500).json({ message })
+        })
+})
+
+router.delete('/users/:id/datasets/:datasetId', validateJwt, (req, res) => {
+    const { params: { id, datasetId } } = req
+    logic.deleteDataset(id, datasetId)
+        .then(() => {
+            res.status(200).json({ message: 'dataset deleted correctly.' })
+        })
+        .catch(err => {
+            const { message } = err
+            res.status(err instanceof LogicError ? 401 : 500).json({ message })
+        })
+})
+
+router.get('/users/:id/datasets', validateJwt, (req, res) => {
+    const { params: { id } } = req
+    logic.retrieveDatasets(id)
+        .then(datasets => {
+            res.status(200).json({ datasets })
+        })
+        .catch(err => {
+            const { message } = err
+            res.status(err instanceof LogicError ? 401 : 500).json({ message })
+        })
+})
+
+router.get('/users/:id/datasets/:datasetId', validateJwt, (req, res) => {
+    const { params: { id, datasetId } } = req
+    logic.retrieveDataset(id, datasetId)
+        .then(filename => res.download(filename))
+})
+
 module.exports = router

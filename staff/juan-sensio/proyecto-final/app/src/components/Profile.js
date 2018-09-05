@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
 import { withRouter, Route, Redirect } from 'react-router-dom'
 import logic from '../logic'
-import { login, logout } from '../redux/actions'
 
 import './styles/Profile.css'
 
@@ -11,24 +9,19 @@ import Register from './Register'
 import Account from './Account'
 import MainProfile from './MainProfile'
 
-const mapStateToProps = state => ({
-    loggedIn: state.user.loggedIn
-})
-
-const mapDispatchToProps = dispatch => ({
-    login: () => dispatch(login()),
-    logout: () => dispatch(logout())
-})
-
 class Profile extends Component {
 
     componentWillMount = () => {
-        if (!this.props.loggedIn)
+        if (!logic.loggedIn())
             this.showLogin()
     }
 
-    showRegister = () => this.props.history.push('/profile/register')
-    showLogin = () => this.props.history.push('/profile/login')
+    showRegister = () =>
+        this.props.history.push('/profile/register')
+
+    showLogin = () =>
+        this.props.history.push('/profile/login')
+
     toggleAccount = () => {
         const path = this.props.location.pathname
         if (path === '/profile/account')
@@ -36,25 +29,22 @@ class Profile extends Component {
         else
             this.props.history.push('/profile/account')
     }
-    logout = () => {
-        logic.logout()
-        this.props.logout()
-        this.showLogin()
-    }
 
     register = (username, password) =>
         logic.registerUser(username, password)
 
     login = (username, password) =>
         logic.loginUser(username, password)
-            .then(() => this.props.login(true))
+            .then(() => this.forceUpdate())
 
-    // unregister = password =>
-    //   logic.unregisterUser(password)
-    //     .then(() => this.logout())
+    logout = () => {
+        logic.logout()
+        this.showLogin()
+    }
 
     render() {
-        const { setVideoSrc, deleteVideo, loggedIn } = this.props
+        const loggedIn = logic.loggedIn()
+        const { setVideoSrc, deleteVideo } = this.props
         const { showRegister, showLogin, toggleAccount, login, logout, register } = this
         return (
             <div className='profile'>
@@ -72,4 +62,4 @@ class Profile extends Component {
     }
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Profile))
+export default withRouter(Profile)
