@@ -2,7 +2,7 @@
 
 const logic = {
 
-    url: 'http://localhost:8080/api',
+    url: 'http://localhost:8080/api/doctor',
 
     /**
      * The call to the API which connects with the data base (on each function later, will be called and sent different parameter for each situation)

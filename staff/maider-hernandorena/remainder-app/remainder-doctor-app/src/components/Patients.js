@@ -42,10 +42,9 @@ class Patients extends Component {
     onSearch = e => {
         e.preventDefault()
         const { name } = this.state
+        
         logic.searchPatients(name)
-            .then(patients => {
-                this.setState({ patients, name: '', error: '', search: true })
-            })
+            .then(patients => this.setState({ patients, name: '', error: '', search: true }))
             .catch(({ message }) => this.setState({ error: message }))
     }
 
