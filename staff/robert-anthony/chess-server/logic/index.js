@@ -37,7 +37,7 @@ const logic = {
       })
       .then(user => {
         if (user) throw new LogicError(`user with ${email} email already exists`)
-        user = new User({email,password,nickname})
+        user = new User({email, password, nickname})
         return user.save()
       })
       .then(() => true)
@@ -168,7 +168,10 @@ const logic = {
   getUsersForString(nickname, term) {
     return Promise.resolve()
       .then(_ => {
+        this._validateStringField('nickname',nickname)
         if (!term) return []
+        else if (typeof term !== 'string')
+          throw new LogicError('search term is not a string')
         else {
           return User.find({nickname: {"$regex": term, $options: "i"}}).lean()
             .then(users => {
@@ -237,7 +240,7 @@ const logic = {
         const engine = new Chess()
         const uuid = uuidv1()
         this._currentEngines.set(uuid, engine)
-     //   engine.header('White', requester, 'Black', confirmer)
+        //   engine.header('White', requester, 'Black', confirmer)
         const pgn = engine.pgn()
         game = new Game({
           initiator: requester,

@@ -8,6 +8,7 @@ const {User} = require('../data/models')
 const {Game} = require('../data/models')
 const {Chess} = require('chess.js')
 const uuidv1 = require('uuid/v1');
+const randomEmail = require('random-email');
 const {env: {MONGO_URL}} = process
 
 describe('logic', () => {
@@ -366,7 +367,7 @@ describe('logic', () => {
   describe('get games for user', () => {
     beforeEach(async () => {
       await User.create({email, password, nickname})
-      await User.create({email: email2,password,nickname: nickname2})
+      await User.create({email: email2, password, nickname: nickname2})
 
       for (let i = 0; i < 3; i++) {
         let engine = new Chess()
@@ -412,7 +413,7 @@ describe('logic', () => {
     )
 
 
-   it('should return empty array when no games exist for user', () =>
+    it('should return empty array when no games exist for user', () =>
       logic.getGamesForUser(nickname2)
         .then(res => {
           expect(res).to.be.an('array')
@@ -420,19 +421,19 @@ describe('logic', () => {
         })
     )
 
-   it('should fail for empty nickname', () =>
+    it('should fail for empty nickname', () =>
       logic.getGamesForUser('')
         .catch(err => err)
         .then(({message}) => expect(message).to.equal(`invalid nickname`))
     )
 
-   it('should fail for undefined nickname', () =>
+    it('should fail for undefined nickname', () =>
       logic.getGamesForUser(undefined)
         .catch(err => err)
         .then(({message}) => expect(message).to.equal(`invalid nickname`))
     )
 
-   it('should fail for numeric nickname', () =>
+    it('should fail for numeric nickname', () =>
       logic.getGamesForUser(1234)
         .catch(err => err)
         .then(({message}) => expect(message).to.equal(`invalid nickname`))
@@ -479,6 +480,83 @@ describe('logic', () => {
         .catch(err => err)
         .then(({message}) => expect(message).to.equal(`invalid nickname`))
     )
+
+
+  })
+
+
+  describe('get users for string', () => {
+    const nickname0 = "abcdefg"
+    const nicknameA = "Abracadabra"
+    const nicknameB = "baldroSa"
+    const nicknameC = "¢”#≠”¢"
+
+    beforeEach(async () => {
+      await User.create({email:randomEmail({ domain: 'example.com' }), password, nickname:nickname0})
+      await User.create({email:randomEmail({ domain: 'example.com' }), password, nickname: nicknameA})
+      await User.create({email: randomEmail({ domain: 'example.com' }), password, nickname: nicknameB})
+      await User.create({email: randomEmail({ domain: 'example.com' }), password, nickname: nicknameC})
+    })
+
+    it('should return correct users for one letter string', () =>
+      logic.getUsersForString(nickname0,'a')
+        .then(res => {
+          expect(res).to.be.an('array')
+          expect(res.length).to.equal(2)
+          expect(res[0]).to.equal(nicknameA)
+          expect(res[1]).to.equal(nicknameB)
+        })
+    )
+
+    it('should return correct users for multi letter string', () =>
+      logic.getUsersForString(nickname0,'cadab')
+        .then(res => {
+          expect(res).to.be.an('array')
+          expect(res.length).to.equal(1)
+          expect(res[0]).to.equal(nicknameA)
+        })
+    )
+
+    it('should return empty array for empty string', () =>
+      logic.getUsersForString(nickname0,'')
+        .then(res => {
+          expect(res).to.be.an('array')
+          expect(res.length).to.equal(0)
+        })
+    )
+
+    it('should return empty array for wrong character string', () =>
+      logic.getUsersForString(nickname0,'xxx')
+        .then(res => {
+          expect(res).to.be.an('array')
+          expect(res.length).to.equal(0)
+        })
+    )
+
+    it('should fail for numeric term', () =>
+      logic.getUsersForString(nickname0,123)
+        .catch(err => err)
+        .then(({message}) => expect(message).to.equal(`search term is not a string`))
+    )
+
+    it('should fail for missing nickname', () =>
+      logic.getUsersForString('','a')
+        .catch(err => err)
+        .then(({message}) => expect(message).to.equal(`invalid nickname`))
+    )
+
+    it('should fail for undefined nickname', () =>
+      logic.getUsersForString(undefined,'a')
+        .catch(err => err)
+        .then(({message}) => expect(message).to.equal(`invalid nickname`))
+    )
+
+    it('should fail for numeric nickname', () =>
+      logic.getUsersForString(123,'a')
+        .catch(err => err)
+        .then(({message}) => expect(message).to.equal(`invalid nickname`))
+    )
+
 
 
   })
