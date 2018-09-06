@@ -73,37 +73,18 @@ router.patch('/update/:email', [verifyJwt, jsonBodyParser], (req, res) => {
 })
 
 /**
- * To unregister caretaker
- * Must send on the body the password
- * 
- * @throws {LogicError} Message of status
- * 
- * @returns {Response} Message 'caretaker removed correctly'
- */
-router.delete('/unregister/:email', [verifyJwt, jsonBodyParser], (req, res) => {
-    const { params: { email }, body: { password } } = req
-
-    logic.unregisterCaretaker(email, password)
-        .then(() => res.status(200).json({ message: 'caretaker removed correctly' }))
-        .catch(err => {
-            const { message } = err
-            res.status(err instanceof LogicError ? 400 : 500).json({ message })
-        })
-})
-
-/**
  * To return the patient the caretaker has
  * 
  * @throws {LogicError} Message of status
  * 
  * @returns {Response} Patient data
  */
-router.get('/:email/patient/:dni', jsonBodyParser, (req, res) => {
-    let { params: { email, dni } } = req
+router.get('/patient/:dni', jsonBodyParser, (req, res) => {
+    let { params: { dni } } = req
     
     dni = parseInt(dni)
 
-    logic.caretakerPatient(email, dni)
+    logic.retrieveCaretakerPatients(dni)
         .then(patient => res.json(patient))
         .catch(err => {
             const { message } = err

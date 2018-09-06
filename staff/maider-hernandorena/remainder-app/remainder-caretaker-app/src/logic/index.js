@@ -1,7 +1,5 @@
 'use strict'
 
-const validateEmail = require('../utils/validate-email')
-
 const logic = {
 
     url: 'http://localhost:8080/api/caretaker',
@@ -70,48 +68,38 @@ const logic = {
     },
 
     /**
-     * Validates a email with a RegExp on a imported function
-     * @param {String} email
-     * 
-     * @throws {Error} invalid email
-     */
-    _validateEmail(email) {
-        if (!validateEmail(email)) throw new Error('invalid email')
-    },
-
-    /**
-     * Registers a caretaker with a email and a password 
-     * @param {String} email //caretakers email
+     * Registers a caretaker with a dni and a password 
+     * @param {Number} dni //caretakers dni
      * @param {String} password //caretakers password
      * 
      * @returns {boolean} TRUE => if it is registered correctly
      */
-    registerCaretaker(email, password) {
+    registerCaretaker(dni, password) {
         return Promise.resolve()
             .then(() => {
-                this._validateEmail(email)
+                this._validateDni('dni', dni)
                 this._validateStringField('password', password)
 
-                return this._call('register', 'post', {'Content-Type': 'application/json'}, JSON.stringify({ email, password }), 201)
+                return this._call('register', 'post', {'Content-Type': 'application/json'}, JSON.stringify({ dni, password }), 201)
                     .then(res => res.json())    
                     .then(() => true)
             })
     },
 
     /**
-     * Authenticates a caretaker with a email and a password 
-     * @param {String} email //caretakers email
+     * Authenticates a caretaker with a dni and a password 
+     * @param {Number} dni //caretakers dni
      * @param {String} password //caretakers password
      * 
      * @returns {Object} caretakers id and token
      */
-    authenticateCaretaker(email, password) {
+    authenticateCaretaker(dni, password) {
         return Promise.resolve()
             .then(() => {
-                this._validateEmail(email)
+                this._validateDni(dni)
                 this._validateStringField('password', password)
 
-                return this._call('auth', 'post', {'Content-Type': 'application/json'}, JSON.stringify({ email, password }), 200)
+                return this._call('auth', 'post', {'Content-Type': 'application/json'}, JSON.stringify({ dni, password }), 200)
                     .then(res => res.json())
                     .then(caretaker => caretaker)
             })
@@ -119,40 +107,21 @@ const logic = {
 
     /**
      * Updates the caretakers account password 
-     * @param {String} email //caretakers email
+     * @param {Number} dni //caretakers dni
      * @param {String} password //caretakers password
      * @param {String} newPassword //caretakers new password
      * @param {String} token //caretakers token, received on authentication
      * 
      * @returns {boolean} TRUE => if it is registered correctly
      */
-    updateCaretakerPassword(email, password, newPassword, token) {
+    updateCaretakerPassword(dni, password, newPassword, token) {
         return Promise.resolve()
             .then(() => {
-                this._validateEmail(email)
+                this._validateDni(dni)
                 this._validateStringField('password', password)
                 this._validateStringField('new password', newPassword)
 
-                return this._call(`update/${email}`, 'PATCH', {'Content-Type': 'application/json', authorization: `bearer ${token}`}, JSON.stringify({ password, newPassword }), 201)
-                    .then(res => res.json())
-                    .then(() => true)
-            })
-    },
-
-    /**
-     * Unregisters the caretaker
-     * @param {String} email //caretakers email
-     * @param {String} password //caretakers password
-     * 
-     * @returns {boolean} TRUE => if it is registered correctly
-     */
-    unregisterCaretaker(email, password, token) {
-        return Promise.resolve()
-            .then(() => {
-                this._validateEmail(email)
-                this._validateStringField('password', password)
-
-                return this._call(`unregister/${email}`, 'delete', {'Content-Type': 'application/json', authorization: `bearer ${token}`}, JSON.stringify({ password }), 200)
+                return this._call(`update/${dni}`, 'PATCH', {'Content-Type': 'application/json', authorization: `bearer ${token}`}, JSON.stringify({ password, newPassword }), 201)
                     .then(res => res.json())
                     .then(() => true)
             })
@@ -160,18 +129,16 @@ const logic = {
 
     /**
      * Caretakers patient 
-     * @param {String} email //caretakers email
-     * @param {String} dni //patient dni
+     * @param {Number} dni //caretakers dni
      * 
      * @returns {Response} caretakers patient data
      */
-    caretakerPatient(email, dni) {
+    retrieveCaretakerPatients(dni) {
         return Promise.resolve()
             .then(() => {
-                this._validateEmail(email)
                 this._validateDniField('dni', dni)
 
-                return this._call(`${email}/patient/${dni}`, 'get', {'Content-Type': 'application/json'}, undefined, 200)
+                return this._call(`patient/${dni}`, 'get', {'Content-Type': 'application/json'}, undefined, 200)
                     .then(res => res.json())
                     .then(patient => patient)
             })

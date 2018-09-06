@@ -1,6 +1,5 @@
 'use strict'
 
-const validateEmail = require('../utils/validate-email')
 const moment = require('moment')
 const { mongoose: { Types: { ObjectId } }, models: { Doctor, Patient, Cite, Caretaker, Admin } } = require('remainder-data')
 
@@ -59,16 +58,6 @@ const logic = {
      */
     _validateDateField(date, field) {
         if (!(field instanceof Date)) throw new LogicError(`invalid ${date}`)
-    },
-
-    /**
-     * Validates a email with a RegExp on a imported function
-     * @param {String} email
-     * 
-     * @throws {LogicError} invalid email
-     */
-    _validateEmail(email) {
-        if (!validateEmail(email)) throw new LogicError('invalid email')
     },
 
 
@@ -599,8 +588,6 @@ const logic = {
             .then(() => true)
     },
 
-    //CHANGE!!!!!!!!!
-
     /**
      * caretakers patients
      * @param {Number} dni //caretakers dni
@@ -618,21 +605,21 @@ const logic = {
             })
             .then(caretaker => {
                 if (!caretaker) throw new LogicError(`caretaker ${dni} does not exist`)
-                debugger
-                let patients = caretaker.patients.map(patient => patient)
-                debugger
-                return patients
+                
+                const patientsIds = caretaker.patients.map(patient => patient._id.toString())
+                
+                return Patient.find({ _id: { $in: patientsIds } })
             })
             .then(patients => {
                 if (patients) {
-                    debugger
+                    
                     patients.forEach(patient => {
                         patient.id = patient._id.toString()
                         delete patient._id
                         delete patient.__v
                     })
                 }
-                debugger
+                
                 return patients || []
             })
     },
@@ -792,17 +779,20 @@ const logic = {
     assignPatientToCaretaker(caretakerDni, patientDni) {
         return Promise.resolve()
             .then(() => {
-                this._validateStringField('caretaker dni', caretakerDni)
-                this._validateStringField('patient dni', patientDni)
+                this._validateDniField('caretaker dni', caretakerDni)
+                this._validateDniField('patient dni', patientDni)
 
-                return Caretaker.findOne({ caretakerDni })
+                const dni = caretakerDni
+
+                return Caretaker.findOne({ dni })
             })
             .then(caretaker => {
-                if (!caretaker) throw new LogicError(`caretaker ${caretakerDni} does not exist`)
+                if (!caretaker) throw new LogicError(`caretaker with ${caretakerDni} dni does not exist`)
+                const dni = patientDni
 
-                return Patient.findOne({ patientDni })
+                return Patient.findOne({ dni })
                     .then(patient => {
-                        if (!patient) throw new LogicError(`caretaker ${patientDni} does not exist`)
+                        if (!patient) throw new LogicError(`patient with ${patientDni} dni does not exist`)
 
                         return Caretaker.updateOne({ _id: caretaker._id }, { $addToSet: { patients: patient } })
                     })
