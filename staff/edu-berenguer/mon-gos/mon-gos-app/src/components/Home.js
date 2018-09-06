@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
-import { withRouter,Link } from 'react-router-dom'
+import { withRouter, Link } from 'react-router-dom'
 import { logic } from '../logic'
-import DetailDog from './DetailDog'
+import 'bulma/css/bulma.css'
+import Slider from "react-slick";
+
 
 class Home extends Component {
 
@@ -43,38 +45,78 @@ class Home extends Component {
     }
 
     render() {
+        var settings = {
+            dots: true,
+            infinite: true,
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            autoplay: true,
+            speed:  8000,
+            autoplaySpeed: 3000,
+            
+
+        };
         return <div>
-            <nav>
-                <a href="/">Mon-Gos</a>
-                <a href="/#/search"><button>Buscador</button></a>
-                <a href="/#/login"><button>Entrar</button></a>
-                <a href="/#/register"><button>Registro</button></a>
+            <nav class="navbar is-fixed-top nav">
+                <div class="navbar-start">
+                    <a href="/" class="navbar-item">DOGGY</a>
+                </div>
+                <div class="navbar-end">
+                    <a href="/#/search" class="navbar-item"><button class="button">Search</button></a>
+                    <nav class="breadcrumb has-succeeds-separator" >
+                        <ul>
+                            <li>You are a shelter?</li>
+                            <li><a href="/#/register" class="navbar-item goShelter">Register</a></li>
+                            <li><a href="/#/login" class="navbar-item goShelter">login</a></li>
+                        </ul>
+                    </nav>
+                </div>
             </nav>
-            <p>Imagen principal</p>
-            <a href="" onClick={this.showNotAdopteds}><h2>En adopción</h2></a>
-            <ul>
+            <Slider {...settings}>
+                <div>
+                    <img alt="" className="carousel image01" />
+                </div>
+                <div>
+                    <img alt="" className="carousel image02" />
+                </div>
+                <div>
+                    <img alt="" className="carousel image03" />
+                </div>
+            </Slider>
+            <div class="breadcrumb is-large">
+                <ul>
+                    <li><a href="" onClick={this.showNotAdopteds} style={this.state.dogsNotAdopteds.length ? { textDecoration: "underline", textDecorationColor:"#8A4D76" } : {}}><h5>In adoption</h5></a></li>
+                    <li><a href="" onClick={this.showAdopteds} style={this.state.dogsAdopted.length ? { textDecoration: "underline", textDecorationColor:"#8A4D76" } : {}}><h5>Adopteds</h5></a></li>
+                </ul>
+            </div>
+            <div className="container">
                 {this.state.dogsNotAdopteds.map(dog => {
-                    return <li>
-                        {`Nombre: ${dog.name}`}
-                        <img src={dog.photo} alt=""/>
-                        <Link to={`/detailDog/${dog._id}`}>+ Información</Link>
-                    </li>
-                }
-                )}
-            </ul>
-
-            <a href="" onClick={this.showAdopteds}><h2>Adoptados</h2></a>
-            <ul>
+                    return <div class="card items">
+                        <p class="is-size-3">{`${dog.name}`}</p>
+                        <div>
+                            <figure>
+                                <img src={dog.photo} alt="" />
+                            </figure>
+                        </div>
+                        <p>{`${dog.gender}`}</p>
+                        <Link to={`/detailDog/${dog._id}`}><button class="button is-small more-information">More information</button></Link>
+                    </div>
+                })}
+            </div>
+            <div className="container">
                 {this.state.dogsAdopted.map(dog => {
-                    return <li key={dog.id}>
-                        {`Nombre: ${dog.name}`}
-                        <img src={dog.photo} alt=""/>
-                    </li>
-                })
-                }
-            </ul>
-
-        </div>
+                    return <div class="card items">
+                        <p class="is-size-3">{`${dog.name}`}</p>
+                        <div>
+                            <figure>
+                                <img src={dog.photo} alt="" />
+                            </figure>
+                        </div>
+                        <p>{`${dog.gender}`}</p>
+                    </div>
+                })}
+            </div>
+        </div >
     }
 }
 export default withRouter(Home)

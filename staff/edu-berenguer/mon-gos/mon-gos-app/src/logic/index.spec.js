@@ -8,14 +8,14 @@ const jwt = require('jsonwebtoken')
 
 describe('logic', () => {
     const { JWT_SECRET } = process.env
-    let email, name, adress, phone, password, latitude, longitude
+    let email, name, address, phone, password, latitude, longitude
 
     beforeEach(() => {
 
         email = `user${Math.random()}@gmail.com`,
             password = '123456',
             name = `edu${Math.random()}`,
-            adress = `muntaner${Math.random()}`,
+            address = `muntaner${Math.random()}`,
             phone = `123456789`,
             latitude = 123.344,
             longitude = 12.3423
@@ -23,13 +23,13 @@ describe('logic', () => {
 
     !true && describe('register user', () => {
         it('should succeed on new user', () =>
-            logic.register(email, name, adress, phone, password, latitude, longitude)
+            logic.register(email, name, address, phone, password, latitude, longitude)
                 .then(res => expect(res).to.be.true)
         )
 
         it('should fail on already existing user', () =>
-            logic.register(email, name, adress, phone, password, latitude, longitude)
-                .then(() => logic.register(email, name, adress, phone, password, latitude, longitude))
+            logic.register(email, name, address, phone, password, latitude, longitude)
+                .then(() => logic.register(email, name, address, phone, password, latitude, longitude))
                 .catch(err => err)
                 .then(err => {
                     expect(err).to.exist
@@ -38,7 +38,7 @@ describe('logic', () => {
         )
 
         it('should fail on empty email', () =>
-            logic.register('', name, adress, phone, password, latitude, longitude)
+            logic.register('', name, address, phone, password, latitude, longitude)
                 .catch(err => err)
                 .then(err => {
                     expect(err).to.exist
@@ -47,7 +47,7 @@ describe('logic', () => {
         )
 
         it('should fail on empty name user', () =>
-            logic.register(email, '', adress, phone, password, latitude, longitude)
+            logic.register(email, '', address, phone, password, latitude, longitude)
                 .catch(err => err)
                 .then(err => {
                     expect(err).to.exist
@@ -56,7 +56,7 @@ describe('logic', () => {
         )
 
         it('should fail on undefined name', () => {
-            logic.register(email, undefined, adress, phone, password, latitude, longitude)
+            logic.register(email, undefined, address, phone, password, latitude, longitude)
                 .catch(err => err)
                 .then(err => {
                     expect(err).to.exist
@@ -65,7 +65,7 @@ describe('logic', () => {
         })
 
         it('should fail on undefined email', () => {
-            logic.register(undefined, name, adress, phone, password, latitude, longitude)
+            logic.register(undefined, name, address, phone, password, latitude, longitude)
                 .catch(err => err)
                 .then(err => {
                     expect(err).to.exist
@@ -74,7 +74,7 @@ describe('logic', () => {
         })
 
         it('should fail on numeric email', () => {
-            logic.register(123, name, adress, phone, password, latitude, longitude)
+            logic.register(123, name, address, phone, password, latitude, longitude)
                 .catch(err => err)
                 .then(err => {
                     expect(err).to.exist
@@ -83,7 +83,7 @@ describe('logic', () => {
         })
 
         it('should fail on numeric name', () => {
-            logic.register(email, 123, adress, phone, password, latitude, longitude)
+            logic.register(email, 123, address, phone, password, latitude, longitude)
                 .catch(err => err)
                 .then(err => {
                     expect(err).to.exist
@@ -91,33 +91,33 @@ describe('logic', () => {
                 })
         })
 
-        it('should fail on empty adress', () => {
+        it('should fail on empty address', () => {
             logic.register(email, name, '', phone, password, latitude, longitude)
                 .catch(err => err)
                 .then(err => {
                     expect(err).to.exist
-                    expect(err.message).to.equal('invalid adress')
+                    expect(err.message).to.equal('invalid address')
                 })
         })
-        it('should fail on undefined adress', () => {
+        it('should fail on undefined address', () => {
             logic.register(email, name, undefined, phone, password, latitude, longitude)
                 .catch(err => err)
                 .then(err => {
                     expect(err).to.exist
-                    expect(err.message).to.equal('invalid adress')
+                    expect(err.message).to.equal('invalid address')
                 })
         })
-        it('should fail on numeric adress', () => {
+        it('should fail on numeric address', () => {
             logic.register(email, name, 123, phone, password, latitude, longitude)
                 .catch(err => err)
                 .then(err => {
                     expect(err).to.exist
-                    expect(err.message).to.equal('invalid adress')
+                    expect(err.message).to.equal('invalid address')
                 })
         })
 
         it('should fail on empty phone', () => {
-            logic.register(email, name, adress, '', password, latitude, longitude)
+            logic.register(email, name, address, '', password, latitude, longitude)
                 .catch(err => err)
                 .then(err => {
                     expect(err).to.exist
@@ -126,7 +126,7 @@ describe('logic', () => {
         })
 
         it('should fail on undefined phone', () => {
-            logic.register(email, name, adress, undefined, password, latitude, longitude)
+            logic.register(email, name, address, undefined, password, latitude, longitude)
                 .catch(err => err)
                 .then(err => {
                     expect(err).to.exist
@@ -135,7 +135,7 @@ describe('logic', () => {
         })
 
         it('should fail on numeric phone', () => {
-            logic.register(email, name, adress, 123, password, latitude, longitude)
+            logic.register(email, name, address, 123, password, latitude, longitude)
                 .catch(err => err)
                 .then(err => {
                     expect(err).to.exist
@@ -144,7 +144,7 @@ describe('logic', () => {
         })
 
         it('should fail on empty phone', () => {
-            logic.register(email, name, adress, phone, '', latitude, longitude)
+            logic.register(email, name, address, phone, '', latitude, longitude)
                 .catch(err => err)
                 .then(err => {
                     expect(err).to.exist
@@ -153,7 +153,7 @@ describe('logic', () => {
         })
 
         it('should fail on undefined password', () => {
-            logic.register(email, name, adress, phone, undefined, latitude, longitude)
+            logic.register(email, name, address, phone, undefined, latitude, longitude)
                 .catch(err => err)
                 .then(err => {
                     expect(err).to.exist
@@ -162,7 +162,7 @@ describe('logic', () => {
         })
 
         it('should fail on numeric password', () => {
-            logic.register(email, name, adress, phone, 123, latitude, longitude)
+            logic.register(email, name, address, phone, 123, latitude, longitude)
                 .catch(err => err)
                 .then(err => {
                     expect(err).to.exist
@@ -171,7 +171,7 @@ describe('logic', () => {
         })
 
         it('should fail on string latitude', () => {
-            logic.register(email, name, adress, phone, password, '123.32', longitude)
+            logic.register(email, name, address, phone, password, '123.32', longitude)
                 .catch(err => err)
                 .then(err => {
                     expect(err).to.exist
@@ -180,7 +180,7 @@ describe('logic', () => {
         })
 
         it('should fail on string longitude', () => {
-            logic.register(email, name, adress, phone, password, latitude, '23.322')
+            logic.register(email, name, address, phone, password, latitude, '23.322')
                 .catch(err => err)
                 .then(err => {
                     expect(err).to.exist
@@ -191,7 +191,7 @@ describe('logic', () => {
 
     !true && describe('login shelter', () => {
         it('should succeed on existing user', () =>
-            logic.register(email, name, adress, phone, password, latitude, longitude)
+            logic.register(email, name, address, phone, password, latitude, longitude)
                 .then(() => logic.authenticate(email, password))
                 .then(res => {
 
@@ -278,7 +278,7 @@ describe('logic', () => {
         const description = 'bla bla bla bla'
 
         it('should add dog', () => {
-            return logic.register(email, name, adress, phone, password, latitude, longitude)
+            return logic.register(email, name, address, phone, password, latitude, longitude)
                 .then(() => logic.authenticate(email, password))
                 .then(res => res)
                 .then(res => {
@@ -291,7 +291,7 @@ describe('logic', () => {
         })
 
         it('should return an error at insert dog with an empty name', () => {
-            return logic.register(email, name, adress, phone, password, latitude, longitude)
+            return logic.register(email, name, address, phone, password, latitude, longitude)
                 .then(() => logic.authenticate(email, password))
                 .then(res => logic.insertDog(res.id, '', gender, age, weight, photo, description, res.token))
                 .catch(err => err)
@@ -303,7 +303,7 @@ describe('logic', () => {
 
         })
         it('should return an error at insert dog with an undefined name', () => {
-            return logic.register(email, name, adress, phone, password, latitude, longitude)
+            return logic.register(email, name, address, phone, password, latitude, longitude)
                 .then(() => logic.authenticate(email, password))
                 .then(res => logic.insertDog(res.id, undefined, gender, age, weight, photo, description, res.token))
                 .catch(err => err)
@@ -315,7 +315,7 @@ describe('logic', () => {
 
         })
         it('should return an error at insert dog with an numeric name', () => {
-            return logic.register(email, name, adress, phone, password, latitude, longitude)
+            return logic.register(email, name, address, phone, password, latitude, longitude)
                 .then(() => logic.authenticate(email, password))
                 .then(res => logic.insertDog(res.id, 123, gender, age, weight, photo, description, res.token))
                 .catch(err => err)
@@ -327,7 +327,7 @@ describe('logic', () => {
 
         })
         it('should return an error at insert dog with an empty gender', () => {
-            return logic.register(email, name, adress, phone, password, latitude, longitude)
+            return logic.register(email, name, address, phone, password, latitude, longitude)
                 .then(() => logic.authenticate(email, password))
                 .then(res => logic.insertDog(res.id, name, '', age, weight, photo, description, res.token))
                 .catch(err => err)
@@ -339,7 +339,7 @@ describe('logic', () => {
 
         })
         it('should return an error at insert dog with an undefined gender', () => {
-            return logic.register(email, name, adress, phone, password, latitude, longitude)
+            return logic.register(email, name, address, phone, password, latitude, longitude)
                 .then(() => logic.authenticate(email, password))
                 .then(res => logic.insertDog(res.id, name, undefined, age, weight, photo, description, res.token))
                 .catch(err => err)
@@ -351,7 +351,7 @@ describe('logic', () => {
 
         })
         it('should return an error at insert dog with an numeric gender', () => {
-            return logic.register(email, name, adress, phone, password, latitude, longitude)
+            return logic.register(email, name, address, phone, password, latitude, longitude)
                 .then(() => logic.authenticate(email, password))
                 .then(res => logic.insertDog(res.id, name, 123, age, weight, photo, description, res.token))
                 .catch(err => err)
@@ -363,7 +363,7 @@ describe('logic', () => {
 
         })
         it('should return an error at insert dog with an string age', () => {
-            return logic.register(email, name, adress, phone, password, latitude, longitude)
+            return logic.register(email, name, address, phone, password, latitude, longitude)
                 .then(() => logic.authenticate(email, password))
                 .then(res => logic.insertDog(res.id, name, gender, '12', weight, photo, description, res.token))
                 .catch(err => err)
@@ -375,7 +375,7 @@ describe('logic', () => {
 
         })
         it('should return an error at insert dog with an empty age', () => {
-            return logic.register(email, name, adress, phone, password, latitude, longitude)
+            return logic.register(email, name, address, phone, password, latitude, longitude)
                 .then(() => logic.authenticate(email, password))
                 .then(res => logic.insertDog(res.id, name, gender, '', weight, photo, description, res.token))
                 .catch(err => err)
@@ -387,7 +387,7 @@ describe('logic', () => {
 
         })
         it('should return an error at insert dog with an undefined age', () => {
-            return logic.register(email, name, adress, phone, password, latitude, longitude)
+            return logic.register(email, name, address, phone, password, latitude, longitude)
                 .then(() => logic.authenticate(email, password))
                 .then(res => logic.insertDog(res.id, name, gender, undefined, weight, photo, description, res.token))
                 .catch(err => err)
@@ -400,7 +400,7 @@ describe('logic', () => {
         })
 
         it('should return an error at insert dog with an undefined weight', () => {
-            return logic.register(email, name, adress, phone, password, latitude, longitude)
+            return logic.register(email, name, address, phone, password, latitude, longitude)
                 .then(() => logic.authenticate(email, password))
                 .then(res => logic.insertDog(res.id, name, gender, age, undefined, photo, description, res.token))
                 .catch(err => err)
@@ -413,7 +413,7 @@ describe('logic', () => {
         })
 
         it('should return an error at insert dog with an empty weight', () => {
-            return logic.register(email, name, adress, phone, password, latitude, longitude)
+            return logic.register(email, name, address, phone, password, latitude, longitude)
                 .then(() => logic.authenticate(email, password))
                 .then(res => logic.insertDog(res.id, name, gender, age, '', photo, description, res.token))
                 .catch(err => err)
@@ -426,7 +426,7 @@ describe('logic', () => {
         })
 
         it('should return an error at insert dog with an string weight', () => {
-            return logic.register(email, name, adress, phone, password, latitude, longitude)
+            return logic.register(email, name, address, phone, password, latitude, longitude)
                 .then(() => logic.authenticate(email, password))
                 .then(res => logic.insertDog(res.id, name, gender, age, '12', photo, description, res.token))
                 .catch(err => err)
@@ -439,7 +439,7 @@ describe('logic', () => {
         })
 
         it('should return an error at insert dog with an numeric description', () => {
-            return logic.register(email, name, adress, phone, password, latitude, longitude)
+            return logic.register(email, name, address, phone, password, latitude, longitude)
                 .then(() => logic.authenticate(email, password))
                 .then(res => logic.insertDog(res.id, name, gender, age, weight, photo, 123, res.token))
                 .catch(err => err)
@@ -452,7 +452,7 @@ describe('logic', () => {
         })
 
         it('should return an error at insert dog with an empty description', () => {
-            return logic.register(email, name, adress, phone, password, latitude, longitude)
+            return logic.register(email, name, address, phone, password, latitude, longitude)
                 .then(() => logic.authenticate(email, password))
                 .then(res => logic.insertDog(res.id, name, gender, age, weight, photo, '', res.token))
                 .catch(err => err)
@@ -465,7 +465,7 @@ describe('logic', () => {
         })
 
         it('should return an error at insert dog with an undefined description', () => {
-            return logic.register(email, name, adress, phone, password, latitude, longitude)
+            return logic.register(email, name, address, phone, password, latitude, longitude)
                 .then(() => logic.authenticate(email, password))
                 .then(res => logic.insertDog(res.id, name, gender, age, weight, photo, undefined, res.token))
                 .catch(err => err)
@@ -487,7 +487,7 @@ describe('logic', () => {
         const description = 'bla bla bla bla'
 
         it('should remove dog', () => {
-            return logic.register(email, name, adress, phone, password, latitude, longitude)
+            return logic.register(email, name, address, phone, password, latitude, longitude)
                 .then(() => logic.authenticate(email, password))
                 .then(data => logic.insertDog(data.id, name, gender, age, weight, photo, description, data.token)
                     .then(dogId => {
@@ -500,7 +500,7 @@ describe('logic', () => {
         })
         it('should fail removing a non-existing dog', () => {
             let id = '5b8934eff7ff6f15f94a524f'
-            return logic.register(email, name, adress, phone, password, latitude, longitude)
+            return logic.register(email, name, address, phone, password, latitude, longitude)
                 .then(() => logic.authenticate(email, password))
                 .then((data) => {
                     return logic.removeDog(data.id, id, data.token)
@@ -519,7 +519,7 @@ describe('logic', () => {
         const description = 'bla bla bla bla'
 
         it('should list dogs not adopteds', () => {
-            return logic.register(email, name, adress, phone, password, latitude, longitude)
+            return logic.register(email, name, address, phone, password, latitude, longitude)
                 .then(() => logic.authenticate(email, password))
                 .then(data => logic.insertDog(data.id, name, gender, age, weight, photo, description, data.token))
                 .then(() => {
@@ -544,7 +544,7 @@ describe('logic', () => {
         const description = 'bla bla bla bla'
 
         it('should dog adopted', () => {
-            return logic.register(email, name, adress, phone, password, latitude, longitude)
+            return logic.register(email, name, address, phone, password, latitude, longitude)
                 .then(() => logic.authenticate(email, password))
                 .then(data => logic.insertDog(data.id, name, gender, age, weight, photo, description, data.token)
                     .then(dogId => {
@@ -561,6 +561,36 @@ describe('logic', () => {
         })
     })
 
+    !true && describe('dog not adopted', () => {
+        const name = `max-${Math.random()}`
+        const gender = 'male'
+        const age = 1
+        const weight = 10
+        const photo = 'http://res.cloudinary.com/eduberenguer/image/upload/v1535653568/lexgoyjnwrmaoqmo1syw.jpg'
+        const description = 'bla bla bla bla'
+
+        it('should dog adopted', () => {
+            return logic.register(email, name, address, phone, password, latitude, longitude)
+                .then(() => logic.authenticate(email, password))
+                .then(data => logic.insertDog(data.id, name, gender, age, weight, photo, description, data.token)
+                    .then(dogId => {
+                        return logic.dogAdopted(data.id, dogId.id, data.token)
+                        .then(() =>  {
+                            return logic.dogNotAdopted(data.id, dogId.id, data.token)
+                        })
+                            .then(res => {
+                                expect(res.message).to.equal('Dog not adopted')
+                                return logic.retrieveDog(res.dogId)
+                            })
+                            .then(dog => {
+
+                                expect(dog.adopted).to.be.false
+                            })
+                    })
+                )
+        })
+    })
+
     !true && describe('list dogs adopted', () => {
         const name = `max-${Math.random()}`
         const gender = 'male'
@@ -570,7 +600,7 @@ describe('logic', () => {
         const description = 'bla bla bla bla'
 
         it('should list dogs adopteds', () => {
-            return logic.register(email, name, adress, phone, password, latitude, longitude)
+            return logic.register(email, name, address, phone, password, latitude, longitude)
                 .then(() => logic.authenticate(email, password))
                 .then(data => logic.insertDog(data.id, name, gender, age, weight, photo, description, data.token)
                     .then(res => logic.dogAdopted(data.id, res.id, data.token))
@@ -597,7 +627,7 @@ describe('logic', () => {
         const description = 'bla bla bla bla'
 
         it('should list dogs by shelter', () => {
-            return logic.register(email, name, adress, phone, password, latitude, longitude)
+            return logic.register(email, name, address, phone, password, latitude, longitude)
                 .then(() => logic.authenticate(email, password))
                 .then(data => logic.insertDog(data.id, name, gender, age, weight, photo, description, data.token)
                     .then(() => logic.insertDog(data.id, name, gender, age, weight, photo, description, data.token))
@@ -621,7 +651,7 @@ describe('logic', () => {
         const description = 'bla bla bla bla'
 
         it('should list dogs by shelter', () => {
-            return logic.register(email, name, adress, phone, password, latitude, longitude)
+            return logic.register(email, name, address, phone, password, latitude, longitude)
                 .then(() => logic.authenticate(email, password))
                 .then(data => logic.insertDog(data.id, name, gender, age, weight, photo, description, data.token))
                 .then(dog => {
@@ -639,13 +669,13 @@ describe('logic', () => {
     !true && describe('retrieve shelter by id', () => {
 
         it('should list dogs by shelter', () => {
-            return logic.register(email, name, adress, phone, password, latitude, longitude)
+            return logic.register(email, name, address, phone, password, latitude, longitude)
                 .then(() => logic.authenticate(email, password))
                 .then(data => logic.retrieveShelter(data.id))
                 .then((res) => {
                     expect(res.email).to.equal(email)
                     expect(res.name).to.equal(name)
-                    expect(res.adress).to.equal(adress)
+                    expect(res.address).to.equal(address)
                     expect(res.phone).to.equal(phone)
                     expect(res.password).to.equal(password)
                 })
@@ -668,7 +698,7 @@ describe('logic', () => {
         const newDescription = 'bli bli bli bli'
 
         it('should list dogs by shelter', () => {
-            return logic.register(email, name, adress, phone, password, latitude, longitude)
+            return logic.register(email, name, address, phone, password, latitude, longitude)
                 .then(() => logic.authenticate(email, password))
                 .then(data => logic.insertDog(data.id, name, gender, age, weight, photo, description, data.token)
                     .then(dog => {
@@ -689,7 +719,7 @@ describe('logic', () => {
         })
     })
 
-    true && describe('list dogs by query', () => {
+    !true && describe('list dogs by query', () => {
         const name = `max-${Math.random()}`
         const gender = 'female'
         const age = 1
@@ -700,21 +730,21 @@ describe('logic', () => {
         const searchFemale = 'female'
         const searchMale = 'male'
 
-        const searchCachorro = 'cachorro'
-        const searchJoven = 'joven'
-        const searchAdulto = 'adulto'
+        const searchPuppy = 'puppy'
+        const searchYoung = 'young'
+        const searchAdult = 'adult'
         const searchSenior = 'senior'
 
-        const searchPequeno = 'pequeno'
-        const searchMediano = 'mediano'
-        const searchGrande = 'grande'
+        const searchLittle = 'little'
+        const searchMedium = 'medium'
+        const searchBig = 'big'
 
         it('should list dogs not adopteds', () => {
-            return logic.register(email, name, adress, phone, password, latitude, longitude)
+            return logic.register(email, name, address, phone, password, latitude, longitude)
                 .then(() => logic.authenticate(email, password))
                 .then(data => logic.insertDog(data.id, name, gender, age, weight, photo, description, data.token))
                 .then(() => {
-                    return logic.listDogsByQuery(searchFemale, undefined,searchGrande)
+                    return logic.listDogsByQuery(searchFemale, undefined, searchBig)
                 })
                 .then((res) => {
                     expect(res.length).to.be.equal(1)

@@ -31,12 +31,12 @@ const logic = {
         if (!validateEmail(email)) throw new LogicError('invalid email')
     },
 
-    register(email, name, adress, phone, password, latitude, longitude) {
+    register(email, name, address, phone, password, latitude, longitude) {
         return Promise.resolve()
             .then(() => {
                 this._validateEmail(email)
                 this._validateStringField('name', name)
-                this._validateStringField('adress', adress)
+                this._validateStringField('address', address)
                 this._validateStringField('phone', phone)
                 this._validateStringField('password', password)
                 if (latitude)
@@ -47,7 +47,7 @@ const logic = {
 
                 return this._call('register', 'post', {
                     'Content-Type': 'application/json'
-                }, JSON.stringify({ email, name, adress, phone, password, latitude, longitude }), 201)
+                }, JSON.stringify({ email, name, address, phone, password, latitude, longitude }), 201)
                     .then(() => true)
             })
     },
@@ -94,6 +94,14 @@ const logic = {
         return Promise.resolve()
             .then(() => {
                 return this._call(`/shelter/${id}/dog/${dogId}`, 'put', { authorization: `bearer ${token}`, 'content-type': 'application/json' }, undefined, 200)
+            })
+            .then(res => res.json())
+    },
+
+    dogNotAdopted(id, dogId, token) {
+        return Promise.resolve()
+            .then(() => {
+                return this._call(`/shelter/${id}/dogNotAdopted/${dogId}`, 'put', { authorization: `bearer ${token}`, 'content-type': 'application/json' }, undefined, 200)
             })
             .then(res => res.json())
     },

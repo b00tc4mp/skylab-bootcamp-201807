@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 import { logic } from '../logic'
+import swal from 'sweetalert2'
 
 
 class UpdateDog extends Component {
@@ -41,15 +42,24 @@ class UpdateDog extends Component {
         e.preventDefault()
         let { name, id, gender, age, weight, photo, description } = this.state
 
-        age = parseInt(age)
-        weight = parseInt(weight)
+        age = parseFloat(age)
+        weight = parseFloat(weight)
 
         logic.updateDog(this.props.id, id, name, gender, age, weight, photo, description, this.props.token)
             .then(() => {
+                swal({
+                    type: 'success',
+                    title: `Updated successfully`,
+                    showConfirmButton: true,
+                })
                 this.props.history.push('/landing')
             })
             .catch(message => (
-                console.log(message)
+                swal({
+                    type: 'error',
+                    title: `${message}`,
+                    showConfirmButton: true,
+                })
             ))
     }
 
@@ -57,12 +67,12 @@ class UpdateDog extends Component {
 
     render() {
         return <div>
-            <h2>Actualizar Perro</h2>
+            <h2>Update dog</h2>
             <form onSubmit={this.updateDog}>
                 <input type="text" name="name" placeholder="Nombre" onChange={this.handleChange} value={this.state.name} />
                 <select name="gender" id="" onChange={this.handleChange} value={this.state.gender}>
-                    <option value="male" onChange={this.handleChange} default>Macho</option>
-                    <option value="female" onChange={this.handleChange}>Hembra</option>
+                    <option value="male" onChange={this.handleChange} default>Male</option>
+                    <option value="female" onChange={this.handleChange}>Female</option>
                 </select>
                 <input type="number" name="age" placeholder="Edad" onChange={this.handleChange} value={this.state.age} />
                 <input type="number" name="weight" placeholder="Peso" onChange={this.handleChange} value={this.state.weight} />
@@ -70,7 +80,7 @@ class UpdateDog extends Component {
                 <textarea name="description" id="" cols="30" rows="10" placeholder="Descripción" onChange={this.handleChange} value={this.state.description}></textarea>
                 <input type="submit" value="Actualizar" />
             </form>
-            <a href="/"><button>Salir</button></a>
+            <a href="/"><button>Home</button></a>
         </div>
     }
 

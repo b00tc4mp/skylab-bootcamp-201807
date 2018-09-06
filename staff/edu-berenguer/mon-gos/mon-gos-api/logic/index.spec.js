@@ -14,7 +14,7 @@ describe('logic', () => {
     const email = `edu-${Math.random()}@mail.com`
     const password = `123-${Math.random()}`
     const name = `Animal sense sostre ${Math.random()}`
-    const adress = `bilbao ${Math.random()}`
+    const address = `bilbao ${Math.random()}`
     const phone = `123-${Math.random()}`
     const latitude = 12.3234
     const longitude = 34.4433
@@ -63,7 +63,7 @@ describe('logic', () => {
                 .then(shelter => {
                     expect(shelter).to.be.null
 
-                    return logic.register(email, name, adress, phone, password, latitude, longitude)
+                    return logic.register(email, name, address, phone, password, latitude, longitude)
                 })
                 .then(res => {
 
@@ -82,85 +82,85 @@ describe('logic', () => {
         })
 
         it('should fail on trying to register an already registered user', () =>
-            Shelter.create({ email, name, adress, phone, password, latitude, longitude })
-                .then(() => logic.register(email, name, adress, phone, password, latitude, longitude))
+            Shelter.create({ email, name, address, phone, password, latitude, longitude })
+                .then(() => logic.register(email, name, address, phone, password, latitude, longitude))
                 .catch(err => err)
                 .then(({ message }) => expect(message).to.equal(`shelter with ${email} email already exist`))
         )
 
         it('should fail on trying to register with an undefined email', () =>
-            logic.register(undefined, name, adress, phone, password)
+            logic.register(undefined, name, address, phone, password)
                 .catch(err => err)
                 .then(({ message }) => expect(message).to.equal(`invalid email`))
         )
 
         it('should fail on trying to register with an empty email', () =>
-            logic.register('', name, adress, phone, password)
+            logic.register('', name, address, phone, password)
                 .catch(err => err)
                 .then(({ message }) => expect(message).to.equal(`invalid email`))
         )
 
         it('should fail on trying to register with a numeric email', () =>
-            logic.register(123, name, adress, phone, password)
+            logic.register(123, name, address, phone, password)
                 .catch(err => err)
                 .then(({ message }) => expect(message).to.equal(`invalid email`))
         )
 
         it('should fail on trying to register with an undefined password', () =>
-            logic.register(email, name, adress, phone, undefined)
+            logic.register(email, name, address, phone, undefined)
                 .catch(err => err)
                 .then(({ message }) => expect(message).to.equal(`invalid password`))
         )
 
         it('should fail on trying to register with an empty password', () =>
-            logic.register(email, name, adress, phone, '')
+            logic.register(email, name, address, phone, '')
                 .catch(err => err)
                 .then(({ message }) => expect(message).to.equal(`invalid password`))
         )
 
         it('should fail on trying to register with a numeric password', () =>
-            logic.register(email, name, adress, phone, 123)
+            logic.register(email, name, address, phone, 123)
                 .catch(err => err)
                 .then(({ message }) => expect(message).to.equal(`invalid password`))
         )
         it('should fail on trying to register with a empty name', () =>
-            logic.register(email, '', adress, phone, '123456')
+            logic.register(email, '', address, phone, '123456')
                 .catch(err => err)
                 .then(({ message }) => expect(message).to.equal(`invalid name`))
         )
-        it('should fail on trying to register with a empty adress', () =>
+        it('should fail on trying to register with a empty address', () =>
             logic.register(email, name, '', phone, '123456')
                 .catch(err => err)
-                .then(({ message }) => expect(message).to.equal(`invalid adress`))
+                .then(({ message }) => expect(message).to.equal(`invalid address`))
         )
         it('should fail on trying to register with a empty phone', () =>
-            logic.register(email, name, adress, '', '123456')
+            logic.register(email, name, address, '', '123456')
                 .catch(err => err)
                 .then(({ message }) => expect(message).to.equal(`invalid phone`))
         )
         it('should fail on trying to register with a numeric name', () =>
-            logic.register(email, 123, adress, phone, '123456')
+            logic.register(email, 123, address, phone, '123456')
                 .catch(err => err)
                 .then(({ message }) => expect(message).to.equal(`invalid name`))
         )
-        it('should fail on trying to register with a numeric adress', () =>
+        it('should fail on trying to register with a numeric address', () =>
             logic.register(email, name, 123, phone, '123456')
                 .catch(err => err)
-                .then(({ message }) => expect(message).to.equal(`invalid adress`))
+                .then(({ message }) => expect(message).to.equal(`invalid address`))
         )
         it('should fail on trying to register with a numeric phone', () =>
-            logic.register(email, name, adress, 123, '123456')
+            logic.register(email, name, address, 123, '123456')
                 .catch(err => err)
                 .then(({ message }) => expect(message).to.equal(`invalid phone`))
         )
         it('should fail on trying to register with a string latitude', () =>
-            logic.register(email, name, adress, '123', '123456', '12312', 123.32)
+            logic.register(email, name, address, '123', '123456', '12312', 123.32)
                 .catch(err => err)
                 .then(({ message }) => expect(message).to.equal(`invalid latitude`))
         )
 
         it('should fail on trying to register with a string longitude', () =>
-            logic.register(email, name, adress, '123', '123456', 123.4234, '12.312')
+            logic.register(email, name, address, '123', '123456', 123.4234, '12.312')
                 .catch(err => err)
                 .then(({ message }) => expect(message).to.equal(`invalid longitude`))
         )
@@ -169,7 +169,7 @@ describe('logic', () => {
     true && describe('authenticate shelter', () => {
         beforeEach(() => {
             return Shelter.create({
-                email, name, adress, phone, password
+                email, name, address, phone, password
             })
         })
         it('should login correctly', () =>
@@ -224,7 +224,7 @@ describe('logic', () => {
         const description = 'bla bla bla bla'
 
         beforeEach(() => {
-            return Shelter.create({ email, name, adress, phone, password })
+            return Shelter.create({ email, name, address, phone, password })
                 .then(shelter => {
                     id = shelter._id.toString()
                 })
@@ -336,7 +336,7 @@ describe('logic', () => {
         const description = 'bla bla bla bla'
 
         beforeEach(() => {
-            return Shelter.create({ email, name, adress, phone, password })
+            return Shelter.create({ email, name, address, phone, password })
                 .then(shelter => {
                     return id = shelter.id
                 })
@@ -370,7 +370,7 @@ describe('logic', () => {
         const description = 'bla bla bla bla'
 
         beforeEach(() => {
-            return Shelter.create({ email, name, adress, phone, password, latitude, longitude })
+            return Shelter.create({ email, name, address, phone, password, latitude, longitude })
                 .then(shelter => {
                     return id = shelter.id
                 })
@@ -393,6 +393,39 @@ describe('logic', () => {
         })
     })
 
+    true && describe('dog Not adopted', () => {
+        const name = `max-${Math.random()}`
+        const gender = 'male'
+        const age = 1.2
+        const weight = 10
+        const photo = chunk
+        const description = 'bla bla bla bla'
+        const adopted = true
+
+        beforeEach(() => {
+            return Shelter.create({ email, name, address, phone, password, latitude, longitude })
+                .then(shelter => {
+                    return id = shelter.id
+                })
+                .then(() => {
+                    return Shelter.findOne({ _id: id })
+                })
+                .then(shelter => {
+                    Dog.create({ name, gender, age, weight, photo, description, shelter: shelter.id })
+                    return Dog.create({ name, gender, age, weight, photo, description, adopted, shelter: shelter.id })
+                })
+                .then(res => {
+                    return dogId = res._doc._id.toString()
+                })
+        })
+        it('should update dog adopted by id', () => {
+            return logic.dogNotAdopted(id, dogId)
+                .then(res => {
+                    expect(res).to.be.true
+                })
+        })
+    })
+
     true && describe('list dogs adopteds', () => {
         const name = `max-${Math.random()}`
         const gender = 'male'
@@ -404,7 +437,7 @@ describe('logic', () => {
 
 
         beforeEach(() => {
-            return Shelter.create({ email, name, adress, phone, password, latitude, longitude })
+            return Shelter.create({ email, name, address, phone, password, latitude, longitude })
                 .then(shelter => {
                     return id = shelter.id
                 })
@@ -443,7 +476,7 @@ describe('logic', () => {
         const description = 'bla bla bla bla'
 
         beforeEach(() => {
-            return Shelter.create({ email, name, adress, phone, password, latitude, longitude })
+            return Shelter.create({ email, name, address, phone, password, latitude, longitude })
                 .then(shelter => {
                     return id = shelter.id
                 })
@@ -474,7 +507,7 @@ describe('logic', () => {
         const description = 'bla bla bla bla'
 
         beforeEach(() => {
-            return Shelter.create({ email, name, adress, phone, password, latitude, longitude })
+            return Shelter.create({ email, name, address, phone, password, latitude, longitude })
                 .then(shelter => {
                     return id = shelter.id
                 })
@@ -503,7 +536,7 @@ describe('logic', () => {
     true && describe('retrieve shelter', () => {
 
         beforeEach(() => {
-            return Shelter.create({ email, name, adress, phone, password, latitude, longitude })
+            return Shelter.create({ email, name, address, phone, password, latitude, longitude })
                 .then(shelter => {
                     return id = shelter.id
                 })
@@ -513,7 +546,7 @@ describe('logic', () => {
             return logic.retrieveShelter(id)
                 .then(shelter => {
                     expect(shelter.name).to.equal(name)
-                    expect(shelter.adress).to.equal(adress)
+                    expect(shelter.address).to.equal(address)
                     expect(shelter.phone).to.equal(phone)
                     expect(shelter.email).to.equal(email)
                     expect(shelter.latitude).to.equal(latitude)
@@ -532,7 +565,7 @@ describe('logic', () => {
         const description = 'bla bla bla bla'
 
         beforeEach(() => {
-            return Shelter.create({ email, name, adress, phone, password, latitude, longitude })
+            return Shelter.create({ email, name, address, phone, password, latitude, longitude })
                 .then(shelter => {
                     return id = shelter.id
                 })
@@ -578,7 +611,7 @@ describe('logic', () => {
         const newDescription = 'bla bla blu blu'
 
         beforeEach(() => {
-            return Shelter.create({ email, name, adress, phone, password, latitude, longitude })
+            return Shelter.create({ email, name, address, phone, password, latitude, longitude })
                 .then(shelter => {
                     return id = shelter.id
                 })
@@ -621,7 +654,7 @@ describe('logic', () => {
         const description = 'bla bla bla bla'
 
         beforeEach(() => {
-            return Shelter.create({ email, name, adress, phone, password, latitude, longitude })
+            return Shelter.create({ email, name, address, phone, password, latitude, longitude })
                 .then(shelter => {
                     return id = shelter.id
                 })
@@ -636,7 +669,7 @@ describe('logic', () => {
         })
 
         it('should list dogs by list with gender, age and weight', () => {
-            return logic.listDogsByQuery('male', 'joven', 'grande')
+            return logic.listDogsByQuery('male', 'young', 'big')
                 .then(dog => {
                     expect(dog.length).to.be.equal(1)
                 })
@@ -648,13 +681,13 @@ describe('logic', () => {
                 })
         })
         it('should list dogs by list with gender and weight', () => {
-            return logic.listDogsByQuery('female', 'mediano')
+            return logic.listDogsByQuery('female', 'medium')
                 .then(dog => {
                     expect(dog.length).to.be.equal(1)
                 })
         })
         it('should list dogs by list with gender and age', () => {
-            return logic.listDogsByQuery('female', 'joven')
+            return logic.listDogsByQuery('female', 'young')
                 .then(dog => {
                     expect(dog.length).to.be.equal(1)
                 })

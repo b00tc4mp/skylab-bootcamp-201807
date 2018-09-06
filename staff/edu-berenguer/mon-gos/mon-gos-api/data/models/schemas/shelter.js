@@ -15,7 +15,7 @@ module.exports = new Schema({
     name: {
         type: String
     },
-    adress: {
+    address: {
         type: String
     },
 

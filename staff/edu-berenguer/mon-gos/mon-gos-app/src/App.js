@@ -7,8 +7,12 @@ import Login from './components/Login'
 import Landing from './components/Landing'
 import DetailDog from './components/DetailDog'
 import FormAdopted from './components/FormAdopted'
-import InsertDog from './components/InsertDog';
+import InsertDog from './components/InsertDog'
 import UpdateDog from './components/UpdateDog'
+import Search from './components/Search'
+import swal from 'sweetalert2';
+
+
 
 class App extends Component {
 
@@ -28,6 +32,12 @@ class App extends Component {
     })
     sessionStorage.setItem('id', id)
     sessionStorage.setItem('token', token)
+    swal({
+      type: 'success',
+      title: 'Logged in correctly',
+      showConfirmButton: false,
+      timer: 1000
+    })
     this.props.history.push('/landing')
   }
 
@@ -45,16 +55,18 @@ class App extends Component {
     return (
       <Switch>
         <Route exact path="/" render={() => this.isLoggedIn() ? <Redirect to="/landing" /> : <Home />} />
-        <Route exact path="/register" render={() => this.isLoggedIn() ? <Redirect to="/Home" /> : <Register />} />
-        <Route exact path="/login" render={() => this.isLoggedIn() ? <Redirect to="/Home" /> : <Login handleLogin={this.handleLogin} />} />    */}
+        <Route exact path="/register" render={() => this.isLoggedIn() ? <Redirect to="/" /> : <Register />} />
+        <Route exact path="/login" render={() => this.isLoggedIn() ? <Redirect to="/" /> : <Login handleLogin={this.handleLogin} />} />    */}
         <Route exact path="/landing" render={() => !this.isLoggedIn() ? <Redirect to="/" /> : <Landing handleLogout={this.handleLogout} id={this.state.id} token={this.state.token} />} />
-        <Route path="/detailDog/:id" render={(props) => this.isLoggedIn() ? <Redirect to="/Home" /> : <DetailDog id={props.match.params.id}/>} />  
+        <Route path="/detailDog/:id" render={(props) => this.isLoggedIn() ? <Redirect to="/" /> : <DetailDog id={props.match.params.id} />} />
         <Route exact path="/adoptar" render={() => this.isLoggedIn() ? <Redirect to="/" /> : <FormAdopted />} />
-        <Route exact path="/insertDog" render={() => !this.isLoggedIn() ? <Redirect to="/" /> : <InsertDog id={this.state.id} token={this.state.token}/>} />
-        <Route exact path="/updateDog/:dogId" render={props => !this.isLoggedIn() ? <Redirect to="/" /> : <UpdateDog id={this.state.id} token={this.state.token} dogId={props.match.params.dogId}/>} />
+        <Route exact path="/insertDog" render={() => !this.isLoggedIn() ? <Redirect to="/" /> : <InsertDog id={this.state.id} token={this.state.token} />} />
+        <Route exact path="/updateDog/:dogId" render={props => !this.isLoggedIn() ? <Redirect to="/" /> : <UpdateDog id={this.state.id} token={this.state.token} dogId={props.match.params.dogId} />} />
+        <Route exact path="/search" render={() => this.isLoggedIn() ? <Redirect to="/" /> : <Search />} />
       </Switch>
     )
   }
 }
+
 
 export default withRouter(App);

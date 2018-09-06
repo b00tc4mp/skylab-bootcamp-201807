@@ -1,0 +1,204 @@
+@import "~slick-carousel/slick/slick.css";
+@import "~slick-carousel/slick/slick-theme.css";
+
+html{
+  height:100%;
+}
+body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    background-color:#EFF0EB;
+    min-height: 100%;
+  }
+
+  .container{
+    display: flex;
+    justify-content: space-around ;
+    flex-wrap: wrap;
+  }
+
+  .items{
+    margin: 1em;
+    padding-bottom: 1em;
+  }
+
+  .items p{
+    margin-left: 0.5em;
+  }
+
+  .items button{
+    margin-left: 14em;
+  }
+
+  .breadcrumb{
+    margin-top: 1em;
+    margin-left: 5em;
+  }
+    
+  h5{
+    color: #8A4D76 !important;
+  }
+
+  .carousel{
+    width: 100%;
+    height: 550px;
+  }
+
+  .image01{
+    background-image: url("./images/image1.jpg");
+    background-size: cover;
+    background-position: center;
+
+  }
+
+  .image02{
+    background-image: url("./images/image2.jpg");
+    background-size: cover;
+    background-position: top;
+
+  }
+  .image03{
+    background-image: url("./images/image3.jpg");
+    background-size: cover;
+    background-position: bottom;
+
+  }
+
+  li figure img{
+    border-radius: 80%;
+  }
+
+  form{
+    text-align: center;
+    margin-top: 1em;
+  }
+
+  form .select{
+    margin-bottom: 5em;
+  }
+
+  .container-form{
+    width: 30%;
+    margin: 0 auto;
+    border-radius: 10px;
+    padding: 2em;
+  }
+  .button.is-success {
+    background-color: #8A4D76 !important;
+    margin-top: 1em;
+  }
+
+  .more-information{
+    background-color: #CFD8DC !important;
+    border-radius:5px !important;
+  }
+
+  .container-form h1{
+    margin-bottom: 2em;
+  }
+
+  .nav{
+    background-color: #EFF0EB !important;
+  }
+
+  .goShelter{
+    color: #8A4D76 !important;
+  }
+
+  .goShelter:hover{
+    text-decoration: underline;
+    background-color: #8A4D76 !important;
+    color: #FFFFFF !important;
+    border-radius: 10px;
+  }
+
+  .detailDog{
+    margin: 0 auto;
+    margin-top: 2em;
+    width: 55em;
+    height: 65em;
+  }
+
+  .titleDetaildDog{
+    font-size: 2em;
+  }
+
+  .detailDog label{
+    font-weight: bold;
+    display: block;
+ }
+ .imageDetail{
+   height: 15em;
+   width: 20em;
+   border: solid black 2px;
+ }
+
+ .dataDog{
+   float: left;
+   width: 33em;
+   margin-right: 1em;
+ }
+ .titleDetailForm{
+  font-size: 1.7em;
+ }    
+ 
+ .titleLanding{
+  font-size: 1.7em;
+  margin-top: 1em;
+  margin-bottom: 1em;
+ }
+ .container-title-landing{
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+ }
+
+ .container-landing{
+   display: flex;
+   justify-content: space-between;
+ }
+
+ .container-list{
+  width: 50%;
+  margin: 0 auto;
+ }
+
+ .button-landing{
+   margin-left: 0.5em;
+ }
+
+ .landing-label{
+   width: 15em;
+   display: inline-block; 
+ }
+
+ .image-list{
+   border-radius:50%;
+   width: 3em;
+   height: 3em;
+   margin-right: 1em; 
+ }
+
+ .element-list{
+   display: flex;
+   align-items: center;
+   margin: 0.5em;
+ }
+  .adopted{
+    background-color: #66BB6A !important;
+  }
+
+  .parameters-dog{
+    display: flex;
+    justify-content: space-around;
+  }
+
+  .infoDog{
+    margin-bottom: 4em !important;
+  }
+
+  .is-fullwidth{
+    margin-bottom: 1em !important;  
+  }
+

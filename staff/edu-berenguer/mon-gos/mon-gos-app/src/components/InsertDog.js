@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 import { logic } from '../logic'
+import swal from 'sweetalert2'
 
 class InsertDog extends Component {
     state = {
@@ -23,36 +24,68 @@ class InsertDog extends Component {
         e.preventDefault()
         let { name, gender, age, weight, photo, description } = this.state
 
-        age = parseInt(age)
-        weight = parseInt(weight)
+        age = parseFloat(age)
+        weight = parseFloat(weight)
 
         logic.insertDog(this.props.id, name, gender, age, weight, photo, description, this.props.token)
             .then(() => {
                 this.props.history.push('/landing')
             })
             .catch(message => (
-                console.log(message)
-            ))
+                swal({
+                    type: 'error',
+                    title: `${message}`,
+                    showConfirmButton: true,
+                })
+            )
+            )
     }
 
 
 
     render() {
         return <div>
-            <h2>Insertar perro</h2>
-            <form onSubmit={this.insertDog}>
-                <input type="text" name="name" placeholder="Nombre" onChange={this.handleChange} />
-                <select name="gender" id="" onChange={this.handleChange}>
-                    <option value="male" onChange={this.handleChange} default>Macho</option>
-                    <option value="female" onChange={this.handleChange}>Hembra</option>
-                </select>
-                <input type="number" name="age" placeholder="Edad" onChange={this.handleChange} />
-                <input type="number" name="weight" placeholder="Peso" onChange={this.handleChange} />
-                <input type="text" name="photo" placeholder="Foto" onChange={this.handleChange} />
-                <textarea name="description" id="" cols="30" rows="10" placeholder="Descripción" onChange={this.handleChange}></textarea>
-                <input type="submit" value="Aceptar" />
-            </form>
-            <a href="/"><button>Salir</button></a>
+            <nav class="navbar nav">
+                <div class="navbar-item">
+                    <a href="/"><button class="button">Return</button></a>
+                </div>
+            </nav>
+            <div class="container-form">
+                <h1 className="titleDetailForm">Add dog</h1>
+                <form onSubmit={this.insertDog}>
+                    <div class="select is-fullwidth" >
+                        <select name="gender" id="" onChange={this.handleChange}>
+                            <option value="" hidden >-- Choose an option --</option>
+                            <option value="male" onChange={this.handleChange}>Male</option>
+                            <option value="female" onChange={this.handleChange}>Female</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <p class="control">
+                            <input class="input" type="text" placeholder="Name" onChange={this.handleChange} name="name" />
+                        </p>
+                    </div>
+                    <div class="parameters-dog">
+                        <div class="field">
+                            <p class="control">
+                                <input class="input" type="number" placeholder="Age" min="0" step="0.1" onChange={this.handleChange} name="age" />
+                            </p>
+                        </div>
+                        <div class="field">
+                            <p class="control">
+                                <input class="input" type="number" placeholder="Weight" min="0" step="0.1" onChange={this.handleChange} name="weight" />
+                            </p>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <p class="control">
+                            <input class="input" type="text" placeholder="photo" onChange={this.handleChange} name="photo" />
+                        </p>
+                    </div>
+                    <textarea class="textarea" placeholder="Description..." onChange={this.handleChange} name="description"></textarea>
+                    <input class="button is-success" type="submit" value="Accept" />
+                </form>
+            </div>
         </div>
     }
 }

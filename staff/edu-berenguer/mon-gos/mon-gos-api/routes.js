@@ -16,9 +16,9 @@ const jsonBodyParser = bodyParser.json()
 // Register User
 
 router.post('/register', jsonBodyParser, (req, res) => {
-    const { body: { email, name, adress, phone, password, latitude, longitude } } = req
+    const { body: { email, name, address, phone, password, latitude, longitude } } = req
 
-    logic.register(email, name, adress, phone, password, latitude, longitude)
+    logic.register(email, name, address, phone, password, latitude, longitude)
         .then(() => res.status(201).json({ message: 'Shelter registered' }))
         .catch(err => {
             const { message } = err
@@ -67,6 +67,18 @@ router.put('/shelter/:id/dog/:dogId', [validateJwt, jsonBodyParser], (req, res) 
     const { params: { id, dogId } } = req
     logic.dogAdopted(id, dogId)
         .then(() => res.json({ message: "Dog adopted!", dogId }))
+        .catch(err => {
+            const { message } = err
+            res.status(err instanceof LogicError ? 418 : 500).json({ message })
+        })
+})
+
+//DOG NOT ADOPTED
+
+router.put('/shelter/:id/dogNotAdopted/:dogId', [validateJwt, jsonBodyParser], (req, res) => {
+    const { params: { id, dogId } } = req
+    logic.dogNotAdopted(id, dogId)
+        .then(() => res.json({ message: "Dog not adopted", dogId }))
         .catch(err => {
             const { message } = err
             res.status(err instanceof LogicError ? 418 : 500).json({ message })

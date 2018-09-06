@@ -33,12 +33,12 @@ const logic = {
         })
     },
 
-    register(email, name, adress, phone, password, latitude, longitude) {
+    register(email, name, address, phone, password, latitude, longitude) {
         return Promise.resolve()
             .then(() => {
                 this._validateEmail(email)
                 this._validateStringField('name', name)
-                this._validateStringField('adress', adress)
+                this._validateStringField('address', address)
                 this._validateStringField('phone', phone)
                 this._validateStringField('password', password)
                 if (latitude)
@@ -51,7 +51,7 @@ const logic = {
             .then(shelter => {
                 if (shelter) throw new LogicError(`shelter with ${email} email already exist`)
 
-                return Shelter.create({ email, name, adress, phone, password, latitude, longitude })
+                return Shelter.create({ email, name, address, phone, password, latitude, longitude })
             })
             .then(() => true)
     },
@@ -168,6 +168,26 @@ const logic = {
             .then(() => true)
     },
 
+    dogNotAdopted(id, dogId) {
+        return Promise.resolve()
+            .then(() => {
+
+                return Shelter.findOne({ _id: id })
+            })
+            .then(shelter => {
+                if (!shelter) throw new LogicError(`Shelter with ${id} id does not exist`)
+                return Dog.findOne({ _id: dogId })
+                    .then(dog => {
+                        if (!dog) throw new LogicError(`Dog with id ${dogId} does not exist`)
+
+                        if (dog.shelter.toString() !== shelter.id) throw new LogicError('dog does not belong to shelter')
+
+                        return Dog.updateOne({ _id: dogId }, { adopted: false })
+                    })
+            })
+            .then(() => true)
+    },
+
     retrieveDog(dogId) {
         return Promise.resolve()
             .then(() => {
@@ -235,7 +255,6 @@ const logic = {
                 return Dog.findOne({ _id: dogId })
                     .then(dog => {
                         if (!dog) throw new LogicError(`Dog with id ${dogId} does not exist`)
-                        debugger
                         return Dog.updateOne({
                             _id: dogId
                         }, {
@@ -259,17 +278,17 @@ const logic = {
                 let minAge, maxAge
                 let minWeight, maxWeight
                 switch (age) {
-                    case "cachorro":
+                    case "puppy":
                         minAge = 0
                         maxAge = 0.6
                         break;
 
-                    case "joven":
+                    case "young":
                         minAge = 0.6
                         maxAge = 1.5
                         break;
 
-                    case "adulto":
+                    case "adult":
                         minAge = 1.5
                         maxAge = 8
                         break;
@@ -291,17 +310,17 @@ const logic = {
                 }
 
                 switch (weight) {
-                    case "pequeno":
+                    case "little":
                         minWeight = 0
                         maxWeight = 6
                         break;
 
-                    case "mediano":
+                    case "medium":
                         minWeight = 6
                         maxWeight = 10
                         break;
 
-                    case "grande":
+                    case "big":
                         minWeight = 10
                         break;
 
@@ -323,7 +342,7 @@ const logic = {
                 if (gender == 'male')
                     filter.gender = 'male'
 
-                return Dog.find(filter, { __v: 0, _id: 0 }, {
+                return Dog.find(filter, { __v: 0}, {
                     sort: {
                         age: 1
                     }

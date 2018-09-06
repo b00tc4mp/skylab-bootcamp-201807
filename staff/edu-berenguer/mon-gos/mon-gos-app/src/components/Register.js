@@ -1,13 +1,14 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 import { logic } from '../logic'
+import swal from 'sweetalert2'
 
 class Register extends Component {
 
     state = {
         email: "",
         name: "",
-        adress: "",
+        address: "",
         phone: "",
         password: ""
     }
@@ -21,28 +22,74 @@ class Register extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault()
-        const { email, name, adress, phone, password } = this.state
-        logic.register(email, name, adress, phone, password)
-            .then(() => this.props.history.push('/login'))
-            .catch( message  => (
-                console.log(message)
-            ))
+        const { email, name, address, phone, password } = this.state
+        logic.register(email, name, address, phone, password)
+            .then(() => {
+                swal({
+                    type: 'success',
+                    title: 'Registered Successfully',
+                    showConfirmButton: false,
+                    timer: 1000
+                })
+                return this.props.history.push('/login')
+            })
+            .catch(message => {
+                swal({
+                    type: 'error',
+                    title: `${message}`,
+                    showConfirmButton: false,
+                    timer: 1000
+                })
+            })
     }
 
 
     render() {
         return <div>
-            <a href="/#/login"><button>Iniciar Sesión</button></a>
-            <h1>Registro</h1>
-            < form onSubmit={this.handleSubmit} >
-                <input type="email" onChange={this.handleChange} name="email" placeholder="Email" />
-                <input type="name" onChange={this.handleChange} name="name" placeholder="Nombre" />
-                <input type="adress" onChange={this.handleChange} name="adress" placeholder="Dirección" />
-                <input type="phone" onChange={this.handleChange} name="phone" placeholder="Teléfono" />
-                <input type="password" name="password" onChange={this.handleChange} placeholder="Password" />
-                <button type="submit">Registrar</button>
-            </form >
-            <a href="/"><button>Volver</button></a>
+            <nav class="navbar is-primary nav">
+                <a class="navbar-item" href="/"><button class="button">Home</button></a>
+                <a class="navbar-item" href="/#/login"><button class="button">Login</button></a>
+            </nav>
+            <div class="container-form">
+                <h1>Register</h1>
+                < form onSubmit={this.handleSubmit} >
+                    <div class="field">
+                        <p class="control has-icons-left has-icons-right">
+                            <input class="input" type="email" placeholder="Email" onChange={this.handleChange} name="email" />
+                            <span class="icon is-small is-left">
+                                <i class="fas fa-envelope"></i>
+                            </span>
+                            <span class="icon is-small is-right">
+                                <i class="fas fa-check"></i>
+                            </span>
+                        </p>
+                    </div>
+                    <div class="field">
+                        <p class="control has-icons-left has-icons-right">
+                            <input class="input" type="text" placeholder="Name" onChange={this.handleChange} name="name" />
+                        </p>
+                    </div>
+                    <div class="field">
+                        <p class="control has-icons-left has-icons-right">
+                            <input class="input" type="text" placeholder="Address" onChange={this.handleChange} name="address" />
+                        </p>
+                    </div>
+                    <div class="field">
+                        <p class="control has-icons-left has-icons-right">
+                            <input class="input" type="text" placeholder="Phone" onChange={this.handleChange} name="phone" />
+                        </p>
+                    </div>
+                    <div class="field">
+                        <p class="control has-icons-left">
+                            <input class="input" name="password" type="password" onChange={this.handleChange} placeholder="Password" />
+                            <span class="icon is-small is-left">
+                                <i class="fas fa-lock"></i>
+                            </span>
+                        </p>
+                    </div>
+                    <button class="button is-success" type="submit">Register</button>
+                </form >
+            </div>
         </div>
     }
 }
