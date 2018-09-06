@@ -448,27 +448,27 @@ const logic = {
         }
       })
       .then(() => {
-        if (Object.is(targetUser._id, user._id)) {
-          return post.populate({ path: "user", select: "-password" });
-
-        } else if (!username) {
+        if (!username) {
           if (targetUser.privateAccount) {
             throw new AccessDeniedError(`user not logged in can not see the post of user ${targetUser.username}`);
           } else {
-            return post.populate({ path: "user", select: "-password" });
+            return Post.findById(postId).populate({ path: "user", select: "-password -__v" });
           }
+        } else if (username && targetUser._id.toString() === user._id.toString()) {
+          return Post.findById(postId).populate({ path: "user", select: "-password -__v" });
         } else {
           if (targetUser.privateAccount) {
             if (this._isFollowingUser(user, targetUser)) {
-              return post.populate({ path: "user", select: "-password" });
+              return Post.findById(postId).populate({ path: "user", select: "-password -__v" });
             } else {
               throw new AccessDeniedError(`user ${username} can not see the post of user ${targetUser.username}`);
             }
           } else {
-            return post.populate({ path: "user", select: "-password" });
+            return Post.findById(postId).populate({ path: "user", select: "-password -__v" });
           }
         }
-      });
+      })
+      .then((post: PostModelInterface) => post);
   },
 
   listUserPosts(username?: string, targetUsername?: string) { },

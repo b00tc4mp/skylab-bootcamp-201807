@@ -906,9 +906,9 @@ describe("logic", () => {
           .then((post: PostModelInterface) => {
             expect(post).toBeInstanceOf(Post);
             expect(post._id).toBeInstanceOf(ObjectId);
-            expect(post._id).toBe(postId);
+            expect(post._id.toString()).toBe(postId);
             expect(post.user).toBeInstanceOf(ObjectId);
-            expect(post.user).toBe(targetUser._id);
+            expect(post.user).toEqual(targetUser._id);
             expect(post.imageId).toBeDefined();
           });
       });
@@ -918,9 +918,9 @@ describe("logic", () => {
           .then((post: PostModelInterface) => {
             expect(post).toBeInstanceOf(Post);
             expect(post._id).toBeInstanceOf(ObjectId);
-            expect(post._id).toBe(postId);
+            expect(post._id.toString()).toBe(postId);
             expect(post.user).toBeInstanceOf(ObjectId);
-            expect(post.user).toBe(targetUser._id);
+            expect(post.user).toEqual(targetUser._id);
             expect(post.imageId).toBeDefined();
           });
       });
@@ -951,9 +951,9 @@ describe("logic", () => {
           .then((post: PostModelInterface) => {
             expect(post).toBeInstanceOf(Post);
             expect(post._id).toBeInstanceOf(ObjectId);
-            expect(post._id).toBe(postId);
+            expect(post._id.toString()).toBe(postId);
             expect(post.user).toBeInstanceOf(ObjectId);
-            expect(post.user).toBe(targetUser._id);
+            expect(post.user).toEqual(targetUser._id);
             expect(post.imageId).toBeDefined();
           });
       });
@@ -1008,9 +1008,9 @@ describe("logic", () => {
           .then((post: PostModelInterface) => {
             expect(post).toBeInstanceOf(Post);
             expect(post._id).toBeInstanceOf(ObjectId);
-            expect(post._id).toBe(postId);
+            expect(post._id.toString()).toBe(postId);
             expect(post.user).toBeInstanceOf(ObjectId);
-            expect(post.user).toBe(user._id);
+            expect(post.user).toEqual(user._id);
             expect(post.imageId).toBeDefined();
           });
       });
