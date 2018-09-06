@@ -44,7 +44,7 @@ const userSchema: Schema = new Schema({
   biography: String,
   imageId: String,
   imageUrl: String,
-  privateAccount: Boolean,
+  privateAccount: { type: Boolean, default: false },
   lastLogin: Date,
   enable: { type: Boolean, default: true },
   followers: [followerSchema],

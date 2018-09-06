@@ -15,6 +15,8 @@ import SavedPost, { SavedPostModelInterface } from "../models/saved-post";
 
 config();
 
+jest.setTimeout(10000);
+
 const { DATABASE_URL_TEST } = process.env;
 
 const { ObjectId } = Types;
@@ -31,8 +33,8 @@ beforeEach(async () => {
 });
 
 afterAll(async () => {
-  // await Post.deleteMany({});
-  // await User.deleteMany({});
+  await Post.deleteMany({});
+  await User.deleteMany({});
 
   await db.disconnect();
 });
@@ -48,7 +50,7 @@ describe("logic", () => {
     password = `123${Math.random()}`;
   });
 
-  false && describe("register", () => {
+  describe("register", () => {
     test("should register correctly", () => {
       return logic.register(username, email, password)
         .then(res => expect(res).toBeTruthy());
@@ -126,7 +128,7 @@ describe("logic", () => {
 
   });
 
-  false && describe("authenticate", () => {
+  describe("authenticate", () => {
     beforeEach(() => User.create({ username, email, password }));
 
     test("should login correctly", () => {
@@ -161,7 +163,7 @@ describe("logic", () => {
     });
   });
 
-  false && describe("retrieve user", () => {
+  describe("retrieve user", () => {
     let user: UserModelInterface;
 
     beforeEach(() => {
@@ -284,7 +286,7 @@ describe("logic", () => {
     });
   });
 
-  false && describe("update user", () => {
+  describe("update user", () => {
     beforeEach(() => User.create({ username, email, password }));
 
     test("should update correctly", () => {
@@ -399,7 +401,7 @@ describe("logic", () => {
     });
   });
 
-  false && describe("update user password", () => {
+  describe("update user password", () => {
     const newPassword = `${password}-${Math.random()}`;
 
     beforeEach(() => User.create({ username, email, password }));
@@ -419,7 +421,7 @@ describe("logic", () => {
     });
   });
 
-  false && describe("update user avatar", () => {
+  describe("update user avatar", () => {
     let buffer: Buffer;
     let filename: string;
 
@@ -457,7 +459,7 @@ describe("logic", () => {
     });
   });
 
-  false && describe("toggle follow user", () => {
+  describe("toggle follow user", () => {
     let targetUsername: string;
     let targetEmail: string;
     let targetPassword: string;
@@ -500,7 +502,7 @@ describe("logic", () => {
 
   });
 
-  false && describe("list user followers", () => {
+  describe("list user followers", () => {
     let user: UserModelInterface;
 
     beforeEach(async () => {
@@ -655,7 +657,7 @@ describe("logic", () => {
     });
   });
 
-  false && describe("list user followings", () => {
+  describe("list user followings", () => {
     let user: UserModelInterface;
 
     beforeEach(async () => {
@@ -804,7 +806,7 @@ describe("logic", () => {
 
   });
 
-  false && describe("create post", () => {
+  describe("create post", () => {
     let buffer: Buffer;
     let filename: string;
 
@@ -907,8 +909,7 @@ describe("logic", () => {
             expect(post).toBeInstanceOf(Post);
             expect(post._id).toBeInstanceOf(ObjectId);
             expect(post._id.toString()).toBe(postId);
-            expect(post.user).toBeInstanceOf(ObjectId);
-            expect(post.user).toEqual(targetUser._id);
+            expect(post.user).toBeInstanceOf(User);
             expect(post.imageId).toBeDefined();
           });
       });
@@ -919,8 +920,7 @@ describe("logic", () => {
             expect(post).toBeInstanceOf(Post);
             expect(post._id).toBeInstanceOf(ObjectId);
             expect(post._id.toString()).toBe(postId);
-            expect(post.user).toBeInstanceOf(ObjectId);
-            expect(post.user).toEqual(targetUser._id);
+            expect(post.user).toBeInstanceOf(User);
             expect(post.imageId).toBeDefined();
           });
       });
@@ -952,8 +952,7 @@ describe("logic", () => {
             expect(post).toBeInstanceOf(Post);
             expect(post._id).toBeInstanceOf(ObjectId);
             expect(post._id.toString()).toBe(postId);
-            expect(post.user).toBeInstanceOf(ObjectId);
-            expect(post.user).toEqual(targetUser._id);
+            expect(post.user).toBeInstanceOf(User);
             expect(post.imageId).toBeDefined();
           });
       });
@@ -985,7 +984,6 @@ describe("logic", () => {
       let filename: string;
 
       beforeEach(async () => {
-
         filename = `${username}.png`;
 
         await new Promise((resolve, reject) => {
@@ -1009,779 +1007,797 @@ describe("logic", () => {
             expect(post).toBeInstanceOf(Post);
             expect(post._id).toBeInstanceOf(ObjectId);
             expect(post._id.toString()).toBe(postId);
-            expect(post.user).toBeInstanceOf(ObjectId);
-            expect(post.user).toEqual(user._id);
+            expect(post.user).toBeInstanceOf(User);
             expect(post.imageId).toBeDefined();
           });
       });
     });
   });
 
-  // describe("list user posts", () => {
-  //   let user: UserModelInterface;
-
-  //   beforeEach(async () => {
-  //     user = await User.create({ username, email, password });
-  //   });
-
-  //   describe("target user", () => {
-  //     let targetUsername: string;
-  //     let targetEmail: string;
-  //     let targetPassword: string;
-  //     let targetFilename: string;
-  //     let targetUser: UserModelInterface;
-
-  //     beforeEach(async () => {
-
-  //       targetUsername = `user-${Math.random()}`;
-  //       targetEmail = `user-${Math.random()}@inskygram.com`;
-  //       targetPassword = `123${Math.random()}`;
-
-  //       targetUser = await User.create({ username: targetUsername, email: targetEmail, password: targetPassword });
-
-  //       for (let i = 0; i < 4; i++) {
-  //         targetFilename = `${targetUsername}-${i}.png`;
-
-  //         await new Promise((resolve, reject) => {
-  //           return new Jimp(256, 256, 0xff0000ff, (err: any, image: any) => {
-  //             if (err) { return reject(err); }
-
-  //             image.write(`${__dirname}/test/${targetFilename}`, resolve);
-  //           });
-  //         });
-
-  //         const buffer: Buffer = fs.readFileSync(`${__dirname}/test/${targetFilename}`);
-
-  //         await logic.createPost(targetUsername, targetFilename, buffer);
-  //       }
-  //     });
-
-  //     afterEach(() => {
-  //       rimraf.sync(`${__dirname}/test`);
-  //     });
-
-  //     test("should list the posts of a public user seeing him by a logged-in user", () => {
-  //       return logic.listUserPosts(username, targetUsername)
-  //         .then((posts: PostModelInterface[]) => {
-  //           expect(posts).toHaveLength(4);
-  //         });
-  //     });
-
-  //     test("should list the posts of a public user seeing him by a user not logged in", () => {
-  //       return logic.listUserPosts(undefined, targetUsername)
-  //         .then((posts: PostModelInterface[]) => {
-  //           expect(posts).toHaveLength(4);
-  //         });
-  //     });
-
-  //     test("should list the posts of a private user seeing him by a logged-in follower user", () => {
-  //       targetUser.privateAccount = true;
-
-  //       return targetUser.save()
-  //         .then((targetUser: UserModelInterface) => {
-  //           const following = new Following();
-  //           following.user = targetUser._id;
-  //           following.createdAt = new Date();
-
-  //           user.followings.push(following);
-
-  //           return user.save();
-  //         })
-  //         .then((user: UserModelInterface) => {
-  //           const follower = new Follower();
-  //           follower.user = user._id;
-  //           follower.createdAt = new Date();
-
-  //           targetUser.followers.push(follower);
-
-  //           return targetUser.save();
-  //         })
-  //         .then((targetUser: UserModelInterface) => logic.listUserPosts(username, targetUsername))
-  //         .then((posts: PostModelInterface[]) => expect(posts).toHaveLength(4));
-  //     });
-
-  //     test("should fail on trying to retrieve a list the posts of a private user " +
-  //       "seeing him by a logged-in user not follower", () => {
-  //         targetUser.privateAccount = true;
-
-  //         return targetUser.save()
-  //           .then((targetUser: UserModelInterface) => {
-  //             expect(() => logic.listUserPosts(username, targetUsername)).toThrowError(AccessDeniedError);
-  //             expect(() => logic.listUserPosts(username, targetUsername))
-  //               .toThrowError(`user ${username} can not see the posts of user ${targetUsername}`);
-  //           });
-  //       });
-
-  //     test("should fail on trying to retrieve a list the posts of a private user " +
-  //       "seeing him by a user not logged in", () => {
-  //         targetUser.privateAccount = true;
-
-  //         return targetUser.save()
-  //           .then((targetUser: UserModelInterface) => {
-  //             expect(() => logic.listUserPosts(undefined, targetUsername)).toThrowError(AccessDeniedError);
-  //             expect(() => logic.listUserPosts(undefined, targetUsername))
-  //               .toThrowError(`user not logged in can not see the posts of user ${targetUsername}`);
-  //           });
-  //       });
-  //   });
+  describe("list user posts", () => {
+    let user: UserModelInterface;
+
+    beforeEach(async () => {
+      user = await User.create({ username, email, password });
+    });
+
+    describe("target user", () => {
+      let targetUsername: string;
+      let targetEmail: string;
+      let targetPassword: string;
+      let targetFilename: string;
+      let targetUser: UserModelInterface;
+
+      beforeEach(async () => {
+        targetUsername = `user-${Math.random()}`;
+        targetEmail = `user-${Math.random()}@inskygram.com`;
+        targetPassword = `123${Math.random()}`;
+
+        targetUser = await User.create({ username: targetUsername, email: targetEmail, password: targetPassword });
+
+        for (let i = 0; i < 2; i++) {
+          targetFilename = `${targetUsername}-${i}.png`;
 
-  //   describe("user", () => {
-  //     let filename: string;
+          await new Promise((resolve, reject) => {
+            return new Jimp(256, 256, 0xff0000ff, (err: any, image: any) => {
+              if (err) { return reject(err); }
+
+              image.write(`${__dirname}/test/${targetFilename}`, resolve);
+            });
+          });
 
-  //     beforeEach(async () => {
+          const buffer: Buffer = fs.readFileSync(`${__dirname}/test/${targetFilename}`);
+
+          await logic.createPost(targetUsername, targetFilename, buffer);
+        }
+      });
+
+      afterEach(() => rimraf.sync(`${__dirname}/test`));
+
+      test("should list the posts of a public user seeing him by a logged-in user", () => {
+        return logic.listUserPosts(username, targetUsername)
+          .then((posts: PostModelInterface[]) => expect(posts).toHaveLength(2));
+      });
+
+      test("should list the posts of a public user seeing him by a user not logged in", () => {
+        return logic.listUserPosts(undefined, targetUsername)
+          .then((posts: PostModelInterface[]) => expect(posts).toHaveLength(2));
+      });
+
+      test("should list the posts of a private user seeing him by a logged-in follower user", () => {
+        targetUser.privateAccount = true;
+
+        return targetUser.save()
+          .then((targetUser: UserModelInterface) => {
+            const following = new Following();
+            following.user = targetUser._id;
+            following.createdAt = new Date();
+
+            user.followings.push(following);
+
+            return user.save();
+          })
+          .then((user: UserModelInterface) => {
+            const follower = new Follower();
+            follower.user = user._id;
+            follower.createdAt = new Date();
+
+            targetUser.followers.push(follower);
+
+            return targetUser.save();
+          })
+          .then((targetUser: UserModelInterface) => logic.listUserPosts(username, targetUsername))
+          .then((posts: PostModelInterface[]) => expect(posts).toHaveLength(2));
+      });
+
+      test("should fail on trying to retrieve a list the posts of a private user " +
+        "seeing him by a logged-in user not follower", () => {
+          targetUser.privateAccount = true;
+
+          return targetUser.save()
+            .then((targetUser: UserModelInterface) => logic.listUserPosts(username, targetUsername))
+            .catch(({ message }) => {
+              expect(message).toBe(`user ${username} can not see the posts of user ${targetUsername}`);
+            });
+        });
 
-  //       for (let i = 0; i < 4; i++) {
-  //         filename = `${username}-${i}.png`;
+      test("should fail on trying to retrieve a list the posts of a private user " +
+        "seeing him by a user not logged in", () => {
+          targetUser.privateAccount = true;
 
-  //         await new Promise((resolve, reject) => {
-  //           return new Jimp(256, 256, 0xff0000ff, (err: any, image: any) => {
-  //             if (err) { return reject(err); }
+          return targetUser.save()
+            .then((targetUser: UserModelInterface) => logic.listUserPosts(undefined, targetUsername))
+            .catch(({ message }) => {
+              expect(message).toBe(`user not logged in can not see the posts of user ${targetUsername}`);
+            });
+        });
+    });
 
-  //             image.write(`${__dirname}/test/${filename}`, resolve);
-  //           });
-  //         });
+    describe("user", () => {
+      let filename: string;
 
-  //         const buffer: Buffer = fs.readFileSync(`${__dirname}/test/${filename}`);
+      beforeEach(async () => {
 
-  //         await logic.createPost(username, filename, buffer);
-  //       }
-  //     });
+        for (let i = 0; i < 2; i++) {
+          filename = `${username}-${i}.png`;
 
-  //     afterEach(() => {
-  //       rimraf.sync(`${__dirname}/test`);
-  //     });
+          await new Promise((resolve, reject) => {
+            return new Jimp(256, 256, 0xff0000ff, (err: any, image: any) => {
+              if (err) { return reject(err); }
 
-  //     test("should list the posts of the logged-in user", () => {
-  //       return logic.listUserPosts(username)
-  //         .then((posts: PostModelInterface[]) => expect(posts).toHaveLength(4));
-  //     });
-  //   });
-  // });
+              image.write(`${__dirname}/test/${filename}`, resolve);
+            });
+          });
 
-  // describe("list user saved posts", () => {
-  //   let user: UserModelInterface;
-  //   let otherUsername: string;
-  //   let otherEmail: string;
-  //   let otherPassword: string;
-  //   let otherFilename: string;
-  //   let otherUser: UserModelInterface;
+          const buffer: Buffer = fs.readFileSync(`${__dirname}/test/${filename}`);
 
-  //   beforeEach(async () => {
-  //     user = await User.create({ username, email, password });
+          await logic.createPost(username, filename, buffer);
+        }
+      });
 
-  //     otherUsername = `user-${Math.random()}`;
-  //     otherEmail = `user-${Math.random()}@inskygram.com`;
-  //     otherPassword = `123${Math.random()}`;
+      afterEach(() => rimraf.sync(`${__dirname}/test`));
 
-  //     otherUser = await User.create({ otherUsername, otherEmail, otherPassword, privateAccount: false });
-  //   });
-
-  //   describe("target user", () => {
-  //     let targetUsername: string;
-  //     let targetEmail: string;
-  //     let targetPassword: string;
-  //     let targetUser: UserModelInterface;
+      test("should list the posts of the logged-in user", () => {
+        return logic.listUserPosts(username)
+          .then((posts: PostModelInterface[]) => expect(posts).toHaveLength(2));
+      });
+    });
 
-  //     beforeEach(async () => {
-
-  //       targetUsername = `user-${Math.random()}`;
-  //       targetEmail = `user-${Math.random()}@inskygram.com`;
-  //       targetPassword = `123${Math.random()}`;
-
-  //       targetUser = await User.create({ username: targetUsername, email: targetEmail, password: targetPassword });
-
-  //       const savedPosts: SavedPostModelInterface[] = [];
-
-  //       for (let i = 0; i < 4; i++) {
-  //         otherFilename = `${otherUsername}-${i}.png`;
-
-  //         await new Promise((resolve, reject) => {
-  //           return new Jimp(256, 256, 0xff0000ff, (err: any, image: any) => {
-  //             if (err) { return reject(err); }
-
-  //             image.write(`${__dirname}/test/${otherFilename}`, resolve);
-  //           });
-  //         });
-
-  //         const buffer: Buffer = fs.readFileSync(`${__dirname}/test/${otherFilename}`);
-
-  //         const postId: string = await logic.createPost(otherUsername, otherFilename, buffer);
-
-  //         const post: PostModelInterface = await Post.findById(postId);
+  });
 
-  //         const savedPost = new SavedPost();
-  //         savedPost.post = post._id;
-  //         savedPost.createdAt = new Date();
+  describe("list user saved posts", () => {
+    let user: UserModelInterface;
+    let otherUsername: string;
+    let otherEmail: string;
+    let otherPassword: string;
+    let otherFilename: string;
+    let otherUser: UserModelInterface;
 
-  //         savedPosts.push(savedPost);
-  //       }
+    beforeEach(async () => {
+      user = await User.create({ username, email, password });
 
-  //       targetUser.savedPosts = savedPosts;
+      otherUsername = `user-${Math.random()}`;
+      otherEmail = `user-${Math.random()}@inskygram.com`;
+      otherPassword = `123${Math.random()}`;
 
-  //       await targetUser.save();
-  //     });
+      otherUser = await User.create({
+        username: otherUsername,
+        email: otherEmail,
+        password: otherPassword,
+        privateAccount: false,
+      });
+    });
 
-  //     afterEach(() => {
-  //       rimraf.sync(`${__dirname}/test`);
-  //     });
+    describe("target user", () => {
+      let targetUsername: string;
+      let targetEmail: string;
+      let targetPassword: string;
+      let targetUser: UserModelInterface;
 
-  //     test("should list the saved posts of a public user seeing him by a logged-in user", () => {
-  //       return logic.listUserSavedPosts(username, targetUsername)
-  //         .then((savedPosts: SavedPostModelInterface[]) => {
-  //           expect(savedPosts).toHaveLength(4);
-  //         });
-  //     });
+      beforeEach(async () => {
+        targetUsername = `user-${Math.random()}`;
+        targetEmail = `user-${Math.random()}@inskygram.com`;
+        targetPassword = `123${Math.random()}`;
 
-  //     test("should list the saved posts of a public user seeing him by a user not logged in", () => {
-  //       return logic.listUserSavedPosts(undefined, targetUsername)
-  //         .then((savedPosts: PostModelInterface[]) => {
-  //           expect(savedPosts).toHaveLength(4);
-  //         });
-  //     });
+        targetUser = await User.create({ username: targetUsername, email: targetEmail, password: targetPassword });
 
-  //     test("should list the saved posts of a private user seeing him by a logged-in follower user", () => {
-  //       targetUser.privateAccount = true;
+        const savedPosts: SavedPostModelInterface[] = [];
 
-  //       return targetUser.save()
-  //         .then((targetUser: UserModelInterface) => {
-  //           const following = new Following();
-  //           following.user = targetUser._id;
-  //           following.createdAt = new Date();
+        for (let i = 0; i < 2; i++) {
+          otherFilename = `${otherUsername}-${i}.png`;
 
-  //           user.followings.push(following);
+          await new Promise((resolve, reject) => {
+            return new Jimp(256, 256, 0xff0000ff, (err: any, image: any) => {
+              if (err) { return reject(err); }
 
-  //           return user.save();
-  //         })
-  //         .then((user: UserModelInterface) => {
-  //           const follower = new Follower();
-  //           follower.user = user._id;
-  //           follower.createdAt = new Date();
+              image.write(`${__dirname}/test/${otherFilename}`, resolve);
+            });
+          });
 
-  //           targetUser.followers.push(follower);
+          const buffer: Buffer = fs.readFileSync(`${__dirname}/test/${otherFilename}`);
 
-  //           return targetUser.save();
-  //         })
-  //         .then((targetUser: UserModelInterface) => logic.listUserSavedPosts(username, targetUsername))
-  //         .then((savedPosts: SavedPostModelInterface[]) => expect(savedPosts).toHaveLength(4));
-  //     });
+          const postId: string = await logic.createPost(otherUsername, otherFilename, buffer);
 
-  //     test("should fail on trying to retrieve a list the saved posts of a private user " +
-  //       "seeing him by a logged-in user not follower", () => {
-  //         targetUser.privateAccount = true;
+          const post: PostModelInterface = await Post.findById(postId);
 
-  //         return targetUser.save()
-  //           .then((targetUser: UserModelInterface) => {
-  //             expect(() => logic.listUserSavedPosts(username, targetUsername)).toThrowError(AccessDeniedError);
-  //             expect(() => logic.listUserSavedPosts(username, targetUsername))
-  //               .toThrowError(`user ${username} can not see the saved posts of user ${targetUsername}`);
-  //           });
-  //       });
+          const savedPost = new SavedPost();
+          savedPost.post = post._id;
+          savedPost.createdAt = new Date();
 
-  //     test("should fail on trying to retrieve a list the saved posts of a private user " +
-  //       "seeing him by a user not logged in", () => {
-  //         targetUser.privateAccount = true;
+          savedPosts.push(savedPost);
+        }
 
-  //         return targetUser.save()
-  //           .then((targetUser: UserModelInterface) => {
-  //             expect(() => logic.listUserSavedPosts(undefined, targetUsername)).toThrowError(AccessDeniedError);
-  //             expect(() => logic.listUserSavedPosts(undefined, targetUsername))
-  //               .toThrowError(`user not logged in can not see the saved posts of user ${targetUsername}`);
-  //           });
-  //       });
-  //   });
+        targetUser.savedPosts = savedPosts;
 
-  //   describe("user", () => {
-  //     beforeEach(async () => {
+        await targetUser.save();
+      });
 
-  //       const savedPosts: SavedPostModelInterface[] = [];
+      afterEach(() => rimraf.sync(`${__dirname}/test`));
 
-  //       for (let i = 0; i < 4; i++) {
-  //         otherFilename = `${otherUsername}-${i}.png`;
+      test("should list the saved posts of a public user seeing him by a logged-in user", () => {
+        return logic.listUserSavedPosts(username, targetUsername)
+          .then((savedPosts: PostModelInterface[]) => expect(savedPosts).toHaveLength(2));
+      });
 
-  //         await new Promise((resolve, reject) => {
-  //           return new Jimp(256, 256, 0xff0000ff, (err: any, image: any) => {
-  //             if (err) { return reject(err); }
+      test("should list the saved posts of a public user seeing him by a user not logged in", () => {
+        return logic.listUserSavedPosts(undefined, targetUsername)
+          .then((savedPosts: PostModelInterface[]) => expect(savedPosts).toHaveLength(2));
+      });
 
-  //             image.write(`${__dirname}/test/${otherFilename}`, resolve);
-  //           });
-  //         });
+      test("should list the saved posts of a private user seeing him by a logged-in follower user", () => {
+        targetUser.privateAccount = true;
 
-  //         const buffer: Buffer = fs.readFileSync(`${__dirname}/test/${otherFilename}`);
+        return targetUser.save()
+          .then((targetUser: UserModelInterface) => {
+            const following = new Following();
+            following.user = targetUser._id;
+            following.createdAt = new Date();
 
-  //         const postId: string = await logic.createPost(otherUsername, otherFilename, buffer);
+            user.followings.push(following);
 
-  //         const post: PostModelInterface = await Post.findById(postId);
+            return user.save();
+          })
+          .then((user: UserModelInterface) => {
+            const follower = new Follower();
+            follower.user = user._id;
+            follower.createdAt = new Date();
 
-  //         const savedPost = new SavedPost();
-  //         savedPost.post = post._id;
-  //         savedPost.createdAt = new Date();
+            targetUser.followers.push(follower);
 
-  //         savedPosts.push(savedPost);
-  //       }
+            return targetUser.save();
+          })
+          .then((targetUser: UserModelInterface) => logic.listUserSavedPosts(username, targetUsername))
+          .then((savedPosts: PostModelInterface[]) => expect(savedPosts).toHaveLength(2));
+      });
 
-  //       user.savedPosts = savedPosts;
+      test("should fail on trying to retrieve a list the saved posts of a private user " +
+        "seeing him by a logged-in user not follower", () => {
+          targetUser.privateAccount = true;
 
-  //       await user.save();
-  //     });
+          return targetUser.save()
+            .then((targetUser: UserModelInterface) => logic.listUserSavedPosts(username, targetUsername))
+            .catch(({ message }) => {
+              expect(message).toBe(`user ${username} can not see the saved posts of user ${targetUsername}`);
+            });
+        });
 
-  //     afterEach(() => {
-  //       rimraf.sync(`${__dirname}/test`);
-  //     });
+      test("should fail on trying to retrieve a list the saved posts of a private user " +
+        "seeing him by a user not logged in", () => {
+          targetUser.privateAccount = true;
 
-  //     test("should list the saved posts of the logged-in user", () => {
-  //       return logic.listUserSavedPosts(username)
-  //         .then((savedPosts: SavedPostModelInterface[]) => expect(savedPosts).toHaveLength(4));
-  //     });
-  //   });
-  // });
+          return targetUser.save()
+            .then((targetUser: UserModelInterface) => logic.listUserSavedPosts(undefined, targetUsername))
+            .catch(({ message }) => {
+              expect(message).toBe(`user not logged in can not see the saved posts of user ${targetUsername}`);
+            });
+        });
+    });
 
-  // describe("list user wall", () => {
-  //   let user: UserModelInterface;
-  //   let filename: string;
-  //   let targetUsername: string;
-  //   let targetEmail: string;
-  //   let targetPassword: string;
-  //   let targetFilename: string;
-  //   let targetUser: UserModelInterface;
+    describe("user", () => {
 
-  //   beforeEach(async () => {
+      beforeEach(async () => {
+        const savedPosts: SavedPostModelInterface[] = [];
 
-  //     user = await User.create({ username, email, password });
+        for (let i = 0; i < 2; i++) {
+          otherFilename = `${otherUsername}-${i}.png`;
 
-  //     targetUsername = `user-${Math.random()}`;
-  //     targetEmail = `user-${Math.random()}@inskygram.com`;
-  //     targetPassword = `123${Math.random()}`;
-  //     targetFilename = `${targetUsername}.png`;
+          await new Promise((resolve, reject) => {
+            return new Jimp(256, 256, 0xff0000ff, (err: any, image: any) => {
+              if (err) { return reject(err); }
 
-  //     targetUser = await User.create({ username: targetUsername, email: targetEmail, password: targetPassword });
+              image.write(`${__dirname}/test/${otherFilename}`, resolve);
+            });
+          });
 
-  //     for (let i = 0; i < 4; i++) {
-  //       targetFilename = `${targetFilename}-${i}.png`;
+          const buffer: Buffer = fs.readFileSync(`${__dirname}/test/${otherFilename}`);
 
-  //       await new Promise((resolve, reject) => {
-  //         return new Jimp(256, 256, 0xff0000ff, (err: any, image: any) => {
-  //           if (err) { return reject(err); }
+          const postId: string = await logic.createPost(otherUsername, otherFilename, buffer);
 
-  //           image.write(`${__dirname}/test/${targetFilename}`, resolve);
-  //         });
-  //       });
+          const post: PostModelInterface = await Post.findById(postId);
 
-  //       const buffer = fs.readFileSync(`${__dirname}/test/${targetFilename}`);
+          const savedPost = new SavedPost();
+          savedPost.post = post._id;
+          savedPost.createdAt = new Date();
 
-  //       await logic.createPost(targetUsername, targetFilename, buffer);
-  //     }
+          savedPosts.push(savedPost);
+        }
 
-  //     filename = `${username}.png`;
+        user.savedPosts = savedPosts;
 
-  //     await new Promise((resolve, reject) => {
-  //       return new Jimp(256, 256, 0xff0000ff, (err: any, image: any) => {
-  //         if (err) { return reject(err); }
+        await user.save();
+      });
 
-  //         image.write(`${__dirname}/test/${filename}`, resolve);
-  //       });
-  //     });
+      afterEach(() => rimraf.sync(`${__dirname}/test`));
 
-  //     const buffer = fs.readFileSync(`${__dirname}/test/${filename}`);
+      test("should list the saved posts of the logged-in user", () => {
+        return logic.listUserSavedPosts(username)
+          .then((savedPosts: PostModelInterface[]) => expect(savedPosts).toHaveLength(2));
+      });
 
-  //     await logic.createPost(username, filename, buffer);
-  //   });
+    });
+  });
 
-  //   afterEach(() => {
-  //     rimraf.sync(`${__dirname}/test`);
-  //   });
+  describe("list user wall", () => {
+    let user: UserModelInterface;
+    let filename: string;
+    let targetUsername: string;
+    let targetEmail: string;
+    let targetPassword: string;
+    let targetFilename: string;
+    let targetUser: UserModelInterface;
 
-  //   test("should list wall of the logged-in user", () => {
-  //     return Promise.resolve()
-  //       .then(() => {
-  //         const following = new Following();
-  //         following.user = targetUser._id;
-  //         following.createdAt = new Date();
+    beforeEach(async () => {
+      user = await User.create({ username, email, password });
 
-  //         user.followings.push(following);
+      targetUsername = `user-${Math.random()}`;
+      targetEmail = `user-${Math.random()}@inskygram.com`;
+      targetPassword = `123${Math.random()}`;
+      targetFilename = `${targetUsername}.png`;
 
-  //         return user.save();
-  //       })
-  //       .then((user: UserModelInterface) => {
-  //         const follower = new Follower();
-  //         follower.user = user._id;
-  //         follower.createdAt = new Date();
+      targetUser = await User.create({ username: targetUsername, email: targetEmail, password: targetPassword });
 
-  //         targetUser.followers.push(follower);
+      for (let i = 0; i < 2; i++) {
+        targetFilename = `${targetFilename}-${i}.png`;
 
-  //         return targetUser.save();
-  //       })
-  //       .then((targetUser: UserModelInterface) => {
-  //         return logic.listUserWall(username)
-  //           .then((posts: PostModelInterface[]) => expect(posts).toHaveLength(5));
-  //       });
-  //   });
+        await new Promise((resolve, reject) => {
+          return new Jimp(256, 256, 0xff0000ff, (err: any, image: any) => {
+            if (err) { return reject(err); }
 
-  //   // TODO: test wall with pagination
-  // });
+            image.write(`${__dirname}/test/${targetFilename}`, resolve);
+          });
+        });
 
-  // describe("add comment to post", () => {
-  //   let user: UserModelInterface;
-  //   let filename: string;
-  //   let targetUsername: string;
-  //   let targetEmail: string;
-  //   let targetPassword: string;
-  //   let targetFilename: string;
-  //   let targetUser: UserModelInterface;
-  //   let targetPostId: string;
-  //   let postId: string;
+        const buffer = fs.readFileSync(`${__dirname}/test/${targetFilename}`);
 
-  //   beforeEach(async () => {
+        await logic.createPost(targetUsername, targetFilename, buffer);
+      }
 
-  //     user = await User.create({ username, email, password });
+      filename = `${username}.png`;
 
-  //     targetUsername = `user-${Math.random()}`;
-  //     targetEmail = `user-${Math.random()}@inskygram.com`;
-  //     targetPassword = `123${Math.random()}`;
-  //     targetFilename = `${targetUsername}.png`;
+      await new Promise((resolve, reject) => {
+        return new Jimp(256, 256, 0xff0000ff, (err: any, image: any) => {
+          if (err) { return reject(err); }
 
-  //     let buffer: Buffer;
+          image.write(`${__dirname}/test/${filename}`, resolve);
+        });
+      });
 
-  //     targetUser = await User.create({ username: targetUsername, email: targetEmail, password: targetPassword });
+      const buffer = fs.readFileSync(`${__dirname}/test/${filename}`);
 
-  //     targetFilename = `${targetFilename}.png`;
+      await logic.createPost(username, filename, buffer);
+    });
 
-  //     await new Promise((resolve, reject) => {
-  //       return new Jimp(256, 256, 0xff0000ff, (err: any, image: any) => {
-  //         if (err) { return reject(err); }
+    afterEach(() => rimraf.sync(`${__dirname}/test`));
 
-  //         image.write(`${__dirname}/test/${targetFilename}`, resolve);
-  //       });
-  //     });
+    test("should list wall of the logged-in user", () => {
+      return Promise.resolve()
+        .then(() => {
+          const following = new Following();
+          following.user = targetUser._id;
+          following.createdAt = new Date();
 
-  //     buffer = fs.readFileSync(`${__dirname}/test/${targetFilename}`);
+          user.followings.push(following);
 
-  //     targetPostId = await logic.createPost(targetUsername, targetFilename, buffer);
+          return user.save();
+        })
+        .then((user: UserModelInterface) => {
+          const follower = new Follower();
+          follower.user = user._id;
+          follower.createdAt = new Date();
 
-  //     filename = `${username}.png`;
+          targetUser.followers.push(follower);
 
-  //     await new Promise((resolve, reject) => {
-  //       return new Jimp(256, 256, 0xff0000ff, (err: any, image: any) => {
-  //         if (err) { return reject(err); }
+          return targetUser.save();
+        })
+        .then((targetUser: UserModelInterface) => {
+          return logic.listUserWall(username)
+            .then((posts: PostModelInterface[]) => expect(posts).toHaveLength(3));
+        });
+    });
 
-  //         image.write(`${__dirname}/test/${filename}`, resolve);
-  //       });
-  //     });
+    test("should list wall of the logged-in user with limit and page", () => {
+      return Promise.resolve()
+        .then(() => {
+          const following = new Following();
+          following.user = targetUser._id;
+          following.createdAt = new Date();
 
-  //     buffer = fs.readFileSync(`${__dirname}/test/${filename}`);
+          user.followings.push(following);
 
-  //     postId = await logic.createPost(username, filename, buffer);
-  //   });
+          return user.save();
+        })
+        .then((user: UserModelInterface) => {
+          const follower = new Follower();
+          follower.user = user._id;
+          follower.createdAt = new Date();
 
-  //   afterEach(() => {
-  //     rimraf.sync(`${__dirname}/test`);
-  //   });
+          targetUser.followers.push(follower);
 
-  //   test("should add comment correctly to post of same user", () => {
-  //     const description = "Lorem ipsum...";
-  //     return logic.addCommentToPost(username, postId, description)
-  //       .then((res: boolean) => expect(res).toBeTruthy());
-  //   });
+          return targetUser.save();
+        })
+        .then((targetUser: UserModelInterface) => {
+          return logic.listUserWall(username, 1)
+            .then((posts: PostModelInterface[]) => {
+              expect(posts).toHaveLength(1);
 
-  //   test("should add comment correctly to post of a following user", () => {
-  //     const description = "Lorem ipsum...";
-  //     return logic.addCommentToPost(username, targetPostId, description)
-  //       .then((res: boolean) => expect(res).toBeTruthy());
-  //   });
-  // });
+              return logic.listUserWall(username, 1, 1);
+            })
+            .then((posts: PostModelInterface[]) => {
+              expect(posts).toHaveLength(1);
+            });
+        });
+    });
+  });
 
-  // describe("toggle like post", () => {
-  //   let user: UserModelInterface;
-  //   let filename: string;
-  //   let targetUsername: string;
-  //   let targetEmail: string;
-  //   let targetPassword: string;
-  //   let targetFilename: string;
-  //   let targetUser: UserModelInterface;
-  //   let targetPostId: string;
-  //   let postId: string;
+  describe("add comment to post", () => {
+    let user: UserModelInterface;
+    let filename: string;
+    let targetUsername: string;
+    let targetEmail: string;
+    let targetPassword: string;
+    let targetFilename: string;
+    let targetUser: UserModelInterface;
+    let targetPostId: string;
+    let postId: string;
 
-  //   beforeEach(async () => {
+    beforeEach(async () => {
+      user = await User.create({ username, email, password });
 
-  //     user = await User.create({ username, email, password });
+      targetUsername = `user-${Math.random()}`;
+      targetEmail = `user-${Math.random()}@inskygram.com`;
+      targetPassword = `123${Math.random()}`;
+      targetFilename = `${targetUsername}.png`;
 
-  //     targetUsername = `user-${Math.random()}`;
-  //     targetEmail = `user-${Math.random()}@inskygram.com`;
-  //     targetPassword = `123${Math.random()}`;
-  //     targetFilename = `${targetUsername}.png`;
+      let buffer: Buffer;
 
-  //     let buffer: Buffer;
+      targetUser = await User.create({ username: targetUsername, email: targetEmail, password: targetPassword });
 
-  //     targetUser = await User.create({ username: targetUsername, email: targetEmail, password: targetPassword });
+      targetFilename = `${targetFilename}.png`;
 
-  //     targetFilename = `${targetFilename}.png`;
+      await new Promise((resolve, reject) => {
+        return new Jimp(256, 256, 0xff0000ff, (err: any, image: any) => {
+          if (err) { return reject(err); }
 
-  //     await new Promise((resolve, reject) => {
-  //       return new Jimp(256, 256, 0xff0000ff, (err: any, image: any) => {
-  //         if (err) { return reject(err); }
+          image.write(`${__dirname}/test/${targetFilename}`, resolve);
+        });
+      });
 
-  //         image.write(`${__dirname}/test/${targetFilename}`, resolve);
-  //       });
-  //     });
+      buffer = fs.readFileSync(`${__dirname}/test/${targetFilename}`);
 
-  //     buffer = fs.readFileSync(`${__dirname}/test/${targetFilename}`);
+      targetPostId = await logic.createPost(targetUsername, targetFilename, buffer);
 
-  //     targetPostId = await logic.createPost(targetUsername, targetFilename, buffer);
+      filename = `${username}.png`;
 
-  //     filename = `${username}.png`;
+      await new Promise((resolve, reject) => {
+        return new Jimp(256, 256, 0xff0000ff, (err: any, image: any) => {
+          if (err) { return reject(err); }
 
-  //     await new Promise((resolve, reject) => {
-  //       return new Jimp(256, 256, 0xff0000ff, (err: any, image: any) => {
-  //         if (err) { return reject(err); }
+          image.write(`${__dirname}/test/${filename}`, resolve);
+        });
+      });
 
-  //         image.write(`${__dirname}/test/${filename}`, resolve);
-  //       });
-  //     });
+      buffer = fs.readFileSync(`${__dirname}/test/${filename}`);
 
-  //     buffer = fs.readFileSync(`${__dirname}/test/${filename}`);
+      postId = await logic.createPost(username, filename, buffer);
+    });
 
-  //     postId = await logic.createPost(username, filename, buffer);
-  //   });
+    afterEach(() => rimraf.sync(`${__dirname}/test`));
 
-  //   afterEach(() => {
-  //     rimraf.sync(`${__dirname}/test`);
-  //   });
+    test("should add comment correctly to post of same user", () => {
+      const description = "Lorem ipsum...";
+      return logic.addCommentToPost(username, postId, description)
+        .then((res: boolean) => expect(res).toBeTruthy());
+    });
 
-  //   test("should do like correctly to post of same user", () => {
-  //     return logic.toggleLikePost(username, postId)
-  //       .then((res: boolean) => expect(res).toBeTruthy());
-  //   });
+    test("should add comment correctly to post of a following user", () => {
+      const description = "Lorem ipsum...";
+      return logic.addCommentToPost(username, targetPostId, description)
+        .then((res: boolean) => expect(res).toBeTruthy());
+    });
+  });
 
-  //   test("should do unlike correctly to post of same user", () => {
-  //     return logic.toggleLikePost(username, postId)
-  //       .then((res: boolean) => logic.toggleLikePost(username, postId))
-  //       .then((res: boolean) => expect(res).toBeTruthy());
-  //   });
+  describe("toggle like post", () => {
+    let user: UserModelInterface;
+    let filename: string;
+    let targetUsername: string;
+    let targetEmail: string;
+    let targetPassword: string;
+    let targetFilename: string;
+    let targetUser: UserModelInterface;
+    let targetPostId: string;
+    let postId: string;
 
-  //   test("should do like correctly to post of a following user", () => {
-  //     return logic.toggleLikePost(username, targetPostId)
-  //       .then((res: boolean) => expect(res).toBeTruthy());
-  //   });
+    beforeEach(async () => {
+      user = await User.create({ username, email, password });
 
-  //   test("should do unlike correctly to post of a following user", () => {
-  //     return logic.toggleLikePost(username, targetPostId)
-  //       .then((res: boolean) => logic.toggleLikePost(username, targetPostId))
-  //       .then((res: boolean) => expect(res).toBeTruthy());
-  //   });
-  // });
+      targetUsername = `user-${Math.random()}`;
+      targetEmail = `user-${Math.random()}@inskygram.com`;
+      targetPassword = `123${Math.random()}`;
+      targetFilename = `${targetUsername}.png`;
 
-  // describe("toggle save post", () => {
-  //   let user: UserModelInterface;
-  //   let filename: string;
-  //   let targetUsername: string;
-  //   let targetEmail: string;
-  //   let targetPassword: string;
-  //   let targetFilename: string;
-  //   let targetUser: UserModelInterface;
-  //   let targetPostId: string;
-  //   let postId: string;
+      let buffer: Buffer;
 
-  //   beforeEach(async () => {
+      targetUser = await User.create({ username: targetUsername, email: targetEmail, password: targetPassword });
 
-  //     user = await User.create({ username, email, password });
+      targetFilename = `${targetFilename}.png`;
 
-  //     targetUsername = `user-${Math.random()}`;
-  //     targetEmail = `user-${Math.random()}@inskygram.com`;
-  //     targetPassword = `123${Math.random()}`;
-  //     targetFilename = `${targetUsername}.png`;
+      await new Promise((resolve, reject) => {
+        return new Jimp(256, 256, 0xff0000ff, (err: any, image: any) => {
+          if (err) { return reject(err); }
 
-  //     let buffer: Buffer;
+          image.write(`${__dirname}/test/${targetFilename}`, resolve);
+        });
+      });
 
-  //     targetUser = await User.create({ username: targetUsername, email: targetEmail, password: targetPassword });
+      buffer = fs.readFileSync(`${__dirname}/test/${targetFilename}`);
 
-  //     targetFilename = `${targetFilename}.png`;
+      targetPostId = await logic.createPost(targetUsername, targetFilename, buffer);
 
-  //     await new Promise((resolve, reject) => {
-  //       return new Jimp(256, 256, 0xff0000ff, (err: any, image: any) => {
-  //         if (err) { return reject(err); }
+      filename = `${username}.png`;
 
-  //         image.write(`${__dirname}/test/${targetFilename}`, resolve);
-  //       });
-  //     });
+      await new Promise((resolve, reject) => {
+        return new Jimp(256, 256, 0xff0000ff, (err: any, image: any) => {
+          if (err) { return reject(err); }
 
-  //     buffer = fs.readFileSync(`${__dirname}/test/${targetFilename}`);
+          image.write(`${__dirname}/test/${filename}`, resolve);
+        });
+      });
 
-  //     targetPostId = await logic.createPost(targetUsername, targetFilename, buffer);
+      buffer = fs.readFileSync(`${__dirname}/test/${filename}`);
 
-  //     filename = `${username}.png`;
+      postId = await logic.createPost(username, filename, buffer);
+    });
 
-  //     await new Promise((resolve, reject) => {
-  //       return new Jimp(256, 256, 0xff0000ff, (err: any, image: any) => {
-  //         if (err) { return reject(err); }
+    afterEach(() => rimraf.sync(`${__dirname}/test`));
 
-  //         image.write(`${__dirname}/test/${filename}`, resolve);
-  //       });
-  //     });
+    test("should do like correctly to post of same user", () => {
+      return logic.toggleLikePost(username, postId)
+        .then((res: boolean) => expect(res).toBeTruthy());
+    });
 
-  //     buffer = fs.readFileSync(`${__dirname}/test/${filename}`);
+    test("should do unlike correctly to post of same user", () => {
+      return logic.toggleLikePost(username, postId)
+        .then((res: boolean) => logic.toggleLikePost(username, postId))
+        .then((res: boolean) => expect(res).toBeTruthy());
+    });
 
-  //     postId = await logic.createPost(username, filename, buffer);
-  //   });
+    test("should do like correctly to post of a following user", () => {
+      return logic.toggleLikePost(username, targetPostId)
+        .then((res: boolean) => expect(res).toBeTruthy());
+    });
 
-  //   afterEach(() => {
-  //     rimraf.sync(`${__dirname}/test`);
-  //   });
+    test("should do unlike correctly to post of a following user", () => {
+      return logic.toggleLikePost(username, targetPostId)
+        .then((res: boolean) => logic.toggleLikePost(username, targetPostId))
+        .then((res: boolean) => expect(res).toBeTruthy());
+    });
+  });
 
-  //   test("should save post correctly to post of same user", () => {
-  //     return logic.toggleSavePost(username, postId)
-  //       .then((res: boolean) => expect(res).toBeTruthy());
-  //   });
+  describe("toggle save post", () => {
+    let user: UserModelInterface;
+    let filename: string;
+    let targetUsername: string;
+    let targetEmail: string;
+    let targetPassword: string;
+    let targetFilename: string;
+    let targetUser: UserModelInterface;
+    let targetPostId: string;
+    let postId: string;
 
-  //   test("should remove post saved correctly to post of same user", () => {
-  //     return logic.toggleSavePost(username, postId)
-  //       .then((res: boolean) => logic.toggleSavePost(username, postId))
-  //       .then((res: boolean) => expect(res).toBeTruthy());
-  //   });
+    beforeEach(async () => {
+      user = await User.create({ username, email, password });
 
-  //   test("should save post correctly to post of following user", () => {
-  //     return logic.toggleSavePost(username, targetPostId)
-  //       .then((res: boolean) => expect(res).toBeTruthy());
-  //   });
+      targetUsername = `user-${Math.random()}`;
+      targetEmail = `user-${Math.random()}@inskygram.com`;
+      targetPassword = `123${Math.random()}`;
+      targetFilename = `${targetUsername}.png`;
 
-  //   test("should remove post saved correctly to post of following user", () => {
-  //     return logic.toggleSavePost(username, targetPostId)
-  //       .then((res: boolean) => logic.toggleSavePost(username, targetPostId))
-  //       .then((res: boolean) => expect(res).toBeTruthy());
-  //   });
+      let buffer: Buffer;
 
-  //   // TODO test more in depth
-  //   // TODO test pagination
+      targetUser = await User.create({ username: targetUsername, email: targetEmail, password: targetPassword });
 
-  // });
+      targetFilename = `${targetFilename}.png`;
 
-  // describe("list popular posts", () => {
-  //   let user: UserModelInterface;
-  //   let filename: string;
+      await new Promise((resolve, reject) => {
+        return new Jimp(256, 256, 0xff0000ff, (err: any, image: any) => {
+          if (err) { return reject(err); }
 
-  //   let targetUser: UserModelInterface;
-  //   let targetUsername: string;
-  //   let targetEmail: string;
-  //   let targetPassword: string;
-  //   let targetFilename: string;
+          image.write(`${__dirname}/test/${targetFilename}`, resolve);
+        });
+      });
 
-  //   let privateUser: UserModelInterface;
-  //   let privateUsername: string;
-  //   let privateEmail: string;
-  //   let privatePassword: string;
-  //   let privateFilename: string;
+      buffer = fs.readFileSync(`${__dirname}/test/${targetFilename}`);
 
-  //   beforeEach(async () => {
+      targetPostId = await logic.createPost(targetUsername, targetFilename, buffer);
 
-  //     user = await User.create({ username, email, password });
+      filename = `${username}.png`;
 
-  //     targetUsername = `user-${Math.random()}`;
-  //     targetEmail = `user-${Math.random()}@inskygram.com`;
-  //     targetPassword = `123${Math.random()}`;
-  //     targetFilename = `${targetUsername}.png`;
+      await new Promise((resolve, reject) => {
+        return new Jimp(256, 256, 0xff0000ff, (err: any, image: any) => {
+          if (err) { return reject(err); }
 
-  //     let buffer: Buffer;
+          image.write(`${__dirname}/test/${filename}`, resolve);
+        });
+      });
 
-  //     targetUser = await User.create({ username: targetUsername, email: targetEmail, password: targetPassword });
+      buffer = fs.readFileSync(`${__dirname}/test/${filename}`);
 
-  //     targetFilename = `${targetFilename}.png`;
+      postId = await logic.createPost(username, filename, buffer);
+    });
 
-  //     await new Promise((resolve, reject) => {
-  //       return new Jimp(256, 256, 0xff0000ff, (err: any, image: any) => {
-  //         if (err) { return reject(err); }
+    afterEach(() => rimraf.sync(`${__dirname}/test`));
 
-  //         image.write(`${__dirname}/test/${targetFilename}`, resolve);
-  //       });
-  //     });
+    test("should save post correctly to post of same user", () => {
+      return logic.toggleSavePost(username, postId)
+        .then((res: boolean) => expect(res).toBeTruthy());
+    });
 
-  //     buffer = fs.readFileSync(`${__dirname}/test/${targetFilename}`);
+    test("should remove post saved correctly to post of same user", () => {
+      return logic.toggleSavePost(username, postId)
+        .then((res: boolean) => logic.toggleSavePost(username, postId))
+        .then((res: boolean) => expect(res).toBeTruthy());
+    });
 
-  //     await logic.createPost(targetUsername, targetFilename, buffer);
+    test("should save post correctly to post of following user", () => {
+      return logic.toggleSavePost(username, targetPostId)
+        .then((res: boolean) => expect(res).toBeTruthy());
+    });
 
-  //     filename = `${username}.png`;
+    test("should remove post saved correctly to post of following user", () => {
+      return logic.toggleSavePost(username, targetPostId)
+        .then((res: boolean) => logic.toggleSavePost(username, targetPostId))
+        .then((res: boolean) => expect(res).toBeTruthy());
+    });
+  });
 
-  //     await new Promise((resolve, reject) => {
-  //       return new Jimp(256, 256, 0xff0000ff, (err: any, image: any) => {
-  //         if (err) { return reject(err); }
+  describe("list recent posts", () => {
+    let user: UserModelInterface;
+    let filename: string;
 
-  //         image.write(`${__dirname}/test/${filename}`, resolve);
-  //       });
-  //     });
+    let targetUser: UserModelInterface;
+    let targetUsername: string;
+    let targetEmail: string;
+    let targetPassword: string;
+    let targetFilename: string;
 
-  //     buffer = fs.readFileSync(`${__dirname}/test/${filename}`);
+    let privateUser: UserModelInterface;
+    let privateUsername: string;
+    let privateEmail: string;
+    let privatePassword: string;
+    let privateFilename: string;
 
-  //     await logic.createPost(username, filename, buffer);
+    beforeEach(async () => {
+      user = await User.create({ username, email, password });
 
-  //     privateUsername = `user-${Math.random()}`;
-  //     privateEmail = `user-${Math.random()}@inskygram.com`;
-  //     privatePassword = `123${Math.random()}`;
-  //     privateFilename = `${privateUsername}.png`;
+      targetUsername = `user-${Math.random()}`;
+      targetEmail = `user-${Math.random()}@inskygram.com`;
+      targetPassword = `123${Math.random()}`;
+      targetFilename = `${targetUsername}.png`;
 
-  //     privateUser = await User.create({ privateUsername, privateEmail, privatePassword });
+      let buffer: Buffer;
 
-  //     privateFilename = `${privateFilename}.png`;
+      targetUser = await User.create({ username: targetUsername, email: targetEmail, password: targetPassword });
 
-  //     await new Promise((resolve, reject) => {
-  //       return new Jimp(256, 256, 0xff0000ff, (err: any, image: any) => {
-  //         if (err) { return reject(err); }
+      targetFilename = `${targetFilename}.png`;
 
-  //         image.write(`${__dirname}/test/${privateFilename}`, resolve);
-  //       });
-  //     });
+      await new Promise((resolve, reject) => {
+        return new Jimp(256, 256, 0xff0000ff, (err: any, image: any) => {
+          if (err) { return reject(err); }
 
-  //     buffer = fs.readFileSync(`${__dirname}/test/${privateFilename}`);
+          image.write(`${__dirname}/test/${targetFilename}`, resolve);
+        });
+      });
 
-  //     await logic.createPost(privateUsername, privateFilename, buffer);
-  //   });
+      buffer = fs.readFileSync(`${__dirname}/test/${targetFilename}`);
 
-  //   afterEach(() => {
-  //     rimraf.sync(`${__dirname}/test`);
-  //   });
+      await logic.createPost(targetUsername, targetFilename, buffer);
 
-  //   test("should list popular posts correctly of only the public users", () => {
-  //     return logic.listPopularPosts()
-  //       .then((posts: PostModelInterface) => expect(posts).toHaveLength(2));
-  //   });
+      filename = `${username}.png`;
 
-  //   // TODO test more in depth
-  //   // TODO test pagination
-  // });
+      await new Promise((resolve, reject) => {
+        return new Jimp(256, 256, 0xff0000ff, (err: any, image: any) => {
+          if (err) { return reject(err); }
 
-  // describe("search", () => {
-  //   let user: UserModelInterface;
+          image.write(`${__dirname}/test/${filename}`, resolve);
+        });
+      });
 
-  //   let targetUser: UserModelInterface;
-  //   let targetUsername: string;
-  //   let targetEmail: string;
-  //   let targetPassword: string;
-  //   let targetFilename: string;
+      buffer = fs.readFileSync(`${__dirname}/test/${filename}`);
 
-  //   let privateUser: UserModelInterface;
-  //   let privateUsername: string;
-  //   let privateEmail: string;
-  //   let privatePassword: string;
-  //   let privateFilename: string;
+      await logic.createPost(username, filename, buffer);
 
-  //   beforeEach(async () => {
-  //     user = await User.create({ username, email, password });
+      privateUsername = `user-${Math.random()}`;
+      privateEmail = `user-${Math.random()}@inskygram.com`;
+      privatePassword = `123${Math.random()}`;
+      privateFilename = `${privateUsername}.png`;
 
-  //     targetUsername = `user-${Math.random()}`;
-  //     targetEmail = `user-${Math.random()}@inskygram.com`;
-  //     targetPassword = `123${Math.random()}`;
-  //     targetFilename = `${targetUsername}.png`;
+      privateUser = await User.create({
+        username: privateUsername,
+        email: privateEmail,
+        password: privatePassword,
+        privateAccount: true,
+      });
 
-  //     targetUser = await User.create({ username: targetUsername, email: targetEmail, password: targetPassword });
+      privateFilename = `${privateFilename}.png`;
 
-  //     privateUsername = `user-${Math.random()}`;
-  //     privateEmail = `user-${Math.random()}@inskygram.com`;
-  //     privatePassword = `123${Math.random()}`;
-  //     privateFilename = `${privateUsername}.png`;
+      await new Promise((resolve, reject) => {
+        return new Jimp(256, 256, 0xff0000ff, (err: any, image: any) => {
+          if (err) { return reject(err); }
 
-  //     privateUser = await User.create({ privateUsername, privateEmail, privatePassword });
-  //   });
+          image.write(`${__dirname}/test/${privateFilename}`, resolve);
+        });
+      });
 
-  //   test("should search correctly users by username query", () => {
-  //     return logic.search("user-")
-  //       .then((users: UserModelInterface) => expect(users).toHaveLength(3));
-  //   });
-  // });
+      buffer = fs.readFileSync(`${__dirname}/test/${privateFilename}`);
+
+      await logic.createPost(privateUsername, privateFilename, buffer);
+    });
+
+    afterEach(() => rimraf.sync(`${__dirname}/test`));
+
+    test("should list recent posts correctly of only the public users", () => {
+      return logic.listRecentPosts()
+        .then((posts: PostModelInterface[]) => expect(posts).toHaveLength(2));
+    });
+
+    test("should list recent posts correctly of only the public users with pagination", () => {
+      return logic.listRecentPosts(1)
+        .then((posts: PostModelInterface[]) => {
+          expect(posts).toHaveLength(1);
+
+          return logic.listRecentPosts(1, 1);
+        })
+        .then((posts: PostModelInterface[]) => expect(posts).toHaveLength(1));
+    });
+  });
+
+  describe("search", () => {
+    let user: UserModelInterface;
+
+    let targetUser: UserModelInterface;
+    let targetUsername: string;
+    let targetEmail: string;
+    let targetPassword: string;
+    let targetFilename: string;
+
+    let privateUser: UserModelInterface;
+    let privateUsername: string;
+    let privateEmail: string;
+    let privatePassword: string;
+    let privateFilename: string;
+
+    beforeEach(async () => {
+      user = await User.create({ username, email, password });
+
+      targetUsername = `user-${Math.random()}`;
+      targetEmail = `user-${Math.random()}@inskygram.com`;
+      targetPassword = `123${Math.random()}`;
+      targetFilename = `${targetUsername}.png`;
+
+      targetUser = await User.create({ username: targetUsername, email: targetEmail, password: targetPassword });
+
+      privateUsername = `user-${Math.random()}`;
+      privateEmail = `user-${Math.random()}@inskygram.com`;
+      privatePassword = `123${Math.random()}`;
+      privateFilename = `${privateUsername}.png`;
+
+      privateUser = await User.create({ username: privateUsername, email: privateEmail, password: privatePassword });
+    });
+
+    test("should search correctly users by username query", () => {
+      return logic.search("user-")
+        .then((users: UserModelInterface[]) => expect(users).toHaveLength(3));
+    });
+
+    test("should search correctly only one user by username query", () => {
+      const oneUsername = `only-user-${Math.random()}`;
+      const oneEmail = `only-user-${Math.random()}@inskygram.com`;
+      const onePassword = `123${Math.random()}`;
+
+      return User.create({ username: oneUsername, email: oneEmail, password: onePassword })
+        .then((user: UserModelInterface) => logic.search("nly"))
+        .then((users: UserModelInterface[]) => expect(users).toHaveLength(1));
+    });
+  });
 
 });
