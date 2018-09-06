@@ -278,6 +278,7 @@ const logic = {
 
         if (!game) throw new LogicError(`game with id ${gameID} does not exist`)
         if (game.initiator !== nickname && game.acceptor !== nickname) throw new LogicError(`game with id ${gameID} does not belong to user ${nickname}`)
+       if (game.toPlay !== nickname) throw new LogicError(`it is not the turn of ${nickname}`)
         const engine = this._currentEngines.get(game.engineID)
         if (engine.game_over()) throw new LogicError('game is over, cannot move')
         const result = engine.move(move)
@@ -307,7 +308,12 @@ const logic = {
       .then(_ => {
         this._validateStringField("requester", requester)
         this._validateStringField("destination", destination)
+        return User.findOne({nickname: requester})
+      })
+      .then(user => {
+        if (!user) throw new LogicError(`user with ${requester} nickname does not exist`)
         return User.findOne({nickname: destination})
+
       })
       .then(user => {
         if (!user) throw new LogicError(`user with ${destination} nickname does not exist`)
