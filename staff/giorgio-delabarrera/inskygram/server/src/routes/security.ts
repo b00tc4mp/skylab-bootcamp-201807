@@ -5,6 +5,7 @@ import logic from "../logic";
 import { LogicError } from "../logic/errors";
 import jwt from "jsonwebtoken";
 import passport from "passport";
+import statusError from "./helpers/status-error";
 
 config();
 
@@ -19,14 +20,24 @@ router.post("/register", jsonBodyParser, (req: Request, res: Response) => {
     .then(() => res.status(201).json({ message: "user registered" }))
     .catch((err: Error) => {
       const { message } = err;
+      const status = statusError(err);
 
-      res.status(err instanceof LogicError ? 400 : 500).json({ message });
+      res.status(status).json({ message });
     });
 });
 
 router.post(
   "/auth",
-  [jsonBodyParser, passport.authenticate("local", { session: false })],
+  [jsonBodyParser, (req: Request, res: Response, next: any) => {
+    passport.authenticate("local", { session: false }, err => {
+      if (err) {
+        const status = statusError(err);
+        return res.status(status).json({ message: err.message });
+      }
+
+      next();
+    })(req, res, next);
+  }],
   (req: Request, res: Response) => {
     const { body: { username, password } } = req;
 
@@ -40,8 +51,9 @@ router.post(
       })
       .catch((err: Error) => {
         const { message } = err;
+        const status = statusError(err);
 
-        res.status(err instanceof LogicError ? 401 : 500).json({ message });
+        res.status(status).json({ message });
       });
   });
 

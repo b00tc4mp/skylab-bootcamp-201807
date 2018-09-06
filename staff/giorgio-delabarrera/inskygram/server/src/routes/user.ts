@@ -1,6 +1,12 @@
 import { config } from "dotenv";
 import { Router, Request, Response } from "express";
 import passport from "passport";
+import bodyParser from "body-parser";
+import logic from "../logic";
+import statusError from "./helpers/status-error";
+import publicPrivateAccessJwt from "./helpers/public-private-access-jwt";
+import { UserModelInterface } from "../models/user";
+import { PostModelInterface } from "../models/post";
 
 config();
 
@@ -8,83 +14,90 @@ const router: Router = Router();
 
 const validateJwt = passport.authenticate("jwt", { session: false });
 
-router.get("/users/:username", (req: Request, res: Response) => { });
+const jsonBodyParser = bodyParser.json();
 
-router.post("/users/:username/actions/follow", [validateJwt], (req: Request, res: Response) => { });
+router.get("/users/:username", publicPrivateAccessJwt, (req: Request, res: Response) => {
+  const username = req.user;
+  const targetUsername = req.params.username;
 
-router.get("/users/:username/followers", (req: Request, res: Response) => { });
+  logic.retrieveUser(username, targetUsername)
+    .then((user: UserModelInterface) => res.json(user))
+    .catch((err: Error) => {
+      const { message } = err;
+      const status = statusError(err);
 
-router.get("/users/:username/followings", (req: Request, res: Response) => { });
+      res.status(status).json({ message });
+    });
+});
 
-router.get("/users/:username/posts", (req: Request, res: Response) => { });
+router.post("/users/:username/actions/follow", [validateJwt, jsonBodyParser], (req: Request, res: Response) => {
+  const username = req.user;
+  const { body: { targetUsername } } = req;
 
-router.get("/users/:username/saved", (req: Request, res: Response) => { });
+  logic.toggleFollowUser(username, targetUsername)
+    .then(() => res.json({ message: "toggle follow correctly" }))
+    .catch((err: Error) => {
+      const { message } = err;
+      const status = statusError(err);
 
-// router.get("/users/:username", validateJwt, (req: Request, res: Response) => {
-//   const { params: { username } } = req;
+      res.status(status).json({ message });
+    });
+});
 
-//   logic.user.retrieve(username)
-//     .then((user: UserModelInterface) => res.json(user))
-//     .catch((err: Error) => {
-//       const { message } = err;
-//       return res.status(err instanceof LogicError ? 400 : 500).json({ message });
-//     });
-// });
+router.get("/users/:username/followers", publicPrivateAccessJwt, (req: Request, res: Response) => {
+  const username = req.user;
+  const targetUsername = req.params.username;
 
-// router.put("/users/:username", [validateJwt, jsonBodyParser], (req: Request, res: Response) => {
-//   const { params: { username } } = req;
-//   const { body: { email, name, website, phoneNumber, gender, biography, privateAccount } } = req;
+  logic.listUserFollowers(username, targetUsername)
+    .then((followerUsers: UserModelInterface[]) => res.json(followerUsers))
+    .catch((err: Error) => {
+      const { message } = err;
+      const status = statusError(err);
 
-//   logic.user.update(username, email, name, website, phoneNumber, gender, biography, privateAccount)
-//     .then(() => res.json({ message: "user updated" }))
-//     .catch(err => {
-//       const { message } = err;
+      res.status(status).json({ message });
+    });
+});
 
-//       res.status(err instanceof LogicError ? 400 : 500).json({ message });
-//     });
-// });
+router.get("/users/:username/followings", publicPrivateAccessJwt, (req: Request, res: Response) => {
+  const username = req.user;
+  const targetUsername = req.params.username;
 
-// router.patch("/users/:username/update-password", [validateJwt, jsonBodyParser], (req: Request, res: Response) => {
-//   const { params: { username }, body: { password, newPassword } } = req;
+  logic.listUserFollowings(username, targetUsername)
+    .then((followingUsers: UserModelInterface[]) => res.json(followingUsers))
+    .catch((err: Error) => {
+      const { message } = err;
+      const status = statusError(err);
 
-//   logic.user.updatePassword(username, password, newPassword)
-//     .then(() => res.json({ message: "user password updated" }))
-//     .catch(err => {
-//       const { message } = err;
+      res.status(status).json({ message });
+    });
+});
 
-//       res.status(err instanceof LogicError ? 400 : 500).json({ message });
-//     });
-// });
+router.get("/users/:username/posts", publicPrivateAccessJwt, (req: Request, res: Response) => {
+  const username = req.user;
+  const targetUsername = req.params.username;
 
-// router.patch(
-//   "/users/:username/update-avatar",
-//   [validateJwt, upload.single("avatar")],
-//   (req: Request | any, res: Response) => {
-//     const { params: { username }, file } = req;
+  logic.listUserPosts(username, targetUsername)
+    .then((posts: PostModelInterface[]) => res.json(posts))
+    .catch((err: Error) => {
+      const { message } = err;
+      const status = statusError(err);
 
-//     if (file) {
-//       logic.user.updateAvatar(username, file.originalname, file.buffer)
-//         .then(() => res.json({ message: "user avatar updated" }))
-//         .catch((err: any) => {
-//           const { message } = err;
+      res.status(status).json({ message });
+    });
+});
 
-//           res.status(err instanceof LogicError ? 400 : 500).json({ message });
-//         });
-//     } else {
-//       res.status(400).json({ message: "no image received" });
-//     }
-//   });
+router.get("/users/:username/saved", publicPrivateAccessJwt, (req: Request, res: Response) => {
+  const username = req.user;
+  const targetUsername = req.params.username;
 
-// router.patch("/users/:username/disable", [validateJwt, jsonBodyParser], (req: Request, res: Response) => {
-//   const { params: { username } } = req;
+  logic.listUserSavedPosts(username, targetUsername)
+    .then((savedPosts: PostModelInterface[]) => res.json(savedPosts))
+    .catch((err: Error) => {
+      const { message } = err;
+      const status = statusError(err);
 
-//   logic.user.disable(username)
-//     .then(() => res.json({ message: "user disabled" }))
-//     .catch(err => {
-//       const { message } = err;
-
-//       res.status(err instanceof LogicError ? 400 : 500).json({ message });
-//     });
-// });
+      res.status(status).json({ message });
+    });
+});
 
 export default router;

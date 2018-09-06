@@ -46,7 +46,7 @@ const logic = {
 
         if (!username) { throw new LogicError("invalid username"); }
         if (!password) { throw new LogicError("invalid password"); }
-
+        
         return User.findOne({ username });
       })
       .then((user: UserModelInterface) => {
@@ -511,7 +511,8 @@ const logic = {
               return Post.find({ user: user._id })
                 .populate({ path: "user", select: "-password -__v" })
                 .populate("comments")
-                .populate("likes");
+                .populate("likes")
+                .sort({ createdAt: -1 });
             })
             .then((posts: PostModelInterface[]) => posts);
         } else if (!username && targetUsername) {
@@ -527,7 +528,8 @@ const logic = {
                 return Post.find({ user: targetUser._id })
                   .populate({ path: "user", select: "-password -__v" })
                   .populate("comments")
-                  .populate("likes");
+                  .populate("likes")
+                  .sort({ createdAt: -1 });
               }
             });
         } else {
@@ -549,7 +551,8 @@ const logic = {
                   return Post.find({ user: targetUser._id })
                     .populate({ path: "user", select: "-password -__v" })
                     .populate("comments")
-                    .populate("likes");
+                    .populate("likes")
+                    .sort({ createdAt: -1 });
                 } else {
                   throw new AccessDeniedError(`user ${username} in can not see the posts of user ${targetUsername}`);
                 }
@@ -557,7 +560,8 @@ const logic = {
                 return Post.find({ user: targetUser._id })
                   .populate({ path: "user", select: "-password -__v" })
                   .populate("comments")
-                  .populate("likes");
+                  .populate("likes")
+                  .sort({ createdAt: -1 });
               }
             });
         }
@@ -643,7 +647,7 @@ const logic = {
       });
   },
 
-  listUserWall(username: string, limit: number = 10, page: number = 0): Promise<PostModelInterface[]> | never {
+  listUserWall(username: string, perPage: number = 10, page: number = 0): Promise<PostModelInterface[]> | never {
     let user: UserModelInterface;
 
     return Promise.resolve()
@@ -665,7 +669,7 @@ const logic = {
               .populate("likes")
               .sort({ createdAt: -1 })
               .skip(page)
-              .limit(limit)
+              .limit(perPage)
               ;
           })
           .then((posts: PostModelInterface[]) => posts);
@@ -792,8 +796,9 @@ const logic = {
       .then(() => true);
   },
 
-  listRecentPosts(limit: number = 10, page: number = 0): Promise<PostModelInterface[]> | never {
+  listRecentPosts(perPage: number = 10, page: number = 0): Promise<PostModelInterface[]> | never {
     // TODO: optimize join post with user
+    debugger;
     return Promise.resolve()
       .then(() => {
         return User.find({ privateAccount: false }, "_id");
@@ -807,8 +812,7 @@ const logic = {
           .populate("likes")
           .sort({ createdAt: -1 })
           .skip(page)
-          .limit(limit)
-          ;
+          .limit(perPage);
       })
       .then((posts: PostModelInterface[]) => posts);
   },
