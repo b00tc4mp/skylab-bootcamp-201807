@@ -41,7 +41,6 @@ const logic = {
 
                 return this._call('hostess-register', 'POST', { 'Content-Type': 'application/json' }, JSON.stringify({ email, password }), 201)
                     .then(() => true)
-
             })
     },
 

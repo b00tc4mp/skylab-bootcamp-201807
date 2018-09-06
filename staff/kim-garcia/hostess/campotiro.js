@@ -798,3 +798,142 @@ class LogicError extends Error {
 }
 
 module.exports = logic
+
+
+
+
+
+
+
+
+
+
+/////////////SERGINS PASAR PROPS AL REVES
+
+import React, { Component } from 'react'
+import {withRouter} from 'react-router-dom'
+import logic from '../logic/logic'
+import './styles/Login.css'
+
+class Login extends Component {
+
+    state = {
+        email: '',
+        password: ''
+    }
+
+    handleChange = (e) => {
+        const { name, value } = e.target
+        this.setState({
+            [name]: value
+        })
+    }
+
+    handleSubmit = (e) => {
+        e.preventDefault()
+        const {email,password} = this.state
+        logic.authenticate(email, password)
+            .then((token) => {
+                this.props.handleLogin(email, token)
+            })
+    }
+
+    render() {
+
+        return <div>
+            <div className='login_form'>
+                <h2>LOGIN</h2>
+                <form onSubmit={this.handleSubmit}>
+                    <label>Email:</label>
+                    <input onChange={this.handleChange} name='email' type='text' placeholder='Email'/>
+
+                    <label>Password:</label>
+                    <input onChange={this.handleChange} name='password' type='password' placeholder='Password'/>
+                    
+                    <button className='button_form' type="submit">Enter</button>
+                    <br/>
+                </form>
+            </div>
+                    <div className='button_return'><a href='/#/user/register'>return to Register</a></div>
+        </div>
+
+    
+    }
+
+
+}
+/*
+div class="form-style-8">
+  <h2>Login to your account</h2>
+  <form>
+    <input type="text" name="field1" placeholder="Full Name" />
+    <input type="email" name="field2" placeholder="Email" />
+    <input type="url" name="field3" placeholder="Website" />
+    <textarea placeholder="Message" onkeyup="adjust_textarea(this)"></textarea>
+    <input type="button" value="Send Message" />
+  </form>
+</div>
+*/
+export default withRouter(Login)
+
+
+
+
+
+
+
+
+
+
+///////////APP PROPS SERGI
+
+class App extends Component {
+    state = {
+      email: sessionStorage.getItem('email') || '',
+      token: sessionStorage.getItem('token') || ''
+    } 
+  
+    handleLogin = (email, token) => {
+      this.setState({
+        email,
+        token
+      })
+  
+      sessionStorage.setItem('email', email)
+      sessionStorage.setItem('token', token)
+    }
+  
+    isLoggedIn = () => {
+      return !!this.state.email
+    }
+  
+    //TODO FRONT
+    handleLogout = (e) => {
+      e.preventDefault()
+      this.setState({
+        email:'',
+        token:''
+      })
+      sessionStorage.clear()
+    }
+  
+    render() {
+     
+      return <div className='site'>
+        <Navbar />
+        <div className='site-content'>
+          <Switch>
+            <Route exact path="/" render={() => this.isLoggedIn() ? <Redirect to="/user/portfolio"/> : <Landing />} />      
+            <Route path="/user/register" render={() => this.isLoggedIn() ? <Redirect to="/market"/> : <Register/>} />      
+            <Route path="/user/authenticate" render={() => this.isLoggedIn() ? <Redirect to="/market"/> : <Login handleLogin={this.handleLogin}/>} />      
+            <Route path="/market" render={() => this.isLoggedIn() ? <Market handleLogout={this.handleLogout} email={this.state.email} token={this.state.token}/> : <Redirect to="/"/>} />      
+            <Route path="/user/portfolio" render={() => this.isLoggedIn() ? <Portfolio handleLogout={this.handleLogout} email={this.state.email} token={this.state.token}/> : <Market /> } />
+          </Switch>
+          </div>
+      </div>
+    }
+  
+  }
+  
+  
+  export default App;
