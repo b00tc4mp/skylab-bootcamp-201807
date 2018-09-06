@@ -5,5 +5,6 @@ module.exports = {
     Patient: require('./patient'),
     Cite: require('./cite'),
     Treatment: require('./treatment'),
-    Caretaker: require('./caretaker')
+    Caretaker: require('./caretaker'),
+    Admin: require('./admin')
 }

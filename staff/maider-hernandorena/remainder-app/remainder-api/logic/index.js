@@ -2,7 +2,7 @@
 
 const validateEmail = require('../utils/validate-email')
 const moment = require('moment')
-const { mongoose: { Types: { ObjectId } }, models: { Doctor, Patient, Cite, Caretaker } } = require('remainder-data')
+const { mongoose: { Types: { ObjectId } }, models: { Doctor, Patient, Cite, Caretaker, Admin } } = require('remainder-data')
 
 const logic = {
 
@@ -71,6 +71,9 @@ const logic = {
         if (!validateEmail(email)) throw new LogicError('invalid email')
     },
 
+
+    // DOCTOR
+
     /**
      * Registers a doctor with a code and a password 
      * @param {String} code //doctors code
@@ -122,6 +125,10 @@ const logic = {
             })
     },
 
+
+
+    // PATIENT
+
     /**
      * Adds a patient requiring different parameters
      * @param {String} name //patient name
@@ -157,73 +164,6 @@ const logic = {
                 return Patient.create(patientData)
             })
             .then(patient => patient)
-    },
-
-    /**
-     * Removes a patient with his/her id and dni
-     * @param {String} id //patient id
-     * @param {Number} dni //patient dni (8 digits)
-     * 
-     * @throws {LogicError} if patient with given dni does not exist
-     * 
-     * @returns {boolean} TRUE => if it removes patient correctly
-     */
-    removePatient(id, dni) {
-        return Promise.resolve()
-            .then(() => {
-                this._validateStringField('id', id)
-                this._validateDniField('dni', dni)
-
-                return Patient.findOne({ dni })
-            })
-            .then(patient => {
-                if (!patient) throw new LogicError(`patient with ${dni} dni does not exist`)
-
-                return Patient.deleteOne({ _id: ObjectId(id) })
-            })
-            .then(() => true)
-    },
-
-    /**
-     * Updates a patients address and/or phone with his/her id and dni
-     * //if there is not any new address or phone should update the other correctly
-     * @param {String} id //patient id
-     * @param {Number} dni //patient dni (8 digits)
-     * @param {String} newAddress //patient new address
-     * @param {Number} newPhone //patient new phone (9 digits)
-     * 
-     * @throws {LogicError} if patient with given dni does not exist
-     * @throws {LogicError} if the new address given is not a string
-     * @throws {LogicError} if the new phone given is not a number or has no 9 digits
-     * 
-     * @returns {boolean} TRUE => if it updates patient correctly
-     */
-    updatePatient(id, dni, newAddress, newPhone) {
-        return Promise.resolve()
-            .then(() => {
-                this._validateStringField('id', id)
-                this._validateDniField('dni', dni)
-
-                return Patient.findOne({ dni })
-            })
-            .then(patient => {
-                if (!patient) throw new LogicError(`patient with ${dni} dni does not exist`)
-
-                if (!newAddress || newAddress === '') {
-                    return Patient.updateOne({ _id: ObjectId(id) }, { $set: { phone: newPhone } })
-                } else {
-                    if (typeof newAddress !== 'string' || !newAddress.length) throw new LogicError(`invalid new address`)
-                }
-
-                if (!newPhone || newPhone.toString().length === 0) {
-                    return Patient.updateOne({ _id: ObjectId(id) }, { $set: { address: newAddress } })
-                } else {
-                    if (typeof newPhone !== 'number' || newPhone !== newPhone || newPhone.toString().length !== 9) throw new LogicError(`invalid new phone`)
-                }
-
-                return Patient.updateOne({ _id: ObjectId(id) }, { $set: { address: newAddress, phone: newPhone } })
-            })
-            .then(() => true)
     },
 
     /**
@@ -301,6 +241,9 @@ const logic = {
                 return patients || []
             })
     },
+
+
+    // TREATMENTS
 
     /**
      * Adds a treatment (with pill name, quantity and frequency) to a patient with his/her id and dni
@@ -410,6 +353,9 @@ const logic = {
                 return treatments || []
             })
     },
+
+
+    // CITES
 
     /**
      * Adds cites to patients relating them to his/her doctor
@@ -567,34 +513,38 @@ const logic = {
             })
     },
 
+
+
+    // CARETAKER
+
     /**
-     * Registers a caretaker with a email and a password 
-     * @param {String} email //caretakers email
+     * Registers a caretaker with a dni and a password 
+     * @param {String} dni //caretakers dni
      * @param {String} password //caretakers password
      * 
      * @throws {LogicError} if caretaker already exist
      * 
      * @returns {boolean} TRUE => if it is registered correctly
      */
-    registerCaretaker(email, password) {
+    registerCaretaker(dni, password) {
         return Promise.resolve()
             .then(() => {
-                this._validateEmail(email)
+                this._validateDniField('dni', dni)
                 this._validateStringField('password', password)
 
-                return Caretaker.findOne({ email })
+                return Caretaker.findOne({ dni })
             })
             .then(caretaker => {
-                if (caretaker) throw new LogicError(`caretaker ${email} already exist`)
+                if (caretaker) throw new LogicError(`caretaker ${dni} already exist`)
 
-                return Caretaker.create({ email, password })
+                return Caretaker.create({ dni, password })
             })
             .then(() => true)
     },
 
     /**
-     * Authenticates a caretaker with his/her email and a password 
-     * @param {String} email //caretakers email
+     * Authenticates a caretaker with his/her dni and a password 
+     * @param {String} dni //caretakers dni
      * @param {String} password //caretakers password
      * 
      * @throws {LogicError} if the caretaker does not exist
@@ -602,16 +552,16 @@ const logic = {
      * 
      * @returns {Object} caretaker information
      */
-    authenticateCaretaker(email, password) {
+    authenticateCaretaker(dni, password) {
         return Promise.resolve()
             .then(() => {
-                this._validateEmail(email)
+                this._validateDniField('dni', dni)
                 this._validateStringField('password', password)
 
-                return Caretaker.findOne({ email }).lean()
+                return Caretaker.findOne({ dni }).lean()
             })
             .then(caretaker => {
-                if (!caretaker) throw new LogicError(`caretaker ${email} does not exist`)
+                if (!caretaker) throw new LogicError(`caretaker ${dni} does not exist`)
                 if (caretaker.password !== password) throw new LogicError(`wrong password`)
 
                 return caretaker
@@ -619,8 +569,8 @@ const logic = {
     },
 
     /**
-     * Updates a caretaker password with his/her email and a password 
-     * @param {String} email //caretakers email
+     * Updates a caretaker password with his/her dni and a password 
+     * @param {String} dni //caretakers dni
      * @param {String} password //caretakers password
      * @param {String} newPassword //caretakers new password
      * 
@@ -630,17 +580,17 @@ const logic = {
      * 
      * @returns {boolean} TRUE => if it is updated correctly
      */
-    updateCaretakerPassword(email, password, newPassword) {
+    updateCaretakerPassword(dni, password, newPassword) {
         return Promise.resolve()
             .then(() => {
-                this._validateEmail(email)
+                this._validateDniField('dni', dni)
                 this._validateStringField('password', password)
                 this._validateStringField('new password', newPassword)
 
-                return Caretaker.findOne({ email })
+                return Caretaker.findOne({ dni })
             })
             .then(caretaker => {
-                if (!caretaker) throw new LogicError(`caretaker ${email} does not exist`)
+                if (!caretaker) throw new LogicError(`caretaker ${dni} does not exist`)
                 if (caretaker.password !== password) throw new LogicError(`wrong password`)
                 if (password === newPassword) throw new LogicError('new password must be different to old password')
 
@@ -649,27 +599,180 @@ const logic = {
             .then(() => true)
     },
 
+    //CHANGE!!!!!!!!!
+
     /**
-     * Removes a caretaker with his/her email and a password 
-     * @param {String} email //caretakers email
-     * @param {String} password //caretakers password
+     * caretakers patients
+     * @param {Number} dni //caretakers dni
      * 
-     * @throws {LogicError} if the caretaker does not exist
-     * @throws {LogicError} if password is wrong
+     * @throws {LogicError} if caretaker does not exist
      * 
-     * @returns {boolean} TRUE => if it is updated correctly
+     * @returns {Array} array with the patients assigned to caretaker
      */
-    unregisterCaretaker(email, password) {
+    retrieveCaretakerPatients(dni) {
         return Promise.resolve()
             .then(() => {
-                this._validateEmail(email)
-                this._validateStringField('password', password)
+                this._validateDniField('dni', dni)
 
-                return Caretaker.findOne({ email })
+                return Caretaker.findOne({ dni })
             })
             .then(caretaker => {
-                if (!caretaker) throw new LogicError(`caretaker ${email} does not exist`)
-                if (caretaker.password !== password) throw new LogicError(`wrong password`)
+                if (!caretaker) throw new LogicError(`caretaker ${dni} does not exist`)
+                debugger
+                let patients = caretaker.patients.map(patient => patient)
+                debugger
+                return patients
+            })
+            .then(patients => {
+                if (patients) {
+                    debugger
+                    patients.forEach(patient => {
+                        patient.id = patient._id.toString()
+                        delete patient._id
+                        delete patient.__v
+                    })
+                }
+                debugger
+                return patients || []
+            })
+    },
+
+
+    // ADMIN
+
+    /**
+     * Authenticates a admin with his/her code and a password 
+     * @param {String} code //admins code
+     * @param {String} password //admins password
+     * 
+     * @throws {LogicError} if the admin does not exist
+     * @throws {LogicError} if password is wrong
+     * 
+     * @returns {Object} admin information
+     */
+    authenticateAdmin(code, password) {
+        return Promise.resolve()
+            .then(() => {
+                this._validateStringField('code', code)
+                this._validateStringField('password', password)
+
+                return Admin.findOne({ code }).lean()
+            })
+            .then(admin => {
+                if (!admin) throw new LogicError(`admin ${code} does not exist`)
+                if (admin.password !== password) throw new LogicError(`wrong password`)
+
+                admin.id = admin._id.toString()
+                delete admin._id
+                delete admin.__v
+
+                return admin
+            })
+    },
+
+    /**
+     * Removes a doctor with his/her code and a password 
+     * @param {String} code //doctors code
+     * 
+     * @throws {LogicError} if the doctor does not exist
+     * 
+     * @returns {boolean} TRUE => if it is removed correctly
+     */
+    removeDoctor(code) {
+        return Promise.resolve()
+            .then(() => {
+                this._validateStringField('code', code)
+
+                return Doctor.findOne({ code })
+            })
+            .then(doctor => {
+                if (!doctor) throw new LogicError(`there is no matches with code ${code}`)
+
+                return Doctor.deleteOne({ _id: doctor._id })
+            })
+            .then(() => true)
+    },
+
+    /**
+     * Removes a patient with his/her dni
+     * @param {Number} dni //patient dni (8 digits)
+     * 
+     * @throws {LogicError} if patient with given dni does not exist
+     * 
+     * @returns {boolean} TRUE => if it removes patient correctly
+     */
+    removePatient(dni) {
+        return Promise.resolve()
+            .then(() => {
+                this._validateDniField('dni', dni)
+
+                return Patient.findOne({ dni })
+            })
+            .then(patient => {
+                if (!patient) throw new LogicError(`patient with ${dni} dni does not exist`)
+
+                return Patient.deleteOne({ _id: patient._id })
+            })
+            .then(() => true)
+    },
+
+    /**
+     * Updates a patients address and/or phone with his/her dni
+     * //if there is not any new address or phone should update the other correctly
+     * @param {Number} dni //patient dni (8 digits)
+     * @param {String} newAddress //patient new address
+     * @param {Number} newPhone //patient new phone (9 digits)
+     * 
+     * @throws {LogicError} if patient with given dni does not exist
+     * @throws {LogicError} if the new address given is not a string
+     * @throws {LogicError} if the new phone given is not a number or has no 9 digits
+     * 
+     * @returns {boolean} TRUE => if it updates patient correctly
+     */
+    updatePatient(dni, newAddress, newPhone) {
+        return Promise.resolve()
+            .then(() => {
+                this._validateDniField('dni', dni)
+
+                return Patient.findOne({ dni })
+            })
+            .then(patient => {
+                if (!patient) throw new LogicError(`patient with ${dni} dni does not exist`)
+
+                if (!newAddress || newAddress === '') {
+                    return Patient.updateOne({ _id: patient._id }, { $set: { phone: newPhone } })
+                } else {
+                    if (typeof newAddress !== 'string' || !newAddress.length) throw new LogicError(`invalid new address`)
+                }
+
+                if (!newPhone || newPhone.toString().length === 0) {
+                    return Patient.updateOne({ _id: patient._id }, { $set: { address: newAddress } })
+                } else {
+                    if (typeof newPhone !== 'number' || newPhone !== newPhone || newPhone.toString().length !== 9) throw new LogicError(`invalid new phone`)
+                }
+
+                return Patient.updateOne({ _id: patient._id }, { $set: { address: newAddress, phone: newPhone } })
+            })
+            .then(() => true)
+    },
+
+    /**
+     * Removes a caretaker with his/her dni
+     * @param {String} dni //caretakers dni
+     * 
+     * @throws {LogicError} if the caretaker does not exist
+     * 
+     * @returns {boolean} TRUE => if it is removed correctly
+     */
+    removeCaretaker(dni) {
+        return Promise.resolve()
+            .then(() => {
+                this._validateDniField('dni', dni)
+
+                return Caretaker.findOne({ dni })
+            })
+            .then(caretaker => {
+                if (!caretaker) throw new LogicError(`caretaker ${dni} does not exist`)
 
                 return Caretaker.deleteOne({ _id: caretaker._id })
             })
@@ -677,37 +780,34 @@ const logic = {
     },
 
     /**
-     * caretakers patients
-     * @param {String} email //caretakers email
-     * @param {Number} dni //patient dni
+     * Assign a patient to his/her caretaker
+     * @param {Number} caretakerDni //caretakers dni
+     * @param {Number} patientDni //patients dni
      * 
      * @throws {LogicError} if caretaker does not exist
      * @throws {LogicError} if patient does not exist
      * 
-     * @returns {Object} with the patient and his/hers data
+     * @returns {boolean} TRUE => if assigned patient to caretaker correctly
      */
-    caretakerPatient(email, dni) {
+    assignPatientToCaretaker(caretakerDni, patientDni) {
         return Promise.resolve()
             .then(() => {
-                this._validateEmail(email)
-                this._validateDniField('dni', dni)
+                this._validateStringField('caretaker dni', caretakerDni)
+                this._validateStringField('patient dni', patientDni)
 
-                return Caretaker.findOne({ email })
+                return Caretaker.findOne({ caretakerDni })
             })
             .then(caretaker => {
-                if (!caretaker) throw new LogicError(`caretaker ${email} does not exist`)
+                if (!caretaker) throw new LogicError(`caretaker ${caretakerDni} does not exist`)
 
-                return Patient.findOne({ dni }).lean()
+                return Patient.findOne({ patientDni })
+                    .then(patient => {
+                        if (!patient) throw new LogicError(`caretaker ${patientDni} does not exist`)
+
+                        return Caretaker.updateOne({ _id: caretaker._id }, { $addToSet: { patients: patient } })
+                    })
             })
-            .then(patient => {
-                if (!patient) throw new LogicError(`patient with ${dni} dni does not exist`)
-
-                patient.id = patient._id.toString()
-                delete patient._id
-                delete patient.__v
-
-                return patient
-            })
+            .then(() => true)
     }
 }
 

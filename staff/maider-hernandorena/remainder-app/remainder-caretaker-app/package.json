@@ -5,8 +5,10 @@
   "dependencies": {
     "react": "^16.4.2",
     "react-dom": "^16.4.2",
+    "react-redux": "^5.0.7",
     "react-router-dom": "^4.3.1",
-    "react-scripts": "1.1.4"
+    "react-scripts": "1.1.4",
+    "remainder-data": "file:../remainder-data"
   },
   "devDependencies": {
     "chai": "^4.1.2",
@@ -20,7 +22,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "eject": "react-scripts eject",
-    "test": "mocha src/logic --timeout 15000",
-    "test-debug": "mocha debug src/logic --timeout 15000"
+    "test": "mocha src/logic --timeout 20000",
+    "test-debug": "mocha debug src/logic --timeout 20000"
   }
 }

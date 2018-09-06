@@ -3,7 +3,7 @@
 const { Schema, Schema: { Types: { ObjectId } } } = require('mongoose')
 
 module.exports = new Schema({
-    dni: {
+    code: {
         type: String,
         required: true
     },
@@ -11,10 +11,5 @@ module.exports = new Schema({
     password: {
         type: String,
         required: true
-    },
-
-    patients: [{
-        type: ObjectId,
-        ref: 'Patient'
-    }]
+    }
 })
