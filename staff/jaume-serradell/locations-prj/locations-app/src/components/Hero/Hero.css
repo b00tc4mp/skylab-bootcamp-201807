@@ -1,0 +1,16 @@
+.hero {
+    background: url('../Hero/heroBg.jpg');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    color: white;
+    padding: 80px 80px;
+    font-family: 'Special Elite', cursive;
+    text-shadow: 2px 2px 2px rgba(0, 0, 0, 1);
+}
+
+.hero h1 {
+    font-size: 50px;
+}

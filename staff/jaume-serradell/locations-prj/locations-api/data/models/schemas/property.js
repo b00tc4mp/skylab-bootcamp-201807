@@ -20,11 +20,6 @@ module.exports = new Schema({
         maxlength: 1000
     },
 
-    dimentions: {
-        type: Number,
-        required: true
-    },
-
     categories: [{
         type: String,
         enum: [
@@ -34,7 +29,7 @@ module.exports = new Schema({
             'Dinning room',
             'Office',
             'Adult Bedroom',
-            'Child\'s bedroom', 
+            'Child\'s bedroom',
             'Abandoned Style',
             'Clasic Style',
             'Industrial Style',

@@ -5,7 +5,6 @@ const { expect } = require('chai')
 const mongoose = require('mongoose')
 const { Types: { ObjectId } } = mongoose
 const { Property, Owner } = require('../data/models')
-// const fs = require('file-system')
 
 const fileTest = require('./imagesTest/test')
 
@@ -55,7 +54,7 @@ describe('logic', () => {
                 .then(owner => {
                     expect(owner).to.be.null
 
-                    return logic.register(email, password, name)
+                    return logic.register(name, email, password)
                 })
                 .then(res => {
                     expect(res).to.be.true
@@ -74,69 +73,57 @@ describe('logic', () => {
         )
 
         it('should fail on trying to register an already registered owner', () =>
-            Owner.create({ email, password, name })
-                .then(() => logic.register(email, password, name))
+            Owner.create({ name, email, password })
+                .then(() => logic.register(name, email, password))
                 .catch(err => err)
                 .then(({ message }) => expect(message).to.equal(`owner with ${email} email already exist`))
         )
 
+        it('should fail on trying to register with an undefined name', () =>
+            logic.register(undefined, email, password)
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`invalid name`))
+        )
+
+        it('should fail on trying to register with an empty name', () =>
+            logic.register('', email, password)
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`invalid name`))
+        )
+
         it('should fail on trying to register with an undefined email', () =>
-            logic.register(undefined, password, name)
+            logic.register(name, undefined, password)
                 .catch(err => err)
                 .then(({ message }) => expect(message).to.equal(`invalid email`))
         )
 
         it('should fail on trying to register with an empty email', () =>
-            logic.register('', password, name)
+            logic.register(name, '', password)
                 .catch(err => err)
                 .then(({ message }) => expect(message).to.equal(`invalid email`))
         )
 
         it('should fail on trying to register with a numeric email', () =>
-            logic.register(123, password, name)
+            logic.register(name, 123, password)
                 .catch(err => err)
                 .then(({ message }) => expect(message).to.equal(`invalid email`))
         )
 
-        it('should fail on trying to register with an undefined password', () =>
-            logic.register(email, undefined, name)
+        it('should fail on trying to register with a undefined password', () =>
+            logic.register(name, email, undefined)
                 .catch(err => err)
                 .then(({ message }) => expect(message).to.equal(`invalid password`))
         )
 
-        it('should fail on trying to register with an empty password', () =>
-            logic.register(email, '', name)
+        it('should fail on trying to register with a empty password', () =>
+            logic.register(name, email, '')
                 .catch(err => err)
                 .then(({ message }) => expect(message).to.equal(`invalid password`))
-        )
-
-        it('should fail on trying to register with a numeric password', () =>
-            logic.register(email, 123, name)
-                .catch(err => err)
-                .then(({ message }) => expect(message).to.equal(`invalid password`))
-        )
-
-        it('should fail on trying to register with a undefined name', () =>
-            logic.register(email, password, undefined)
-                .catch(err => err)
-                .then(({ message }) => expect(message).to.equal(`invalid name`))
-        )
-
-        it('should fail on trying to register with a empty name', () =>
-            logic.register(email, password, '')
-                .catch(err => err)
-                .then(({ message }) => expect(message).to.equal(`invalid name`))
-        )
-
-        it('should fail on trying to register with a numeric name', () =>
-            logic.register(email, password, 123)
-                .catch(err => err)
-                .then(({ message }) => expect(message).to.equal(`invalid name`))
         )
     })
 
     true && describe('authenticate owner', () => {
-        beforeEach(() => Owner.create({ email, password, name }))
+        beforeEach(() => Owner.create({ name, email, password }))
 
         it('should login correctly', () =>
             logic.authenticate(email, password)
@@ -313,16 +300,15 @@ describe('logic', () => {
         const subtitle = `Ideal for movies`
         const photo = fileTest
         const description = 'blablabla'
-        const dimentions = 300
         const categories = ['Balcony', 'Bathroom', 'Kitchen']
         const type = 'Penthouse'
 
         beforeEach(() => Owner.create({ email, password, name }))
 
         it('should succeed on correct data', () => 
-            logic.addProperty(email, title, subtitle, photo, description, dimentions, categories, type)
+            logic.addProperty(email, title, subtitle, photo, description, categories, type)
                 .then(res => {
-                    expect(res).to.be.true
+                    expect(res.title).to.equal(title)
                     return Owner.findOne({ email })
                 })
                 .then(owner => {
@@ -334,111 +320,79 @@ describe('logic', () => {
         )
 
         it('should fail on trying to add properties with an undefined email', () =>
-            logic.addProperty(undefined, title, subtitle, photo, description, dimentions, categories, type)
+            logic.addProperty(undefined, title, subtitle, photo, description, categories, type)
                 .catch(err => err)
                 .then(({ message }) => expect(message).to.equal(`invalid email`))
         )
 
         it('should fail on trying to add properties with an empty email', () =>
-            logic.addProperty('', title, subtitle, photo, description, dimentions, categories, type)
+            logic.addProperty('', title, subtitle, photo, description, categories, type)
                 .catch(err => err)
                 .then(({ message }) => expect(message).to.equal(`invalid email`))
         )
 
         it('should fail on trying to add properties with an numeric email', () =>
-            logic.addProperty(123, title, subtitle, photo, description, dimentions, categories, type)
+            logic.addProperty(123, title, subtitle, photo, description, categories, type)
                 .catch(err => err)
                 .then(({ message }) => expect(message).to.equal(`invalid email`))
         )
 
         it('should fail on trying to add properties with an undefined title', () =>
-            logic.addProperty(email, undefined, subtitle, photo, description, dimentions, categories, type)
+            logic.addProperty(email, undefined, subtitle, photo, description, categories, type)
                 .catch(err => err)
                 .then(({ message }) => expect(message).to.equal(`invalid title`))
         )
 
         it('should fail on trying to add properties with an empty title', () =>
-            logic.addProperty(email, '', subtitle, photo, description, dimentions, categories, type)
+            logic.addProperty(email, '', subtitle, photo, description, categories, type)
                 .catch(err => err)
                 .then(({ message }) => expect(message).to.equal(`invalid title`))
         )
 
         it('should fail on trying to add properties with an undefined field', () =>
-            logic.addProperty(email, title, subtitle, undefined, description, dimentions, categories, type)
+            logic.addProperty(email, title, subtitle, undefined, description, categories, type)
                 .catch(err => err)
                 .then(({ message }) => expect(message).to.equal(`invalid photo`))
         )
 
         it('should fail on trying to add properties with an empty field', () =>
-            logic.addProperty(email, title, subtitle, '', description, dimentions, categories, type)
+            logic.addProperty(email, title, subtitle, '', description, categories, type)
                 .catch(err => err)
                 .then(({ message }) => expect(message).to.equal(`invalid photo`))
         )
 
         it('should fail on trying to add properties with a number field', () =>
-            logic.addProperty(email, title, subtitle, 123, description, dimentions, categories, type)
+            logic.addProperty(email, title, subtitle, 123, description, categories, type)
                 .catch(err => err)
                 .then(({ message }) => expect(message).to.equal(`invalid photo`))
         )
 
-        it('should fail on trying to add properties with an undefined dimentions', () =>
-            logic.addProperty(email, title, subtitle, photo, description, undefined, categories, type)
-                .catch(err => err)
-                .then(({ message }) => expect(message).to.equal(`invalid dimentions`))
-        )
-
-        it('should fail on trying to add properties with an empty dimentions', () =>
-            logic.addProperty(email, title, subtitle, photo, description, '', categories, type)
-                .catch(err => err)
-                .then(({ message }) => expect(message).to.equal(`invalid dimentions`))
-        )
-
-        it('should fail on trying to add properties with a string dimentions', () =>
-            logic.addProperty(email, title, subtitle, photo, description, '123', categories, type)
-                .catch(err => err)
-                .then(({ message }) => expect(message).to.equal(`invalid dimentions`))
-        )
-
         it('should fail on trying to add properties with an undefined category', () =>
-            logic.addProperty(email, title, subtitle, photo, description, dimentions, undefined, type)
+            logic.addProperty(email, title, subtitle, photo, description, undefined, type)
                 .catch(err => err)
                 .then(({ message }) => expect(message).to.equal(`invalid categories`))
         )
 
         it('should fail on trying to add properties with an empty array of categories', () =>
-            logic.addProperty(email, title, subtitle, photo, description, dimentions, [], type)
+            logic.addProperty(email, title, subtitle, photo, description, [], type)
                 .catch(err => err)
                 .then(({ message }) => expect(message).to.equal(`at least one category`))
         )
 
-        it('should fail on trying to add properties with a numeric category', () =>
-            logic.addProperty(email, title, subtitle, photo, description, dimentions, 123, type)
-                .catch(err => err)
-                .then(({ message }) => expect(message).to.equal(`invalid categories`))
-        )
-
-        it('should fail on trying to add properties with a numeric category', () =>
-            logic.addProperty(email, title, subtitle, photo, description, dimentions, ['churra'], type)
-                .catch(err => err)
-                .then(({ message }) => {
-                    expect(message).to.equal(message);
-                })
-        )
-
         it('should fail on trying to add properties with an undefined type', () =>
-            logic.addProperty(email, title, subtitle, photo, description, dimentions, categories, undefined)
+            logic.addProperty(email, title, subtitle, photo, description, categories, undefined)
                 .catch(err => err)
                 .then(({ message }) => expect(message).to.equal(`invalid type`))
         )
 
         it('should fail on trying to add properties with an empty type', () =>
-            logic.addProperty(email, title, subtitle, photo, description, dimentions, categories, '')
+            logic.addProperty(email, title, subtitle, photo, description, categories, '')
                 .catch(err => err)
                 .then(({ message }) => expect(message).to.equal(`invalid type`))
         )
 
         it('should fail on trying to add properties with a numeric type', () =>
-            logic.addProperty(email, title, subtitle, photo, description, dimentions, categories, 123)
+            logic.addProperty(email, title, subtitle, photo, description, categories, 123)
                 .catch(err => err)
                 .then(({ message }) => expect(message).to.equal(`invalid type`))
         )
@@ -450,7 +404,6 @@ describe('logic', () => {
         const subtitle = 'New subtitle'
         const photo = 'http://cci10.com/blog/wp-content/uploads/2017/11/%C3%A1ticos-680x365.jpg'
         const description = 'new Blablabla'
-        const dimentions = 100
         const categories = ['Adult Bedroom', 'Office']
         const type = 'Events Spaces'
 
@@ -462,7 +415,7 @@ describe('logic', () => {
                     return Owner.findOne({ email })
                 })
                 .then(owner => {
-                    return Property.create({ title, subtitle, photo, description, dimentions, categories, type, owner: owner.id })
+                    return Property.create({ title, subtitle, photo, description, categories, type, owner: owner.id })
                 })
                 .then(res => propertyId = res._doc._id.toString())
         })
@@ -478,7 +431,6 @@ describe('logic', () => {
         const subtitle = 'New Subtitle'
         const photo = 'http://cci10.com/blog/wp-content/uploads/2017/11/%C3%A1ticos-680x365.jpg'
         const description = 'new Blablabla'
-        const dimentions = 100
         const categories = ['Adult Bedroom', 'Office']
         const type = 'Events Spaces'
 
@@ -490,59 +442,95 @@ describe('logic', () => {
                     return Owner.findOne({ email })
                 })
                 .then(owner => {
-                    return Property.create({ title, subtitle, photo, description, dimentions, categories, type, owner: owner.id })
+                    return Property.create({ title, subtitle, photo, description, categories, type, owner: owner.id })
                 })
                 .then(res => propertyId = res._doc._id.toString())
         })
 
         it('should update property succesfully', () => {
-            debugger
-            
-            return logic.updatePropertyById(email, propertyId, title, subtitle, photo, description, dimentions, categories, type)
+            return logic.updatePropertyById(email, propertyId, title, subtitle, photo, description, categories, type)
                 .then(property => {
                     expect(property).to.be.true
                 })
         })
 
         it('should fail with invalid email', () => {
-            return logic.updatePropertyById('jhondoe.mail.com', propertyId, title, subtitle, photo, description, dimentions, categories, type)
+            return logic.updatePropertyById('jhondoe.mail.com', propertyId, title, subtitle, photo, description, categories, type)
                 .catch(err => err)
                 .then(({ message }) => expect(message).to.equal(`invalid email`))
         })
 
         it('should fail with a numeric email', () => {
-            return logic.updatePropertyById(123455, propertyId, title, subtitle, photo, description, dimentions, categories, type)
+            return logic.updatePropertyById(123455, propertyId, title, subtitle, photo, description, categories, type)
                 .catch(err => err)
                 .then(({ message }) => expect(message).to.equal(`invalid email`))
         })
 
         it('should fail with a empty email', () => {
-            debugger
-            return logic.updatePropertyById('', propertyId, title, subtitle, photo, description, dimentions, categories, type)
+            return logic.updatePropertyById('', propertyId, title, subtitle, photo, description, categories, type)
                 .catch(err => err)
                 .then(({ message }) => expect(message).to.equal(`invalid email`))
         })
 
         it('should fail with invalid propertyId', () => {
-            return logic.updatePropertyById(email, '123456', title, subtitle, photo, description, dimentions, categories, type)
+            return logic.updatePropertyById(email, '123456', title, subtitle, photo, description, categories, type)
                 .catch(err => err)
                 .then(({ message }) => expect(message).to.equal(`invalid property id: 123456`))
         })
 
         it('should fail with empty newTitle', () => {
-            return logic.updatePropertyById(email, propertyId, '', subtitle, photo, description, dimentions, categories, type)
+            return logic.updatePropertyById(email, propertyId, '', subtitle, photo, description, categories, type)
                 .catch(err => err)
                 .then(({ message }) => expect(message).to.equal(`invalid title`))
         })
 
         it('should fail with undefined newTitle', () => {
-            return logic.updatePropertyById(email, propertyId, undefined, subtitle, photo, description, dimentions, categories, type)
+            return logic.updatePropertyById(email, propertyId, undefined, subtitle, photo, description, categories, type)
                 .catch(err => err)
                 .then(({ message }) => expect(message).to.equal(`invalid title`))
         })
 
-        //TODO
+        it('should fail with undefined newPhoto', () => {
+            return logic.updatePropertyById(email, propertyId, title, subtitle, undefined, description, categories, type)
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`invalid photo`))
+        })
 
+        it('should fail with empty newPhoto', () => {
+            return logic.updatePropertyById(email, propertyId, title, subtitle, '', description, categories, type)
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`invalid photo`))
+        })
+
+        it('should fail with empty newCategory', () => {
+            return logic.updatePropertyById(email, propertyId, title, subtitle, photo, description, [], type)
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`at least one category`))
+        })
+
+        it('should fail with undefined newCategory', () => {
+            return logic.updatePropertyById(email, propertyId, title, subtitle, photo, description, undefined, type)
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`invalid categories`))
+        })
+
+        it('should fail with object newCategory', () => {
+            return logic.updatePropertyById(email, propertyId, title, subtitle, photo, description, {}, type)
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`invalid categories`))
+        })
+
+        it('should fail with empty newType', () => {
+            return logic.updatePropertyById(email, propertyId, title, subtitle, photo, description, categories, '')
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`invalid type`))
+        })
+
+        it('should fail with undefined newType', () => {
+            return logic.updatePropertyById(email, propertyId, title, subtitle, photo, description, categories, undefined)
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`invalid type`))
+        })
     })
 
     true && describe('retrieve properties by Id', () => {
@@ -550,7 +538,6 @@ describe('logic', () => {
         const subtitle = 'New Subtitle'
         const photo = 'http://cci10.com/blog/wp-content/uploads/2017/11/%C3%A1ticos-680x365.jpg'
         const description = 'new Blablabla'
-        const dimentions = 100
         const categories = ['Adult Bedroom', 'Office']
         const type = 'Events Spaces'
         let propertyId
@@ -561,7 +548,7 @@ describe('logic', () => {
                     return Owner.findOne({ email })
                 })
                 .then(owner => {
-                    return Property.create({ title, subtitle, photo, description, dimentions, categories, type, owner: owner.id })
+                    return Property.create({ title, subtitle, photo, description, categories, type, owner: owner.id })
                 })
                 .then(res => propertyId = res._doc._id.toString())
         })
@@ -573,7 +560,6 @@ describe('logic', () => {
                     expect(property.subtitle).to.equal(subtitle)
                     expect(property.photo).to.equal(photo)
                     expect(property.description).to.equal(description)
-                    expect(property.dimentions).to.equal(dimentions)
                     expect(property.categories).to.deep.equal(categories)
                     expect(property.type).to.equal(type)
                 })
@@ -601,7 +587,6 @@ describe('logic', () => {
         const subtitle = 'New Subtitle'
         const photo = 'http://cci10.com/blog/wp-content/uploads/2017/11/%C3%A1ticos-680x365.jpg'
         const description = 'new Blablabla'
-        const dimentions = 100
         const categories = ['Adult Bedroom', 'Office']
         const type = 'Events Spaces'
         let propertyId
@@ -612,7 +597,7 @@ describe('logic', () => {
                     return Owner.findOne({ email })
                 })
                 .then(owner => {
-                    return Property.create({ title, subtitle, photo, description, dimentions, categories, type, owner: owner.id })
+                    return Property.create({ title, subtitle, photo, description, categories, type, owner: owner.id })
                 })
                 .then(res => propertyId = res._doc._id.toString())
         })

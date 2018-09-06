@@ -16,9 +16,9 @@ const jsonBodyParser = bodyParser.json()
 // REGISTER OWNER
 
 router.post('/register', jsonBodyParser, (req, res) => {
-    const { body: { email, password, name } } = req
+    const { body: { name, email, password } } = req
 
-    logic.register(email, password, name)
+    logic.register(name, email, password)
         .then(() => res.status(201).json({ message: 'owner registered' }))
         .catch(err => {
             const { message } = err
@@ -50,7 +50,7 @@ router.post('/authenticate', jsonBodyParser, (req, res) => {
 
 // UPDATE OWNER PASSWORD
 
-router.patch('/owner/:email', [validateJwt, jsonBodyParser], (req, res) => {
+router.patch('/owner/:email/profile', [validateJwt, jsonBodyParser], (req, res) => {
     const { params: { email }, body: { password, newPassword } } = req
     debugger
     logic.updatePassword(email, password, newPassword)
@@ -64,7 +64,7 @@ router.patch('/owner/:email', [validateJwt, jsonBodyParser], (req, res) => {
 
 //DELETE OWNER
 
-router.delete('/owner/:email', [validateJwt, jsonBodyParser], (req, res) => {
+router.delete('/owner/:email/unregister', [validateJwt, jsonBodyParser], (req, res) => {
     const { body: { email, password } } = req
 
     logic.unregisterOwner(email, password)
@@ -80,10 +80,14 @@ router.delete('/owner/:email', [validateJwt, jsonBodyParser], (req, res) => {
 // ADD PROPERTY
 
 router.post('/owner/:email/property', [validateJwt, jsonBodyParser], (req, res) => {
-    const { params: { email }, body: { title, subtitle, photo, description, dimentions, categories, type } } = req
+    const { params: { email }, body: { title, subtitle, photo, description, categories, type } } = req
 
-    logic.addProperty(email, title, subtitle, photo, description, dimentions, categories, type)
-        .then(() => res.json({ message: 'property added' }))
+    logic.addProperty(email, title, subtitle, photo, description, categories, type)
+        .then(property => {
+            const id = property.id
+
+            res.json({ message: 'property added', id })
+        })
         .catch(err => {
             const { message } = err
             debugger
@@ -140,8 +144,8 @@ router.get('/retrievePropertyById/:email/property/:id', validateJwt, (req, res) 
 // UPDATE PROPERTY
 
 router.patch('/updatePropertyById/:email/property/:id', [validateJwt, jsonBodyParser], (req, res) => {
-    const { params: { email, id }, body: { title, subtitle, photo, description, dimentions, categories, type } } = req
-    logic.updatePropertyById(email, id, title, subtitle, photo, description, dimentions, categories, type)
+    const { params: { email, id }, body: { title, subtitle, photo, description, categories, type } } = req
+    logic.updatePropertyById(email, id, title, subtitle, photo, description, categories, type)
         .then(() => res.json({ message: 'property updated' }))
         .catch(err => {
             const { message } = err
@@ -152,7 +156,7 @@ router.patch('/updatePropertyById/:email/property/:id', [validateJwt, jsonBodyPa
 
 //DELETE PROPERTY
 
-router.delete('/deletePropertyById/:email/property/:id', [validateJwt], (req, res) => {
+router.delete('/owner/:email/property/:id', [validateJwt], (req, res) => {
     const { params: { email, id } } = req
 
     logic.deletePropertyById(email, id)

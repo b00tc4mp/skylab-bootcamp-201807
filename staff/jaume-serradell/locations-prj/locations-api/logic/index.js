@@ -3,6 +3,7 @@ const { Property, Owner } = require('../data/models')
 const cloudinary = require('cloudinary')
 const mongoose = require('mongoose')
 
+
 cloudinary.config({
     cloud_name: 'locationssky',
     api_key: '669844342926842',
@@ -88,7 +89,7 @@ const logic = {
      * @throws {LogicError} If owner email is already exist
      * 
      */
-    register(email, password, name) {
+    register(name, email, password) {
         return Promise.resolve()
             .then(() => {
                 this._validateEmail(email)
@@ -100,7 +101,7 @@ const logic = {
             .then(owner => {
                 if (owner) throw new LogicError(`owner with ${email} email already exist`)
 
-                return Owner.create({ email, password, name })
+                return Owner.create({ name, email, password })
             })
             .then(() => true)
     },
@@ -154,7 +155,6 @@ const logic = {
                 return Owner.findOne({ email })
             })
             .then(owner => {
-                debugger
                 if (!owner) throw new LogicError(`owner with ${email} email does not exist`)
 
                 if (owner.password !== password) throw new LogicError(`wrong password`)
@@ -204,7 +204,6 @@ const logic = {
      * @param {string} subtitle The subtitle of the property
      * @param {string} photo The url of the photo
      * @param {string} description The description of the property
-     * @param {number} dimentions THe dimentions of the property
      * @param {string} categories The categories of the property
      * @param {string} type The type of the property
      * 
@@ -212,14 +211,12 @@ const logic = {
      * @throws {LogicError} If wrong password
      * 
      */
-    addProperty(email, title, subtitle, photo, description, dimentions, categories, type) {
+    addProperty(email, title, subtitle, photo, description, categories, type) {
         return Promise.resolve()
             .then(() => {
-                
                 this._validateEmail(email)
                 this._validateStringField("title", title)
                 this._validateStringField("photo", photo)
-                this._validateNumberField("dimentions", dimentions)
                 this._validateStringField("type", type)
 
                 if (!(categories instanceof Array)) throw new LogicError('invalid categories')
@@ -232,12 +229,21 @@ const logic = {
 
                 return this._saveImage(photo)
                     .then(imageCloudinary => {
-                        const property = { title, subtitle, photo: imageCloudinary, description, dimentions, categories, type, owner: owner.id }
+                        const property = { title, subtitle, photo: imageCloudinary, description, categories, type, owner: owner.id }
 
                         return Property.create(property)
                     })
+
             })
-            .then(() => true)
+            .then(property => property)
+            .catch(e => {
+                if (e.message === 'invalid categories' || e.message === 'at least one category' || e.message === `owner with ${email} email does not exist` || e.message === 'invalid title' || e.message === 'invalid photo' || e.message === 'invalid type' || e.message === 'invalid email') {
+                    throw e
+                }
+                else {
+                    throw new Error(e.message)
+                }
+            })
     },
 
     /** List all properties
@@ -339,7 +345,6 @@ const logic = {
      * @param {string} subtitle The Subtitle of the property
      * @param {string} photo The photo of the property
      * @param {string} description The description of the property
-     * @param {number} dimentions The dimentions of the property
      * @param {string} categories The categories of the property
      * @param {string} type The type of the property
      * 
@@ -347,24 +352,26 @@ const logic = {
      * @throws {LogicError} If id property does not exist
      * 
      */
-    updatePropertyById(email, propertyId, title, subtitle, photo, description, dimentions, categories, type) {
+    updatePropertyById(email, propertyId, title, subtitle, photo, description, categories, type) {
         return Promise.resolve()
             .then(() => {
                 this._validateEmail(email)
                 this._validateObjectId(propertyId)
                 this._validateStringField("title", title)
                 this._validateStringField("photo", photo)
-                this._validateNumberField('dimentions', dimentions)
                 this._validateStringField("type", type)
+
+                if (!(categories instanceof Array)) throw new LogicError('invalid categories')
 
                 return Owner.findOne({ email })
                     .then(owner => {
                         if (!owner) throw new LogicError(`Owner with ${email} email does not exist`)
+                        if (!categories || !categories.length) throw new LogicError('at least one category')
                         return Property.findOne({ _id: propertyId, owner: owner.id })
                             .then((property) => {
                                 if (!property) throw new LogicError(`cannot update property ${propertyId}`)
 
-                                return Property.updateOne({ _id: propertyId }, { $set: { "title": title, "subtitle": subtitle, "photo": photo, "description": description, "dimentions": dimentions, "categories": categories, "type": type } })
+                                return Property.updateOne({ _id: propertyId }, { $set: { "title": title, "subtitle": subtitle, "photo": photo, "description": description, "categories": categories, "type": type } })
                                     .then(() => true)
                             })
                     })
@@ -385,6 +392,7 @@ const logic = {
 
                 return Property.findByIdAndRemove({ email, _id: propertyId })
             })
+            .then(() => true )
     }
 }
 
