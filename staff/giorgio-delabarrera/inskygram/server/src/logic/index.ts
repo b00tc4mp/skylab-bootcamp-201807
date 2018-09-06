@@ -798,7 +798,6 @@ const logic = {
 
   listRecentPosts(perPage: number = 10, page: number = 0): Promise<PostModelInterface[]> | never {
     // TODO: optimize join post with user
-    debugger;
     return Promise.resolve()
       .then(() => {
         return User.find({ privateAccount: false }, "_id");
