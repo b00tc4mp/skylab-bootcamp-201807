@@ -15,7 +15,7 @@ const JwtStrategy = PassportJwt.Strategy;
 const LocalStrategy = PassportLocal.Strategy;
 
 passport.use(new LocalStrategy((username: string, password: string, done: any) => {
-  logic.user.authenticate(username, password)
+  logic.authenticate(username, password)
     .then(user => {
       if (!user) { return done(undefined, false); }
 
@@ -35,7 +35,7 @@ const options: StrategyOptions = {
 passport.use(new JwtStrategy(options, (payload: any, done: VerifiedCallback) => {
   const username = payload.sub;
 
-  logic.user.retrieve(username)
+  logic.retrieveUser(username)
     .then((user: UserModelInterface) => done(undefined, user ? user.username : false))
     .catch((err: Error) => done(err, false));
 }));

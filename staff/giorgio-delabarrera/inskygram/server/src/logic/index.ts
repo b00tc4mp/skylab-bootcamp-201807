@@ -2,14 +2,19 @@ import validator from "validator";
 import User, { UserModelInterface } from "../models/user";
 import { LogicError, AccessDeniedError, NotFoundError, UniqueConstraintError } from "./errors";
 import cloudinary from "../config/cloudinary";
+import Post, { PostModelInterface } from "../models/post";
+import Following from "../models/following";
+import Follower from "../models/follower";
 
 const logic = {
 
-  isPrivateUser(username: string) { },
+  // _isPrivateUser(username: string) { },
 
-  isFollowingUser(username: string, targetUsername: string) { },
+  _isFollowingUser(user: UserModelInterface, targetUser: UserModelInterface) {
+    return User.findOne({ _id: user._id }, { "followings.user": targetUser._id }) ? true : false;
+  },
 
-  hasPermissionOverUser(username: string, targetUsername: string) { },
+  _hasPermissionOverUser(username: string, targetUsername: string) { },
 
   register(username: string, email: string, password: string): Promise<boolean> | never {
 
@@ -58,13 +63,43 @@ const logic = {
   },
 
   retrieveUser(username?: string, targetUsername?: string): Promise<UserModelInterface> | never {
+    let user: UserModelInterface;
+    let targetUser: UserModelInterface;
+
     return Promise.resolve()
       .then(() => {
-        if (!username) { throw new LogicError("invalid username"); }
+        if (!username && !targetUsername) { throw new LogicError("invalid username and target username"); }
 
-        return User.findOne({ username }, { password: 0, __v: 0 });
+        return User.findOne({ username });
       })
-      .then((user: UserModelInterface) => user);
+      .then((_user: UserModelInterface) => {
+        if (!_user) { throw new NotFoundError(`user with username ${username} does not exists`); }
+
+        user = _user;
+
+        return User.findOne({ username: targetUsername });
+      })
+      .then((_targetUser: UserModelInterface) => {
+        if (!_targetUser) { throw new NotFoundError(`user with username ${targetUsername} does not exists`); }
+
+        targetUser = _targetUser;
+
+        if (username && !targetUsername) {
+
+          return User.findOne({ username }, { password: 0, __v: 0 });
+
+        } else {
+
+          return User.findOne({ username: targetUsername }, {
+            password: 0,
+            email: 0,
+            phoneNumber: 0,
+            enable: 0,
+            __v: 0,
+          })
+            .then((user: UserModelInterface) => user);
+        }
+      });
   },
 
   updateUser(
@@ -157,6 +192,7 @@ const logic = {
             }
 
             user.imageId = result.public_id;
+            user.imageUrl = result.secure_url;
 
             resolve(user.save());
 
@@ -166,11 +202,186 @@ const logic = {
       .then((user: UserModelInterface) => true);
   },
 
-  toggleFollowUser(username: string, targetUsername: string) { return true; },
+  toggleFollowUser(username: string, targetUsername: string): Promise<boolean> | never {
+    let user: UserModelInterface;
+    let targetUser: UserModelInterface;
 
-  listUserFollowers(username?: string, targetUsername?: string) { },
+    return Promise.resolve()
+      .then(() => {
 
-  listUserFollowings(username?: string, targetUsername?: string) { },
+        if (!username) { throw new LogicError("invalid username"); }
+        if (!targetUsername) { throw new LogicError("invalid target username"); }
+
+        return User.findOne({ username });
+      })
+      .then((_user: UserModelInterface) => {
+        if (!_user) { throw new NotFoundError(`user with username ${username} does not exists`); }
+
+        user = _user;
+
+        return User.findOne({ username: targetUsername });
+      })
+      .then((_targetUser: UserModelInterface) => {
+        if (!_targetUser) { throw new NotFoundError(`user with username ${targetUsername} does not exists`); }
+
+        targetUser = _targetUser;
+
+        return User.findOne({ _id: user._id, "followings.user": targetUser._id });
+      })
+      .then((foundFollowingUser: UserModelInterface) => {
+        if (!foundFollowingUser) {
+          const following = new Following();
+          following.user = targetUser._id;
+          following.createdAt = new Date();
+
+          user.followings.push(following);
+
+          return user.save()
+            .then(() => {
+              const follower = new Follower();
+              follower.user = user._id;
+              follower.createdAt = new Date();
+
+              targetUser.followers.push(follower);
+
+              return targetUser.save();
+            })
+            .then(() => true);
+        } else {
+          return User.update({ _id: user._id }, { $pull: { followings: { _id: targetUser._id } } })
+            .then(() => User.update({ _id: targetUser._id }, { $pull: { followers: { _id: user._id } } }))
+            .then(() => false);
+        }
+      });
+  },
+
+  listUserFollowers(username?: string, targetUsername?: string): Promise<UserModelInterface[]> | never {
+    let user: UserModelInterface;
+    let targetUser: UserModelInterface;
+
+    return Promise.resolve()
+      .then(() => {
+        if (!username && !targetUsername) { throw new LogicError("invalid username and target username"); }
+
+        if (username && !targetUsername) {
+          return User.findOne({ username })
+            .then((_user: UserModelInterface) => {
+              if (!_user) { throw new NotFoundError(`user with username ${username} does not exists`); }
+
+              user = _user;
+
+              return User.find({ "followings.user": user._id });
+            })
+            .then((followerUsers: UserModelInterface[]) => followerUsers);
+
+        } else if (!username && targetUsername) {
+          return User.findOne({ username: targetUsername })
+            .then((_targetUser: UserModelInterface) => {
+              if (!_targetUser) { throw new NotFoundError(`user with username ${username} does not exists`); }
+
+              targetUser = _targetUser;
+
+              if (targetUser.privateAccount) {
+                throw new AccessDeniedError(`user not logged in can not see the follower users of user ${targetUsername}`);
+              } else {
+                return User.find({ "followings.user": targetUser._id }, { password: 0, __v: 0 })
+                  .then((followerUsers: UserModelInterface[]) => followerUsers);
+              }
+            });
+
+        } else {
+          return User.findOne({ username })
+            .then((_user: UserModelInterface) => {
+              if (!_user) { throw new NotFoundError(`user with username ${username} does not exists`); }
+
+              user = _user;
+
+              return User.findOne({ username: targetUsername });
+            })
+            .then((_targetUser: UserModelInterface) => {
+              if (!_targetUser) { throw new NotFoundError(`user with username ${username} does not exists`); }
+
+              targetUser = _targetUser;
+
+              if (targetUser.privateAccount) {
+                if (this._isFollowingUser(user, targetUser)) {
+                  return User.find({ "followings.user": targetUser._id }, { password: 0, __v: 0 })
+                    .then((followerUsers: UserModelInterface[]) => followerUsers);
+                } else {
+                  throw new AccessDeniedError(`user ${username} in can not see the follower users of user ${targetUsername}`);
+                }
+              } else {
+                return User.find({ "followings.user": targetUser._id }, { password: 0, __v: 0 })
+                  .then((followerUsers: UserModelInterface[]) => followerUsers);
+              }
+            });
+        }
+      });
+  },
+
+  listUserFollowings(username?: string, targetUsername?: string): Promise<UserModelInterface[]> | never {
+    let user: UserModelInterface;
+    let targetUser: UserModelInterface;
+
+    return Promise.resolve()
+      .then(() => {
+        if (!username && !targetUsername) { throw new LogicError("invalid username and target username"); }
+
+        if (username && !targetUsername) {
+          return User.findOne({ username })
+            .then((_user: UserModelInterface) => {
+              if (!_user) { throw new NotFoundError(`user with username ${username} does not exists`); }
+
+              user = _user;
+
+              return User.find({ "followers.user": user._id });
+            })
+            .then((followingUsers: UserModelInterface[]) => followingUsers);
+
+        } else if (!username && targetUsername) {
+          return User.findOne({ username: targetUsername })
+            .then((_targetUser: UserModelInterface) => {
+              if (!_targetUser) { throw new NotFoundError(`user with username ${username} does not exists`); }
+
+              targetUser = _targetUser;
+
+              if (targetUser.privateAccount) {
+                throw new AccessDeniedError(`user not logged in can not see the following users of user ${targetUsername}`);
+              } else {
+                return User.find({ "followers.user": targetUser._id }, { password: 0, __v: 0 })
+                  .then((followingUsers: UserModelInterface[]) => followingUsers);
+              }
+            });
+
+        } else {
+          return User.findOne({ username })
+            .then((_user: UserModelInterface) => {
+              if (!_user) { throw new NotFoundError(`user with username ${username} does not exists`); }
+
+              user = _user;
+
+              return User.findOne({ username: targetUsername });
+            })
+            .then((_targetUser: UserModelInterface) => {
+              if (!_targetUser) { throw new NotFoundError(`user with username ${username} does not exists`); }
+
+              targetUser = _targetUser;
+
+              if (targetUser.privateAccount) {
+                if (this._isFollowingUser(user, targetUser)) {
+                  return User.find({ "followers.user": targetUser._id }, { password: 0, __v: 0 })
+                    .then((followingUsers: UserModelInterface[]) => followingUsers);
+                } else {
+                  throw new AccessDeniedError(`user ${username} in can not see the following users of user ${targetUsername}`);
+                }
+              } else {
+                return User.find({ "followers.user": targetUser._id }, { password: 0, __v: 0 })
+                  .then((followingUsers: UserModelInterface[]) => followingUsers);
+              }
+            });
+        }
+      });
+  },
 
   createPost(username: string, filename: string, buffer: Buffer, caption?: string): Promise<string> | never {
     return Promise.resolve()
@@ -192,6 +403,7 @@ const logic = {
             const post = new Post();
 
             post.imageId = result.public_id;
+            post.imageUrl = result.secure_url;
             post.user = user._id;
             if (caption) { post.caption = caption; }
 
@@ -203,39 +415,60 @@ const logic = {
       .then((post: PostModelInterface) => post.id);
   },
 
-  retrievePost(username?: string, postId: string): Promise<PostModelInterface> | never {
+  retrievePost(postId: string, username?: string): Promise<PostModelInterface> | never {
     let post: PostModelInterface;
+    let targetUser: UserModelInterface;
+    let user: UserModelInterface;
+
     return Promise.resolve()
       .then(() => {
         if (!postId) { throw new LogicError("invalid post id"); }
 
-        return Post.findOne({ _id: postId }, { __v: 0 });
+        return Post.findOne({ _id: postId });
       })
-      .then((foundPost: PostModelInterface) => {
-        if (!foundPost) { throw new NotFoundError(`post with id ${postId} does not exists`); }
+      .then((_post: PostModelInterface) => {
+        if (!_post) { throw new NotFoundError(`post with id ${postId} does not exists`); }
 
-        post = foundPost;
+        post = _post;
 
         return User.findById(post.user);
       })
-      .then((user: UserModelInterface) => {
-        if (!user) { throw new NotFoundError(`user with id ${post.user} does not exists`); }
+      .then((_targetUser: UserModelInterface) => {
+        if (!_targetUser) { throw new NotFoundError(`user with id ${post.user} does not exists`); }
 
-        // if (user.privateAccount)
+        targetUser = _targetUser;
 
-        return Post.findOne({ _id: postId, user: user._id }, { __v: 0 });
+        if (username) {
+          return User.findOne({ username })
+            .then((_user: UserModelInterface) => {
+              if (!_user) { throw new NotFoundError(`user with username ${username} does not exists`); }
+
+              user = _user;
+            });
+        }
+      })
+      .then(() => {
+        if (Object.is(targetUser._id, user._id)) {
+          return post.populate({ path: "user", select: "-password" });
+
+        } else if (!username) {
+          if (targetUser.privateAccount) {
+            throw new AccessDeniedError(`user not logged in can not see the post of user ${targetUser.username}`);
+          } else {
+            return post.populate({ path: "user", select: "-password" });
+          }
+        } else {
+          if (targetUser.privateAccount) {
+            if (this._isFollowingUser(user, targetUser)) {
+              return post.populate({ path: "user", select: "-password" });
+            } else {
+              throw new AccessDeniedError(`user ${username} can not see the post of user ${targetUser.username}`);
+            }
+          } else {
+            return post.populate({ path: "user", select: "-password" });
+          }
+        }
       });
-
-    // .then((user: UserModelInterface) => {
-    //   if (!user) { throw new LogicError(`user with username ${username} does not exists`); }
-
-    //   return Post.findOne({ _id: id, user: user._id }, { __v: 0 });
-    // })
-    // .then((post: PostModelInterface) => {
-    //   if (!post) { throw new LogicError(`post with id ${id} does not exists`); }
-
-    //   return post;
-    // });
   },
 
   listUserPosts(username?: string, targetUsername?: string) { },
@@ -244,42 +477,42 @@ const logic = {
 
   listUserWall(username: string, limit: number = 10, offset: number = 1) { },
 
-  addCommentToPost(username: string, postId: string, description: string): Promise<boolean> | never {
-    let post: PostModelInterface;
+  addCommentToPost(username: string, postId: string, description: string) {
+    // let post: PostModelInterface;
 
-    return Promise.resolve()
-      .then(() => {
-        if (!username) { throw new LogicError("invalid username"); }
-        if (!postId) { throw new LogicError("invalid post id"); }
-        if (!commentUsername) { throw new LogicError("invalid comment username"); }
-        if (!description) { throw new LogicError("invalid comment description"); }
+    // return Promise.resolve()
+    //   .then(() => {
+    //     if (!username) { throw new LogicError("invalid username"); }
+    //     if (!postId) { throw new LogicError("invalid post id"); }
+    //     if (!commentUsername) { throw new LogicError("invalid comment username"); }
+    //     if (!description) { throw new LogicError("invalid comment description"); }
 
-        return User.findOne({ username });
-      })
-      .then((user: UserModelInterface) => {
-        if (!user) { throw new NotFoundError(`user with username ${username} does not exists`); }
+    //     return User.findOne({ username });
+    //   })
+    //   .then((user: UserModelInterface) => {
+    //     if (!user) { throw new NotFoundError(`user with username ${username} does not exists`); }
 
-        return Post.findOne({ _id: postId, user: user._id });
-      })
-      .then((foundPost: PostModelInterface) => {
-        if (!foundPost) { throw new NotFoundError(`post with id ${postId} does not exists`); }
+    //     return Post.findOne({ _id: postId, user: user._id });
+    //   })
+    //   .then((foundPost: PostModelInterface) => {
+    //     if (!foundPost) { throw new NotFoundError(`post with id ${postId} does not exists`); }
 
-        post = foundPost;
+    //     post = foundPost;
 
-        return User.findOne({ commentUsername });
-      })
-      .then((commentUser: UserModelInterface) => {
-        if (!commentUser) { throw new NotFoundError(`comment user with username ${username} does not exists`); }
+    //     return User.findOne({ commentUsername });
+    //   })
+    //   .then((commentUser: UserModelInterface) => {
+    //     if (!commentUser) { throw new NotFoundError(`comment user with username ${username} does not exists`); }
 
-        const comment = new Comment();
-        comment.description = description;
-        comment.user = commentUser._id;
+    //     const comment = new Comment();
+    //     comment.description = description;
+    //     comment.user = commentUser._id;
 
-        post.comments.push(comment);
+    //     post.comments.push(comment);
 
-        return post.save();
-      })
-      .then((post: PostModelInterface) => true);
+    //     return post.save();
+    //   })
+    //   .then((post: PostModelInterface) => true);
   },
 
   toggleLikePost(username: string, postId: string) { },

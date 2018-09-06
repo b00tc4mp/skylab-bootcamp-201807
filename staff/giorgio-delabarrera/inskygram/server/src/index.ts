@@ -19,11 +19,11 @@ connect(DATABASE_URL)
 
     app.use(passport.initialize());
 
-    app.use("/api", defaultRouter);
-    app.use("/api", securityRouter);
-    app.use("/api", meRouter);
-    app.use("/api", userRouter);
-    app.use("/api", postRouter);
+    // app.use("/api", defaultRouter);
+    // app.use("/api", securityRouter);
+    // app.use("/api", meRouter);
+    // app.use("/api", userRouter);
+    // app.use("/api", postRouter);
 
     app.listen(PORT, () => console.log(`inskygram up and running on port ${PORT}`));
   });

@@ -43,6 +43,7 @@ const userSchema: Schema = new Schema({
   },
   biography: String,
   imageId: String,
+  imageUrl: String,
   privateAccount: Boolean,
   lastLogin: Date,
   enable: { type: Boolean, default: true },

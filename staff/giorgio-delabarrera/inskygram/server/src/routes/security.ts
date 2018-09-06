@@ -2,7 +2,7 @@ import { config } from "dotenv";
 import { Router, Request, Response } from "express";
 import bodyParser from "body-parser";
 import logic from "../logic";
-import LogicError from "../logic/error/logic-error";
+import { LogicError } from "../logic/errors";
 import jwt from "jsonwebtoken";
 import passport from "passport";
 
@@ -15,7 +15,7 @@ const jsonBodyParser = bodyParser.json();
 router.post("/register", jsonBodyParser, (req: Request, res: Response) => {
   const { body: { username, email, password } } = req;
 
-  logic.user.register(username, email, password)
+  logic.register(username, email, password)
     .then(() => res.status(201).json({ message: "user registered" }))
     .catch((err: Error) => {
       const { message } = err;
@@ -30,7 +30,7 @@ router.post(
   (req: Request, res: Response) => {
     const { body: { username, password } } = req;
 
-    logic.user.authenticate(username, password)
+    logic.authenticate(username, password)
       .then(() => {
         const { JWT_SECRET, JWT_EXP } = process.env;
 

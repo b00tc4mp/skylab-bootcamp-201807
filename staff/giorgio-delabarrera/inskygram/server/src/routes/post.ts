@@ -3,6 +3,8 @@ import { Router, Response, Request } from "express";
 const multer = require("multer");
 import bodyParser from "body-parser";
 import passport from "passport";
+import logic from "../logic";
+import { LogicError } from "../logic/errors";
 
 config();
 
@@ -18,7 +20,7 @@ router.post("/posts", [validateJwt, upload.single("image")], (req: Request | any
   const { params: { username }, body: { caption }, file } = req;
 
   if (file) {
-    logic.post.create(username, file.originalname, file.buffer, caption)
+    logic.createPost(username, file.originalname, file.buffer, caption)
       .then(() => res.status(201).json({ message: "post saved" }))
       .catch((err: any) => {
         const { message } = err;

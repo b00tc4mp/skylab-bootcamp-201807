@@ -4,6 +4,7 @@
         "esModuleInterop": true,
         "sourceMap": true,
         "noImplicitAny": true,
+        "moduleResolution": "node",
         "module": "commonjs",
         "target": "es6",
     },
