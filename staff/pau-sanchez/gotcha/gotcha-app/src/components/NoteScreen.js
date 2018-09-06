@@ -1,9 +1,12 @@
 import React, {Component} from 'react';
+
 //import {Container, ListGroup, ListGroupItem, Button, FormGroup, FormControl, ControlLabel} from 'reactstrap';
 import ReactPlayer from 'react-player'
 import PlayerNotesBar from './PlayerNotesBar';
 import {logic} from '../logic'
 import { withRouter } from 'react-router-dom'
+import screenfull from 'screenfull'
+import { findDOMNode } from 'react-dom'
  
 
 
@@ -128,6 +131,11 @@ class NoteScreen extends Component {
       onDuration = (duration) => {
         console.log('onDuration', duration)
         this.setState({ duration })
+      }
+
+      onClickFullscreen = () => {
+        console.log('onClickFullScrenn')
+        screenfull.request(findDOMNode(this.player))
       }
       
       renderLoadButton = (url, label) => {
