@@ -695,8 +695,8 @@ describe('logic', () => {
     const email1 = randomEmail({domain: 'example.com'})
     const email2 = randomEmail({domain: 'example.com'})
 
-    let gameInProgress, gameInCheckmate
-
+    let gameInProgress, gameInCheckmate, gameOneBeforeCheckmate, gameOneBeforeStalemate,gameNotInCheck
+    let badGameID = (new ObjectId()).toString()
 
     beforeEach(async () => {
       await User.create({email: email1, password, nickname: nickname})
@@ -721,6 +721,66 @@ describe('logic', () => {
         insufficientMaterial: false,
         hasAcknowledgedGameOver: [],
       })
+      engine = new Chess('rnbqkbnr/pppp1ppp/8/4p3/5PP1/8/PPPPP2P/RNBQKBNR b KQkq f3 0 2') // game in progress one before checkmate
+      uuid = uuidv1()
+      engines.set(uuid, engine)
+      pgn = engine.pgn()
+      gameOneBeforeCheckmate = await Game.create({
+        initiator: nickname,
+        acceptor: nickname2,
+        engineID: uuid,
+        pgn,
+        winner: "",
+        state: "playing",
+        toPlay: nickname,
+        inCheck: false,
+        inDraw: false,
+        inStalemate: false,
+        inCheckmate: false,
+        inThreefoldRepetition: false,
+        insufficientMaterial: false,
+        hasAcknowledgedGameOver: [],
+      })
+      engine = new Chess('rnbqkbnr/ppp2ppp/8/3pp3/3P4/3Q4/PPP1PPPP/RNB1KBNR w KQkq e6 0 3') // game not in check
+      uuid = uuidv1()
+      engines.set(uuid, engine)
+      pgn = engine.pgn()
+      gameNotInCheck = await Game.create({
+        initiator: nickname,
+        acceptor: nickname2,
+        engineID: uuid,
+        pgn,
+        winner: "",
+        state: "playing",
+        toPlay: nickname,
+        inCheck: false,
+        inDraw: false,
+        inStalemate: false,
+        inCheckmate: false,
+        inThreefoldRepetition: false,
+        insufficientMaterial: false,
+        hasAcknowledgedGameOver: [],
+      })
+      engine = new Chess('4k3/4P3/8/4K3/8/8/8/8 w - - 0 1') // game one before stalemate
+      uuid = uuidv1()
+      engines.set(uuid, engine)
+      pgn = engine.pgn()
+      gameOneBeforeStalemate = await Game.create({
+        initiator: nickname,
+        acceptor: nickname2,
+        engineID: uuid,
+        pgn,
+        winner: "",
+        state: "playing",
+        toPlay: nickname,
+        inCheck: false,
+        inDraw: false,
+        inStalemate: false,
+        inCheckmate: false,
+        inThreefoldRepetition: false,
+        insufficientMaterial: false,
+        hasAcknowledgedGameOver: [],
+      })
       engine = new Chess('rnb1kbnr/pppp1ppp/8/4p3/5PPq/8/PPPPP2P/RNBQKBNR w KQkq - 1 3') // game in checkmate
       uuid = uuidv1()
       engines.set(uuid, engine)
@@ -730,7 +790,7 @@ describe('logic', () => {
         acceptor: nickname2,
         engineID: uuid,
         pgn,
-        winner:nickname2,
+        winner: nickname2,
         state: "playing",
         toPlay: nickname,
         inCheck: false,
@@ -746,7 +806,7 @@ describe('logic', () => {
 
 
     it('should succeed for correct nickname, move and gameID with game in progress', () =>
-      logic.move(nickname, gameInProgress.id,{from:"e2",to:"e4",promotion:"q"})
+      logic.move(nickname, gameInProgress.id, {from: "e2", to: "e4", promotion: "q"})
         .then(res => {
           expect(res).to.be.true
           return Game.findOne({_id: gameInProgress._id})
@@ -761,8 +821,173 @@ describe('logic', () => {
           expect(game.initiator).to.equal(nickname)
           expect(game.acceptor).to.equal(nickname2)
           expect(game.inCheckmate).to.be.false
+          expect(game.inThreefoldRepetition).to.be.false
+          expect(game.inStalemate).to.be.false
+          expect(game.inCheck).to.be.false
+          expect(game.insufficientMaterial).to.be.false
+          expect(game.inDraw).to.be.false
         })
     )
+
+    it('should succeed for game one before check with correct nickname, move and gameID with game in progress', () =>
+      logic.move(nickname, gameNotInCheck.id, {from: "d3", to: "b5", promotion: "q"})
+        .then(res => {
+          expect(res).to.be.true
+          return Game.findOne({_id: gameNotInCheck._id})
+        })
+        .then(game => {
+          const engine = engines.get(game.engineID)
+          expect(engine).to.exist
+          expect(engine.fen()).to.equal('rnbqkbnr/ppp2ppp/8/1Q1pp3/3P4/8/PPP1PPPP/RNB1KBNR b KQkq - 1 3')
+          expect(game.state).to.equal('playing')
+          expect(game.toPlay).to.equal(nickname2)
+          expect(game.winner).to.equal('')
+          expect(game.initiator).to.equal(nickname)
+          expect(game.acceptor).to.equal(nickname2)
+          expect(game.inCheckmate).to.be.false
+          expect(game.inThreefoldRepetition).to.be.false
+          expect(game.inStalemate).to.be.false
+          expect(game.inCheck).to.be.true
+          expect(game.insufficientMaterial).to.be.false
+          expect(game.inDraw).to.be.false
+        })
+    )
+
+    it('should fail for correct nickname, move and gameID with impossible move with game in progress', () =>
+      logic.move(nickname, gameInProgress.id, {from: "e2", to: "e6", promotion: "q"})
+        .catch(err => err)
+        .then(({message}) => expect(message).to.equal(`move is not allowed`))
+    )
+
+    it('should fail when game is over (in checkmate) for correct nickname, move and gameID', () =>
+      logic.move(nickname, gameInCheckmate.id, {from: "e2", to: "e4", promotion: "q"})
+        .catch(err => err)
+        .then(({message}) => expect(message).to.equal(`game is over, cannot move`))
+    )
+
+    it('should succeed when game is one move before checkmate for correct nickname, move and gameID with game in progress', () =>
+      logic.move(nickname2, gameOneBeforeCheckmate.id, {from: "d8", to: "h4", promotion: "q"})
+        .then(res => {
+          expect(res).to.be.true
+          return Game.findOne({_id: gameOneBeforeCheckmate._id})
+        })
+        .then(game => {
+          const engine = engines.get(game.engineID)
+          expect(engine).to.exist
+          expect(engine.fen()).to.equal('rnb1kbnr/pppp1ppp/8/4p3/5PPq/8/PPPPP2P/RNBQKBNR w KQkq - 1 3')
+          expect(engine.game_over()).to.be.true
+          expect(game.inCheckmate).to.be.true
+          expect(game.inCheck).to.be.false
+          expect(game.inDraw).to.be.false
+          expect(game.inThreefoldRepetition).to.be.false
+          expect(game.inStalemate).to.be.false
+          expect(game.state).to.equal('playing')
+          expect(game.toPlay).to.equal(nickname)
+          expect(game.winner).to.equal(game.acceptor)
+          expect(game.initiator).to.equal(nickname)
+          expect(game.acceptor).to.equal(nickname2)
+        })
+    )
+
+
+    it('should succeed when game is one move before stalemate for correct nickname, move and gameID with game in progress', () =>
+      logic.move(nickname, gameOneBeforeStalemate.id, {from: "e5", to: "e6", promotion: "q"})
+        .then(res => {
+          expect(res).to.be.true
+          return Game.findOne({_id: gameOneBeforeStalemate._id})
+        })
+        .then(game => {
+          const engine = engines.get(game.engineID)
+          expect(engine).to.exist
+          expect(engine.fen()).to.equal('4k3/4P3/4K3/8/8/8/8/8 b - - 1 1')
+          expect(engine.game_over()).to.be.true
+          expect(game.inCheckmate).to.be.false
+          expect(game.inCheck).to.be.false
+          expect(game.inDraw).to.be.true
+          expect(game.inThreefoldRepetition).to.be.false
+          expect(game.inStalemate).to.be.true
+          expect(game.state).to.equal('playing')
+          expect(game.toPlay).to.equal(game.initiator)
+          expect(game.winner).to.equal("no winner")
+          expect(game.initiator).to.equal(nickname)
+          expect(game.acceptor).to.equal(nickname2)
+        })
+    )
+
+    it('should fail for correct nickname, move and bad gameID', () =>
+      logic.move(nickname, badGameID, {from: "e2", to: "e4", promotion: "q"})
+        .catch(err => err)
+        .then(({message}) => expect(message).to.equal(`game with id ${badGameID} does not exist`))
+    )
+
+    it('should fail for correct nickname, move and missing gameID', () =>
+      logic.move(nickname, '', {from: "e2", to: "e4", promotion: "q"})
+        .catch(err => err)
+        .then(({message}) => expect(message).to.equal(`invalid gameID`))
+    )
+
+    it('should fail for correct nickname, move and undefined gameID', () =>
+      logic.move(nickname, undefined, {from: "e2", to: "e4", promotion: "q"})
+        .catch(err => err)
+        .then(({message}) => expect(message).to.equal(`invalid gameID`))
+    )
+
+    it('should fail for correct nickname, move and numeric gameID', () =>
+      logic.move(nickname, 123, {from: "e2", to: "e4", promotion: "q"})
+        .catch(err => err)
+        .then(({message}) => expect(message).to.equal(`invalid gameID`))
+    )
+
+    it('should fail for correct move, gameID and bad nickname', () =>
+      logic.move("buddy", gameInProgress.id, {from: "e2", to: "e4", promotion: "q"})
+        .catch(err => err)
+        .then(({message}) => expect(message).to.equal(`game with id ${ gameInProgress.id} does not belong to user buddy`))
+    )
+
+    it('should fail for correct move, gameID and missing nickname', () =>
+      logic.move("", gameInProgress.id, {from: "e2", to: "e4", promotion: "q"})
+        .catch(err => err)
+        .then(({message}) => expect(message).to.equal(`invalid nickname`))
+    )
+
+    it('should fail for correct move, gameID and undefined nickname', () =>
+      logic.move(undefined, gameInProgress.id, {from: "e2", to: "e4", promotion: "q"})
+        .catch(err => err)
+        .then(({message}) => expect(message).to.equal(`invalid nickname`))
+    )
+
+    it('should fail for correct move, gameID and numeric nickname', () =>
+      logic.move(123, gameInProgress.id, {from: "e2", to: "e4", promotion: "q"})
+        .catch(err => err)
+        .then(({message}) => expect(message).to.equal(`invalid nickname`))
+    )
+
+    it('should fail for correct nickname, gameID and malformed move', () =>
+      logic.move(nickname, gameInProgress.id, {x: "e2", to: "e4", promotion: "q"})
+        .catch(err => err)
+        .then(({message}) => expect(message).to.equal(`move is of wrong format`))
+    )
+
+    it('should fail for correct nickname, gameID and empty move', () =>
+      logic.move(nickname, gameInProgress.id, {})
+        .catch(err => err)
+        .then(({message}) => expect(message).to.equal(`move is of wrong format`))
+    )
+
+    it('should fail for correct nickname, gameID and undefined move', () =>
+      logic.move(nickname, gameInProgress.id, undefined)
+        .catch(err => err)
+        .then(({message}) => expect(message).to.equal(`move is of wrong format`))
+    )
+
+    it('should fail for correct nickname, gameID and numeric move', () =>
+      logic.move(nickname, gameInProgress.id, 112)
+        .catch(err => err)
+        .then(({message}) => expect(message).to.equal(`move is of wrong format`))
+    )
+
+
+
 
   }) // end make a game move
 

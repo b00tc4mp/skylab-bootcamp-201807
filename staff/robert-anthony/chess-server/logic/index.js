@@ -270,7 +270,7 @@ const logic = {
       .then(_ => {
         this._validateStringField("nickname", nickname)
         this._validateStringField("gameID", gameID)
-        if (typeof move !== 'object' || !move.from || !move.to || !move.promotion) throw new LogicError('move was of wrong format')
+        if (typeof move !== 'object' || !move.from || !move.to || !move.promotion) throw new LogicError('move is of wrong format')
         return Game.findOne({_id: mongoose.Types.ObjectId(gameID)})
       })
       .then(_game => {

@@ -89,7 +89,7 @@ class App extends Component {
 
   setupSocketListeners = (nickname, token) => {
 
-    this.socket = socketIOClient(`localhost:8080`);
+    this.socket = socketIOClient(`http://localhost:8080`);
     if (this.socket) {
 
       this.socket.on(`error ${nickname}`, message => console.error(message))
