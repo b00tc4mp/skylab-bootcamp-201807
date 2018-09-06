@@ -60,7 +60,6 @@ describe('logic', () => {
             engineID: uuid,
             pgn,
             winner: "",
-            lastMove: "",
             state: "invited",
             toPlay: users[i].nickname,
             inCheck: false,
@@ -381,7 +380,6 @@ describe('logic', () => {
           engineID: uuid,
           pgn,
           winner: "",
-          lastMove: "",
           state: "invited",
           toPlay: nickname,
           inCheck: false,
@@ -492,14 +490,14 @@ describe('logic', () => {
     const nicknameC = "¢”#≠”¢"
 
     beforeEach(async () => {
-      await User.create({email:randomEmail({ domain: 'example.com' }), password, nickname:nickname0})
-      await User.create({email:randomEmail({ domain: 'example.com' }), password, nickname: nicknameA})
-      await User.create({email: randomEmail({ domain: 'example.com' }), password, nickname: nicknameB})
-      await User.create({email: randomEmail({ domain: 'example.com' }), password, nickname: nicknameC})
+      await User.create({email: randomEmail({domain: 'example.com'}), password, nickname: nickname0})
+      await User.create({email: randomEmail({domain: 'example.com'}), password, nickname: nicknameA})
+      await User.create({email: randomEmail({domain: 'example.com'}), password, nickname: nicknameB})
+      await User.create({email: randomEmail({domain: 'example.com'}), password, nickname: nicknameC})
     })
 
     it('should return correct users for one letter string', () =>
-      logic.getUsersForString(nickname0,'a')
+      logic.getUsersForString(nickname0, 'a')
         .then(res => {
           expect(res).to.be.an('array')
           expect(res.length).to.equal(2)
@@ -509,7 +507,7 @@ describe('logic', () => {
     )
 
     it('should return correct users for multi letter string', () =>
-      logic.getUsersForString(nickname0,'cadab')
+      logic.getUsersForString(nickname0, 'cadab')
         .then(res => {
           expect(res).to.be.an('array')
           expect(res.length).to.equal(1)
@@ -518,7 +516,7 @@ describe('logic', () => {
     )
 
     it('should return empty array for empty string', () =>
-      logic.getUsersForString(nickname0,'')
+      logic.getUsersForString(nickname0, '')
         .then(res => {
           expect(res).to.be.an('array')
           expect(res.length).to.equal(0)
@@ -526,7 +524,7 @@ describe('logic', () => {
     )
 
     it('should return empty array for wrong character string', () =>
-      logic.getUsersForString(nickname0,'xxx')
+      logic.getUsersForString(nickname0, 'xxx')
         .then(res => {
           expect(res).to.be.an('array')
           expect(res.length).to.equal(0)
@@ -534,33 +532,239 @@ describe('logic', () => {
     )
 
     it('should fail for numeric term', () =>
-      logic.getUsersForString(nickname0,123)
+      logic.getUsersForString(nickname0, 123)
         .catch(err => err)
         .then(({message}) => expect(message).to.equal(`search term is not a string`))
     )
 
     it('should fail for missing nickname', () =>
-      logic.getUsersForString('','a')
+      logic.getUsersForString('', 'a')
         .catch(err => err)
         .then(({message}) => expect(message).to.equal(`invalid nickname`))
     )
 
     it('should fail for undefined nickname', () =>
-      logic.getUsersForString(undefined,'a')
+      logic.getUsersForString(undefined, 'a')
         .catch(err => err)
         .then(({message}) => expect(message).to.equal(`invalid nickname`))
     )
 
     it('should fail for numeric nickname', () =>
-      logic.getUsersForString(123,'a')
+      logic.getUsersForString(123, 'a')
         .catch(err => err)
         .then(({message}) => expect(message).to.equal(`invalid nickname`))
     )
 
 
-
   })
 
+  describe('acknowledge game over for user', () => {
+
+    const email1 = randomEmail({domain: 'example.com'})
+    const email2 = randomEmail({domain: 'example.com'})
+    let game0State, game1State
+
+
+    beforeEach(async () => {
+      await User.create({email: email1, password, nickname: nickname})
+      await User.create({email: email2, password, nickname: nickname2})
+      let engine = new Chess('rnb1kbnr/pppp1ppp/8/4p3/5PPq/8/PPPPP2P/RNBQKBNR w KQkq - 1 3') // game in checkmate
+      let uuid = uuidv1()
+      engines.set(uuid, engine)
+      let pgn = engine.pgn()
+      game0State = await Game.create({
+        initiator: nickname,
+        acceptor: nickname2,
+        engineID: uuid,
+        pgn,
+        winner: "",
+        state: "playing",
+        toPlay: nickname,
+        inCheck: false,
+        inDraw: false,
+        inStalemate: false,
+        inCheckmate: false,
+        inThreefoldRepetition: false,
+        insufficientMaterial: false,
+        hasAcknowledgedGameOver: [],
+      })
+      engine = new Chess('rnb1kbnr/pppp1ppp/8/4p3/5PPq/8/PPPPP2P/RNBQKBNR w KQkq - 1 3') // game in checkmate
+      uuid = uuidv1()
+      engines.set(uuid, engine)
+      pgn = engine.pgn()
+      game1State = await Game.create({
+        initiator: nickname,
+        acceptor: nickname2,
+        engineID: uuid,
+        pgn,
+        winner: "",
+        state: "playing",
+        toPlay: nickname,
+        inCheck: false,
+        inDraw: false,
+        inStalemate: false,
+        inCheckmate: false,
+        inThreefoldRepetition: false,
+        insufficientMaterial: false,
+        hasAcknowledgedGameOver: [nickname],
+      })
+    })
+
+
+    it('should succeed for correct nickname and gameID with game having 0 acknowledgements', () =>
+      logic.acknowledgeGameOverForUser(nickname, game0State.id)
+        .then(res => {
+          expect(res).to.be.true
+          return Game.findOne({_id: game0State._id})
+        })
+        .then(game => {
+          const engine = engines.get(game.engineID)
+          expect(engine).to.exist
+          expect(game.hasAcknowledgedGameOver.length).to.equal(1)
+          expect(game.hasAcknowledgedGameOver[0]).to.equal(nickname)
+          expect(game.state).to.equal('playing')
+        })
+    )
+
+
+    it('should succeed for correct nickname and gameID with game having 1 acknowledgement', () =>
+      logic.acknowledgeGameOverForUser(nickname2, game1State.id)
+        .then(res => {
+          expect(res).to.be.true
+          return Game.findOne({_id: game1State._id})
+        })
+        .then(game => {
+          const engine = engines.get(game.engineID)
+          expect(engine).to.exist
+          expect(game.hasAcknowledgedGameOver.length).to.equal(2)
+          expect(game.hasAcknowledgedGameOver[0]).to.equal(nickname)
+          expect(game.hasAcknowledgedGameOver[1]).to.equal(nickname2)
+          expect(game.state).to.equal('terminated')
+        })
+    )
+
+    it('should fail for incorrect nickname ', () =>
+      logic.acknowledgeGameOverForUser("georgeJones", game0State.id)
+        .catch(err => err)
+        .then(({message}) => expect(message).to.equal(`game with id ${game0State.id} does not belong to user georgeJones`))
+    )
+
+    it('should fail for missing nickname ', () =>
+      logic.acknowledgeGameOverForUser("", game0State.id)
+        .catch(err => err)
+        .then(({message}) => expect(message).to.equal(`invalid nickname`))
+    )
+
+    it('should fail for undefined nickname ', () =>
+      logic.acknowledgeGameOverForUser(undefined, game0State.id)
+        .catch(err => err)
+        .then(({message}) => expect(message).to.equal(`invalid nickname`))
+    )
+
+    it('should fail for numeric nickname ', () =>
+      logic.acknowledgeGameOverForUser(123, game0State.id)
+        .catch(err => err)
+        .then(({message}) => expect(message).to.equal(`invalid nickname`))
+    )
+    it('should fail for incorrect gameID', () => {
+        const id = new ObjectId().toString()
+        return logic.acknowledgeGameOverForUser(nickname, id)
+          .catch(err => err)
+          .then(({message}) => expect(message).to.equal(`game with id ${id} does not exist`))
+      }
+    )
+    it('should fail for missing gameID', () =>
+      logic.acknowledgeGameOverForUser(nickname, '')
+        .catch(err => err)
+        .then(({message}) => expect(message).to.equal(`invalid gameID`))
+    )
+    it('should fail for undefined gameID', () =>
+      logic.acknowledgeGameOverForUser(nickname, undefined)
+        .catch(err => err)
+        .then(({message}) => expect(message).to.equal(`invalid gameID`))
+    )
+    it('should fail for numeric gameID', () =>
+      logic.acknowledgeGameOverForUser(nickname, 123434)
+        .catch(err => err)
+        .then(({message}) => expect(message).to.equal(`invalid gameID`))
+    )
+  }) // end describe acknowledge game over for user
+
+  describe('make a game move', () => {
+
+    const email1 = randomEmail({domain: 'example.com'})
+    const email2 = randomEmail({domain: 'example.com'})
+
+    let gameInProgress, gameInCheckmate
+
+
+    beforeEach(async () => {
+      await User.create({email: email1, password, nickname: nickname})
+      await User.create({email: email2, password, nickname: nickname2})
+      let engine = new Chess() // game in progress
+      let uuid = uuidv1()
+      engines.set(uuid, engine)
+      let pgn = engine.pgn()
+      gameInProgress = await Game.create({
+        initiator: nickname,
+        acceptor: nickname2,
+        engineID: uuid,
+        pgn,
+        winner: "",
+        state: "playing",
+        toPlay: nickname,
+        inCheck: false,
+        inDraw: false,
+        inStalemate: false,
+        inCheckmate: false,
+        inThreefoldRepetition: false,
+        insufficientMaterial: false,
+        hasAcknowledgedGameOver: [],
+      })
+      engine = new Chess('rnb1kbnr/pppp1ppp/8/4p3/5PPq/8/PPPPP2P/RNBQKBNR w KQkq - 1 3') // game in checkmate
+      uuid = uuidv1()
+      engines.set(uuid, engine)
+      pgn = engine.pgn()
+      gameInCheckmate = await Game.create({
+        initiator: nickname,
+        acceptor: nickname2,
+        engineID: uuid,
+        pgn,
+        winner:nickname2,
+        state: "playing",
+        toPlay: nickname,
+        inCheck: false,
+        inDraw: false,
+        inStalemate: false,
+        inCheckmate: true,
+        inThreefoldRepetition: false,
+        insufficientMaterial: false,
+        hasAcknowledgedGameOver: [],
+      })
+      logic._currentEngines = engines
+    })
+
+
+    it('should succeed for correct nickname, move and gameID with game in progress', () =>
+      logic.move(nickname, gameInProgress.id,{from:"e2",to:"e4",promotion:"q"})
+        .then(res => {
+          expect(res).to.be.true
+          return Game.findOne({_id: gameInProgress._id})
+        })
+        .then(game => {
+          const engine = engines.get(game.engineID)
+          expect(engine).to.exist
+          expect(engine.fen()).to.equal('rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1')
+          expect(game.state).to.equal('playing')
+          expect(game.toPlay).to.equal(nickname2)
+          expect(game.winner).to.equal('')
+          expect(game.initiator).to.equal(nickname)
+          expect(game.acceptor).to.equal(nickname2)
+          expect(game.inCheckmate).to.be.false
+        })
+    )
+
+  }) // end make a game move
 
   after(() =>
     Promise.all([

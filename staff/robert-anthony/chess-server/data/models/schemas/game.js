@@ -28,10 +28,6 @@ module.exports = new Schema({
     type:String,
     required:winnerString
   },
-  lastMove: {
-    type:String,
-    required:lastMoveString
-  },
   state: {
     type:String,
     required:true,

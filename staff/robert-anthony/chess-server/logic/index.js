@@ -248,7 +248,6 @@ const logic = {
           engineID: uuid,
           pgn,
           winner: "",
-          lastMove: "",
           state: "invited",
           toPlay: requester,
           inCheck: false,
