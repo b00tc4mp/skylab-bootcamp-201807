@@ -13,6 +13,29 @@ module.exports = new Schema({
         required: true
     },
 
+    name: {
+        type: String
+    },
+
+    surname: {
+        type: String
+    },
+
+    age: {
+        type: Number,
+    },
+
+    gender: {
+        type: String,
+        enum: ['female', 'male', 'other']
+    },
+
+    phone: {
+        type: Number,
+        match: /^[0-9]+$/,
+        maxlength: 9
+    },
+
     patients: [{
         type: ObjectId,
         ref: 'Patient'

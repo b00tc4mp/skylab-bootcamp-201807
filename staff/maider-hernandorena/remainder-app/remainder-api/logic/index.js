@@ -61,32 +61,7 @@ const logic = {
     },
 
 
-    // DOCTOR
-
-    /**
-     * Registers a doctor with a code and a password 
-     * @param {String} code //doctors code
-     * @param {String} password //doctors password
-     * 
-     * @throws {LogicError} if doctor already exist
-     * 
-     * @returns {boolean} TRUE => if it is registered correctly
-     */
-    registerDoctor(code, password) {
-        return Promise.resolve()
-            .then(() => {
-                this._validateStringField('code', code)
-                this._validateStringField('password', password)
-
-                return Doctor.findOne({ code })
-            })
-            .then(doctor => {
-                if (doctor) throw new LogicError(`${code} doctor already exist`)
-
-                return Doctor.create({ code, password })
-            })
-            .then(() => true)
-    },
+    // DOCTORS
 
     /**
      * Authenticates a doctor with his/her code and a password 
@@ -115,45 +90,7 @@ const logic = {
     },
 
 
-
-    // PATIENT
-
-    /**
-     * Adds a patient requiring different parameters
-     * @param {String} name //patient name
-     * @param {Number} dni //patient dni (8 digits)
-     * @param {String} surname //patient surname
-     * @param {Number} age //patient age
-     * @param {String} gender //patient gender (male, female or other)
-     * @param {String} address //patient address
-     * @param {Number} phone //patient phone (9 digits)
-     * 
-     * @throws {LogicError} if patient with the same dni already exists
-     * 
-     * @returns {Object} patient information
-     */
-    addPatient(name, dni, surname, age, gender, address, phone) {
-        return Promise.resolve()
-            .then(() => {
-                this._validateStringField('name', name)
-                this._validateDniField('dni', dni)
-                this._validateStringField('surname', surname)
-                this._validateAgeField('age', age)
-                this._validateStringField('gender', gender)
-                this._validateStringField('address', address)
-                this._validatePhoneField('phone', phone)
-
-                return Patient.findOne({ dni })
-            })
-            .then(patient => {
-                if (patient) throw new LogicError(`patient with ${dni} dni already exist`)
-
-                const patientData = { name, dni, surname, age, gender, address, phone }
-
-                return Patient.create(patientData)
-            })
-            .then(patient => patient)
-    },
+    // PATIENTS
 
     /**
      * Returns a patient data
@@ -503,33 +440,7 @@ const logic = {
     },
 
 
-
-    // CARETAKER
-
-    /**
-     * Registers a caretaker with a dni and a password 
-     * @param {String} dni //caretakers dni
-     * @param {String} password //caretakers password
-     * 
-     * @throws {LogicError} if caretaker already exist
-     * 
-     * @returns {boolean} TRUE => if it is registered correctly
-     */
-    registerCaretaker(dni, password) {
-        return Promise.resolve()
-            .then(() => {
-                this._validateDniField('dni', dni)
-                this._validateStringField('password', password)
-
-                return Caretaker.findOne({ dni })
-            })
-            .then(caretaker => {
-                if (caretaker) throw new LogicError(`caretaker ${dni} already exist`)
-
-                return Caretaker.create({ dni, password })
-            })
-            .then(() => true)
-    },
+    // CARETAKERS
 
     /**
      * Authenticates a caretaker with his/her dni and a password 
@@ -608,7 +519,7 @@ const logic = {
                 
                 const patientsIds = caretaker.patients.map(patient => patient._id.toString())
                 
-                return Patient.find({ _id: { $in: patientsIds } })
+                return Patient.find({ _id: { $in: patientsIds } }).lean()
             })
             .then(patients => {
                 if (patients) {
@@ -658,6 +569,31 @@ const logic = {
     },
 
     /**
+     * Registers a doctor with a code and a password 
+     * @param {String} code //doctors code
+     * @param {String} password //doctors password
+     * 
+     * @throws {LogicError} if doctor already exist
+     * 
+     * @returns {boolean} TRUE => if it is registered correctly
+     */
+    registerDoctor(code, password) {
+        return Promise.resolve()
+            .then(() => {
+                this._validateStringField('code', code)
+                this._validateStringField('password', password)
+
+                return Doctor.findOne({ code })
+            })
+            .then(doctor => {
+                if (doctor) throw new LogicError(`${code} doctor already exist`)
+
+                return Doctor.create({ code, password })
+            })
+            .then(() => true)
+    },
+
+    /**
      * Removes a doctor with his/her code and a password 
      * @param {String} code //doctors code
      * 
@@ -678,6 +614,91 @@ const logic = {
                 return Doctor.deleteOne({ _id: doctor._id })
             })
             .then(() => true)
+    },
+
+    /**
+     * Returns a doctor data
+     * @param {String} code //doctor code
+     * 
+     * @throws {LogicError} //if doctor does not exits
+     * 
+     * @returns {Object} doctor data
+     */
+    doctorData(code) {
+        return Promise.resolve()
+            .then(() => {
+                this._validateStringField('code', code)
+
+                return Doctor.findOne({ code }).lean()
+            })
+            .then(doctor => {
+                if (!doctor) throw new LogicError(`doctor with ${code} code does not exist`)
+
+                doctor.id = doctor._id.toString()
+                delete doctor._id
+                delete doctor.__v
+
+                return doctor
+            })
+    },
+
+    /**
+     * List all doctors
+     * @throws {LogicError} if it does not exist any doctor
+     * 
+     * @returns {Array} all doctors in an array or an empty array
+     */
+    listDoctors() {
+        return Promise.resolve()
+            .then(() => Doctor.find().lean())
+            .then(doctors => {
+                if (!doctors) throw new LogicError(`doctor does not exist`)
+                if (doctors) {
+                    doctors.forEach(doctor => {
+                        doctor.id = doctor._id.toString()
+                        delete doctor._id
+                        delete doctor.__v
+                    })
+                }
+                return doctors || []
+            })
+    },
+
+    /**
+     * Adds a patient requiring different parameters
+     * @param {String} name //patient name
+     * @param {Number} dni //patient dni (8 digits)
+     * @param {String} surname //patient surname
+     * @param {Number} age //patient age
+     * @param {String} gender //patient gender (male, female or other)
+     * @param {String} address //patient address
+     * @param {Number} phone //patient phone (9 digits)
+     * 
+     * @throws {LogicError} if patient with the same dni already exists
+     * 
+     * @returns {Object} patient information
+     */
+    addPatient(name, dni, surname, age, gender, address, phone) {
+        return Promise.resolve()
+            .then(() => {
+                this._validateStringField('name', name)
+                this._validateDniField('dni', dni)
+                this._validateStringField('surname', surname)
+                this._validateAgeField('age', age)
+                this._validateStringField('gender', gender)
+                this._validateStringField('address', address)
+                this._validatePhoneField('phone', phone)
+
+                return Patient.findOne({ dni })
+            })
+            .then(patient => {
+                if (patient) throw new LogicError(`patient with ${dni} dni already exist`)
+
+                const patientData = { name, dni, surname, age, gender, address, phone }
+
+                return Patient.create(patientData)
+            })
+            .then(patient => patient)
     },
 
     /**
@@ -744,6 +765,38 @@ const logic = {
     },
 
     /**
+     * Registers a caretaker with a dni and a password 
+     * @param {String} dni //caretakers dni
+     * @param {String} password //caretakers password
+     * 
+     * @throws {LogicError} if caretaker already exist
+     * 
+     * @returns {boolean} TRUE => if it is registered correctly
+     */
+    registerCaretaker(dni, password, name, surname, age, gender, phone) {
+        return Promise.resolve()
+            .then(() => {
+                this._validateDniField('dni', dni)
+                this._validateStringField('password', password)
+                this._validateStringField('name', name)
+                this._validateStringField('surname', surname)
+                this._validateAgeField('age', age)
+                this._validateStringField('gender', gender)
+                this._validatePhoneField('phone', phone)
+
+                return Caretaker.findOne({ dni })
+            })
+            .then(caretaker => {
+                if (caretaker) throw new LogicError(`caretaker ${dni} already exist`)
+
+                const newCaretaker = { dni, password, name, surname, age, gender, phone }
+
+                return Caretaker.create(newCaretaker)
+            })
+            .then(() => true)
+    },
+
+    /**
      * Removes a caretaker with his/her dni
      * @param {String} dni //caretakers dni
      * 
@@ -764,6 +817,54 @@ const logic = {
                 return Caretaker.deleteOne({ _id: caretaker._id })
             })
             .then(() => true)
+    },
+
+    /**
+     * Returns a caretaker data
+     * @param {Number} dni //caretaker dni
+     * 
+     * @throws {LogicError} //if caretaker does not exits
+     * 
+     * @returns {Object} caretaker data
+     */
+    caretakerData(dni) {
+        return Promise.resolve()
+            .then(() => {
+                this._validateDniField('dni', dni)
+
+                return Caretaker.findOne({ dni }).lean()
+            })
+            .then(caretaker => {
+                if (!caretaker) throw new LogicError(`caretaker with ${dni} dni does not exist`)
+
+                caretaker.id = caretaker._id.toString()
+                delete caretaker._id
+                delete caretaker.__v
+
+                return caretaker
+            })
+    },
+
+    /**
+     * List all caretakers
+     * @throws {LogicError} if it does not exist any caretaker
+     * 
+     * @returns {Array} all caretakers in an array or an empty array
+     */
+    listCaretakers() {
+        return Promise.resolve()
+            .then(() => Caretaker.find().lean())
+            .then(caretakers => {
+                if (!caretakers) throw new LogicError(`caretaker does not exist`)
+                if (caretakers) {
+                    caretakers.forEach(caretaker => {
+                        caretaker.id = caretaker._id.toString()
+                        delete caretaker._id
+                        delete caretaker.__v
+                    })
+                }
+                return caretakers || []
+            })
     },
 
     /**

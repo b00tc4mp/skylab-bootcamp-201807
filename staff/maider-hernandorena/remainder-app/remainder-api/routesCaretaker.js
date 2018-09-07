@@ -10,39 +10,20 @@ const router = express.Router()
 
 
 /**
- * To register the caretaker
- * Must send on the body the email and password
- * 
- * @throws {LogicError} Message of status
- * 
- * @returns {Response} Message 'caretaker registered correctly'
- */
-router.post('/register', jsonBodyParser, (req, res) => {
-    const { body: { email, password } } = req
-
-    logic.registerCaretaker(email, password)
-        .then(() => res.status(201).json({ message: 'caretaker registered correctly' }))
-        .catch(err => {
-            const { message } = err
-            res.status(err instanceof LogicError ? 400 : 500).json({ message })
-        })
-})
-
-/**
  * To authenticate the caretaker
- * Must send on the body the email and password
+ * Must send on the body the dni and password
  * 
  * @throws {LogicError} Message of status
  * 
  * @returns {Response} Message 'caretaker authenticated', caretakers token and id
  */
 router.post('/auth', jsonBodyParser, (req, res) => {
-    const { body: { email, password } } = req
+    const { body: { dni, password } } = req
 
-    logic.authenticateCaretaker(email, password)
+    logic.authenticateCaretaker(dni, password)
         .then(caretaker => {
             const { JWT_SECRET, JWT_EXP } = process.env
-            const token = jwt.sign({ sub: caretaker.id }, JWT_SECRET, { expiresIn: JWT_EXP })
+            const token = jwt.sign({ sub: caretaker._id }, JWT_SECRET, { expiresIn: JWT_EXP })
             const id = caretaker._id
     
             res.status(200).json({ message: 'caretaker authenticated', token, id })
@@ -61,10 +42,10 @@ router.post('/auth', jsonBodyParser, (req, res) => {
  * 
  * @returns {Response} Message 'caretakers password updated correctly'
  */
-router.patch('/update/:email', [verifyJwt, jsonBodyParser], (req, res) => {
-    const { params: { email }, body: { password, newPassword } } = req
+router.patch('/update/:id', [verifyJwt, jsonBodyParser], (req, res) => {
+    const { params: { id }, body: { dni, password, newPassword } } = req
 
-    logic.updateCaretakerPassword(email, password, newPassword)
+    logic.updateCaretakerPassword(dni, password, newPassword)
         .then(() => res.status(201).json({ message: 'caretakers password updated correctly' }))
         .catch(err => {
             const { message } = err
@@ -79,13 +60,13 @@ router.patch('/update/:email', [verifyJwt, jsonBodyParser], (req, res) => {
  * 
  * @returns {Response} Patient data
  */
-router.get('/patient/:dni', jsonBodyParser, (req, res) => {
+router.get('/:dni/patients', jsonBodyParser, (req, res) => {
     let { params: { dni } } = req
     
     dni = parseInt(dni)
 
     logic.retrieveCaretakerPatients(dni)
-        .then(patient => res.json(patient))
+        .then(patients => res.json(patients))
         .catch(err => {
             const { message } = err
             res.status(err instanceof LogicError ? 400 : 500).json({ message })

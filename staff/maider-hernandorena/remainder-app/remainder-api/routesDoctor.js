@@ -9,25 +9,6 @@ const router = express.Router()
 
 
 /**
- * To register the doctor
- * Must send on the body the code and password
- * 
- * @throws {LogicError} Message of status
- * 
- * @returns {Response} Message 'doctor registered correctly'
- */
-router.post('/register', jsonBodyParser, (req, res) => {
-    const { body: { code, password } } = req
-
-    logic.registerDoctor(code, password)
-        .then(() => res.status(201).json({ message: 'doctor registered correctly' }))
-        .catch(err => {
-            const { message } = err
-            res.status(err instanceof LogicError ? 400 : 500).json({ message })
-        })
-})
-
-/**
  * To authenticate the doctor
  * Must send on the body the code and password
  * 
@@ -45,29 +26,6 @@ router.post('/auth', jsonBodyParser, (req, res) => {
             const id = doctor.id
     
             res.json({ message: 'doctor authenticated', token, id })
-        })
-        .catch(err => {
-            const { message } = err
-            res.status(err instanceof LogicError ? 400 : 500).json({ message })
-        })
-})
-
-/**
- * To add patient
- * Must send on the body the name, DNI, surname, age, gender, address and phone of the patient
- * 
- * @throws {LogicError} Message of status
- * 
- * @returns {Response} Message 'patient added correctly', patients token and id
- */
-router.post('/add-patient', jsonBodyParser, (req, res) => {
-    const { body: { name, dni, surname, age, gender, address, phone } } = req
-
-    logic.addPatient(name, dni, surname, age, gender, address, phone)
-        .then(patient => {
-            const id = patient.id
-
-            res.status(201).json({ message: 'patient added correctly', id })
         })
         .catch(err => {
             const { message } = err

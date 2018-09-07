@@ -89,81 +89,6 @@ describe('logic', () => {
 
     // DOCTOR
 
-    true && describe('register doctor', () => {
-
-        const code = `123A${Math.random()}`
-        const password = `12-${Math.random()}`
-
-        it('should be registered with given code and password', () =>
-            Doctor.findOne({ code })
-                .then(doctor => {
-                    expect(doctor).to.be.null
-
-                    return logic.registerDoctor(code, password)
-                })
-                .then(res => {
-                    expect(res).to.be.true
-
-                    return Doctor.findOne({ code })
-                })
-                .then(doctor => {
-                    expect(doctor).to.exist
-                    expect(doctor.code).to.equal(code)
-                    expect(doctor.password).to.equal(password)
-                })
-        )
-
-        it('should fail on registering an already registered doctor', () => {
-
-            const newCode = code
-
-            return logic.registerDoctor(code, password)
-                .then(res => {
-                    expect(res).to.be.true
-
-                    return logic.registerDoctor(newCode, password)
-                })
-                .catch(err => err)
-                .then(({ message }) => expect(message).to.equal(`${newCode} doctor already exist`))
-        })
-
-        it('should fail on trying to register with an undefined code', () =>
-            logic.registerDoctor(undefined, password)
-                .catch(err => err)
-                .then(({ message }) => expect(message).to.equal(`invalid code`))
-        )
-
-        it('should fail on trying to register with an empty code', () =>
-            logic.registerDoctor('', password)
-                .catch(err => err)
-                .then(({ message }) => expect(message).to.equal(`invalid code`))
-        )
-
-        it('should fail on trying to register with a numeric code', () =>
-            logic.registerDoctor(123, password)
-                .catch(err => err)
-                .then(({ message }) => expect(message).to.equal(`invalid code`))
-        )
-
-        it('should fail on trying to register with an undefined password', () =>
-            logic.registerDoctor(code, undefined)
-                .catch(err => err)
-                .then(({ message }) => expect(message).to.equal(`invalid password`))
-        )
-
-        it('should fail on trying to register with an empty password', () =>
-            logic.registerDoctor(code, '')
-                .catch(err => err)
-                .then(({ message }) => expect(message).to.equal(`invalid password`))
-        )
-
-        it('should fail on trying to register with a numeric password', () =>
-            logic.registerDoctor(code, 123)
-                .catch(err => err)
-                .then(({ message }) => expect(message).to.equal(`invalid password`))
-        )
-    })
-
     true && describe('authenticate doctor', () => {
 
         const code = `123A${Math.random()}`
@@ -236,173 +161,6 @@ describe('logic', () => {
     })
 
     // PATIENT
-
-    true && describe('add patient', () => {
-
-        const patient = { name: 'John', dni: 12345678, surname: 'Doe', age: 78 , gender: 'male', address: 'Barcelona', phone: 123123123}
-
-        const {name, dni, surname, age, gender, address, phone} = patient
-
-        it('should add correctly the given patient', () =>
-            Patient.findOne(patient)
-                .then(foundPatient => {
-                    expect(foundPatient).to.be.null
-
-                    return logic.addPatient(name, dni, surname, age, gender, address, phone)
-                })
-                .then(foundPatient => {
-                    expect(foundPatient).to.exist
-                    expect(foundPatient.id).to.exist
-                    expect(foundPatient.name).to.equal(name)
-                    expect(foundPatient.dni).to.equal(dni)
-                    expect(foundPatient.surname).to.equal(surname)
-                    expect(foundPatient.age).to.equal(age)
-                    expect(foundPatient.gender).to.equal(gender)
-                    expect(foundPatient.address).to.equal(address)
-                    expect(foundPatient.phone).to.equal(phone)
-                })
-        )
-
-        it('should fail on adding an already existing patient', () => {
-
-            const sameDni = dni
-
-            return logic.addPatient(name, dni, surname, age, gender, address, phone)
-                .then(foundPatient => {
-                    expect(foundPatient).to.exist
-
-                    return logic.addPatient(name, sameDni, surname, age, gender, address, phone)
-                })
-                .catch(err => err)
-                .then(({ message }) => expect(message).to.equal(`patient with ${sameDni} dni already exist`))
-        })
-
-        it('should fail on trying to add patient with an undefined name', () =>
-            logic.addPatient(undefined, dni, surname, age, gender, address, phone)
-                .catch(err => err)
-                .then(({ message }) => expect(message).to.equal(`invalid name`))
-        )
-
-        it('should fail on trying to add patient with an empty name', () =>
-            logic.addPatient('', dni, surname, age, gender, address, phone)
-                .catch(err => err)
-                .then(({ message }) => expect(message).to.equal(`invalid name`))
-        )
-
-        it('should fail on trying to add patient with a numeric name', () =>
-            logic.addPatient(123, dni, surname, age, gender, address, phone)
-                .catch(err => err)
-                .then(({ message }) => expect(message).to.equal(`invalid name`))
-        )
-
-        it('should fail on trying to add patient with an undefined dni', () =>
-            logic.addPatient(name, undefined, surname, age, gender, address, phone)
-                .catch(err => err)
-                .then(({ message }) => expect(message).to.equal(`invalid dni`))
-        )
-
-        it('should fail on trying to add patient with an empty dni', () =>
-            logic.addPatient(name, '', surname, age, gender, address, phone)
-                .catch(err => err)
-                .then(({ message }) => expect(message).to.equal(`invalid dni`))
-        )
-
-        it('should fail on trying to add patient with a string dni', () =>
-            logic.addPatient(name, '123', surname, age, gender, address, phone)
-                .catch(err => err)
-                .then(({ message }) => expect(message).to.equal(`invalid dni`))
-        )
-
-        it('should fail on trying to add patient with an undefined surname', () =>
-            logic.addPatient(name, dni, undefined, age, gender, address, phone)
-                .catch(err => err)
-                .then(({ message }) => expect(message).to.equal(`invalid surname`))
-        )
-
-        it('should fail on trying to add patient with an empty surname', () =>
-            logic.addPatient(name, dni, '', age, gender, address, phone)
-                .catch(err => err)
-                .then(({ message }) => expect(message).to.equal(`invalid surname`))
-        )
-
-        it('should fail on trying to add patient with a numeric surname', () =>
-            logic.addPatient(name, dni, 123, age, gender, address, phone)
-                .catch(err => err)
-                .then(({ message }) => expect(message).to.equal(`invalid surname`))
-        )
-
-        it('should fail on trying to add patient with an undefined age', () =>
-            logic.addPatient(name, dni, surname, undefined, gender, address, phone)
-                .catch(err => err)
-                .then(({ message }) => expect(message).to.equal(`invalid age`))
-        )
-
-        it('should fail on trying to add patient with an empty age', () =>
-            logic.addPatient(name, dni, surname, '', gender, address, phone)
-                .catch(err => err)
-                .then(({ message }) => expect(message).to.equal(`invalid age`))
-        )
-
-        it('should fail on trying to add patient with a string age', () =>
-            logic.addPatient(name, dni, surname, '123', gender, address, phone)
-                .catch(err => err)
-                .then(({ message }) => expect(message).to.equal(`invalid age`))
-        )
-
-        it('should fail on trying to add patient with an undefined gender', () =>
-            logic.addPatient(name, dni, surname, age, undefined, address, phone)
-                .catch(err => err)
-                .then(({ message }) => expect(message).to.equal(`invalid gender`))
-        )
-
-        it('should fail on trying to add patient with an empty gender', () =>
-            logic.addPatient(name, dni, surname, age, '', address, phone)
-                .catch(err => err)
-                .then(({ message }) => expect(message).to.equal(`invalid gender`))
-        )
-
-        it('should fail on trying to add patient with a numeric gender', () =>
-            logic.addPatient(name, dni, surname, age, 123, address, phone)
-                .catch(err => err)
-                .then(({ message }) => expect(message).to.equal(`invalid gender`))
-        )
-
-        it('should fail on trying to add patient with an undefined address', () =>
-            logic.addPatient(name, dni, surname, age, gender, undefined, phone)
-                .catch(err => err)
-                .then(({ message }) => expect(message).to.equal(`invalid address`))
-        )
-
-        it('should fail on trying to add patient with an empty address', () =>
-            logic.addPatient(name, dni, surname, age, gender, '', phone)
-                .catch(err => err)
-                .then(({ message }) => expect(message).to.equal(`invalid address`))
-        )
-
-        it('should fail on trying to add patient with a numeric address', () =>
-            logic.addPatient(name, dni, surname, age, gender, 123, phone)
-                .catch(err => err)
-                .then(({ message }) => expect(message).to.equal(`invalid address`))
-        )
-
-        it('should fail on trying to add patient with an undefined phone', () =>
-            logic.addPatient(name, dni, surname, age, gender, address, undefined)
-                .catch(err => err)
-                .then(({ message }) => expect(message).to.equal(`invalid phone`))
-        )
-
-        it('should fail on trying to add patient with an empty phone', () =>
-            logic.addPatient(name, dni, surname, age, gender, address, '')
-                .catch(err => err)
-                .then(({ message }) => expect(message).to.equal(`invalid phone`))
-        )
-
-        it('should fail on trying to add patient with a string phone', () =>
-            logic.addPatient(name, dni, surname, age, gender, address, '123')
-                .catch(err => err)
-                .then(({ message }) => expect(message).to.equal(`invalid phone`))
-        )
-    })
 
     true && describe('return patient data', () => {
 
@@ -1372,78 +1130,6 @@ describe('logic', () => {
 
     // CARETAKER
 
-    true && describe('register caretaker', () => {
-
-        const dni = 12345678
-        const password = `123-${Math.random()}`
-    
-        it('should be registered correctly with dni and password', () =>
-            Caretaker.findOne({ dni })
-                .then(caretaker => {
-                    expect(caretaker).not.to.exist
-
-                    return logic.registerCaretaker(dni, password)
-                })
-                .then(res => {
-                    expect(res).to.be.true
-
-                    return Caretaker.findOne({ dni })
-                })
-                .then(caretaker => {
-                    expect(caretaker).to.exist
-                    expect(caretaker.dni).to.equal(dni.toString())
-                    expect(caretaker.password).to.equal(password)
-                })
-        )
-
-        it('should fail on registering an already existing caretaker', () =>
-            logic.registerCaretaker(dni, password)
-                .then(res => {
-                    expect(res).to.be.true
-
-                    return logic.registerCaretaker(dni, password)
-                })
-                .catch(err => err)
-                .then(({ message }) => expect(message).to.equal(`caretaker ${dni} already exist`))
-        )
-
-        it('should fail on trying to register with an undefined dni', () =>
-            logic.registerCaretaker(undefined, password)
-                .catch(err => err)
-                .then(({ message }) => expect(message).to.equal(`invalid dni`))
-        )
-
-        it('should fail on trying to register with an empty dni', () =>
-            logic.registerCaretaker('', password)
-                .catch(err => err)
-                .then(({ message }) => expect(message).to.equal(`invalid dni`))
-        )
-
-        it('should fail on trying to register with a numeric dni', () =>
-            logic.registerCaretaker(123, password)
-                .catch(err => err)
-                .then(({ message }) => expect(message).to.equal(`invalid dni`))
-        )
-
-        it('should fail on trying to register with an undefined password', () =>
-            logic.registerCaretaker(dni, undefined)
-                .catch(err => err)
-                .then(({ message }) => expect(message).to.equal(`invalid password`))
-        )
-
-        it('should fail on trying to register with an empty password', () =>
-            logic.registerCaretaker(dni, '')
-                .catch(err => err)
-                .then(({ message }) => expect(message).to.equal(`invalid password`))
-        )
-
-        it('should fail on trying to register with a numeric password', () =>
-            logic.registerCaretaker(dni, 123)
-                .catch(err => err)
-                .then(({ message }) => expect(message).to.equal(`invalid password`))
-        )
-    })
-
     true && describe('authenticate caretaker', () => {
 
         const dni = 12345678
@@ -1781,6 +1467,81 @@ describe('logic', () => {
         )
     })
 
+    true && describe('register doctor', () => {
+
+        const code = `123A${Math.random()}`
+        const password = `12-${Math.random()}`
+
+        it('should be registered with given code and password', () =>
+            Doctor.findOne({ code })
+                .then(doctor => {
+                    expect(doctor).to.be.null
+
+                    return logic.registerDoctor(code, password)
+                })
+                .then(res => {
+                    expect(res).to.be.true
+
+                    return Doctor.findOne({ code })
+                })
+                .then(doctor => {
+                    expect(doctor).to.exist
+                    expect(doctor.code).to.equal(code)
+                    expect(doctor.password).to.equal(password)
+                })
+        )
+
+        it('should fail on registering an already registered doctor', () => {
+
+            const newCode = code
+
+            return logic.registerDoctor(code, password)
+                .then(res => {
+                    expect(res).to.be.true
+
+                    return logic.registerDoctor(newCode, password)
+                })
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`${newCode} doctor already exist`))
+        })
+
+        it('should fail on trying to register with an undefined code', () =>
+            logic.registerDoctor(undefined, password)
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`invalid code`))
+        )
+
+        it('should fail on trying to register with an empty code', () =>
+            logic.registerDoctor('', password)
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`invalid code`))
+        )
+
+        it('should fail on trying to register with a numeric code', () =>
+            logic.registerDoctor(123, password)
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`invalid code`))
+        )
+
+        it('should fail on trying to register with an undefined password', () =>
+            logic.registerDoctor(code, undefined)
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`invalid password`))
+        )
+
+        it('should fail on trying to register with an empty password', () =>
+            logic.registerDoctor(code, '')
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`invalid password`))
+        )
+
+        it('should fail on trying to register with a numeric password', () =>
+            logic.registerDoctor(code, 123)
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`invalid password`))
+        )
+    })
+
     true && describe('remove doctor', () => {
 
         const code = `maider-${Math.random()}`
@@ -1825,6 +1586,240 @@ describe('logic', () => {
             logic.removeDoctor(123)
                 .catch(err => err)
                 .then(({ message }) => expect(message).to.equal(`invalid code`))
+        )
+    })
+
+    true && describe('return doctor data', () => {
+
+        const code = `maider-${Math.random()}`
+        const password = `123-${Math.random()}`
+
+        beforeEach(() => Doctor.create({ code, password }))
+
+        it('should be return correctly the doctor data', () => 
+            logic.doctorData(code)
+                .then(doctor => {
+                    expect(doctor).to.exist
+                    expect(doctor.code).to.equal(code)
+                    expect(doctor.password).to.equal(password)
+                })
+        )
+
+        it('should fail on trying to return doctor data with an undefined code', () =>
+            logic.doctorData(undefined)
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`invalid code`))
+        )
+
+        it('should fail on trying to return doctor data with an empty code', () =>
+            logic.doctorData('')
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`invalid code`))
+        )
+
+        it('should fail on trying to return doctor data with a numeric code', () =>
+            logic.doctorData(123)
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`invalid code`))
+        )
+    })
+
+    true && describe('list all doctors', () => {
+
+        const doctor1 = { code: `1-${Math.random()}`, password: `111-${Math.random()}` }
+        const doctor2 = { code: `2-${Math.random()}`, password: `222-${Math.random()}` }
+        const doctor3 = { code: `3-${Math.random()}`, password: `333-${Math.random()}` }
+        const doctor4 = { code: `4-${Math.random()}`, password: `444-${Math.random()}` }
+
+        beforeEach(() =>
+            Doctor.create(doctor1)
+                .then(() => Doctor.create(doctor2))
+                .then(() => Doctor.create(doctor3))
+                .then(() => Doctor.create(doctor4))
+        )
+
+        true && it('should succeed on correct data', () => 
+            logic.listDoctors()
+                .then(doctors => {
+                    expect(doctors[0].name).to.equal(doctor1.name)
+                    expect(doctors[0].dni).to.equal(doctor1.dni)
+
+                    expect(doctors[1].name).to.equal(doctor2.name)
+                    expect(doctors[1].dni).to.equal(doctor2.dni)
+
+                    expect(doctors[2].name).to.equal(doctor3.name)
+                    expect(doctors[2].dni).to.equal(doctor3.dni)
+
+                    expect(doctors[3].name).to.equal(doctor4.name)
+                    expect(doctors[3].dni).to.equal(doctor4.dni)
+                })
+        )
+    })
+
+    true && describe('add patient', () => {
+
+        const patient = { name: 'John', dni: 12345678, surname: 'Doe', age: 78 , gender: 'male', address: 'Barcelona', phone: 123123123}
+
+        const {name, dni, surname, age, gender, address, phone} = patient
+
+        it('should add correctly the given patient', () =>
+            Patient.findOne(patient)
+                .then(foundPatient => {
+                    expect(foundPatient).to.be.null
+
+                    return logic.addPatient(name, dni, surname, age, gender, address, phone)
+                })
+                .then(foundPatient => {
+                    expect(foundPatient).to.exist
+                    expect(foundPatient.id).to.exist
+                    expect(foundPatient.name).to.equal(name)
+                    expect(foundPatient.dni).to.equal(dni)
+                    expect(foundPatient.surname).to.equal(surname)
+                    expect(foundPatient.age).to.equal(age)
+                    expect(foundPatient.gender).to.equal(gender)
+                    expect(foundPatient.address).to.equal(address)
+                    expect(foundPatient.phone).to.equal(phone)
+                })
+        )
+
+        it('should fail on adding an already existing patient', () => {
+
+            const sameDni = dni
+
+            return logic.addPatient(name, dni, surname, age, gender, address, phone)
+                .then(foundPatient => {
+                    expect(foundPatient).to.exist
+
+                    return logic.addPatient(name, sameDni, surname, age, gender, address, phone)
+                })
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`patient with ${sameDni} dni already exist`))
+        })
+
+        it('should fail on trying to add patient with an undefined name', () =>
+            logic.addPatient(undefined, dni, surname, age, gender, address, phone)
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`invalid name`))
+        )
+
+        it('should fail on trying to add patient with an empty name', () =>
+            logic.addPatient('', dni, surname, age, gender, address, phone)
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`invalid name`))
+        )
+
+        it('should fail on trying to add patient with a numeric name', () =>
+            logic.addPatient(123, dni, surname, age, gender, address, phone)
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`invalid name`))
+        )
+
+        it('should fail on trying to add patient with an undefined dni', () =>
+            logic.addPatient(name, undefined, surname, age, gender, address, phone)
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`invalid dni`))
+        )
+
+        it('should fail on trying to add patient with an empty dni', () =>
+            logic.addPatient(name, '', surname, age, gender, address, phone)
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`invalid dni`))
+        )
+
+        it('should fail on trying to add patient with a string dni', () =>
+            logic.addPatient(name, '123', surname, age, gender, address, phone)
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`invalid dni`))
+        )
+
+        it('should fail on trying to add patient with an undefined surname', () =>
+            logic.addPatient(name, dni, undefined, age, gender, address, phone)
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`invalid surname`))
+        )
+
+        it('should fail on trying to add patient with an empty surname', () =>
+            logic.addPatient(name, dni, '', age, gender, address, phone)
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`invalid surname`))
+        )
+
+        it('should fail on trying to add patient with a numeric surname', () =>
+            logic.addPatient(name, dni, 123, age, gender, address, phone)
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`invalid surname`))
+        )
+
+        it('should fail on trying to add patient with an undefined age', () =>
+            logic.addPatient(name, dni, surname, undefined, gender, address, phone)
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`invalid age`))
+        )
+
+        it('should fail on trying to add patient with an empty age', () =>
+            logic.addPatient(name, dni, surname, '', gender, address, phone)
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`invalid age`))
+        )
+
+        it('should fail on trying to add patient with a string age', () =>
+            logic.addPatient(name, dni, surname, '123', gender, address, phone)
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`invalid age`))
+        )
+
+        it('should fail on trying to add patient with an undefined gender', () =>
+            logic.addPatient(name, dni, surname, age, undefined, address, phone)
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`invalid gender`))
+        )
+
+        it('should fail on trying to add patient with an empty gender', () =>
+            logic.addPatient(name, dni, surname, age, '', address, phone)
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`invalid gender`))
+        )
+
+        it('should fail on trying to add patient with a numeric gender', () =>
+            logic.addPatient(name, dni, surname, age, 123, address, phone)
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`invalid gender`))
+        )
+
+        it('should fail on trying to add patient with an undefined address', () =>
+            logic.addPatient(name, dni, surname, age, gender, undefined, phone)
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`invalid address`))
+        )
+
+        it('should fail on trying to add patient with an empty address', () =>
+            logic.addPatient(name, dni, surname, age, gender, '', phone)
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`invalid address`))
+        )
+
+        it('should fail on trying to add patient with a numeric address', () =>
+            logic.addPatient(name, dni, surname, age, gender, 123, phone)
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`invalid address`))
+        )
+
+        it('should fail on trying to add patient with an undefined phone', () =>
+            logic.addPatient(name, dni, surname, age, gender, address, undefined)
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`invalid phone`))
+        )
+
+        it('should fail on trying to add patient with an empty phone', () =>
+            logic.addPatient(name, dni, surname, age, gender, address, '')
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`invalid phone`))
+        )
+
+        it('should fail on trying to add patient with a string phone', () =>
+            logic.addPatient(name, dni, surname, age, gender, address, '123')
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`invalid phone`))
         )
     })
 
@@ -2019,6 +2014,177 @@ describe('logic', () => {
                 .then(({ message }) => expect(message).to.equal(`invalid new phone`))
         )
     })
+    
+    true && describe('register caretaker', () => {
+
+        const dni = 12345678
+        const password = `123-${Math.random()}`
+        const name = "Pepe"
+        const surname = "Doe"
+        const age = 40
+        const gender = "male"
+        const phone = 654654654
+    
+        it('should be registered correctly with dni and password', () =>
+            Caretaker.findOne({ dni })
+                .then(caretaker => {
+                    expect(caretaker).not.to.exist
+
+                    return logic.registerCaretaker(dni, password, name, surname, age, gender, phone)
+                })
+                .then(res => {
+                    expect(res).to.be.true
+
+                    return Caretaker.findOne({ dni })
+                })
+                .then(caretaker => {
+                    expect(caretaker).to.exist
+                    expect(caretaker.dni).to.equal(dni.toString())
+                    expect(caretaker.password).to.equal(password)
+                    expect(caretaker.name).to.equal(name)
+                    expect(caretaker.surname).to.equal(surname)
+                    expect(caretaker.age).to.equal(age)
+                    expect(caretaker.gender).to.equal(gender)
+                    expect(caretaker.phone).to.equal(phone)
+                })
+        )
+
+        it('should fail on registering an already existing caretaker', () =>
+            logic.registerCaretaker(dni, password, name, surname, age, gender, phone)
+                .then(res => {
+                    expect(res).to.be.true
+
+                    return logic.registerCaretaker(dni, password, name, surname, age, gender, phone)
+                })
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`caretaker ${dni} already exist`))
+        )
+
+        it('should fail on trying to register with an undefined dni', () =>
+            logic.registerCaretaker(undefined, password, name, surname, age, gender, phone)
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`invalid dni`))
+        )
+
+        it('should fail on trying to register with an empty dni', () =>
+            logic.registerCaretaker('', password, name, surname, age, gender, phone)
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`invalid dni`))
+        )
+
+        it('should fail on trying to register with a numeric dni', () =>
+            logic.registerCaretaker(123, password, name, surname, age, gender, phone)
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`invalid dni`))
+        )
+
+        it('should fail on trying to register with an undefined password', () =>
+            logic.registerCaretaker(dni, undefined, name, surname, age, gender, phone)
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`invalid password`))
+        )
+
+        it('should fail on trying to register with an empty password', () =>
+            logic.registerCaretaker(dni, '', name, surname, age, gender, phone)
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`invalid password`))
+        )
+
+        it('should fail on trying to register with a numeric password', () =>
+            logic.registerCaretaker(dni, 123, name, surname, age, gender, phone)
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`invalid password`))
+        )
+        
+        it('should fail on trying to register with an undefined name', () =>
+            logic.registerCaretaker(dni, password, undefined, surname, age, gender, phone)
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`invalid name`))
+        )
+
+        it('should fail on trying to register with an empty name', () =>
+            logic.registerCaretaker(dni, password, '', surname, age, gender, phone)
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`invalid name`))
+        )
+
+        it('should fail on trying to register with a numeric name', () =>
+            logic.registerCaretaker(dni, password, 123, surname, age, gender, phone)
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`invalid name`))
+        )
+
+        it('should fail on trying to register with an undefined surname', () =>
+            logic.registerCaretaker(dni, password, name, undefined, age, gender, phone)
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`invalid surname`))
+        )
+
+        it('should fail on trying to register with an empty surname', () =>
+            logic.registerCaretaker(dni, password, name, '', age, gender, phone)
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`invalid surname`))
+        )
+
+        it('should fail on trying to register with a numeric surname', () =>
+            logic.registerCaretaker(dni, password, name, 123, age, gender, phone)
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`invalid surname`))
+        )
+        
+        it('should fail on trying to register with an undefined age', () =>
+            logic.registerCaretaker(dni, password, name, surname, undefined, gender, phone)
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`invalid age`))
+        )
+
+        it('should fail on trying to register with an empty age', () =>
+            logic.registerCaretaker(dni, password, name, surname, '', gender, phone)
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`invalid age`))
+        )
+
+        it('should fail on trying to register with a string age', () =>
+            logic.registerCaretaker(dni, password, name, surname, '123', gender, phone)
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`invalid age`))
+        )
+        it('should fail on trying to register with an undefined phone', () =>
+            logic.registerCaretaker(dni, password, name, surname, age, gender, undefined)
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`invalid phone`))
+        )
+
+        it('should fail on trying to register with an undefined gender', () =>
+            logic.registerCaretaker(dni, password, name, surname, age, undefined, phone)
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`invalid gender`))
+        )
+
+        it('should fail on trying to register with an empty gender', () =>
+            logic.registerCaretaker(dni, password, name, surname, age, '', phone)
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`invalid gender`))
+        )
+
+        it('should fail on trying to register with a numeric gender', () =>
+            logic.registerCaretaker(dni, password, name, surname, age, 123, phone)
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`invalid gender`))
+        )
+
+        it('should fail on trying to register with an empty phone', () =>
+            logic.registerCaretaker(dni, password, name, surname, age, gender, '')
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`invalid phone`))
+        )
+
+        it('should fail on trying to register with a string phone', () =>
+            logic.registerCaretaker(dni, password, name, surname, age, gender, '123123123')
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`invalid phone`))
+        )
+    })
 
     true && describe('remove caretaker', () => {
 
@@ -2064,6 +2230,73 @@ describe('logic', () => {
             logic.removeCaretaker('123')
                 .catch(err => err)
                 .then(({ message }) => expect(message).to.equal(`invalid dni`))
+        )
+    })
+
+    true && describe('return caretaker data', () => {
+
+        const dni = 12341234
+        const password = `123-${Math.random()}`
+
+        beforeEach(() => Caretaker.create({ dni, password }))
+
+        it('should be return correctly the caretaker data', () => 
+            logic.caretakerData(dni)
+                .then(caretaker => {
+                    expect(caretaker).to.exist
+                    expect(caretaker.dni).to.equal(dni.toString())
+                    expect(caretaker.password).to.equal(password)
+                })
+        )
+
+        it('should fail on trying to return caretaker data with an undefined dni', () =>
+            logic.caretakerData(undefined)
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`invalid dni`))
+        )
+
+        it('should fail on trying to return caretaker data with an empty dni', () =>
+            logic.caretakerData('')
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`invalid dni`))
+        )
+
+        it('should fail on trying to return caretaker data with a string dni', () =>
+            logic.caretakerData('123')
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`invalid dni`))
+        )
+    })
+
+    true && describe('list all caretakers', () => {
+
+        const caretaker1 = { dni: 11112222, password: `111-${Math.random()}` }
+        const caretaker2 = { dni: 22223333, password: `222-${Math.random()}` }
+        const caretaker3 = { dni: 33334444, password: `333-${Math.random()}` }
+        const caretaker4 = { dni: 44445555, password: `444-${Math.random()}` }
+
+        beforeEach(() =>
+            Caretaker.create(caretaker1)
+                .then(() => Caretaker.create(caretaker2))
+                .then(() => Caretaker.create(caretaker3))
+                .then(() => Caretaker.create(caretaker4))
+        )
+
+        true && it('should succeed on correct data', () => 
+            logic.listCaretakers()
+                .then(caretakers => {
+                    expect(caretakers[0].dni).to.equal(caretaker1.dni.toString())
+                    expect(caretakers[0].password).to.equal(caretaker1.password)
+
+                    expect(caretakers[1].dni).to.equal(caretaker2.dni.toString())
+                    expect(caretakers[1].password).to.equal(caretaker2.password)
+
+                    expect(caretakers[2].dni).to.equal(caretaker3.dni.toString())
+                    expect(caretakers[2].password).to.equal(caretaker3.password)
+
+                    expect(caretakers[3].dni).to.equal(caretaker4.dni.toString())
+                    expect(caretakers[3].password).to.equal(caretaker4.password)
+                })
         )
     })
 
