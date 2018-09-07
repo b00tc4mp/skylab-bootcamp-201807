@@ -484,7 +484,7 @@ describe('logic', () => {
 
 
   describe('get users for string', () => {
-    const nickname0 = "abcdefg"
+    const nickname0 = "Abcedgh"
     const nicknameA = "Abracadabra"
     const nicknameB = "baldroSa"
     const nicknameC = "¢”#≠”¢"

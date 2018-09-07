@@ -3,12 +3,37 @@ require('dotenv').config()
 const express = require('express')
 const cors = require('cors')
 const pkg = require('./package.json')
-const routes = require('./routes')
-const socketIO = require('socket.io');
-const {sockets} = require('./sockets')
+
 const http = require('http')
 const {env: {MONGO_URL}} = process
 const mongoose = require('mongoose')
+const socketIO = require('socket.io');
+/*
+
+var consoleFormatter = {
+  stdout: true, // this is actually the default and can be removed
+  inspectArgsMaxLen: 100,
+  indentationChar: '    ',
+  inspectOptions: {colors: true}
+};
+
+
+const fileFormatter = {
+  stdout: 'trace.out',
+  inspectArgsMaxLen: 0,
+  indentationChar: '\t'
+};
+
+
+const njstrace = require('njstrace').inject({
+  formatter: [consoleFormatter, fileFormatter]
+})
+
+*/
+
+const routes = require('./routes')
+const {sockets} = require('./sockets')
+
 
 mongoose.connect(MONGO_URL, {useNewUrlParser: true}, (err, conn) => {
   if (err) throw err
@@ -27,13 +52,6 @@ mongoose.connect(MONGO_URL, {useNewUrlParser: true}, (err, conn) => {
   sockets.setIO(io)
   server.listen(PORT, () => console.log(`${pkg.name} ${pkg.version} up and running on port ${PORT}`));
 // WARNING: app.listen(80) will NOT work here!
-
-
-
-
-
-
-
 
 
 })

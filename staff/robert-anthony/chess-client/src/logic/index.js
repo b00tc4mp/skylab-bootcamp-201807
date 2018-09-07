@@ -1,5 +1,6 @@
 const logic = {
-    url: 'http://localhost:8080/api',
+  //  url: 'https://tranquil-ridge-60570.herokuapp.com/api/',
+    url: 'http://localhost:8080/api/',
 
     _call(path, method, headers, body, expectedStatus) {
         const config = {method}

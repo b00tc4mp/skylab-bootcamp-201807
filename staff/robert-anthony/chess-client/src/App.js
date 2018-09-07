@@ -89,6 +89,7 @@ class App extends Component {
 
   setupSocketListeners = (nickname, token) => {
 
+  //  this.socket = socketIOClient(`https://tranquil-ridge-60570.herokuapp.com/`);
     this.socket = socketIOClient(`http://localhost:8080`);
     if (this.socket) {
 

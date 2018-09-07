@@ -2,6 +2,9 @@ const chalk = require('chalk')
 const {logic, LogicError} = require('./logic')
 const jwt = require('jsonwebtoken')
 const {JWT_SECRET} = process.env
+const logger = require('./logger')
+
+
 const socketLogic = {
 
 
@@ -17,6 +20,8 @@ const socketLogic = {
   },
 
   announceMoveMade(mover, receiver) {
+    logger.info('announceMoveMade', { "context": "sockets.js", "mover": mover,"receiver":receiver })
+
     this.io.emit(`update to games ${mover}`)
     this.io.emit(`update to games ${receiver}`)
   },
