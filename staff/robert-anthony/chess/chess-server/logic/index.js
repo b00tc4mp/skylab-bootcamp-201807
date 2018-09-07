@@ -3,6 +3,9 @@ const { mongoose, models: { User, Game } } = require('chess-data')
 const chalk = require('chalk')
 const { Chess } = require('chess.js')
 const uuidv1 = require('uuid/v1')
+const logger = require('../logger')
+const fs = require('fs')
+var appRoot = require('app-root-path');
 
 const logic = {
   _validateStringField(name, value) {
@@ -19,6 +22,8 @@ const logic = {
 
 
   register(email, password, nickname) {
+    logger.info('register', { "context": "logic/index.js", "email": email, "password": password, "nickname": nickname })
+
     return Promise.resolve()
       .then(() => {
         console.log(email, password, nickname)
@@ -42,6 +47,8 @@ const logic = {
   },
 
   authenticate(nickname, password) {
+    logger.info('authenticate', { "context": "logic/index.js", "nickname": nickname, "password": password})
+
     return Promise.resolve()
       .then(() => {
         this._validateStringField('nickname', nickname)
@@ -59,8 +66,11 @@ const logic = {
       .then(() => true)
 
   },
+/*
 
   updatePassword(nickname, password, newPassword) {
+    logger.info('updatePassword', { "context": "logic/index.js", "nickname": nickname, "password": password})
+
     return Promise.resolve()
       .then(() => {
         this._validateStringField('nickname', nickname)
@@ -82,8 +92,11 @@ const logic = {
       })
       .then(() => true)
   },
+*/
 
   unregisterUser(nickname, password) {
+    logger.info('unregisterUser', { "context": "logic/index.js", "nickname": nickname, "password": password})
+
     return Promise.resolve()
       .then(() => {
         this._validateStringField('nickname', nickname)
@@ -112,7 +125,7 @@ const logic = {
 
 
   getGamesForUser(nickname) {
-    console.log(chalk.red.bgYellow.bold(`Getting games for user ${nickname}`))
+    logger.info('getGamesForUser', { "context": "logic/index.js", "nickname": nickname})
 
     return Promise.resolve()
       .then(_ => {
@@ -150,6 +163,8 @@ const logic = {
 
   /* called from sockets */
   userConnected(nickname) {
+    logger.info('userConnected', { "context": "logic/index.js", "nickname": nickname})
+
     return Promise.resolve()
       .then(_ => {
         this._validateStringField("nickname", nickname)
@@ -163,6 +178,8 @@ const logic = {
   },
 
   getUsersForString(nickname, term) {
+    logger.info('getUsersForString', { "context": "logic/index.js", "term": term})
+
     return Promise.resolve()
       .then(_ => {
         this._validateStringField('nickname', nickname)
@@ -203,6 +220,8 @@ const logic = {
   */
 
   acknowledgeGameOverForUser(nickname, gameID) {
+    logger.info('acknowledgeGameOverForUser', { "context": "logic/index.js", "nickname": nickname, "gameID": gameID})
+
     return Promise.resolve()
       .then(_ => {
         this._validateStringField("nickname", nickname)
@@ -221,6 +240,8 @@ const logic = {
   },
 
   _createGame(requester, confirmer) {
+    logger.info('_createGame', { "context": "logic/index.js", "requester": requester, "confirmer": confirmer})
+
     let game
     return Promise.resolve()
       .then(_ => {
@@ -261,6 +282,8 @@ const logic = {
   },
 
   move(nickname, gameID, move) {
+    logger.info('move', { "context": "logic/index.js", "gameID": gameID, "gameID": gameID,"move":`to: ${move.to}, from: ${move.from}, promotion: ${move.promotion}`})
+
     let game
 
     return Promise.resolve()
@@ -301,6 +324,8 @@ const logic = {
   },
 
   requestNewGame(requester, destination) {
+    logger.info('requestNewGame', { "context": "logic/index.js", "requester": requester, "destination": destination})
+
     return Promise.resolve()
       .then(_ => {
         this._validateStringField("requester", requester)
@@ -330,6 +355,8 @@ const logic = {
   },
 
   respondToGameRequest(confirmer, destination, gameID, answer) {
+    logger.info('requestNewGame', { "context": "logic/index.js", "confirmer": confirmer, "destination": destination, "gameID":gameID, "answer": answer})
+
     return Promise.resolve()
       .then(_ => {
         this._validateStringField("confirmer", confirmer)
@@ -351,6 +378,15 @@ const logic = {
 
   },
 
+  getLogs(type) {
+    type = type ||'combined'
+    return new Promise((resolve,reject) =>{
+      fs.readFile(`${appRoot}/logs/${type}.log`,"utf8",(err,data)=>{
+        if (err) return reject(err)
+        resolve(data)
+      })
+    })
+  }
 
 }
 

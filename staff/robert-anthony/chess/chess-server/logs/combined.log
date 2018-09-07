@@ -1,0 +1,418 @@
+info: on connection {"context":"sockets.js","socket id":"aviByTyKlv8_QpEHAAAA"}
+info: on connection {"context":"sockets.js","socket id":"HgulPA5ctJqf9FgoAAAB"}
+info: on connection {"context":"sockets.js","socket id":"ou7D1aro7tWt2LVMAAAC"}
+info: /authenticate {"context":"router.js","nickname":"robbie","password":"robbie"}
+info: authenticate {"context":"logic/index.js","nickname":"robbie","password":"robbie"}
+info: on connection {"context":"sockets.js","socket id":"rjDMl7ugFZ2IfcI_AAAD"}
+info: on authenticated {"context":"sockets.js","username":"robbie"}
+info: userConnected {"context":"logic/index.js","nickname":"robbie"}
+info: /user/:nickname/games {"context":"router.js","nickname":"robbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"robbie"}
+info: /user/:nickname/users {"context":"router.js","term":"","nickname":"robbie"}
+info: getUsersForString {"context":"logic/index.js","term":""}
+info: /user/:nickname/users {"context":"router.js","term":"","nickname":"robbie"}
+info: getUsersForString {"context":"logic/index.js","term":""}
+info: /user/:nickname/users {"context":"router.js","term":"","nickname":"robbie"}
+info: getUsersForString {"context":"logic/index.js","term":""}
+info: /user/:nickname/users {"context":"router.js","term":"","nickname":"robbie"}
+info: getUsersForString {"context":"logic/index.js","term":""}
+info: on connection {"context":"sockets.js","socket id":"Yn95YzbTB_SoPSxQAAAE"}
+info: on connection {"context":"sockets.js","socket id":"Vbm2nJ5miKcswxKFAAAF"}
+info: on connection {"context":"sockets.js","socket id":"lRy1XQ9Vl_ibJ0czAAAG"}
+info: on connection {"context":"sockets.js","socket id":"TxdUa7r_71yOUomJAAAH"}
+info: on connection {"context":"sockets.js","socket id":"_b_G4L2_W7KHxQjeAAAI"}
+info: on connection {"context":"sockets.js","socket id":"kyVBsLqy_mlqYMzfAAAJ"}
+info: on connection {"context":"sockets.js","socket id":"C8kyklaBq5yuZkcTAAAK"}
+info: on connection {"context":"sockets.js","socket id":"4Sge_OLwPrB-OfJDAAAL"}
+info: on connection {"context":"sockets.js","socket id":"AtHLzU2FwDg8m3zaAAAM"}
+info: on connection {"context":"sockets.js","socket id":"M1f56N10Bw8kjg-YAAAN"}
+info: on connection {"context":"sockets.js","socket id":"owdNxFmhH84IbfpXAAAO"}
+info: on connection {"context":"sockets.js","socket id":"N-nrojlEx0oLlCMgAAAP"}
+info: on connection {"context":"sockets.js","socket id":"VtEmzaI7JoIYiym0AAAQ"}
+info: on connection {"context":"sockets.js","socket id":"DrZSUl3DHZKVRNFnAAAR"}
+info: on connection {"context":"sockets.js","socket id":"c7CmW_JzzUSrbUacAAAS"}
+info: on connection {"context":"sockets.js","socket id":"hD4mE_gVTrDSPre9AAAT"}
+info: on connection {"context":"sockets.js","socket id":"iEj1Hv1nbj3dvWP4AAAU"}
+info: on connection {"context":"sockets.js","socket id":"NJzY7Jppu1HRQxhEAAAV"}
+info: on connection {"context":"sockets.js","socket id":"yMfWAZHmTB-Kk1ySAAAW"}
+info: on connection {"context":"sockets.js","socket id":"7-OEnjoTBvUzEM5aAAAX"}
+info: /authenticate {"context":"router.js","nickname":"robbie","password":"robbie"}
+info: authenticate {"context":"logic/index.js","nickname":"robbie","password":"robbie"}
+info: on connection {"context":"sockets.js","socket id":"rlT96gXRet5OdN8eAAAY"}
+info: on authenticated {"context":"sockets.js","username":"robbie"}
+info: userConnected {"context":"logic/index.js","nickname":"robbie"}
+info: /user/:nickname/games {"context":"router.js","nickname":"robbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"robbie"}
+info: /user/:nickname/users {"context":"router.js","term":"","nickname":"robbie"}
+info: getUsersForString {"context":"logic/index.js","term":""}
+info: /authenticate {"context":"router.js","nickname":"dobbie","password":"dobbie"}
+info: authenticate {"context":"logic/index.js","nickname":"dobbie","password":"dobbie"}
+info: on connection {"context":"sockets.js","socket id":"q6bfJxVgX6AfTbDjAAAZ"}
+info: on authenticated {"context":"sockets.js","username":"dobbie"}
+info: userConnected {"context":"logic/index.js","nickname":"dobbie"}
+info: /user/:nickname/users {"context":"router.js","term":"","nickname":"robbie"}
+info: getUsersForString {"context":"logic/index.js","term":""}
+info: /user/:nickname/games {"context":"router.js","nickname":"dobbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"dobbie"}
+info: /user/:nickname/users {"context":"router.js","term":"","nickname":"dobbie"}
+info: getUsersForString {"context":"logic/index.js","term":""}
+info: /authenticate {"context":"router.js","nickname":"cobbie","password":"cobbie"}
+info: authenticate {"context":"logic/index.js","nickname":"cobbie","password":"cobbie"}
+info: on connection {"context":"sockets.js","socket id":"-yG0Smi008NrBKfEAAAa"}
+info: on authenticated {"context":"sockets.js","username":"cobbie"}
+info: userConnected {"context":"logic/index.js","nickname":"cobbie"}
+info: /user/:nickname/users {"context":"router.js","term":"","nickname":"robbie"}
+info: getUsersForString {"context":"logic/index.js","term":""}
+info: /user/:nickname/users {"context":"router.js","term":"","nickname":"dobbie"}
+info: getUsersForString {"context":"logic/index.js","term":""}
+info: /user/:nickname/games {"context":"router.js","nickname":"cobbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"cobbie"}
+info: /user/:nickname/users {"context":"router.js","term":"","nickname":"cobbie"}
+info: getUsersForString {"context":"logic/index.js","term":""}
+info: /user/:nickname/game/:gameID/ {"context":"router.js","nickname":"dobbie","gameID":"5b92aee22366b9459cda5ae7","move":"{\"from\":\"c1\",\"to\":\"f4\",\"promotion\":\"q\"}","opponent":"robbie"}
+info: move {"context":"logic/index.js","gameID":"5b92aee22366b9459cda5ae7","move":"to: f4, from: c1, promotion: q"}
+info: announceMoveMade {"context":"sockets.js","mover":"dobbie","receiver":"robbie"}
+info: /user/:nickname/games {"context":"router.js","nickname":"dobbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"dobbie"}
+info: /user/:nickname/games {"context":"router.js","nickname":"robbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"robbie"}
+info: /user/:nickname/games {"context":"router.js","nickname":"dobbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"dobbie"}
+info: /user/:nickname/game/:gameID/ {"context":"router.js","nickname":"dobbie","gameID":"5b92af4c2366b9459cda5aea","move":"{\"from\":\"d7\",\"to\":\"d5\",\"promotion\":\"q\"}","opponent":"cobbie"}
+info: move {"context":"logic/index.js","gameID":"5b92af4c2366b9459cda5aea","move":"to: d5, from: d7, promotion: q"}
+info: announceMoveMade {"context":"sockets.js","mover":"dobbie","receiver":"cobbie"}
+info: /user/:nickname/games {"context":"router.js","nickname":"cobbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"cobbie"}
+info: /user/:nickname/games {"context":"router.js","nickname":"dobbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"dobbie"}
+info: /user/:nickname/games {"context":"router.js","nickname":"dobbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"dobbie"}
+info: /user/:nickname/game/:gameID/ {"context":"router.js","nickname":"cobbie","gameID":"5b92af482366b9459cda5ae9","move":"{\"from\":\"f1\",\"to\":\"b5\",\"promotion\":\"q\"}","opponent":"robbie"}
+info: move {"context":"logic/index.js","gameID":"5b92af482366b9459cda5ae9","move":"to: b5, from: f1, promotion: q"}
+info: announceMoveMade {"context":"sockets.js","mover":"cobbie","receiver":"robbie"}
+info: /user/:nickname/games {"context":"router.js","nickname":"robbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"robbie"}
+info: /user/:nickname/games {"context":"router.js","nickname":"cobbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"cobbie"}
+info: /user/:nickname/games {"context":"router.js","nickname":"cobbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"cobbie"}
+info: /user/:nickname/game/:gameID/ {"context":"router.js","nickname":"cobbie","gameID":"5b92af4c2366b9459cda5aea","move":"{\"from\":\"f1\",\"to\":\"b5\",\"promotion\":\"q\"}","opponent":"dobbie"}
+info: move {"context":"logic/index.js","gameID":"5b92af4c2366b9459cda5aea","move":"to: b5, from: f1, promotion: q"}
+info: announceMoveMade {"context":"sockets.js","mover":"cobbie","receiver":"dobbie"}
+info: /user/:nickname/games {"context":"router.js","nickname":"dobbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"dobbie"}
+info: /user/:nickname/games {"context":"router.js","nickname":"cobbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"cobbie"}
+info: /user/:nickname/games {"context":"router.js","nickname":"cobbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"cobbie"}
+info: /user/:nickname/game/:gameID/ {"context":"router.js","nickname":"dobbie","gameID":"5b92af4c2366b9459cda5aea","move":"{\"from\":\"d5\",\"to\":\"e4\",\"promotion\":\"q\"}","opponent":"cobbie"}
+info: move {"context":"logic/index.js","gameID":"5b92af4c2366b9459cda5aea","move":"to: e4, from: d5, promotion: q"}
+info: /user/:nickname/game/:gameID/ {"context":"router.js","nickname":"dobbie","gameID":"5b92af4c2366b9459cda5aea","move":"{\"from\":\"c7\",\"to\":\"c6\",\"promotion\":\"q\"}","opponent":"cobbie"}
+info: move {"context":"logic/index.js","gameID":"5b92af4c2366b9459cda5aea","move":"to: c6, from: c7, promotion: q"}
+info: announceMoveMade {"context":"sockets.js","mover":"dobbie","receiver":"cobbie"}
+info: /user/:nickname/games {"context":"router.js","nickname":"cobbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"cobbie"}
+info: /user/:nickname/games {"context":"router.js","nickname":"dobbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"dobbie"}
+info: /user/:nickname/games {"context":"router.js","nickname":"dobbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"dobbie"}
+info: /user/:nickname/game/:gameID/ {"context":"router.js","nickname":"cobbie","gameID":"5b92af4c2366b9459cda5aea","move":"{\"from\":\"e1\",\"to\":\"g1\",\"promotion\":\"q\"}","opponent":"dobbie"}
+info: move {"context":"logic/index.js","gameID":"5b92af4c2366b9459cda5aea","move":"to: g1, from: e1, promotion: q"}
+info: announceMoveMade {"context":"sockets.js","mover":"cobbie","receiver":"dobbie"}
+info: /user/:nickname/games {"context":"router.js","nickname":"cobbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"cobbie"}
+info: /user/:nickname/games {"context":"router.js","nickname":"dobbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"dobbie"}
+info: /user/:nickname/games {"context":"router.js","nickname":"cobbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"cobbie"}
+info: /user/:nickname/game/:gameID/ {"context":"router.js","nickname":"robbie","gameID":"5b92aee22366b9459cda5ae7","move":"{\"from\":\"e8\",\"to\":\"b8\",\"promotion\":\"q\"}","opponent":"dobbie"}
+info: move {"context":"logic/index.js","gameID":"5b92aee22366b9459cda5ae7","move":"to: b8, from: e8, promotion: q"}
+info: /user/:nickname/game/:gameID/ {"context":"router.js","nickname":"robbie","gameID":"5b92aee22366b9459cda5ae7","move":"{\"from\":\"e8\",\"to\":\"c8\",\"promotion\":\"q\"}","opponent":"dobbie"}
+info: move {"context":"logic/index.js","gameID":"5b92aee22366b9459cda5ae7","move":"to: c8, from: e8, promotion: q"}
+info: announceMoveMade {"context":"sockets.js","mover":"robbie","receiver":"dobbie"}
+info: /user/:nickname/games {"context":"router.js","nickname":"robbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"robbie"}
+info: /user/:nickname/games {"context":"router.js","nickname":"dobbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"dobbie"}
+info: /user/:nickname/games {"context":"router.js","nickname":"robbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"robbie"}
+info: /user/:nickname/game/:gameID/ {"context":"router.js","nickname":"robbie","gameID":"5b92af482366b9459cda5ae9","move":"{\"from\":\"b8\",\"to\":\"c6\",\"promotion\":\"q\"}","opponent":"cobbie"}
+info: move {"context":"logic/index.js","gameID":"5b92af482366b9459cda5ae9","move":"to: c6, from: b8, promotion: q"}
+info: announceMoveMade {"context":"sockets.js","mover":"robbie","receiver":"cobbie"}
+info: /user/:nickname/games {"context":"router.js","nickname":"robbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"robbie"}
+info: /user/:nickname/games {"context":"router.js","nickname":"cobbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"cobbie"}
+info: /user/:nickname/games {"context":"router.js","nickname":"robbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"robbie"}
+info: /user/:nickname/game/:gameID/ {"context":"router.js","nickname":"cobbie","gameID":"5b92af482366b9459cda5ae9","move":"{\"from\":\"b5\",\"to\":\"c6\",\"promotion\":\"q\"}","opponent":"robbie"}
+info: move {"context":"logic/index.js","gameID":"5b92af482366b9459cda5ae9","move":"to: c6, from: b5, promotion: q"}
+info: announceMoveMade {"context":"sockets.js","mover":"cobbie","receiver":"robbie"}
+info: /user/:nickname/games {"context":"router.js","nickname":"cobbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"cobbie"}
+info: /user/:nickname/games {"context":"router.js","nickname":"robbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"robbie"}
+info: /user/:nickname/games {"context":"router.js","nickname":"cobbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"cobbie"}
+info: on connection {"context":"sockets.js","socket id":"SVfuT1yWPJ_k5pFnAAAb"}
+info: on connection {"context":"sockets.js","socket id":"HLDJT8eKFGCi4hmmAAAc"}
+info: on connection {"context":"sockets.js","socket id":"DkSXaM4-7qJRF2_lAAAd"}
+info: on connection {"context":"sockets.js","socket id":"ktpCzXZoc118T33ZAAAe"}
+info: on connection {"context":"sockets.js","socket id":"04ihXJ6OwkV6yV2rAAAf"}
+info: on connection {"context":"sockets.js","socket id":"I7Jk1mmGz1MTxCojAAAg"}
+info: on connection {"context":"sockets.js","socket id":"sbroFcoL1Xiz4d2pAAAh"}
+info: /user/:nickname/game/:gameID/ {"context":"router.js","nickname":"robbie","gameID":"5b92af482366b9459cda5ae9","move":"{\"from\":\"f7\",\"to\":\"f5\",\"promotion\":\"q\"}","opponent":"cobbie"}
+info: move {"context":"logic/index.js","gameID":"5b92af482366b9459cda5ae9","move":"to: f5, from: f7, promotion: q"}
+info: /user/:nickname/game/:gameID/ {"context":"router.js","nickname":"robbie","gameID":"5b92af482366b9459cda5ae9","move":"{\"from\":\"c8\",\"to\":\"d7\",\"promotion\":\"q\"}","opponent":"cobbie"}
+info: move {"context":"logic/index.js","gameID":"5b92af482366b9459cda5ae9","move":"to: d7, from: c8, promotion: q"}
+info: announceMoveMade {"context":"sockets.js","mover":"robbie","receiver":"cobbie"}
+info: /user/:nickname/games {"context":"router.js","nickname":"robbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"robbie"}
+info: /user/:nickname/games {"context":"router.js","nickname":"cobbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"cobbie"}
+info: /user/:nickname/games {"context":"router.js","nickname":"robbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"robbie"}
+info: /user/:nickname/game/:gameID/ {"context":"router.js","nickname":"dobbie","gameID":"5b92af4c2366b9459cda5aea","move":"{\"from\":\"c8\",\"to\":\"h4\",\"promotion\":\"q\"}","opponent":"cobbie"}
+info: move {"context":"logic/index.js","gameID":"5b92af4c2366b9459cda5aea","move":"to: h4, from: c8, promotion: q"}
+info: /user/:nickname/game/:gameID/ {"context":"router.js","nickname":"dobbie","gameID":"5b92af4c2366b9459cda5aea","move":"{\"from\":\"c8\",\"to\":\"h5\",\"promotion\":\"q\"}","opponent":"cobbie"}
+info: move {"context":"logic/index.js","gameID":"5b92af4c2366b9459cda5aea","move":"to: h5, from: c8, promotion: q"}
+info: /user/:nickname/game/:gameID/ {"context":"router.js","nickname":"dobbie","gameID":"5b92af4c2366b9459cda5aea","move":"{\"from\":\"c8\",\"to\":\"g4\",\"promotion\":\"q\"}","opponent":"cobbie"}
+info: move {"context":"logic/index.js","gameID":"5b92af4c2366b9459cda5aea","move":"to: g4, from: c8, promotion: q"}
+info: announceMoveMade {"context":"sockets.js","mover":"dobbie","receiver":"cobbie"}
+info: /user/:nickname/games {"context":"router.js","nickname":"dobbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"dobbie"}
+info: /user/:nickname/games {"context":"router.js","nickname":"cobbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"cobbie"}
+info: /user/:nickname/games {"context":"router.js","nickname":"dobbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"dobbie"}
+info: /user/:nickname/game/:gameID/ {"context":"router.js","nickname":"dobbie","gameID":"5b92aee22366b9459cda5ae7","move":"{\"from\":\"b1\",\"to\":\"c3\",\"promotion\":\"q\"}","opponent":"robbie"}
+info: move {"context":"logic/index.js","gameID":"5b92aee22366b9459cda5ae7","move":"to: c3, from: b1, promotion: q"}
+info: announceMoveMade {"context":"sockets.js","mover":"dobbie","receiver":"robbie"}
+info: /user/:nickname/games {"context":"router.js","nickname":"dobbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"dobbie"}
+info: /user/:nickname/games {"context":"router.js","nickname":"robbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"robbie"}
+info: /user/:nickname/games {"context":"router.js","nickname":"dobbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"dobbie"}
+info: /user/:nickname/game/:gameID/ {"context":"router.js","nickname":"cobbie","gameID":"5b92af4c2366b9459cda5aea","move":"{\"from\":\"e4\",\"to\":\"d5\",\"promotion\":\"q\"}","opponent":"dobbie"}
+info: move {"context":"logic/index.js","gameID":"5b92af4c2366b9459cda5aea","move":"to: d5, from: e4, promotion: q"}
+info: announceMoveMade {"context":"sockets.js","mover":"cobbie","receiver":"dobbie"}
+info: /user/:nickname/games {"context":"router.js","nickname":"dobbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"dobbie"}
+info: /user/:nickname/games {"context":"router.js","nickname":"cobbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"cobbie"}
+info: /user/:nickname/games {"context":"router.js","nickname":"cobbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"cobbie"}
+info: /user/:nickname/game/:gameID/ {"context":"router.js","nickname":"cobbie","gameID":"5b92af482366b9459cda5ae9","move":"{\"from\":\"c6\",\"to\":\"d7\",\"promotion\":\"q\"}","opponent":"robbie"}
+info: move {"context":"logic/index.js","gameID":"5b92af482366b9459cda5ae9","move":"to: d7, from: c6, promotion: q"}
+info: announceMoveMade {"context":"sockets.js","mover":"cobbie","receiver":"robbie"}
+info: /user/:nickname/games {"context":"router.js","nickname":"robbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"robbie"}
+info: /user/:nickname/games {"context":"router.js","nickname":"cobbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"cobbie"}
+info: /user/:nickname/games {"context":"router.js","nickname":"cobbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"cobbie"}
+info: /user/:nickname/game/:gameID/ {"context":"router.js","nickname":"dobbie","gameID":"5b92af4c2366b9459cda5aea","move":"{\"from\":\"c6\",\"to\":\"b5\",\"promotion\":\"q\"}","opponent":"cobbie"}
+info: move {"context":"logic/index.js","gameID":"5b92af4c2366b9459cda5aea","move":"to: b5, from: c6, promotion: q"}
+info: announceMoveMade {"context":"sockets.js","mover":"dobbie","receiver":"cobbie"}
+info: /user/:nickname/games {"context":"router.js","nickname":"dobbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"dobbie"}
+info: /user/:nickname/games {"context":"router.js","nickname":"cobbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"cobbie"}
+info: /user/:nickname/games {"context":"router.js","nickname":"dobbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"dobbie"}
+info: on connection {"context":"sockets.js","socket id":"a-EUlxM1zaQ_Z0D2AAAi"}
+info: /user/:nickname/game/:gameID/ {"context":"router.js","nickname":"robbie","gameID":"5b92aee22366b9459cda5ae7","move":"{\"from\":\"c5\",\"to\":\"c5\",\"promotion\":\"q\"}","opponent":"dobbie"}
+info: move {"context":"logic/index.js","gameID":"5b92aee22366b9459cda5ae7","move":"to: c5, from: c5, promotion: q"}
+info: /user/:nickname/game/:gameID/ {"context":"router.js","nickname":"robbie","gameID":"5b92aee22366b9459cda5ae7","move":"{\"from\":\"c5\",\"to\":\"e4\",\"promotion\":\"q\"}","opponent":"dobbie"}
+info: move {"context":"logic/index.js","gameID":"5b92aee22366b9459cda5ae7","move":"to: e4, from: c5, promotion: q"}
+info: announceMoveMade {"context":"sockets.js","mover":"robbie","receiver":"dobbie"}
+info: /user/:nickname/games {"context":"router.js","nickname":"robbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"robbie"}
+info: /user/:nickname/games {"context":"router.js","nickname":"dobbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"dobbie"}
+info: /user/:nickname/games {"context":"router.js","nickname":"robbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"robbie"}
+info: /user/:nickname/game/:gameID/ {"context":"router.js","nickname":"robbie","gameID":"5b92af482366b9459cda5ae9","move":"{\"from\":\"d8\",\"to\":\"d7\",\"promotion\":\"q\"}","opponent":"cobbie"}
+info: move {"context":"logic/index.js","gameID":"5b92af482366b9459cda5ae9","move":"to: d7, from: d8, promotion: q"}
+info: announceMoveMade {"context":"sockets.js","mover":"robbie","receiver":"cobbie"}
+info: /user/:nickname/games {"context":"router.js","nickname":"robbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"robbie"}
+info: /user/:nickname/games {"context":"router.js","nickname":"robbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"robbie"}
+info: /user/:nickname/game/:gameID/ {"context":"router.js","nickname":"dobbie","gameID":"5b92aee22366b9459cda5ae7","move":"{\"from\":\"g4\",\"to\":\"g5\",\"promotion\":\"q\"}","opponent":"robbie"}
+info: move {"context":"logic/index.js","gameID":"5b92aee22366b9459cda5ae7","move":"to: g5, from: g4, promotion: q"}
+info: announceMoveMade {"context":"sockets.js","mover":"dobbie","receiver":"robbie"}
+info: /user/:nickname/games {"context":"router.js","nickname":"robbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"robbie"}
+info: /user/:nickname/games {"context":"router.js","nickname":"dobbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"dobbie"}
+info: /user/:nickname/games {"context":"router.js","nickname":"dobbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"dobbie"}
+info: on connection {"context":"sockets.js","socket id":"v04BL-_1q0mOLhdIAAAj"}
+info: /user/:nickname/game/:gameID/ {"context":"router.js","nickname":"cobbie","gameID":"5b92af4c2366b9459cda5aea","move":"{\"from\":\"h2\",\"to\":\"h3\",\"promotion\":\"q\"}","opponent":"dobbie"}
+info: move {"context":"logic/index.js","gameID":"5b92af4c2366b9459cda5aea","move":"to: h3, from: h2, promotion: q"}
+info: announceMoveMade {"context":"sockets.js","mover":"cobbie","receiver":"dobbie"}
+info: /user/:nickname/games {"context":"router.js","nickname":"dobbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"dobbie"}
+info: /user/:nickname/games {"context":"router.js","nickname":"cobbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"cobbie"}
+info: /user/:nickname/games {"context":"router.js","nickname":"cobbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"cobbie"}
+info: /user/:nickname/game/:gameID/ {"context":"router.js","nickname":"robbie","gameID":"5b92aee22366b9459cda5ae7","move":"{\"from\":\"e7\",\"to\":\"b4\",\"promotion\":\"q\"}","opponent":"dobbie"}
+info: move {"context":"logic/index.js","gameID":"5b92aee22366b9459cda5ae7","move":"to: b4, from: e7, promotion: q"}
+info: announceMoveMade {"context":"sockets.js","mover":"robbie","receiver":"dobbie"}
+info: /user/:nickname/games {"context":"router.js","nickname":"dobbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"dobbie"}
+info: /user/:nickname/games {"context":"router.js","nickname":"robbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"robbie"}
+info: /user/:nickname/games {"context":"router.js","nickname":"robbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"robbie"}
+info: /user/:nickname/game/:gameID/ {"context":"router.js","nickname":"cobbie","gameID":"5b92af482366b9459cda5ae9","move":"{\"from\":\"e1\",\"to\":\"g1\",\"promotion\":\"q\"}","opponent":"robbie"}
+info: move {"context":"logic/index.js","gameID":"5b92af482366b9459cda5ae9","move":"to: g1, from: e1, promotion: q"}
+info: announceMoveMade {"context":"sockets.js","mover":"cobbie","receiver":"robbie"}
+info: /user/:nickname/games {"context":"router.js","nickname":"cobbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"cobbie"}
+info: /user/:nickname/games {"context":"router.js","nickname":"robbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"robbie"}
+info: /user/:nickname/games {"context":"router.js","nickname":"cobbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"cobbie"}
+info: /user/:nickname/game/:gameID/ {"context":"router.js","nickname":"robbie","gameID":"5b92af482366b9459cda5ae9","move":"{\"from\":\"e8\",\"to\":\"c8\",\"promotion\":\"q\"}","opponent":"cobbie"}
+info: move {"context":"logic/index.js","gameID":"5b92af482366b9459cda5ae9","move":"to: c8, from: e8, promotion: q"}
+info: announceMoveMade {"context":"sockets.js","mover":"robbie","receiver":"cobbie"}
+info: /user/:nickname/games {"context":"router.js","nickname":"robbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"robbie"}
+info: /user/:nickname/games {"context":"router.js","nickname":"cobbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"cobbie"}
+info: /user/:nickname/games {"context":"router.js","nickname":"robbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"robbie"}
+info: /user/:nickname/game/:gameID/ {"context":"router.js","nickname":"cobbie","gameID":"5b92af482366b9459cda5ae9","move":"{\"from\":\"e4\",\"to\":\"e4\",\"promotion\":\"q\"}","opponent":"robbie"}
+info: move {"context":"logic/index.js","gameID":"5b92af482366b9459cda5ae9","move":"to: e4, from: e4, promotion: q"}
+info: /user/:nickname/game/:gameID/ {"context":"router.js","nickname":"cobbie","gameID":"5b92af482366b9459cda5ae9","move":"{\"from\":\"b1\",\"to\":\"c3\",\"promotion\":\"q\"}","opponent":"robbie"}
+info: move {"context":"logic/index.js","gameID":"5b92af482366b9459cda5ae9","move":"to: c3, from: b1, promotion: q"}
+info: announceMoveMade {"context":"sockets.js","mover":"cobbie","receiver":"robbie"}
+info: /user/:nickname/games {"context":"router.js","nickname":"cobbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"cobbie"}
+info: /user/:nickname/games {"context":"router.js","nickname":"robbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"robbie"}
+info: /user/:nickname/games {"context":"router.js","nickname":"cobbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"cobbie"}
+info: /user/:nickname/game/:gameID/ {"context":"router.js","nickname":"dobbie","gameID":"5b92aee22366b9459cda5ae7","move":"{\"from\":\"g5\",\"to\":\"f6\",\"promotion\":\"q\"}","opponent":"robbie"}
+info: move {"context":"logic/index.js","gameID":"5b92aee22366b9459cda5ae7","move":"to: f6, from: g5, promotion: q"}
+info: announceMoveMade {"context":"sockets.js","mover":"dobbie","receiver":"robbie"}
+info: /user/:nickname/games {"context":"router.js","nickname":"robbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"robbie"}
+info: /user/:nickname/games {"context":"router.js","nickname":"dobbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"dobbie"}
+info: /user/:nickname/games {"context":"router.js","nickname":"dobbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"dobbie"}
+info: /user/:nickname/game/:gameID/ {"context":"router.js","nickname":"dobbie","gameID":"5b92af4c2366b9459cda5aea","move":"{\"from\":\"f8\",\"to\":\"c5\",\"promotion\":\"q\"}","opponent":"cobbie"}
+info: move {"context":"logic/index.js","gameID":"5b92af4c2366b9459cda5aea","move":"to: c5, from: f8, promotion: q"}
+info: announceMoveMade {"context":"sockets.js","mover":"dobbie","receiver":"cobbie"}
+info: /user/:nickname/games {"context":"router.js","nickname":"cobbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"cobbie"}
+info: /user/:nickname/games {"context":"router.js","nickname":"dobbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"dobbie"}
+info: /user/:nickname/games {"context":"router.js","nickname":"dobbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"dobbie"}
+info: /user/:nickname/game/:gameID/ {"context":"router.js","nickname":"robbie","gameID":"5b92aee22366b9459cda5ae7","move":"{\"from\":\"b4\",\"to\":\"b2\",\"promotion\":\"q\"}","opponent":"dobbie"}
+info: move {"context":"logic/index.js","gameID":"5b92aee22366b9459cda5ae7","move":"to: b2, from: b4, promotion: q"}
+info: announceMoveMade {"context":"sockets.js","mover":"robbie","receiver":"dobbie"}
+info: /user/:nickname/games {"context":"router.js","nickname":"robbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"robbie"}
+info: /user/:nickname/games {"context":"router.js","nickname":"dobbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"dobbie"}
+info: /user/:nickname/games {"context":"router.js","nickname":"robbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"robbie"}
+info: /user/:nickname/game/:gameID/ {"context":"router.js","nickname":"robbie","gameID":"5b92af482366b9459cda5ae9","move":"{\"from\":\"d5\",\"to\":\"e4\",\"promotion\":\"q\"}","opponent":"cobbie"}
+info: move {"context":"logic/index.js","gameID":"5b92af482366b9459cda5ae9","move":"to: e4, from: d5, promotion: q"}
+info: announceMoveMade {"context":"sockets.js","mover":"robbie","receiver":"cobbie"}
+info: /user/:nickname/games {"context":"router.js","nickname":"robbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"robbie"}
+info: /user/:nickname/games {"context":"router.js","nickname":"cobbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"cobbie"}
+info: /user/:nickname/games {"context":"router.js","nickname":"robbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"robbie"}
+info: /user/:nickname/game/:gameID/ {"context":"router.js","nickname":"dobbie","gameID":"5b92aee22366b9459cda5ae7","move":"{\"from\":\"e1\",\"to\":\"g1\",\"promotion\":\"q\"}","opponent":"robbie"}
+info: move {"context":"logic/index.js","gameID":"5b92aee22366b9459cda5ae7","move":"to: g1, from: e1, promotion: q"}
+info: announceMoveMade {"context":"sockets.js","mover":"dobbie","receiver":"robbie"}
+info: /user/:nickname/games {"context":"router.js","nickname":"dobbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"dobbie"}
+info: /user/:nickname/games {"context":"router.js","nickname":"robbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"robbie"}
+info: /user/:nickname/games {"context":"router.js","nickname":"dobbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"dobbie"}
+info: /user/:nickname/game/:gameID/ {"context":"router.js","nickname":"cobbie","gameID":"5b92af482366b9459cda5ae9","move":"{\"from\":\"f3\",\"to\":\"e5\",\"promotion\":\"q\"}","opponent":"robbie"}
+info: move {"context":"logic/index.js","gameID":"5b92af482366b9459cda5ae9","move":"to: e5, from: f3, promotion: q"}
+info: announceMoveMade {"context":"sockets.js","mover":"cobbie","receiver":"robbie"}
+info: /user/:nickname/games {"context":"router.js","nickname":"cobbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"cobbie"}
+info: /user/:nickname/games {"context":"router.js","nickname":"robbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"robbie"}
+info: /user/:nickname/games {"context":"router.js","nickname":"cobbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"cobbie"}
+info: /user/:nickname/game/:gameID/ {"context":"router.js","nickname":"robbie","gameID":"5b92aee22366b9459cda5ae7","move":"{\"from\":\"b2\",\"to\":\"c3\",\"promotion\":\"q\"}","opponent":"dobbie"}
+info: move {"context":"logic/index.js","gameID":"5b92aee22366b9459cda5ae7","move":"to: c3, from: b2, promotion: q"}
+info: announceMoveMade {"context":"sockets.js","mover":"robbie","receiver":"dobbie"}
+info: /user/:nickname/games {"context":"router.js","nickname":"robbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"robbie"}
+info: /user/:nickname/games {"context":"router.js","nickname":"dobbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"dobbie"}
+info: /user/:nickname/games {"context":"router.js","nickname":"robbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"robbie"}
+info: /user/:nickname/game/:gameID/ {"context":"router.js","nickname":"robbie","gameID":"5b92af482366b9459cda5ae9","move":"{\"from\":\"f8\",\"to\":\"d6\",\"promotion\":\"q\"}","opponent":"cobbie"}
+info: move {"context":"logic/index.js","gameID":"5b92af482366b9459cda5ae9","move":"to: d6, from: f8, promotion: q"}
+info: announceMoveMade {"context":"sockets.js","mover":"robbie","receiver":"cobbie"}
+info: /user/:nickname/games {"context":"router.js","nickname":"cobbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"cobbie"}
+info: /user/:nickname/games {"context":"router.js","nickname":"robbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"robbie"}
+info: /user/:nickname/games {"context":"router.js","nickname":"robbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"robbie"}
+info: /user/:nickname/game/:gameID/ {"context":"router.js","nickname":"dobbie","gameID":"5b92aee22366b9459cda5ae7","move":"{\"from\":\"f4\",\"to\":\"d2\",\"promotion\":\"q\"}","opponent":"robbie"}
+info: move {"context":"logic/index.js","gameID":"5b92aee22366b9459cda5ae7","move":"to: d2, from: f4, promotion: q"}
+info: announceMoveMade {"context":"sockets.js","mover":"dobbie","receiver":"robbie"}
+info: /user/:nickname/games {"context":"router.js","nickname":"robbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"robbie"}
+info: /user/:nickname/games {"context":"router.js","nickname":"dobbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"dobbie"}
+info: /user/:nickname/games {"context":"router.js","nickname":"dobbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"dobbie"}
+info: /user/:nickname/game/:gameID/ {"context":"router.js","nickname":"robbie","gameID":"5b92aee22366b9459cda5ae7","move":"{\"from\":\"c3\",\"to\":\"c5\",\"promotion\":\"q\"}","opponent":"dobbie"}
+info: move {"context":"logic/index.js","gameID":"5b92aee22366b9459cda5ae7","move":"to: c5, from: c3, promotion: q"}
+info: announceMoveMade {"context":"sockets.js","mover":"robbie","receiver":"dobbie"}
+info: /user/:nickname/games {"context":"router.js","nickname":"robbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"robbie"}
+info: /user/:nickname/games {"context":"router.js","nickname":"dobbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"dobbie"}
+info: /user/:nickname/games {"context":"router.js","nickname":"robbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"robbie"}
+info: /user/:nickname/game/:gameID/ {"context":"router.js","nickname":"dobbie","gameID":"5b92aee22366b9459cda5ae7","move":"{\"from\":\"d4\",\"to\":\"c5\",\"promotion\":\"q\"}","opponent":"robbie"}
+info: move {"context":"logic/index.js","gameID":"5b92aee22366b9459cda5ae7","move":"to: c5, from: d4, promotion: q"}
+info: announceMoveMade {"context":"sockets.js","mover":"dobbie","receiver":"robbie"}
+info: /user/:nickname/games {"context":"router.js","nickname":"dobbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"dobbie"}
+info: /user/:nickname/games {"context":"router.js","nickname":"robbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"robbie"}
+info: /user/:nickname/games {"context":"router.js","nickname":"dobbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"dobbie"}
+info: /user/:nickname/game/:gameID/ {"context":"router.js","nickname":"cobbie","gameID":"5b92af482366b9459cda5ae9","move":"{\"from\":\"d1\",\"to\":\"h5\",\"promotion\":\"q\"}","opponent":"robbie"}
+info: move {"context":"logic/index.js","gameID":"5b92af482366b9459cda5ae9","move":"to: h5, from: d1, promotion: q"}
+info: announceMoveMade {"context":"sockets.js","mover":"cobbie","receiver":"robbie"}
+info: /user/:nickname/games {"context":"router.js","nickname":"cobbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"cobbie"}
+info: /user/:nickname/games {"context":"router.js","nickname":"robbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"robbie"}
+info: /user/:nickname/games {"context":"router.js","nickname":"cobbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"cobbie"}
+info: /user/:nickname/game/:gameID/ {"context":"router.js","nickname":"robbie","gameID":"5b92aee22366b9459cda5ae7","move":"{\"from\":\"f8\",\"to\":\"c5\",\"promotion\":\"q\"}","opponent":"dobbie"}
+info: move {"context":"logic/index.js","gameID":"5b92aee22366b9459cda5ae7","move":"to: c5, from: f8, promotion: q"}
+info: announceMoveMade {"context":"sockets.js","mover":"robbie","receiver":"dobbie"}
+info: /user/:nickname/games {"context":"router.js","nickname":"robbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"robbie"}
+info: /user/:nickname/games {"context":"router.js","nickname":"dobbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"dobbie"}
+info: /user/:nickname/games {"context":"router.js","nickname":"robbie"}
+info: getGamesForUser {"context":"logic/index.js","nickname":"robbie"}
+info: /user/:nickname/game/:gameID/ {"context":"router.js","nickname":"robbie","gameID":"5b92af482366b9459cda5ae9","move":"{\"from\":\"d6\",\"to\":\"d6\",\"promotion\":\"q\"}","opponent":"cobbie"}
+info: move {"context":"logic/index.js","gameID":"5b92af482366b9459cda5ae9","move":"to: d6, from: d6, promotion: q"}

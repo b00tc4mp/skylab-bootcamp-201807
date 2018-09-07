@@ -180,6 +180,19 @@ router.post('/user/:nickname/', [validateJwt, jsonBodyParser], (req, res) => {
 */
 
 
+/*  get logs */
+router.get('/logs/:type', (req, res) => {
+  const {params:{type}} = req
+
+  logic.getLogs(type)
+    .then(logs => res.send(logs))
+    .catch(err => {
+      const {message} = err
+      res.status(err instanceof LogicError ? 400 : 500).json({message})
+    })
+})
+
+
 module.exports = function () {
 
   return router

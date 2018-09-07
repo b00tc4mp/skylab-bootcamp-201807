@@ -53,7 +53,7 @@ const socketLogic = {
     this.io = io
 
     io.on('connection', (socket) => {
-      logger.info('on connection', { "context": "sockets.js", "socket": socket })
+      logger.info('on connection', { "context": "sockets.js", "socket id": socket.id })
 
       /*
 
