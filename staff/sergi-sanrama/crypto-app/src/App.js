@@ -1,11 +1,16 @@
 import React, { Component } from 'react';
 import { Switch, Route, withRouter, Redirect } from 'react-router-dom'
 import './App.css';
+import Navbar from './components/Navbar'
 import Register from './components/Register'
 import Login from './components/Login'
 import Landing from './components/Landing'
 import Market from './components/Market'
 import Portfolio from './components/Portfolio'
+import News from './components/News'
+import Profile from './components/Profile'
+import ResultList from './components/ResultList'
+
 
 class App extends Component {
   state = {
@@ -24,11 +29,11 @@ class App extends Component {
   }
 
   isLoggedIn = () => {
-    return !!this.state.email
+    return this.state.email
   }
 
-  //TODO FRONT
-  handleLogout = (e) => {
+ 
+  logout = (e) => {
     e.preventDefault()
     this.setState({
       email:'',
@@ -38,13 +43,21 @@ class App extends Component {
   }
 
   render() {
-    return <Switch>
-    <Route exact path="/" render={() => this.isLoggedIn() ? <Redirect to="/market"/> : <Landing/>} />      
-    <Route path="/user/authenticate" render={() => this.isLoggedIn() ? <Redirect to="/market"/> : <Login handleLogin={this.handleLogin}/>} />      
-    <Route path="/user/register" render={() => this.isLoggedIn() ? <Redirect to="/market"/> : <Register/>} />      
-    <Route path="/market" render={() => this.isLoggedIn() ? <Market handleLogout={this.handleLogout} email={this.state.email} token={this.state.token}/> : <Redirect to="/"/>} />      
-    <Route path="/user/portfolio" render={() => this.isLoggedIn() ? <Portfolio handleLogout={this.handleLogout} email={this.state.email} token={this.state.token}/> : <Market /> } />
-    </Switch>
+   
+    return <div className='site'>
+      <Navbar />
+      <div className='site-content'>
+        <Switch>
+          <Route exact path='/' render={() => this.isLoggedIn() ? <Redirect to='/user/portfolio'/> : <Landing />} />      
+          <Route path='/user/register' render={() => this.isLoggedIn() ? <Redirect to='/market'/> : <Register/>} />      
+          <Route path='/user/authenticate' render={() => this.isLoggedIn() ? <Redirect to='/market'/> : <Login handleLogin={this.handleLogin}/>} />      
+          <Route path='/user/portfolio' render={() => this.isLoggedIn() ? <Portfolio email={this.state.email} token={this.state.token}/> : <Login /> } />
+          <Route path='/market' render={() => <Market /> } />      
+          <Route path='/news' render={() => <News /> } />
+          <Route path='/user/profile' render={() => this.isLoggedIn() ? <Profile onLogout={this.logout} updateUser={this.updateUser} deleteUser={this.deleteUser} email={this.state.email} token={this.state.token}/> : <Login /> } />
+        </Switch>
+        </div>
+    </div>
   }
 
 }

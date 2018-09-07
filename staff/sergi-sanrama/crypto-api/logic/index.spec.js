@@ -35,7 +35,7 @@ describe('logic', () => {
         ])
     )
 
-    !true && describe('validate fields', () => {
+    true && describe('validate fields', () => {
        it('should succeed on correct value', () => {
             expect(() => logic._validateStringField('username', username).to.equal(username))
             expect(() => logic._validateStringField('email', email).to.equal(email))
@@ -57,7 +57,7 @@ describe('logic', () => {
         })
     })
 
-    !true && describe('register user', () => {
+    true && describe('register user', () => {
         it('should register correctly', () =>
             User.findOne({email})    
                 .then(user => {
@@ -150,7 +150,7 @@ describe('logic', () => {
 
     })
 
-    !true && describe('authenticate user', () =>{
+    true && describe('authenticate user', () =>{
         beforeEach(() => User.create({username, email, password }))
 
         it('should authenticate correctly', () =>
@@ -185,7 +185,7 @@ describe('logic', () => {
         // )
     })
 
-    !true && describe('update user', () =>{
+    true && describe('update user', () =>{
         const newPassword = `${password} 123-${Math.random()}`
 
         beforeEach(() => User.create({username, email, password}))
@@ -210,7 +210,7 @@ describe('logic', () => {
         })
     })
 
-    !true && describe('unregister user', () => {
+    true && describe('unregister user', () => {
        beforeEach(() => User.create({username, email, password}))
 
        it('should unregister user correctly', () =>{
@@ -232,7 +232,7 @@ describe('logic', () => {
         })
     })
 
-    !true && describe('add coin', () => {
+    true && describe('add coin', () => {
         beforeEach(() => User.create({username, email, password}))
         
         it('should add coin correctly', () => {
@@ -257,7 +257,7 @@ describe('logic', () => {
         })
     })
 
-    !true && describe('list coins', () => {
+    true && describe('list coins', () => {
         beforeEach(() => 
             User.create({username, email, password})
                 .then(user => {
@@ -279,7 +279,7 @@ describe('logic', () => {
     })
 
 
-    !true && describe('update coin quantity', () => {
+    true && describe('update coin quantity', () => {
         const coinId = "123456"
         const newDate = new Date()
         const newValue = 5000
@@ -306,7 +306,7 @@ describe('logic', () => {
         })
     })
 
-    !true && describe('remove coin', () => {
+    true && describe('remove coin', () => {
         const coinId = "123456"
         beforeEach(() => {
             return User.create({username, email, password, portfolio: {name, quantity, value, date, coinId}})
@@ -320,7 +320,10 @@ describe('logic', () => {
         })
     })
 
-    !true && describe('get coin', () => {
+
+    // Api's//
+    
+    true && describe('get coin', () => {
         it('retrieve coins correctly', () => {
             return logic.getCoins(10)
             .then(res => {
@@ -329,7 +332,17 @@ describe('logic', () => {
         })
     })
 
-    !true && describe('get crypto news', () => {
+    true & describe('get global crypto market data', () => {
+        it ('retrieve data correctly', () => {
+            return logic.getGlobalMarketData()
+            .then(res => {
+                expect(res).to.be.true
+            })
+        })
+    })
+
+
+    true && describe('get crypto news', () => {
         it('retrieve news correctly', () =>{
             return logic.getCryptoNews('cointelegraph')
             .then(res => {
@@ -342,8 +355,7 @@ describe('logic', () => {
         it('retrieve symbol correctly', () => {
             return logic.checkValidateCoin(symbol)
             .then(res => {
-                debugger
-                expect(res.map).to.exist
+                expect(res).to.exist
             })
         })
     })

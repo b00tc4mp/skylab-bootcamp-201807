@@ -135,16 +135,16 @@ router.delete('/user/:email/portfolio/remove', [validateJwt, jsonBodyParser], (r
 })
 
 
-//////////////////////////
-//COINMARKET API ROUTES//
-////////////////////////
+
+//COINMARKET API ROUTES //
+
 
 // GET MARKET COINS
 router.get('/market/list', (req, res) => {
     const { query: { limit } } = req
     
     logic.getCoins(limit)
-        .then(() => res.status(201).json({message: 'coins retrived succesfully'}))
+        .then(data => res.status(201).json({message: 'coins retrived succesfully', data}))
         .catch(err => {
             const { message } = err
 
@@ -153,9 +153,9 @@ router.get('/market/list', (req, res) => {
 })
 
 
-/////////////////////////////
+
 //CRYPTOCOMPARE API ROUTES//
-///////////////////////////
+
 
 //GET VALUE
 router.get('/market/value', (req, res) => {

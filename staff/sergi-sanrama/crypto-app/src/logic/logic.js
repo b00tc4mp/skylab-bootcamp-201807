@@ -100,7 +100,54 @@ const logic = {
                     { authorization: `bearer ${token}`, 'content-type': 'application/json'}, JSON.stringify({ coinId }), 201)
             })
             .then(res => res.json())
+    },
+
+    //Calculate Cost Portfolio
+    calculatePortfolioInvestment(transactions){
+        return Promise.resolve().then(() => {
+            const ordered = transactions.sort((a, b) => a.name > b.name)
+            
+            const result = {}
+            
+            let val = 0
+            let prev = ordered[0].name
+            ordered.forEach(transaction => {
+                if (transaction.name !== prev) {
+                    prev = transaction.name
+                    val = 0
+                }
+                
+                val += transaction.value * transaction.quantity
+                result[transaction.name] = val
+            })
+            
+            return result
+        })
+    },
+
+    
+
+    //// Market ////
+    //TODO
+    getCoins(){
+        return Promise.resolve()
+            .then(() => {
+                return this._call(`/market/list`, 'GET',undefined , undefined, 201)
+            })
+            .then(res => res.json())
     }
+
+
+    // getCoins(limit) {
+    //     return axios.get(`https://api.coinmarketcap.com/v1/ticker/?limit=${limit}`)
+    //          .then(res => {
+    //              return res.data
+    //          })
+    //          .then(res => {
+    //              if (!res.data) throw new LogicError(`Something has failed, it was not possible to load the ${limit} cryptocurrencies, try later`)
+    //          })
+    //          .then(() => true)
+    //  },
 
 }
 

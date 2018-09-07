@@ -1,14 +1,16 @@
 import React, { Component } from 'react'
-import logic from '../logic/logic'
+// import logic from '../logic/logic'
+import ResultList from './ResultList'
 
 
 class Market extends Component {
 
+    
+
     render(){
         return <div>
-
-            <div>Market</div><br/>
-            <a href='/#/user/portfolio'>go to Portfolio</a>
+            <ResultList />
+            <div>Market</div>
         </div>
     }
 }

@@ -1,21 +1,22 @@
-import React from 'react'
-import Login from './Login'
-import Register from './Register'
+import React, {Component} from 'react'
 
-function Landing() {
-    return <div>
-    <p>LANDING PAGE</p>
-    <nav>
-        <li>
-            <a href="/#/user/register">Register</a>
-        </li>
-        <li>
-           <a href="/#/user/authenticate">Login</a>
-        </li>
-        {/* <Login />
-        <Register /> */}
-    </nav>
-   </div>
+
+import './styles/Landing.css'
+
+class Landing extends Component {
+    render() {
+       
+        return(
+            <div className='landing'>
+                <h1 className='landing__title'> Welcome to Crypto App </h1>
+                <div className='landing__buttons'>
+                    <a href='/#/user/register' className="button">REGISTER</a><br/>
+                    <a href='/#/user/authenticate' className="button">LOGIN</a>
+                    
+                </div>
+            </div>
+        )
+    }
 }
 
 export default Landing

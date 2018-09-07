@@ -109,9 +109,9 @@ const logic = {
     },
 
 
-    ////////////////////
+ 
     //LOGIC PORTFOLIO//
-    //////////////////
+
 
     //ADD A COIN TO PORTFOLIO
     addCoin(email, name, quantity, value, date){
@@ -204,27 +204,38 @@ const logic = {
     },
     
     
-    //////////////////////
-    //COINMARKETCAP API//
-    ////////////////////
 
-    // GET MARKET COINS
-    getCoins(limit) {
-       return axios.get(`https://api.coinmarketcap.com/v1/ticker/?limit=${limit}`)
+    //COINMARKETCAP API//
+
+
+    //GET MARKET COINS, limit= nº coins retrieve
+    getCoins() {
+       return axios.get(`https://api.coinmarketcap.com/v1/ticker/?limit=2`)
+            .then(res => {
+                debugger
+                if (!res || !res.data) throw new LogicError(`Something has failed, it was not possible to load the cryptocurrencies, try later`)
+                return res.data
+            })
+    },
+
+    //GET GLOBAL STATS CRYPTO MARKET
+    getGlobalMarketData(){  
+        return axios.get(`https://api.coinmarketcap.com/v2/global/`)
             .then(res => {
                 return res.data
             })
             .then(res => {
-                if (!res.data) throw new LogicError(`Something has failed, it was not possible to load the ${limit} cryptocurrencies, try later`)
+                if (!res.data) throw new LogicError(`Something has failed, it was not possible to load the global market stats, try later`)
             })
             .then(() => true)
     },
 
-    ///////////////////////
-    //CRYPTOCOMPARE API///
-    /////////////////////
 
-    //PORTFOLIO CKECK
+
+    //CRYPTOCOMPARE API///
+ 
+
+    //PORTFOLIO CHECK & PRICE
     checkValidateCoin(symbol){
         return axios.get(`https://min-api.cryptocompare.com/data/pricemulti?fsyms=${symbol}&tsyms=USD`)
             .then(res => {

@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import {withRouter} from 'react-router-dom'
 import logic from '../logic/logic'
+import './styles/Login.css'
+import swal from 'sweetalert';
 
 class Login extends Component {
 
@@ -23,25 +25,29 @@ class Login extends Component {
             .then((token) => {
                 this.props.handleLogin(email, token)
             })
+            .catch(({ message }) => swal(`Login failed; Invalid email: ${email} or password`))
     }
 
     render() {
 
         return <div>
-            <h1>LOGIN</h1>
-            <form onSubmit={this.handleSubmit}>
-                <label>Email:</label>
-                <input onChange={this.handleChange} name='email' type='text' placeholder='Email'/>
+            <div className='login_form'>
+                <h2>LOGIN</h2>
+                <form onSubmit={this.handleSubmit}>
+                    <label>Email</label>
+                    <input onChange={this.handleChange} name='email' type='text' placeholder='Email'/>
 
-                <label>Password:</label>
-                <input onChange={this.handleChange} name='password' type='password' placeholder='Password'/>
-
-                <button type="submit">Login</button>
-                <br/>
-                <a href='/#/user/register'>return to Register</a>
-            </form>
+                    <label>Password</label>
+                    <input onChange={this.handleChange} name='password' type='password' placeholder='Password'/>
+                    
+                    <button className='button_form' type="submit">LOGIN</button>
+                    <br/>
+                </form>
+            </div>
+                    <div className='button_return'><a href='/#/user/register'>return to Register</a></div>
         </div>
 
+    
     }
 
 
