@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import { withRouter, Link } from 'react-router-dom'
 import {logic} from '../logic'
+import Navbar from '../components/Navbar'
 
 class Notebooks extends Component {
     
@@ -41,6 +42,7 @@ class Notebooks extends Component {
         const {notebooks} = this.state
         return (
             <div>
+                <Navbar />
                 <h1>NOTEBOOKS</h1>
 
                 {notebooks.map(({ date, notebooktitle, user, videoid, videothumbnail, videotitle, videourl, _id }) => {

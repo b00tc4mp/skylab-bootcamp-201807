@@ -1,10 +1,45 @@
-
-
 body {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
 }
+
+/* Landing Page */
+
+.center_landing{
+  margin: auto;
+  width: 50%;
+  padding-top: 50px;
+  width: 200px;
+  padding-left: 15%;
+  padding-right: 15%
+}
+
+.landing_input{
+  width: 200px
+}
+
+.nav_button{
+  margin-left:10px;
+}
+
+.landing_header{
+  margin: auto;
+  width: 50%;
+  text-align: center
+}
+
+.landing_title{
+  margin-top: 1rem;
+  font-size: 5rem;
+}
+
+.landing_subtitle{
+  text-transform: uppercase;
+  
+}
+
+
 
 
 

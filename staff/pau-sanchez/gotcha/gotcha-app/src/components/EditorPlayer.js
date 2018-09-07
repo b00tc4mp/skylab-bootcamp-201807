@@ -10,6 +10,7 @@ import FormErrors from './formerrors'
 
 
 
+
 class EditorPlayer extends Component {
     state = {
         seconds: '',
@@ -335,6 +336,7 @@ validateForm = () => this.setState({formValid: this.state.urlValid})
                 {
                         (this.state.origin == "landing")
                         ? <div>
+                           
                           <h1>This is a demo, if you want to save your notes you should be logged in ;)</h1>
                           </div>
                         : <div></div>    
@@ -417,8 +419,7 @@ validateForm = () => this.setState({formValid: this.state.urlValid})
                         noteStage
                         ?   <div  id="noteStage">
                                 <p>{gotchaSeconds}</p>
-                                {/*<form onSubmit={this.state.origin === "landing" ? this.buildFakeNote : this.buildNote}>*/}
-                                <form onSubmit={this.buildFakeNote}>
+                                <form onSubmit={this.state.origin === "landing" ? this.buildFakeNote : this.buildNote}>
                                     <input type="text" name="notetitle" placeholder="notetitle" onChange={this.inputNoteTitle} required/>
                                     <input type="text" name="notetext" placeholder="notext" onChange={this.inputNoteText} />
                                     <button type="submit">Submit</button>

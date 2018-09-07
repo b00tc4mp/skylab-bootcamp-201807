@@ -3,6 +3,7 @@ import {logic} from '../logic'
 import FormErrors from '../components/formerrors'
 import { withRouter } from 'react-router-dom'
 
+
 class Register extends Component {
 
     state = {
@@ -99,6 +100,7 @@ class Register extends Component {
 
         return (
             <main>
+                
                 <h1>REGISTER</h1>
                 <form onSubmit={this.handleSubmit}>
                         <h2>Sign Up</h2>

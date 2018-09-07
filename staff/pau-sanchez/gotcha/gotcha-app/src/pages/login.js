@@ -10,6 +10,7 @@ class Login extends Component {
         error: ''
     }
     
+    
 
     onEmailChange = e => this.setState({ email: e.target.value })
     onPasswordChange = e => this.setState({ password: e.target.value })
@@ -23,7 +24,7 @@ class Login extends Component {
             
             .then(res => this.props.onLoggedIn(res.id, res.token))
             .catch(({ message }) => this.setState({ error: message }))
-        
+            window.location.reload()
     }
     
     render() {
@@ -33,8 +34,8 @@ class Login extends Component {
         return <div>
                 <h1>LOGIN</h1>
                 <form onSubmit={this.onLoginSubmit}>
-                    <input type="email" name="email" placeholder="email" autofocus onChange={this.onEmailChange} />
-                    <input type="password" name="password" placeholder="password" onChange={this.onPasswordChange} />
+                    <input type="email" name="email" placeholder="email" autofocus onChange={this.onEmailChange} required/>
+                    <input type="password" name="password" placeholder="password" onChange={this.onPasswordChange} required/>
                     <button>Login</button>
                 </form>
                 {error && <p>{error}</p>}

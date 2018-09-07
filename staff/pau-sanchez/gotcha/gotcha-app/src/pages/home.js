@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import { withRouter } from 'react-router-dom'
 import FormErrors from '../components/formerrors'
+import Navbar from '../components/Navbar'
 
 class Home extends Component {
     
@@ -60,6 +61,9 @@ class Home extends Component {
     render() {
         return (
             <div>
+                
+                <Navbar />
+
                 <h1>HOME</h1>
 
                 <button onClick={this.gotoNotebooks}>NOTEBOOKS</button>
