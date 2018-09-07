@@ -1,13 +1,10 @@
 const validateEmail = require('../utils/validate-email')
-const {User, Game} = require('../data/models')
+const { mongoose, models: { User, Game } } = require('chess-data')
 const chalk = require('chalk')
-const {Chess} = require('chess.js')
-const uuidv1 = require('uuid/v1');
-const mongoose = require('mongoose')
+const { Chess } = require('chess.js')
+const uuidv1 = require('uuid/v1')
 
 const logic = {
-
-
   _validateStringField(name, value) {
     if (typeof value !== 'string' || !value.length) throw new LogicError(`invalid ${name}`)
   },
@@ -29,15 +26,15 @@ const logic = {
         this._validateStringField('password', password)
         this._validateStringField('nickname', nickname)
 
-        return User.findOne({nickname})
+        return User.findOne({ nickname })
       })
       .then(user => {
         if (user) throw new LogicError(`user with ${nickname} nickname already exists`)
-        return User.findOne({email})
+        return User.findOne({ email })
       })
       .then(user => {
         if (user) throw new LogicError(`user with ${email} email already exists`)
-        user = new User({email, password, nickname})
+        user = new User({ email, password, nickname })
         return user.save()
       })
       .then(() => true)
@@ -49,7 +46,7 @@ const logic = {
       .then(() => {
         this._validateStringField('nickname', nickname)
         this._validateStringField('password', password)
-        return User.findOne({nickname})
+        return User.findOne({ nickname })
       })
       .then(user => {
         if (!user) throw new LogicError(`user with ${nickname} nickname does not exist`)
@@ -70,7 +67,7 @@ const logic = {
         this._validateStringField('password', password)
         this._validateStringField('new password', newPassword)
 
-        return User.findOne({nickname})
+        return User.findOne({ nickname })
       })
       .then(user => {
         if (!user) throw new LogicError(`user with ${nickname} nickname does not exist`)
@@ -91,14 +88,14 @@ const logic = {
       .then(() => {
         this._validateStringField('nickname', nickname)
         this._validateStringField('password', password)
-        return User.findOne({email})
+        return User.findOne({ email })
       })
       .then(user => {
         if (!user) throw new LogicError(`user with ${nickname} nickname does not exist`)
 
         if (user.password !== password) throw new LogicError(`wrong password`)
 
-        return User.deleteOne({_id: user._id})
+        return User.deleteOne({ _id: user._id })
       })
       .then(() => true)
   },
@@ -120,33 +117,33 @@ const logic = {
     return Promise.resolve()
       .then(_ => {
         this._validateStringField("nickname", nickname)
-        return Game.find({$or: [{initiator: nickname}, {acceptor: nickname}]})
+        return Game.find({ $or: [{ initiator: nickname }, { acceptor: nickname }] })
           .then(games => games.filter(game => (game.state !== 'terminated')).filter(game => game.hasAcknowledgedGameOver.indexOf(nickname) === -1).map(game => {
-              const obj = {}
-              obj.id = game.id
-              obj.state = game.state
-              obj.toPlay = game.toPlay
-              obj.initiator = game.initiator
-              obj.acceptor = game.acceptor
-              obj.inCheck = game.inCheck
-              obj.inDraw = game.inDraw
-              obj.inStalemate = game.inStalemate
-              obj.inCheckmate = game.inCheckmate
-              obj.inThreefoldRepetition = game.inThreefoldRepetition
-              obj.insufficientMaterial = game.insufficientMaterial
-              obj.inDraw = game.inDraw
-              obj.winner = game.winner
-              obj.opponent = game.initiator === nickname ? game.acceptor : game.initiator
-              engine = this._currentEngines.get(game.engineID)
-              if (!engine) {
-                engine = new Chess()
-                engine.load_pgn(game.pgn)
-                this._currentEngines.set(game.engineID, engine)
-              }
-              obj.fen = engine.fen()
-              obj.pgn = engine.pgn()
-              return obj
+            const obj = {}
+            obj.id = game.id
+            obj.state = game.state
+            obj.toPlay = game.toPlay
+            obj.initiator = game.initiator
+            obj.acceptor = game.acceptor
+            obj.inCheck = game.inCheck
+            obj.inDraw = game.inDraw
+            obj.inStalemate = game.inStalemate
+            obj.inCheckmate = game.inCheckmate
+            obj.inThreefoldRepetition = game.inThreefoldRepetition
+            obj.insufficientMaterial = game.insufficientMaterial
+            obj.inDraw = game.inDraw
+            obj.winner = game.winner
+            obj.opponent = game.initiator === nickname ? game.acceptor : game.initiator
+            engine = this._currentEngines.get(game.engineID)
+            if (!engine) {
+              engine = new Chess()
+              engine.load_pgn(game.pgn)
+              this._currentEngines.set(game.engineID, engine)
             }
+            obj.fen = engine.fen()
+            obj.pgn = engine.pgn()
+            return obj
+          }
           ))
       })
   },
@@ -156,7 +153,7 @@ const logic = {
     return Promise.resolve()
       .then(_ => {
         this._validateStringField("nickname", nickname)
-        return User.findOne({nickname})
+        return User.findOne({ nickname })
       })
       .then(user => {
         if (!user) throw new LogicError(`user with ${nickname} nickname does not exist`)
@@ -168,12 +165,12 @@ const logic = {
   getUsersForString(nickname, term) {
     return Promise.resolve()
       .then(_ => {
-        this._validateStringField('nickname',nickname)
+        this._validateStringField('nickname', nickname)
         if (!term) return []
         else if (typeof term !== 'string')
           throw new LogicError('search term is not a string')
         else {
-          return User.find({nickname: {"$regex": term, $options: "i"}}).lean()
+          return User.find({ nickname: { "$regex": term, $options: "i" } }).lean()
             .then(users => {
               users = users.map(user => user.nickname)
               userSet = new Set
@@ -210,7 +207,7 @@ const logic = {
       .then(_ => {
         this._validateStringField("nickname", nickname)
         this._validateStringField("gameID", gameID)
-        return Game.findOne({_id: mongoose.Types.ObjectId(gameID)})
+        return Game.findOne({ _id: mongoose.Types.ObjectId(gameID) })
       })
       .then(game => {
         if (!game) throw new LogicError(`game with id ${gameID} does not exist`)
@@ -229,11 +226,11 @@ const logic = {
       .then(_ => {
         this._validateStringField("requester", requester)
         this._validateStringField("confirmer", confirmer)
-        return User.findOne({nickname: requester})
+        return User.findOne({ nickname: requester })
       })
       .then(user => {
         if (!user) throw new LogicError(`user with ${requester} nickname does not exist`)
-        return User.findOne({nickname: requester})
+        return User.findOne({ nickname: requester })
       })
       .then(user => {
         if (!user) throw new LogicError(`user with ${confirmer} nickname does not exist`)
@@ -271,14 +268,14 @@ const logic = {
         this._validateStringField("nickname", nickname)
         this._validateStringField("gameID", gameID)
         if (typeof move !== 'object' || !move.from || !move.to || !move.promotion) throw new LogicError('move is of wrong format')
-        return Game.findOne({_id: mongoose.Types.ObjectId(gameID)})
+        return Game.findOne({ _id: mongoose.Types.ObjectId(gameID) })
       })
       .then(_game => {
         game = _game
 
         if (!game) throw new LogicError(`game with id ${gameID} does not exist`)
         if (game.initiator !== nickname && game.acceptor !== nickname) throw new LogicError(`game with id ${gameID} does not belong to user ${nickname}`)
-       if (game.toPlay !== nickname) throw new LogicError(`it is not the turn of ${nickname}`)
+        if (game.toPlay !== nickname) throw new LogicError(`it is not the turn of ${nickname}`)
         const engine = this._currentEngines.get(game.engineID)
         if (engine.game_over()) throw new LogicError('game is over, cannot move')
         const result = engine.move(move)
@@ -308,18 +305,18 @@ const logic = {
       .then(_ => {
         this._validateStringField("requester", requester)
         this._validateStringField("destination", destination)
-        return User.findOne({nickname: requester})
+        return User.findOne({ nickname: requester })
       })
       .then(user => {
         if (!user) throw new LogicError(`user with ${requester} nickname does not exist`)
-        return User.findOne({nickname: destination})
+        return User.findOne({ nickname: destination })
 
       })
       .then(user => {
         if (!user) throw new LogicError(`user with ${destination} nickname does not exist`)
         return Game.findOne({
-          $or: [{$and: [{"initiator": requester}, {"acceptor": destination}]}, {$and: [{"initiator": destination}, {"acceptor": requester}]}],
-          "state": {$ne: "terminated"}
+          $or: [{ $and: [{ "initiator": requester }, { "acceptor": destination }] }, { $and: [{ "initiator": destination }, { "acceptor": requester }] }],
+          "state": { $ne: "terminated" }
         })
 
       })
@@ -339,7 +336,7 @@ const logic = {
         this._validateStringField("destination", destination)
         this._validateStringField("gameID", gameID)
         if (typeof answer !== 'boolean') throw LogicError('answer is not type boolean')
-        return Game.findOne({_id: mongoose.Types.ObjectId(gameID)})
+        return Game.findOne({ _id: mongoose.Types.ObjectId(gameID) })
       })
       .then(game => {
         if (!game) throw new LogicError(`game with id ${gameID} does not exist`)
@@ -364,4 +361,4 @@ class LogicError extends Error {
   }
 }
 
-module.exports = {logic, LogicError}
+module.exports = { logic, LogicError }
