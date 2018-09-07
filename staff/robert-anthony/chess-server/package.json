@@ -31,9 +31,5 @@
     "mocha": "^5.2.0",
     "random-email": "^1.0.3",
     "rimraf": "^2.6.2"
-  },
-  "engines": {
-    "node": "8.9.x",
-    "npm": "5.6.x"
   }
 }
