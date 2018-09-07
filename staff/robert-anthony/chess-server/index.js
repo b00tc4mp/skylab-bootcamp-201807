@@ -5,8 +5,8 @@ const cors = require('cors')
 const pkg = require('./package.json')
 
 const http = require('http')
-const {env: {MONGO_URL}} = process
-const mongoose = require('mongoose')
+const { env: { MONGO_URL } } = process
+const { mongoose } = require('chess-data')
 const socketIO = require('socket.io');
 /*
 
@@ -32,14 +32,14 @@ const njstrace = require('njstrace').inject({
 */
 
 const routes = require('./routes')
-const {sockets} = require('./sockets')
+const { sockets } = require('./sockets')
 
 
-mongoose.connect(MONGO_URL, {useNewUrlParser: true}, (err, conn) => {
+mongoose.connect(MONGO_URL, { useNewUrlParser: true }, (err, conn) => {
   if (err) throw err
 
 
-  const {PORT} = process.env
+  const { PORT } = process.env
 
   const app = express()
 
@@ -51,7 +51,7 @@ mongoose.connect(MONGO_URL, {useNewUrlParser: true}, (err, conn) => {
   const io = socketIO(server);
   sockets.setIO(io)
   server.listen(PORT, () => console.log(`${pkg.name} ${pkg.version} up and running on port ${PORT}`));
-// WARNING: app.listen(80) will NOT work here!
+  // WARNING: app.listen(80) will NOT work here!
 
 
 })
