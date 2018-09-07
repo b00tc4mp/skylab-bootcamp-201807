@@ -9,19 +9,18 @@ class ListNews extends Component{
         return (
             <Row>
                 <CardDeck>
-                <Col sm='3'>
-                        {news.map(data => <div key={news.idNew}>
-                            <Card>
+                    {news.map(data => <Col sm='3'>      
+                        <Card key={news.idNew}>
                                 <CardImg top width="100%" src={data.imageurl} alt="New image" />
-                                <CardBody>
+                                <CardBody >
                                 <CardTitle>{data.title}</CardTitle>
                                 <CardSubtitle>{data.source}</CardSubtitle>
                                 <CardText>{data.body}</CardText>
-                                <Link to={data.url}><Button className="cardButton">View original new in {data.source}</Button></Link>
+                                <Link to={data.url}><Button className="cardButton">Source: {data.source}</Button></Link>
                             </CardBody>
                             </Card>
-                            </div>)}
-                    </Col>
+                        </Col>
+                    )}    
                 </CardDeck>
             </Row>
         )
