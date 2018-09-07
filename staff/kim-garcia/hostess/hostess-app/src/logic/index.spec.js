@@ -15,13 +15,40 @@ global.FormData = FormData
 describe('logic', () => {
     const { JWT_SECRET } = process.env
 
-    let hostessEmail
-    let businessEmail = 'b@mail.com'
+    let hostessEmail 
+    let businessEmail 
     let password = '123456'
     let event
 
     beforeEach(() => {
         hostessEmail = `h-${Math.random()}@mail.com`, businessEmail = `b-${Math.random()}@mail.com`
+    })
+
+    
+    describe('retrieve hostess', () => {
+
+        it('should retrieve hostess', () =>
+            logic.registerHostess(hostessEmail, password)
+                .then(() => logic.authenticateHostess(hostessEmail, password))
+                .then(token => logic.retrieveHostess(hostessEmail, token))
+                .then(hostess => {
+                    expect(hostess).to.exist
+                    expect(hostess.email).to.equal(hostessEmail)
+                })
+        )
+    })
+
+    describe('retrieve business', () => {
+
+        it('should retrieve business', () =>
+            logic.registerBusiness(businessEmail, password)
+                .then(() => logic.authenticateBusiness(businessEmail, password))
+                .then(token => logic.retrieveBusiness(businessEmail, token))
+                .then(business => {
+                    expect(business).to.exist
+                    expect(business.email).to.equal(businessEmail)
+                })
+        )
     })
 
 
@@ -248,6 +275,8 @@ describe('logic', () => {
                 )
         )
     })
+
+
 
     describe('add hostess to favorites', () => {
 

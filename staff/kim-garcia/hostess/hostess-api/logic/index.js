@@ -130,6 +130,32 @@ const logic = {
             .then(() => true)
     },
 
+    retrieveHostess(email) {
+        return Promise.resolve()
+        .then(() => {
+            this._validateEmail(email)
+            
+            return Hostess.findOne({ email })
+        })
+        .then(hostess => {
+            if (!hostess) throw new LogicError('can not find the hostess')
+            return hostess
+        })
+    },
+
+    retrieveBusiness(email) {
+        return Promise.resolve()
+        .then(() => {
+            this._validateEmail(email)
+
+            return Business.findOne({ email })
+        })
+        .then(business => {
+            if(!business) throw new LogicError('can not find the business')
+            return business
+        })
+    },
+
     editHostessProfile(email, name, birth, origin, gender, phone, languages, jobType, height, myself, skills, photo) {
         return Promise.resolve()
             .then(() => {

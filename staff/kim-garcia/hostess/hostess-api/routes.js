@@ -71,6 +71,32 @@ router.post('/business-auth', jsonBodyParser, (req, res) => {
         })
 })
 
+router.get('/hostess-details/:email', [validateJwt, jsonBodyParser], (req, res) => {
+    const { params: { email }} = req
+
+    logic.retrieveHostess(email)
+    .then(hostesses => res.status(200).json({ status: 'OK', hostesses }))
+    .catch(err => {
+        const { message } = err
+
+        res.status(err instanceof LogicError ? 400 : 500).json({ message })
+    })
+})
+
+router.get('/business-details/:email', [validateJwt, jsonBodyParser], (req, res) => {
+    const { params: { email }} = req
+
+    logic.retrieveBusiness(email)
+    .then(businesses => res.status(200).json({ status: 'OK', businesses }))
+    .catch(err => {
+        const { message } = err
+
+        res.status(err instanceof LogicError ? 400 : 500).json({ message })
+    })
+})
+
+
+
 router.patch('/hostess-edit/:email', [validateJwt, jsonBodyParser], (req, res) => {
     const { params: { email }, body: { password, newPassword } } = req
 

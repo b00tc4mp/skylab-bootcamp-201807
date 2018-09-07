@@ -31,6 +31,7 @@ describe('logic', () => {
 
     const host1 = {
         email: 'host1@mail.com',
+        name: 'kim',
         password: password,
         gender: 'M',
         jobType: 'sells',
@@ -248,6 +249,30 @@ describe('logic', () => {
                     expect(business).to.exist
                     expect(business.email).to.equal(email)
                     expect(business.password).to.equal(newPassword)
+                })
+        )
+    })
+
+    true && describe('retrieve hostess details', () => {
+        beforeEach(() => Hostess.insertMany(hostesses))
+
+        it('should retrieve the hostess details', () =>
+            logic.retrieveHostess('host1@mail.com')
+                .then(hostess => {
+                    expect(hostess).to.exist
+                    expect(hostess.name).to.equal('kim')
+                })
+        )
+    })
+
+    true && describe('retrieve business details', () => {
+        beforeEach(() => Business.insertMany(business1))
+
+        it('should retrieve the business details', () =>
+            logic.retrieveBusiness('business1@mail.com')
+                .then(business => {
+                    expect(business).to.exist
+                    expect(business.philosophy).to.equal('Go slow to go fast')
                 })
         )
     })

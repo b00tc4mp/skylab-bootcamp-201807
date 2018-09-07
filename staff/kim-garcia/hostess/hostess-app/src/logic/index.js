@@ -104,6 +104,28 @@ const logic = {
             })
     },
 
+    retrieveHostess(email, token) {
+        return Promise.resolve()
+        .then(() => {
+            this._validateEmail(email)
+
+            return this._call(`hostess-details/${email}`, 'GET', { authorization: `bearer ${token}`, 'Content-Type': 'application/json' }, undefined, 200)
+        })
+        .then(res => res.json())
+        .then(res => res.hostesses)
+    },
+
+    retrieveBusiness(email, token) {
+        return Promise.resolve()
+        .then(() => {
+            this._validateEmail(email)
+
+            return this._call(`business-details/${email}`, 'GET', { authorization: `bearer ${token}`, 'Content-Type': 'application/json' }, undefined, 200)
+        })
+        .then(res => res.json())
+        .then(res => res.businesses)
+    },
+
     editBusinessProfile(email, name, web, boss, phone, philosophy, token) {
         return Promise.resolve()
             .then(() => {

@@ -14,20 +14,24 @@ import CreateEvent from './pages/CreateEvent'
 class App extends Component {
 
   state = {
-    emailHostess: sessionStorage.getItem('email') || '',
-    emailBusiness: sessionStorage.getItem('email') || '',
-    token: sessionStorage.getItem('token') || ''
+    email: sessionStorage.getItem('email') || '',
+    token: sessionStorage.getItem('token') || '',
+    hostess: false,
+    business: false,
+    loggedIn: false
   }
 
   hostessLogged = (email, token) => {
-    this.setState({ emailHostess: email, token })
+    this.setState({ email, token })
+    this.setState({ hostess: true, business: false, loggedIn: true})
 
     sessionStorage.setItem('email', email)
     sessionStorage.setItem('token', token)
   }
 
   businessLogged = (email, token) => {
-    this.setState({ emailBusiness: email, token })
+    this.setState({ email, token })
+    this.setState({ business: true, hostess: false, loggedIn: true})
 
     sessionStorage.setItem('email', email)
     sessionStorage.setItem('token', token)
@@ -36,29 +40,22 @@ class App extends Component {
   onLogout = event => {
     event.preventDefault()
 
-    this.setState({ emailBusiness: '', emailBusiness: '', token: '' })
+    this.setState({ email: '', token: '', hostess: false, business: false, loggedIn: false })
 
     sessionStorage.clear()
   }
 
-  isHostessLoggedIn() {
-    return !!this.state.emailHostess
-  }
-
-  isBusinessLoggedIn() {
-    console.log(this.state.emailBusiness)
-    return !!this.state.emailBusiness
-  }
-
   render() {
+    const { email, token, hostess, business, loggedIn } = this.state
+
     return (
       <div>
 
         <Switch>
-          <Route exact path="/" render={() => this.isBusinessLoggedIn() ? <Redirect to="/business"/> : this.isHostessLoggedIn() ? <Redirect to="/hostess"/> : <Landing hostessLogged={this.hostessLogged} businessLogged={this.businessLogged} />} />
-          <Route exact path="/hostess" render={() => <Hostess />} />
-          <Route exact path="/business" render={() => <Business />} />
-          <Route exact path="/hostess/profile" render={() => <HostessEditProfile />} />
+          <Route exact path="/" render={() => this.state.hostess ? <Redirect to="/hostess" /> : this.state.business ? <Redirect to="/business" /> : <Landing hostessLogged={this.hostessLogged} businessLogged={this.businessLogged} />} />
+          <Route exact path="/hostess" render={() => (hostess && loggedIn) ? <Hostess email={email} token={token} onLogout={this.onLogout}/> : <Redirect to="/"/>} />
+          <Route exact path="/business" render={() => (business && loggedIn) ? <Business /> : <Redirect to="/"/>} />
+          <Route exact path="/hostess/profile" render={() => (hostess && loggedIn) ? <HostessEditProfile onLogout={this.onLogout}/> : <Redirect to="/" />} />
           <Route exact path="/business/profile" render={() => <BusinessEditProfile />} />
           <Route exact path="/event" render={() => <Event />} />
           <Route exact path="/event/create" render={() => <CreateEvent />} />

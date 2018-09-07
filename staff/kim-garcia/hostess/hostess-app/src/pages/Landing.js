@@ -61,7 +61,7 @@ class Landing extends Component {
                         logic.authenticateHostess(email, password)
                             .then((token) => {
                                 this.props.hostessLogged(email, token)
-                                this.props.history.push('/hostess')
+                                this.props.history.push('/hostess/profile')
                             })
                             .catch(err => this.setState({ error: err.message }))
                     )
@@ -79,7 +79,7 @@ class Landing extends Component {
                         logic.authenticateBusiness(email, password)
                             .then((token) => {
                                 this.props.businessLogged(email, token)
-                                this.props.history.push('/business')
+                                this.props.history.push('/business/profile')
                             })
                             .catch(err => this.setState({ error: err.message }))
                     )
