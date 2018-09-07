@@ -325,7 +325,7 @@ describe('logic', () => {
     
     true && describe('get coin', () => {
         it('retrieve coins correctly', () => {
-            return logic.getCoins(10)
+            return logic.getCoins()
             .then(res => {
                 expect(res).to.be.true
             })

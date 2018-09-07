@@ -1,16 +1,14 @@
 import React, { Component } from 'react';
-import { Switch, Route, withRouter, Redirect } from 'react-router-dom'
-import './App.css';
+import { Switch, Route, Redirect } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import Register from './components/Register'
 import Login from './components/Login'
+import Profile from './components/Profile'
 import Landing from './components/Landing'
 import Market from './components/Market'
 import Portfolio from './components/Portfolio'
 import News from './components/News'
-import Profile from './components/Profile'
-import ResultList from './components/ResultList'
-
+import './App.css'
 
 class App extends Component {
   state = {
@@ -32,7 +30,6 @@ class App extends Component {
     return this.state.email
   }
 
- 
   logout = (e) => {
     e.preventDefault()
     this.setState({

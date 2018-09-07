@@ -6,12 +6,11 @@ import ResultList from './ResultList'
 class Market extends Component {
 
     
-
     render(){
         return <div>
-            <ResultList />
-            <div>Market</div>
-        </div>
+                <div>Market</div>
+                <ResultList />
+            </div>
     }
 }
 

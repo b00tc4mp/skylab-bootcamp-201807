@@ -13,12 +13,12 @@ class Portfolio extends Component{
         value: '',
         date: moment().format('YYYY-MM-DD'),
         coinId: '',
-        portfolioInvestment:{}
+        portfolioInvestment: {}
     }
 
 
     componentDidMount(){
-        this.listCoins()  
+        this.listCoins()
     }
 
     listCoins = () => {
@@ -27,10 +27,9 @@ class Portfolio extends Component{
         .then((transactions) => {
             this.setState({
                 transactions
+            },() => {
+                this.calculatePortfolioInvestment() 
             })
-            if(transactions.length){
-                // this.calculatePortfolioInvestment() 
-            }
         })
         .catch(({ message }) => alert(message))
     }
@@ -59,16 +58,17 @@ class Portfolio extends Component{
 
     calculatePortfolioInvestment(){
         const { transactions } = this.state
-        if (transactions.lenth){
+
+        if (transactions.length){
             logic.calculatePortfolioInvestment(transactions)
-            .then((portfolioInvestment) => {
-                this.setState({
-                    portfolioInvestment
+                .then(portfolioInvestment => {
+                    this.setState({
+                        portfolioInvestment
+                    })
                 })
                 .catch(({ message }) => alert(message))
-            }
-            
-            )}}
+        }
+    }
 
     handleChange = (e) => {
         const { name, value } = e.target
@@ -87,7 +87,7 @@ class Portfolio extends Component{
                         name: '',
                         quantity: '',
                         value: '',
-                        date: '',
+                        date: moment().format('YYYY-MM-DD'),
                         coinId:''
                     }))
                     .then(() => this.listCoins())
@@ -106,12 +106,23 @@ class Portfolio extends Component{
         }
     }
 
+    renderPortFolioInvestment = () => {
+        const { portfolioInvestment } = this.state
+
+        if(Object.keys(portfolioInvestment).length) {
+            return Object.keys(portfolioInvestment)
+                .map(coin => {
+                    return <li>Coin: {coin} - Value: {portfolioInvestment[coin]}</li>
+                })
+        }
+
+        return ''
+    }
+
     render(){
-        
         return <div>
             <div>Portfolio</div><br/>
                 
-
             <h2>Add a transaction</h2>
 
             <form onSubmit={this.handleSubmit}>
@@ -139,13 +150,15 @@ class Portfolio extends Component{
                             Date: ${moment(trans.date).format('DD/MM/YYYY')}`}
                                 <a href='' onClick={(e) =>  {e.preventDefault();this.removeCoin(trans.coinId)}} >X</a>
                                 <a href='' onClick={(e) => {e.preventDefault();this.editCoin(trans.name, trans.quantity, trans.value, trans.date, trans.coinId)}}> E</a>
-                        </div>)}
+                        </div>
+                )}
             </div>
-            
+
+            {this.renderPortFolioInvestment()}
+
         </div>
     }
 }
-// Object.keys(result).forEach(element => console.log(result[element]))
-
 
 export default withRouter (Portfolio)
+

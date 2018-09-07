@@ -209,8 +209,8 @@ const logic = {
 
 
     //GET MARKET COINS, limit= nº coins retrieve
-    getCoins() {
-       return axios.get(`https://api.coinmarketcap.com/v1/ticker/?limit=2`)
+    getCoins(limit = 10) {
+       return axios.get(`https://api.coinmarketcap.com/v1/ticker/?limit=${limit}`)
             .then(res => {
                 debugger
                 if (!res || !res.data) throw new LogicError(`Something has failed, it was not possible to load the cryptocurrencies, try later`)
@@ -273,7 +273,9 @@ const logic = {
 
                     const {imageurl, title, url, body, source} = news
 
-                    return { title, imageurl, url, body, source}
+                    let idNew = uuid()
+
+                    return { idNew, title, imageurl, url, body, source}
                 })
 
                 if(!cryptoNews.length) throw new LogicError(`Right now no news are available in this site: ${site}, try later`)

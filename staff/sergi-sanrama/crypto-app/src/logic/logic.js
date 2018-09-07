@@ -72,7 +72,7 @@ const logic = {
     //List Coins
     listCoins(email, token){
         return Promise.resolve()
-            .then(() => {   
+            .then(() => {           
                 return this._call(`user/${email}/portfolio/list`, 'GET',
                     { authorization: `bearer ${token}` }, undefined, 200)
             })
@@ -128,15 +128,24 @@ const logic = {
     
 
     //// Market ////
-    //TODO
-    getCoins(){
+    //TODO with $limits
+
+    getCoins(limit = 10){
         return Promise.resolve()
             .then(() => {
-                return this._call(`/market/list`, 'GET',undefined , undefined, 201)
+                return this._call(`market/list?limit=${limit}`, 'GET', undefined, undefined, 200)
             })
             .then(res => res.json())
-    }
+    },
 
+    getCryptoNews(site){
+        return Promise.resolve()
+            .then(() => {
+                return this._call(`/news?site=${site}`, 'GET', undefined, undefined, 200)
+            })
+            .then(res => res.json())
+            .then(({news}) => news)
+    }
 
     // getCoins(limit) {
     //     return axios.get(`https://api.coinmarketcap.com/v1/ticker/?limit=${limit}`)
