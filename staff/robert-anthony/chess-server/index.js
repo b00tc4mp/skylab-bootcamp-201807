@@ -10,8 +10,7 @@ const http = require('http')
 const {env: {MONGO_URL}} = process
 const mongoose = require('mongoose')
 
-//mongoose.connect(MONGO_URL, {useNewUrlParser: true}, (err, conn) => {
-mongoose.connect(MONGOLAB_URI, {useNewUrlParser: true}, (err, conn) => {
+mongoose.connect(MONGO_URL, {useNewUrlParser: true}, (err, conn) => {
   if (err) throw err
 
 
