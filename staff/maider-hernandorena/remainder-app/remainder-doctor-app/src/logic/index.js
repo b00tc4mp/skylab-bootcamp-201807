@@ -90,25 +90,6 @@ const logic = {
     },
 
     /**
-     * Registers a doctor with a code and a password 
-     * @param {String} code //doctors code
-     * @param {String} password //doctors password
-     * 
-     * @returns {boolean} TRUE => if it is registered correctly
-     */
-    registerDoctor(code, password) {
-        return Promise.resolve()
-            .then(() => {
-                this._validateStringField('code', code)
-                this._validateStringField('password', password)
-
-                return this._call('register', 'post', {'Content-Type': 'application/json'}, JSON.stringify({ code, password }), 201)
-                    .then(res => res.json())    
-                    .then(() => true)
-            })
-    },
-
-    /**
      * Authenticates a doctor with a code and a password 
      * @param {String} code //doctors code
      * @param {String} password //doctors password
@@ -124,78 +105,6 @@ const logic = {
                 return this._call('auth', 'post', {'Content-Type': 'application/json'}, JSON.stringify({ code, password }), 200)
                     .then(res => res.json())
                     .then(({ id, token }) => {id, token})
-            })
-    },
-
-    /**
-     * Adds a patient requiring different parameters
-     * @param {String} name //patient name
-     * @param {Number} dni //patient dni (8 digits)
-     * @param {String} surname //patient surname
-     * @param {Number} age //patient age
-     * @param {String} gender //patient gender (male, female or other)
-     * @param {String} address //patient address
-     * @param {Number} phone //patient phone (9 digits)
-     *  
-     * @returns {Response} response with message notifying patient was added correctly
-     */
-    addPatient(name, dni, surname, age, gender, address, phone) {
-        return Promise.resolve()
-            .then(() => {
-                this._validateStringField('name', name)
-                this._validateDniField('dni', dni)
-                this._validateStringField('surname', surname)
-                this._validateAgeField('age', age)
-                this._validateStringField('gender', gender)
-                this._validateStringField('address', address)
-                this._validatePhoneField('phone', phone)
-
-                return this._call('add-patient', 'post', {'Content-Type': 'application/json'}, JSON.stringify({ name, dni, surname, age, gender, address, phone }), 201)
-                    .then(res => res.json())
-                    .then(res => res)
-            })
-    },
-
-    /**
-     * Removes a patient with his/her id and dni
-     * @param {String} id //patient id
-     * @param {Number} dni //patient dni (8 digits)
-     * 
-     * @returns {boolean} TRUE => if it removes patient correctly
-     */
-    removePatient(id, dni) {
-        return Promise.resolve()
-            .then(() => {
-                this._validateStringField('id', id)
-                this._validateDniField('dni', dni)
-
-                return this._call(`remove-patient/${id}`, 'delete', {'Content-Type': 'application/json'}, JSON.stringify({ dni }), 200)
-                    .then(res => res.json())
-                    .then(() => true)
-            })
-    },
-
-    /**
-     * Updates a patients address and/or phone with his/her id and dni
-     * //if there is not any new address or phone should update the other correctly
-     * @param {String} id //patient id
-     * @param {Number} dni //patient dni (8 digits)
-     * @param {String} newAddress //patient new address
-     * @param {Number} newPhone //patient new phone (9 digits)
-     * 
-     * @returns {boolean} TRUE => if it updates patient correctly
-     */
-    updatePatient(id, dni, newAddress, newPhone) {
-        return Promise.resolve()
-            .then(() => {
-                this._validateStringField('id', id)
-                this._validateDniField('dni', dni)
-                this._validateStringField('newAddress', newAddress)
-                this._validatePhoneField('newPhone', newPhone)
-
-                return this._call(`update-patient/${id}`, 'PATCH', {'Content-Type': 'application/json'}, JSON.stringify({ dni, newAddress, newPhone }), 201)
-                    .then(res => res.json())
-                    .then(() => true)
             })
     },
 

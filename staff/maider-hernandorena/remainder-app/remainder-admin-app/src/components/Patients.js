@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 import logic from '../logic'
-import '../styles/css/patients.css'
 
 class Patients extends Component {
 
@@ -13,6 +12,11 @@ class Patients extends Component {
     }
     
     keepName = e => this.setState({ name: e.target.value, error: '' })
+    
+    goToAddPatient = e => {
+        e.preventDefault()
+        this.props.goToAddPatient()
+    }
 
     patientData = dni => {
         this.props.patientData(dni)
@@ -54,6 +58,9 @@ class Patients extends Component {
                         <button className="patients__group__search__form__button" type="submit">Search</button>
                     </form>
                     {error && <p className="patients__group__search__error">{error}</p>}
+                </div>
+                <div className="patients__group__add">
+                    <button className="patients__group__add__button" onClick={goToAddPatient}>Add Patient</button>
                 </div>
                 <h2 className="patients__group__title">Patients</h2>
                 <div className="patients__group__all">

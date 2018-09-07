@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import logic from '../logic'
-import '../styles/css/login.css'
 
 class Login extends Component {
   state = {
@@ -16,7 +15,7 @@ class Login extends Component {
     e.preventDefault()
     const { code, password } = this.state
 
-    logic.authenticateDoctor(code, password)
+    logic.authenticateAdmin(code, password)
       .then(token => this.props.onLoggedIn(code, token))
       .catch(({ message }) => this.setState({ error: message }))
   }

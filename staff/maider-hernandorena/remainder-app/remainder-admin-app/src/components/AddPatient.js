@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import logic from '../logic'
+import logic from '../../../remainder-doctor-app/src/logic'
 import '../styles/css/addpatient.css'
 
 class AddPatient extends Component {
