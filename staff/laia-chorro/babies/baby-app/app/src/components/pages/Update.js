@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import Message from '../sections/Message'
-//import './Update.css';
+import './Update.css'
+import { withRouter } from 'react-router-dom'
+
 
 class Update extends Component {
 

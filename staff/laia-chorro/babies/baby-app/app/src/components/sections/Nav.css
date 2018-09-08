@@ -1,0 +1,39 @@
+
+.material-icons.md-36 { 
+    font-size: 36px; 
+}
+
+.material-icons.md-48 { 
+    font-size: 48px; 
+}
+
+.nav-myzone-link {
+    display: flex;
+    align-items: center; 
+}
+
+.nav-myzone-link span {
+    margin-left: 5px; 
+}
+
+.nav-link span, .nav-link i, .nav-link img {
+    vertical-align: middle;
+}
+
+.navbar button {
+    color: #3f6b91;
+    border-color: #3f6b91;
+}
+
+.navbar button:hover {
+    background-color: #3f6b91;
+    border-color: #3f6b91;
+}
+
+.navbar button:active, 
+.navbar .btn-outline-success:not(:disabled):not(.disabled).active, 
+.navbar .btn-outline-success:not(:disabled):not(.disabled):active, 
+.navbar .show>.btn-outline-success.dropdown-toggle {
+    background-color: #3f6b91;
+    border-color: #3f6b91;
+}

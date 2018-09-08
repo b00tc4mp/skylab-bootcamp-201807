@@ -1,0 +1,36 @@
+.upload-form {
+    max-width: 900px;
+    margin: auto;
+}
+
+.upload-form-inline {
+    display: inline-block;
+    width: 50%;
+}
+
+/*.upload-form .upload-form-inline:first-child {
+    padding-right: 10px;
+}*/
+
+/*.upload-form .upload-form-inline:nth-child(2) {
+    padding-left: 10px;
+}*/
+
+.upload-container {
+    background-color: #ffffff;
+    padding: 30px;
+    max-width: 900px;
+    margin: 40px auto;
+    border: 1px solid #ced4da;
+    border-radius: .45rem;
+}
+
+.upload-title {
+    text-transform: uppercase;
+    font-size: 14px;
+    margin-bottom: 25px;
+}
+
+.upload-form-photo-input {
+    display: none;
+}

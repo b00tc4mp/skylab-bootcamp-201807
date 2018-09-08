@@ -1,3 +1,5 @@
+const validate = require('./validate')
+
 const logic = {
     url: 'http://localhost:8080/api',
 
@@ -19,174 +21,191 @@ const logic = {
             })
     },
 
-    _validateStringField(fieldName, fieldValue) {
-        if (typeof fieldValue !== 'string' || !fieldValue.length) throw new Error(`invalid ${fieldName}`)
+    set _userId(userId) {
+        sessionStorage.setItem('userId', userId)
     },
 
-    register(username, password) {
+    get _userId() {
+        return sessionStorage.getItem('userId')
+    },
+
+    set _userToken(userToken) {
+        sessionStorage.setItem('userToken', userToken)
+    },
+
+    get _userToken() {
+        return sessionStorage.getItem('userToken')
+    },
+
+    set _user(user) {
+        sessionStorage.setItem('user', JSON.stringify(user))
+    },
+
+    get _user() {
+        return JSON.parse(sessionStorage.getItem('user'))
+        //var obj = JSON.parse(sessionStorage.user);
+    },
+
+    _validateStateOptions(name, field) {
+        validate._stringField(name, field)
+        if (!['sold', 'reserved', 'pending', 'expired', 'removed'].includes(field)) 
+            throw new Error(`${name} is not a valid state for a product`)
+    },
+
+    _buildQueryParams(filters) {
+        const url = new URL(this.url)
+
+        if (filters) {
+            const fieldNames = Object.keys(filters)
+            fieldNames.forEach(fieldName => url.searchParams.append(fieldName, filters[fieldName]))
+        }
+
+        return url.search
+    },
+
+    getUserField(nameField) {
+        if (this._user && this._user[nameField]) return this._user[nameField]
+
+        return null
+    },
+
+    get loggedIn() {
+        return this._userId && this._userToken
+    },
+
+    register(email, password) {
         return Promise.resolve()
             .then(() => {
-                this._validateStringField('username', username)
-                this._validateStringField('password', password)
+                validate._email(email)
+                validate._stringField('password', password)
 
                 return this._call('register', 'post', {
                     'Content-Type': 'application/json'
-                }, JSON.stringify({ username, password }), 201)
+                }, JSON.stringify({ email, password }), 201)
                     .then(() => true)
             })
     },
 
-    authenticate(username, password) {
+    authenticate(email, password) {
         return Promise.resolve()
             .then(() => {
-                this._validateStringField('username', username)
-                this._validateStringField('password', password)
-debugger;
+                validate._email(email)
+                validate._stringField('password', password)
+
                 return this._call('authenticate', 'post', {
                     'Content-Type': 'application/json'
-                }, JSON.stringify({ username, password }), 200)
+                }, JSON.stringify({ email, password }), 200)
                     .then(res => res.json())
-                    .then(({ token }) => token )
+                    .then(({ user, token }) => {
+                        this._userId = user
+                        this._userToken = token
+        
+                        return true
+                    })
             })
     },
 
-    getNotesByDate(username, date, token) {
+    getPrivateUser() {
         return Promise.resolve()
             .then(() => {
-                this._validateStringField('username', username)
+                return this._call(`/me/${this._userId}`, 'get', { 
+                    'Authorization': `bearer ${this._userToken}`,
+                    'Content-Type': 'application/json' 
+                }, undefined, 200)
+                    .then(res => res.json() )
+                    .then(res => this._user = res )
+            })
+    },
 
-                return this._call(`/user/${username}/notes/?date=${date}`, 'get', { 
-                    'Content-Type': 'application/json',
-                    authorization: `bearer ${token}` 
+    login(email, password) {
+        return Promise.resolve()
+            .then(() => this.authenticate(email, password))
+            .then(() => this.getPrivateUser() )
+    },
+
+    logout() {
+        this._userId = null
+        this._userToken = null
+        this._user = null
+
+        sessionStorage.clear()
+    },
+
+    getSimpleProductsByFilters(filters) {
+        return Promise.resolve()
+            .then(() => {
+                //this._validateFilters('filters', filters)
+
+                const queryParams = this._buildQueryParams(filters)
+
+                return this._call(`/prod/${queryParams}`, 'get', { 
+                    'Content-Type': 'application/json' 
                 }, undefined, 200)
                     .then(res => res.json())
             })
     },
 
-    addNote(username, text, date, token) {
+   uploadProduct(title, cathegory, price, description, photo, longitude, latitude) {
+
         return Promise.resolve()
             .then(() => {
-                this._validateStringField('username', username)
-                this._validateStringField('text', text)
-
-                return this._call(`/user/${username}/notes`, 'post', { 
-                    'Content-Type': 'application/json', 
-                    authorization: `bearer ${token}` 
-                }, JSON.stringify({ text, date }), 201)
-                    .then(() => true)
-            })
-    },
-
-    /*router.post('/user/:username/notes', [validateJwt, jsonBodyParser], (req, res) => {
-        const { params: { username }, body: { text, date } } = req
-    
-        logic.addNote(username, text, date)
-            .then(() => res.json({ message: 'note created' }))
-            .catch(err => {
-                const { message } = err
-    
-                res.status(err instanceof LogicError ? 400 : 500).json({ message })
-            })
-    })*/
-
-    updateNote(username, id, newText, token) {
-        return Promise.resolve()
-            .then(() => {
-                this._validateStringField('username', username)
-                this._validateStringField('new text', newText)
-
-                return this._call(`/user/${username}/notes/${id}`, 'patch', {
-                    'Content-Type': 'application/json', 
-                    authorization: `bearer ${token}` 
-                }, JSON.stringify({ text: newText }), 201)
-                    .then(() => true)
-            })
-    },
-
-    /*router.patch('/user/:username/notes/:id', [validateJwt, jsonBodyParser], (req, res) => {
-        const { params: { username, id }, body: { newText } } = req
-    
-        logic.updateNote(username, id, newText)
-            .then(() => res.json({ message: 'note updated' }))
-            .catch(err => {
-                const { message } = err
-    
-                res.status(err instanceof LogicError ? 400 : 500).json({ message })
-            })
-    })*/
-
-    removeNote(username, id, token) {
-        return Promise.resolve()
-            .then(() => {
-                this._validateStringField('username', username)
-                
-                return this._call(`/user/${username}/notes/${id}`, 'delete', { 
-                    'Content-Type': 'application/json', 
-                    authorization: `bearer ${token}` 
-                }, undefined, 200)
-                    .then(res => res.body)
-            })
-    }
-    
-    /*router.delete('/user/:username/notes/:id', validateJwt, (req, res) => {
-        const { params: { username, id } } = req
-    
-        logic.deleteNote(username, id)
-            .then(() => res.json({ message: 'note deleted' }))
-            .catch(err => {
-                const { message } = err
-    
-                res.status(err instanceof LogicError ? 400 : 500).json({ message })
-            })
-    })*/
-
-    /*saveFile(username, file, token) {
-        return Promise.resolve()
-            .then(() => {
-                this._validateStringField('username', username)
-
-                if (typeof file !== 'object') throw new Error('invalid file')
+                validate._stringField('title', title)
+                validate._stringField('cathegory', cathegory)
+                validate._floatField('price', price, 0, 999999)
+                validate._stringField('description', description)
+                validate._objectField('photo', photo)
+                validate._longitude(longitude)
+                validate._latitude(latitude)
+                //validate._location([longitude, latitude])
 
                 const body = new FormData()
 
-                body.append('upload', file)
-
-                return this._call(`user/${username}/files`, 'post', { authorization: `bearer ${token}` }, body, 201)
+                body.append('title', title)
+                body.append('cathegory', cathegory)
+                body.append('price', price)
+                body.append('description', description)
+                body.append('image', photo)
+                body.append('longitude', longitude)
+                body.append('latitude', latitude)
+                
+                return this._call(`me/prod/${this._userId}`, 'post', { 
+                    authorization: `bearer ${this._userToken}` 
+                }, body, 201)
                     .then(() => true)
             })
     },
 
-    retrieveFile(username, file, token) {
+    updateStateProd(productId, state) {
         return Promise.resolve()
-            .then(() => {
-                this._validateStringField('username', username)
-                this._validateStringField('file', file)
+        .then(() => {
+            this._validateStateOptions('state', state)
 
-                return this._call(`user/${username}/files/${file}`, 'get', { authorization: `bearer ${token}` }, undefined, 200)
-                    .then(res => res.body)
-            })
+            const body = { state }
+
+            return this._call(`/me/${this._userId}/prod/${productId}/state`, 'PATCH', { 
+                'Authorization': `bearer ${this._userToken}`,
+                'Content-Type': 'application/json'
+            }, JSON.stringify(body), 200)
+                .then(() => true)
+        })
     },
 
-    listFiles(username, token) {
+    addProductToFavourites(productId) {
         return Promise.resolve()
-            .then(() => {
-                this._validateStringField('username', username)
+        .then(() => {
+            debugger;
+            return this._call(`/me/${this._userId}/prod/${productId}/favs`, 'PATCH', { 
+                'Authorization': `bearer ${this._userToken}`,
+                'Content-Type': 'application/json'
+            }, undefined, 200)
+                .then(() => true)
+        })
 
-                return this._call(`user/${username}/files`, 'get', { authorization: `bearer ${token}` }, undefined, 200)
-                    .then(res => res.json())
-            })
-    },
+    }
 
-    removeFile(username, file, token) {
-        return Promise.resolve()
-            .then(() => {
-                this._validateStringField('username', username)
-                this._validateStringField('file', file)
+    /*userRouter.patch('/me/:user/prod/:prod/favs', [validateJwt, jsonBodyParser], (req, res) => {
+        const { params: { user, prod } } = req*/
 
-                return this._call(`user/${username}/files/${file}`, 'delete', { authorization: `bearer ${token}` }, undefined, 200)
-                    .then(res => res.body)
-            })
-    }*/
 }
 
 module.exports = logic

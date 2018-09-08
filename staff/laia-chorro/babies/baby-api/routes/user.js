@@ -14,7 +14,7 @@ const jsonBodyParser = bodyParser.json()
 
 userRouter.post('/register', jsonBodyParser, (req, res) => {
     const { body: { email, password } } = req
-debugger;
+
     logicUser.register(email, password)
         .then(() => res.status(201).json({ message: 'user registered' }))
         .catch(err => {
@@ -26,7 +26,7 @@ debugger;
 
 userRouter.post('/authenticate', jsonBodyParser, (req, res) => {
     const { body: { email, password } } = req
-debugger;
+
     logicUser.authenticate(email, password)
         .then(userId => {
             const { JWT_SECRET, JWT_EXP } = process.env
@@ -42,7 +42,31 @@ debugger;
         })
 })
 
-userRouter.patch('/user/:user/password', [validateJwt, jsonBodyParser], (req, res) => {
+userRouter.get('/me/:user', validateJwt, (req, res) => {
+    const { params: { user } } = req
+
+    logicUser.listPrivateUser(user)
+        .then(res.json.bind(res))
+        .catch(err => {
+            const { message } = err
+
+            res.status(err instanceof LogicError ? 400 : 500).json({ message })
+        })
+})
+
+userRouter.get('/user/:user', (req, res) => {
+    const { params: { user } } = req
+
+    logicUser.listPublicUser(user)
+        .then(res.json.bind(res))
+        .catch(err => {
+            const { message } = err
+
+            res.status(err instanceof LogicError ? 400 : 500).json({ message })
+        })
+})
+
+userRouter.patch('/me/:user/password', [validateJwt, jsonBodyParser], (req, res) => {
     const { params: { user }, body: { old_password, new_password } } = req
 
     logicUser.updatePassword(user, old_password, new_password)
@@ -54,7 +78,7 @@ userRouter.patch('/user/:user/password', [validateJwt, jsonBodyParser], (req, re
         })
 })
 
-userRouter.patch('/user/:user/email', [validateJwt, jsonBodyParser], (req, res) => {
+userRouter.patch('/me/:user/email', [validateJwt, jsonBodyParser], (req, res) => {
     const { params: { user }, body: { old_email, new_email } } = req
 
     logicUser.updateEmail(user, old_email, new_email)
@@ -66,7 +90,7 @@ userRouter.patch('/user/:user/email', [validateJwt, jsonBodyParser], (req, res) 
         })
 })
 
-userRouter.patch('/user/:user/profile', [validateJwt, jsonBodyParser], (req, res) => {
+userRouter.patch('/me/:user/profile', [validateJwt, jsonBodyParser], (req, res) => {
     const { params: { user }, body: { data } } = req
 
     logicUser.updateProfile(user, data)
@@ -89,7 +113,7 @@ userRouter.patch('/user/:user/profile', [validateJwt, jsonBodyParser], (req, res
       });
   })*/
 
-userRouter.patch('/user/:user/photo', [validateJwt, fileUpload()], (req, res) => {
+userRouter.patch('/me/:user/photo', [validateJwt, fileUpload()], (req, res) => {
     const { params: { user }, files } = req
 
     if (files && files.image) {
@@ -118,7 +142,7 @@ userRouter.post('/unregister', jsonBodyParser, (req, res) => {
         })
 })
 
-userRouter.post('/user/:user/review', [validateJwt, jsonBodyParser], (req, res) => {
+userRouter.post('/me/:user/review', [validateJwt, jsonBodyParser], (req, res) => {
     const { params: { user }, body: { userTo, score, idProd, description } } = req
 
     logicUser.addReview(user, userTo, score, idProd, description)
@@ -130,12 +154,14 @@ userRouter.post('/user/:user/review', [validateJwt, jsonBodyParser], (req, res) 
         })
 })
 
-userRouter.patch('/user/:user/prod/:prod/favs', jsonBodyParser, (req, res) => {
+userRouter.patch('/me/:user/prod/:prod/favs', [validateJwt, jsonBodyParser], (req, res) => {
     const { params: { user, prod } } = req
-
+debugger;
     logicUser.addFavourite(user, prod)
         .then(() => logicProduct.incrementFavs(user, prod))
-        .then(() => res.json({ message: 'product added as favourites', user, product: prod }))
+        .then(() => {
+            debugger;
+            return res.json({ message: 'product added as favourites', user, product: prod })})
         .catch(err => {
             const { message } = err
 

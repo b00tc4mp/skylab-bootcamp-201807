@@ -1,16 +1,30 @@
 import React, {Component} from 'react'
 import Message from '../sections/Message'
-//import './Register.css';
+import './Register.css';
 
 
 class Register extends Component {
     state = {
         username: null,
         password: null,
+        errorMsg: null,
+        showFeedback: false
     }
 
     componentDidMount() {
         this.props.hideFeedback()
+    }
+
+    static getDerivedStateFromProps(props, state) {
+        if (props.errorMsg !== state.errorMsg || 
+            props.showFeedback !== state.showFeedback) {
+          return {
+            errorMsg: props.errorMsg,
+            showFeedback: props.showFeedback,
+          };
+        }
+    
+        return null; // Return null to indicate no change to state.
     }
 
     keepUsername = e => this.setState({username: e.target.value})
@@ -25,15 +39,15 @@ class Register extends Component {
     }
 
     render () {
-        
-        const { submitRegistration, keepUsername, keepPassword, props: { errorMsg, showFeedback } } = this
+        const {submitRegistration, keepUsername, keepPassword } = this
+        const {errorMsg, showFeedback} = this.state
 
         return (
             <section>
                 <form className="form-register" onSubmit={submitRegistration}>
                     <h1 className="h3 mb-3 font-weight-normal">Registration</h1>
-                    <label className="sr-only">Username</label>
-                    <input type="text" className="form-control" placeholder="Username" onChange={keepUsername}/>
+                    <label className="sr-only">email</label>
+                    <input type="text" className="form-control" placeholder="email@example.com" onChange={keepUsername}/>
                     <label className="sr-only">Password</label>
                     <input type="password" className="form-control" placeholder="Password" onChange={keepPassword}/>
                     <button type="submit" className="btn btn-lg btn-block" >Register</button>

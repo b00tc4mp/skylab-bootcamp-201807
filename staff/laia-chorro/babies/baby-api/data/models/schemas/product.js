@@ -12,7 +12,7 @@ const Product = new Schema({
 
     description: { type: String, required: true, maxlength: 650 },
 
-    price: { type: Number, required: true, min: 0, max: 999999 },
+    price: { type: Number, required: true, min: 0, max: 30000 },
 
     state: { type: String, enum: ['sold', 'reserved', 'pending', 'expired', 'removed'], default: 'pending' },
 
@@ -23,9 +23,9 @@ const Product = new Schema({
 
     photos: { type: [String], required: true },
 
-    num_favs: { type: Number, default: 0, min: 0, max: 999999 },
+    num_favs: { type: Number, default: 0, min: 0, max: 30000 },
 
-    num_views: { type: Number, default: 0, min: 0, max: 999999 },
+    num_views: { type: Number, default: 0, min: 0, max: 30000 },
 
     created_at: { type: Date, default: Date.now },
 

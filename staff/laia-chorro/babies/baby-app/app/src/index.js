@@ -1,12 +1,15 @@
+import 'bootstrap/dist/css/bootstrap.min.css';
 import React from 'react';
-import { render } from 'react-dom';
+import ReactDOM from 'react-dom';
+import './index.css';
+import App from './App';
 import { BrowserRouter } from 'react-router-dom';
+import registerServiceWorker from './registerServiceWorker';
 
-import App from './components/App';
-
-render((
+ReactDOM.render(
     <BrowserRouter>
-        <App data={window.__PRELOADED_STATE__}/>
-    </BrowserRouter>), 
+        <App />
+    </BrowserRouter>,
     document.getElementById('root')
-);
+)
+registerServiceWorker()

@@ -29,7 +29,7 @@ const product = {
      * @param {String} name 
      * @param {Array} images 
      */
-    _validatePhotos(name, images) {
+    _validatePhotos(images) {
         if (!images || !images.length) throw new LogicError('at least one image must be provided in order to upload a product')
         if (!images.length > 4) throw new LogicError('the maximum number of images required are 4')
     },
@@ -39,28 +39,29 @@ const product = {
     },*/
 
     _parseProductItems(product) {
-        if (!product.user) throw new LogicError('this product does not belong to any user')
-
-        const { user } = product
         let numReviews = 0, avgReviews = 0
 
         product.id = product._id.toString()
         delete product._id
         delete product.__v
 
-        if (user.name && user.surname) product.user_name = `${user.name} ${user.surname.charAt(0)}.`
+        if (product.user) {
+            const { user } = product
 
-        if (user.products) product.user_products = user.products.length || 0
+            if (user.name && user.surname) product.user_name = `${user.name} ${user.surname.charAt(0)}.`
+    
+            if (user.products) product.user_products = user.products.length || 0
+    
+            if (user.reviews && user.reviews.length) {
+                numReviews = user.reviews.length
+                avgReviews = user.reviews.reduce((sum, review) => sum + parseFloat(review.score), 0) / numReviews
+            }
 
-        if (user.reviews && user.reviews.length) {
-            numReviews = user.reviews.length
-            avgReviews = user.reviews.reduce((sum, review) => sum + parseFloat(review.score), 0) / numReviews
+            delete product.user
         }
 
         product.user_reviews = numReviews
         product.user_avg_score = avgReviews
-
-        delete product.user
 
         return product
     },
@@ -80,7 +81,7 @@ const product = {
         validate._stringField('description', data.description)
         validate._stringField('cathegory', data.cathegory)  // TODO: Better enum or string?
         validate._location(data.location)
-        validate._floatField('price', data.price, 0, 999999)
+        validate._floatField('price', data.price, 0, 30000)
         //this._validatePhotos('image', data.photos)
     },
 
@@ -93,56 +94,54 @@ const product = {
 
         fieldNames.forEach(fieldName => {
             if(fieldName === 'txt' || fieldName === 'cath') { // text, cathegory
-                validate._stringField(fieldName, data[fieldName])
+                validate._stringField(fieldName, filters[fieldName])
             } else if(fieldName === 'date') { // publication date
-                validate._dateField(fieldName, data[fieldName])
-            } else if(fieldName === 'dist' || fieldName === 'price') { // distance, price
-                validate._intField(fieldName, data[fieldName], 0, 999999)
+                validate._dateField(fieldName, filters[fieldName] ? new Date(filters[fieldName]) : filters[fieldName])
+            } else if(fieldName === 'dist' || fieldName === 'maxVal' || fieldName === 'minVal') { // distance, price
+                const max = fieldName === 'dist'? 400 : 30000
+                validate._intField(fieldName, filters[fieldName], 0, max)
+            } else if(fieldName === 'long') { // loc: [long,lat]
+                validate._longitude(filters[fieldName])
+            } else if(fieldName === 'lat') { // loc: [long,lat]
+                validate._latitude(filters[fieldName])
             } else {
                 throw new LogicError(`is not possible to search for any product with the filter provided in ${fieldName}`)
             }
         })
     },
 
+    // TODO: filter between two prices (minVal - maxVal)
     _buildQueryFilters(filters) {
-        const fieldNames = Object.keys(filters)
-        let parsedFilters
+        let parsedFilters = {}
 
-        fieldNames.forEach(fieldName => {
-            if(fieldName === 'txt') {
-                parsedFilters.title = { $text: { $search: filters.txt } }
-                parsedFilters.description = { $text: { $search: filters.txt } }
-            } else if(fieldName === 'cath') {
-                parsedFilters.cathegory = filters.cath
-            } else if(fieldName === 'date') {
-                parsedFilters.created_at = { $gte: filters.date }
-            } else if(fieldName === 'dist') {
-                parsedFilters.location = {
-                    $near: {
-                        $geometry: { type: "Point",  coordinates: [longitude,latitude] },
-                        $maxDistance: filters.dist
+        if (filters) {
+            const fieldNames = Object.keys(filters)
+
+            fieldNames.forEach(fieldName => {
+                if(fieldName === 'txt') {
+                    parsedFilters.title = { $text: { $search: filters.txt } }
+                    parsedFilters.description = { $text: { $search: filters.txt } }
+                } else if(fieldName === 'cath') {
+                    parsedFilters.cathegory = filters.cath
+                } else if(fieldName === 'date') {
+                    parsedFilters.created_at = { $gte: filters.date }
+                } else if(fieldName === 'dist' && fieldName === 'long' && fieldName === 'lat') {
+                    parsedFilters.location = {
+                        $near: {
+                            $geometry: { type: 'Point',  coordinates: [filters.long, filters.lat] }, // [long,lat]
+                            $maxDistance: filters.dist
+                        }
                     }
+                } else if(fieldName === 'maxVal' && fieldName === 'minVal') { //price
+                    parsedFilters.price = { $lte: filters.maxVal, $gte: filters.minVal }
                 }
-            } else if(fieldName === 'price') {
-                parsedFilters.price = filters.price
-            }
-        })
-
+            })
+        }
 
         parsedFilters.state = { $in: ['sold', 'reserved', 'pending'] }
 
         return parsedFilters
     },
-
-    /*
-    find({
-                            occupation: /host/,
-                            'name.last': 'Ghost',
-                            age: { $gt: 17, $lt: 66 },
-                            state: { $in: ['sold', 'reserved', 'pending'] }
-                        }).
-    */
-
 
     /**
      * Create a new product uploaded by the user.
@@ -321,24 +320,26 @@ const product = {
 
     listFilteredProducts(filters) {
         return Promise.resolve()
-        .then(() => {
-            validate._objectId('product', productId)
-            this._validateProductFilters(filters)
+            .then(() => {
+                this._validateProductFilters(filters)
 
-            const parsedFilters = this._buildQueryFilters(filters)
+                const parsedFilters = this._buildQueryFilters(filters)
 
-            return Product.
-                        find({ parsedFilters }).
-                        limit(40).
-                        sort({ location: -1 }).
-                        select({ title: 1, description: 1, photos: 1, state: 1 }).
-                        lean()
-        })
-        .then(product => {
-            //if (!product) throw new LogicError(`product with id: ${productId} does not exist`)
+                return Product.
+                            find(parsedFilters).
+                            limit(40).
+                            sort({ location: -1, updated_at: -1 }).
+                            select({ title: 1, description: 1, photos: 1, state: 1, price: 1 }).
+                            lean()
+            })
+            .then(products => {
+                if (!products) throw new LogicError('undefined products after a filtered search')
+                if (!products.length) return products
 
-            return this._parseProductItems(product)
-        })
+                const parsedProducts = products.map(product => this._parseProductItems(product))
+
+                return parsedProducts
+            })
     }
 }
 

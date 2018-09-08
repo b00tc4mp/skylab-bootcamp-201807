@@ -39,7 +39,7 @@ const user = {
     },
 
     _parseUserItems(user) {
-        let reviews = [], products = [], total_score = 0
+        let reviews = [], products = [], favs = [], total_score = 0
 
         user.id = user._id.toString()
         delete user._id
@@ -347,12 +347,18 @@ const user = {
                 return User.
                     findById(userId).
                     select('email name surname photo birth gender location favs products reviews').
-                    populate({
+                    populate([{
                         path: 'products'
                         , select: 'title description price state cathegory location photos num_favs num_views created_at'
                         , match: { state: { $in: ['pending', 'sold', 'reserved'] }}
                         , options: { sort: { created_at: -1 }, lean: true}
-                    }).
+                    },
+                    {
+                        path: 'favs'
+                        , select: 'title description price state cathegory location photos num_favs num_views created_at'
+                        , match: { state: { $in: ['pending', 'sold', 'reserved'] }}
+                        , options: { sort: { created_at: -1 }, lean: true}
+                    }]).
                     lean()
             })
             .then(user => {
