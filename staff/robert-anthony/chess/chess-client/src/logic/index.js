@@ -174,6 +174,7 @@ const logic = {
   },
 
 
+
   makeAGameMove(nickname, opponent, move, gameID, token) {
     return Promise.resolve()
       .then(() => {
