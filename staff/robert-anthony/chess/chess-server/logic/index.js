@@ -282,7 +282,7 @@ const logic = {
   },
 
   move(nickname, gameID, move) {
-    logger.info('move', { "context": "logic/index.js", "gameID": gameID, "gameID": gameID,"move":`to: ${move.to}, from: ${move.from}, promotion: ${move.promotion}`})
+    logger.info('move', { "context": "logic/index.js", "gameID": gameID, "gameID": gameID,"move":`to: ${move ? move.to : 'undefined'}, from: ${move ? move.from : 'undefined'}, promotion: ${move ? move.promotion : 'undefined'}`})
 
     let game
 
@@ -290,7 +290,7 @@ const logic = {
       .then(_ => {
         this._validateStringField("nickname", nickname)
         this._validateStringField("gameID", gameID)
-        if (typeof move !== 'object' || !move.from || !move.to || !move.promotion) throw new LogicError('move is of wrong format')
+        if (move === undefined || typeof move !== 'object' || !move.from || !move.to || !move.promotion) throw new LogicError('move is of wrong format')
         return Game.findOne({ _id: mongoose.Types.ObjectId(gameID) })
       })
       .then(_game => {

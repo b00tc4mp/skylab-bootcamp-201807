@@ -44,8 +44,8 @@ router.post('/authenticate', jsonBodyParser, (req, res) => {
       res.status(err instanceof LogicError ? 401 : 500).json({message})
     })
 })
-
-/*  update password */
+/*
+/!*  update password *!/
 router.patch('/user/:nickname', [validateJwt, jsonBodyParser], (req, res) => {
 
   const {params: {nickname}, body: {password, newPassword}} = req
@@ -58,7 +58,7 @@ router.patch('/user/:nickname', [validateJwt, jsonBodyParser], (req, res) => {
 
       res.status(err instanceof LogicError ? 400 : 500).json({message})
     })
-})
+})*/
 
 /*  get all games for user */
 router.get('/user/:nickname/games', [validateJwt], (req, res) => {
