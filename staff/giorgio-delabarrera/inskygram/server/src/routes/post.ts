@@ -7,6 +7,7 @@ import logic from "../logic";
 import { LogicError } from "../logic/errors";
 import statusError from "./helpers/status-error";
 import { PostModelInterface } from "../models/post";
+import publicPrivateAccessJwt from "./helpers/public-private-access-jwt";
 
 config();
 
@@ -37,8 +38,9 @@ router.post("/posts", [validateJwt, upload.single("image")], (req: Request | any
   }
 });
 
-// TODO: falla cuando usuario logueado quiere ver un post suyo
-router.get("/posts/:id", (req: Request, res: Response) => {
+// BUX_FIXED: falla cuando usuario logueado es privado quiere ver un post suyo
+// TODO: test
+router.get("/posts/:id", publicPrivateAccessJwt, (req: Request, res: Response) => {
   const username = req.user;
   const postId = req.params.id;
 

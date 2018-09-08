@@ -11,8 +11,12 @@ import SavedPost, { SavedPostModelInterface } from "../models/saved-post";
 
 const logic = {
 
-  _isFollowingUser(user: UserModelInterface, targetUser: UserModelInterface) {
+  _isFollowingUser(user: UserModelInterface, targetUser: UserModelInterface): boolean {
     return User.findOne({ _id: user._id }, { "followings.user": targetUser._id }) ? true : false;
+  },
+
+  _isSameUser(user: UserModelInterface, targetUser: UserModelInterface): boolean {
+    return user._id.toString() === targetUser._id.toString();
   },
 
   register(username: string, email: string, password: string): Promise<boolean> | never {
@@ -46,7 +50,7 @@ const logic = {
 
         if (!username) { throw new LogicError("invalid username"); }
         if (!password) { throw new LogicError("invalid password"); }
-        
+
         return User.findOne({ username });
       })
       .then((user: UserModelInterface) => {
@@ -467,7 +471,7 @@ const logic = {
               .populate("comments")
               .populate("likes");
           }
-        } else if (username && targetUser._id.toString() === user._id.toString()) {
+        } else if (username && this._isSameUser(user, targetUser)) {
           return Post.findById(postId)
             .populate({ path: "user", select: "-password -__v" })
             .populate("comments")
