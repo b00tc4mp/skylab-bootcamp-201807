@@ -5,7 +5,13 @@ import './Favourites.css'
 
 class Favourites extends Component {
     state = {
-        favs: logic.getUserField('favs') || [],
+        favs: [],
+    }
+
+    static getDerivedStateFromProps(props, state) {
+        if (props.idFavs !== state.idFavs) return {favs: logic.getUserField('favs')}
+    
+        return null; // Return null to indicate no change to state.
     }
     
     componentDidMount(){
@@ -15,7 +21,7 @@ class Favourites extends Component {
 
     render() {
 
-        const { state: {favs} } = this
+        const { state: { favs }, props: { onRemoveFavourite } } = this
 
         return(
             <div>
@@ -31,7 +37,7 @@ class Favourites extends Component {
                                 idProd={prod.id}
                                 isFav = {true}
                                 description={prod.description}
-                                addProductToFavourites={this.addProductToFavourites}                     
+                                removeFavourite={onRemoveFavourite}                     
                             /> 
                         </div>)
                         })}

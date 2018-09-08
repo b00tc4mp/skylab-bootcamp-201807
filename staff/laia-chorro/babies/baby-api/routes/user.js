@@ -156,12 +156,25 @@ userRouter.post('/me/:user/review', [validateJwt, jsonBodyParser], (req, res) =>
 
 userRouter.patch('/me/:user/prod/:prod/favs', [validateJwt, jsonBodyParser], (req, res) => {
     const { params: { user, prod } } = req
-debugger;
+
     logicUser.addFavourite(user, prod)
         .then(() => logicProduct.incrementFavs(user, prod))
         .then(() => {
-            debugger;
             return res.json({ message: 'product added as favourites', user, product: prod })})
+        .catch(err => {
+            const { message } = err
+
+            res.status(err instanceof LogicError ? 400 : 500).json({ message })
+        })
+})
+
+userRouter.patch('/me/:user/prod/:prod/unfavs', [validateJwt, jsonBodyParser], (req, res) => {
+    const { params: { user, prod } } = req
+
+    logicUser.removeFavourite(user, prod)
+        .then(() => logicProduct.decrementFavs(user, prod))
+        .then(() => {
+            return res.json({ message: 'product removed from favourites', user, product: prod })})
         .catch(err => {
             const { message } = err
 

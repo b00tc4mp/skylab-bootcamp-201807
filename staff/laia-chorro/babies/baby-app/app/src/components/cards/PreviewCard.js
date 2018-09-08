@@ -15,11 +15,12 @@ import Typography from '@material-ui/core/Typography';
 
 const styles = {
   card: {
-    maxWidth: 280,
-    height: 400
+    width: 250,
+    height: 450
   },
   content: {
-    height: 152
+    height: 186,
+    width: 250
   },
   media: {
     // ⚠️ object-fit is not supported by IE11.
@@ -37,13 +38,19 @@ const styles = {
 };
 
 function ImgMediaCard(props) {
-  const { classes, state, photo, price, title, description, addProductToFavourites, idProd, isFav } = props
+  const { classes, state, photo, price, title, description, addFavourite, removeFavourite, idProd, isFav } = props
 
   const onFavourites = event => {
     event.preventDefault()
 
-    addProductToFavourites(idProd)
-}
+    addFavourite(idProd)
+  }
+
+  const onNotFavourites = event => {
+    event.preventDefault()
+
+    removeFavourite(idProd)
+  }
 
   return (
     <Card className={classes.card}>
@@ -71,7 +78,8 @@ function ImgMediaCard(props) {
       </CardActionArea>
       <CardActions>
       <IconButton aria-label="Add to favorites">
-            <FavoriteIcon onClick={onFavourites} className={isFav ? classes.isFavourite : null}/>
+            {isFav ?  <FavoriteIcon onClick={onNotFavourites} className={classes.isFavourite}/> : 
+            <FavoriteIcon onClick={onFavourites}/>}
           </IconButton>
           <IconButton aria-label="Share">
             <ShareIcon />

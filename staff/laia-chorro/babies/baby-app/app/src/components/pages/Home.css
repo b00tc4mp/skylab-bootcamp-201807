@@ -1,3 +1,7 @@
+.home-empty-products > h1 {
+    margin: 300px 50px;
+    font-size: 18px;
+}
 
 /*.flex-group {
     margin: auto;
@@ -12,6 +16,7 @@
 }
 
 .flex-container {
+    min-height: 300px;
     flex: 0 100%;
     display: flex;
     flex-flow: row wrap;

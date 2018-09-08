@@ -122,17 +122,17 @@ const product = {
                     parsedFilters.title = { $text: { $search: filters.txt } }
                     parsedFilters.description = { $text: { $search: filters.txt } }
                 } else if(fieldName === 'cath') {
-                    parsedFilters.cathegory = filters.cath
+                    parsedFilters.cathegory = filters.cath.toLowerCase()
                 } else if(fieldName === 'date') {
                     parsedFilters.created_at = { $gte: filters.date }
-                } else if(fieldName === 'dist' && fieldName === 'long' && fieldName === 'lat') {
+                } else if(fieldName === 'dist') {
                     parsedFilters.location = {
                         $near: {
                             $geometry: { type: 'Point',  coordinates: [filters.long, filters.lat] }, // [long,lat]
                             $maxDistance: filters.dist
                         }
                     }
-                } else if(fieldName === 'maxVal' && fieldName === 'minVal') { //price
+                } else if(fieldName === 'maxVal' || fieldName === 'minVal') { //price
                     parsedFilters.price = { $lte: filters.maxVal, $gte: filters.minVal }
                 }
             })
@@ -169,6 +169,7 @@ const product = {
                 return Promise.all(uploadsToCloudinary)
             })
             .then(urlsCloudinary => {
+                data.cathegory = data.cathegory.toLowerCase()
                 const { title, description, price, cathegory, location } = data
 
                 return Product.create({ user: userId, title, description, price, cathegory, location, photos: urlsCloudinary })
@@ -295,6 +296,29 @@ const product = {
                 if (!product) throw new LogicError(`product with id ${productId} does not exist`)
 
                 product.num_favs++
+
+                return product.save()
+            })
+            .then(product => product.id)
+    },
+
+    decrementFavs(userId, productId) {
+        return Promise.resolve()
+            .then(() => {
+                validate._objectId('user', userId)
+                validate._objectId('product', productId)
+
+                return User.findById(userId)
+            })
+            .then(user => {
+                if (!user) throw new LogicError(`user with id: ${userId} does not exist`)
+
+                return Product.findById(productId)
+            })
+            .then(product => {
+                if (!product) throw new LogicError(`product with id ${productId} does not exist`)
+
+                product.num_favs--
 
                 return product.save()
             })

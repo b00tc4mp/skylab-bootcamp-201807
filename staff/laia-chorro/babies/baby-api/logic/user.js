@@ -391,6 +391,29 @@ const user = {
         .then(user => user.id)
     },
 
+    removeFavourite(userId, productId) {
+        return Promise.resolve()
+        .then(() => {
+            validate._objectId('user', userId)
+            validate._objectId('product', productId)
+
+            return Product.findById(productId)
+        })
+        .then(product => {
+            if (!product) throw new LogicError(`product with id ${productId} does not exist`)
+
+            return User.findById(userId)
+        })
+        .then(user => {
+            if (!user) throw new LogicError(`user with id: ${userId} does not exist`)
+
+            user.favs.pull(productId)
+
+            return user.save()
+        })
+        .then(user => user.id)
+    },
+
     addProduct(userId, productId) {
         return Promise.resolve()
         .then(() => {

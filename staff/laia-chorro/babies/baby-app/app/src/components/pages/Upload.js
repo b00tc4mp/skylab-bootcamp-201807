@@ -79,10 +79,10 @@ class Upload extends Component {
                         <div className="form-group upload-form-inline">
                             <label className="">Cathegory</label>
                             <select onChange={this.keepCathegory} className="form-control">
-                                <option>Clothes</option>
-                                <option>Books</option>
-                                <option>IT</option>
-                                <option>Car</option>
+                                <option label="Clothes">clothes</option>
+                                <option label="Books">books</option>
+                                <option label="IT">it</option>
+                                <option label="Car">car</option>
                             </select>
                         </div>
                             

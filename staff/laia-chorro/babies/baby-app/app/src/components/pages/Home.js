@@ -13,75 +13,60 @@ class Home extends Component {
 
     }
 
-    componentDidMount(){
-        this.getIdFavs()
+    static getDerivedStateFromProps(props, state) {
+        if (props.idFavs !== state.idFavs) return {idFavs: props.idFavs}
+    
+        return null; // Return null to indicate no change to state.
+    }
+
+    componentDidMount() {
+        this.props.getIdFavs()
         this.getProducts()
     }
 
-    getIdFavs = () => {
-        const favs = logic.getUserField('favs')
-
-        if (logic.loggedIn && favs && favs.length) {
-            const idFavs = favs.map(fav => fav.id);
-            this.setState({ idFavs })
-        }
-    }
-
-    getProducts = () => {
+    getProducts = (query) => {
         return Promise.resolve()
-            .then(() => logic.getSimpleProductsByFilters())
-            .then(products => this.setState({ products }) )
-            .catch(res => {
-            })
-            //.catch(({ message }) => this.setState({ errorMsg: message }))
-    }
-
-    // TODO: redirect to loggin if user is not logged
-    addProductToFavourites = (idProduct) => {
-        this.getIdFavs()
-        return Promise.resolve()
-            .then(() => logic.addProductToFavourites(idProduct))
-            .then(() => logic.getPrivateUser() )
-            .then(() => this.getIdFavs() )
-            .catch(res => {
-            })
+            .then(() => logic.getSimpleProductsByFilters(query))
+            .then(products => this.setState({ products: products || [] }) )
             //.catch(({ message }) => this.setState({ errorMsg: message }))
     }
 
 
     render() {
 
-        const { products, idFavs } = this.state
+        const { state: { products, idFavs }, props: { onAddFavourite, onRemoveFavourite } } = this
 
        return(
             <main >
                     <div className="filter-container" >
-                        <FilterCard />
+                        <FilterCard filterProducts={this.getProducts}/>
                     </div>
                     <section className="flex-container">
-                        {products.map((prod, index) => {
-                            return(<div key={index} data-prod={prod.id}>
-                                <PreviewCard 
-                                    state={prod.state} 
-                                    photo={prod.photos[0]}
-                                    price={prod.price}
-                                    title={prod.title}
-                                    idProd={prod.id}
-                                    isFav = {idFavs && idFavs.length && idFavs.includes(prod.id)}
-                                    description={prod.description}
-                                    addProductToFavourites={this.addProductToFavourites}                     
-                                /> 
-                            </div>)
-                            })}
+                        {products.length ? 
+                            products.map((prod, index) => {
+                                return(<div key={index} data-prod={prod.id}>
+                                    <PreviewCard 
+                                        state={prod.state} 
+                                        photo={prod.photos[0]}
+                                        price={prod.price}
+                                        title={prod.title}
+                                        idProd={prod.id}
+                                        isFav = {idFavs && idFavs.length && idFavs.includes(prod.id)}
+                                        description={prod.description}
+                                        addFavourite={onAddFavourite}
+                                        removeFavourite={onRemoveFavourite}                  
+                                    /> 
+                                </div>)
+                            }) :
+                            <div className="home-empty-products">
+                                <h1>We could'nt find any product that fits your requirements</h1>
+                            </div>
+                        }
                     </section>
                 <Footer />
             </main>
         )
     }
-
 }
-
-// <h1 className="text-white pt-4 heading-home">HOME</h1>
-
 
 export default Home

@@ -16,10 +16,6 @@ import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
 
 const styles = theme => ({
-  root: {
-    /*display: 'flex',
-    flexWrap: 'wrap',*/
-  },
   margin: {
     margin: theme.spacing.unit,
   },
@@ -52,54 +48,121 @@ const sliderStyle = { width: 200, margin: '30px 20px' };
 const sliderSubHeadingStyle = { fontSize: '0.875rem', marginBottom: '0.1rem' };
 
 const cathegories = [
-    { value: 'All Cathegories', label: 'All Cathegories', },
-    { value: 'Clothes', label: 'Clothes', },
-    { value: 'Books', label: 'Books', },
-    { value: 'IT', label: 'IT', },
-    { value: 'Car', label: 'Car', },
-  ];
+    { value: 'all', label: 'All Cathegories', },
+    { value: 'clothes', label: 'Clothes', },
+    { value: 'books', label: 'Books', },
+    { value: 'it', label: 'IT', },
+    { value: 'car', label: 'Car', },
+    { value: 'general', label: 'General', },
+  ]
+
 
 
 class FilterCard extends Component {
 
     state = {
-        cathegoryRange: '',
+        cath: 'all',
         minVal: 0,
         maxVal: 30000,
         dist: 400,
-        dateValue: '24 hours',
-        
+        period: 'any',
+        long: -3.70379, 
+        lat: 40.416775,
+        filters: {}
     };
-    
+
+
+    /*
+    const userId = user._id,
+                    dayBefore = new Date(date),
+                    dayAfter = new Date(date)
+
+                    dayBefore.setDate(dayBefore.getDate() - 1)
+                    dayAfter.setDate(dayAfter.getDate() + 1)
+
+                return this._notes.find({ userId, date: { 
+                                        $gt: dayBefore, 
+                                        $lt: dayAfter } }).toArray() || []
+    */
+
+    onFiltersChange = (propName, prop, defaultVal) => {
+        if (prop === defaultVal) {
+            delete this.state.filters[propName]
+            this.setState({ filters: {...this.state.filters} }, () => this.onGetProductsByFiltersChange())
+        } else {
+            this.setState({ filters: {...this.state.filters, [propName]: prop} }, () => this.onGetProductsByFiltersChange())
+        } 
+    }
+
     onCathegoryChange = prop => event => {
-        this.setState({ [prop]: event.target.value });
-    };
+        const cath = event.target.value
 
-    onPriceRangeChange = value => {
-        this.setState({ minVal: value[0], maxVal: value[1] });
-    };
+        this.setState({ cath })
+        this.onFiltersChange('cath', cath, 'all')
+    }
 
-    onDistChange = value => {
-        this.setState({ dist: value });
-    };
-    
+    onPriceRangeChange = value => this.setState({ minVal: value[0], maxVal: value[1] })
+
+    onPriceRangeAfterChange = value => {
+        const minVal = value[0], maxVal = value[1]
+
+        if (minVal === 0 && maxVal === 30000) {
+            delete this.state.filters.minVal
+            delete this.state.filters.maxVal
+            this.setState({ filters: {...this.state.filters} }, () => this.onGetProductsByFiltersChange())
+        } else {
+            this.setState({ filters: { ...this.state.filters, minVal, maxVal } }, () => this.onGetProductsByFiltersChange())
+        }
+    }
+
+    onDistChange = value => this.setState({ dist: value })
+
+    onDistAfterChange = value => {
+        //this.onFiltersChange('dist', value, 400)
+        const dist = value
+        const { long, lat } = this.state
+
+        if (dist === 400) {
+            delete this.state.filters.dist
+            delete this.state.filters.long
+            delete this.state.filters.lat
+            this.setState({ filters: {...this.state.filters} }, () => this.onGetProductsByFiltersChange())
+        } else {
+            this.setState({ filters: { ...this.state.filters, dist, long, lat } }, () => this.onGetProductsByFiltersChange())
+        }
+    }
+
     onDateChange = event => {
-        this.setState({ dateValue: event.target.value });
-    };
-  
+        const period = event.target.value
+        let date = period === 'any' ? period : this.getDateFromSelection(period)
+
+        this.setState({ period })
+        
+        this.onFiltersChange('date', date, 'any')
+    }
+
+    getDateFromSelection = daysToExtract => {
+        const today = new Date()
+        const dateFrom = today.setDate(today.getDate() - parseInt(daysToExtract))
+
+        return (new Date(dateFrom)).toISOString()
+    }
+
+    onGetProductsByFiltersChange = () => this.props.filterProducts(this.state.filters)
+
 
     render() {
-        const { props: {classes}, state: {cathegoryRange, minVal, maxVal, dist, dateValue} } = this;
+        const { props: { classes }, state: { cath, minVal, maxVal, dist, period } } = this
 
        return(
-           <div className={classes.root} >
+           <div >
                 <Card className={classes.card} >
                     <TextField
                         select
                         label="Cathegories"
                         className={classNames(classes.margin, classes.textField)}
-                        value={cathegoryRange}
-                        onChange={this.onCathegoryChange('cathegoryRange')}
+                        value={cath}
+                        onChange={this.onCathegoryChange('cath')}
                         >
                         {cathegories.map(option => (
                             <MenuItem key={option.value} value={option.value}>
@@ -111,13 +174,13 @@ class FilterCard extends Component {
                     <div style={sliderStyle}>
                         <FormLabel component="legend">Distance</FormLabel>
                         <p style={sliderSubHeadingStyle}>{`${dist}+ Km`}</p>
-                        <Slider onChange={this.onDistChange} defaultValue={400} max={400} />
+                        <Slider onChange={this.onDistChange} onAfterChange={this.onDistAfterChange} defaultValue={400} max={400} />
                     </div>
 
                     <div style={sliderStyle}>
                         <FormLabel component="legend">Price</FormLabel>
                         <p style={sliderSubHeadingStyle}>{minVal === 0 && maxVal === 30000 ? 'Any price' : `${minVal}€ - ${maxVal}€`}</p>
-                        <Range onChange={this.onPriceRangeChange} allowCross={false} defaultValue={[0, 30000]} min={0} max={30000} />
+                        <Range onChange={this.onPriceRangeChange} onAfterChange={this.onPriceRangeAfterChange} allowCross={false} defaultValue={[0, 30000]} min={0} max={30000} />
                     </div>
 
                     <FormControl component="fieldset" className={classes.formControl}>
@@ -126,13 +189,13 @@ class FilterCard extends Component {
                             aria-label="Date Range"
                             name="Date Range"
                             className={classes.group}
-                            value={dateValue}
+                            value={period}
                             onChange={this.onDateChange}
                         >
-                            <FormControlLabel value="24 hours" control={<Radio />} label="24 hours" />
-                            <FormControlLabel value="male" control={<Radio />} label="7 days" />
-                            <FormControlLabel value="other" control={<Radio />} label="30 days" />
-                            <FormControlLabel value='hola' control={<Radio />} label="Any day" />
+                            <FormControlLabel value="1" control={<Radio />} label="24 hours" />
+                            <FormControlLabel value="7" control={<Radio />} label="7 days" />
+                            <FormControlLabel value="30" control={<Radio />} label="30 days" />
+                            <FormControlLabel value="any" control={<Radio />} label="Any day" />
                         </RadioGroup>
                     </FormControl>
                 </Card>

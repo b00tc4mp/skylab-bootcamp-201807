@@ -11,6 +11,7 @@ const logic = {
 
         return fetch(`${this.url}/${path}`, config)
             .then(res => {
+
                 if (res.status === expectedStatus) {
                     return res
                 } else
@@ -43,13 +44,35 @@ const logic = {
 
     get _user() {
         return JSON.parse(sessionStorage.getItem('user'))
-        //var obj = JSON.parse(sessionStorage.user);
     },
 
     _validateStateOptions(name, field) {
         validate._stringField(name, field)
         if (!['sold', 'reserved', 'pending', 'expired', 'removed'].includes(field)) 
             throw new Error(`${name} is not a valid state for a product`)
+    },
+
+    _validateProductFilters(filters) {
+        validate._objectField('product filters', filters)
+
+        const fieldNames = Object.keys(filters)
+
+        fieldNames.forEach(fieldName => {
+            if(fieldName === 'txt' || fieldName === 'cath') { // text, cathegory
+                validate._stringField(fieldName, filters[fieldName])
+            } else if(fieldName === 'date') { // publication date
+                validate._dateField(fieldName, filters[fieldName] ? new Date(filters[fieldName]) : filters[fieldName])
+            } else if(fieldName === 'dist' || fieldName === 'maxVal' || fieldName === 'minVal') { // distance, price
+                const max = fieldName === 'dist'? 400 : 30000
+                validate._intField(fieldName, filters[fieldName], 0, max)
+            } else if(fieldName === 'long') { // loc: [long,lat]
+                validate._longitude(filters[fieldName])
+            } else if(fieldName === 'lat') { // loc: [long,lat]
+                validate._latitude(filters[fieldName])
+            } else {
+                throw new Error(`is not possible to search for any product with the filter provided in ${fieldName}`)
+            }
+        })
     },
 
     _buildQueryParams(filters) {
@@ -134,11 +157,11 @@ const logic = {
     getSimpleProductsByFilters(filters) {
         return Promise.resolve()
             .then(() => {
-                //this._validateFilters('filters', filters)
+                if (filters) this._validateProductFilters(filters)
 
                 const queryParams = this._buildQueryParams(filters)
-
-                return this._call(`/prod/${queryParams}`, 'get', { 
+                
+                return this._call(`/prod/${queryParams}`, 'GET', { 
                     'Content-Type': 'application/json' 
                 }, undefined, 200)
                     .then(res => res.json())
@@ -193,18 +216,24 @@ const logic = {
     addProductToFavourites(productId) {
         return Promise.resolve()
         .then(() => {
-            debugger;
             return this._call(`/me/${this._userId}/prod/${productId}/favs`, 'PATCH', { 
                 'Authorization': `bearer ${this._userToken}`,
                 'Content-Type': 'application/json'
             }, undefined, 200)
                 .then(() => true)
         })
+    },
 
+    removeProductFromFavourites(productId) {
+        return Promise.resolve()
+        .then(() => {
+            return this._call(`/me/${this._userId}/prod/${productId}/unfavs`, 'PATCH', { 
+                'Authorization': `bearer ${this._userToken}`,
+                'Content-Type': 'application/json'
+            }, undefined, 200)
+                .then(() => true)
+        })
     }
-
-    /*userRouter.patch('/me/:user/prod/:prod/favs', [validateJwt, jsonBodyParser], (req, res) => {
-        const { params: { user, prod } } = req*/
 
 }
 

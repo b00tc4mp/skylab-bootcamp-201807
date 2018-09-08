@@ -6,7 +6,6 @@ import Profile from './pages/Profile'
 import Mylist from './pages/Mylist'
 import Favourites from './pages/Favourites'
 import Reviews from './pages/Reviews'
-import logic from '../logic'
 
 import { Route, withRouter } from 'react-router-dom'
 
@@ -17,7 +16,7 @@ class Myzone extends Component {
 
     render() {
 
-        const { onLogout, onProductUpload } = this.props
+        const { onLogout, onProductUpload, onRemoveFavourite, idFavs } = this.props
 
         return (
             <div>
@@ -25,7 +24,7 @@ class Myzone extends Component {
                 <main className="main-zone">
                     <Route path="/profile" exact render={() => <Profile onLogout={onLogout}/>} />
                     <Route path="/mylist" exact render={() => <Mylist/>} />
-                    <Route path="/favourites" exact render={() => <Favourites />} />
+                    <Route path="/favourites" exact render={() => <Favourites onRemoveFavourite={onRemoveFavourite} idFavs={idFavs}/>} />
                     <Route path="/reviews" exact render={() => <Reviews />} />
                     <Route path="/prod/upload" exact render={() => <Upload onProductUpload={onProductUpload}/>} />
                 </main>
