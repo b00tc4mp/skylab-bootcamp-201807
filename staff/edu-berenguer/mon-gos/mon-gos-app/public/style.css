@@ -12,6 +12,14 @@ body {
     min-height: 100%;
   }
 
+  /* HOME */
+  
+  .logo{
+    font-family: 'Risque', 'cursive';
+    font-size:1.5em;
+    color:#8A4D76 !important;
+  }
+
   .container{
     display: flex;
     justify-content: space-around ;
@@ -21,14 +29,14 @@ body {
   .items{
     margin: 1em;
     padding-bottom: 1em;
+    width: 20em;
+    height: 20em;
+    border-radius: 5px;
+    border: none; 
   }
 
   .items p{
     margin-left: 0.5em;
-  }
-
-  .items button{
-    margin-left: 14em;
   }
 
   .breadcrumb{
@@ -59,15 +67,28 @@ body {
 
   }
   .image03{
+    background-image: url("./images/image4.jpg");
+    background-size: cover;
+    background-position: center;
+
+  }
+  .image04{
     background-image: url("./images/image3.jpg");
     background-size: cover;
-    background-position: bottom;
+    background-position: center;
 
   }
 
-  li figure img{
+  .search{
+    background-color: #8A4D76 !important;
+    color: white !important;
+  }
+
+  /* li figure img{
     border-radius: 80%;
-  }
+  } */
+
+  /* FORMS */
 
   form{
     text-align: center;
@@ -81,25 +102,32 @@ body {
   .container-form{
     width: 30%;
     margin: 0 auto;
-    border-radius: 10px;
+    /* border-radius: 10px; */
     padding: 2em;
   }
   .button.is-success {
     background-color: #8A4D76 !important;
-    margin-top: 1em;
   }
 
   .more-information{
-    background-color: #CFD8DC !important;
+    background-color: #8A4D76 !important;
     border-radius:5px !important;
+    margin-left: 23.5em;
+    color:white !important;
+  }
+
+  .more-information:hover{
+    background-color: rgb(155, 94, 135) !important;
   }
 
   .container-form h1{
     margin-bottom: 2em;
   }
 
+  /* NAV */
+
   .nav{
-    background-color: #EFF0EB !important;
+    background-color: #FFFFFF !important;
   }
 
   .goShelter{
@@ -113,6 +141,8 @@ body {
     border-radius: 10px;
   }
 
+  /* DETAIL DOG */
+
   .detailDog{
     margin: 0 auto;
     margin-top: 2em;
@@ -124,14 +154,15 @@ body {
     font-size: 2em;
   }
 
-  .detailDog label{
+  .detailDog h6{
+    color:#8A4D76;
     font-weight: bold;
     display: block;
  }
  .imageDetail{
    height: 15em;
    width: 20em;
-   border: solid black 2px;
+   border-radius:10px;
  }
 
  .dataDog{
@@ -141,7 +172,18 @@ body {
  }
  .titleDetailForm{
   font-size: 1.7em;
- }    
+ }   
+ 
+ .accordion{
+   margin-bottom: 1em;
+ }
+
+ .informationShelter{
+   display: flex;
+   justify-content: space-between
+ }
+
+ /* LANDING */
  
  .titleLanding{
   font-size: 1.7em;
@@ -183,7 +225,7 @@ body {
  .element-list{
    display: flex;
    align-items: center;
-   margin: 0.5em;
+   margin: 0.8em;
  }
   .adopted{
     background-color: #66BB6A !important;
@@ -195,10 +237,37 @@ body {
   }
 
   .infoDog{
-    margin-bottom: 4em !important;
+    margin-bottom: 2em !important;
   }
 
   .is-fullwidth{
     margin-bottom: 1em !important;  
+  }
+
+  textarea{
+    margin-bottom: 1em !important;
+  }
+  
+  .fa-mars{
+    color:red;
+  }
+
+  /*Update dog*/
+
+  .container-title-update{
+    display: flex;
+    justify-content: space-between;
+    color: #8A4D76;
+  }
+  .title-update{
+    font-size: 1.5em;
+  }
+  label{
+    color:#FFFFFF !important;
+    background-color: #8A4D76 !important;
+    font-size: 1em !important;
+  }
+  .parameter-dog{
+    color:#8A4D76;
   }
 

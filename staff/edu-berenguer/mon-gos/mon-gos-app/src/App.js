@@ -12,8 +12,6 @@ import UpdateDog from './components/UpdateDog'
 import Search from './components/Search'
 import swal from 'sweetalert2';
 
-
-
 class App extends Component {
 
   state = {
@@ -50,7 +48,6 @@ class App extends Component {
     sessionStorage.clear()
   }
 
-
   render() {
     return (
       <Switch>
@@ -67,6 +64,4 @@ class App extends Component {
     )
   }
 }
-
-
 export default withRouter(App);

@@ -9,16 +9,36 @@ cloudinary.config({
 })
 
 const logic = {
+    /**
+     * Validate string
+     * @param {string} fieldName 
+     * @param {string} fieldValue 
+     */
     _validateStringField(name, value) {
         if (typeof value !== 'string' || !value.length) throw new LogicError(`invalid ${name}`)
     },
+
+    /**
+     * Validate email
+     * @param {email} email 
+     */
     _validateEmail(email) {
         if (!validateEmail(email)) throw new LogicError('invalid email')
     },
+
+    /**
+     * 
+     * @param {string} name 
+     * @param {number} value 
+     */
     _validateNumberField(name, value) {
         if (typeof value !== 'number') throw new LogicError(`invalid ${name}`)
     },
 
+    /**
+     * 
+     * @param {string} base64Image 
+     */
     _saveImage(base64Image) {
         return Promise.resolve().then(() => {
             if (typeof base64Image !== 'string') throw new LogicError('base64Image is not a string')
@@ -33,6 +53,16 @@ const logic = {
         })
     },
 
+    /**
+     * Register shelter to API
+     * @param {string} email The shelter´s email
+     * @param {string} name The shelter´s name
+     * @param {string} address The shelter´s address
+     * @param {string} phone The shelter´s phone
+     * @param {string} password The shelter´s password
+     * @param {number} latitude The shelter´s latitude
+     * @param {number} longitude The shelter´s longitude
+     */
     register(email, name, address, phone, password, latitude, longitude) {
         return Promise.resolve()
             .then(() => {
@@ -55,6 +85,12 @@ const logic = {
             })
             .then(() => true)
     },
+
+    /**
+     * Authenticate shelter to API
+     * @param {string} email Authenticate shelter´s email
+     * @param {string} password Authenticate shelter´s password
+     */
     authenticate(email, password) {
         return Promise.resolve()
             .then(() => {
@@ -72,6 +108,17 @@ const logic = {
             })
     },
 
+    /**
+     * Insert dog to API
+     * @param {string} id The dog´s id
+     * @param {string} name The dog´s name
+     * @param {string} gender The dog´s gender
+     * @param {number} age The dog´s age
+     * @param {number} weight The dog´s weight
+     * @param {string} photo The dog´s photo
+     * @param {string} description The dog´s description
+     * @param {string} token The dog´s token
+     */
     insertDog(id, name, gender, age, weight, photo, description) {
         return Promise.resolve()
             .then(() => {
@@ -97,6 +144,9 @@ const logic = {
 
     },
 
+    /**
+     * List dogs not adopted
+     */
     listDogsNotAdopteds() {
         return Promise.resolve()
             .then(() => {
@@ -113,6 +163,9 @@ const logic = {
             })
     },
 
+    /**
+     * List dogs adopted
+     */
     listDogsAdopteds() {
         return Promise.resolve()
             .then(() => {
@@ -129,6 +182,10 @@ const logic = {
             })
     },
 
+    /**
+     * List of dogs by shelter
+     * @param {string} id The shelter´s id
+     */
     listDogsByShelter(id) {
         return Promise.resolve()
             .then(() => {
@@ -148,6 +205,11 @@ const logic = {
             })
     },
 
+    /**
+     * Dog adopted by id
+     * @param {string} id The shelter´s id
+     * @param {string} dogId The dog´s id
+     */
     dogAdopted(id, dogId) {
         return Promise.resolve()
             .then(() => {
@@ -168,6 +230,11 @@ const logic = {
             .then(() => true)
     },
 
+    /**
+     * Dog not adopted by id
+     * @param {string} id The shelter´s id
+     * @param {string} dogId The dog´s id
+     */
     dogNotAdopted(id, dogId) {
         return Promise.resolve()
             .then(() => {
@@ -188,6 +255,10 @@ const logic = {
             .then(() => true)
     },
 
+    /**
+     * Retrieve dog by id
+     * @param {string} dogId The dog´s id 
+     */
     retrieveDog(dogId) {
         return Promise.resolve()
             .then(() => {
@@ -202,6 +273,10 @@ const logic = {
             })
     },
 
+    /**
+     * Retrieve shelter by id
+     * @param {string} id The shelter´s id
+     */
     retrieveShelter(id) {
         return Promise.resolve()
             .then(() => {
@@ -215,6 +290,11 @@ const logic = {
             })
     },
 
+    /**
+     * Remove dog by id
+     * @param {string} id The shelter´s id
+     * @param {string} dogId The dog´s id
+     */
     removeDog(id, dogId) {
         return Promise.resolve()
             .then(() => {
@@ -235,6 +315,17 @@ const logic = {
             })
     },
 
+    /**
+     * Update dog by id
+     * @param {string} id The shelter´s id
+     * @param {string} dogId The dog´s dogId
+     * @param {string} newName The dog´s newName
+     * @param {string} newGender The dog´s newGender
+     * @param {number} newAge The dog´s newAge
+     * @param {number} newWeight The dog´s newWeight
+     * @param {string} newPhoto The dog´s nwePhoto
+     * @param {string} newDescription The dog´s newDescription
+     */
     updateDog(id, dogId, newName, newGender, newAge, newWeight, newPhoto, newDescription) {
         return Promise.resolve()
             .then(() => {
@@ -270,6 +361,12 @@ const logic = {
             .then(() => true)
     },
 
+    /**
+     * List dogs by query
+     * @param {string} gender The dog´s gender
+     * @param {number} age The dog´s age
+     * @param {number} weight The dog´s weight
+     */
     listDogsByQuery(gender, age, weight) {
         return Promise.resolve()
             .then(() => {

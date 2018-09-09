@@ -3,7 +3,6 @@ import { withRouter } from 'react-router-dom'
 import { logic } from '../logic'
 import swal from 'sweetalert2'
 
-
 class UpdateDog extends Component {
 
     state = {
@@ -63,27 +62,42 @@ class UpdateDog extends Component {
             ))
     }
 
-
-
     render() {
         return <div>
-            <h2>Update dog</h2>
-            <form onSubmit={this.updateDog}>
-                <input type="text" name="name" placeholder="Nombre" onChange={this.handleChange} value={this.state.name} />
-                <select name="gender" id="" onChange={this.handleChange} value={this.state.gender}>
-                    <option value="male" onChange={this.handleChange} default>Male</option>
-                    <option value="female" onChange={this.handleChange}>Female</option>
-                </select>
-                <input type="number" name="age" placeholder="Edad" onChange={this.handleChange} value={this.state.age} />
-                <input type="number" name="weight" placeholder="Peso" onChange={this.handleChange} value={this.state.weight} />
-                <img src={this.state.photo} />
-                <textarea name="description" id="" cols="30" rows="10" placeholder="Descripción" onChange={this.handleChange} value={this.state.description}></textarea>
-                <input type="submit" value="Actualizar" />
-            </form>
-            <a href="/"><button>Home</button></a>
+            <nav class="navbar nav">
+                <div class="navbar-item">
+                    <a href="/#/landing" onClick={this.handleLogout}><button class="button is-dark">Return</button></a>
+                </div>
+            </nav>
+            <div className="container-form">
+                <div className="container-title-update">
+                    <h1 className="title-update">Update dog</h1>
+                    <label class="tag">{this.state.gender}</label>
+                </div>
+                <form onSubmit={this.updateDog}>
+                    <div class="field">
+                        <input class="input" type="text" placeholder="Name" maxlength="15" onChange={this.handleChange} value={this.state.name} name="name" />
+                    </div>
+                        
+                    <div class="parameters-dog">
+                        <div class="field">
+                        <p className="parameter-dog">Age</p>
+                            <input class="input" type="number" placeholder="Age" onChange={this.handleChange} name="age" value={this.state.age} />
+                        </div>
+                        <div class="field">
+                        <p className="parameter-dog">Weight</p>
+                            <input class="input" type="number" placeholder="Weight" onChange={this.handleChange} name="weight" value={this.state.weight} />
+                        </div>
+                    </div>
+                    <div class="field">
+                        <input class="input" type="text" placeholder="Photo" onChange={this.handleChange} name="photo" />
+                    </div>
+                    <textarea class="textarea is-small" name="description" id="" placeholder="Description" onChange={this.handleChange} value={this.state.description}></textarea>
+                    <button class="button is-success" type="submit">Update</button>
+                </form>
+            </div>
         </div>
     }
-
 }
 
 export default withRouter(UpdateDog)

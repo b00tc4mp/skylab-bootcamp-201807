@@ -6,7 +6,7 @@ import swal from 'sweetalert2'
 class Landing extends Component {
 
     state = {
-        dogs: []
+        dogs: [],
     }
 
     componentDidMount() {
@@ -26,7 +26,6 @@ class Landing extends Component {
     deleteDog(id) {
         swal({
             title: 'Are you sure?',
-            // text: "You won't be able to revert this!",
             type: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -64,8 +63,8 @@ class Landing extends Component {
         logic.dogNotAdopted(this.props.id, id, this.props.token)
             .then(() => this.listDogs())
     }
-
     render() {
+        const { open } = this.state;
         return <div>
             <nav class="navbar nav">
                 <div class="navbar-item">
@@ -77,19 +76,20 @@ class Landing extends Component {
                     <div className="container-title-landing">
                         <h2 className="titleLanding">LIST OF DOGS</h2>
                         <a href="/#/insertDog"><button class="button is-success">Add dog</button></a>
-                    </div>  
+                    </div>
                     <ul>
                         {this.state.dogs.map(dog => {
                             if (dog.adopted === false) {
                                 return <li>
                                     <div className="element-list">
                                         <img class="image-list" src={dog.photo}></img>
-                                        <label className="landing-label">{dog.name}</label><a href="" onClick={(e) => {
+                                        <p className="landing-label">{dog.name}</p>
+                                        <a href="" onClick={(e) => {
                                             e.preventDefault();
                                             this.deleteDog(dog._id)
                                         }}>
                                             <button class="button is-danger is-small button-landing">X</button></a>
-                                        <Link to={`/updateDog/${dog._id}`} class="button is-light is-small button-landing"> Update</Link>
+                                        <Link to={`/updateDog/${dog._id}`} class="button is-light is-small button-landing"> Update/Information</Link>
                                         <a href="" onClick={(e) => {
                                             e.preventDefault()
                                             this.adopted(dog._id)
@@ -101,18 +101,17 @@ class Landing extends Component {
                                 return <li>
                                     <div className="element-list">
                                         <img class="image-list" src={dog.photo}></img>
-                                        <label className="landing-label">{dog.name} </label><a href="" onClick={(e) => {
+                                        <p className="landing-label">{dog.name} </p><a href="" onClick={(e) => {
                                             e.preventDefault(); this.deleteDog(dog._id)
                                         }}><button class="button is-danger is-small button-landing">X</button></a>
                                         <a href="" onClick={(e) => {
                                             e.preventDefault()
                                             this.notAdopted(dog._id)
-                                        }}
-                                        ><button class="button is-light is-small button-landing adopted" >Adopted</button></a>
+                                        }}>
+                                            <button class="button is-light is-small button-landing adopted" >Adopted</button></a>
                                     </div>
                                 </li>
                             }
-
                         })}
                     </ul>
                 </div>

@@ -10,6 +10,8 @@ class Register extends Component {
         name: "",
         address: "",
         phone: "",
+        latitude: "",
+        longitude: "",
         password: ""
     }
 
@@ -22,8 +24,12 @@ class Register extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault()
-        const { email, name, address, phone, password } = this.state
-        logic.register(email, name, address, phone, password)
+        let { email, name, address, phone, password, latitude, longitude } = this.state
+
+        latitude = parseFloat(latitude)
+        longitude = parseFloat(longitude)
+
+        logic.register(email, name, address, phone, password, latitude, longitude)
             .then(() => {
                 swal({
                     type: 'success',
@@ -47,8 +53,8 @@ class Register extends Component {
     render() {
         return <div>
             <nav class="navbar is-primary nav">
-                <a class="navbar-item" href="/"><button class="button">Home</button></a>
-                <a class="navbar-item" href="/#/login"><button class="button">Login</button></a>
+                <a class="navbar-item" href="/"><button class="button is-success">Home</button></a>
+                <a class="navbar-item" href="/#/login"><button class="button is-success">Login</button></a>
             </nav>
             <div class="container-form">
                 <h1>Register</h1>
@@ -77,6 +83,16 @@ class Register extends Component {
                     <div class="field">
                         <p class="control has-icons-left has-icons-right">
                             <input class="input" type="text" placeholder="Phone" onChange={this.handleChange} name="phone" />
+                        </p>
+                    </div>
+                    <div class="field">
+                        <p class="control has-icons-left has-icons-right">
+                            <input class="input" type="number" placeholder="Optional latitude..." step="any" onChange={this.handleChange} name="latitude" />
+                        </p>
+                    </div>
+                    <div class="field">
+                        <p class="control has-icons-left has-icons-right">
+                            <input class="input" type="number" placeholder="Optional longitude..." step="any" onChange={this.handleChange} name="longitude" />
                         </p>
                     </div>
                     <div class="field">

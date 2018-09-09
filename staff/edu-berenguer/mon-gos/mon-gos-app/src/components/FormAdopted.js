@@ -41,7 +41,7 @@ class FormAdopted extends Component {
         return <div>
             <nav class="navbar nav">
                 <div class="navbar-start">
-                    <a href="/" class="navbar-item">DOGGY</a>
+                    <a href="/" class="navbar-item logo">MON-GOS</a>
                 </div>
             </nav>
             <div className="container-form">

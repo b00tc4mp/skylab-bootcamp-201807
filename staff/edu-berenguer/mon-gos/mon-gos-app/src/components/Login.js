@@ -36,8 +36,8 @@ class Login extends Component {
     render() {
         return <div>
             <nav class="navbar is-primary nav">
-                <a class="navbar-item" href="/"><button class="button">Home</button></a>
-                <a class="navbar-item" href="/#/register"><button class="button">Register</button></a>
+                <a class="navbar-item" href="/"><button class="button is-success">Home</button></a>
+                <a class="navbar-item" href="/#/register"><button class="button is-success">Register</button></a>
             </nav>
             <div class="container-form">
                 <h1>Login</h1>

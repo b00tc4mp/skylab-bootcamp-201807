@@ -2,6 +2,13 @@ import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 import { logic } from '../logic'
 import 'bulma/css/bulma.css'
+// import { withGoogleMap, GoogleMap, Marker } from 'react-google-maps';
+import {
+    withScriptjs,
+    withGoogleMap,
+    GoogleMap,
+    Marker,
+} from "react-google-maps";
 
 import {
     Accordion,
@@ -13,12 +20,12 @@ import {
 // Demo styles, see 'Styles' section below for some notes on use.
 import 'react-accessible-accordion/dist/fancy-example.css';
 
-
 class DetailDog extends Component {
 
     state = {
         dog: "",
-        shelter: ""
+        shelter: "",
+        isMarkerShown: true
     }
 
     componentDidMount() {
@@ -27,45 +34,68 @@ class DetailDog extends Component {
                 this.setState({ dog })
                 return logic.retrieveShelter(dog.shelter)
                     .then(shelter => {
+                        debugger
                         this.setState({ shelter })
                     })
             })
     }
 
+
     render() {
+        const MapWithAMarker = withScriptjs(withGoogleMap(props =>
+            <GoogleMap
+                defaultZoom={13}
+                defaultCenter={{ lat: this.state.shelter.latitude, lng: this.state.shelter.longitude }}>
+                <Marker position={{ lat: this.state.shelter.latitude, lng: this.state.shelter.longitude}}/>
+            </GoogleMap>
+        ));
+
         return <div>
-            <nav class="navbar nav">
+            < nav class="navbar nav" >
                 <div class="navbar-start">
-                    <a href="/" class="navbar-item">DOGGY</a>
+                    <a href="/" class="navbar-item logo">MON-GOS</a>
                 </div>
-            </nav>
+            </nav >
             <div className="detailDog">
                 <h2 className="titleDetaildDog">Information of {this.state.dog.name}</h2>
                 <div className="infoDog">
                     <div className="dataDog">
-                        <label>Gender: </label> <p>{this.state.dog.gender}</p>
-                        <label>Weight:</label> <p>{this.state.dog.weight} kg.</p>
-                    <label>Age: </label><p>{this.state.dog.age} years</p>
-                    <label>Text:</label><p>{this.state.dog.description}</p>
+                        <h6>Gender: </h6> <p>{this.state.dog.gender}</p>
+                        <h6>Weight:</h6> <p>{this.state.dog.weight} kg.</p>
+                        <h6>Age: </h6><p>{this.state.dog.age} years</p>
+                        <h6>Text:</h6><p>{this.state.dog.description}</p>
                     </div>
                     <img class="imageDetail" src={this.state.dog.photo} />
                 </div>
-                <Accordion>
+                <Accordion class="accordion">
                     <AccordionItem>
                         <AccordionItemTitle>
-                            <label>Shelter:</label><p>{this.state.shelter.name}</p>
+                            <p>Shelter:</p><p>{this.state.shelter.name}</p>
                             <i class="fas fa-chevron-circle-down"></i>
                         </AccordionItemTitle>
                         <AccordionItemBody>
-                            <p>Email:</p><p>{this.state.shelter.email}</p>
-                            <p>Address:</p><p>{this.state.shelter.address}</p>
-                            <p>Phone:</p><p>{this.state.shelter.phone}</p>
+                            <div className="informationShelter">
+                                <div>
+                                    <p>Email:</p><p>{this.state.shelter.email}</p>
+                                    <p>Address:</p><p>{this.state.shelter.address}</p>
+                                    <p>Phone:</p><p>{this.state.shelter.phone}</p>
+                                </div>
+                                <div>
+                                    {this.state.shelter.latitude ? <MapWithAMarker
+                                        googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyBBm1O0T3pA22EiQsEOSgrMyl9uHh87p4o&callback=3.exp&libraries=geometry,drawing,places"
+                                        loadingElement={<div style={{ height: `100%` }} />}
+                                        containerElement={<div style={{ height: `250px`, width: '330px' }}/>}
+                                        mapElement={<div style={{ height: `100%` }} />}
+                                    />:<div></div>}
+                                </div>
+                            </div>
                         </AccordionItemBody>
                     </AccordionItem>
                 </Accordion>
                 <a href="/#/adoptar"><button class="button is-success">Adopt</button></a>
+
             </div>
-        </div>
+        </div >
     }
 }
 export default withRouter(DetailDog)

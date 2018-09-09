@@ -4,7 +4,6 @@ import { logic } from '../logic'
 import 'bulma/css/bulma.css'
 import Slider from "react-slick";
 
-
 class Home extends Component {
 
     state = {
@@ -27,8 +26,9 @@ class Home extends Component {
         logic.listDogsAdopted()
             .then(dogs => {
                 this.setState({
-                    dogsAdopted: dogs,
-                    dogsNotAdopteds: []
+                    dogsNotAdopteds: [],
+                    dogsAdopted: dogs
+
                 })
             })
     }
@@ -38,34 +38,33 @@ class Home extends Component {
         logic.listDogsNotAdopted()
             .then(dogs => {
                 this.setState({
-                    dogsAdopted: [],
-                    dogsNotAdopteds: dogs
+                    dogsNotAdopteds: dogs,
+                    dogsAdopted: []
                 })
             })
     }
 
     render() {
-        var settings = {
+        const settings = {
             dots: true,
             infinite: true,
             slidesToShow: 1,
             slidesToScroll: 1,
             autoplay: true,
-            speed:  8000,
+            speed: 8000,
             autoplaySpeed: 3000,
-            
-
         };
         return <div>
             <nav class="navbar is-fixed-top nav">
                 <div class="navbar-start">
-                    <a href="/" class="navbar-item">DOGGY</a>
+                    <a href="/" class="navbar-item logo">MON-GOS</a>
+                    {/* <a href=""><img src="./images/logo.png" className="logo"></img></a> */}
                 </div>
                 <div class="navbar-end">
-                    <a href="/#/search" class="navbar-item"><button class="button">Search</button></a>
+                    <a href="/#/search" class="navbar-item"><button class="button search"><i class="fas fa-search"></i></button></a>
                     <nav class="breadcrumb has-succeeds-separator" >
                         <ul>
-                            <li>You are a shelter?</li>
+                            <li>Are you a shelter?</li>
                             <li><a href="/#/register" class="navbar-item goShelter">Register</a></li>
                             <li><a href="/#/login" class="navbar-item goShelter">login</a></li>
                         </ul>
@@ -74,19 +73,22 @@ class Home extends Component {
             </nav>
             <Slider {...settings}>
                 <div>
-                    <img alt="" className="carousel image01" />
+                    <img alt="" className="carousel image02" />
                 </div>
                 <div>
-                    <img alt="" className="carousel image02" />
+                    <img alt="" className="carousel image01" />
                 </div>
                 <div>
                     <img alt="" className="carousel image03" />
                 </div>
+                <div>
+                    <img alt="" className="carousel image04" />
+                </div>
             </Slider>
             <div class="breadcrumb is-large">
                 <ul>
-                    <li><a href="" onClick={this.showNotAdopteds} style={this.state.dogsNotAdopteds.length ? { textDecoration: "underline", textDecorationColor:"#8A4D76" } : {}}><h5>In adoption</h5></a></li>
-                    <li><a href="" onClick={this.showAdopteds} style={this.state.dogsAdopted.length ? { textDecoration: "underline", textDecorationColor:"#8A4D76" } : {}}><h5>Adopteds</h5></a></li>
+                    <li><a href="" onClick={this.showNotAdopteds} style={this.state.dogsNotAdopteds.length ? { textDecoration: "underline", textDecorationColor: "#8A4D76" } : {}}><h5>In adoption</h5></a></li>
+                    <li><a href="" onClick={this.showAdopteds} style={this.state.dogsAdopted.length ? { textDecoration: "underline", textDecorationColor: "#8A4D76" } : {}}><h5>Adopteds</h5></a></li>
                 </ul>
             </div>
             <div className="container">
@@ -94,12 +96,12 @@ class Home extends Component {
                     return <div class="card items">
                         <p class="is-size-3">{`${dog.name}`}</p>
                         <div>
-                            <figure>
+                            <figure class="image is-3by2">
                                 <img src={dog.photo} alt="" />
                             </figure>
                         </div>
                         <p>{`${dog.gender}`}</p>
-                        <Link to={`/detailDog/${dog._id}`}><button class="button is-small more-information">More information</button></Link>
+                        <Link to={`/detailDog/${dog._id}`}><button class="button is-small more-information">+</button></Link>
                     </div>
                 })}
             </div>
@@ -108,7 +110,7 @@ class Home extends Component {
                     return <div class="card items">
                         <p class="is-size-3">{`${dog.name}`}</p>
                         <div>
-                            <figure>
+                            <figure class="image is-3by2">
                                 <img src={dog.photo} alt="" />
                             </figure>
                         </div>

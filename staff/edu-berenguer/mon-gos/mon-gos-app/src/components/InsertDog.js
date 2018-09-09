@@ -47,7 +47,7 @@ class InsertDog extends Component {
         return <div>
             <nav class="navbar nav">
                 <div class="navbar-item">
-                    <a href="/"><button class="button">Return</button></a>
+                    <a href="/"><button class="button is-success">Return</button></a>
                 </div>
             </nav>
             <div class="container-form">
@@ -62,7 +62,7 @@ class InsertDog extends Component {
                     </div>
                     <div class="field">
                         <p class="control">
-                            <input class="input" type="text" placeholder="Name" onChange={this.handleChange} name="name" />
+                            <input class="input" type="text" placeholder="Name" maxlength="15" onChange={this.handleChange} name="name" />
                         </p>
                     </div>
                     <div class="parameters-dog">
@@ -82,7 +82,7 @@ class InsertDog extends Component {
                             <input class="input" type="text" placeholder="photo" onChange={this.handleChange} name="photo" />
                         </p>
                     </div>
-                    <textarea class="textarea" placeholder="Description..." onChange={this.handleChange} name="description"></textarea>
+                    <textarea class="textarea" placeholder="Description..." maxlength="200" onChange={this.handleChange} name="description"></textarea>
                     <input class="button is-success" type="submit" value="Accept" />
                 </form>
             </div>

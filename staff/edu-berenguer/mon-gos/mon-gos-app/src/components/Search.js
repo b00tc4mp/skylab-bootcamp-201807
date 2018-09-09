@@ -49,12 +49,12 @@ class Search extends Component {
         return <div>
             <nav class="navbar nav">
                 <div class="navbar-start">
-                    <a href="/" class="navbar-item">DOGGY</a>
+                    <a href="/" class="navbar-item logo">MON-GOS</a>
                 </div>
                 <div class="navbar-end">
                     <nav class="breadcrumb has-succeeds-separator" >
                         <ul>
-                            <li>You are a shelter?</li>
+                            <li>Are you a shelter?</li>
                             <li><a href="/#/register" class="navbar-item goShelter ">Register</a></li>
                             <li><a href="/#/login" class="navbar-item goShelter">login</a></li>
                         </ul>
@@ -94,12 +94,12 @@ class Search extends Component {
                     return <div class="card items">
                         <p class="is-size-3">{`${dog.name}`}</p>
                         <div>
-                            <figure>
+                            <figure class="image is-3by2">
                                 <img src={dog.photo} alt="" />
                             </figure>
                         </div>
                         <p>{`${dog.gender}`}</p>
-                        <Link to={`/detailDog/${dog._id}`}><button class="button is-small more-information">More information</button></Link>
+                        <Link to={`/detailDog/${dog._id}`}><button class="button is-small more-information">+</button></Link>
                     </div>
                 })}
             </div>
