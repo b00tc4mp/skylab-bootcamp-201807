@@ -11,8 +11,12 @@ import SavedPost, { SavedPostModelInterface } from "../models/saved-post";
 
 const logic = {
 
-  _isFollowingUser(user: UserModelInterface, targetUser: UserModelInterface): boolean {
-    return User.findOne({ _id: user._id, "followings.user": targetUser._id }) ? true : false;
+  _isFollowingUser(user: UserModelInterface, targetUser: UserModelInterface): Promise<boolean> | never {
+    return Promise.resolve()
+      .then(() => User.findOne({ _id: user._id, "followings.user": targetUser._id }))
+      .then((user: UserModelInterface) => {
+        return (user) ? true : false;
+      });
   },
 
   _isSameUser(user: UserModelInterface, targetUser: UserModelInterface): boolean {
@@ -318,12 +322,15 @@ const logic = {
               targetUser = _targetUser;
 
               if (targetUser.privateAccount) {
-                if (this._isFollowingUser(user, targetUser)) {
-                  return User.find({ "followings.user": targetUser._id }, { password: 0, __v: 0 })
-                    .then((followerUsers: UserModelInterface[]) => followerUsers);
-                } else {
-                  throw new AccessDeniedError(`user ${username} in can not see the follower users of user ${targetUsername}`);
-                }
+                this._isFollowingUser(user, targetUser)
+                  .then((isFollowingUser: boolean) => {
+                    if (isFollowingUser) {
+                      return User.find({ "followings.user": targetUser._id }, { password: 0, __v: 0 })
+                        .then((followerUsers: UserModelInterface[]) => followerUsers);
+                    } else {
+                      throw new AccessDeniedError(`user ${username} in can not see the follower users of user ${targetUsername}`);
+                    }
+                  });
               } else {
                 return User.find({ "followings.user": targetUser._id }, { password: 0, __v: 0 })
                   .then((followerUsers: UserModelInterface[]) => followerUsers);
@@ -382,12 +389,15 @@ const logic = {
               targetUser = _targetUser;
 
               if (targetUser.privateAccount) {
-                if (this._isFollowingUser(user, targetUser)) {
-                  return User.find({ "followers.user": targetUser._id }, { password: 0, __v: 0 })
-                    .then((followingUsers: UserModelInterface[]) => followingUsers);
-                } else {
-                  throw new AccessDeniedError(`user ${username} in can not see the following users of user ${targetUsername}`);
-                }
+                this._isFollowingUser(user, targetUser)
+                  .then((isFollowingUser: boolean) => {
+                    if (isFollowingUser) {
+                      return User.find({ "followers.user": targetUser._id }, { password: 0, __v: 0 })
+                        .then((followingUsers: UserModelInterface[]) => followingUsers);
+                    } else {
+                      throw new AccessDeniedError(`user ${username} in can not see the following users of user ${targetUsername}`);
+                    }
+                  });
               } else {
                 return User.find({ "followers.user": targetUser._id }, { password: 0, __v: 0 })
                   .then((followingUsers: UserModelInterface[]) => followingUsers);
@@ -478,14 +488,17 @@ const logic = {
             .populate("likes");
         } else {
           if (targetUser.privateAccount) {
-            if (this._isFollowingUser(user, targetUser)) {
-              return Post.findById(postId)
-                .populate({ path: "user", select: "-password -__v" })
-                .populate("comments")
-                .populate("likes");
-            } else {
-              throw new AccessDeniedError(`user ${username} can not see the post of user ${targetUser.username}`);
-            }
+            this._isFollowingUser(user, targetUser)
+              .then((isFollowingUser: boolean) => {
+                if (isFollowingUser) {
+                  return Post.findById(postId)
+                    .populate({ path: "user", select: "-password -__v" })
+                    .populate("comments")
+                    .populate("likes");
+                } else {
+                  throw new AccessDeniedError(`user ${username} can not see the post of user ${targetUser.username}`);
+                }
+              });
           } else {
             return Post.findById(postId)
               .populate({ path: "user", select: "-password -__v" })
@@ -551,15 +564,18 @@ const logic = {
               targetUser = _targetUser;
 
               if (targetUser.privateAccount) {
-                if (this._isFollowingUser(user, targetUser)) {
-                  return Post.find({ user: targetUser._id })
-                    .populate({ path: "user", select: "-password -__v" })
-                    .populate("comments")
-                    .populate("likes")
-                    .sort({ createdAt: -1 });
-                } else {
-                  throw new AccessDeniedError(`user ${username} in can not see the posts of user ${targetUsername}`);
-                }
+                this._isFollowingUser(user, targetUser)
+                  .then((isFollowingUser: boolean) => {
+                    if (isFollowingUser) {
+                      return Post.find({ user: targetUser._id })
+                        .populate({ path: "user", select: "-password -__v" })
+                        .populate("comments")
+                        .populate("likes")
+                        .sort({ createdAt: -1 });
+                    } else {
+                      throw new AccessDeniedError(`user ${username} in can not see the posts of user ${targetUsername}`);
+                    }
+                  });
               } else {
                 return Post.find({ user: targetUser._id })
                   .populate({ path: "user", select: "-password -__v" })
@@ -628,16 +644,19 @@ const logic = {
               targetUser = _targetUser;
 
               if (targetUser.privateAccount) {
-                if (this._isFollowingUser(user, targetUser)) {
-                  const postsId = targetUser.savedPosts.map(savedPost => savedPost.post);
+                this._isFollowingUser(user, targetUser)
+                  .then((isFollowingUser: boolean) => {
+                    if (isFollowingUser) {
+                      const postsId = targetUser.savedPosts.map(savedPost => savedPost.post);
 
-                  return Post.find({ _id: { $in: postsId } })
-                    .populate({ path: "user", select: "-password -__v" })
-                    .populate("comments")
-                    .populate("likes");
-                } else {
-                  throw new AccessDeniedError(`user ${username} can not see the saved posts of user ${targetUsername}`);
-                }
+                      return Post.find({ _id: { $in: postsId } })
+                        .populate({ path: "user", select: "-password -__v" })
+                        .populate("comments")
+                        .populate("likes");
+                    } else {
+                      throw new AccessDeniedError(`user ${username} can not see the saved posts of user ${targetUsername}`);
+                    }
+                  });
               } else {
                 const postsId = targetUser.savedPosts.map(savedPost => savedPost.post);
 

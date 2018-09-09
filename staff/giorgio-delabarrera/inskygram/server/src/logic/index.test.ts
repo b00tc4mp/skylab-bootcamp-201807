@@ -50,6 +50,99 @@ describe("logic", () => {
     password = `123${Math.random()}`;
   });
 
+  describe("is following user", () => {
+    let user: UserModelInterface;
+
+    let targetUser: UserModelInterface;
+    let targetUsername: string;
+    let targetEmail: string;
+    let targetPassword: string;
+    let targetFilename: string;
+
+    let privateUser: UserModelInterface;
+    let privateUsername: string;
+    let privateEmail: string;
+    let privatePassword: string;
+    let privateFilename: string;
+
+    beforeEach(async () => {
+      user = await User.create({ username, email, password });
+
+      targetUsername = `user-${Math.random()}`;
+      targetEmail = `user-${Math.random()}@inskygram.com`;
+      targetPassword = `123${Math.random()}`;
+      targetFilename = `${targetUsername}.png`;
+
+      targetUser = await User.create({ username: targetUsername, email: targetEmail, password: targetPassword });
+
+      privateUsername = `user-${Math.random()}`;
+      privateEmail = `user-${Math.random()}@inskygram.com`;
+      privatePassword = `123${Math.random()}`;
+      privateFilename = `${privateUsername}.png`;
+
+      privateUser = await User.create({ username: privateUsername, email: privateEmail, password: privatePassword, privateAccount: true });
+    });
+
+    test("should not have permission to see the private user", () => {
+      return Promise.resolve()
+        .then(() => logic._isFollowingUser(user, privateUser))
+        .then((res: boolean) => expect(res).toBeFalsy());
+    });
+
+    test("should have permission to see the private user", () => {
+      return Promise.resolve()
+        .then(() => {
+          const following = new Following();
+          following.user = privateUser._id;
+          following.createdAt = new Date();
+
+          user.followings.push(following);
+
+          return user.save();
+        })
+        .then((user: UserModelInterface) => {
+          const follower = new Follower();
+          follower.user = user._id;
+          follower.createdAt = new Date();
+
+          privateUser.followers.push(follower);
+
+          return privateUser.save();
+        })
+        .then(() => logic._isFollowingUser(user, privateUser))
+        .then((res: boolean) => expect(res).toBeTruthy());
+    });
+  });
+
+  describe("is same user", () => {
+    let user: UserModelInterface;
+    let targetUser: UserModelInterface;
+
+    beforeEach(async () => {
+      user = await User.create({ username, email, password });
+
+      targetUser = await User.findById(user._id);
+    });
+
+    test("should be the same user", () => {
+      return Promise.resolve()
+        .then(() => expect(logic._isSameUser(user, targetUser)).toBeTruthy());
+    });
+
+    test("should not be the same user", () => {
+      return Promise.resolve()
+        .then(async () => {
+          const privateUsername = `user-${Math.random()}`;
+          const privateEmail = `user-${Math.random()}@inskygram.com`;
+          const privatePassword = `123${Math.random()}`;
+          const privateFilename = `${privateUsername}.png`;
+
+          return await User.create({ username: privateUsername, email: privateEmail, password: privatePassword, privateAccount: true });
+        })
+        .then((privateUser: UserModelInterface) => expect(logic._isSameUser(user, privateUser)).toBeFalsy());
+    });
+  });
+
   describe("register", () => {
     test("should register correctly", () => {
       return logic.register(username, email, password)
