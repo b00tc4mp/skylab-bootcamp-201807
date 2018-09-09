@@ -126,11 +126,12 @@ const logic = {
   respondToGameRequest(nickname, destination, gameID, answer, token) {
     return Promise.resolve()
       .then(() => {
-        ç
         this._validateStringField('nickname', nickname)
         this._validateStringField('destination', destination)
         this._validateStringField('gameID', gameID)
         this._validateStringField('token', token)
+        if (typeof answer !== 'boolean') throw new Error('answer is not type boolean')
+
         return this._call(`user/${nickname}/respondtorequest`, 'POST', {
           'Content-Type': 'application/json',
           'authorization': `bearer ${token}`

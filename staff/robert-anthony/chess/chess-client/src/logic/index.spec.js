@@ -12,6 +12,7 @@ const {env: {MONGO_URL, JWT_SECRET}} = process
 const jwt = require('jsonwebtoken')
 const fetchMock = require('fetch-mock');
 
+
 describe('logic', () => {
   const email = `blippy-${Math.random()}@mail.com`, password = `123-${Math.random()}`,
     nickname = `blippy-${Math.random()}`
@@ -243,131 +244,6 @@ describe('logic', () => {
     )
   })
 
-  false && describe('update user', () => {
-    const newPassword = `${password}-${Math.random()}`
-
-    beforeEach(() => User.create({email, password}))
-
-    it('should update password correctly', () =>
-      logic.updatePassword(email, password, newPassword)
-        .then(res => {
-          expect(res).to.be.true
-
-          return User.findOne({email})
-        })
-        .then(user => {
-          expect(user).to.exist
-          expect(user.email).to.equal(email)
-          expect(user.password).to.equal(newPassword)
-        })
-    )
-
-    it('should fail on trying to update password with an undefined email', () =>
-      logic.updatePassword(undefined, password, newPassword)
-        .catch(err => err)
-        .then(({message}) => expect(message).to.equal(`invalid email`))
-    )
-
-    it('should fail on trying to update password with an empty email', () =>
-      logic.updatePassword('', password, newPassword)
-        .catch(err => err)
-        .then(({message}) => expect(message).to.equal(`invalid email`))
-    )
-
-    it('should fail on trying to update password with a numeric email', () =>
-      logic.updatePassword(123, password, newPassword)
-        .catch(err => err)
-        .then(({message}) => expect(message).to.equal(`invalid email`))
-    )
-
-    it('should fail on trying to update password with an undefined password', () =>
-      logic.updatePassword(email, undefined, newPassword)
-        .catch(err => err)
-        .then(({message}) => expect(message).to.equal(`invalid password`))
-    )
-
-    it('should fail on trying to update password with an empty password', () =>
-      logic.updatePassword(email, '', newPassword)
-        .catch(err => err)
-        .then(({message}) => expect(message).to.equal(`invalid password`))
-    )
-
-    it('should fail on trying to update password with a numeric password', () =>
-      logic.updatePassword(email, 123, newPassword)
-        .catch(err => err)
-        .then(({message}) => expect(message).to.equal(`invalid password`))
-    )
-
-    it('should fail on trying to update password with an undefined new password', () =>
-      logic.updatePassword(email, password, undefined)
-        .catch(err => err)
-        .then(({message}) => expect(message).to.equal(`invalid new password`))
-    )
-
-    it('should fail on trying to update password with an empty new password', () =>
-      logic.updatePassword(email, password, '')
-        .catch(err => err)
-        .then(({message}) => expect(message).to.equal(`invalid new password`))
-    )
-
-    it('should fail on trying to update password with a numeric new password', () =>
-      logic.updatePassword(email, password, 123)
-        .catch(err => err)
-        .then(({message}) => expect(message).to.equal(`invalid new password`))
-    )
-  })
-
-  false && describe('unregister user', () => {
-    beforeEach(() => User.create({email, password}))
-
-    it('should unregister user correctly', () =>
-      logic.unregisterUser(email, password)
-        .then(res => {
-          expect(res).to.be.true
-
-          return User.findOne({email})
-        })
-        .then(user => {
-          expect(user).not.to.exist
-        })
-    )
-
-    it('should fail on trying to unregister user with an undefined email', () =>
-      logic.unregisterUser(undefined, password)
-        .catch(err => err)
-        .then(({message}) => expect(message).to.equal(`invalid email`))
-    )
-
-    it('should fail on trying to unregister user with an empty email', () =>
-      logic.unregisterUser('', password)
-        .catch(err => err)
-        .then(({message}) => expect(message).to.equal(`invalid email`))
-    )
-
-    it('should fail on trying to unregister user with a numeric email', () =>
-      logic.unregisterUser(123, password)
-        .catch(err => err)
-        .then(({message}) => expect(message).to.equal(`invalid email`))
-    )
-
-    it('should fail on trying to unregister user with an undefined password', () =>
-      logic.unregisterUser(email, undefined)
-        .catch(err => err)
-        .then(({message}) => expect(message).to.equal(`invalid password`))
-    )
-
-    it('should fail on trying to unregister user with an empty password', () =>
-      logic.unregisterUser(email, '')
-        .catch(err => err)
-        .then(({message}) => expect(message).to.equal(`invalid password`))
-    )
-
-    it('should fail on trying to unregister user with a numeric password', () =>
-      logic.unregisterUser(email, 123)
-        .catch(err => err)
-        .then(({message}) => expect(message).to.equal(`invalid password`))
-    )
-  })
 
   describe('get games for user', () => {
 
@@ -449,6 +325,38 @@ describe('logic', () => {
     )
 
 
+    it('should fail for wrong token', () =>
+      logic.getGamesForUser(nickname, token2)
+        .catch(err => err)
+        .then(({message}) => expect(message).to.equal(`invalid token`))
+    )
+
+    it('should fail for bad token', () =>
+      logic.getGamesForUser(nickname, "12345")
+        .catch(err => err)
+        .then(({message}) => expect(message).to.equal(`jwt malformed`))
+    )
+
+    it('should fail for empty token', () =>
+      logic.getGamesForUser(nickname, "")
+        .catch(err => err)
+        .then(({message}) => expect(message).to.equal(`invalid token`))
+    )
+
+    it('should fail for undefined token', () =>
+      logic.getGamesForUser(nickname, undefined)
+        .catch(err => err)
+        .then(({message}) => expect(message).to.equal(`invalid token`))
+    )
+
+    it('should fail for numeric token', () =>
+      logic.getGamesForUser(nickname, 123456)
+        .catch(err => err)
+        .then(({message}) => expect(message).to.equal(`invalid token`))
+    )
+
+
+
   })
 
 
@@ -460,11 +368,12 @@ describe('logic', () => {
 
     beforeEach(async () => {
 
-      await User.create({email: randomEmail({domain: 'example.com'}), password, nickname: nickname0})
-      await User.create({email: randomEmail({domain: 'example.com'}), password, nickname: nicknameA})
-      await User.create({email: randomEmail({domain: 'example.com'}), password, nickname: nicknameB})
-      await User.create({email: randomEmail({domain: 'example.com'}), password, nickname: nicknameC})
+      await User.create({email: "hoppy" + Math.random() + "@somewhere.com" , password, nickname: nickname0})
+      await User.create({email: "hoppy" + Math.random() + "@somewhere.com", password, nickname: nicknameA})
+      await User.create({email: "hoppy" + Math.random() + "@somewhere.com", password, nickname: nicknameB})
+      await User.create({email: "hoppy" + Math.random() + "@somewhere.com", password, nickname: nicknameC})
       token = await logic.authenticate(nickname0, password)
+      token2 = await logic.authenticate(nicknameA, password)
 
     })
 
@@ -485,6 +394,38 @@ describe('logic', () => {
           expect(res.length).to.equal(1)
           expect(res[0]).to.equal(nicknameA)
         })
+    )
+
+
+
+    it('should fail for wrong token', () =>
+      logic.getUsersForString(nickname0, 'cadab', token2)
+        .catch(err => err)
+        .then(({message}) => expect(message).to.equal(`invalid token`))
+    )
+
+    it('should fail for bad token', () =>
+      logic.getUsersForString(nickname0, 'cadab', "12345")
+        .catch(err => err)
+        .then(({message}) => expect(message).to.equal(`jwt malformed`))
+    )
+
+    it('should fail for empty token', () =>
+      logic.getUsersForString(nickname0, 'cadab', "")
+        .catch(err => err)
+        .then(({message}) => expect(message).to.equal(`invalid token`))
+    )
+
+    it('should fail for undefined token', () =>
+      logic.getUsersForString(nickname0, 'cadab', undefined)
+        .catch(err => err)
+        .then(({message}) => expect(message).to.equal(`invalid token`))
+    )
+
+    it('should fail for numeric token', () =>
+      logic.getUsersForString(nickname0, 'cadab', 12345)
+        .catch(err => err)
+        .then(({message}) => expect(message).to.equal(`invalid token`))
     )
 
     it('should return empty array for empty string', () =>
@@ -530,8 +471,8 @@ describe('logic', () => {
 
   describe('acknowledge game over for user', () => {
 
-    const email1 = randomEmail({domain: 'example.com'})
-    const email2 = randomEmail({domain: 'example.com'})
+    const email1 = "hoppy" + Math.random() + "@somewhere.com"
+    const email2 = "hoppy" + Math.random() + "@somewhere.com"
     let game0State, game1State
 
 
@@ -616,6 +557,38 @@ describe('logic', () => {
         })
     )
 
+
+
+    it('should fail for wrong token', () =>
+      logic.onAcknowledgeGameOver(nickname2, game1State.id, token)
+        .catch(err => err)
+        .then(({message}) => expect(message).to.equal(`invalid token`))
+    )
+
+    it('should fail for bad token', () =>
+      logic.onAcknowledgeGameOver(nickname2, game1State.id, "abcdefg")
+        .catch(err => err)
+        .then(({message}) => expect(message).to.equal(`jwt malformed`))
+    )
+
+    it('should fail for empty token', () =>
+      logic.onAcknowledgeGameOver(nickname2, game1State.id, "")
+        .catch(err => err)
+        .then(({message}) => expect(message).to.equal(`invalid token`))
+    )
+
+    it('should fail for undefined token', () =>
+      logic.onAcknowledgeGameOver(nickname2, game1State.id, undefined)
+        .catch(err => err)
+        .then(({message}) => expect(message).to.equal(`invalid token`))
+    )
+
+    it('should fail for numeric token', () =>
+      logic.onAcknowledgeGameOver(nickname2, game1State.id, 12345)
+        .catch(err => err)
+        .then(({message}) => expect(message).to.equal(`invalid token`))
+    )
+
     it('should fail for incorrect nickname ', () =>
       logic.onAcknowledgeGameOver("georgeJones", game0State.id, token)
         .catch(err => err)
@@ -665,8 +638,8 @@ describe('logic', () => {
 
   describe('make a game move', () => {
 
-    const email1 = randomEmail({domain: 'example.com'})
-    const email2 = randomEmail({domain: 'example.com'})
+    const email1 = "hoppy" + Math.random() + "@somewhere.com"
+    const email2 = "hoppy" + Math.random() + "@somewhere.com"
     const badName = "buddy"
 
     let gameInProgress, gameInCheckmate, gameOneBeforeCheckmate, gameOneBeforeStalemate, gameNotInCheck
@@ -679,6 +652,7 @@ describe('logic', () => {
       await User.create({email: email1, password, nickname: nickname})
       await User.create({email: email2, password, nickname: nickname2})
       token = await logic.authenticate(nickname, password)
+      token = await logic.authenticate(nickname2, password)
 
       let engine = new Chess() // game in progress
       let uuid = uuidv1()
@@ -805,6 +779,59 @@ describe('logic', () => {
         })
     )
 
+
+
+    it('should fail for wrong token', () =>
+      logic.makeAGameMove(nickname, nickname2, {
+        from: "e2",
+        to: "e4",
+        promotion: "q"
+      }, gameInProgress.id, token2)
+        .catch(err => err)
+        .then(({message}) => expect(message).to.equal(`invalid token`))
+    )
+
+    it('should fail for bad token', () =>
+      logic.makeAGameMove(nickname, nickname2, {
+        from: "e2",
+        to: "e4",
+        promotion: "q"
+      }, gameInProgress.id, "12345")
+        .catch(err => err)
+        .then(({message}) => expect(message).to.equal(`jwt malformed`))
+    )
+
+    it('should fail for empty token', () =>
+      logic.makeAGameMove(nickname, nickname2, {
+        from: "e2",
+        to: "e4",
+        promotion: "q"
+      }, gameInProgress.id, "")
+        .catch(err => err)
+        .then(({message}) => expect(message).to.equal(`invalid token`))
+    )
+
+    it('should fail for undefined token', () =>
+      logic.makeAGameMove(nickname, nickname2, {
+        from: "e2",
+        to: "e4",
+        promotion: "q"
+      }, gameInProgress.id, undefined)
+        .catch(err => err)
+        .then(({message}) => expect(message).to.equal(`invalid token`))
+    )
+
+    it('should fail for numeric token', () =>
+      logic.makeAGameMove(nickname, nickname2, {
+        from: "e2",
+        to: "e4",
+        promotion: "q"
+      }, gameInProgress.id, 11324)
+        .catch(err => err)
+        .then(({message}) => expect(message).to.equal(`invalid token`))
+    )
+
+
     it('should succeed for game one before check with correct nickname, move and gameID with game in progress', () =>
       Promise.resolve()
         .then(_ => {
@@ -912,169 +939,94 @@ describe('logic', () => {
     )
 
     it('should fail for correct nickname, move and missing gameID', () =>
-      Promise.resolve()
-        .then(_ => {
-          fetchMock.post(`http://localhost:8080/api/user/${nickname}/game/anythingAtAllItDoesntMatterAsItsNeverCalled`, {
-            "status": 400,
-            "message": `something`
-          })
-          return logic.makeAGameMove(nickname, nickname2, {from: "e2", to: "e4", promotion: "q"}, '', token)
-        })
+      logic.makeAGameMove(nickname, nickname2, {from: "e2", to: "e4", promotion: "q"}, '', token)
+
         .catch(err => err)
         .then(({message}) => expect(message).to.equal(`invalid gameID`))
     )
 
     it('should fail for correct nickname, move and undefined gameID', () =>
-      Promise.resolve()
-        .then(_ => {
-          fetchMock.post(`http://localhost:8080/api/user/${nickname}/game/anythingAtAllItDoesntMatterAsItsNeverCalled`, {
-            "status": 400,
-            "message": `something`
-          })
-          return logic.makeAGameMove(nickname, nickname2, {from: "e2", to: "e4", promotion: "q"}, undefined, token)
-        })
+      logic.makeAGameMove(nickname, nickname2, {from: "e2", to: "e4", promotion: "q"}, undefined, token)
         .catch(err => err)
         .then(({message}) => expect(message).to.equal(`invalid gameID`))
     )
 
     it('should fail for correct nickname, move and numeric gameID', () =>
-      Promise.resolve()
-        .then(_ => {
-          fetchMock.post(`http://localhost:8080/api/user/${nickname}/game/anythingAtAllItDoesntMatterAsItsNeverCalled`, {
-            "status": 400,
-            "message": `something`
-          })
-          return logic.makeAGameMove(nickname, nickname2, {from: "e2", to: "e4", promotion: "q"}, 123, token)
-        })
+      logic.makeAGameMove(nickname, nickname2, {from: "e2", to: "e4", promotion: "q"}, 123, token)
+
         .catch(err => err)
         .then(({message}) => expect(message).to.equal(`invalid gameID`))
     )
 
 
     it('should fail for correct move, gameID and bad nickname', () =>
-      Promise.resolve()
-        .then(_ => {
-          fetchMock.post(`http://localhost:8080/api/user/${badName}/game/${gameInProgress.id}`, {
-            "status": 400,
-            "message": `game with id ${gameInProgress.id} does not belong to user buddy`
-          })
-          return logic.makeAGameMove(badName, nickname2, {
-            from: "e2",
-            to: "e4",
-            promotion: "q"
-          }, gameInProgress.id, token)
-        })
+      logic.makeAGameMove(badName, nickname2, {
+        from: "e2",
+        to: "e4",
+        promotion: "q"
+      }, gameInProgress.id, token)
         .catch(err => err)
-        .then(({message}) => expect(message).to.equal(`game with id ${gameInProgress.id} does not belong to user ${badName}`))
+        .then(({message}) => expect(message).to.equal(`invalid token`))
     )
 
     it('should fail for correct move, gameID and missing nickname', () =>
-      Promise.resolve()
-        .then(_ => {
-          fetchMock.post(`http://localhost:8080/api/user/doesntmatter/game/${gameInProgress.id}`, {
-            "status": 400,
-            "message": `something`
-          })
-          return logic.makeAGameMove("", nickname2, {from: "e2", to: "e4", promotion: "q"}, gameInProgress.id, token)
-        })
+      logic.makeAGameMove("", nickname2, {from: "e2", to: "e4", promotion: "q"}, gameInProgress.id, token)
         .catch(err => err)
         .then(({message}) => expect(message).to.equal(`invalid nickname`))
     )
     it('should fail for correct move, gameID and undefined nickname', () =>
-      Promise.resolve()
-        .then(_ => {
-          fetchMock.post(`http://localhost:8080/api/user/doesntmatter/game/${gameInProgress.id}`, {
-            "status": 400,
-            "message": `something`
-          })
-          return logic.makeAGameMove(undefined, nickname2, {
-            from: "e2",
-            to: "e4",
-            promotion: "q"
-          }, gameInProgress.id, token)
-        })
+      logic.makeAGameMove(undefined, nickname2, {
+        from: "e2",
+        to: "e4",
+        promotion: "q"
+      }, gameInProgress.id, token)
         .catch(err => err)
         .then(({message}) => expect(message).to.equal(`invalid nickname`))
     )
 
 
     it('should fail for correct move, gameID and numeric nickname', () =>
-      Promise.resolve()
-        .then(_ => {
-          fetchMock.post(`http://localhost:8080/api/user/doesntmatter/game/${gameInProgress.id}`, {
-            "status": 400,
-            "message": `something`
-          })
-          return  logic.makeAGameMove(123, nickname2, {from: "e2", to: "e4", promotion: "q"}, gameInProgress.id, token)
-        })
+      logic.makeAGameMove(123, nickname2, {from: "e2", to: "e4", promotion: "q"}, gameInProgress.id, token)
         .catch(err => err)
         .then(({message}) => expect(message).to.equal(`invalid nickname`))
     )
 
     it('should fail for correct nickname, gameID and malformed move', () =>
-      Promise.resolve()
-        .then(_ => {
-          fetchMock.post(`http://localhost:8080/api/user/${nickname}/game/${gameInProgress.id}`, {
-            "status": 400,
-            "message": `move is of wrong format`
-          })
-          return logic.makeAGameMove(nickname, nickname2, {x: "e2", to: "e4", promotion: "q"}, gameInProgress.id, token)
-        })
+      logic.makeAGameMove(nickname, nickname2, {x: "e2", to: "e4", promotion: "q"}, gameInProgress.id, token)
         .catch(err => err)
         .then(({message}) => expect(message).to.equal(`move is of wrong format`))
     )
 
     it('should fail for correct nickname, gameID and empty move', () =>
-      Promise.resolve()
-        .then(_ => {
-          fetchMock.post(`http://localhost:8080/api/user/${nickname}/game/${gameInProgress.id}`, {
-            "status": 400,
-            "message": `move is of wrong format`
-          })
-          return   logic.makeAGameMove(nickname, nickname2, {}, gameInProgress.id, token)
-        })
+      logic.makeAGameMove(nickname, nickname2, {}, gameInProgress.id, token)
         .catch(err => err)
         .then(({message}) => expect(message).to.equal(`move is of wrong format`))
     )
 
     it('should fail for correct nickname, gameID and undefined move', () =>
-      Promise.resolve()
-        .then(_ => {
-          fetchMock.post(`http://localhost:8080/api/user/${nickname}/game/${gameInProgress.id}`, {
-            "status": 400,
-            "message": `move is of wrong format`
-          })
-          return   logic.makeAGameMove(nickname, nickname2, undefined, gameInProgress.id, token)
-        })
+      logic.makeAGameMove(nickname, nickname2, undefined, gameInProgress.id, token)
         .catch(err => err)
         .then(({message}) => expect(message).to.equal(`move is of wrong format`))
     )
 
     it('should fail for correct nickname, gameID and numeric move', () =>
-      Promise.resolve()
-        .then(_ => {
-          fetchMock.post(`http://localhost:8080/api/user/${nickname}/game/${gameInProgress.id}`, {
-            "status": 400,
-            "message": `move is of wrong format`
-          })
-          return     logic.makeAGameMove(nickname, nickname2, 112, gameInProgress.id, token)
-        })
+      logic.makeAGameMove(nickname, nickname2, 112, gameInProgress.id, token)
         .catch(err => err)
         .then(({message}) => expect(message).to.equal(`move is of wrong format`))
-
     )
 
     afterEach(done => {
       fetchMock.restore()
       done()
+
     })
   }) // end make a game move
 
 
   describe('request new game', () => {
 
-    const email1 = randomEmail({domain: 'example.com'})
-    const email2 = randomEmail({domain: 'example.com'})
+    const email1 = "hoppy" + Math.random() + "@somewhere.com"
+    const email2 = "hoppy" + Math.random() + "@somewhere.com"
     nicknameA = uuidv1()
     nicknameB = uuidv1()
 
@@ -1082,6 +1034,7 @@ describe('logic', () => {
       await User.create({email: email1, password, nickname: nicknameA})
       await User.create({email: email2, password, nickname: nicknameB})
       token = await logic.authenticate(nicknameA, password)
+      token2 = await logic.authenticate(nicknameB, password)
     })
 
     it('should succeed with correct requester and destination', () =>
@@ -1098,6 +1051,38 @@ describe('logic', () => {
           return Game.find({initiator: nicknameA, acceptor: nicknameB})
         })
         .then(games => expect(games.length).to.equal(1))
+    )
+
+
+
+    it('should fail for wrong token', () =>
+      logic.requestGame(nicknameA, nicknameB, token2)
+        .catch(err => err)
+        .then(({message}) => expect(message).to.equal(`invalid token`))
+    )
+
+    it('should fail for bad token', () =>
+      logic.requestGame(nicknameA, nicknameB, "1234")
+        .catch(err => err)
+        .then(({message}) => expect(message).to.equal(`jwt malformed`))
+    )
+
+    it('should fail for empty token', () =>
+      logic.requestGame(nicknameA, nicknameB, "")
+        .catch(err => err)
+        .then(({message}) => expect(message).to.equal(`invalid token`))
+    )
+
+    it('should fail for undefined token', () =>
+      logic.requestGame(nicknameA, nicknameB, undefined)
+        .catch(err => err)
+        .then(({message}) => expect(message).to.equal(`invalid token`))
+    )
+
+    it('should fail for numeric token', () =>
+      logic.requestGame(nicknameA, nicknameB, 1234)
+        .catch(err => err)
+        .then(({message}) => expect(message).to.equal(`invalid token`))
     )
 
     it('should fail when game already exists between players ', () =>
@@ -1180,8 +1165,8 @@ describe('logic', () => {
   describe('respond to game request', () => {
 
 
-    const email1 = randomEmail({domain: 'example.com'})
-    const email2 = randomEmail({domain: 'example.com'})
+    const email1 = "hoppy" + Math.random() + "@somewhere.com"
+    const email2 = "hoppy" + Math.random() + "@somewhere.com"
     let nicknameA
     let nicknameB
     let game
@@ -1203,6 +1188,7 @@ describe('logic', () => {
       await User.create({email: email1, password, nickname: nicknameA})
       await User.create({email: email2, password, nickname: nicknameB})
       token = await logic.authenticate(nicknameB, password)
+      token2 = await logic.authenticate(nicknameA, password)
 
       game = await Game.create({
         initiator: nicknameA,
@@ -1222,118 +1208,160 @@ describe('logic', () => {
       })
     })
 
-    expect('it to succeed with correct usernames, gameID and afffirmative answer', () =>
+
+    it('should to succeed with correct usernames, gameID and affirmative answer', () =>
       logic.respondToGameRequest(nicknameB, nicknameA, game.id, true, token)
-        .then(res => {
-          expect(res).to.deep.equal({message: 'game requested'})
-          expect(game.state).to.equal('playing')
+        .then(({message}) => {
+          expect(message).to.equal("game request response sent")
+        return  Game.findOne({_id:ObjectId(game.id)})
         })
+        .then(game => expect(game.state).to.equal('playing'))
     )
 
-    expect('it to succeed with correct usernames, gameID and negative answer', () => {
-      logic.respondToGameRequest(nicknameB, nicknameA, game.id, true, token)
-        .then(res => {
-          expect(res).to.deep.equal({message: 'game requested'})
-          expect(game.state).to.equal('terminated')
-        })
-    })
 
-    expect('it to fail with string answer', () => {
+
+    it('should succeed with correct usernames, gameID and negative answer', () =>
+      logic.respondToGameRequest(nicknameB, nicknameA, game.id, false, token)
+        .then(({message}) => {
+          expect(message).to.equal("game request response sent")
+          return  Game.findOne({_id:ObjectId(game.id)})
+        })
+        .then(game => expect(game.state).to.equal('terminated'))
+    )
+
+
+
+
+
+    it('should fail for wrong token', () =>
+      logic.respondToGameRequest(nicknameB, nicknameA, game.id, true, token2)
+        .catch(err => err)
+        .then(({message}) => expect(message).to.equal(`invalid token`))
+    )
+
+    it('should fail for bad token', () =>
+      logic.respondToGameRequest(nicknameB, nicknameA, game.id, true, "something")
+        .catch(err => err)
+        .then(({message}) => expect(message).to.equal(`jwt malformed`))
+    )
+
+    it('should fail for empty token', () =>
+      logic.respondToGameRequest(nicknameB, nicknameA, game.id, true, "")
+        .catch(err => err)
+        .then(({message}) => expect(message).to.equal(`invalid token`))
+    )
+
+    it('should fail for undefined token', () =>
+      logic.respondToGameRequest(nicknameB, nicknameA, game.id, true, undefined)
+        .catch(err => err)
+        .then(({message}) => expect(message).to.equal(`invalid token`))
+    )
+
+    it('should fail for numeric token', () =>
+      logic.respondToGameRequest(nicknameB, nicknameA, game.id, true, 123)
+        .catch(err => err)
+        .then(({message}) => expect(message).to.equal(`invalid token`))
+    )
+
+
+
+    it('should fail with string answer', () => {
       logic.respondToGameRequest(nicknameB, nicknameA, badID, 'true', token)
         .catch(err => err)
         .then(({message}) => expect(message).to.equal(`answer is not type boolean`))
     })
 
-    expect('it to fail with missing answer', () => {
+    it('should fail with missing answer', () => {
       logic.respondToGameRequest(nicknameB, nicknameA, badID, '', token)
         .catch(err => err)
         .then(({message}) => expect(message).to.equal(`answer is not type boolean`))
     })
 
-    expect('it to fail with undefined answer', () => {
+    it('should fail with undefined answer', () => {
       logic.respondToGameRequest(nicknameB, nicknameA, badID, undefined, token)
         .catch(err => err)
         .then(({message}) => expect(message).to.equal(`answer is not type boolean`))
     })
 
-    expect('it to fail with numeric answer', () => {
+    it('should  fail with numeric answer', () => {
       logic.respondToGameRequest(nicknameB, nicknameA, badID, 123, token)
         .catch(err => err)
         .then(({message}) => expect(message).to.equal(`answer is not type boolean`))
     })
 
 
-    expect('it to fail with wrong game id', () => {
+    it('should  fail with wrong game id', () => {
       logic.respondToGameRequest(nicknameB, nicknameA, badID, true, token)
         .catch(err => err)
         .then(({message}) => expect(message).to.equal(`game with id ${badID} does not exist`))
     })
 
-    expect('it to fail with missing game id', () => {
+    it('should  fail with missing game id', () => {
       logic.respondToGameRequest(nicknameB, nicknameA, '', true, token)
         .catch(err => err)
         .then(({message}) => expect(message).to.equal(`invalid gameID`))
     })
 
-    expect('it to fail with undefined game id', () => {
+    it('should  fail with undefined game id', () => {
       logic.respondToGameRequest(nicknameB, nicknameA, undefined, true, token)
         .catch(err => err)
         .then(({message}) => expect(message).to.equal(`invalid gameID`))
     })
 
-    expect('it to fail with numeric game id', () => {
+    it('should  fail with numeric game id', () => {
       logic.respondToGameRequest(nicknameB, nicknameA, 123, true, token)
         .catch(err => err)
         .then(({message}) => expect(message).to.equal(`invalid gameID`))
     })
 
-    expect('it to fail with wrong confirmer', () => {
+    it('should fail with wrong confirmer', () => {
       logic.respondToGameRequest("smithy", nicknameA, game.id, true, token)
         .catch(err => err)
-        .then(({message}) => expect(message).to.equal(`game with id ${game.id} does not belong to smithy`))
+        .then(({message}) => expect(message).to.equal(`invalid token`))
     })
 
-    expect('it to fail with missing confirmer', () => {
+    it('should fail with missing confirmer', () => {
       logic.respondToGameRequest('', nicknameA, game.id, true, token)
         .catch(err => err)
-        .then(({message}) => expect(message).to.equal(`invalid confirmer`))
+        .then(({message}) => expect(message).to.equal(`invalid nickname`))
     })
 
-    expect('it to fail with undefined confirmer', () => {
+    it('should  fail with undefined confirmer', () => {
       logic.respondToGameRequest(undefined, nicknameA, game.id, true, token)
         .catch(err => err)
-        .then(({message}) => expect(message).to.equal(`invalid confirmer`))
+        .then(({message}) => expect(message).to.equal(`invalid nickname`))
     })
 
-    expect('it to fail with numeric confirmer', () => {
+    it('should  fail with numeric confirmer', () => {
       logic.respondToGameRequest(123, nicknameA, game.id, true, token)
         .catch(err => err)
-        .then(({message}) => expect(message).to.equal(`invalid confirmer`))
+        .then(({message}) => expect(message).to.equal(`invalid nickname`))
     })
 
-    expect('it to fail with wrong destination', () => {
+    it('should  to fail with wrong destination', () => {
       logic.respondToGameRequest(nicknameA, "will robinson", game.id, true, token)
         .catch(err => err)
-        .then(({message}) => expect(message).to.equal(`game with id ${game.id} does not belong to smithy`))
+        .then(({message}) => expect(message).to.equal(`invalid token`))
     })
 
-    expect('it to fail with missing destination', () => {
+    it('should  fail with missing destination', () => {
       logic.respondToGameRequest(nicknameA, "", game.id, true, token)
         .catch(err => err)
         .then(({message}) => expect(message).to.equal(`invalid destination`))
     })
 
-    expect('it to fail with undefined destination', () => {
+    it('should  fail with undefined destination', () => {
       logic.respondToGameRequest(nicknameA, undefined, game.id, true, token)
         .catch(err => err)
         .then(({message}) => expect(message).to.equal(`invalid destination`))
     })
 
-    expect('it to fail with undefined destination', () => {
+    it('should fail with undefined destination', () => {
       logic.respondToGameRequest(nicknameA, 123, game.id, true, token)
         .catch(err => err)
         .then(({message}) => expect(message).to.equal(`invalid destination`))
     })
+
 
 
   })
