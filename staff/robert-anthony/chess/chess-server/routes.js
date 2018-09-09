@@ -146,7 +146,7 @@ router.post('/user/:nickname/respondtorequest', [validateJwt, jsonBodyParser], (
 
   const {params: {nickname}, body: {destination,gameID, answer}} = req
 
-  logger.info('/user/:nickname/respondtoreques', { "context": "router.js", "nickname":nickname, "destination": destination,  "gameID":gameID, "answer": answer })
+  logger.info('/user/:nickname/respondtorequest', { "context": "router.js", "nickname":nickname, "destination": destination,  "gameID":gameID, "answer": answer })
 
   logic.respondToGameRequest(nickname, destination,gameID, answer)
     .then(_ => {

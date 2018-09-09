@@ -362,7 +362,7 @@ const logic = {
         this._validateStringField("confirmer", confirmer)
         this._validateStringField("destination", destination)
         this._validateStringField("gameID", gameID)
-        if (typeof answer !== 'boolean') throw LogicError('answer is not type boolean')
+        if (typeof answer !== 'boolean') throw new LogicError('answer is not type boolean')
         return Game.findOne({ _id: mongoose.Types.ObjectId(gameID) })
       })
       .then(game => {
