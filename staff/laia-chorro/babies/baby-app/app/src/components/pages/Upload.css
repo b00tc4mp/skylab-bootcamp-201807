@@ -25,12 +25,48 @@
     border-radius: .45rem;
 }
 
+.upload-container .fileContainer {
+    box-shadow: none;
+}
+
+.upload-container .uploadPictureContainer {
+    margin: 10px !important;
+    width: 170px !important;
+    padding: 5px !important;
+}
+
+.upload-container .uploadPictureContainer .deleteImage {
+    width: 19px;
+    height: 19px;
+    background: #cfd8dc;
+
+    font-size: 14px;
+    line-height: 19px;
+}
+
+.upload-container .uploadPictureContainer img.uploadPicture {
+    width: 100%;
+    height: 105px;
+    object-fit: cover;
+}
+
+
+.upload-map-field-container {
+    height: 700px;
+    position: relative;
+    overflow: hidden;
+}
+
+.upload-map-container {
+    position: relative;
+}
+
 .upload-title {
     text-transform: uppercase;
     font-size: 14px;
     margin-bottom: 25px;
 }
 
-.upload-form-photo-input {
+/*.upload-form-photo-input {
     display: none;
-}
+}*/

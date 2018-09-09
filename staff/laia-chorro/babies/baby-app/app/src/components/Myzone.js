@@ -16,13 +16,13 @@ class Myzone extends Component {
 
     render() {
 
-        const { onLogout, onProductUpload, onRemoveFavourite, idFavs } = this.props
+        const { onLogout, onProductUpload, onRemoveFavourite, onUploadProfilePhoto, idFavs, profilePhoto } = this.props
 
         return (
             <div>
-                <Sidebar />
+                <Sidebar profilePhoto={profilePhoto}/>
                 <main className="main-zone">
-                    <Route path="/profile" exact render={() => <Profile onLogout={onLogout}/>} />
+                    <Route path="/profile" exact render={() => <Profile onUploadProfilePhoto={onUploadProfilePhoto} profilePhoto={profilePhoto} onLogout={onLogout}/>} />
                     <Route path="/mylist" exact render={() => <Mylist/>} />
                     <Route path="/favourites" exact render={() => <Favourites onRemoveFavourite={onRemoveFavourite} idFavs={idFavs}/>} />
                     <Route path="/reviews" exact render={() => <Reviews />} />

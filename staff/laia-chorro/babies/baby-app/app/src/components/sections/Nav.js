@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Avatar from '@material-ui/core/Avatar';
+import Avatar from '@material-ui/core/Avatar'
 import { Link } from 'react-router-dom'
 import logic from '../../logic'
 import './Nav.css';
@@ -7,27 +7,32 @@ import './Nav.css';
 class Nav extends Component {
     state = {
         loggedIn: logic.loggedIn,
+        photoUrl: null
       }
 
     static getDerivedStateFromProps(props, state) {
-        if (props.loggedIn !== state.loggedIn) {
-          return {
-            loggedIn: props.loggedIn
-          }
-        }
-    
+        if (props.loggedIn !== state.loggedIn)
+          return { loggedIn: props.loggedIn}
+
+        if (props.profilePhoto !== state.photoUrl)
+          return { photoUrl: props.profilePhoto}
+
         return null; // Return null to indicate no change to state.
     }
 
-    /*getProfilePhoto = () => {
-        if (logic.getUserField('photos') && logic.getUserField('photos').length)
-            return logic.getUserField('photos')[0]
-        
-        return false
-    }*/
+    componentDidMount() {
+        this.getProfilePhoto()
+    }
+
+    getProfilePhoto = () => {
+        const photoUrl = logic.getUserField('photo')
+
+        if (logic.loggedIn && photoUrl) 
+            this.setState({ photoUrl })
+    }
     
     render() {
-        const { loggedIn } = this.state
+        const { loggedIn, photoUrl } = this.state
 
 
         //<i className="material-icons">face</i>
@@ -42,10 +47,34 @@ class Nav extends Component {
                 </button>
 
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul className="navbar-nav mr-auto">
+                    {/*<ul className="navbar-nav mr-auto">
                         
-                    </ul>
+        </ul>*/}
+                    <form className="form-inline my-2 my-lg-0">
+                    {/*<form className="navbar-form navbar-left" role="search">*/}
+                        <div className="input-group">
+                            <input type="text" className="form-control" placeholder="Search" name="search" />
+                            <div className="input-group-btn">
+                                <button className="btn btn-default" type="submit"><i className="glyphicon glyphicon-search"></i></button>
+                                {/*<button className="btn btn-default" type="submit"><i className="material-icons md-dark">search</i></button>*/}
+                            </div>
+                        </div>
+                    </form>
                     <ul className="nav navbar-nav navbar-right">
+
+                        {/*<li className="nav-item">
+                            <div className="container">
+                                <form action="/action_page.php">
+                                    <div className="input-group">
+                                    <input type="text" className="form-control" placeholder="Search" name="search" />
+                                    <div className="input-group-btn">
+                                        <button className="btn btn-default" type="submit"><i className="glyphicon glyphicon-search"></i></button>
+                                    </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </li>*/}
+                        
                         {!loggedIn && <li className="nav-item">
                         <Link className="nav-link" to='/login'>LogIn</Link>
                         </li>}
@@ -55,7 +84,10 @@ class Nav extends Component {
                         {loggedIn && <li className="nav-item">
                             <Link className="nav-link" to='/mylist'>
                                 <div className="nav-myzone-link">
-                                    {logic.getUserField('photos') && logic.getUserField('photos').length ? <Avatar alt="profile photo" src={logic.getUserField('photos')[0]} className="photo" /> : <i className="material-icons md-36">face</i>}
+                                {photoUrl?
+                                    <Avatar alt="profile photo" size={36} style={{ alignSelf: 'center' }} src={photoUrl} className="photo" /> : 
+                                    <i className="material-icons md-36">face</i>
+                                }
                                     <span>My zone</span>
                                 </div>
                             </Link>
@@ -72,3 +104,52 @@ class Nav extends Component {
 }
 
 export default Nav
+
+/*
+<div class="container">
+    <nav class="navbar navbar-default" role="navigation">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>    
+      </div>
+      <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav">
+          <li class="navbar-left"><a href="#">Left 1</a></li>
+          <li class="navbar-left"><a href="#">Left 2</a></li>
+          <li class="active"><a href="#">Center 1</a></li>
+          <li><a href="#">Center 2</a></li>
+          <li><a href="#">Center 3</a></li>
+          <li class="navbar-right"><a href="#">Right 2</a></li>
+          <li class="navbar-right"><a href="#">Right 1</a></li>
+        </ul>
+      </div>
+    </nav>
+    <h1>Hello</h1>
+</div>
+
+*/
+
+
+
+/*
+<div class="collapse navbar-collapse" id="bs-example-navbar">
+          <form class="navbar-form navbar-right" role="search">
+            <div class="form-group">
+              Navbar text
+              <input type="text" class="form-control" placeholder="Search">
+            </div>
+            <button type="submit" class="btn">Search</button>
+          </form>
+          <ul class="nav navbar-nav navbar-left">
+                <li class="active"><a href="/">Home</a>
+                </li>
+                <li><a href="/products">Products</a>
+                </li>
+                <li><a href="/about-us">About Us</a>
+                </li>
+          </ul>
+        </div><!-- /.navbar-collapse -->
+*/

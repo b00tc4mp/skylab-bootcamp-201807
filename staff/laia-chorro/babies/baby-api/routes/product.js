@@ -16,11 +16,11 @@ const jsonBodyParser = bodyParser.json()
 //TODO use upload.array() from multer to filter how many files can be pass as form-data
 productRouter.post('/me/prod/:user', [validateJwt, upload.any()], (req, res) => {
     const { params: { user }, body: { title, description, price, cathegory, longitude, latitude }, files } = req
-
+debugger;
     if (files) {
         const location = [JSON.parse(longitude), JSON.parse(latitude)]
         const data = { title, description, price: JSON.parse(price), cathegory, location }
-
+debugger;
         logicProduct.addProduct(user, data, files)
             .then(productId => logicUser.addProduct(user, productId))
             .then(product => res.status(201).json({ message: 'product uploaded', user, product }))

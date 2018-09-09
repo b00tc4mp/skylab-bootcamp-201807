@@ -16,10 +16,15 @@ class App extends Component {
 		loggedIn: logic.loggedIn,
 		errorMsg: null,
 		showFeedback: false,
-        idFavs: []
+		idFavs: [],
+		profilePhoto: null,
 	}
 
 	hideFeedback = () => this.setState({errorMsg: null, showFeedback: false})
+
+	componentDidMount() {
+        this.getProfilePhoto()
+    }
 
 	onRegister = (email, password) => {
 		this.hideFeedback()
@@ -81,7 +86,7 @@ class App extends Component {
 			//.catch(({ message }) => this.setState({ errorMsg: message }))
 	}
 
-	onRemoveFavourite = (idProduct) => {
+	onRemoveFavourite = idProduct => {
 		return Promise.resolve()
 			.then(() => logic.removeProductFromFavourites(idProduct))
 			.then(() => logic.getPrivateUser() )
@@ -89,6 +94,22 @@ class App extends Component {
 			.catch(res => {
 			})
 			//.catch(({ message }) => this.setState({ errorMsg: message }))
+	}
+
+	getProfilePhoto = () => {
+        const profilePhoto = logic.getUserField('photo')
+
+        if (logic.loggedIn && profilePhoto)
+			this.setState({ profilePhoto })
+    }
+
+	onUploadProfilePhoto = photo => {
+		return Promise.resolve()
+			.then(() => logic.uploadProfilePhoto(photo))
+			.then(() => logic.getPrivateUser() )
+			.then(() => this.getProfilePhoto() )
+			.catch(res => {
+			})
 	}
 
   /*onUpdate = (password, newUsername, newPassword) => {
@@ -103,19 +124,24 @@ class App extends Component {
 
 
 	render() {
-		const { loggedIn, errorMsg, showFeedback, idFavs } =  this.state
-		const { onRegister, onLogin, onLogout, onProductUpload, hideFeedback, getIdFavs, onAddFavourite, onRemoveFavourite } = this
+		const { loggedIn, errorMsg, showFeedback, idFavs, profilePhoto } =  this.state
+		const { onRegister, onLogin, onLogout, onProductUpload, hideFeedback, getIdFavs, onAddFavourite, onRemoveFavourite, onUploadProfilePhoto } = this
 
 		return (
 			<div className="App">
-				<Nav loggedIn={loggedIn} />
+				<Nav loggedIn={loggedIn} profilePhoto={profilePhoto}/>
 
 				<Route path="/" exact render={() => <Home onAddFavourite={onAddFavourite} onRemoveFavourite={onRemoveFavourite} idFavs={idFavs} getIdFavs={getIdFavs}/>} />
 				<Route path="/login" exact render={() => <Login onLogin={onLogin} errorMsg={errorMsg} showFeedback={showFeedback} hideFeedback={hideFeedback}/>} />
 				<Route path="/register" exact render={() => <Register onRegister={onRegister} errorMsg={errorMsg} showFeedback={showFeedback} hideFeedback={hideFeedback}/>} />
 				<Route path="/(profile|mylist|favourites|reviews|prod/upload)" exact render={() => 
 					loggedIn ? 
-						<Myzone onLogout={onLogout} onProductUpload={onProductUpload} onRemoveFavourite={onRemoveFavourite} idFavs={idFavs} /> : 
+						<Myzone onLogout={onLogout} 
+								onProductUpload={onProductUpload} 
+								onRemoveFavourite={onRemoveFavourite} 
+								idFavs={idFavs} 
+								onUploadProfilePhoto={onUploadProfilePhoto}
+								profilePhoto={profilePhoto}/> : 
 						<Redirect to="/login" />
 				} />
 

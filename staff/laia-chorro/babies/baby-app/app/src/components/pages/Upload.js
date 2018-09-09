@@ -1,13 +1,24 @@
 import React, { Component } from 'react'
 import GoogleMapsContainer from '../cards/GoogleMapsContainer'
-//import InputPhotoPreview from '../cards/InputPhotoPreview'
+import Autocomplete from '../maps/Autocomplete'
 import logic from '../../logic'
 import './Upload.css'
 import { withRouter } from 'react-router-dom'
 
-import Icon from '@material-ui/core/Icon';
-import IconButton from '@material-ui/core/IconButton';
-import PhotoCamera from '@material-ui/icons/PhotoCamera';
+import Icon from '@material-ui/core/Icon'
+import IconButton from '@material-ui/core/IconButton'
+import PhotoCamera from '@material-ui/icons/PhotoCamera'
+
+
+import ImageUploader from 'react-images-upload'
+
+const mapContainerStyle = {
+    height: '510px',
+    position: 'relative',
+    width: '100%',
+    border: '1px solid #ced4da',
+    borderRadius: '.45rem'
+  }
 
 
 class Upload extends Component {
@@ -16,12 +27,13 @@ class Upload extends Component {
         cathegory: 'general',
         price: null,
         description: null,
-        photo: null,
-        longitude: -3.703790,
-        latitude: 40.416775
+        longitude: 2.173403, // Default: Barcelona
+        latitude: 41.385064,
         //errorMsg: null,
-        //showFeedback: false
+        //showFeedback: false,
+        pictures: []
     }
+
 
     /*componentDidMount() {
         this.props.hideFeedback()
@@ -39,6 +51,7 @@ class Upload extends Component {
         return null; // Return null to indicate no change to state.
     }*/
 
+
     keepTitle = e => this.setState({title: e.target.value})
 
     keepCathegory = e => this.setState({cathegory: e.target.value})
@@ -47,14 +60,17 @@ class Upload extends Component {
 
     keepDescription = e => this.setState({description: e.target.value})
 
-    keepPhoto = e => this.setState({photo: e.target.files[0]})
+    keepPhoto = picture => this.setState({ pictures: this.state.pictures.concat(picture) })
+
+    onKeepLocation = (latitude, longitude) => this.setState({ latitude, longitude })
 
     submitUpload = e => {
         e.preventDefault()
 
-        const { title, cathegory, price, description, photo, longitude, latitude } = this.state
+        const { title, cathegory, price, description, pictures, longitude, latitude } = this.state
 
-        this.props.onProductUpload(title, cathegory, price, description, photo, longitude, latitude)
+        this.props.onProductUpload(title, cathegory, price, description, pictures, longitude, latitude)
+
     }
 
 
@@ -97,23 +113,28 @@ class Upload extends Component {
                     <div className="upload-container">
                         <h2 className="upload-title">Photos</h2>
                         <div className="form-group">
-                            {/*<label>File input</label>
-                            <input onChange={this.keepPhoto} type="file" className="form-control-file"/>*/}
-                            <input onChange={this.keepPhoto} accept="image/*" className="upload-form-photo-input" id="icon-button-file" type="file" />
-                            <label htmlFor="icon-button-file">
-                                <IconButton color="primary" className="upload-form-photo-button" component="span">
-                                    <PhotoCamera />
-                                </IconButton>
-                        </label>
-                        {/*<InputPhotoPreview />*/}
+                            <ImageUploader
+                                withPreview={true}
+                                withIcon={false}
+                                buttonText='Choose images'
+                                onChange={this.keepPhoto}
+                                imgExtension={['.jpg', '.jpeg']}
+                                maxFileSize={5242880}
+                                label={'Choose until 4 images Max file size: 5mb, accepted: jpg'}
+                                fileContainerStyle={{
+                                    width: '170px',
+                                    margin: '10px',
+                                    boxShadow: 'none'
+                                  }}
+                            />
                         </div>
                     </div>
 
-                    <div className="upload-container">
+                    <div className="upload-container upload-map-field-container">
                         <h2 className="upload-title">Map</h2>
-                        {/*<div className="form-group">*/}
-                            {/*<GoogleMapsContainer/>*/}
-                        {/*</div>*/}
+                        <div className="upload-map-container">
+                            <Autocomplete mapContainerStyle={mapContainerStyle} keepLocation={this.onKeepLocation} />
+                        </div>                        
                     </div>
 
                     <button type="submit" className="btn btn-primary">Upload Product</button>

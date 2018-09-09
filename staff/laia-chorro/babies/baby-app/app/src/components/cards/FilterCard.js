@@ -71,20 +71,6 @@ class FilterCard extends Component {
         filters: {}
     };
 
-
-    /*
-    const userId = user._id,
-                    dayBefore = new Date(date),
-                    dayAfter = new Date(date)
-
-                    dayBefore.setDate(dayBefore.getDate() - 1)
-                    dayAfter.setDate(dayAfter.getDate() + 1)
-
-                return this._notes.find({ userId, date: { 
-                                        $gt: dayBefore, 
-                                        $lt: dayAfter } }).toArray() || []
-    */
-
     onFiltersChange = (propName, prop, defaultVal) => {
         if (prop === defaultVal) {
             delete this.state.filters[propName]

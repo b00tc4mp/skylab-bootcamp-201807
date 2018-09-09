@@ -96,6 +96,7 @@ const logic = {
         return this._userId && this._userToken
     },
 
+    //LOGGIN//
     register(email, password) {
         return Promise.resolve()
             .then(() => {
@@ -115,7 +116,7 @@ const logic = {
                 validate._email(email)
                 validate._stringField('password', password)
 
-                return this._call('authenticate', 'post', {
+                return this._call('authenticate', 'POST', {
                     'Content-Type': 'application/json'
                 }, JSON.stringify({ email, password }), 200)
                     .then(res => res.json())
@@ -131,7 +132,7 @@ const logic = {
     getPrivateUser() {
         return Promise.resolve()
             .then(() => {
-                return this._call(`/me/${this._userId}`, 'get', { 
+                return this._call(`/me/${this._userId}`, 'GET', { 
                     'Authorization': `bearer ${this._userToken}`,
                     'Content-Type': 'application/json' 
                 }, undefined, 200)
@@ -154,6 +155,23 @@ const logic = {
         sessionStorage.clear()
     },
 
+    //USER//
+    uploadProfilePhoto(photo) {
+        return Promise.resolve()
+        .then(() => {
+            validate._objectField('photo', photo)
+
+            const body = new FormData()
+            body.append('image', photo)
+
+            return this._call(`me/${this._userId}/photo`, 'PATCH', { 
+                authorization: `bearer ${this._userToken}` 
+            }, body, 200)
+                .then(() => true)
+        })
+    },
+
+    //PRODUCTS//
     getSimpleProductsByFilters(filters) {
         return Promise.resolve()
             .then(() => {
@@ -168,30 +186,37 @@ const logic = {
             })
     },
 
-   uploadProduct(title, cathegory, price, description, photo, longitude, latitude) {
+   uploadProduct(title, cathegory, price, description, photos, longitude, latitude) {
 
         return Promise.resolve()
             .then(() => {
+                debugger;
                 validate._stringField('title', title)
                 validate._stringField('cathegory', cathegory)
                 validate._floatField('price', price, 0, 999999)
                 validate._stringField('description', description)
-                validate._objectField('photo', photo)
+                if (photos) photos.forEach((photo, index) => {
+                                validate._objectField(`photo${index}`, photo)
+                            })
+                
                 validate._longitude(longitude)
                 validate._latitude(latitude)
                 //validate._location([longitude, latitude])
-
+debugger;
                 const body = new FormData()
 
                 body.append('title', title)
                 body.append('cathegory', cathegory)
                 body.append('price', price)
                 body.append('description', description)
-                body.append('image', photo)
+                //body.append('image', photo)
+                photos.forEach((photo, index) => {
+                    body.append(`image${index}`, photo)
+                })
                 body.append('longitude', longitude)
                 body.append('latitude', latitude)
-                
-                return this._call(`me/prod/${this._userId}`, 'post', { 
+        debugger;
+                return this._call(`me/prod/${this._userId}`, 'POST', { 
                     authorization: `bearer ${this._userToken}` 
                 }, body, 201)
                     .then(() => true)
