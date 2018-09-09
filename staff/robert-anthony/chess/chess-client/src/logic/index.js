@@ -1,13 +1,12 @@
 const logic = {
   //  url: 'https://tranquil-ridge-60570.herokuapp.com/api/',
-  url: 'http://localhost:8080/api/',
+  url: 'http://localhost:8080/api',
 
   _call(path, method, headers, body, expectedStatus) {
     const config = {method}
 
     if (headers) config.headers = headers
     if (body) config.body = body
-
     return fetch(`${this.url}/${path}`, config)
       .then(res => {
         if (res.status === expectedStatus) {
@@ -182,7 +181,7 @@ const logic = {
         this._validateStringField('opponent', opponent)
         this._validateStringField('gameID', gameID)
         this._validateStringField('token', token)
-        if (move === undefined || typeof move !== 'object' || !move.from || !move.to || !move.promotion) throw new LogicError('move is of wrong format')
+        if (move === undefined || typeof move !== 'object' || !move.from || !move.to || !move.promotion) throw new Error('move is of wrong format')
         return this._call(`user/${nickname}/game/${gameID}`, 'POST', {
           'Content-Type': 'application/json',
           'authorization': `bearer ${token}`
