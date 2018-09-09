@@ -22,7 +22,7 @@ const logic = {
 
 
   register(email, password, nickname) {
-    logger.info('register', { "context": "logic/index.js", "email": email, "password": password, "nickname": nickname })
+    logger.debug(`register,  CONTEXT: "logic/index.js", EMAIL:${email}, PASSWORD:${password},  NICKNAME: ${nickname}`)
 
     return Promise.resolve()
       .then(() => {
@@ -47,7 +47,7 @@ const logic = {
   },
 
   authenticate(nickname, password) {
-    logger.info('authenticate', { "context": "logic/index.js", "nickname": nickname, "password": password})
+    logger.debug(`authenticate,  CONTEXT: "logic/index.js", NICKNAME:${nickname}, PASSWORD:${password}`)
 
     return Promise.resolve()
       .then(() => {
@@ -69,7 +69,7 @@ const logic = {
 /*
 
   updatePassword(nickname, password, newPassword) {
-    logger.info('updatePassword', { "context": "logic/index.js", "nickname": nickname, "password": password})
+    logger.debug('updatePassword', { "context": "logic/index.js", "nickname": nickname, "password": password})
 
     return Promise.resolve()
       .then(() => {
@@ -95,7 +95,7 @@ const logic = {
 */
 
   unregisterUser(nickname, password) {
-    logger.info('unregisterUser', { "context": "logic/index.js", "nickname": nickname, "password": password})
+    logger.debug(`unregisterUser,  CONTEXT: "logic/index.js", NICKNAME:${nickname}, PASSWORD:${password}`)
 
     return Promise.resolve()
       .then(() => {
@@ -125,7 +125,7 @@ const logic = {
 
 
   getGamesForUser(nickname) {
-    logger.info('getGamesForUser', { "context": "logic/index.js", "nickname": nickname})
+    logger.debug(`getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:${nickname}`)
 
     return Promise.resolve()
       .then(_ => {
@@ -163,7 +163,7 @@ const logic = {
 
   /* called from sockets */
   userConnected(nickname) {
-    logger.info('userConnected', { "context": "logic/index.js", "nickname": nickname})
+    logger.debug(`userConnected,  CONTEXT: "logic/index.js", NICKNAME:${nickname}`)
 
     return Promise.resolve()
       .then(_ => {
@@ -178,7 +178,7 @@ const logic = {
   },
 
   getUsersForString(nickname, term) {
-    logger.info('getUsersForString', { "context": "logic/index.js", "term": term})
+    logger.debug(`getUsersForString,  CONTEXT: "logic/index.js", TERM:${term}`)
 
     return Promise.resolve()
       .then(_ => {
@@ -220,7 +220,7 @@ const logic = {
   */
 
   acknowledgeGameOverForUser(nickname, gameID) {
-    logger.info('acknowledgeGameOverForUser', { "context": "logic/index.js", "nickname": nickname, "gameID": gameID})
+    logger.debug(`acknowledgeGameOverForUser,  CONTEXT: "logic/index.js", NICKNAME:${nickname}, GAMEID:${gameID}`)
 
     return Promise.resolve()
       .then(_ => {
@@ -240,7 +240,7 @@ const logic = {
   },
 
   _createGame(requester, confirmer) {
-    logger.info('_createGame', { "context": "logic/index.js", "requester": requester, "confirmer": confirmer})
+    logger.debug(`_createGame,  CONTEXT: "logic/index.js", REQUESTER:${requester}, CONFIRMER:${confirmer}`)
 
     let game
     return Promise.resolve()
@@ -282,7 +282,7 @@ const logic = {
   },
 
   move(nickname, gameID, move) {
-    logger.info('move', { "context": "logic/index.js", "gameID": gameID, "gameID": gameID,"move":`to: ${move ? move.to : 'undefined'}, from: ${move ? move.from : 'undefined'}, promotion: ${move ? move.promotion : 'undefined'}`})
+    logger.debug(`move,  CONTEXT: "logic/index.js", GAMEID:${gameID}, MOVE:${move ? JSON.stringify(move) : 'undefined'}`)
 
     let game
 
@@ -324,7 +324,7 @@ const logic = {
   },
 
   requestNewGame(requester, destination) {
-    logger.info('requestNewGame', { "context": "logic/index.js", "requester": requester, "destination": destination})
+    logger.debug(`requestNewGame,  CONTEXT: "logic/index.js", REQUESTER:${requester}, DESTINATION:${destination}`)
 
     return Promise.resolve()
       .then(_ => {
@@ -355,7 +355,7 @@ const logic = {
   },
 
   respondToGameRequest(confirmer, destination, gameID, answer) {
-    logger.info('requestNewGame', { "context": "logic/index.js", "confirmer": confirmer, "destination": destination, "gameID":gameID, "answer": answer})
+    logger.debug(`respondToGameRequest,  CONTEXT: "logic/index.js", CONFIRMER:${confirmer}, DESTINATION:${destination}, GAMEID:${gameID}, ANSWER:${answer}`)
 
     return Promise.resolve()
       .then(_ => {

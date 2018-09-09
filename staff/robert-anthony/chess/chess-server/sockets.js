@@ -12,26 +12,26 @@ const socketLogic = {
 
 
   onError(nickname, error) {
-    logger.info('onError', { "context": "sockets.js", "nickname": nickname,"error":error })
+    logger.debug(`onError,  CONTEXT: "sockets.js"", NICKNAME:${nickname}, ERROR:${error}`)
 
     this.io.emit(`error ${nickname}`, error)
   },
 
   gameAcceptedOrRejected(destination) {
-    logger.info('gameAcceptedOrRejected', { "context": "sockets.js", "destination": destination })
+    logger.debug(`gameAcceptedOrRejected,  CONTEXT: "sockets.js"", DESTINATION:${destination}`)
 
     this.io.emit(`update to games ${destination}`)
   },
 
   announceMoveMade(mover, receiver) {
-    logger.info('announceMoveMade', { "context": "sockets.js", "mover": mover,"receiver":receiver })
+    logger.debug(`announceMoveMade,  CONTEXT: "sockets.js"", MOVER:${mover}, RECEIVER:${receiver}`)
 
     this.io.emit(`update to games ${mover}`)
     this.io.emit(`update to games ${receiver}`)
   },
 
   requestConnection(destination) {
-    logger.info('requestConnection', { "context": "sockets.js", "destination": destination })
+    logger.debug(`announceMoveMade,  CONTEXT: "sockets.js"", DESTINATION:${destination}`)
 
     this.io.emit(`update to games ${destination}`)
   },
@@ -41,7 +41,7 @@ const socketLogic = {
   },*/
 
   newGameAdded(confirmer,asker) {
-    logger.info('newGameAdded', { "context": "sockets.js", "confirmer": confirmer,"asker":asker })
+    logger.debug(`newGameAdded,  CONTEXT: "sockets.js"", CONFIRMER:${confirmer}, ASKER:${asker}`)
 
     this.io.emit(`update to games ${confirmer}`)
     this.io.emit(`update to games ${asker}`)
@@ -53,38 +53,14 @@ const socketLogic = {
     this.io = io
 
     io.on('connection', (socket) => {
-      logger.info('on connection', { "context": "sockets.js", "socket id": socket.id })
+      logger.debug(`on connection,  CONTEXT: "sockets.js"", SOCKETID:${socket.id}`)
 
-      /*
 
-            // a reconnection request from client (after unwanted disconnection)
-            socket.on('client has reconnected', (username, cb) => {
-              console.log(chalk.yellow.bgBlue.bold(`Client reconnected with socket ${socket.id}`))
-              // clear any timers related to user (should only be one
-              // so that user is not permanently disconnected
-              this.timers.forEach(timer => {
-                if (timer.username === username) timer.clearTimeout()
-              })
-              this.timers = this.timers.filter(timer => timer.username !== username)
-              // and associate new socket with user
-              if (this._userToSocket.has(username)) {
-                this._userToSocket.set(username, socket)
-                cb(null, `Successfully reset socket for user ${username}`)
-              } else cb(1, `Did not reset socket for user ${username}`)
-            })
-      */
 
-      /*socket.on('disconnect', reason => {
-        console.log(chalk.white.bgBlue.bold(`There was a disconnection on the server for socket ${socket.id}, reason: ${reason}`))
-        let username
-        this._userToSocket.forEach((value, key) => {
-          if (value === socket) username = key
-        })
-        if (username) {
-          this.onUserTemporarilyDisconnect(username)
-        } else console.log(chalk.white.bgRed.bold(`User not encountered for ${socket.id}, on disconnection`))
+     socket.on('disconnect', reason => {
+       logger.debug(`on disconnect,  CONTEXT: "sockets.js"", SOCKETID:${socket.id}, REASON:${reason}`)
 
-      })*/
+     })
 
       socket.on('client alive', nickname => {
        // console.log(chalk.white.bgGreen.bold(`User ${nickname} client alive message received`))
@@ -98,11 +74,14 @@ const socketLogic = {
 */
 
       socket.on('error', client => {
-        logger.info('on error', { "context": "sockets.js", "client": client })
+        logger.debug('on error', { "context": "sockets.js", "client": client })
+        logger.debug(`on error,  CONTEXT: "sockets.js"", client:${client}`)
+
       })
 
       socket.on('authenticated', username => {
-        logger.info('on authenticated', { "context": "sockets.js", "username": username })
+        logger.debug('on authenticated', { "context": "sockets.js", "username": username })
+        logger.debug(`on authenticated,  CONTEXT: "sockets.js"", USERNAME:${username}`)
 
         return Promise.resolve()
           .then(_ => {
