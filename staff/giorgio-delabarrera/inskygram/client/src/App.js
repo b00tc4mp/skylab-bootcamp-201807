@@ -42,7 +42,7 @@ class App extends Component {
   render() {
     const { loggedInUsername, token } = this.state
     return (
-      <div className="App">
+      <div>
         
         <Switch>
           <Route exact path="/" render={() => !this.isLoggedIn() ? <Redirect to="/accounts/login" /> : (
@@ -51,6 +51,7 @@ class App extends Component {
               token={token}
             />
           )} />
+          {/* <Route exact path="/explore" render={() => !this.isLoggedIn() ? <Redirect to="/accounts/login" /> : <ExplorePage loggedInUsername={loggedInUsername} token={token} /> } /> */}
           <Route exact path="/accounts/login" render={() => this.isLoggedIn() ? <Redirect to="/" /> : <LoginPage onLoggedIn={this.onLoggedIn} />} />
           <Route exact path="/accounts/logout" render={() => <LogoutPage onLogout={this.handleLogout} />} />
           <Route exact path="/accounts/register" render={() => this.isLoggedIn() ? <Redirect to="/" /> : <RegisterPage onRegistered={this.onRegistered} />} />

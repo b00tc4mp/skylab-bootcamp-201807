@@ -5,28 +5,30 @@ import logic from '../logic'
 
 class RegisterPage extends Component {
 
-  // goToLogin = (event) => {
-  //   event.preventDefault()
-  //   this.props.history.push('/login')
-  // }
+  state = {
+    registerError: ''
+  }
+
+  goToLogin = event => {
+    event.preventDefault()
+    this.props.history.push('/accounts/login')
+  }
 
   handleRegisterSubmit = (username, email, password) => {
     logic.register(username, email, password)
-      .then(() => console.log('registrado!!!'))
-      .then(() => {
-        logic.authenticate(username, password)
-          .then(token => this.props.onRegistered(username, token))
-      })
-      .catch(error => {
-        console.log(error);
-      })
+      .then(() => logic.authenticate(username, password))
+      .then(token => this.props.onRegistered(username, token))
+      .then(() => this.props.history.push('/'))
+      .catch(({ message }) => this.setState({ registerError: `Upps, ${message}` }))
   }
 
   render() {
     return (
       <div>
-        {/* <Register onSubmit={this.props.onRegisterSubmit} error={this.props.registerError} /> */}
-        <Register onSubmit={this.handleRegisterSubmit} />
+        <h1>Inskygram</h1>
+        <Register onSubmit={this.handleRegisterSubmit} error={this.state.registerError} />
+        <br />
+        <div>Have an account? <a href="#/" onClick={this.goToLogin}>Log in</a></div>
       </div>
     )
   }

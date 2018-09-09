@@ -1,86 +1,68 @@
 import React, { Component } from 'react'
-// import Utils from '../utils/Utils'
+import validator from 'validator';
 
 class Login extends Component {
 
   state = {
     username: '',
     password: '',
-    // usernameError: '',
-    // passwordError: '',
+    usernameError: '',
+    passwordError: '',
   }
 
-  handleUsername = (event) => {
-    this.setState({ username: event.target.value })
-  }
+  handleUsername = event => this.setState({ username: event.target.value })
 
-  handlePassword = (event) => {
-    this.setState({ password: event.target.value })
-  }
+  handlePassword = event => this.setState({ password: event.target.value })
 
   handleSubmit = event => {
     event.preventDefault()
 
-    // let isValid = true
-    // this.setState({ usernameError: '', passwordError: '' })
+    let isValid = true
+    this.setState({ usernameError: '', passwordError: '' })
 
-    // if (Utils.isBlank(this.state.username)) {
-    //   this.setState({ usernameError: `Username can't be blank` })
-    //   isValid = false
-    // }
+    if (validator.isEmpty(this.state.username)) {
+      this.setState({ usernameError: `Username can't be blank` })
+      isValid = false
+    }
 
-    // if (Utils.isBlank(this.state.password)) {
-    //   this.setState({ passwordError: `Password can't be blank` })
-    //   isValid = false
-    // }
+    if (validator.isEmpty(this.state.password)) {
+      this.setState({ passwordError: `Password can't be blank` })
+      isValid = false
+    }
 
-    // if (isValid) {
-      // const { usernameError, passwordError, ...formData } = this.state
-      // this.props.onSubmit(formData)
-    // }
-
-    const { username, password } = this.state
-    this.props.onSubmit(username, password)
+    if (isValid) {
+      const { username, password } = this.state
+      this.props.onSubmit(username, password)
+    }
   }
 
   render() {
     return (
       <form onSubmit={this.handleSubmit}>
+        {
+          this.props.error &&
+          <div className="error">
+            {this.props.error}
+          </div>
+        }
         <div>
           <label htmlFor="username">Username</label>
           <input type="text" name="" id="username" onChange={this.handleUsername} />
+          {
+            this.state.usernameError &&
+            <div className="error">{this.state.usernameError}</div>
+          }
         </div>
         <div>
           <label htmlFor="password">Password</label>
           <input type="password" name="" id="password" onChange={this.handlePassword} />
+          {
+            this.state.passwordError &&
+            <div className="error">{this.state.passwordError}</div>
+          }
         </div>
-        <button type="submit">Login</button>
+        <button type="submit">Log in</button>
       </form>
-      // <form className="form" onSubmit={this.handleSubmit}>
-      //   {
-      //     this.props.error &&
-      //     <div className="form__main-feedback form__main-feedback--invalid">
-      //       {this.props.error}
-      //     </div>
-      //   }
-      //   <div className={'form__field ' + (this.state.usernameError && 'has-error')}>
-      //     <label className="form__label" htmlFor="username">Username</label>
-      //     <input type="text" name="" id="username" className="form__input" onChange={this.handleUsername} />
-      //     {
-      //       this.state.usernameError &&
-      //       <div className="form__feedback form__feedback--invalid">{this.state.usernameError}</div>
-      //     }
-      //   </div>
-      //   <div className={'form__field ' + (this.state.passwordError && 'has-error')}>
-      //     <label className="form__label" htmlFor="password">Password</label>
-      //     <input type="password" name="" id="password" className="form__input" onChange={this.handlePassword} />
-      //     {
-      //       this.state.passwordError &&
-      //       <div className="form__feedback form__feedback--invalid">{this.state.passwordError}</div>
-      //     }
-      //   </div>
-      //   <button type="submit" className="form__submit">Login</button>
-      // </form>
     )
   }
 }

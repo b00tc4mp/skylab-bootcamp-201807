@@ -12,7 +12,7 @@ import SavedPost, { SavedPostModelInterface } from "../models/saved-post";
 const logic = {
 
   _isFollowingUser(user: UserModelInterface, targetUser: UserModelInterface): boolean {
-    return User.findOne({ _id: user._id }, { "followings.user": targetUser._id }) ? true : false;
+    return User.findOne({ _id: user._id, "followings.user": targetUser._id }) ? true : false;
   },
 
   _isSameUser(user: UserModelInterface, targetUser: UserModelInterface): boolean {

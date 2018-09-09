@@ -5,24 +5,28 @@ import logic from "../logic"
 
 class LoginPage extends Component {
 
-  // goToRegister = (event) => {
-  //   event.preventDefault()
-  //   this.props.history.push('/join')
-  // }
+  state = {
+    loginError: ''
+  }
+
+  goToRegister = event => {
+    event.preventDefault()
+    this.props.history.push('/accounts/register')
+  }
 
   handleLoginSubmit = (username, password) => {
     logic.authenticate(username, password)
       .then(token => this.props.onLoggedIn(username, token))
-      .catch(error => {
-        console.log(error);
-        // this.setState({ loginError: `Upps, ${error.message}` })
-      })
+      .catch(({ message }) => this.setState({ loginError: `Upps, ${message}` }))
   }
 
   render() {
     return (
       <div>
-        <Login onSubmit={this.handleLoginSubmit} />
+        <h1>Inskygram</h1>
+        <Login onSubmit={this.handleLoginSubmit} error={this.state.loginError} />
+        <br/>
+        <div>Don't have an account? <a href="#/" onClick={this.goToRegister}>Sign up</a></div>
       </div>
     )
   }

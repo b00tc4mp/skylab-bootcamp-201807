@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 import logic from '../logic'
 import WallPostItem from '../components/WallPostItem';
+import Header from '../components/Header';
 
 class WallPage extends Component {
 
@@ -30,6 +31,7 @@ class WallPage extends Component {
   render() {
     return (
       <div>
+        <Header />
         {
           this.state.posts && this.state.posts.map((post) =>
             (

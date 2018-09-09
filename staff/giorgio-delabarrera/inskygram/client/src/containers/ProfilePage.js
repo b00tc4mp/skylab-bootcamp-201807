@@ -16,7 +16,7 @@ class ProfilePage extends Component {
 
     Promise.resolve()
       .then(() => {
-        if (!!loggedInUsername) {
+        if (loggedInUsername) {
           if (loggedInUsername === username) {
             return logic.retrieveUser(username, undefined, token)
           } else {
@@ -33,7 +33,7 @@ class ProfilePage extends Component {
         this.setState({ user })
       })
       .then(() => {
-        if (!!loggedInUsername) {
+        if (loggedInUsername) {
           if (loggedInUsername === username) {
             return logic.listUserPosts(username, undefined, token)
           } else {
@@ -63,7 +63,7 @@ class ProfilePage extends Component {
   }
 
   render() {
-    const { username, loggedInUsername, token } = this.props
+    const { username, loggedInUsername } = this.props
     return (
       <div>
         <div>
