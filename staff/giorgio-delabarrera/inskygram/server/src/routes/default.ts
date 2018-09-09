@@ -9,20 +9,6 @@ config();
 
 const router: Router = Router();
 
-router.get("/recents", (req: Request, res: Response) => {
-  const perPage = (req.query.per_page) ? Number(req.query.per_page) : undefined;
-  const page = (req.query.page) ? Number(req.query.page) : undefined;
-
-  logic.listRecentPosts(perPage, page)
-    .then((posts: PostModelInterface[]) => res.status(200).json(posts))
-    .catch((err: Error) => {
-      const { message } = err;
-      const status = statusError(err);
-
-      res.status(status).json(message);
-    });
-});
-
 router.get("/search", (req: Request, res: Response) => {
   const { query: { q } } = req;
 

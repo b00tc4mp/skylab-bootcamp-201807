@@ -144,4 +144,19 @@ router.get("/me/wall", validateJwt, (req: Request, res: Response) => {
     });
 });
 
+router.get("/me/explore", validateJwt, (req: Request, res: Response) => {
+  const username = req.user;
+  const perPage = (req.query.per_page) ? Number(req.query.per_page) : undefined;
+  const page = (req.query.page) ? Number(req.query.page) : undefined;
+
+  logic.listExplorePosts(username, perPage, page)
+    .then((posts: PostModelInterface[]) => res.status(200).json(posts))
+    .catch((err: Error) => {
+      const { message } = err;
+      const status = statusError(err);
+
+      res.status(status).json(message);
+    });
+});
+
 export default router;

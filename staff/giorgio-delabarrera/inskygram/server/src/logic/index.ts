@@ -800,10 +800,21 @@ const logic = {
       .then(() => true);
   },
 
-  listRecentPosts(perPage: number = 10, page: number = 0): Promise<PostModelInterface[]> | never {
+  listExplorePosts(username: string, perPage: number = 10, page: number = 0): Promise<PostModelInterface[]> | never {
+    let user: UserModelInterface;
+
     // TODO: optimize join post with user
     return Promise.resolve()
       .then(() => {
+        if (!username) { throw new LogicError("invalid username"); }
+
+        return User.findOne({ username });
+      })
+      .then((_user: UserModelInterface) => {
+        if (!_user) { throw new NotFoundError(`user with username ${username} does not exists`); }
+
+        user = _user;
+
         return User.find({ privateAccount: false }, "_id");
       })
       .then((publicUsers: UserModelInterface[]) => {

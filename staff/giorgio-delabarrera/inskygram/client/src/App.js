@@ -40,20 +40,15 @@ class App extends Component {
   onRegistered = (username, token) => this.onLoggedIn(username, token)
 
   render() {
-    // const { username, token } = this.state
+    const { loggedInUsername, token } = this.state
     return (
       <div className="App">
+        
         <Switch>
-          {/* <Route exact path="/" render={() => this.isLoggedIn() ? <Redirect to="/files" /> : <Landing />} /> */}
-          {/* <Route path="/register" render={() => this.isLoggedIn() ? <Redirect to="/files" /> : <Register />} />
-        <Route path="/login" render={() => this.isLoggedIn() ? <Redirect to="/files" /> : <Login onLoggedIn={this.onLoggedIn} />} />
-        <Route path="/files" render={() => this.isLoggedIn() ? <Files username={username} token={token} onLogout={this.onLogout} /> : <Redirect to="/" />} /> */}
-          {/* <Route path="/register" render={() => <RegisterPage />} */}
-
           <Route exact path="/" render={() => !this.isLoggedIn() ? <Redirect to="/accounts/login" /> : (
             <WallPage
-              loggedInUsername={this.state.loggedInUsername}
-              token={this.state.token}
+              loggedInUsername={loggedInUsername}
+              token={token}
             />
           )} />
           <Route exact path="/accounts/login" render={() => this.isLoggedIn() ? <Redirect to="/" /> : <LoginPage onLoggedIn={this.onLoggedIn} />} />
@@ -61,34 +56,33 @@ class App extends Component {
           <Route exact path="/accounts/register" render={() => this.isLoggedIn() ? <Redirect to="/" /> : <RegisterPage onRegistered={this.onRegistered} />} />
           <Route exact path="/accounts/edit" render={() => !this.isLoggedIn() ? <Redirect to="/accounts/login" /> : (
             <EditProfilePage
-              loggedInUsername={this.state.loggedInUsername}
-              token={this.state.token}
+              loggedInUsername={loggedInUsername}
+              token={token}
             />
           )
           } />
           <Route exact path="/accounts/password/change" render={() => !this.isLoggedIn() ? <Redirect to="/accounts/login" /> : (
             <ChangePasswordPage
-              loggedInUsername={this.state.loggedInUsername}
-              token={this.state.token}
+              loggedInUsername={loggedInUsername}
+              token={token}
             />
           )
           } />
-          <Route exact path="/p/new" render={() => !this.isLoggedIn() ? <Redirect to="/accounts/login" /> : <CreationPostPage loggedInUsername={this.state.loggedInUsername} token={this.state.token} />} />
+          <Route exact path="/p/new" render={() => !this.isLoggedIn() ? <Redirect to="/accounts/login" /> : <CreationPostPage loggedInUsername={loggedInUsername} token={token} />} />
           <Route path="/p/:id" render={props => (
             <PostDetailPage
               postId={props.match.params.id}
-              loggedInUsername={this.state.loggedInUsername}
-              token={this.state.token}
+              loggedInUsername={loggedInUsername}
+              token={token}
             />
           )} />
           <Route path="/:username" render={props => (
             <ProfilePage
               username={props.match.params.username}
-              loggedInUsername={this.state.loggedInUsername}
-              token={this.state.token}
+              loggedInUsername={loggedInUsername}
+              token={token}
             />
           )} />
-
         </Switch>
       </div>
     )

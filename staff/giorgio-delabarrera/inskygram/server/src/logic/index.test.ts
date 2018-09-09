@@ -1650,7 +1650,7 @@ describe("logic", () => {
     });
   });
 
-  describe("list recent posts", () => {
+  describe("list explore posts", () => {
     let user: UserModelInterface;
     let filename: string;
 
@@ -1735,17 +1735,17 @@ describe("logic", () => {
 
     afterEach(() => rimraf.sync(`${__dirname}/test`));
 
-    test("should list recent posts correctly of only the public users", () => {
-      return logic.listRecentPosts()
+    test("should list explore posts correctly of only the public users", () => {
+      return logic.listExplorePosts(username)
         .then((posts: PostModelInterface[]) => expect(posts).toHaveLength(2));
     });
 
-    test("should list recent posts correctly of only the public users with pagination", () => {
-      return logic.listRecentPosts(1)
+    test("should list explore posts correctly of only the public users with pagination", () => {
+      return logic.listExplorePosts(username, 1)
         .then((posts: PostModelInterface[]) => {
           expect(posts).toHaveLength(1);
 
-          return logic.listRecentPosts(1, 1);
+          return logic.listExplorePosts(username, 1, 1);
         })
         .then((posts: PostModelInterface[]) => expect(posts).toHaveLength(1));
     });
