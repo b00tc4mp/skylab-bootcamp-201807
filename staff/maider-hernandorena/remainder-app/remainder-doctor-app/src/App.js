@@ -31,7 +31,7 @@ class App extends Component {
     e.preventDefault()
     this.setState({ code: '', token: '' })
     sessionStorage.clear()
-    this.props.history.push('/login')
+    this.props.history.push('/')
   }
 
   listPatients = e => {
@@ -57,17 +57,17 @@ class App extends Component {
               <nav className="header__nav">
                 <a className="header__nav__link" href="/#/patients" onClick={listPatients}>Patients</a>
                 <a className="header__nav__link" href="/#/cites">Cites</a>
-                <a className="header__nav__link" href="/#/login" onClick={onLogout}>Logout</a>
+                <a className="header__nav__link" href="/#/" onClick={onLogout}>Logout</a>
               </nav>
             </div> : <div className="noHome">
                 <img className="noHome__logo" src="/images/logo.svg"/>
             </div> }
 
             <Switch>
-              <Route exact path="/login" render={() => this.isLoggedIn() ? <Redirect to="/patients" /> : <Login onLoggedIn={onLoggedIn} />} />
-              <Route path="/cites" render={() => this.isLoggedIn() ? <Cites/> : <Redirect to="/login" />} />
-              <Route path="/patients" render={() => this.isLoggedIn() ? <Patients patientData={patientData}/> : <Redirect to="/login" />} />
-              <Route path="/patient/:dni" render={() => this.isLoggedIn() ? <PatientData code={code} dni={dni}/> : <Redirect to="/login" />} />
+              <Route exact path="/" render={() => this.isLoggedIn() ? <Redirect to="/patients" /> : <Login onLoggedIn={onLoggedIn} />} />
+              <Route path="/cites" render={() => this.isLoggedIn() ? <Cites/> : <Redirect to="/" />} />
+              <Route path="/patients" render={() => this.isLoggedIn() ? <Patients patientData={patientData}/> : <Redirect to="/" />} />
+              <Route path="/patient/:dni" render={() => this.isLoggedIn() ? <PatientData code={code} dni={dni}/> : <Redirect to="/" />} />
               <Route component={Error404} />
             </Switch>
     </div>

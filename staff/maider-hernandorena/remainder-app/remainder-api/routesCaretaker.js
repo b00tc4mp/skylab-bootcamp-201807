@@ -74,6 +74,26 @@ router.get('/:dni/patients', jsonBodyParser, (req, res) => {
 })
 
 /**
+ * Returns a patient data
+ * 
+ * @throws {LogicError} Message of status
+ * 
+ * @returns {Response} Patients data
+ */
+router.get('/patient/:dni', jsonBodyParser, (req, res) => {
+    let { params: { dni } } = req
+
+    dni = parseInt(dni)
+
+    logic.patientData(dni)
+        .then(patient => res.json(patient)) 
+        .catch(err => {
+            const { message } = err
+            res.status(400 || 500).json({ message })
+        })
+})
+
+/**
  * To list the patient treatments
  * Must send on the route path the id of the patient
  * 

@@ -3,31 +3,31 @@ import logic from '../logic'
 
 class Login extends Component {
   state = {
-    email: '',
+    dni: '',
     password: '',
     error: ''
   }
 
-  keepEmail = e => this.setState({ email: e.target.value, error: '' })
+  keepDni = e => this.setState({ dni: e.target.value, error: '' })
   keepPassword = e => this.setState({ password: e.target.value, error: '' })
 
   onLogin = e => {
     e.preventDefault()
-    const { email, password } = this.state
+    let { dni, password } = this.state
+    dni = parseInt(dni)
 
-    logic.authenticateCaretaker(email, password)
-      .then(({ token }) => this.props.onLoggedIn(email, token))
+    logic.authenticateCaretaker(dni, password)
+      .then(({id, token }) => this.props.onLoggedIn(dni, id, token))
       .catch(({ message }) => this.setState({ error: message }))
   }
 
   render() {
-    const { state: { email, password, error }, keepEmail, keepPassword, onLogin } = this
+    const { state: { dni, password, error }, keepDni, keepPassword, onLogin } = this
 
     return <main className="login">
       <div className="login__group">
-        <p className="login__group__text">Login or go to <a className="login__group__text__link" href="/#/register">Register</a></p>
         <form className="login__group__form" onSubmit={onLogin}>
-          <input className="login__group__form__input" type="text" value={email} name="email" placeholder="email" autoFocus onChange={keepEmail} />
+          <input className="login__group__form__input" type="text" value={dni} name="dni" placeholder="dni" autoFocus onChange={keepDni} />
           <input className="login__group__form__input" type="password" value={password} name="password" placeholder="password" onChange={keepPassword} />
           <button className="login__group__form__button" type="submit">Login</button>
         </form>

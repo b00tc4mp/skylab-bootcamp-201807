@@ -16,7 +16,7 @@ class Login extends Component {
     const { code, password } = this.state
 
     logic.authenticateAdmin(code, password)
-      .then(token => this.props.onLoggedIn(code, token))
+      .then(({ id, token }) => this.props.onLoggedIn(code, id, token))
       .catch(({ message }) => this.setState({ error: message }))
   }
 

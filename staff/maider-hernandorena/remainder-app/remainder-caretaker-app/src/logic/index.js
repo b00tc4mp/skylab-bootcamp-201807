@@ -68,25 +68,6 @@ const logic = {
     },
 
     /**
-     * Registers a caretaker with a dni and a password 
-     * @param {Number} dni //caretakers dni
-     * @param {String} password //caretakers password
-     * 
-     * @returns {boolean} TRUE => if it is registered correctly
-     */
-    registerCaretaker(dni, password) {
-        return Promise.resolve()
-            .then(() => {
-                this._validateDni('dni', dni)
-                this._validateStringField('password', password)
-
-                return this._call('register', 'post', {'Content-Type': 'application/json'}, JSON.stringify({ dni, password }), 201)
-                    .then(res => res.json())    
-                    .then(() => true)
-            })
-    },
-
-    /**
      * Authenticates a caretaker with a dni and a password 
      * @param {Number} dni //caretakers dni
      * @param {String} password //caretakers password
@@ -96,7 +77,7 @@ const logic = {
     authenticateCaretaker(dni, password) {
         return Promise.resolve()
             .then(() => {
-                this._validateDni(dni)
+                this._validateDniField('dni', dni)
                 this._validateStringField('password', password)
 
                 return this._call('auth', 'post', {'Content-Type': 'application/json'}, JSON.stringify({ dni, password }), 200)
@@ -114,14 +95,14 @@ const logic = {
      * 
      * @returns {boolean} TRUE => if it is registered correctly
      */
-    updateCaretakerPassword(dni, password, newPassword, token) {
+    updateCaretakerPassword(dni, password, newPassword, id, token) {
         return Promise.resolve()
             .then(() => {
-                this._validateDni(dni)
+                this._validateDniField('dni', dni)
                 this._validateStringField('password', password)
                 this._validateStringField('new password', newPassword)
 
-                return this._call(`update/${dni}`, 'PATCH', {'Content-Type': 'application/json', authorization: `bearer ${token}`}, JSON.stringify({ password, newPassword }), 201)
+                return this._call(`update/${id}`, 'PATCH', {'Content-Type': 'application/json', authorization: `bearer ${token}`}, JSON.stringify({ dni, password, newPassword }), 201)
                     .then(res => res.json())
                     .then(() => true)
             })
@@ -138,9 +119,25 @@ const logic = {
             .then(() => {
                 this._validateDniField('dni', dni)
 
-                return this._call(`patient/${dni}`, 'get', {'Content-Type': 'application/json'}, undefined, 200)
+                return this._call(`${dni}/patients`, 'get', {'Content-Type': 'application/json'}, undefined, 200)
                     .then(res => res.json())
                     .then(patient => patient)
+            })
+    },
+
+    /**
+     * Returns a patient data
+     * @param {Number} dni //patient id
+     * 
+     * @returns {Object} patients data
+     */
+    patientData(dni) {
+        return Promise.resolve()
+            .then(() => {
+                this._validateDniField('dni', dni)
+
+                return this._call(`patient/${dni}`, 'get', {'Content-Type': 'application/json'}, undefined, 200)
+                    .then(res => res.json())
             })
     },
 

@@ -24,43 +24,29 @@ class Profile extends Component{
   onUpdate = e => {
     e.preventDefault()
     const { password, newPassword } = this.state
-    const { email, token } = this.props
-    logic.updateCaretakerPassword(email, password, newPassword, token)
+    let { dni, id, token } = this.props
+    dni = parseInt(dni)
+
+    logic.updateCaretakerPassword(dni, password, newPassword, id, token)
       .then( message => this.setState({ updated: message, updateError: '' }))
       .catch(({ message }) => this.setState({ updateError: message, updated: '' }))
   }
 
-  onUnregister = e => {
-    e.preventDefault()
-    this.props.onUnregister(this.state.password)
-  }
-
   render(){
-    const { state: { updateError, updated }, keepPassword, keepNewPassword, onUpdate, onUnregister} = this
+    const { state: { updateError, updated }, keepPassword, keepNewPassword, onUpdate } = this
     return <main>
             <div>
               <nav>
                 <p>Update your Password</p>
               </nav>
               <form onSubmit={onUpdate}>
-                <input type="text" name="email" placeholder="email" readOnly value={this.props.email} />
+                <input type="text" name="dni" placeholder="dni" readOnly value={this.props.dni} />
                 <input type="password" name="password" placeholder="password" onChange={keepPassword} />
                 <input type="password" name="newPassword" placeholder="New password" onChange={keepNewPassword} />
                 <button type="submit">Update</button>
               </form>
               {updateError && <p className="error">{updateError}</p>}
               {updated && <p className="okey">Okey! {updated}. Now you can continue navigating on <a href="/#/home">home</a></p>}
-            </div>
-            <div>
-              <nav>
-                <p>Delete your account</p>
-              </nav>
-              <form onSubmit={onUnregister}>
-                <input type="text" name="email" placeholder="email" readOnly value={this.props.email} />
-                <input type="password" name="password" placeholder="password" onChange={keepPassword} />
-                <button type="submit">Unregister</button>
-              </form>
-              {this.props.unregisterError && <p className="error">{this.props.unregisterError}</p>}
             </div>
           </main>
   }

@@ -1,53 +1,48 @@
 import React, { Component } from 'react'
 import { Switch, Route, withRouter, Redirect } from 'react-router-dom'
-import logic from './logic'
-import Landing from './components/Landing'
-import Register from './components/Register'
 import Login from './components/Login'
 import Home from './components/Home'
 import Profile from './components/Profile'
+import PatientData from './components/PatientData'
 
 class App extends Component {
   state = {
-    email: sessionStorage.getItem('email') || '',
+    dni: sessionStorage.getItem('dni') || '',
+    id: sessionStorage.getItem('id') || '',
     token: sessionStorage.getItem('token') || '',
+    patientDni: sessionStorage.getItem('patient dni') || '',
     unregisterError: ''
   }
 
-  onLoggedIn = (email, token) => {
-    this.setState({ email, token })
+  onLoggedIn = (dni, id, token) => {
+    this.setState({ dni, id, token })
 
-    sessionStorage.setItem('email', email)
+    sessionStorage.setItem('dni', dni)
+    sessionStorage.setItem('id', id)
     sessionStorage.setItem('token', token)
 
     this.props.history.push('/home')
   }
 
   isLoggedIn() {
-    return this.state.email
+    return this.state.dni
   }
 
   onLogout = e => {
     e.preventDefault()
-    this.setState({ email: '', token: '' })
+    this.setState({ dni: '', id: '', token: '' })
     sessionStorage.clear()
     this.props.history.push('/')
   }
 
-  onUnregister = password => {
-    const {email, token} = this.state
-    logic.unregisterCaretaker(email, password, token)
-      .then(() => {
-        this.setState({ email: '', token: '' })
-        sessionStorage.clear()
-        this.props.history.push('/')
-      })
-      .catch(({ message }) => this.setState({ unregisterError: message }))
+  patientData = patientDni => {
+    this.setState({ patientDni })
+    sessionStorage.setItem('patient dni', patientDni)
   }
 
   render() {
 
-    const { state: { email, token, unregisterError }, onLoggedIn, onLogout, onUnregister } = this
+    const { state: { dni, id, token, patientDni }, onLoggedIn, onLogout, patientData } = this
 
     return <div>
           { this.isLoggedIn() ? 
@@ -65,11 +60,10 @@ class App extends Component {
             </div> }
 
             <Switch>
-              <Route exact path="/" render={() => this.isLoggedIn() ? <Redirect to="/home" /> : <Landing />} />
-              <Route path="/register" render={() => this.isLoggedIn() ? <Redirect to="/home" /> : <Register />} />
-              <Route path="/login" render={() => this.isLoggedIn() ? <Redirect to="/home" /> : <Login onLoggedIn={onLoggedIn} />} />
-              <Route path="/home" render={() => this.isLoggedIn() ? <Home email={email}/> : <Redirect to="/" /> } />
-              <Route path="/profile" render={() => this.isLoggedIn() ? <Profile email={email} token={token} unregisterError={unregisterError} onUnregister={onUnregister}/> : <Redirect to="/" />} />
+              <Route exact path="/" render={() => this.isLoggedIn() ? <Redirect to="/home" /> : <Login onLoggedIn={onLoggedIn} />} />
+              <Route path="/home" render={() => this.isLoggedIn() ? <Home dni={dni} patientData={patientData}/> : <Redirect to="/" /> } />
+              <Route path="/profile" render={() => this.isLoggedIn() ? <Profile dni={dni} id={id} token={token} /> : <Redirect to="/" />} />
+              <Route path="/patient/:dni" render={() => this.isLoggedIn() ? <PatientData patientDni={patientDni}/> : <Redirect to="/" />} />
             </Switch>  
         </div>
   }

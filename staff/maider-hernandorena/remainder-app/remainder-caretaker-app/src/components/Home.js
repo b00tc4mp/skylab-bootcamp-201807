@@ -4,96 +4,39 @@ import logic from '../logic'
 class Home extends Component {
 
     state = {
-        patientDni: '',
-        error: '',
-        name: '',
-        surname: '',
-        age: null,
-        gender: '',
-        address: '',
-        phone: null,
-        id: '',
+        patients: [],
         treatments: [],
         date: new Date(),
         cites: []
     }
 
-    keepPatientDni = e => this.setState({ patientDni: e.target.value, error: ''})
+    componentDidMount() {
+        this.retrieveCaretakerPatients()
+    }
 
-    retrievePatient = e => {
-        e.preventDefault()
-        let { patientDni } = this.state
-        const { email } = this.props
+    retrieveCaretakerPatients = () => {
+        let { dni } = this.props
 
-        patientDni = parseInt(patientDni)
+        dni = parseInt(dni)
 
-        logic.caretakerPatient(email, patientDni)
-            .then(patient => {
-                const { name, surname, age, gender, address, phone, id } = patient
-                this.setState({
-                    name: name,
-                    surname: surname,
-                    age: age,
-                    gender: gender,
-                    address: address,
-                    phone: phone,
-                    id: id
-                })
-            })
-            .then(() => {
-                this.listTreatments()
-                this.listCites()
-            })
+        logic.retrieveCaretakerPatients(dni)
+            .then(patients => this.setState({ patients }))
             .catch(({ message }) => this.setState({ error: message }))
     }
 
-    listTreatments = () => {
-        const { id } = this.state
-
-        logic.listTreatments(id)
-            .then(treatments => this.setState({ treatments }))
-    }
-
-    listCites = () => {
-        let { id, date } = this.state
-        date = new Date(date)
-
-        logic.listPatientCites(id, date)
-            .then(cites => this.setState({ cites }))
+    patientData = dni => {
+        this.props.patientData(dni)
     }
 
     render() {
         
-        const { state: { patientDni, error, name, surname, age, gender, address, phone, treatments, cites }, keepPatientDni, retrievePatient } = this
+        const { state: { patients }, patientData } = this
 
         return <div>
             <div>
-                <form onSubmit={retrievePatient}>
-                    <input type="number" value={patientDni} name="dni" placeholder="enter patient dni" onChange={keepPatientDni}/>
-                    <button type="submit">Search Patient</button>
-                </form>
-                {error && <p>{error}</p>}
-            </div>
-            <div>
-                <h3>{name} {surname}</h3>
-                <p>{age} years old, {gender}</p>
-                <p>DNI: {patientDni}</p>
-                <p>Address: {address}</p>
-                <p>Phone: {phone}</p>
-            </div>
-            <div>
-                <h3>Treatments</h3>
-                <ul>
-                    {treatments.map(treatment => <li key={treatment.pill}>
-                        <p>{treatment.pill}, {treatment.quantity}, {treatment.frequency}.</p>
-                    </li> )}
-                </ul>
-            </div>
-            <div>
-                <h3>Cites</h3>
-                <ul>
-                    {cites.map(cite => <li key={cite.name}>
-                        <p>{cite.name}, {new Date(cite.date).toLocaleString()}.</p>
+                <ul className="patients__group__all__list">
+                    {patients.map(patient => <li className="patients__group__all__list__item" key={patient.dni} onClick={() => patientData(patient.dni)}>
+                        <a className="patients__group__all__list__item__link" href={`/#/patient/${patient.dni}`}><p><strong>{patient.name} {patient.surname}</strong>. DNI: {patient.dni}. {patient.age} years old, {patient.gender}.</p></a>
                     </li> )}
                 </ul>
             </div>

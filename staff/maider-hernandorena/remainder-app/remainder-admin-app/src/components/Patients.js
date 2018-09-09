@@ -47,6 +47,8 @@ class Patients extends Component {
             .catch(({ message }) => this.setState({ error: message }))
     }
 
+    removePatient = dni => this.props.removePatient(dni)
+
     render() {
         const { state: { error, name, patients }, keepName, onSearch, goToAddPatient, patientData } = this
 
@@ -67,6 +69,7 @@ class Patients extends Component {
                     <ul className="patients__group__all__list">
                         {patients.map(patient => <li className="patients__group__all__list__item" key={patient.dni} onClick={() => patientData(patient.dni)}>
                             <a className="patients__group__all__list__item__link" href={`/#/patient/${patient.dni}`}><p><strong>{patient.name} {patient.surname}</strong>. DNI: {patient.dni}. {patient.age} years old, {patient.gender}.</p></a>
+                            <button onClick={() => this.removePatient(patient.dni)}>Delete Patient</button>
                         </li> )}
                     </ul>
                 </div>
