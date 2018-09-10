@@ -2,6 +2,8 @@ import React, {Component} from 'react'
 import {logic} from '../logic'
 import FormErrors from '../components/formerrors'
 import { withRouter } from 'react-router-dom'
+import Navbars from '../components/Navbar'
+import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 
 
 class Register extends Component {
@@ -44,7 +46,7 @@ class Register extends Component {
                 break;
             case 'password':
                 passwordValid = value.length >= 6;
-                fieldValidationErrors.password = passwordValid ? '' : ' password too short'
+                fieldValidationErrors.password = passwordValid ? '' : ' too short'
                 break;
             case 'name':
                 nameValid = value.match(/^[A-Za-z0-9]+(?:[ _-][A-Za-z0-9]+)*$/)
@@ -99,42 +101,46 @@ class Register extends Component {
         const { success, error } = this.state
 
         return (
-            <main>
+            <main >
+                <Navbars />
                 
-                <h1>REGISTER</h1>
-                <form onSubmit={this.handleSubmit}>
-                        <h2>Sign Up</h2>
-                            <div>
-                                <label>Name</label>
-                                <input 
+
+                <Form onSubmit={this.handleSubmit} className='signuplogin_group'>
+                    <FormGroup>
+                        
+                            <FormGroup>
+                                <Label>Name</Label>
+                                <Input 
                                 type='text' name='name' placeholder='name'
                                 value={this.state.name}
                                 onChange={this.handlerUserInput}
-                                />
-                            </div>
-                            <div>
-                                <label>Email</label>
-                                <input
+                                required/>
+                            </FormGroup>
+                            <FormGroup>
+                                <Label>Email</Label>
+                                <Input
                                 type='text'name='email' placeholder='email@email.com'
                                 value={this.state.email}
-                                onChange={this.handlerUserInput}/>
-                            </div>
-                            <div>
-                                <label>Password</label>
-                                <input 
+                                onChange={this.handlerUserInput}
+                                required/>
+                            </FormGroup>
+                            <FormGroup>
+                                <Label>Password</Label>
+                                <Input 
                                 type='password' name='password' placeholder='Password'
                                 value={this.state.password}
-                                onChange={this.handlerUserInput}/>
-                            </div>
-                            <button type='submit' disabled={!this.state.formValid}>
+                                onChange={this.handlerUserInput}
+                                required/>
+                            </FormGroup>
+                            <Button type='submit' disabled={!this.state.formValid}>
                             Sign Up
-                            </button>
+                            </Button>
 
                             <div>
                                 <FormErrors formErrors={this.state.formErrors} />
                             </div>
-                
-                </form>
+                    </FormGroup>
+                </Form>
                 {/*{!success ? 
                 <div>
                     <nav>

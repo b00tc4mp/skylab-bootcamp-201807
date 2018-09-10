@@ -251,7 +251,7 @@ router.get('/:id/note/:noteid', jsonBodyParser, (req, res) => {
 })
 
 //@@    DELETE api/:id/removenote/:noteid/:sessionUserId
-//@@    Remove note
+//@@    Remove note by noteid
 //@@    Private-Token
 //€€
 router.delete('/:id/removenote/:noteid/:sessionuserid', [validateJwt, jsonBodyParser] , (req, res) => {
@@ -264,6 +264,25 @@ router.delete('/:id/removenote/:noteid/:sessionuserid', [validateJwt, jsonBodyPa
             res.status(err instanceof LogicError ? 401 : 500).json({ message })
         })
 })
+
+///////////////////////////////////////////////////////////
+
+//@@    DELETE api/:id/removenotebooksnotes/:notebookid/:sessionUserId
+//@@    Remove all notes in a notebook by notebookid
+//@@    Private-Token
+//€€
+router.delete('/:id/removenotebooksnotes/:notebookid/:sessionuserid', [validateJwt, jsonBodyParser] , (req, res) => {
+    const {params: { id, sessionuserid, notebookid} } = req
+
+    logic.removeNotebooksNotes(id, sessionuserid, notebookid)
+        .then(() => res.json({ message: 'Notes from Notebook removed succesfully' }))
+        .catch(err => {
+            const { message } = err
+            res.status(err instanceof LogicError ? 401 : 500).json({ message })
+        })
+})
+
+///////////////////////////////////////////////////////////
 
 //@@    UPDATE api/:id/updatenote/:noteid/:sessionuserid
 //@@    Remove note

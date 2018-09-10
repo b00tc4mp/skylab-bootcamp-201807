@@ -2,9 +2,12 @@ import React, {Component} from 'react';
 //import {Container, ListGroup, ListGroupItem, Button, FormGroup, FormControl, ControlLabel} from 'reactstrap';
 import ReactPlayer from 'react-player'
 import PlayerNotesBar from './PlayerNotesBar';
+import EditorNotesBar from './EditorNotesBar';
 import {logic} from '../logic'
 import { withRouter } from 'react-router-dom'
-import queryString from 'query-string' 
+import FormErrors from './formerrors'
+import { Form, FormGroup, Label, Row, Col, Button, Input, InputGroup, InputGroupAddon } from 'reactstrap';
+
 
 
 
@@ -38,10 +41,27 @@ class NotebookScreen extends Component {
         videoTitle:'',
         noteBookId: '',
         notebookTitle: '',
+        /////////////////////
+        ////////////////////
+        notebookStage: true, /*IF TRUE Display only notebook title & url form// IF FALSE Hide form*/
+        gotchaStage: false, /*IF TRUE Display gotcha button//IF FALSE Hide Button*/
+        noteStage: false, /*IF TRUE Display note form//IF FALSE Hide form notes*/
+        /////////////////
+        formErrors: {url: ''},
+        urlValid: false,
+        formValid: false,
+        /////////////
+        notebooktitle: '',
+        homeNotebookTitle: '',
+        landingNotebookTitle: '',
+        /////ORIGIN///////
+        origin: '',
+        loggedOut: '',
     }
 
     componentDidMount() {
         const {editor, id} = this.props.match.params
+        const token = sessionStorage.getItem('token')
         
         return logic.listNotebooksByNotebookId(editor, id)
         .then(res => {
@@ -50,8 +70,10 @@ class NotebookScreen extends Component {
             this.setState({ noteBookId: res._id})
             this.setState({ notebookTitle: res.notebooktitle })
             this.setState({ videoTitle: res.videotitle})
+            this.setState({ loggedOut: token})
         })
         .then(() => this.child.method(editor, id) )
+        .then(this.setState({ gotchaStage: true}))
         
         
         
@@ -153,7 +175,6 @@ class NotebookScreen extends Component {
             })
     }        
 
-    /////////////////////////////////////////
     /////////NOTES CREATOR///////////////
 
     
@@ -169,20 +190,40 @@ class NotebookScreen extends Component {
         const userId = sessionStorage.getItem('userId')
         const token = sessionStorage.getItem('token')
     
-        const { playedSeconds, notetitle, notetext, notebook} = this.state
+        const { gotchaSeconds, notetitle, notetext, noteBookId} = this.state
         
         return Promise.resolve()
             .then(() => {
-                return logic.createNote(playedSeconds, notetitle, notetext, notebook, userId, token)
+                return logic.createNote(gotchaSeconds, notetitle, notetext, noteBookId, userId, token)
             })
-            
-        
-    
-        
-    
-        
+            .then(() => this.child.method(userId, noteBookId))
+            .then(() => {
+                this.setState({ noteStage: false})
+            })
+            .then(() => {
+                this.setState({notetitle: '' })
+                this.setState({notetext: '' })
+                this.setState({gotchaSeconds: '' })
+                
+            })
     }
 
+    gotcha = () => {
+        const {playedSeconds} = this.state
+
+        this.setState({gotchaSeconds : playedSeconds})
+        this.setState({ noteStage: true})
+        
+
+    }
+    /*
+    onKeyPressed = e => {
+        e.preventDefault()
+        this.gotcha()
+       console.log('gotcha')
+       //STOP PROPAGATION///
+      }
+      */
 
 ///////////////////////////////////////////
 
@@ -194,15 +235,29 @@ class NotebookScreen extends Component {
     
 /////////////////////////////////////////
 
+    loggedOut = () => {
+        const token = sessionStorage.getItem('token')
+        (!!token) ? this.setState({loggedOut: false}) : this.setState({loggedOut: true})
+        console.log('loggedOut: '+this.state.loggedOut)
+    }
+
+
+/////////////////////////////////////////
+
     render () 
         {
         const {items, notes} = this.state;
-        const { url, playing, volume, muted, loop, played, loaded, duration, playbackRate } = this.state
+        
+        const { url, playing, volume, muted, loop, playbackRate, gotchaSeconds, notebookTitle, fakenotes } = this.state
         const SEPARATOR = ' · '
+        const gotchaStage = this.state.gotchaStage
+        const noteStage = this.state.noteStage
+        const loggedOut = this.state.loggedOut
         
         return(
             <div>
-                <div className='app'>
+
+                {/*<div className='app'>
                     <section className='section'>
            
                         <div className='player-wrapper'>
@@ -325,7 +380,128 @@ class NotebookScreen extends Component {
 
                     </section>
           
-                </div>
+                    </div>*/}
+                    <div>
+                    <Row className='editor_rowcontainer'>
+                <Col className='editor_coleditor'>
+                
+                
+
+                    <div className='appeditor'>
+                    
+           
+                        <div className='player-wrapper'>
+                        <ReactPlayer
+                            ref={this.ref}
+                            width='100%'
+                            height='100%'
+                            url={url}
+                            playing={playing}
+                            loop={loop}
+                            playbackRate={playbackRate}
+                            volume={volume}
+                            muted={muted}
+                            onReady={() => console.log('onReady')}
+                            onStart={() => console.log('onStart')}
+                            onPlay={this.onPlay}
+                            onPause={this.onPause}
+                            onBuffer={() => console.log('onBuffer')}
+                            onSeek={e => console.log('onSeek', e)}
+                            onEnded={this.onEnded}
+                            onError={e => console.log('onError', e)}
+                            onProgress={this.onProgress}
+                            onDuration={this.onDuration}
+                            youtubeConfig={{ playerVars: { controls: 1 } }}
+                            />
+                        </div>
+                       
+                    
+                       
+                    
+
+                    
+                    
+                    
+                    
+                    
+
+                    {
+                        (gotchaStage && loggedOut)
+                        ?   <div id="gotchaStage" className='gotchaStage'>
+                                <Button onClick={this.gotcha}>GOTCHA!</Button>
+                            </div>
+                        : <div></div>
+                        
+                    }
+                    
+                    {
+                        noteStage
+                        ?   <div  id="noteStage" className='noteStage'>
+                                <Form onSubmit={this.buildNote}>
+                                <FormGroup row>
+                                        <Label sm={2}>Moment (sec.)</Label>
+                                        <Col sm={8}>
+                                        <Input type="text" value={gotchaSeconds} onChange={this.inputNoteTitle} disabled/>
+                                        </Col>
+                                    </FormGroup>
+                                    <FormGroup row>
+                                        <Label sm={2}>Title</Label>
+                                        <Col sm={8}>
+                                            <Input type="text" name="notetitle" placeholder="notetitle" onChange={this.inputNoteTitle} required/>
+                                        </Col>
+                                    </FormGroup>
+                                    <FormGroup row>
+                                        <Label  sm={2}>Text</Label>
+                                        <Col sm={8}>
+                                            <Input type="textarea" name="notetext" placeholder="notext" onChange={this.inputNoteText} />
+                                        </Col>
+                                        <Button sm={2} type="submit">Submit</Button>
+                                    </FormGroup>
+                                    
+                                </Form>
+                            </div>
+                        : <div></div>
+                    }
+
+                    </div>
+
+                </Col>
+                   
+                <Col className='editor_colsidebar'>
+                    <h3>{notebookTitle}</h3>
+                    <EditorNotesBar onRef={ref => (this.child = ref)} seektoPass={this.setSeekToPlay}/>
+
+                    {(this.state.origin === "landing")
+                        ? <div>
+                                <h1>FakeNotes</h1>
+                                    <div>
+                   
+                                        {fakenotes.map(({ gotchaSeconds, notetext, notetitle}) => (
+                                            
+                                                <div>
+                                            <span>Title: {notetitle}  </span> 
+                                                <span>Text: {notetext}  </span>
+                                                <span>Time: {Math.floor(gotchaSeconds/60)}:{Math.floor(gotchaSeconds - (Math.floor(gotchaSeconds/60)) * 60)}  </span>
+                                                <Button
+                                                className="remove-btn"
+                                                color="danger"
+                                                size="sm"
+                                                onClick={() => this.setSeekToPlay(gotchaSeconds)}
+                                                >SeekTo</Button>
+                                                </div>
+                                            
+                                        ))}
+                    
+                                    </div>
+                            </div>
+                        :<div></div>    
+                    }
+
+                    
+          
+                </Col>
+                </Row>
+                    </div>
             </div>      
          
         )

@@ -39,6 +39,133 @@ body {
   
 }
 
+.landing_back{
+  background-image: url('./public/background_landing.jpg');
+  height: 100vh;
+  background-position:center;
+}
+
+/* Sign Up Page & Login Page */
+
+.signuplogin_group{
+  position: relative;
+  padding: 3em 1em 1em;
+  border: 1px solid black;
+  margin: 1.5 px;
+  margin: auto;
+  width: 50%;
+  text-align: center;
+  margin-top: 10%;
+}
+
+/*Home*/
+
+.home_options{
+  position: relative;
+  padding: 3em 1em 1em;
+  margin: auto;
+  text-align: center;
+  
+}
+
+/*Editor*/
+
+.player-wrapper {
+  width: 700px;
+  height: 394px;
+  margin: 2em;
+  margin-bottom: 1em;
+}
+
+.editor_rowcontainer {
+  width: 100vmax
+}
+
+.editor_coleditor {
+  width: 75vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+}
+
+.appeditor{
+  position: fixed;
+}
+
+.editor_colsidebar {
+  width: 25vh;
+  float: right;
+  height: 100%;
+  overflow-y: auto;
+  text-align: center;
+}
+
+.NotesCards{
+  padding: 0.7em;
+  margin-bottom: 0.2em;
+}
+
+.editor_headerrow{
+  padding-top: 10em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+}
+
+.editor_headerrow-nocontent{
+  padding-top: 0em;
+}
+
+.notebookStage{
+  position: relative;
+  width: 50%;
+  margin-left: 100px;
+  text-align: center;
+}
+
+.notebookStage{
+  text-align: center;
+}
+
+.editormain:focus {
+  outline: none;
+}
+
+.gotchaStage {
+  position: relative;
+  width: 50%;
+  margin: auto;
+  text-align: center;
+}
+
+.noteStage{
+  padding-top: 1em;
+  padding-left: 0.2em 
+}
+
+.optionnotes{
+  position: relative;
+  width: 50%;
+  margin: auto;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/*Note player*/
+.player-wrapper-note {
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 700px;
+  height: 394px;
+  margin: auto;
+  margin-bottom: 1em;
+}
 
 
 

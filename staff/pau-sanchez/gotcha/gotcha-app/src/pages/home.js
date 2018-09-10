@@ -1,7 +1,8 @@
 import React, {Component} from 'react'
 import { withRouter } from 'react-router-dom'
 import FormErrors from '../components/formerrors'
-import Navbar from '../components/Navbar'
+import Navbars from '../components/Navbar'
+import { Button, Input, InputGroup, InputGroupAddon, Col, Container , FormGroup } from 'reactstrap';
 
 class Home extends Component {
     
@@ -60,27 +61,50 @@ class Home extends Component {
     
     render() {
         return (
-            <div>
+            <div >
                 
-                <Navbar />
+                <Navbars />
+                    <Container>
+                        <div className='home_options' >
+                            <Button onClick={this.gotoNotebooks} size="lg">NOTEBOOKS</Button>
+                            
+                        </div>
+                        <hr/>
+                        <div className='home_options' >
+                            <Button onClick={this.gotoNotes} size="lg">NOTES</Button>
+                            
+                        </div>
+                        <hr/>
+                        <div className='home_options'>
+                            <p>Create a new notebook</p>
+                                <InputGroup >
+                                    <Input type='text' name='notetitle' placeholder='Add a title to your new Notebook' onChange={this.handleTitle} required/>
+                                    <Input type='text' name='url' placeholder='youtube.com...' onChange={this.validateField} required/>
+                                    <InputGroupAddon addonType='append'>
+                                        <Button onClick={this.gotoHomeEditor} disabled={!this.state.formValid} >GO</Button>
+                                    </InputGroupAddon>
+                                </InputGroup>
+                            <FormErrors formErrors={this.state.formErrors} />
 
-                <h1>HOME</h1>
-
-                <button onClick={this.gotoNotebooks}>NOTEBOOKS</button>
-
-                <button onClick={this.gotoNotes}>NOTES</button>
-
-                <input type='text' name='notetitle' placeholder='Notebook title' onChange={this.handleTitle} required/>
-                <input type='text' name='url' placeholder='youtube.com...' onChange={this.validateField} required/>
-                <button onClick={this.gotoHomeEditor} disabled={!this.state.formValid} >GO</button>
+                        </div>
+                    </Container>
                 
-                <div>
-                <FormErrors formErrors={this.state.formErrors} />
-                </div>
             </div>
         )
     }
 }
 
-
+                                
+                               
 export default withRouter(Home) 
+                               
+
+                        
+
+
+                
+
+
+
+                
+

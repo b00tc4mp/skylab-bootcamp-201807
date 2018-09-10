@@ -312,7 +312,7 @@ const logic = {
 
     
     //@@remove note
-    //@@logic.deleteNote
+    //@@logic.removeNote
 
     
     //€€
@@ -326,6 +326,27 @@ const logic = {
             })
             .then(() => true)
     },
+
+    //////////////////////////////////////////////
+
+    //@@Remove all notes in a notebook by notebookid
+    //@@logic.removeNotebooksNotes
+
+    
+    //€€
+    removeNotebooksNotes(id, sessionUserId, notebookid) {
+        return Promise.resolve()
+            .then(() => {
+                if(id !== sessionUserId) throw new LogicError(`Permission Not Granted`)
+            })
+            .then(() => {
+                return Note.deleteMany({notebook : notebookid})
+                //return Note.deleteOne({ _id: noteId })
+            })
+            .then(() => true)
+    },
+
+    //////////////////////////////////////////////
 
     //@@update note
     //@@logic.updateNote 

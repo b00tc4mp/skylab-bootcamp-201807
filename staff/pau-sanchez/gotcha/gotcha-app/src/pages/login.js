@@ -1,6 +1,8 @@
 import React, {Component} from 'react'
 import {logic} from '../logic'
 import { withRouter } from 'react-router-dom'
+import Navbars from '../components/Navbar'
+import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 
 class Login extends Component {
 
@@ -32,13 +34,26 @@ class Login extends Component {
         const { error } = this.state
 
         return <div>
-                <h1>LOGIN</h1>
-                <form onSubmit={this.onLoginSubmit}>
-                    <input type="email" name="email" placeholder="email" autofocus onChange={this.onEmailChange} required/>
-                    <input type="password" name="password" placeholder="password" onChange={this.onPasswordChange} required/>
-                    <button>Login</button>
-                </form>
+                
+                <Navbars />
+                
+                <Form onSubmit={this.onLoginSubmit} className='signuplogin_group'>
+                    <FormGroup>
+                        <Label>Email</Label>
+                        <Input type="email" name="email" placeholder="email" 
+                        autofocus 
+                        onChange={this.onEmailChange} 
+                        required/>
+                    </FormGroup>
+                    <FormGroup>
+                        <Label>Password</Label>
+                        <Input type="password" name="password" placeholder="password" 
+                        onChange={this.onPasswordChange} 
+                        required/>
+                    </FormGroup>
+                    <Button>Login</Button>
                 {error && <p>{error}</p>}
+                </Form>
             </div>
         
     }

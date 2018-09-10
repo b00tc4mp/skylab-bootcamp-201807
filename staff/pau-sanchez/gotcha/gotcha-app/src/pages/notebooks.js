@@ -2,11 +2,15 @@ import React, {Component} from 'react'
 import { withRouter, Link } from 'react-router-dom'
 import {logic} from '../logic'
 import Navbar from '../components/Navbar'
+import {FormGroup, Input, Button, Form, Label, Col, Card, Row} from 'reactstrap'
 
 class Notebooks extends Component {
     
     state = {
-        notebooks: []
+        notebooks: [],
+        edit: '',
+        newnotebooktitle: ''
+        
     }
 
     componentDidMount() {
@@ -23,15 +27,44 @@ class Notebooks extends Component {
         })
     }
 
-    deleteNotebooks = (notebookid, userId) => {
+    deleteNotebooks = (e, _id, user) => {
+        e.preventDefault()
+        console.log('delete')
         const sessionuserid = sessionStorage.getItem('userId')
         const token = sessionStorage.getItem('token')
         return Promise.resolve()
+            .then(()=> {
+                console.log(_id)
+                logic.removeNotebooksNotes(user, sessionuserid, _id, token)
+            })
             .then(() => {
-                logic.removeNotebook(userId, sessionuserid, notebookid, token)
+                logic.removeNotebook(user, sessionuserid, _id, token)
             })
             .then(()=> this.getNotebooks())
+            .then(() => window.location.reload())
     }
+    updateNotebookTitle = (_id, userId) => {
+        const sessionuserid = sessionStorage.getItem('userId')
+        const token = sessionStorage.getItem('token')
+        const {newnotebooktitle} = this.state
+        return Promise.resolve()
+            .then( () => {
+                logic.updateNotebook(userId, sessionuserid, _id, newnotebooktitle, token)
+                console.log('logic.updateNotebook')
+            })
+            .then(() => this.setState({ edit: ''}))
+            .then(() => this.setState({ newnotebooktitle: ''}))
+            .then(()=> this.getNotebooks())
+            //.then(() => window.location.reload())
+
+            
+    }
+
+    changeTitle = e => this.setState({ newnotebooktitle: e.target.value })
+
+  
+
+   
 
     
  
@@ -43,11 +76,11 @@ class Notebooks extends Component {
         return (
             <div>
                 <Navbar />
-                <h1>NOTEBOOKS</h1>
+                
 
-                {notebooks.map(({ date, notebooktitle, user, videoid, videothumbnail, videotitle, videourl, _id }) => {
+                {notebooks.map(({ date, notebooktitle, user, videoid, videothumbnail, videotitle, videourl, _id, newnotebooktitle }) => {
 
-                   return <div>
+                   {/*return <div>
                         <span>Date {date}</span>
                         <span>notebooktitle {notebooktitle}</span>
                         <span>user {user}</span>
@@ -55,11 +88,73 @@ class Notebooks extends Component {
                         <span>videothumbnail {videothumbnail}</span>
                         <span>videotitle {videotitle}</span>
                         <span>videourl {videourl}</span>
-                        <Link to={`/player/${_id}/${user}`}>Play Notebook</Link>
-                        <Link to={`/editnotebook/${_id}/${user}`}>Edit Notebook</Link>
+                        <Link to={`/player/${_id}/${user}`}>
+                        <button type='button'>Play Notebook</button>
+                        </Link>
+                        <Link to={`/editnotebook/${_id}/${user}`}>
+                        <button type='button'>Edit Notebook</button>
+                        </Link>
                         
-                        {/*<button onClick={this.deleteNotebooks(_id, user)}>Delete Notebook</button>*/}
-                    </div>
+                        <button onClick={ e => this.deleteNotebooks(e, _id, user)}>Delete Notebook</button>
+                        {/*onClick={ e => this.upvotes(e, arg1, arg2, arg3) }
+                        <button onClick={this.infotodeleteNotebooks(_id, user)}>Delete Notebook</button>
+                    </div>*/}
+                    
+                    return    <div>
+                            <Card className='NotesCards'>
+                            <Row>
+                                <Col sm={3}>
+                                    <div>
+                                        <img src={videothumbnail} height='150' width='200'/>
+                                    </div>
+                                </Col>
+                                <Col sm={5}>
+                                    
+                                    <FormGroup row>
+                                        <Label sm={2}>Video</Label>
+                                        <Col sm={8}>
+                                        <Input type="text" value={videotitle} disabled/>
+                                        </Col>
+                                    </FormGroup>
+                                    {
+                                        (this.state.edit === _id)
+                                        ? <div>
+                                            <FormGroup row>
+                                                <Label sm={2}>Notebook</Label>
+                                                <Col sm={8}>
+                                                    <Input type="text" name="notebooktitle" defaultValue={notebooktitle} onChange={this.changeTitle} required/>
+                                                </Col>
+                                            </FormGroup>
+
+                                        </div>
+                                        :<div>
+                                            <FormGroup row>
+                                                <Label sm={2}>Notebook</Label>
+                                                <Col sm={8}>
+                                                    <Input type="text" name="notebooktitle" defaultValue={notebooktitle} disabled/>
+                                                </Col>
+                                            </FormGroup>
+                                        </div>
+                                    }
+                                    
+                                    <div className='optionnotebooks'>
+                                    {
+                                        (this.state.edit === _id && this.state.newnotebooktitle !== '')
+                                        ? <Button sm={2} onClick={() => this.updateNotebookTitle(_id, user)}>Save Changes&#128394;</Button> 
+                                        : <Button onClick={() => this.setState({ edit: _id})}>EDIT NOTEBOOK TITLE &#128394;</Button>
+                                    }    
+                                    <Link to={`/player/${_id}/${user}`}>
+                                            <Button type='button'>&#9654;</Button>
+                                        </Link>
+                                        <Button onClick={ e => this.deleteNotebooks(e, _id, user)}>&#10799;</Button>
+                                    </div>
+                                
+                                </Col>
+                                </Row>    
+                            </Card>    
+                                
+                                </div> 
+                    
 
                 }
 

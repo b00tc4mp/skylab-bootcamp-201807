@@ -7,6 +7,7 @@ import { withRouter } from 'react-router-dom'
 import screenfull from 'screenfull'
 import { findDOMNode } from 'react-dom'
 import FormErrors from './formerrors'
+import { Form, FormGroup, Label, Row, Col, Button, Input, InputGroup, InputGroupAddon, Card } from 'reactstrap';
 
 
 
@@ -61,6 +62,8 @@ class EditorPlayer extends Component {
 
 
     }
+
+    
     
     componentDidMount () {
         
@@ -86,6 +89,8 @@ class EditorPlayer extends Component {
             }).then(() => {
                 if (this.state.origin === 'home') this.setState({notebookStage: false})
                 if (this.state.origin === 'landing') this.setState({notebookStage: false})
+            }).then(() => {
+                sessionStorage.getItem('token') === null ? this.setState({isLoggedin: false}) : this.setState({isLoggedin: true})
             })
             
 
@@ -163,9 +168,9 @@ class EditorPlayer extends Component {
       
       renderLoadButton = (url, label) => {
         return (
-          <button onClick={() => this.load(url)}>
+          <Button onClick={() => this.load(url)}>
             {label}
-          </button>
+          </Button>
         )
       }
       ref = player => {
@@ -221,7 +226,7 @@ class EditorPlayer extends Component {
             console.log('hi')
             this.setState({ notebookStage: false})
             this.setState({ gotchaStage: true})
-            //this.setState({ origin: ''})
+            this.setState({ origin: 'landing_edition'})
         })
     }
 
@@ -288,7 +293,14 @@ class EditorPlayer extends Component {
         
 
     }
-
+    /*
+    onKeyPressed = e => {
+        e.preventDefault()
+        this.gotcha()
+       console.log('gotcha')
+       //STOP PROPAGATION///
+      }
+      */
 
 ///////////////////////////////////////////
 
@@ -313,37 +325,102 @@ validateUrl = e => {
     fieldValidationErrors.url = urlValid ? '' : 'invalid youtube url';
     this.setState({preurl: seturl})
     this.setState({formErrors: fieldValidationErrors,
-            urlValid: urlValid}, this.validateForm)   
+        urlValid: urlValid}, this.validateForm)   
     }
+    
+    validateForm = () => this.setState({formValid: this.state.urlValid})
 
-validateForm = () => this.setState({formValid: this.state.urlValid})
+    secondsForm = (secs) => {
+        return Math.floor(secs - (Math.floor(secs/60)) * 60)
+    }
+    
+    minutesForm = (secs) => {
+        return Math.floor(secs/60)
+     }
 
+    ////////////////////////////////////////////
+     
 
-/////////////////////////////////////////
-
+    
+    
+    
+    /////////////////////////////////////////
+    
     render () 
-        {
-        const { url, playing, volume, muted, loop, playbackRate, gotchaSeconds, notebooktitle, fakenotes } = this.state
+    {
+        const { url, playing, volume, muted, loop, playbackRate, gotchaSeconds, notebooktitle, fakenotes, isLoggedin } = this.state
         
         const notebookStage = this.state.notebookStage
         const gotchaStage = this.state.gotchaStage
         const noteStage = this.state.noteStage
-
+        
         const SEPARATOR = ' · '
         
         return(
-            <div>
-                {
+            <div onKeyPress={this.onKeyPressed} tabIndex='0' className='editormain'>
+                    <Row className={(gotchaStage) ? 'editor_headerrow-nocontent': 'editor_headerrow'} >
+                        
+                     
+                
+
+                
+                    {
                         (this.state.origin == "landing")
-                        ? <div>
+                        ? <div className='landing_header'>
                            
-                          <h1>This is a demo, if you want to save your notes you should be logged in ;)</h1>
+                          <h4>This is a demo!</h4><br/>
+                          <h4>if you want to save your notes you should be logged in ;)</h4><br/>
+                          <Button onClick={this.buildFakeNotebook}>Create Demo Notebook</Button>
                           </div>
                         : <div></div>    
                         
                     }
-                <div className='app'>
-                    <section className='section'>
+
+                    {
+                        (this.state.origin === "home")
+                        ? <Button onClick={this.buildNotebook}>Start Notebook</Button>
+                        : <div></div>    
+                                    
+                    }
+                            
+                                
+                            {
+                                    (notebookStage)
+                                    ?   <div id="notebookStage">
+                                    
+                                            
+                                                {
+                                                    (!isLoggedin)
+                                                    ?<InputGroup >
+                                                        <Input type="text" name="url" placeholder='Paste a Youtube link' onChange={this.validateUrl} required/>
+                                                        <InputGroupAddon addonType='append'>
+                                                            <Button onClick={this.buildFakeNotebook} disabled={!this.state.formValid} >Submit</Button>
+                                                        </InputGroupAddon>
+                                                    </InputGroup>
+                                                    :<InputGroup >
+                                                        <Input type="text" name="notebooktitle" placeholder='Add a title' onChange={this.inputTitle} required/>
+                                                        <Input type="text" name="url" placeholder='Paste a Youtube link' onChange={this.validateUrl} required/>
+                                                        <InputGroupAddon addonType='append'>
+                                                            <Button onClick={this.buildNotebook} disabled={!this.state.formValid} >Submit</Button>
+                                                        </InputGroupAddon>
+                                                    </InputGroup>
+                                                }
+                                            
+                                            
+                                        <div>
+                                                <FormErrors formErrors={this.state.formErrors} />
+                                            </div>
+                                        </div>
+                                    : <div></div>
+                                }
+                </Row>
+                <Row className='editor_rowcontainer'>
+                <Col className='editor_coleditor'>
+                
+                
+
+                    <div className='appeditor'>
+                    
            
                         <div className='player-wrapper'>
                         <ReactPlayer
@@ -367,89 +444,109 @@ validateForm = () => this.setState({formValid: this.state.urlValid})
                             onProgress={this.onProgress}
                             onDuration={this.onDuration}
                             youtubeConfig={{ playerVars: { controls: 1 } }}
-                        />
+                            />
                         </div>
                        
-                    </section>
-                    <section className='section'>
-                       
-                    <h1>{notebooktitle}</h1>
-
-                    {
-                        (this.state.origin === "home")
-                        ? <button onClick={this.buildNotebook}>Start HomeNotebook</button>
-                        : <div></div>    
-                        
-                    }
-
-                    {
-                        (this.state.origin === "landing")
-                        ? <button onClick={this.buildFakeNotebook}>Start FakeNotebook</button>
-                        : <div></div>    
-                        
-                    }
                     
-                    {
-                        (notebookStage)
-                        ?   <div id="notebookStage">
-                                <form onSubmit={this.buildNotebook}>
-                                    <input type="text" name="url" placeholder="www.youtube.com/..." onChange={this.validateUrl} />
-                                    <input type="text" name="notebooktitle" placeholder="Notebook Title" onChange={this.inputTitle} required/>
-                                    <button type="submit" disabled={!this.state.formValid}>Submit</button>
-                                </form>
-                                <div>
-                                    <FormErrors formErrors={this.state.formErrors} />
-                                </div>
-                            </div>
-                        : <div></div>
-                    }
+                       
+                    
+
+                    
+                    
+                    
                     
                     
 
                     {
                         gotchaStage 
-                        ?   <div id="gotchaStage">
-                                <button onClick={this.gotcha}>GOTCHA!</button>
+                        ?   <div id="gotchaStage" className='gotchaStage'>
+                                <Button onClick={this.gotcha}>GOTCHA!</Button>
                             </div>
                         : <div></div>
-
+                        
                     }
                     
                     {
                         noteStage
-                        ?   <div  id="noteStage">
-                                <p>{gotchaSeconds}</p>
-                                <form onSubmit={this.state.origin === "landing" ? this.buildFakeNote : this.buildNote}>
-                                    <input type="text" name="notetitle" placeholder="notetitle" onChange={this.inputNoteTitle} required/>
-                                    <input type="text" name="notetext" placeholder="notext" onChange={this.inputNoteText} />
-                                    <button type="submit">Submit</button>
-                                </form>
+                        ?   <div  id="noteStage" className='noteStage'>
+                                <Form onSubmit={this.state.origin === "landing_edition" ? this.buildFakeNote : this.buildNote}>
+                                <FormGroup row>
+                                        <Label sm={2}>Moment (sec.)</Label>
+                                        <Col sm={8}>
+                                        <Input type="text" value={gotchaSeconds} onChange={this.inputNoteTitle} disabled/>
+                                        </Col>
+                                    </FormGroup>
+                                    <FormGroup row>
+                                        <Label sm={2}>Title</Label>
+                                        <Col sm={8}>
+                                            <Input type="text" name="notetitle" placeholder="notetitle" onChange={this.inputNoteTitle} required/>
+                                        </Col>
+                                    </FormGroup>
+                                    <FormGroup row>
+                                        <Label  sm={2}>Text</Label>
+                                        <Col sm={8}>
+                                            <Input type="textarea" name="notetext" placeholder="notext" onChange={this.inputNoteText} />
+                                        </Col>
+                                        <Button sm={2} type="submit">Submit</Button>
+                                    </FormGroup>
+                                    
+                                </Form>
                             </div>
                         : <div></div>
                     }
 
+                    </div>
 
-                    
-
+                </Col>
+                   
+                <Col className='editor_colsidebar'>
+                    { (!gotchaStage) ?  null :  <h3>{notebooktitle}</h3> }
                     <EditorNotesBar onRef={ref => (this.child = ref)} seektoPass={this.setSeekToPlay}/>
 
-                    {(this.state.origin === "landing")
+                    {(this.state.origin === "landing_edition")
                         ? <div>
-                                <h1>FakeNotes</h1>
+                               
                                     <div>
                    
                                         {fakenotes.map(({ gotchaSeconds, notetext, notetitle}) => (
                                             
-                                                <div>
-                                            <span>Title: {notetitle}  </span> 
+                                                /*<div>
+                                                <span>Title: {notetitle}  </span> 
                                                 <span>Text: {notetext}  </span>
                                                 <span>Time: {Math.floor(gotchaSeconds/60)}:{Math.floor(gotchaSeconds - (Math.floor(gotchaSeconds/60)) * 60)}  </span>
-                                                <button
+                                                <Button
                                                 className="remove-btn"
                                                 color="danger"
                                                 size="sm"
                                                 onClick={() => this.setSeekToPlay(gotchaSeconds)}
-                                                >SeekTo</button>
+                                                >SeekTo</Button>
+                                                </div>*/
+
+                                                <div>
+                                                    <Card className='NotesCards'>    
+                                                        <FormGroup row>
+                                                                <Label sm={2}>Moment</Label>
+                                                                <Col sm={8}>
+                                                                <Input type="text" value={this.minutesForm(gotchaSeconds)+`:`+this.secondsForm(gotchaSeconds)} disabled/>
+                                                                </Col>
+                                                        </FormGroup>
+                                                        <FormGroup row>
+                                                                <Label sm={2}>Title</Label>
+                                                                <Col sm={8}>
+                                                                <Input type="text" name="notetitle" defaultValue={notetitle} onChange={this.onChangeNoteTitle} required disabled/>
+                                                                </Col>
+                                                        </FormGroup>
+                                                        <FormGroup row>
+                                                                <Label  sm={2}>Text</Label>
+                                                                <Col sm={8}>
+                                                                <Input type="textarea" name="notetext" defaultValue={notetext} onChange={this.onChangeNoteText} disabled/>
+                                                                </Col>
+                                                        </FormGroup>
+                                                                <div className='optionnotes'>
+                                                                    {/*<Button sm={2} onClick={() => this.deleteNote(_id)}>&#10799;</Button>*/}
+                                                                    <Button sm={2} onClick={() => this.setSeekToPlay(gotchaSeconds)}>&#9654;</Button>
+                                                                </div>
+                                                    </Card>    
                                                 </div>
                                             
                                         ))}
@@ -459,9 +556,10 @@ validateForm = () => this.setState({formValid: this.state.urlValid})
                         :<div></div>    
                     }
 
-                    </section>
+                    
           
-                </div>
+                </Col>
+                </Row>
             </div>      
          
         )

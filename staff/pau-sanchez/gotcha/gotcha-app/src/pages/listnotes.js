@@ -7,7 +7,7 @@ export default class Listnotes extends Component {
         return (
             <div>
                 <Navbar />
-                <h1>LIST NOTES</h1>
+                
                 < ListingNotes />
             </div>
         )

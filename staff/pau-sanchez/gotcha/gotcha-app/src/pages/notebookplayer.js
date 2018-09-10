@@ -10,8 +10,7 @@ export default class NotebookPlayer extends Component {
         return (
             <div>
                 <Navbar />
-                <h1>NOTEBOOK PLAYER</h1>
-                
+                               
                 <NotebookScreen />
                 
 

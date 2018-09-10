@@ -1,6 +1,7 @@
 import React from 'react'
 import {logic} from '../logic'
 import { withRouter, Link } from 'react-router-dom'
+import {FormGroup, Input, Button, Form, Label, Col, Card} from 'reactstrap'
 class ListingNotes extends React.Component {
 
     
@@ -10,7 +11,9 @@ class ListingNotes extends React.Component {
         userId: '',
         notebookid: '',
         newnotetitle: '',
-        newnotetext: ''
+        newnotetext: '',
+        notesNotebooksInfo: [],
+        edit: ''
         
     }
     
@@ -20,37 +23,95 @@ class ListingNotes extends React.Component {
         this.setState({userId : sessionuserid})
         
         
+        
           console.log('do stuff')
           
           return Promise.resolve()
               .then(() => {
                   logic.listNotesbyUser(sessionuserid, token)
                   .then(res => {
-                  console.log(res)
-                  this.setState({notes: res})
+                      this.setState({notes: res})
+                      console.log(res)
                   })
-              
+                  .then(() => this.getNotebookInfo())
               })
-      
+            }
+
+    getNotebookInfo = () => {
+        
+        const sessionuserid = sessionStorage.getItem('userId')
+        const {notes} = this.state
+        console.log('getNotebookInfo')
+        const withInfo = []
+
+        notes.map(note => {
+            
+            return Promise.resolve()
+            .then(() => {
+                console.log(note.notebook)
+                return logic.listNotebooksByNotebookId(sessionuserid, note.notebook) 
+            })
+            .then(res => {
+                note.notebooktitle = res.notebooktitle
+                note.videotitle = res.videotitle
+                note.videothumbnail = res.videothumbnail
+            })
+            .then(() => console.log(note))
+            .then(withInfo.push(note))
+            .then(() => this.setState({notesNotebooksInfo: withInfo}))
+        })
     }
+
+    getNotes = () => {
+
+    }
+
+    secondsForm = (secs) => {
+        return Math.floor(secs - (Math.floor(secs/60)) * 60)
+    }
+    
+    minutesForm = (secs) => {
+        return Math.floor(secs/60)
+     }
       
       
 
     refreshList = () => {
-        const {userId, notebookid} = this.state
-        logic.listNotebyNotebookId(userId, notebookid)
+        const token = sessionStorage.getItem('token')
+        const sessionuserid = sessionStorage.getItem('userId')
+        logic.listNotesbyUser(sessionuserid, token)
+        
         .then(res => {
             this.setState({notes: res})
         })
     }
 
-    deleteNote(noteid) {
+    refresh = () => {
+        const token = sessionStorage.getItem('token')
+        const sessionuserid = sessionStorage.getItem('userId')
+        
+        return Promise.resolve()
+              .then(() => {
+                  logic.listNotesbyUser(sessionuserid, token)
+                  .then(res => {
+                      this.setState({notes: res})
+                      console.log(res)
+                  })
+                  .then(() => {
+                      return this.getNotebookInfo()
+                  })
+              })
+            
+    }
+
+    deleteNote =(noteid)=> {
         const {userId} = this.state
         const token = sessionStorage.getItem('token')
         const sessionuserid = sessionStorage.getItem('userId')
+        console.log(noteid)
         logic.removeNote(userId, sessionuserid, noteid, token)
         .then(() => {
-            return this.refreshList()
+            return this.refresh()
         })
     }
     
@@ -62,8 +123,9 @@ class ListingNotes extends React.Component {
         //const noteIdtoEdit = sessionStorage.getItem('noteIdtoEdit')
         console.log(_id)
         logic.updateNote(userId, sessionuserid, _id, newnotetitle, newnotetext, token)
+        .then(() => {this.setState({ edit: ''})})
         .then(() => {
-            return this.refreshList()
+            return this.refresh()
         })
     }
 
@@ -74,46 +136,124 @@ class ListingNotes extends React.Component {
     onChangeNoteText = e => this.setState({ newnotetext: e.target.value})
 
     
-    
+    editable = e => {
+        e.preventDefault()
+        console.log(e.target.name)
+    }
 
 
       render() {
-                        const {notes} = this.state
+                        const {notes, notesNotebooksInfo} = this.state
         return <div>
-            <h1>Notes</h1>
+            
             <div>
                    
-                        {notes.map(({ notetext, notetitle, seconds, _id, user }) => (
-                            
+                        {notesNotebooksInfo.map(({ notetext, notetitle, seconds, _id, user, notebook, notebooktitle, videotitle, videothumbnail}) => (
+                                
+                                /*
                                 <div>
-                                <button
-                                 className="remove-btn"
-                                 color="danger"
-                                 size="sm"
-                                 onClick={() => {
-                                     this.deleteNote(_id)
-                                 }}
-                                 
-                                 >&times;</button>
-                                
-                                
-                                
-                                    <input type="text" defaultValue={notetitle} onChange={this.onChangeNoteTitle}/>
-                                    <input type="text" defaultValue={notetext} onChange={this.onChangeNoteText}/>
-                                    <button onClick={() => this.updateNoteForm(_id)}>UpdateNote</button>       
-                                   
-                                {/*<span>Title: {notetitle}  </span> 
-                                <span>Text: {notetext}  </span>*/}
-                                <span>Time: {Math.floor(seconds/60)}:{Math.floor(seconds - (Math.floor(seconds/60)) * 60)}  </span>
-                                <button
-                                 className="remove-btn"
-                                 color="danger"
-                                 size="sm"
-                                 onClick={() => this.props.seektoPass(seconds)}
-                                 >SeekTo</button>
-                                 <Link to={`/noteplayer/${_id}/${user}`}>Play Note</Link>
-                                 
+                                    <button
+                                    className="remove-btn"
+                                    color="danger"
+                                    size="sm"
+                                    onClick={() => {
+                                        this.deleteNote(_id)
+                                    }}
+                                    
+                                    >&times;</button>
+                                    
+                                    
+                                    
+                                        <input type="text" defaultValue={notetitle} onChange={this.onChangeNoteTitle}/>
+                                        <input type="text" defaultValue={notetext} onChange={this.onChangeNoteText}/>
+                                        <button onClick={() => this.updateNoteForm(_id)}>UpdateNote</button>       
+                                    
+                                    
+                                    <span>Time: {Math.floor(seconds/60)}:{Math.floor(seconds - (Math.floor(seconds/60)) * 60)}  </span>
+                                    <button
+                                    className="remove-btn"
+                                    color="danger"
+                                    size="sm"
+                                    onClick={() => this.props.seektoPass(seconds)}
+                                    >SeekTo</button>
+                                    <Link to={`/noteplayer/${_id}/${user}`}>Play Note</Link>
                                 </div>
+                                */
+                                
+                                <div>
+                                    <Card className='NotesCards'>    
+                                <FormGroup row>
+                                        <Label sm={2}>Moment</Label>
+                                        <Col sm={8}>
+                                        <Input type="text" value={this.minutesForm(seconds)+`:`+this.secondsForm(seconds)} disabled/>
+                                        </Col>
+                                    </FormGroup>
+                                    {
+                                        (this.state.edit === _id)
+                                        ? <div>
+                                            <FormGroup row>
+                                                <Label sm={2}>Title</Label>
+                                                    <Col sm={8}>
+                                                    <Input type="text" name='notetitle' defaultValue={notetitle} onChange={this.onChangeNoteTitle}   required/>
+                                                </Col>
+                                            </FormGroup>
+                                            <FormGroup row>
+                                                <Label  sm={2}>Text</Label>
+                                                <Col sm={8}>
+                                                    <Input type="textarea" name="notetext" defaultValue={notetext} onChange={this.onChangeNoteText} />
+                                                </Col>
+                                            </FormGroup>
+                                        </div>
+                                        : <div>
+                                        <FormGroup row>
+                                            <Label sm={2}>Title</Label>
+                                                <Col sm={8}>
+                                                <Input type="text" name='notetitle' defaultValue={notetitle} onChange={this.onChangeNoteTitle}  disabled required/>
+                                            </Col>
+                                        </FormGroup>
+                                        <FormGroup row>
+                                            <Label  sm={2}>Text</Label>
+                                            <Col sm={8}>
+                                                <Input type="textarea" name="notetext" defaultValue={notetext} onChange={this.onChangeNoteText} disabled/>
+                                            </Col>
+                                        </FormGroup>
+                                    </div>
+                                    }
+                                    
+                                        <FormGroup row>
+                                        <Label  sm={2}>notebooktitle</Label>
+                                        <Col sm={8}>
+                                            <p>{notebooktitle}</p>
+                                        </Col>
+                                        
+                                        </FormGroup>
+                                        <FormGroup row>
+                                        <Label  sm={2}>videotitle</Label>
+                                        <Col sm={8}>
+                                            <p>{videotitle}</p>
+                                        </Col>
+                                        
+                                        </FormGroup>
+                                        <div className='optionnotes'>
+                                        {
+                                            (this.state.edit === _id)
+                                            ? <Button sm={2} onClick={() => this.updateNoteForm(_id)}>Save Changes&#128394;</Button>
+                                            : <Button onClick={() => this.setState({ edit: _id})}>EDIT</Button>
+                                        }
+                                        
+                                        
+                                        <Button sm={2} onClick={() => {this.deleteNote(_id)}}>&#10799;</Button>
+                                            <Link to={`/noteplayer/${_id}/${user}`}>
+                                                <Button sm={2} >&#9654; Note</Button>
+                                            </Link>
+                                            <Link to={`/player/${notebook}/${user}`}>
+                                                <Button type='button'>&#9654; Notebook</Button>
+                                            </Link>
+                                        </div>
+                            </Card>
+                                </div>
+                                
+                                
                             
                         ))}
                     

@@ -141,7 +141,7 @@ const logic = {
     updateNotebook(userId, sessionuserid, notebookid, newnotebooktitle, token) {
         return Promise.resolve()
             .then(() => {
-                    return this._call(`${userId}/notebooks/${notebookid}/update/${sessionuserid}`, 'patch',
+                    return this._call(`${userId}/notebooks/${notebookid}/update/${sessionuserid}`, 'PATCH',
                     {'Content-Type': 'application/json', authorization: `bearer ${token}`},
                     JSON.stringify({ newnotebooktitle }),
                     200)
@@ -235,7 +235,7 @@ const logic = {
     },
 
     //@@    DELETE api/:id/removenote/:noteid
-    //@@    Remove note
+    //@@    Remove note by noteid
     //@@    Private-Token
 
     removeNote(userId, sessionuserid, noteid, token) {
@@ -250,7 +250,24 @@ const logic = {
             
             })
     },
+    ////////////////////////
+    //@@    DELETE api/:id/removenotebooksnotes/:notebookid/:sessionUserId
+    //@@    Remove all notes in a notebooks by notebookid
+    //@@    Private-Token
 
+    removeNotebooksNotes(userId, sessionuserid, notebookid, token) {
+        return Promise.resolve()
+            .then(() => {
+                return this._call(`${userId}/removenotebooksnotes/${notebookid}/${sessionuserid}`,
+                'delete',
+                {authorization: `bearer ${token}`},
+                undefined,
+                200)
+                .then(res => res.json())
+            
+            })
+    },
+    /////////////////////////////
     //@@    UPDATE api/:id/updatenote/:noteid
     //@@    Update note
     //@@    Private-Token

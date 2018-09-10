@@ -7,7 +7,7 @@ export default class Noteplayer extends Component {
         return (
             <div>
                 <Navbar />
-                <h1>Note Player</h1>
+                
                 < NoteScreen />
             </div>
         )

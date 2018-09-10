@@ -7,13 +7,15 @@ import {logic} from '../logic'
 import { withRouter } from 'react-router-dom'
 import screenfull from 'screenfull'
 import { findDOMNode } from 'react-dom'
- 
+import {FormGroup, Input, Button, Form, Label, Col, Card} from 'reactstrap'
+import { CopyToClipboard } from 'react-copy-to-clipboard' 
 
 
 
 class NoteScreen extends Component {
 
     state = {
+        userId: '',
         seconds: '',
         notetitle: '',
         notetext: '',
@@ -23,7 +25,9 @@ class NoteScreen extends Component {
             
         ],
         notes:[],
+        fakenotes:[],
         url: null ,
+        preurl: null,
         //////////////////////
         videoSlugId: '',
         playing: true,
@@ -35,23 +39,46 @@ class NoteScreen extends Component {
         playbackRate: 1.0,
         loop: false,
         /////////////////////
-        newNoteTitle: '',
-        newNoteText: '',
+        newnotetitle: '',
+        newnotetext: '',
         newNoteSeconds: '',
         videoTitle:'',
         noteBookId: '',
-        notebookTitle: '',
+        noteId: '',
+        /////////////////////
+        isLoggedin: false,
+        gotchaSeconds: '',
+        ////////////////////
+        notebookStage: true, /*IF TRUE Display only notebook title & url form// IF FALSE Hide form*/
+        gotchaStage: false, /*IF TRUE Display gotcha button//IF FALSE Hide Button*/
+        noteStage: false, /*IF TRUE Display note form//IF FALSE Hide form notes*/
+        /////////////////
+        formErrors: {url: ''},
+        urlValid: false,
+        formValid: false,
+        /////////////
+        notebooktitle: '',
+        homeNotebookTitle: '',
+        landingNotebookTitle: '',
+        /////ORIGIN///////
+        origin: '',
+        loggedOut: '',
+
+
     }
 
     componentDidMount() {
         const {editor, noteid} = this.props.match.params
-        
+        const token = sessionStorage.getItem('token')
         
         return logic.listNotesbyNoteId(editor, noteid)
         .then(res => {
             console.log(res)
             this.setState({ seconds: res.seconds })
             this.setState({ noteBookId: res.notebook })
+            this.setState({ notetitle: res.notetitle})
+            this.setState({ notetext: res.notetext})
+            this.setState({ userId: res.user})
         })
         .then(() => {
             return logic.listNotebooksByNotebookId(editor, this.state.noteBookId)
@@ -59,16 +86,44 @@ class NoteScreen extends Component {
         .then(res => {
             console.log(res)
             this.setState({ url : res.videourl})
+            this.setState({ notebooktitle: res.notebooktitle})
+            this.setState({ videoTitle: res.videotitle})
         })        
         .then( () => {
             console.log(this.state.seconds)
             this.setSeekToPlay(this.state.seconds)
-        } )
-        
-        
-        
-        
-    }
+        })
+        .then(() => this.setState({noteId: noteid}))
+        .then(this.setState({ loggedOut: token}))
+   }
+
+refresh = () => {
+    const {userId, noteId } = this.state
+    return logic.listNotesbyNoteId(userId, noteId)
+    .then(res => {
+        console.log(res)
+        this.setState({ seconds: res.seconds })
+        this.setState({ noteBookId: res.notebook })
+        this.setState({ notetitle: res.notetitle})
+        this.setState({ notetext: res.notetext})
+        this.setState({ userId: res.user})
+    })
+    .then(() => {
+        return logic.listNotebooksByNotebookId(userId, this.state.noteBookId)
+    })
+    .then(res => {
+        console.log(res)
+        this.setState({ url : res.videourl})
+        this.setState({ notebooktitle: res.notebooktitle})
+        this.setState({ videoTitle: res.videotitle})
+    })        
+    .then( () => {
+        console.log(this.state.seconds)
+        this.setSeekToPlay(this.state.seconds)
+    })
+    
+}
+   
 
                      
   
@@ -150,55 +205,60 @@ class NoteScreen extends Component {
       }
     
     /////////////////////////////////////////
-    /////////NOTEBOOK CREATOR///////////////
+   
+    /////////NOTES UPDATE///////////////
 
-    inputVideoUrl = e => this.setState({ url: e.target.value})
-    inputTitle = e => this.setState({ notebooktitle: e.target.value})
-
-
-    buildNotebook = e => {
-        e.preventDefault()
-
-        const userId = sessionStorage.getItem('userId')
-        const token = sessionStorage.getItem('token')
-
-        const { url, notebooktitle} = this.state
-        
-        return Promise.resolve()
-        .then(() => {
-            logic.createNotebook(userId, notebooktitle, url, token)
-            .then(res => { this.setState({ notebook: res.notebookdId})})
-            })
-    }        
-
-    /////////////////////////////////////////
-    /////////NOTES CREATOR///////////////
-
-    
-    
-      
-    
-    inputNoteTitle = e => this.setState({ notetitle: e.target.value})
-    inputNoteText = e => this.setState({ notetext: e.target.value})
-    
-    buildNote = e => {
-        e.preventDefault()
-    
-        const userId = sessionStorage.getItem('userId')
-        const token = sessionStorage.getItem('token')
-    
-        const { playedSeconds, notetitle, notetext, notebook} = this.state
-        
-        return Promise.resolve()
+    updateNoteForm = (noteId) =>{
+        const {userId, newnotetitle, newnotetext } = this.state
+            const token = sessionStorage.getItem('token')
+            const sessionuserid = sessionStorage.getItem('userId')
+            
+            console.log(userId, sessionuserid, noteId, newnotetitle, newnotetext, token)
+            logic.updateNote(userId, sessionuserid, noteId, newnotetitle, newnotetext, token)
+            .then(() => {this.setState({ edit: ''})})
+            .then(() => {this.setState({ newnotetitle: ''})})
+            .then(() => {this.setState({ newnotetext: ''})})
             .then(() => {
-                return logic.createNote(playedSeconds, notetitle, notetext, notebook, userId, token)
+                return this.refresh()
             })
             
+        }
+    
+        //idState = (_id) => this.setState({noteIdtoEdit : _id})
+        //idState = (_id) => sessionStorage.setItem('noteIdtoEdit', _id)
+    
+        onChangeNoteTitle = e => this.setState({ newnotetitle: e.target.value})
+        onChangeNoteText = e => this.setState({ newnotetext: e.target.value})
+    
+        
+        editable = e => {
+            e.preventDefault()
+            console.log(e.target.name)
+        }
+            
+        
+    ////////////////////////////////////////////////
         
     
         
     
-        
+
+    secondsForm = (secs) => {
+        return Math.floor(secs - (Math.floor(secs/60)) * 60)
+    }
+    
+    minutesForm = (secs) => {
+        return Math.floor(secs/60)
+     }
+
+     deleteNote(noteid) {
+        const {userId} = this.state
+        const token = sessionStorage.getItem('token')
+        const sessionuserid = sessionStorage.getItem('userId')
+        logic.removeNote(userId, sessionuserid, noteid, token)
+        .then(() => {
+            this.props.history.push('/notes')
+        })
     }
 
 
@@ -216,15 +276,13 @@ class NoteScreen extends Component {
     render () 
         {
         const {items, notes} = this.state;
-        const { url, playing, volume, muted, loop, played, loaded, duration, playbackRate } = this.state
+        const { url, playing, volume, muted, loop, playbackRate, gotchaSeconds, notebooktitle, fakenotes, noteId, seconds, notetitle, notetext, videoTitle, loggedOut } = this.state
+        const urlToShare = window.location.href
         const SEPARATOR = ' · '
         
         return(
-            <div>
-                <div className='app'>
-                    <section className='section'>
-           
-                        <div className='player-wrapper'>
+            <div className='center-note-player'>
+                    <div className='player-wrapper-note'>
                         <ReactPlayer
                             ref={this.ref}
                             width='100%'
@@ -245,107 +303,105 @@ class NoteScreen extends Component {
                             onError={e => console.log('onError', e)}
                             onProgress={this.onProgress}
                             onDuration={this.onDuration}
-                        />
-                        </div>
-  
-                        <table><tbody>
-                        <tr>
-                            <p>{this.state.videoTitle}</p>  
-                            <h3>{this.state.notebookTitle}</h3> 
-                            <th>Controls</th>
-                            <td>
-                            <button onClick={this.stop}>Stop</button>
-                            <button onClick={this.playPause}>{playing ? 'Pause' : 'Play'}</button>
-                            <button onClick={this.onClickFullscreen}>Fullscreen</button>
-                            <button onClick={this.setPlaybackRate} value={1}>1</button>
-                            <button onClick={this.setPlaybackRate} value={1.5}>1.5</button>
-                            <button onClick={this.setPlaybackRate} value={2}>2</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>Seek</th>
-                            <td>
-                            <input
-                                type='range' min={0} max={1} step='any'
-                                value={played}
-                                onMouseDown={this.onSeekMouseDown}
-                                onChange={this.onSeekChange}
-                                onMouseUp={this.onSeekMouseUp}
+                            youtubeConfig={{ playerVars: { controls: 1 } }}
                             />
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>Volume</th>
-                            <td>
-                            <input type='range' min={0} max={1} step='any' value={volume} onChange={this.setVolume} />
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>
-                            <label htmlFor='muted'>Muted</label>
-                            </th>
-                            <td>
-                            <input id='muted' type='checkbox' checked={muted} onChange={this.toggleMuted} />
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>
-                            <label htmlFor='loop'>Loop</label>
-                            </th>
-                            <td>
-                            <input id='loop' type='checkbox' checked={loop} onChange={this.toggleLoop} />
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>Played</th>
-                            <td><progress max={1} value={played} /></td>
-                        </tr>
-                        <tr>
-                            <th>Loaded</th>
-                            <td><progress max={1} value={loaded} /></td>
-                        </tr>
-                        </tbody></table>
-                    </section>
-          
-                    <section className='section'>
-                        <table><tbody>
-                        <tr>
-                            <th>YouTube</th>
-                            <td>
-                            {this.renderLoadButton('https://www.youtube.com/watch?v=oUFJJNQGwhk', 'Test A')}
-                            {this.renderLoadButton('https://www.youtube.com/watch?v=jNgP6d9HraI', 'Test B')}
-                            </td>
-                        </tr>
-                        
-                        <tr>
-                            <th>Custom URL</th>
-                            <td>
-                            <input ref={input => { this.urlInput = input }} type='text' placeholder='Enter URL' />
-                            <button onClick={() => {
-                                    const url = this.urlInput.value
-                                    this.setState({ url: this.urlInput.value })
-                                    //this.onLoadVideo(url)
+                    </div>
+                    <div>
+                                    <Card className='NotesCards'>    
+                                <FormGroup row>
+                                        <Label sm={2}>Moment</Label>
+                                        <Col sm={8}>
+                                        <Input type="text" value={this.minutesForm(seconds)+`:`+this.secondsForm(seconds)} disabled/>
+                                        </Col>
+                                    </FormGroup>
+                                    {
+                                        (this.state.edit === noteId)
+                                        ? <div>
+                                            <FormGroup row>
+                                                <Label sm={2}>Title</Label>
+                                                    <Col sm={8}>
+                                                    <Input type="text" name='notetitle' defaultValue={notetitle} onChange={this.onChangeNoteTitle}   required/>
+                                                </Col>
+                                            </FormGroup>
+                                            <FormGroup row>
+                                                <Label  sm={2}>Text</Label>
+                                                <Col sm={8}>
+                                                    <Input type="textarea" name="notetext" defaultValue={notetext} onChange={this.onChangeNoteText} />
+                                                </Col>
+                                            </FormGroup>
+                                        </div>
+                                        : <div>
+                                        <FormGroup row>
+                                            <Label sm={2}>Title</Label>
+                                                <Col sm={8}>
+                                                <Input type="text" name='notetitle' value={notetitle} onChange={this.onChangeNoteTitle}  disabled required/>
+                                            </Col>
+                                        </FormGroup>
+                                        <FormGroup row>
+                                            <Label  sm={2}>Text</Label>
+                                            <Col sm={8}>
+                                                <Input type="textarea" name="notetext" value={notetext} onChange={this.onChangeNoteText} disabled/>
+                                            </Col>
+                                        </FormGroup>
+                                    </div>
+                                    }
                                     
-                                }
-                                
-                                }>Load</button>
-                            </td>
-                        </tr>
-                        </tbody></table>
-            
-                        <h2>Form Notes</h2>
-                                
-                                <button onClick={() => {this.openNote()}}>Take Note</button>
-                                <button onClick={() => {this.setUrl()}}>Seturl</button>
-                    
-                    
-                    
-                    <PlayerNotesBar onRef={ref => (this.child = ref)} seektoPass={this.setSeekToPlay}/>
+                                        <FormGroup row>
+                                        <Label  sm={2}>notebooktitle</Label>
+                                        <Col sm={8}>
+                                            <p>{notebooktitle}</p>
+                                            
+                                    
+                                        </Col>
+                                        
+                                        </FormGroup>
+                                        <FormGroup row>
+                                        <Label  sm={2}>videotitle</Label>
+                                        <Col sm={8}>
+                                            <p>{videoTitle}</p>
+                                        </Col>
+                                        
+                                        </FormGroup>
+                                        <div className='optionnotes'>
+                                        {
+                                            (loggedOut)
+                                            ?<div>
+                                                {
+                                                    (this.state.edit === noteId)
+                                                    ? <Button sm={2} onClick={() => this.updateNoteForm(noteId)}>Save Changes&#128394;</Button>
+                                                    : <Button onClick={() => this.setState({ edit: noteId})}>Edit&#128394;</Button>
+                                                }
+                                                    <Button sm={2} onClick={() => {this.deleteNote(noteId)}}>&#10799;</Button>
+                                            </div>
+                                            :<div></div>
+                                        
+                                        }
+                                        
 
-                    </section>
+                                        <CopyToClipboard text={urlToShare}>
+                                        <Button>Copy to Share Note Url</Button>
+                                        </CopyToClipboard>
+                                        
+                                            
+                                        </div>
+                            </Card>
+                                </div>
+                    
+                
+                    
+          
+                    
+            
+                        
+                    
+                    
+                    
+              {/*<PlayerNotesBar onRef={ref => (this.child = ref)} seektoPass={this.setSeekToPlay}/>*/}
+
+                    
           
                 </div>
-            </div>      
+                 
          
         )
     }

@@ -11,7 +11,7 @@ export default class NotebookEditorLanding extends Component {
         return (
             <div>
                 <Navbars />
-                <h1>DEMO NOTEBOOK EDITOR</h1>
+                
                 
                 <EditorPlayer />
                 

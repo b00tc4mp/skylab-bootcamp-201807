@@ -81,7 +81,7 @@ class Landing extends Component {
         const {url} = this.state
 
         return (
-            <div>
+            <div class='landing_back'>
                 <Navbar >
                     <NavbarBrand href="/">Gotcha</NavbarBrand>
                         <Nav pills>

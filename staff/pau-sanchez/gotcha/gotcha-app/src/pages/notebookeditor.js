@@ -11,7 +11,7 @@ export default class NotebookEditor extends Component {
         return (
             <div>
                 <Navbar />
-                <h1>NOTEBOOK EDITOR</h1>
+                
                 
                 <EditorPlayer />
                 
