@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import logic from '../logic'
 import { withRouter } from 'react-router-dom'
+import Header from '../components/Header';
 import PostDetail from '../components/PostDetail';
 
 class PostDetailPage extends Component {
@@ -29,14 +30,19 @@ class PostDetailPage extends Component {
   render() {
     return (
       <div>
-        <div>
-          {
-            this.state.post && (
-              <PostDetail
-                post={this.state.post}
-              />
-            )
-          }
+        <div className="header-wrapper">
+          <Header />
+        </div>
+        <div className="main-wrapper">
+          <main>
+            {
+              this.state.post && (
+                <PostDetail
+                  post={this.state.post}
+                />
+              )
+            }
+          </main>
         </div>
       </div>
     )

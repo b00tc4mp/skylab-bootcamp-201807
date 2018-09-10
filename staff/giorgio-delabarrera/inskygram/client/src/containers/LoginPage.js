@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import Login from '../components/Login';
 import { withRouter } from 'react-router-dom'
 import logic from "../logic"
+import Login from '../components/Login';
 
 class LoginPage extends Component {
 
@@ -22,11 +22,11 @@ class LoginPage extends Component {
 
   render() {
     return (
-      <div>
-        <h1>Inskygram</h1>
+      <div className="login-wrapper">
         <Login onSubmit={this.handleLoginSubmit} error={this.state.loginError} />
-        <br/>
-        <div>Don't have an account? <a href="#/" onClick={this.goToRegister}>Sign up</a></div>
+        <section className="block">
+          <div className="block-message">Don't have an account? <a href="#/" onClick={this.goToRegister}>Sign up</a></div>
+        </section>
       </div>
     )
   }

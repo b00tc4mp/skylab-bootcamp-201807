@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import Register from '../components/Register';
 import { withRouter } from 'react-router-dom'
 import logic from '../logic'
+import Register from '../components/Register';
 
 class RegisterPage extends Component {
 
@@ -24,11 +24,11 @@ class RegisterPage extends Component {
 
   render() {
     return (
-      <div>
-        <h1>Inskygram</h1>
+      <div className="register-wrapper">
         <Register onSubmit={this.handleRegisterSubmit} error={this.state.registerError} />
-        <br />
-        <div>Have an account? <a href="#/" onClick={this.goToLogin}>Log in</a></div>
+        <section className="block">
+          <div className="block-message">Have an account? <a href="#/" onClick={this.goToLogin}>Log in</a></div>
+        </section>
       </div>
     )
   }
