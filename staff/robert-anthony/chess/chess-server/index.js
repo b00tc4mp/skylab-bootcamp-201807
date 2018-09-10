@@ -35,7 +35,7 @@ const routes = require('./routes')
 const { sockets } = require('./sockets')
 
 
-mongoose.connect(MONGO_URL, { useNewUrlParser: true }, (err, conn) => {
+mongoose.connect('mongodb://ajedrez:Play2Win@ds243212.mlab.com:43212/ajedrez1', { useNewUrlParser: true }, (err, conn) => {
   if (err) throw err
 
 
