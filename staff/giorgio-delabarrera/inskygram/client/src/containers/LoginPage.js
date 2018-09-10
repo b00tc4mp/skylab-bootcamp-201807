@@ -22,7 +22,7 @@ class LoginPage extends Component {
 
   render() {
     return (
-      <div className="login-wrapper">
+      <div className="push-t-50">
         <Login onSubmit={this.handleLoginSubmit} error={this.state.loginError} />
         <section className="block">
           <div className="block-message">Don't have an account? <a href="#/" onClick={this.goToRegister}>Sign up</a></div>

@@ -125,8 +125,44 @@ main
   &-message
     font-size: .9em
 
-.login-wrapper
+.push-t-50
   margin-top: 50px
 
-.register-wrapper
-  margin-top: 50px
+.Menu
+  display: inline-block
+  width: 100%
+  
+  &-item
+    list-style: none
+
+  &-itemLink
+    padding: 1.4em 2.2em
+    color: #262626
+    display: block
+    font-size: 1em
+    text-decoration: none
+    border-left: 2px solid #ffffff
+    
+    &:hover
+      background-color: #fafafa
+      color: #000000
+      border-left: 2px solid #dbdbdb
+
+    &.is-active
+      color: #000000
+      border-left: 2px solid #000000
+      font-weight: bold
+
+.edit-profile-wrapper
+  display: grid
+  grid-template-columns: 1fr 3fr
+  background-color: #fff
+  border: 1px solid #dbdbdb
+  border-radius: 3px
+
+.edit-profile-menu-container
+  border-right: 1px solid #dbdbdb
+
+.edit-profile-container
+  display: grid
+  grid-template-columns: 4fr 1fr

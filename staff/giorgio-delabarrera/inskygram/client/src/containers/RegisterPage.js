@@ -24,7 +24,7 @@ class RegisterPage extends Component {
 
   render() {
     return (
-      <div className="register-wrapper">
+      <div className="push-t-50">
         <Register onSubmit={this.handleRegisterSubmit} error={this.state.registerError} />
         <section className="block">
           <div className="block-message">Have an account? <a href="#/" onClick={this.goToLogin}>Log in</a></div>
