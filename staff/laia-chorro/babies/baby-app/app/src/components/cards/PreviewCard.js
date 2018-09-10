@@ -1,17 +1,18 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
-import IconButton from '@material-ui/core/IconButton';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import ShareIcon from '@material-ui/icons/Share';
-import TurnedInIcon from '@material-ui/icons/TurnedIn';
-import WorkIcon from '@material-ui/icons/Work';
-import Typography from '@material-ui/core/Typography';
+import React from 'react'
+import PropTypes from 'prop-types'
+import { withStyles } from '@material-ui/core/styles'
+import Card from '@material-ui/core/Card'
+import CardActionArea from '@material-ui/core/CardActionArea'
+import CardActions from '@material-ui/core/CardActions'
+import CardContent from '@material-ui/core/CardContent'
+import CardMedia from '@material-ui/core/CardMedia'
+import IconButton from '@material-ui/core/IconButton'
+import FavoriteIcon from '@material-ui/icons/Favorite'
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder'
+import ShareIcon from '@material-ui/icons/Share'
+import TurnedInIcon from '@material-ui/icons/TurnedIn'
+import WorkIcon from '@material-ui/icons/Work'
+import Typography from '@material-ui/core/Typography'
 
 const styles = {
   card: {
@@ -33,12 +34,13 @@ const styles = {
     color: 'blue'
   },
   isFavourite: {
-    color: 'red'
+    color: '#4DD0E1'
   }
 };
 
-function ImgMediaCard(props) {
-  const { classes, state, photo, price, title, description, addFavourite, removeFavourite, idProd, isFav } = props
+function PreviewCard(props) {
+  const { classes, state, photo, price, title, description, addFavourite, 
+          removeFavourite, idProd, isFav, getProductDetail } = props
 
   const onFavourites = event => {
     event.preventDefault()
@@ -52,9 +54,15 @@ function ImgMediaCard(props) {
     removeFavourite(idProd)
   }
 
+  const onProductDetail = event => {
+    event.preventDefault()
+
+    getProductDetail(idProd)
+  }
+
   return (
     <Card className={classes.card}>
-      <CardActionArea >
+      <CardActionArea onClick={onProductDetail}>
         {state === 'sold' &&  <WorkIcon  className={classes.state}/>}
         {state === 'reserved' &&  <TurnedInIcon  className={classes.state}/>}
         <CardMedia
@@ -78,8 +86,8 @@ function ImgMediaCard(props) {
       </CardActionArea>
       <CardActions>
       <IconButton aria-label="Add to favorites">
-            {isFav ?  <FavoriteIcon onClick={onNotFavourites} className={classes.isFavourite}/> : 
-            <FavoriteIcon onClick={onFavourites}/>}
+            {isFav ?  <FavoriteIcon onClick={onNotFavourites} className={classes.isFavourite} /> : 
+            <FavoriteBorderIcon onClick={onFavourites} className={classes.isFavourite} />}
           </IconButton>
           <IconButton aria-label="Share">
             <ShareIcon />
@@ -89,8 +97,8 @@ function ImgMediaCard(props) {
   );
 }
 
-ImgMediaCard.propTypes = {
+PreviewCard.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(ImgMediaCard);
+export default withStyles(styles)(PreviewCard);

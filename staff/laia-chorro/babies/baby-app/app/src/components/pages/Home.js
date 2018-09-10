@@ -34,7 +34,7 @@ class Home extends Component {
 
     render() {
 
-        const { state: { products, idFavs }, props: { onAddFavourite, onRemoveFavourite } } = this
+        const { state: { products, idFavs }, props: { onAddFavourite, onRemoveFavourite, onProductDetail } } = this
 
        return(
             <main >
@@ -54,7 +54,8 @@ class Home extends Component {
                                         isFav = {idFavs && idFavs.length && idFavs.includes(prod.id)}
                                         description={prod.description}
                                         addFavourite={onAddFavourite}
-                                        removeFavourite={onRemoveFavourite}                  
+                                        removeFavourite={onRemoveFavourite}
+                                        getProductDetail={onProductDetail}             
                                     /> 
                                 </div>)
                             }) :

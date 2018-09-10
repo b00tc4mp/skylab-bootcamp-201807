@@ -60,8 +60,10 @@ const user = {
             })
 
             user.reviews = reviews
-            user.avg_score = total_score / (reviews.length || 1)
         }
+
+        user.avg_score = total_score / (reviews.length || 1)
+
 
         if (user.products && user.products.length) {
             user.products.forEach( product => {
@@ -85,7 +87,11 @@ const user = {
             user.favs = favs
         }
 
-        if (user.name && user.surname) user.public_name = `${user.name} ${user.surname.charAt(0)}.`
+        if (user.name && user.surname) {
+            user.public_name = `${user.name} ${user.surname.charAt(0)}.`
+        } else if (user.email) {
+            user.public_name = user.email.substring(0, user.email.lastIndexOf("@"))
+        }
 
         return user
     },
@@ -316,7 +322,7 @@ const user = {
 
                 return User.
                     findById(userId).
-                    select('name surname reviews products location').
+                    select('email name surname reviews products photo location').
                     populate({
                         path: 'products'
                         , select: 'title description price state cathegory location photos num_favs num_views created_at'

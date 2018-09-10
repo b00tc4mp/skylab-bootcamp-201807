@@ -48,7 +48,7 @@ const sliderStyle = { width: 200, margin: '30px 20px' };
 const sliderSubHeadingStyle = { fontSize: '0.875rem', marginBottom: '0.1rem' };
 
 const cathegories = [
-    { value: 'all', label: 'All Cathegories', },
+    { value: 'all', label: 'All Categories', },
     { value: 'clothes', label: 'Clothes', },
     { value: 'books', label: 'Books', },
     { value: 'it', label: 'IT', },
@@ -145,7 +145,7 @@ class FilterCard extends Component {
                 <Card className={classes.card} >
                     <TextField
                         select
-                        label="Cathegories"
+                        label="Categories"
                         className={classNames(classes.margin, classes.textField)}
                         value={cath}
                         onChange={this.onCathegoryChange('cath')}

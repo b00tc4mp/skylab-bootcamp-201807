@@ -5,7 +5,7 @@
     z-index: 1;
     top: 0;
     left: 0;
-    background-color: rebeccapurple;
+    background-color: #0097A7;
     overflow-x: hidden;
     padding-top: 20px;
     margin-top: 68px;
@@ -17,7 +17,7 @@
     text-decoration: none;
     font-size: 12px;
     text-transform: uppercase;
-    color: #818181;
+    color: #f1f1f1;
     display: block;
     text-align: center;
 }
@@ -28,5 +28,5 @@
 }
 
 .sidenav a:hover {
-    color: #f1f1f1;
+    color: #4DD0E1;
 }

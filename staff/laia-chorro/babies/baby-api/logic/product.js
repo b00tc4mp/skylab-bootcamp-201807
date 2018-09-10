@@ -48,14 +48,21 @@ const product = {
         if (product.user) {
             const { user } = product
 
-            if (user.name && user.surname) product.user_name = `${user.name} ${user.surname.charAt(0)}.`
-    
+            if (user.name && user.surname) {
+                product.user_name = `${user.name} ${user.surname.charAt(0)}.`
+            } else if (user.email) {
+                product.user_name = user.email.substring(0, user.email.lastIndexOf("@"))
+            }
+
             if (user.products) product.user_products = user.products.length || 0
-    
+ 
             if (user.reviews && user.reviews.length) {
                 numReviews = user.reviews.length
                 avgReviews = user.reviews.reduce((sum, review) => sum + parseFloat(review.score), 0) / numReviews
             }
+
+            product.user_photo = user.photo
+            product.user_id = user._id.toString()
 
             delete product.user
         }
@@ -198,7 +205,7 @@ const product = {
                     where('state').in(['sold', 'reserved', 'pending']).
                     populate({
                         path: 'user'
-                        , select: 'name surname photo products reviews'
+                        , select: 'email name surname photo products reviews'
                         , options: { lean: true}
                     }).
                     lean()

@@ -129,18 +129,6 @@ const logic = {
             })
     },
 
-    getPrivateUser() {
-        return Promise.resolve()
-            .then(() => {
-                return this._call(`/me/${this._userId}`, 'GET', { 
-                    'Authorization': `bearer ${this._userToken}`,
-                    'Content-Type': 'application/json' 
-                }, undefined, 200)
-                    .then(res => res.json() )
-                    .then(res => this._user = res )
-            })
-    },
-
     login(email, password) {
         return Promise.resolve()
             .then(() => this.authenticate(email, password))
@@ -171,6 +159,28 @@ const logic = {
         })
     },
 
+    getPrivateUser() {
+        return Promise.resolve()
+            .then(() => {
+                return this._call(`/me/${this._userId}`, 'GET', { 
+                    'Authorization': `bearer ${this._userToken}`,
+                    'Content-Type': 'application/json' 
+                }, undefined, 200)
+                    .then(res => res.json() )
+                    .then(res => this._user = res )
+            })
+    },
+
+    getPublicUser(userId) {
+        return Promise.resolve()
+            .then(() => {
+                return this._call(`/user/${userId}`, 'GET', { 
+                    'Content-Type': 'application/json' 
+                }, undefined, 200)
+                    .then(res => res.json() )
+            })
+    },
+
     //PRODUCTS//
     getSimpleProductsByFilters(filters) {
         return Promise.resolve()
@@ -186,7 +196,36 @@ const logic = {
             })
     },
 
-   uploadProduct(title, cathegory, price, description, photos, longitude, latitude) {
+    getProductDetailById(productId) {
+        return Promise.resolve()
+            .then(() => {
+                validate._stringField('productId', productId)
+                
+                return this._call(`/prod/${productId}`, 'GET', { 
+                    'Content-Type': 'application/json' 
+                }, undefined, 200)
+                    .then(res => res.json())
+            })
+    },
+
+    incrementProductViewsById(productId) {
+        return Promise.resolve()
+        .then(() => {
+            return this._call(`/prod/${productId}/views`, 'PATCH', { 
+                'Authorization': `bearer ${this._userToken}`,
+                'Content-Type': 'application/json'
+            }, undefined, 200)
+                .then(() => true)
+        })
+    },
+
+    /*visitProductDetail(productId){
+        return Promise.resolve()
+            .then(() => this.incrementProductViewsById(productId))
+            .then(() => this.getProductDetailById(productId) )
+    },*/
+
+    uploadProduct(title, cathegory, price, description, photos, longitude, latitude) {
 
         return Promise.resolve()
             .then(() => {
@@ -202,7 +241,7 @@ const logic = {
                 validate._longitude(longitude)
                 validate._latitude(latitude)
                 //validate._location([longitude, latitude])
-debugger;
+
                 const body = new FormData()
 
                 body.append('title', title)
@@ -215,7 +254,7 @@ debugger;
                 })
                 body.append('longitude', longitude)
                 body.append('latitude', latitude)
-        debugger;
+
                 return this._call(`me/prod/${this._userId}`, 'POST', { 
                     authorization: `bearer ${this._userToken}` 
                 }, body, 201)

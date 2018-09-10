@@ -1,13 +1,7 @@
 import React, { Component } from 'react'
-import GoogleMapsContainer from '../cards/GoogleMapsContainer'
 import Autocomplete from '../maps/Autocomplete'
-import logic from '../../logic'
 import './Upload.css'
 import { withRouter } from 'react-router-dom'
-
-import Icon from '@material-ui/core/Icon'
-import IconButton from '@material-ui/core/IconButton'
-import PhotoCamera from '@material-ui/icons/PhotoCamera'
 
 
 import ImageUploader from 'react-images-upload'

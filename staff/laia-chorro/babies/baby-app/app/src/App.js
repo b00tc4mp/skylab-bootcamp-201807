@@ -7,6 +7,8 @@ import Register from './components/pages/Register'
 //import Update from './components/pages/Update'
 import Nav from './components/sections/Nav'
 import Myzone from './components/Myzone'
+import ProductDetail from './components/pages/ProductDetail'
+import PublicUser from './components/pages/PublicUser'
 import { Route, withRouter, Redirect } from 'react-router-dom'
 
 
@@ -18,6 +20,7 @@ class App extends Component {
 		showFeedback: false,
 		idFavs: [],
 		profilePhoto: null,
+		detailProduct: null
 	}
 
 	hideFeedback = () => this.setState({errorMsg: null, showFeedback: false})
@@ -69,7 +72,7 @@ class App extends Component {
         const favs = logic.getUserField('favs')
 
         if (logic.loggedIn && favs && favs.length) {
-            const idFavs = favs.map(fav => fav.id);
+			const idFavs = favs.map(fav => fav.id)
             this.setState({ idFavs })
         }
     }
@@ -112,6 +115,15 @@ class App extends Component {
 			})
 	}
 
+	onProductDetail = productId => {
+		return Promise.resolve()
+			.then(() => logic.incrementProductViewsById(productId))
+            .then(() => logic.getProductDetailById(productId))
+			.then(product => this.setState({ product }) )
+			.then(() => this.props.history.push(`/item/${productId}`))
+            //.catch(({ message }) => this.setState({ errorMsg: message }))
+	}
+
   /*onUpdate = (password, newUsername, newPassword) => {
     this.hideFeedback()
     logic.updateUser(password, newUsername, newPassword)
@@ -124,14 +136,16 @@ class App extends Component {
 
 
 	render() {
-		const { loggedIn, errorMsg, showFeedback, idFavs, profilePhoto } =  this.state
-		const { onRegister, onLogin, onLogout, onProductUpload, hideFeedback, getIdFavs, onAddFavourite, onRemoveFavourite, onUploadProfilePhoto } = this
+		const { loggedIn, errorMsg, showFeedback, idFavs, profilePhoto, product } =  this.state
+		const { onRegister, onLogin, onLogout, onProductUpload, hideFeedback, 
+				getIdFavs, onAddFavourite, onRemoveFavourite, onUploadProfilePhoto,
+				onProductDetail } = this
 
 		return (
 			<div className="App">
 				<Nav loggedIn={loggedIn} profilePhoto={profilePhoto}/>
 
-				<Route path="/" exact render={() => <Home onAddFavourite={onAddFavourite} onRemoveFavourite={onRemoveFavourite} idFavs={idFavs} getIdFavs={getIdFavs}/>} />
+				<Route path="/" exact render={() => <Home onAddFavourite={onAddFavourite} onRemoveFavourite={onRemoveFavourite} idFavs={idFavs} getIdFavs={getIdFavs} onProductDetail={onProductDetail}/>} />
 				<Route path="/login" exact render={() => <Login onLogin={onLogin} errorMsg={errorMsg} showFeedback={showFeedback} hideFeedback={hideFeedback}/>} />
 				<Route path="/register" exact render={() => <Register onRegister={onRegister} errorMsg={errorMsg} showFeedback={showFeedback} hideFeedback={hideFeedback}/>} />
 				<Route path="/(profile|mylist|favourites|reviews|prod/upload)" exact render={() => 
@@ -144,7 +158,8 @@ class App extends Component {
 								profilePhoto={profilePhoto}/> : 
 						<Redirect to="/login" />
 				} />
-
+				<Route path="/item/:idProd" exact render={() => <ProductDetail onAddFavourite={onAddFavourite} onRemoveFavourite={onRemoveFavourite} idFavs={idFavs} getIdFavs={getIdFavs} onProductDetail={onProductDetail} product={product}/>} />
+				<Route path="/user/:idUser" exact render={() => <PublicUser onAddFavourite={onAddFavourite} onRemoveFavourite={onRemoveFavourite} idFavs={idFavs} getIdFavs={getIdFavs}  />} />
 				{/*<Route path="/update" exact render={() => loggedIn ? <Update onUpdateProp={onUpdate} email={logic.userUsername} errorMsg={errorMsg} showFeedback={showFeedback} hideFeedback={hideFeedback}/> : <Redirect to="/login" />} />*/}
 
 			</div>

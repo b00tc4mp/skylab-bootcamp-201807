@@ -31,7 +31,7 @@ class Favourites extends Component {
                         return(<div key={index} data-prod={prod.id}>
                             <PreviewCard 
                                 state={prod.state} 
-                                photo={prod.photos[0]}
+                                photo={prod.photos && prod.photos[0]}
                                 price={prod.price}
                                 title={prod.title}
                                 idProd={prod.id}

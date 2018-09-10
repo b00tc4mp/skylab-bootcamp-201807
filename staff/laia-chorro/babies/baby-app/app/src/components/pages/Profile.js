@@ -48,7 +48,7 @@ class Profile extends Component {
     getProfilePhoto = () => {
         const photoUrl = logic.getUserField('photo')
 
-        if (logic.loggedIn && photoUrl) 
+        if (logic.loggedIn && photoUrl)
             this.setState({ photoUrl })
     }
 

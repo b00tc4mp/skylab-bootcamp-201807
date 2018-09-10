@@ -1,0 +1,18 @@
+.public-user-flex {
+    display: flex;
+    justify-content: space-between;
+    margin-left: 20px;
+    margin-right: 100px;
+}
+
+.public-user-name {
+    margin-top: 3px;
+    margin-left: 20px;
+}
+
+.public-user-thumbnail .material-icons {
+    align-self: center;
+    color: grey;
+}
+
+

@@ -13,7 +13,7 @@ class Sidebar extends Component {
         if (props.profilePhoto !== state.photoUrl)
           return { photoUrl: props.profilePhoto}
 
-        return null; // Return null to indicate no change to state.
+        return null // Return null to indicate no change to state.
     }
 
     componentDidMount() {
