@@ -2,8 +2,9 @@
 
 const logic = {
 
-    //url: 'http://localhost:8080/api/caretaker',
-    url: 'http://192.168.0.45:8080/api/caretaker',
+    url: 'http://localhost:8080/api/caretaker',
+    // url: 'https://localhost:8443/api/caretaker',
+    // url: 'https://192.168.0.45:8080/api/caretaker',
 
 
     /**

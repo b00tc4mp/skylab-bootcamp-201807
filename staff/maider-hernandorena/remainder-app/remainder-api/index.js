@@ -7,8 +7,6 @@ const routesDoctor = require('./routesDoctor')
 const routesCaretaker = require('./routesCaretaker')
 const routesAdmin = require('./routesAdmin')
 const { mongoose } = require('remainder-data')
-const fs = require('fs')
-const https = require('https')
 
 const { env: { MONGO_URL, PORT } } = process
 
@@ -19,11 +17,6 @@ app.use(cors())
 app.use('/api/doctor', routesDoctor)
 app.use('/api/caretaker', routesCaretaker)
 app.use('/api/admin', routesAdmin)
-
-// https.createServer({
-//     key: fs.readFileSync('server.key'),
-//     cert: fs.readFileSync('server.cert')
-// }, app)
 
 app.listen(PORT, () => console.log(`${package.name} ${package.version} up and running on port ${PORT}`))
 

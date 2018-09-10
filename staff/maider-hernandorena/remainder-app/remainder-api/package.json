@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node . 8080",
+    "start-https": "node server.js 8443",
     "debug": "node debug . 8080",
     "test": "mocha logic --timeout 15000",
     "test-debug": "mocha debug logic"
