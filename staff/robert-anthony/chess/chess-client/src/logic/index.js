@@ -1,6 +1,6 @@
 const logic = {
   //  url: 'https://tranquil-ridge-60570.herokuapp.com/api',
-   url: 'http://localhost:8080/api',
+   url:process.env.REACT_APP_API_SERVER_URL,
 
   _call(path, method, headers, body, expectedStatus) {
     const config = {method}

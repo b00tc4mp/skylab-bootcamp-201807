@@ -4,11 +4,7 @@ require('dotenv').config()
 const fs = require('fs');
 const http = require('http');
 const https = require('https');
-const credentials = {
-  key: fs.readFileSync('server.key', 'utf8'),
-  cert: fs.readFileSync('server.crt', 'utf8'),
-  passphrase: 'secretstuff'
-}
+
 const { env: { MONGODB_URI } } = process
 const express = require('express')
 const cors = require('cors')
@@ -32,6 +28,11 @@ mongoose.connect(MONGODB_URI, { useNewUrlParser: true }, (err, conn) => {
 
   app.use('/api', routes())
 
+  const credentials = {
+    key: fs.readFileSync('server.key', 'utf8'),
+    cert: fs.readFileSync('server.crt', 'utf8'),
+    passphrase: 'secretstuff'
+  }
   const httpsServer = https.createServer(credentials, app);
   const io = socketIO(httpsServer);
   sockets.setIO(io)

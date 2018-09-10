@@ -282,6 +282,10 @@ const logic = {
       .then(_ => true)
   },
 
+  getOpponentForGame(gameID) {
+
+  }
+
   move(nickname, gameID, move) {
     logger.debug(`move,  CONTEXT: "logic/index.js", GAMEID:${gameID}, MOVE:${move ? JSON.stringify(move) : 'undefined'}`)
 
