@@ -27,6 +27,9 @@ class App extends Component {
 
     sessionStorage.setItem('email', email)
     sessionStorage.setItem('token', token)
+
+    logic.editHostessProfile(email, 'Hostess', '07/10/1991', 'Kiribati', 'W', '000000000', ['Catalan', 'Spanish'], 'info', 120, 'A little about me', ['sociable'], 'photo', token)
+    .then(() => true)
   }
 
   businessLogged = (email, token) => {
@@ -35,6 +38,9 @@ class App extends Component {
 
     sessionStorage.setItem('email', email)
     sessionStorage.setItem('token', token)
+
+    logic.editBusinessProfile(email, 'Company name', 'Web page', 'Person in charge', '000000000', 'Philosophy of the company', token)
+    .then(() => true)
   }
 
   onLogout = event => {
@@ -52,19 +58,16 @@ class App extends Component {
       <div>
 
         <Switch>
-          <Route exact path="/" render={() => this.state.hostess ? <Redirect to="/hostess" /> : this.state.business ? <Redirect to="/business" /> : <Landing hostessLogged={this.hostessLogged} businessLogged={this.businessLogged} />} />
+          <Route exact path="/" render={() => hostess ? <Redirect to="/hostess" /> : business ? <Redirect to="/business" /> : <Landing hostessLogged={this.hostessLogged} businessLogged={this.businessLogged} />} />
           <Route exact path="/hostess" render={() => (hostess && loggedIn) ? <Hostess email={email} token={token} onLogout={this.onLogout}/> : <Redirect to="/"/>} />
-          <Route exact path="/business" render={() => (business && loggedIn) ? <Business /> : <Redirect to="/"/>} />
-          <Route exact path="/hostess/profile" render={() => (hostess && loggedIn) ? <HostessEditProfile onLogout={this.onLogout}/> : <Redirect to="/" />} />
-          <Route exact path="/business/profile" render={() => <BusinessEditProfile />} />
+          <Route exact path="/hostess/profile" render={() => (hostess && loggedIn) ? <HostessEditProfile email={email} token={token} onLogout={this.onLogout}/> : <Redirect to="/" />} />
+          <Route exact path="/business" render={() => (business && loggedIn) ? <Business email={email} token={token} /> : <Redirect to="/"/>} />
+          <Route exact path="/business/profile" render={() => (business && loggedIn) ? <BusinessEditProfile email={email} token={token} /> :  <Redirect to="/"/>} />
           <Route exact path="/event" render={() => <Event />} />
-          <Route exact path="/event/create" render={() => <CreateEvent />} />
+          <Route exact path="/event/create" render={() => (business && loggedIn) ? <CreateEvent email={email} token={token} /> : <Redirect to="/"/>} />
         </Switch>
 
       </div>
-
-
-
     )
   }
 }

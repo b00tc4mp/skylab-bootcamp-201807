@@ -1,18 +1,19 @@
 import React from 'react'
 
-const Title = props => {
-
+const ToTop = () => {
 
     return (
         <div className="header">
             <header>
-                <title className="header__title"> &bull; {props.title} &bull; </title>
+                <h1 className="header__title"> &bull; {this.props.top} &bull; </h1>
                 {
-                    props.details && (
+                    this.props.details && (
+                    <div>
                         <details>
-                            <summary>{props.summary}</summary>
+                            <summary>{this.props.summary}</summary>
+                        <p className="header__description">{this.props.description}</p>
                         </details>
-                        <p className="header__description">{props.description}</p>
+                    </div>
                     )
                 }
             </header>
@@ -20,4 +21,4 @@ const Title = props => {
     )
 }
 
-export default Title
+export default ToTop

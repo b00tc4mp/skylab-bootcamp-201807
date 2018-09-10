@@ -20,6 +20,11 @@ class Header extends Component {
         this.props.history.push('/business/profile')
     }
 
+    goToProfile = (event) => {
+        event.preventDefault()
+        this.props.history.push('/')
+    }
+
     render() {
         return (
             <header>
@@ -34,15 +39,22 @@ class Header extends Component {
                     </summary>
                     <details-menu className="dropdown-menu" role="menu">
                         <ul className="list-header">
-                            <li>{this.props.hostess && (<a role="menuitem" onClick={this.goToEditHostessProfil}>Edit profile</a>)} </li>
-                            <li>{this.props.business && (<a role="menuitem" onClick={this.goToEditBusinessProfil}>Edit profile</a>)} </li>
+                            {
+                                this.props.hostessProfile && <li><a role="menuitem" onClick={this.goToEditHostessProfil}>Edit profile</a> </li>
+                            }
+                            {
+                                this.props.hostessEdit && <li><a role="menuitem" onClick={this.goToProfile}>My profile</a> </li>
+                            }
+                            {
+                                this.props.businessProfile && <li><a role="menuitem" onClick={this.goToEditBusinessProfil}>Edit profile</a></li>
+                            }
+                            {
+                                this.props.businessEdit && <li><a role="menuitem" onClick={this.props.goToProfile}>My profile</a></li>
+                            }
                             <li><a role="menuitem" onClick={this.props.onLogout}>Logout</a></li>
                         </ul>
                     </details-menu>
                 </details>
-                <div>
-                    <a>Logout</a>
-                </div>
             </header>
         )
     }

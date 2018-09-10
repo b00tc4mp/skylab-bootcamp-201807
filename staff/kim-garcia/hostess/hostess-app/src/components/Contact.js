@@ -5,7 +5,8 @@ const Contact = props => {
         <div className="contact">
             <details>
                 <summary>CONTACT</summary>
-                <span className="contact__phone">Whatsapp: {props.phone}</span>
+                <p className="contact__name">Contact name: {props.name}</p>
+                <p className="contact__phone">Whatsapp: {props.phone}</p>
                 <p className="contact__email">Email: {props.email}</p>
             </details>
         </div>

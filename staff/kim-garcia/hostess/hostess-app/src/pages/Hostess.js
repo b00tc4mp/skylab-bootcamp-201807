@@ -54,7 +54,7 @@ render() {
 
     return (
         <div>
-            <Header hostess business name={name} onLogout={this.props.onLogout} />
+            <Header hostessProfile={true} name={name} onLogout={this.props.onLogout} />
             <div className="cuadricula__hostess">
                 <div className="cuadricula__hostess__photo" >FOTO</div>
                 <div className="cuadricula__hostess__details">

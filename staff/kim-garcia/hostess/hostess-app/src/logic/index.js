@@ -106,38 +106,24 @@ const logic = {
 
     retrieveHostess(email, token) {
         return Promise.resolve()
-        .then(() => {
-            this._validateEmail(email)
+            .then(() => {
+                this._validateEmail(email)
 
-            return this._call(`hostess-details/${email}`, 'GET', { authorization: `bearer ${token}`, 'Content-Type': 'application/json' }, undefined, 200)
-        })
-        .then(res => res.json())
-        .then(res => res.hostesses)
+                return this._call(`hostess-details/${email}`, 'GET', { authorization: `bearer ${token}`, 'Content-Type': 'application/json' }, undefined, 200)
+            })
+            .then(res => res.json())
+            .then(res => res.hostesses)
     },
 
     retrieveBusiness(email, token) {
         return Promise.resolve()
-        .then(() => {
-            this._validateEmail(email)
-
-            return this._call(`business-details/${email}`, 'GET', { authorization: `bearer ${token}`, 'Content-Type': 'application/json' }, undefined, 200)
-        })
-        .then(res => res.json())
-        .then(res => res.businesses)
-    },
-
-    editBusinessProfile(email, name, web, boss, phone, philosophy, token) {
-        return Promise.resolve()
             .then(() => {
                 this._validateEmail(email)
-                this._validateStringField('name', name)
-                this._validateStringField('contact name', boss)
-                this._validateStringField('contact phone', phone)
-                this._validateStringField('company philosophy', philosophy)
 
-                return this._call(`business/${email}`, 'PATCH', { authorization: `bearer ${token}`, 'content-type': 'application/json' }, JSON.stringify({ name, web, boss, phone, philosophy }), 200)
+                return this._call(`business-details/${email}`, 'GET', { authorization: `bearer ${token}`, 'Content-Type': 'application/json' }, undefined, 200)
             })
             .then(res => res.json())
+            .then(res => res.businesses)
     },
 
     editHostessProfile(email, name, birth, origin, gender, phone, languages, jobType, height, myself, skills, photo, token) {
@@ -156,6 +142,20 @@ const logic = {
                 if (!(skills instanceof Array)) throw new Error('invalid skills')
 
                 return this._call(`hostess/${email}`, 'PATCH', { authorization: `bearer ${token}`, 'content-type': 'application/json' }, JSON.stringify({ name, birth, origin, gender, phone, languages, jobType, skills, height, myself, photo }), 200)
+            })
+            .then(res => res.json())
+    },
+
+    editBusinessProfile(email, name, web, boss, phone, philosophy, token) {
+        return Promise.resolve()
+            .then(() => {
+                this._validateEmail(email)
+                this._validateStringField('name', name)
+                this._validateStringField('contact name', boss)
+                this._validateStringField('contact phone', phone)
+                this._validateStringField('company philosophy', philosophy)
+
+                return this._call(`business/${email}`, 'PATCH', { authorization: `bearer ${token}`, 'content-type': 'application/json' }, JSON.stringify({ name, web, boss, phone, philosophy }), 200)
             })
             .then(res => res.json())
     },
@@ -186,11 +186,11 @@ const logic = {
 
     searchWorkers(email, gender, jobType, height, languages, token) {
         return Promise.resolve()
-        .then(() => {
-            return this._call(`${email}/search/?gender=${gender}&jobType=${jobType}&height=${height}&languages=${languages}`, 'GET', {authorization: `bearer ${token}`, 'Content-Type': 'application/json'}, undefined, 200)
-        })
-        .then(res => res.json())
-        .then(res => res.hostesses)
+            .then(() => {
+                return this._call(`${email}/search/?gender=${gender}&jobType=${jobType}&height=${height}&languages=${languages}`, 'GET', { authorization: `bearer ${token}`, 'Content-Type': 'application/json' }, undefined, 200)
+            })
+            .then(res => res.json())
+            .then(res => res.hostesses)
     },
 
     addFavs(emailHost, emailBus, token) {
