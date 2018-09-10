@@ -9,6 +9,8 @@ import Doctors from './components/Doctors'
 import Caretakers from './components/Caretakers'
 import AddCaretaker from './components/AddCaretaker'
 import CaretakerData from './components/CaretakerData'
+import Error404 from './components/Error404'
+import './styles/css/app.css'
 
 
 class App extends Component {
@@ -99,6 +101,7 @@ class App extends Component {
               <Route path="/caretakers" render={() => this.isLoggedIn() ? <Caretakers goToAddCaretaker={goToAddCaretaker} caretakerData={caretakerData} id={id} token={token}/> : <Redirect to="/" />} />
               <Route path="/addcaretaker" render={() => this.isLoggedIn() ? <AddCaretaker id={id} token={token}/> : <Redirect to="/" />} />
               <Route path="/caretaker/:dni" render={() => this.isLoggedIn() ? <CaretakerData caretakerDni={caretakerDni} id={id} token={token} patientData={patientData}/> : <Redirect to="/" />} />
+              <Route component={Error404} />
             </Switch>
     </div>
   }

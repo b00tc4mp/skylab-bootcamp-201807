@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import logic from '../logic'
+import '../styles/css/login.css'
+
 
 class Login extends Component {
   state = {

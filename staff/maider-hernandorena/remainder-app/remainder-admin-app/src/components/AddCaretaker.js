@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import logic from '../logic'
+import '../styles/css/addcaretaker.css'
 
 class AddCaretaker extends Component {
     
@@ -56,8 +57,6 @@ class AddCaretaker extends Component {
                         <input className="add__group__form__row__input" type="text" value={surname} name="surname" placeholder="surname" onChange={keepSurname}/>
                         <p className="add__group__form__row__text">DNI:</p>
                         <input className="add__group__form__row__num" type="number" value={dni} name="dni" placeholder="8 digits" onChange={keepDni}/>
-                        <p className="add__group__form__row__text">Password:</p>
-                        <input className="add__group__form__row__num" type="password" value={password} name="password" placeholder="password" onChange={keepPassword}/>
                     </div>
                     <div className="add__group__form__row">
                         <p className="add__group__form__row__text">Gender:</p>
@@ -71,7 +70,11 @@ class AddCaretaker extends Component {
                         <p className="add__group__form__row__text">Age:</p>
                         <input className="add__group__form__row__age" type="number" value={age} name="age" placeholder="70" onChange={keepAge}/>
                     </div>
-                    <button className="add__group__form__row__button" type="submit">Add Caretaker</button>
+                    <div className="add__group__form__row">
+                        <p className="add__group__form__row__text">Password:</p>
+                        <input className="add__group__form__row__num" type="password" value={password} name="password" placeholder="password" onChange={keepPassword}/>
+                        <button className="add__group__form__row__button" type="submit">Add Caretaker</button>
+                    </div>
                 </form>
             </div>
         </main>

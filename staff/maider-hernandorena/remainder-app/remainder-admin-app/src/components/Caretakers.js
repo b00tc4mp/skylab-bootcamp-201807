@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 import logic from '../logic'
+import '../styles/css/caretakers.css'
 
 class Caretakers extends Component {
 
@@ -32,7 +33,8 @@ class Caretakers extends Component {
             .catch(({ message }) => this.setState({ error: message }))
     }
 
-    removeCaretaker = dni => {
+    removeCaretaker = (e, dni) => {
+        e.preventDefault()
         const { id, token } = this.props
         dni = parseInt(dni)
         
@@ -54,14 +56,16 @@ class Caretakers extends Component {
         const { state: { caretakers }, removeCaretaker, goToAddCaretaker, caretakerData } = this
 
         return <main className="caretakers">
-            <button className="caretakers__add" onClick={goToAddCaretaker}>Add Caretaker</button>
             <div className="caretakers__group">
+                <div className="caretakers__group__add">
+                    <button className="caretakers__group__add__button" onClick={goToAddCaretaker}>Add Caretaker</button>
+                </div>
                 <h2 className="caretakers__group__title">Caretakers</h2>
                 <div className="caretakers__group__all">
                     <ul className="caretakers__group__all__list">
                         {caretakers.map(caretaker => <li className="caretakers__group__all__list__item" key={caretaker.dni} onClick={() => caretakerData(caretaker.dni)}>
-                            <a  href={`/#/caretaker/${caretaker.dni}`}><p><strong>{caretaker.name} {caretaker.surname}</strong>. {caretaker.dni}</p></a>
-                            <button onClick={() => removeCaretaker(caretaker.dni)} href="">Delete Caretaker</button>
+                            <a className="patients__group__all__list__item__link" href={`/#/caretaker/${caretaker.dni}`}><p className="patients__group__all__list__item__link__text"><strong>{caretaker.name} {caretaker.surname}</strong>. {caretaker.dni}</p></a>
+                            <a className="caretakers__group__all__list__item__delete" href=""  onClick={(e) => removeCaretaker(e, caretaker.dni)}>Delete Caretaker</a>
                         </li> )}
                     </ul>
                 </div>

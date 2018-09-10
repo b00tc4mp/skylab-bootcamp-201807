@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 import logic from '../logic'
+import '../styles/css/patients.css'
 
 class Patients extends Component {
 
@@ -68,8 +69,8 @@ class Patients extends Component {
                 <div className="patients__group__all">
                     <ul className="patients__group__all__list">
                         {patients.map(patient => <li className="patients__group__all__list__item" key={patient.dni} onClick={() => patientData(patient.dni)}>
-                            <a className="patients__group__all__list__item__link" href={`/#/patient/${patient.dni}`}><p><strong>{patient.name} {patient.surname}</strong>. DNI: {patient.dni}. {patient.age} years old, {patient.gender}.</p></a>
-                            <button onClick={() => this.removePatient(patient.dni)}>Delete Patient</button>
+                            <a className="patients__group__all__list__item__link" href={`/#/patient/${patient.dni}`}><p className="patients__group__all__list__item__link__text"><strong>{patient.name} {patient.surname}</strong>. DNI: {patient.dni}. {patient.age} years old, {patient.gender}.</p></a>
+                            <a className="patients__group__all__list__item__delete" href="" onClick={() => this.removePatient(patient.dni)}>Delete Patient</a>
                         </li> )}
                     </ul>
                 </div>

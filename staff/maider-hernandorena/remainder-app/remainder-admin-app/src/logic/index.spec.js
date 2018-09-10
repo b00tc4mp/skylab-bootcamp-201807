@@ -1031,9 +1031,193 @@ describe('logic', () => {
         )
     })
 
-    //assign patient
+    true && describe('assign patient to caretaker', () => {
+
+        const code = `Maider${Math.random()}`
+        const password = `123-${Math.random()}`
+        const caretakerDni = 12345678
+        const patientDni = 87654321
+        const name = `Pepe${Math.random()}`
+        const surname = `Garcia${Math.random()}`
+        const age = 20
+        const gender = 'male'
+        const address = 'Roc Boronat'
+        const phone = 123456789
+
+        beforeEach(() => {
+            return Admin.create({ code, password })
+                .then(() => {
+                    const dni = caretakerDni
+                    return Caretaker.create({ dni, password, name, surname, age, gender, phone })
+                })
+                .then(() => {
+                    const dni = patientDni
+                    return Patient.create({ dni, name, surname, age, gender, address, phone })
+                })
+        })
+
+        it('should assign a patient to a caretaker correctly', () => 
+            logic.authenticateAdmin(code, password)
+                .then(({ id, token }) => logic.assignPatientToCaretaker(caretakerDni, patientDni, id, token))
+                .then(({ message }) => expect(message).to.equal('patient assigned correctly to caretaker'))
+        )
+
+        it('should fail on assigning a patient to a caretaker that does not exist', () => {
+            const falseDni = 11112222
+
+            return logic.authenticateAdmin(code, password)
+                .then(({ id, token }) => logic.assignPatientToCaretaker(falseDni, patientDni, id, token))
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`caretaker with ${falseDni} dni does not exist`))
+        })
+
+        it('should fail on assigning a patient does not exist to a caretaker', () => {
+            const falseDni = 11112222
+
+            return logic.authenticateAdmin(code, password)
+                .then(({ id, token }) => logic.assignPatientToCaretaker(caretakerDni, falseDni, id, token))
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`patient with ${falseDni} dni does not exist`))
+        })
+
+        it('should fail on trying to assign a patient to a caretaker with an undefined dni', () =>
+            logic.authenticateAdmin(code, password)
+                .then(({ id, token }) => logic.assignPatientToCaretaker(undefined, dni, id, token))
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`dni is not defined`))
+        )
+
+        it('should fail on trying to assign a patient to a caretaker with an empty dni', () =>
+            logic.authenticateAdmin(code, password)
+                .then(({ id, token }) => logic.assignPatientToCaretaker('', dni, id, token))
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`dni is not defined`))
+        )
+
+        it('should fail on trying to assign a patient to a caretaker with a string dni', () =>
+            logic.authenticateAdmin(code, password)
+                .then(({ id, token }) => logic.assignPatientToCaretaker('123', dni, id, token))
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`dni is not defined`))
+        )   
+
+        it('should fail on trying to assign a patient to a caretaker with an undefined dni', () =>
+            logic.authenticateAdmin(code, password)
+                .then(({ id, token }) => logic.assignPatientToCaretaker(dni, undefined, id, token))
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`dni is not defined`))
+        )
+
+        it('should fail on trying to assign a patient to a caretaker with an empty dni', () =>
+            logic.authenticateAdmin(code, password)
+                .then(({ id, token }) => logic.assignPatientToCaretaker(dni, '', id, token))
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`dni is not defined`))
+        )
+
+        it('should fail on trying to assign a patient to a caretaker with a string dni', () =>
+            logic.authenticateAdmin(code, password)
+                .then(({ id, token }) => logic.assignPatientToCaretaker(dni, '123', id, token))
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`dni is not defined`))
+        )  
+    })
     
-    //unassign patient
+    true && describe('unassign patient to caretaker', () => {
+
+        const code = `Maider${Math.random()}`
+        const password = `123-${Math.random()}`
+        const caretakerDni = 12345678
+        const patientDni = 87654321
+        const name = `Pepe${Math.random()}`
+        const surname = `Garcia${Math.random()}`
+        const age = 20
+        const gender = 'male'
+        const address = 'Roc Boronat'
+        const phone = 123456789
+
+        beforeEach(() => {
+            return Admin.create({ code, password })
+                .then(() => {
+                    const dni = caretakerDni
+                    return Caretaker.create({ dni, password, name, surname, age, gender, phone })
+                })
+                .then(() => {
+                    const dni = patientDni
+                    return Patient.create({ dni, name, surname, age, gender, address, phone })
+                })
+                .then(() => {
+                    return logic.authenticateAdmin(code, password)
+                        .then(({ id, token }) => logic.assignPatientToCaretaker(caretakerDni, patientDni, id, token))
+                })
+        })
+
+        it('should unassign a patient to a caretaker correctly', () => 
+            logic.authenticateAdmin(code, password)
+                .then(({ id, token }) => logic.unassignPatientToCaretaker(caretakerDni, patientDni, id, token))
+                .then(({ message }) => expect(message).to.equal('patient unassigned correctly to caretaker'))
+        )
+
+        it('should fail on unassigning a patient to a caretaker that does not exist', () => {
+            const falseDni = 11112222
+
+            return logic.authenticateAdmin(code, password)
+                .then(({ id, token }) => logic.unassignPatientToCaretaker(falseDni, patientDni, id, token))
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`caretaker with ${falseDni} dni does not exist`))
+        })
+
+        it('should fail on unassigning a patient does not exist to a caretaker', () => {
+            const falseDni = 11112222
+
+            return logic.authenticateAdmin(code, password)
+                .then(({ id, token }) => logic.unassignPatientToCaretaker(caretakerDni, falseDni, id, token))
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`patient with ${falseDni} dni does not exist`))
+        })
+
+        it('should fail on trying to unassign a patient to a caretaker with an undefined dni', () =>
+            logic.authenticateAdmin(code, password)
+                .then(({ id, token }) => logic.unassignPatientToCaretaker(undefined, dni, id, token))
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`dni is not defined`))
+        )
+
+        it('should fail on trying to unassign a patient to a caretaker with an empty dni', () =>
+            logic.authenticateAdmin(code, password)
+                .then(({ id, token }) => logic.unassignPatientToCaretaker('', dni, id, token))
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`dni is not defined`))
+        )
+
+        it('should fail on trying to unassign a patient to a caretaker with a string dni', () =>
+            logic.authenticateAdmin(code, password)
+                .then(({ id, token }) => logic.unassignPatientToCaretaker('123', dni, id, token))
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`dni is not defined`))
+        )   
+
+        it('should fail on trying to unassign a patient to a caretaker with an undefined dni', () =>
+            logic.authenticateAdmin(code, password)
+                .then(({ id, token }) => logic.unassignPatientToCaretaker(dni, undefined, id, token))
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`dni is not defined`))
+        )
+
+        it('should fail on trying to unassign a patient to a caretaker with an empty dni', () =>
+            logic.authenticateAdmin(code, password)
+                .then(({ id, token }) => logic.unassignPatientToCaretaker(dni, '', id, token))
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`dni is not defined`))
+        )
+
+        it('should fail on trying to unassign a patient to a caretaker with a string dni', () =>
+            logic.authenticateAdmin(code, password)
+                .then(({ id, token }) => logic.unassignPatientToCaretaker(dni, '123', id, token))
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`dni is not defined`))
+        )  
+    })
 
     true && describe('retrieve caretaker patient', () => {
 

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 import logic from '../logic'
+import '../styles/css/doctors.css'
 
 class Doctors extends Component {
 
@@ -27,7 +28,8 @@ class Doctors extends Component {
             .catch(({ message }) => this.setState({ error: message }))
     }
 
-    removeDoctor = code => {
+    removeDoctor = (e, code) => {
+        e.preventDefault()
         const { id, token } = this.props
 
         logic.removeDoctor(code, id, token)
@@ -45,26 +47,29 @@ class Doctors extends Component {
         logic.registerDoctor(code, password, id, token)
             .then(() => true)
             .then(() => this.listDoctors())
+            .catch(({ message }) => this.setState({ error: message }))
     }
 
     render() {
-        const { state: { doctors, code, password }, removeDoctor, keepCode, keepPassword, addDoctor } = this
+        const { state: { doctors, code, password, error }, removeDoctor, keepCode, keepPassword, addDoctor } = this
 
         return <main className="doctors">
-            <div>
-                <form onSubmit={addDoctor}>
-                    <input type="text" name={code} value={code} placeholder="doctor code" onChange={keepCode} />
-                    <input type="password" name={password} value={password} placeholder="doctor password" onChange={keepPassword} />
-                    <button type="submit">Add Doctor</button>
+            <div className="doctors__add">
+                <h3 className="doctors__add__title">Add Doctor</h3>
+                <form className="doctors__add__form" onSubmit={addDoctor}>
+                    <input className="doctors__add__form__input" type="text" name={code} value={code} placeholder="doctor code" onChange={keepCode} />
+                    <input className="doctors__add__form__input" type="password" name={password} value={password} placeholder="doctor password" onChange={keepPassword} />
+                    <button className="doctors__add__form__button" type="submit">Add Doctor</button>
                 </form>
+                {error && <p className="doctors__add__error">{error}</p>}
             </div>
             <div className="doctors__group">
                 <h2 className="doctors__group__title">Doctors</h2>
                 <div className="doctors__group__all">
                     <ul className="doctors__group__all__list">
                         {doctors.map(doctor => <li className="doctors__group__all__list__item" key={doctor.code} >
-                            <p><strong>{doctor.code}</strong></p>
-                            <button onClick={() => removeDoctor(doctor.code)} href="">Delete Doctor</button>
+                            <p className="patients__group__all__list__item__text"><strong>{doctor.code}</strong></p>
+                            <a className="patients__group__all__list__item__delete" href="" onClick={(e) => removeDoctor(e, doctor.code)}>Delete Doctor</a>
                         </li> )}
                     </ul>
                 </div>

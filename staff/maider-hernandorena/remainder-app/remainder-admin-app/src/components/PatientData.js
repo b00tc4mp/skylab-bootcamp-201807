@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import logic from '../logic'
+import '../styles/css/patientdata.css'
 
 class PatientData extends Component {
 
@@ -60,21 +61,24 @@ class PatientData extends Component {
 
         const { state: { name, surname, age, gender, dni, address, phone, newAddress, newPhone, error }, updatePatient, keepNewAddress, keepNewPhone } = this
 
-        return <main className="patient">
-                <div className="patient__data">
-                    <h3>{name} {surname}</h3>
-                    <p>{age} years old, {gender}</p>
-                    <p>DNI: {dni}</p>
-                    <p>Address: {address}</p>
-                    <p>Phone: {phone}</p>
-                </div>
-                <div>
-                    <form onSubmit={updatePatient}>
-                        <input type="text" value={newAddress} name="newAddress" placeholder="new address" onChange={keepNewAddress} />
-                        <input type="number" value={newPhone} name="newPhone" placeholder="new phone" onChange={keepNewPhone} />
-                        <button type="submit">Update</button>
-                    </form>
-                    {error && <p>{error}</p>}
+        return <main className="all">
+                <div className="all__data">
+                    <div className="all__data__patient">
+                        <h3>{name} {surname}</h3>
+                        <p>{age} years old, {gender}</p>
+                        <p>DNI: {dni}</p>
+                        <p>Address: {address}</p>
+                        <p>Phone: {phone}</p>
+                    </div>
+                    <div className="all__data__forms">
+                        <h3 className="all__data__forms__title">Update Patient Data:</h3>
+                        <form className="all__data__forms__form" onSubmit={updatePatient}>
+                            <input className="all__data__forms__form__input" type="text" value={newAddress} name="newAddress" placeholder="new address" onChange={keepNewAddress} />
+                            <input className="all__data__forms__form__num" type="number" value={newPhone} name="newPhone" placeholder="new phone" onChange={keepNewPhone} />
+                            <button className="all__data__forms__form__button" type="submit">Update</button>
+                        </form>
+                        {error && <p className="all__data__forms__error">{error}</p>}
+                    </div>
                 </div>
         </main>
     }

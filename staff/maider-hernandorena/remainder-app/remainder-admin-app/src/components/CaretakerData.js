@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import logic from '../logic'
+import '../styles/css/caretakerdata.css'
 
 class CaretakerData extends Component {
 
@@ -57,7 +58,8 @@ class CaretakerData extends Component {
             .catch(({ message }) => this.setState({ error: message, added: '' }))
     }
 
-    unassignPatient = patientDni => {
+    unassignPatient = (e, patientDni) => {
+        e.preventDefault()
         let { dni } = this.state
         const { id, token } = this.props
 
@@ -90,26 +92,28 @@ class CaretakerData extends Component {
 
         return <main className="caretaker">
                 <div className="caretaker__data">
-                    <h3>{name} {surname}</h3>
-                    <p>{age} years old, {gender}</p>
-                    <p>DNI: {dni}</p>
-                    <p>Phone: {phone}</p>
+                    <div className="caretaker__data__info">
+                        <h3>{name} {surname}</h3>
+                        <p>{age} years old, {gender}</p>
+                        <p>DNI: {dni}</p>
+                        <p>Phone: {phone}</p>
+                    </div>
+                    <div className="caretaker__data__assign">
+                        <h3 className="caretaker__data__assign__title">Assign a Patient:</h3>
+                        <form className="caretaker__data__assign__form" onSubmit={assignPatient}>
+                            <input className="caretaker__data__assign__form__num" type="number" name={patientDni} value={patientDni} placeholder="patient dni" onChange={keepPatientDni} />
+                            <button className="caretaker__data__assign__form__button" type="submit">Assign Patient</button>
+                        </form>
+                        {added && <p className="caretaker__data__assign__added">{added}</p>}
+                        {error && <p className="caretaker__data__assign__error">{error}</p>}
+                    </div>
                 </div>
-                <div>
-                    <h3>Assign a Patient:</h3>
-                    <form onSubmit={assignPatient}>
-                        <p>Patients DNI:</p>
-                        <input type="number" name={patientDni} value={patientDni} onChange={keepPatientDni} />
-                        <button type="submit">Assign Patient</button>
-                    </form>
-                    {added && <p>{added}</p>}
-                    {error && <p>{error}</p>}
-                </div>
-                <div>
-                    <ul className="patients__group__all__list">
-                        {patients.map(patient => <li className="patients__group__all__list__item" key={patient.dni} onClick={() => patientData(patient.dni)}>
-                            <a className="patients__group__all__list__item__link" href={`/#/patient/${patient.dni}`}><p><strong>{patient.name} {patient.surname}</strong>. DNI: {patient.dni}. {patient.age} years old, {patient.gender}.</p></a>
-                            <button onClick={() => this.unassignPatient(patient.dni)}>Unassign Patient</button>
+                <div className="caretaker__all">
+                    <h2 className="caretaker__all__title">Patients:</h2>
+                    <ul className="caretaker__all__list">
+                        {patients.map(patient => <li className="caretaker__all__list__item" key={patient.dni} onClick={() => patientData(patient.dni)}>
+                            <a className="caretaker__all__list__item__link" href={`/#/patient/${patient.dni}`}><p className="caretaker__all__list__item__link__text"><strong>{patient.name} {patient.surname}</strong>. DNI: {patient.dni}. {patient.age} years old, {patient.gender}.</p></a>
+                            <a className="caretaker__all__list__item__delete" onClick={(e) => this.unassignPatient(e, patient.dni)}>Unassign Patient</a>
                         </li> )}
                     </ul>
                 </div>
