@@ -147,6 +147,8 @@ const logic = {
               obj.insufficientMaterial = game.insufficientMaterial
               obj.inDraw = game.inDraw
               obj.winner = game.winner
+              obj.initiator = game.initiator
+              obj.acceptor = game.acceptor
               obj.opponent = game.initiator === nickname ? game.acceptor : game.initiator
               engine = this._currentEngines.get(game.engineID)
               if (!engine) {
@@ -282,9 +284,13 @@ const logic = {
       .then(_ => true)
   },
 
-  getOpponentForGame(gameID) {
-
-  }
+  getOpponentForGame(nickname,gameID) {
+  return  Game.findOne({_id: mongoose.Types.ObjectId(gameID)})
+      .then(game => {
+        if (!game) throw new LogicError(`game does not exist for game id ${gameID}`)
+        return nickname === game.initiator ? game.acceptor : game.initiator
+      })
+  },
 
   move(nickname, gameID, move) {
     logger.debug(`move,  CONTEXT: "logic/index.js", GAMEID:${gameID}, MOVE:${move ? JSON.stringify(move) : 'undefined'}`)

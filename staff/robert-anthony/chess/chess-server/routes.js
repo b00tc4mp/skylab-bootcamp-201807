@@ -77,17 +77,16 @@ router.get('/user/:nickname/games', [validateJwt], (req, res) => {
 
 /*  get users for string */
 router.get('/user/:nickname/users', [validateJwt], (req, res) => {
-  const {query:{term},params:{nickname}} = req
+  const {query: {term}, params: {nickname}} = req
   logger.debug(`GET:/user/:nickname/users,  CONTEXT: "router.js", TERM: ${term}, NICKNAME:${nickname} `)
 
-  logic.getUsersForString(nickname,term)
+  logic.getUsersForString(nickname, term)
     .then(users => res.json(users))
     .catch(err => {
       const {message} = err
       res.status(err instanceof LogicError ? 400 : 500).json({message})
     })
 })
-
 
 
 /* terminate game */
@@ -108,11 +107,13 @@ router.patch('/user/:nickname/game/:gameID', [validateJwt], (req, res) => {
 /* make a move  */
 router.post('/user/:nickname/game/:gameID', [validateJwt, jsonBodyParser], (req, res) => {
 
-  const {params: {nickname, gameID}, body: {move, opponent}} = req
-  logger.debug(`POST:/user/:nickname/game/:gameID,  CONTEXT: "router.js",  NICKNAME:${nickname}, OPPONENT:${opponent}, GAMEID: ${gameID}, MOVE:${JSON.stringify(move)}`)
+  const {params: {nickname, gameID}, body: {move}} = req
+  logger.debug(`POST:/user/:nickname/game/:gameID,  CONTEXT: "router.js",  NICKNAME:${nickname},  GAMEID: ${gameID}, MOVE:${JSON.stringify(move)}`)
 
   logic.move(nickname, gameID, move)
-    .then(_ => {
+    .then(_ =>  logic.getOpponentForGame(nickname,gameID))
+    .then(opponent => {
+      if (!opponent ) throw new LogicError(`no opponent found for game id ${gameID}`)
         sockets.announceMoveMade(nickname, opponent)
         res.json({message: 'successful move'})
       }
@@ -144,11 +145,11 @@ router.post('/user/:nickname/gamerequest', [validateJwt, jsonBodyParser], (req, 
 /* respond to a game request  */
 router.post('/user/:nickname/respondtorequest', [validateJwt, jsonBodyParser], (req, res) => {
 
-  const {params: {nickname}, body: {destination,gameID, answer}} = req
+  const {params: {nickname}, body: {destination, gameID, answer}} = req
 
   logger.debug(`POST:/user/:nickname/respondtorequest,  CONTEXT: "router.js",  NICKNAME:${nickname}, DESTINATION:${destination},  GAMEID: ${gameID}, ANSWER:${answer}`)
 
-  logic.respondToGameRequest(nickname, destination,gameID, answer)
+  logic.respondToGameRequest(nickname, destination, gameID, answer)
     .then(_ => {
         sockets.gameAcceptedOrRejected(destination)
         res.json({message: 'game request response sent'})
@@ -182,7 +183,7 @@ router.post('/user/:nickname/', [validateJwt, jsonBodyParser], (req, res) => {
 
 /*  get logs */
 router.get('/logs/:type', (req, res) => {
-  const {params:{type}} = req
+  const {params: {type}} = req
 
   logic.getLogs(type)
     .then(logs => res.send(logs))

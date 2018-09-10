@@ -175,18 +175,17 @@ const logic = {
 
 
 
-  makeAGameMove(nickname, opponent, move, gameID, token) {
+  makeAGameMove(nickname, move, gameID, token) {
     return Promise.resolve()
       .then(() => {
         this._validateStringField('nickname', nickname)
-        this._validateStringField('opponent', opponent)
         this._validateStringField('gameID', gameID)
         this._validateStringField('token', token)
         if (move === undefined || typeof move !== 'object' || !move.from || !move.to || !move.promotion) throw new Error('move is of wrong format')
         return this._call(`user/${nickname}/game/${gameID}`, 'POST', {
           'Content-Type': 'application/json',
           'authorization': `bearer ${token}`
-        }, JSON.stringify({move, opponent}), 200)
+        }, JSON.stringify({move}), 200)
           .then(res => res.json())
           .then(res => res)
       })

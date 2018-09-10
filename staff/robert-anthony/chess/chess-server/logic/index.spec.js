@@ -7,7 +7,7 @@ const { Types: { ObjectId } } = mongoose
 const { Chess } = require('chess.js')
 const uuidv1 = require('uuid/v1');
 const randomEmail = require('random-email');
-const { env: { MONGO_URL } } = process
+const { env: { MONGODB_URI } } = process
 
 describe('logic', () => {
   const email = `blippy-${Math.random()}@mail.com`, password = `123-${Math.random()}`,
@@ -19,7 +19,7 @@ describe('logic', () => {
   let engines = new Map
 
   before(() =>
-    mongoose.connect(MONGO_URL, { useNewUrlParser: true })
+    mongoose.connect(MONGODB_URI, { useNewUrlParser: true })
       .then(conn => _connection = conn)
   )
 
