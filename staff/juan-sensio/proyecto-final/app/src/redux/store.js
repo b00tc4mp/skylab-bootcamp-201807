@@ -10,11 +10,14 @@ const BREAK_SCREEN = 700
 const initialState = {
     user: {
         videos: [],
-        datasets: []
+        datasets: [],
+        results: [],
+        models: []
     },
     video: {
         url: '',
-        id: ''
+        id: '',
+        type: ''
     },
     layout: true,
     settings: {
@@ -25,6 +28,17 @@ const initialState = {
         FPS: DEFAULT_FPS,
         REF_RATE: 1000 / DEFAULT_FPS,
         breakScreen: BREAK_SCREEN
+    },
+    actions: {
+        save: false,
+        pose: false, 
+        prepTransfer: false,
+        transfer: false,
+        delete: false,
+        dataset: {
+            url: '',
+            id: ''
+        }
     }
 }
 

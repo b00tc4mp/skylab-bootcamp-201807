@@ -1,6 +1,61 @@
+.app {
+  display: grid;
+  grid-template: 100vh/5% 40% auto;
+}
+
+.app-mobile {
+  display: grid;
+  grid-template: 1fr/1fr;
+}
+
+.help {
+  overflow-y: scroll;
+}
 .help p, .help h3 {
   padding: 5px;
   margin: 10px 10px;
+}
+.help h3 {
+  color: #EA6848;
+}
+@media screen and (max-width: 700px) {
+  .help {
+    margin-bottom: 10vh;
+  }
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.icon-background {
+  background-color: #B2B2B2;
+  margin: 0 10%;
+  padding: 10px;
+}
+.icon-background img {
+  width: 10%;
+  display: block;
+  margin: auto;
+}
+
+.icon-background-2 {
+  background-color: #353535;
+  margin: 0 10%;
+  padding: 10px;
+}
+.icon-background-2 img {
+  width: 10%;
+  display: block;
+  margin: auto;
+}
+
+.back {
+  font-size: 10px;
+  padding: 5px;
+  margin: 5px 10px;
+  background: none;
+  border-radius: 10px;
 }
 
 /*# sourceMappingURL=Help.css.map */

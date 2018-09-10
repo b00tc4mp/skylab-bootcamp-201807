@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 
 import logic from '../logic'
 
+import './styles/Account.css'
+
 class Account extends Component {
 
     state = {
@@ -34,22 +36,29 @@ class Account extends Component {
         const { keepNewPassword, keepNewUsername, keepPassword, updatePassword, updateUsername, deleteAccount } = this
         return (
             <div className='account'>
-                <p> account </p>
                 <button onClick={close}>back</button>
-                <button onClick={logout}>logout</button>
-                <div>
-                    <h3>Change username</h3>
-                    <input placeholder='password' type='password' onChange={keepPassword} />
-                    <input placeholder='new username' type='text' onChange={keepNewUsername} />
-                    <button onClick={updateUsername}>Update</button>
-                    <h3>Change password</h3>
-                    <input placeholder='password' type='password' onChange={keepPassword} />
-                    <input placeholder='new password' type='password' onChange={keepNewPassword} />
-                    <button onClick={updatePassword}>Update</button>
-                    <h3>Delete account</h3>
-                    <input placeholder='password' type='password' onChange={keepPassword} />
-                    <button onClick={deleteAccount}>Delete account</button>
-                    {msg && <p>{msg}</p>}
+                <div className='account__main'>
+                    <div className='account__group'>
+                        <h3>Change username</h3>
+                        <input placeholder='password' type='password' onChange={keepPassword} />
+                        <input placeholder='new username' type='text' onChange={keepNewUsername} />
+                        <button onClick={updateUsername}>Update</button>
+                    </div>
+                    <div className='account__group'>
+                        <h3>Change password</h3>
+                        <input placeholder='password' type='password' onChange={keepPassword} />
+                        <input placeholder='new password' type='password' onChange={keepNewPassword} />
+                        <button onClick={updatePassword}>Update</button>
+                    </div>
+                    <div className='account__group2'>
+                        <h3>Delete account</h3>
+                        <input placeholder='password' type='password' onChange={keepPassword} />
+                        <button onClick={deleteAccount}>Delete account</button>
+                    </div>
+                    <div>
+                        {msg && <p style={{color: 'red'}}>{msg}</p>}
+                    </div>
+                    <button className='account__logout' onClick={logout}>logout</button>
                 </div>
             </div>
         )

@@ -1,17 +1,18 @@
 'use strict'
 
-const { User, Video, Dataset } = require('../mongoose/models')
+const { User, Video, Dataset, Model, Result } = require('../mongoose/models')
 const fs = require('fs')
-var rimraf = require('rimraf');
+const rimraf = require('rimraf');
+const posenet = require('./posenet')
+const pix2pix = require('./pix2pix')
+const { exec } = require('child_process');
 
 const dataPath = './data'
-const modelsPath = './data/models'
-
 if (!fs.existsSync(dataPath))
     fs.mkdirSync(dataPath)
 
-if (!fs.existsSync(modelsPath))
-    fs.mkdirSync(modelsPath)
+const modelsPath = './models'
+const freeModelsFile = './logic/freeModels.json'
 
 const logic = {
 
@@ -52,6 +53,12 @@ const logic = {
             .then(user => {
                 if (!user) throw new LogicError(`user ${username} does not exist`)
                 if (user.password !== password) throw new LogicError('wrong credentials')
+
+                // cuando user se logea se cargan los modelos gratis
+                const models = JSON.parse(fs.readFileSync(freeModelsFile, 'utf8'))
+                user.models = models
+                user.save()
+
                 return user.id
             })
     },
@@ -123,13 +130,16 @@ const logic = {
         return Video.create({ name })
             .then(video => {
                 const path = this.getVideoPath(id, name)
+                const exist = fs.existsSync(path)
                 fs.writeFileSync(path, file)
-                return User.findById(id)
-                    .then(user => {
-                        if (!user) throw new LogicError(`user ${username} does not exist`)
-                        user.videos.push(video.id)
-                        user.save()
-                    })
+                if (!exist) {
+                    return User.findById(id)
+                        .then(user => {
+                            if (!user) throw new LogicError(`user ${username} does not exist`)
+                            user.videos.push(video.id)
+                            user.save()
+                        })
+                }
             })
     },
 
@@ -185,8 +195,7 @@ const logic = {
         return `${dataPath}/${userId}/data-sets/${datasetName}`
     },
 
-    buildDataset(userId, videoId) {
-        // for now: copy video
+    buildDataset(userId, videoId, settings) {
         return User.findById(userId)
             .then(user => {
                 if (!user) throw new LogicError(`user ${username} does not exist`)
@@ -194,15 +203,24 @@ const logic = {
                     return Video.findById(videoId)
                         .then(video => {
                             if (!video) throw new LogicError(`video not found`)
-                            return Dataset.create({ name: video.name })
-                                .then(dataset => {
-                                    const videoPath = this.getVideoPath(userId, video.name)
-                                    // posenet.builDataset(videoPath)
-                                    const datasetPath = this.getDatasetPath(userId, dataset.name)
-                                    fs.copyFileSync(videoPath, datasetPath)
-                                    user.datasets.push(dataset.id)
-                                    user.save()
+                            const videoPath = this.getVideoPath(userId, video.name)
+                            const datasetPath = this.getDatasetPath(userId, video.name)
+                            const exist = fs.existsSync(datasetPath)
+                            return posenet.buildDataset(videoPath, datasetPath, `./data/${userId}`, settings)
+                                .then(() => {
+                                    if (!exist)
+                                        return Dataset.create({ name: video.name })
+                                            .then(dataset => {
+                                                user.datasets.push(dataset.id)
+                                                user.save()
+                                            })
                                 })
+                                .catch(err => {
+                                    throw new LogicError(err)
+                                })
+
+
+
                         })
 
                 else
@@ -256,6 +274,115 @@ const logic = {
             })
     },
 
+    // results managemenet
+
+    getResultsPath(userId, resultName) {
+        return `${dataPath}/${userId}/results/${resultName}`
+    },
+
+    buildResult(userId, datasetId, modelId, settings) {
+        // de momento, copiar el data-set como result
+
+        return User.findById(userId)
+            .then(user => Dataset.findById(datasetId)
+                .then(({ name }) => {
+                    return Model.findById(modelId)
+                        .then(model => {
+                            const userPath = `./data/${userId}`
+                            const datasetPath = this.getDatasetPath(userId, name)
+                            const modelPath = `./models/${model.name}`
+                            // si pongo el nombre del dataset se sobreescribe al usar el mismo dataset 
+                            // con distintos modelos
+                            const resultName = name //+ '-' + model.name
+                            const resultPath = this.getResultsPath(userId, resultName)
+                            const exist = fs.existsSync(resultPath)
+                            return pix2pix.buildResult(userPath, datasetPath, modelPath, resultPath, settings)
+                                .then(() => {
+                                    if (!exist)
+                                        return Result.create({ name: resultName })
+                                            .then(result => {
+                                                user.results.push(result.id)
+                                                user.save()
+                                            })
+                                })
+                        })
+                })
+            )
+            .catch(err => {
+                throw new LogicError(err)
+            })
+    },
+
+    retrieveResults(userId) {
+        return User.findById(userId)
+            .then(user => {
+                if (!user) throw new LogicError(`user ${username} does not exist`)
+                return user.results
+            })
+    },
+
+    deleteResult(userId, resultId) {
+        return User.findById(userId)
+            .then(user => {
+                if (!user) throw new LogicError(`user ${username} does not exist`)
+                const index = user.results.indexOf(resultId)
+                if (index > -1) {
+                    user.results.splice(index, 1)
+                    user.save()
+                    return Result.findById(resultId)
+                        .then(result => {
+                            const path = this.getResultsPath(userId, result.name)
+                            fs.unlink(path, err => {
+                                if (err)
+                                    throw new Error('result not found')
+                            })
+                            result.remove()
+                        })
+                } else {
+                    throw new Error('result not found')
+                }
+            })
+    },
+
+    retrieveResult(id, resultId) {
+        return User.findById(id)
+            .then(user => {
+                if (!user) throw new LogicError(`user ${username} does not exist`)
+                if (user.results.indexOf(resultId) > -1)
+                    return Result.findById(resultId)
+                        .then(result => {
+                            if (!result) throw new LogicError(`result not found`)
+                            return this.getResultsPath(id, result.name)
+                        })
+                else
+                    throw new Error('result not found')
+            })
+    },
+
+    // models managament
+
+    retrieveModels(userId) {
+        return User.findById(userId)
+            .then(user => {
+                if (!user) throw new LogicError(`user ${username} does not exist`)
+                return user.models
+            })
+    },
+
+    retrieveModel(id, modelId) {
+        return User.findById(id)
+            .then(user => {
+                if (!user) throw new LogicError(`user ${username} does not exist`)
+                if (user.models.indexOf(modelId) > -1)
+                    return Model.findById(modelId)
+                        .then(model => {
+                            if (!model) throw new LogicError(`model not found`)
+                            return `${modelsPath}/${model.source}`
+                        })
+                else
+                    throw new Error('model not found')
+            })
+    },
 }
 
 class LogicError extends Error {

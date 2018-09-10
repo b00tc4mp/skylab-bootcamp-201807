@@ -11,7 +11,8 @@ import Help from './components/Help'
 
 const mapStateToProps = state => ({
   layout: state.layout,
-  breakScreen: state.settings.breakScreen
+  breakScreen: state.settings.breakScreen,
+  videoSrc: state.video.url
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -27,6 +28,11 @@ class App extends Component {
   }
   componentDidMount = () => window.addEventListener('resize', this.setLayout)
   componentWillUnmount = () => window.removeEventListener('resize', this.setLayout)
+  componentWillReceiveProps = nextProps => {
+    if (this.props.videoSrc !== nextProps.videoSrc)
+      if (!this.props.layout)
+        this.props.history.push('/')
+  }
 
   setLayout = () => {
     const { layout, breakScreen, setLayout } = this.props

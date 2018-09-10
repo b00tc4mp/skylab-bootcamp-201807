@@ -1,6 +1,6 @@
 .app {
   display: grid;
-  grid-template: 100vh/5% 25% auto;
+  grid-template: 100vh/5% 40% auto;
 }
 
 .app-mobile {
@@ -8,6 +8,9 @@
   grid-template: 1fr/1fr;
 }
 
+.profile {
+  overflow-y: scroll;
+}
 .profile__container {
   display: grid;
   grid-template: 50px auto/1fr;
@@ -22,6 +25,11 @@
   background: none;
   border-radius: 10px;
   color: #EA6848;
+}
+@media screen and (max-width: 700px) {
+  .profile {
+    margin-bottom: 15vh;
+  }
 }
 
 /*# sourceMappingURL=Profile.css.map */

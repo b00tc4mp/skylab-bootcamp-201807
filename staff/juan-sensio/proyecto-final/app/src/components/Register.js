@@ -37,8 +37,8 @@ class Register extends Component {
                 <div>
                     {msg && <p>{msg}</p>}
                 </div>
-                <button onClick={register}>register</button>
-                <button onClick={login}>log in</button>
+                <button onClick={register}>Register</button>
+                <button onClick={login}>Log In</button>
             </div>
         )
     }

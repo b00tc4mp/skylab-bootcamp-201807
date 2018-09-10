@@ -123,9 +123,9 @@ router.get('/users/:id/videos/:videoId', validateJwt, (req, res) => {
 // dataset management
 
 router.put('/users/:id/dataset', [validateJwt, jsonBodyParser], (req, res) => {
-    const { params: { id }, body: { videoId } } = req
+    const { params: { id }, body: { videoId, settings } } = req
     debugger
-    logic.buildDataset(id, videoId)
+    logic.buildDataset(id, videoId, settings)
         .then(() => {
             res.status(201).json({ message: 'dataset built correctly' })
         })
@@ -162,6 +162,74 @@ router.get('/users/:id/datasets', validateJwt, (req, res) => {
 router.get('/users/:id/datasets/:datasetId', validateJwt, (req, res) => {
     const { params: { id, datasetId } } = req
     logic.retrieveDataset(id, datasetId)
+        .then(filename => res.download(filename))
+})
+
+// results management
+
+router.put('/users/:id/result', [validateJwt, jsonBodyParser], (req, res) => {
+    const { params: { id }, body: { datasetId, modelId, settings } } = req
+    debugger
+    logic.buildResult(id, datasetId, modelId, settings)
+        .then(() => {
+            res.status(201).json({ message: 'result built correctly' })
+        })
+        .catch(err => {
+            const { message } = err
+            res.status(err instanceof LogicError ? 401 : 500).json({ message })
+        })
+})
+
+router.delete('/users/:id/results/:resultId', validateJwt, (req, res) => {
+    const { params: { id, resultId } } = req
+    logic.deleteResult(id, resultId)
+        .then(() => {
+            res.status(200).json({ message: 'result deleted correctly.' })
+        })
+        .catch(err => {
+            const { message } = err
+            res.status(err instanceof LogicError ? 401 : 500).json({ message })
+        })
+})
+
+router.get('/users/:id/results', validateJwt, (req, res) => {
+    const { params: { id } } = req
+    logic.retrieveResults(id)
+        .then(results => {
+            res.status(200).json({ results })
+        })
+        .catch(err => {
+            const { message } = err
+            res.status(err instanceof LogicError ? 401 : 500).json({ message })
+        })
+})
+
+router.get('/users/:id/results/:resultId', validateJwt, (req, res) => {
+    const { params: { id, resultId } } = req
+    logic.retrieveResult(id, resultId)
+        .then(filename => {
+            console.log(filename)
+            res.download(filename)
+        })
+})
+
+// models managament
+
+router.get('/users/:id/models', validateJwt, (req, res) => {
+    const { params: { id } } = req
+    logic.retrieveModels(id)
+        .then(models => {
+            res.status(200).json({ models })
+        })
+        .catch(err => {
+            const { message } = err
+            res.status(err instanceof LogicError ? 401 : 500).json({ message })
+        })
+})
+
+router.get('/users/:id/models/:modelId', validateJwt, (req, res) => {
+    const { params: { id, modelId } } = req
+    logic.retrieveModel(id, modelId)
         .then(filename => res.download(filename))
 })
 

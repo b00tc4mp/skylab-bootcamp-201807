@@ -26,8 +26,8 @@ class Login extends Component {
                 <div>
                     {msg && <p>{msg}</p>}
                 </div>
-                <button onClick={login}>log in</button>
-                <button onClick={register}>register</button>
+                <button onClick={login}>Log In</button>
+                <button onClick={register}>Register</button>
             </div>
         )
     }

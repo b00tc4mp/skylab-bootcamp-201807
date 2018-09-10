@@ -1,3 +1,6 @@
+//const API_BASE_URL = 'http://192.168.1.185:8080/api/' // mac
+//const API_BASE_URL = 'http://192.168.1.191:8080/api/' // casa
+
 const API_BASE_URL = 'http://localhost:8080/api/'
 
 const logic = {
@@ -174,12 +177,12 @@ const logic = {
 
     // dataset management
 
-    buildDataset(id) {
+    buildDataset(id, settings) {
         const headers = {
             'content-type': 'application/json',
             'authorization': `bearer ${this._userToken}`
         }
-        const body = JSON.stringify({videoId: id})
+        const body = JSON.stringify({videoId: id, settings})
         return this._callApi(`users/${this._userId}/dataset`, 'put', headers, body, 201)
             .then(() => true)
     },
@@ -207,7 +210,61 @@ const logic = {
         return this._callApi(`users/${this._userId}/datasets/${id}`, 'delete', headers, undefined, 200)
             .then(() => true)
     },
+
+    // results management
+
+    buildResult(datasetId, modelId, settings) {
+        const headers = {
+            'content-type': 'application/json',
+            'authorization': `bearer ${this._userToken}`
+        }
+        const body = JSON.stringify({datasetId, modelId, settings})
+        return this._callApi(`users/${this._userId}/result`, 'put', headers, body, 201)
+            .then(() => true)
+    },
+
+    retrieveResults() {
+        const headers = {
+            'authorization': `bearer ${this._userToken}`
+        }
+        return this._callApi(`users/${this._userId}/results`, 'get', headers, undefined, 200)
+            .then(res => res.json())
+            .then(({ results }) => {
+                return results.map(result => {
+                    return {
+                        url: `${API_BASE_URL}users/${this._userId}/results/${result}?token=${this._userToken}`,
+                        id: result
+                    }
+                })
+            })
+    },
+
+    deleteResult(id) {
+        const headers = {
+            'authorization': `bearer ${this._userToken}`
+        }
+        return this._callApi(`users/${this._userId}/results/${id}`, 'delete', headers, undefined, 200)
+            .then(() => true)
+    },
+
+    // models management
+
+    retrieveModels() {
+        const headers = {
+            'authorization': `bearer ${this._userToken}`
+        }
+        return this._callApi(`users/${this._userId}/models`, 'get', headers, undefined, 200)
+            .then(res => res.json())
+            .then(({ models }) => {
+                return models.map(model => {
+                    return {
+                        url: `${API_BASE_URL}users/${this._userId}/models/${model}?token=${this._userToken}`,
+                        id: model
+                    }
+                })
+            })
+    }
 }
 
 if (typeof module !== 'undefined')
-    module.exports = logic;
+    module.exports = logic

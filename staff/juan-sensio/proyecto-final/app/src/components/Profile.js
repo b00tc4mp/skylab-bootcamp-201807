@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import { withRouter, Route, Redirect } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { setVideo, setActions } from '../redux/actions'
 import logic from '../logic'
 
 import './styles/Profile.css'
@@ -8,6 +10,11 @@ import Login from './Login'
 import Register from './Register'
 import Account from './Account'
 import MainProfile from './MainProfile'
+
+const mapDispatchToProps = dispatch => ({
+    setVideo: (video, type) => dispatch(setVideo(video, type)),
+    setActions: actions => dispatch(setActions(actions))
+})
 
 class Profile extends Component {
 
@@ -35,11 +42,20 @@ class Profile extends Component {
 
     login = (username, password) =>
         logic.loginUser(username, password)
-            .then(() => this.forceUpdate())
+            .then(() => {
+                this.resetVideo()
+                this.forceUpdate()
+            })
 
     logout = () => {
         logic.logout()
+        this.resetVideo()
         this.showLogin()
+    }
+
+    resetVideo = () => {
+        this.props.setVideo({ video: { url: '', id: '' }, type: '' })
+        this.props.setActions({ save: false, pose: false, prepTransfer: false, transfer: false, delete: false, dataset: { url: '', id: '' } })
     }
 
     render() {
@@ -62,4 +78,4 @@ class Profile extends Component {
     }
 }
 
-export default withRouter(Profile)
+export default withRouter(connect(null, mapDispatchToProps)(Profile))

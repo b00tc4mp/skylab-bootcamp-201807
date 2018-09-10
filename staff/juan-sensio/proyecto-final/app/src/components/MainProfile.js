@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { setVideo, setVideos, setDatasets } from '../redux/actions'
+import { setVideo, setVideos, setDatasets, setResults, setModels } from '../redux/actions'
 
 import logic from '../logic'
 
@@ -10,13 +10,17 @@ import VideoGallery from './VideoGallery'
 
 const mapStateToProps = ({ user }) => ({
     videos: user.videos,
-    datasets: user.datasets
+    datasets: user.datasets,
+    results: user.results,
+    models: user.models
 })
 
 const mapDispatchToProps = dispatch => ({
-    setVideo: video => dispatch(setVideo(video)),
+    setVideo: (video, type) => dispatch(setVideo(video, type)),
     setVideos: videos => dispatch(setVideos(videos)),
-    setDatasets: datasets => dispatch(setDatasets(datasets))
+    setDatasets: datasets => dispatch(setDatasets(datasets)),
+    setResults: results => dispatch(setResults(results)),
+    setModels: models => dispatch(setModels(models))
 })
 
 class MainProfile extends Component {
@@ -24,8 +28,6 @@ class MainProfile extends Component {
     state = {
         msg: ''
     }
-
-    setVideo = video => this.props.setVideo(video)
 
     retrieveVideos = () =>
         logic.retrieveVideos()
@@ -35,40 +37,45 @@ class MainProfile extends Component {
         logic.retrieveDatasets()
             .then(datasets => this.props.setDatasets(datasets))
 
+    retrieveResults = () =>
+        logic.retrieveResults()
+            .then(results => this.props.setResults(results))
+
+    retrieveModels = () =>
+        logic.retrieveModels()
+            .then(models => this.props.setModels(models))
+
     componentWillMount = () => {
         this.retrieveVideos()
         this.retrieveDatasets()
+        this.retrieveResults()
+        this.retrieveModels()
     }
 
-    deleteVideo = id =>
-        logic.deleteVideo(id)
-            .then(() => {
-                this.setState({ msg: 'video deleted !' })
-                return this.retrieveVideos()
-            })
-
-    deleteDataset = id =>
-        logic.deleteDataset(id)
-            .then(() => {
-                this.setState({ msg: 'dataset deleted !' })
-                return this.retrieveDatasets()
-            })
-
     render() {
-        const { videos, datasets } = this.props
-        const { setVideo, deleteVideo, deleteDataset } = this
+        const { videos, datasets, results, models, setVideo } = this.props
         return (
             <div className='main-profile'>
                 <VideoGallery
-                    title={'My Videos'}
+                    title={'Videos'}
                     videos={videos}
                     setVideo={setVideo}
-                    deleteVideo={deleteVideo} />
+                    type='video' />
                 <VideoGallery
-                    title={'My Datasets'}
+                    title={'Datasets'}
                     videos={datasets}
                     setVideo={setVideo}
-                    deleteVideo={deleteDataset} />
+                    type='dataset' />
+                <VideoGallery
+                    title={'Results'}
+                    videos={results}
+                    setVideo={setVideo}
+                    type='result' />
+                <VideoGallery
+                    title={'Models'}
+                    videos={models}
+                    setVideo={setVideo}
+                    type='model' />
             </div>
         )
     }

@@ -1,6 +1,6 @@
 .app {
   display: grid;
-  grid-template: 100vh/5% 25% auto;
+  grid-template: 100vh/5% 40% auto;
 }
 
 .app-mobile {

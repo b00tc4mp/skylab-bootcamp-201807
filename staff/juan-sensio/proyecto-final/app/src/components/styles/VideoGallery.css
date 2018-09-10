@@ -5,24 +5,14 @@
   padding: 10px;
 }
 .video-gallery__container {
+  width: 100%;
   display: grid;
   grid-template: auto/1fr 1fr;
 }
-.video-gallery__video-container {
-  width: 100%;
-  margin: 0;
-  display: grid;
-  grid-template: 15vh 5vh/1fr;
-  align-items: center;
-  justify-items: center;
-}
-.video-gallery__video-container video {
+.video-gallery__container video {
   min-width: 60px;
-  max-width: 90%;
+  max-width: 100%;
   max-height: 100%;
-}
-.video-gallery__video-container button {
-  font-size: 12px;
 }
 
 /*# sourceMappingURL=VideoGallery.css.map */

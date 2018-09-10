@@ -1,6 +1,6 @@
 {
-  "name": "Pose to Animation",
-  "short_name": "Pose2Animation",
+  "name": "Pose to Pose",
+  "short_name": "p2p",
   "theme_color": "#000000",
   "background_color": "#5a5a5a",
   "display": "standalone",

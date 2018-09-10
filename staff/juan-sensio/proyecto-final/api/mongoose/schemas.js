@@ -14,6 +14,25 @@ const Dataset = new Schema({
     }
 })
 
+const Result = new Schema({
+    name: {
+        type: String,
+        required: true
+    }
+})
+
+const Model = new Schema({
+    name: {
+        type: String,
+        required: true,
+        unique: true
+    },
+    source: {
+        type: String,
+        required: true
+    }
+})
+
 const User = new Schema({
     username: {
         type: String,
@@ -25,9 +44,15 @@ const User = new Schema({
         required: true
     },
     videos: [],
-    datasets: []
+    datasets: [],
+    results: [],
+    models: []
 })
 
-
-
-module.exports = { Video, User, Dataset }
+module.exports = {
+    Video,
+    Dataset,
+    Result,
+    Model,
+    User
+}
