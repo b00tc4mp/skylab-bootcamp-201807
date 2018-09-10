@@ -5,7 +5,7 @@ const cors = require('cors')
 const pkg = require('./package.json')
 
 const http = require('http')
-const { env: { MONGO_URL } } = process
+const { env: { MONGODB_URI } } = process
 const { mongoose } = require('chess-data')
 const socketIO = require('socket.io');
 /*
@@ -35,7 +35,7 @@ const routes = require('./routes')
 const { sockets } = require('./sockets')
 
 
-mongoose.connect('mongodb://ajedrez:Play2Win@ds243212.mlab.com:43212/ajedrez1', { useNewUrlParser: true }, (err, conn) => {
+mongoose.connect(MONGODB_URI, { useNewUrlParser: true }, (err, conn) => {
   if (err) throw err
 
 

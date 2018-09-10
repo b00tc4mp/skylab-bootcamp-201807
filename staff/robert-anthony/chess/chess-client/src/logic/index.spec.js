@@ -1015,11 +1015,8 @@ describe('logic', () => {
         .then(({message}) => expect(message).to.equal(`move is of wrong format`))
     )
 
-    afterEach(done => {
-      fetchMock.restore()
-      done()
-
-    })
+    afterEach(()=>  fetchMock.restore()
+   )
   }) // end make a game move
 
 
