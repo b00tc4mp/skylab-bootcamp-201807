@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom'
 import logic from '../logic'
 import Header from '../components/Header';
 import Avatar from '../components/Avatar/Avatar';
-import GridPost from '../components/GridPost/GridPost';
+import ColumnPost from '../components/ColumnPost';
 
 class WallPage extends Component {
 
@@ -37,12 +37,12 @@ class WallPage extends Component {
           <Header />
         </div>
         <div className="main-wrapper">
-          <main>
+          <main className="is-eight-quarters grid-gap-30">
             <section>
               {
                 this.state.posts && this.state.posts.map((post) =>
                   (
-                    <GridPost
+                    <ColumnPost
                       key={post._id}
                       post={post}
                       onPostDetailClick={this.handlePostDetailClick}

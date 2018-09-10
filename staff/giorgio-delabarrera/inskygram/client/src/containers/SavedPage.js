@@ -5,7 +5,7 @@ import Header from '../components/Header';
 import Profile from '../components/Profile';
 import GridPost from '../components/GridPost';
 
-class ProfilePage extends Component {
+class SavedPage extends Component {
 
   state = {
     user: null,
@@ -87,32 +87,35 @@ class ProfilePage extends Component {
               <div className="tabs-wrapper">
                 <ul className="Tabs">
                   <li className="Tabs-item">
-                    <a href="#/" className="Tabs-itemLink is-active">
+                    <a href="#/" className="Tabs-itemLink">
                       <i className="fas fa-th"></i> Posts
                     </a>
                   </li>
                   <li className="Tabs-item">
-                    <a href="#/" className="Tabs-itemLink">
-                    <i className="far fa-bookmark"></i> Saved
+                    <a href="#/" className="Tabs-itemLink is-active">
+                      <i className="far fa-bookmark"></i> Saved
                     </a>
                   </li>
                 </ul>
               </div>
-              <div className="is-one-thirds grid-gap-30">
-                {this.state.isForbidden ? (
-                  <div>This Account is Private</div>
-                ) : (
-                    this.state.posts && this.state.posts.map((post) =>
-                      (
-                        <GridPost
-                          key={post._id}
-                          post={post}
-                          onPostDetailClick={this.handlePostDetailClick}
-                        />
-                      )
-                    )
-                  )}
-              </div>
+              {this.state.isForbidden ? (
+                <div>This Account is Private</div>
+              ) : (
+                  <div>
+                    <div className="saved-info has-text-gray">Only you can see what you've saved</div>
+                    <div className="is-one-thirds grid-gap-30">
+                      {this.state.posts && this.state.posts.map((post) =>
+                        (
+                          <GridPost
+                            key={post._id}
+                            post={post}
+                            onPostDetailClick={this.handlePostDetailClick}
+                          />
+                        )
+                      )}
+                    </div>
+                  </div>
+                )}
             </section>
           </main>
         </div>
@@ -121,4 +124,4 @@ class ProfilePage extends Component {
   }
 }
 
-export default withRouter(ProfilePage)
+export default withRouter(SavedPage)

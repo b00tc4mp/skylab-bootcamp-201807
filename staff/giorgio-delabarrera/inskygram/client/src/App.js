@@ -9,6 +9,8 @@ import CreationPostPage from './containers/CreationPostPage';
 import EditProfilePage from './containers/EditProfilePage';
 import ChangePasswordPage from './containers/ChangePasswordPage';
 import PostDetailPage from './containers/PostDetailPage';
+import ExplorePage from './containers/ExplorePage';
+import SavedPage from './containers/SavedPage';
 
 class App extends Component {
   state = {
@@ -43,7 +45,7 @@ class App extends Component {
     const { loggedInUsername, token } = this.state
     return (
       <div>
-        
+
         <Switch>
           <Route exact path="/" render={() => !this.isLoggedIn() ? <Redirect to="/accounts/login" /> : (
             <WallPage
@@ -51,7 +53,7 @@ class App extends Component {
               token={token}
             />
           )} />
-          {/* <Route exact path="/explore" render={() => !this.isLoggedIn() ? <Redirect to="/accounts/login" /> : <ExplorePage loggedInUsername={loggedInUsername} token={token} /> } /> */}
+          <Route exact path="/explore" render={() => !this.isLoggedIn() ? <Redirect to="/accounts/login" /> : <ExplorePage loggedInUsername={loggedInUsername} token={token} />} />
           <Route exact path="/accounts/login" render={() => this.isLoggedIn() ? <Redirect to="/" /> : <LoginPage onLoggedIn={this.onLoggedIn} />} />
           <Route exact path="/accounts/logout" render={() => <LogoutPage onLogout={this.handleLogout} />} />
           <Route exact path="/accounts/register" render={() => this.isLoggedIn() ? <Redirect to="/" /> : <RegisterPage onRegistered={this.onRegistered} />} />
@@ -73,6 +75,13 @@ class App extends Component {
           <Route path="/p/:id" render={props => (
             <PostDetailPage
               postId={props.match.params.id}
+              loggedInUsername={loggedInUsername}
+              token={token}
+            />
+          )} />
+          <Route path="/:username/saved" render={props => (
+            <SavedPage
+              username={props.match.params.username}
               loggedInUsername={loggedInUsername}
               token={token}
             />

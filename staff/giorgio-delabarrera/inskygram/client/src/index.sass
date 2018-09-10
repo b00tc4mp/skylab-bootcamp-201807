@@ -8,6 +8,9 @@ body,
 dl,
 dt,
 dd,
+figure,
+ul,
+li,
   margin: 0
   padding: 0
 
@@ -35,6 +38,7 @@ body
   border-bottom: 1px solid #e5e5e5
   position: fixed
   width: 100%
+  z-index: 1
 
 .main-wrapper
   padding-top: 85px
@@ -45,6 +49,64 @@ main
   margin: 0px auto
   padding-left: 20px
   padding-right: 20px
+
+.is-eight-quarters
   display: grid
   grid-template-columns: 8fr 4fr
-  grid-column-gap: 30px
+
+.is-one-thirds
+  display: grid
+  grid-template-columns: repeat(3, 1fr)
+
+.grid-gap-30
+  grid-gap: 30px
+
+.has-text-gray
+  color: #999999
+
+.button
+  padding: 5px 12px
+  background-color: #fafafa
+  color: #262626
+  font-size: .9em
+  border-radius: 4px
+  font-weight: 500
+  cursor: pointer
+  min-width: 100px
+
+.button.is-primary
+  color: #ffffff
+  background-color: #3e99ed
+  border-color: #3e99ed
+
+.profile-posts-wrapper
+  border-top: 1px solid #efefef
+
+.tabs-wrapper
+  text-align: center
+
+.Tabs
+  display: inline-block
+  
+  &-item
+    float: left
+    list-style: none
+    margin: 0 40px
+
+  &-itemLink
+    padding: 1.3em 0
+    color: #959595
+    display: block
+    font-size: .8em
+    text-transform: uppercase
+    text-decoration: none
+    letter-spacing: .08em
+    font-weight: 600
+    
+    &.is-active
+      color: #000000
+      border-top: 1px solid #000000
+
+.saved-info
+  font-size: .8em
+  margin-bottom: 1.5em

@@ -239,6 +239,19 @@ const logic = {
         return this._httpClient(`me/wall?${uri}`, 'GET', { authorization: `bearer ${token}` }, undefined, 200)
           .then(res => res.json())
       })
+  },
+
+  listExplorePosts(token, username, perPage = 10, page = 0) {
+    return Promise.resolve()
+      .then(() => {
+        this._validateStringField('token', token)
+        this._validateStringField('username', username)
+
+        const uri = this._buildUri({ per_page: perPage, page })
+
+        return this._httpClient(`me/explore?${uri}`, 'GET', { authorization: `bearer ${token}` }, undefined, 200)
+          .then(res => res.json())
+      })
   }
 }
 
