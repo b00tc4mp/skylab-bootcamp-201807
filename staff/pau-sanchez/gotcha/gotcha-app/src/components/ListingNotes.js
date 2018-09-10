@@ -1,7 +1,7 @@
 import React from 'react'
 import {logic} from '../logic'
 import { withRouter, Link } from 'react-router-dom'
-import {FormGroup, Input, Button, Form, Label, Col, Card} from 'reactstrap'
+import {FormGroup, Input, Button, Form, Label, Col, Card, Table} from 'reactstrap'
 class ListingNotes extends React.Component {
 
     
@@ -143,43 +143,65 @@ class ListingNotes extends React.Component {
 
 
       render() {
-                        const {notes, notesNotebooksInfo} = this.state
+                        const {notes, notesNotebooksInfo, notetext, notetitle, seconds, _id, user, notebook, notebooktitle, videotitle,} = this.state
         return <div>
             
             <div>
                    
-                        {notesNotebooksInfo.map(({ notetext, notetitle, seconds, _id, user, notebook, notebooktitle, videotitle, videothumbnail}) => (
                                 
-                                /*
+                                
                                 <div>
-                                    <button
-                                    className="remove-btn"
-                                    color="danger"
-                                    size="sm"
-                                    onClick={() => {
-                                        this.deleteNote(_id)
-                                    }}
-                                    
-                                    >&times;</button>
-                                    
-                                    
-                                    
-                                        <input type="text" defaultValue={notetitle} onChange={this.onChangeNoteTitle}/>
-                                        <input type="text" defaultValue={notetext} onChange={this.onChangeNoteText}/>
-                                        <button onClick={() => this.updateNoteForm(_id)}>UpdateNote</button>       
-                                    
-                                    
-                                    <span>Time: {Math.floor(seconds/60)}:{Math.floor(seconds - (Math.floor(seconds/60)) * 60)}  </span>
-                                    <button
-                                    className="remove-btn"
-                                    color="danger"
-                                    size="sm"
-                                    onClick={() => this.props.seektoPass(seconds)}
-                                    >SeekTo</button>
-                                    <Link to={`/noteplayer/${_id}/${user}`}>Play Note</Link>
+                                    <Table responsive>
+                                        <thead>
+                                            <tr>
+                                                
+                                                <th>Moment</th>
+                                                <th>Title</th>
+                                                <th>Text</th>
+                                                <th>Notebook</th>
+                                                <th>Video</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        
+                        {notesNotebooksInfo.map(({ notetext, notetitle, seconds, _id, user, notebook, notebooktitle, videotitle, videothumbnail}) => (
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    {this.minutesForm(seconds)+`:`+this.secondsForm(seconds)}
+                                                </td>
+                                                <td>
+                                                    {notetitle}    
+                                                </td>
+                                                <td>
+                                                    {notetext}    
+                                                </td>
+                                                <td>
+                                                    {notebooktitle}    
+                                                </td>
+                                                <td>
+                                                    {videotitle}    
+                                                </td>
+                                                <td>
+                                                    <Link to={`/noteplayer/${_id}/${user}`}>
+                                                        <Button sm={2} >&#9654; Note</Button>
+                                                    </Link>
+                                                    <Link to={`/player/${notebook}/${user}`}>
+                                                        <Button type='button'>&#9654; Notebook</Button>
+                                                    </Link>    
+                                                        <Button sm={2} onClick={() => {this.deleteNote(_id)}}>Delete &#10799;</Button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+
+                                    ))}
+
+                                    </Table>
                                 </div>
-                                */
+
+
                                 
+                                {/*
                                 <div>
                                     <Card className='NotesCards'>    
                                 <FormGroup row>
@@ -252,10 +274,10 @@ class ListingNotes extends React.Component {
                                         </div>
                             </Card>
                                 </div>
-                                
+                                */}
                                 
                             
-                        ))}
+                        
                     
                 </div>
             </div>

@@ -66,19 +66,19 @@ class Home extends Component {
                 <Navbars />
                     <Container>
                         <div className='home_options' >
-                            <Button onClick={this.gotoNotebooks} size="lg">NOTEBOOKS</Button>
+                            <Button color="info" onClick={this.gotoNotebooks} size="lg">NOTEBOOKS</Button>
                             
                         </div>
                         <hr/>
                         <div className='home_options' >
-                            <Button onClick={this.gotoNotes} size="lg">NOTES</Button>
+                            <Button color="info" onClick={this.gotoNotes} size="lg">NOTES</Button>
                             
                         </div>
                         <hr/>
                         <div className='home_options'>
                             <p>Create a new notebook</p>
                                 <InputGroup >
-                                    <Input type='text' name='notetitle' placeholder='Add a title to your new Notebook' onChange={this.handleTitle} required/>
+                                    <Input type='text' name='notetitle' placeholder='A title to your Notebook' onChange={this.handleTitle} required/>
                                     <Input type='text' name='url' placeholder='youtube.com...' onChange={this.validateField} required/>
                                     <InputGroupAddon addonType='append'>
                                         <Button onClick={this.gotoHomeEditor} disabled={!this.state.formValid} >GO</Button>

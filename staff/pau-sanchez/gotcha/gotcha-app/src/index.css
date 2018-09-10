@@ -45,6 +45,13 @@ body {
   background-position:center;
 }
 
+.landing_error{
+  
+  margin: auto;
+  width: 50%;
+  text-align: center
+}
+
 /* Sign Up Page & Login Page */
 
 .signuplogin_group{
@@ -78,10 +85,13 @@ body {
 }
 
 .editor_rowcontainer {
-  width: 100vmax
+  width: 100vmax;
+  
 }
 
 .editor_coleditor {
+  display: flex;
+    
   width: 75vh;
   position: fixed;
   top: 0;
@@ -94,14 +104,19 @@ body {
 }
 
 .editor_colsidebar {
-  width: 25vh;
-  float: right;
+  
+   
+  
+  
   height: 100%;
-  overflow-y: auto;
+  overflow: auto;
   text-align: center;
 }
 
-.NotesCards{
+.notesCards{
+  text-align: center;
+  display: flex;
+  justify-content: center;
   padding: 0.7em;
   margin-bottom: 0.2em;
 }

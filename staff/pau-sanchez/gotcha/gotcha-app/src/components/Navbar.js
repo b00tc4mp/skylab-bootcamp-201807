@@ -1,23 +1,6 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom'
-import {
-    Collapse,
-    Navbar,
-    NavbarToggler,
-    NavbarBrand,
-    Nav,
-    NavItem,
-    NavLink,
-    UncontrolledDropdown,
-    DropdownToggle,
-    DropdownMenu,
-    DropdownItem,
-    Button,
-    Input,
-    InputGroup,
-    InputGroupAddon,
-    Col
-} from 'reactstrap';
+import {Navbar, NavbarBrand, Nav, NavItem, NavLink, Button} from 'reactstrap';
 
 
 class Navbars extends Component {
@@ -49,10 +32,12 @@ class Navbars extends Component {
                 
                 ? <div>
                     <Navbar >
-                        <NavbarBrand href="/home">Gotcha</NavbarBrand>
+                        <NavbarBrand href="/home">
+                            <Button color="danger" className='nav_button'>GOTCHA!</Button>
+                        </NavbarBrand>
                             <Nav pills>
                                 <NavItem>
-                                    <NavLink href="/editor">Editor</NavLink>
+                                    <NavLink href="/editor">New Notebook</NavLink>
                                 </NavItem>
                                 <NavItem>
                                     <NavLink href="/notebooks">Notebooks</NavLink>
@@ -67,10 +52,7 @@ class Navbars extends Component {
                                     <NavLink href="/about">About</NavLink>
                                 </NavItem>                                
                                 <NavItem>
-                                    <NavLink href="/profile">Account</NavLink>
-                                </NavItem>
-                                <NavItem>
-                                    <Button onClick={this.onLogout} color="secondary" className='nav_button' active>Logout</Button>
+                                    <Button outline color="primary" onClick={this.onLogout} className='nav_button'>Logout</Button>
                                 </NavItem>
                                 </Nav>
                     </Navbar >
@@ -79,7 +61,9 @@ class Navbars extends Component {
 
                 : <div>
                     <Navbar >
-                        <NavbarBrand href="/">Gotcha</NavbarBrand>
+                        <NavbarBrand href="/">
+                            <Button color="danger" className='nav_button'>GOTCHA!</Button>
+                        </NavbarBrand>
                             <Nav pills>
                                 <NavItem>
                                     <NavLink href="/faq">FAQ</NavLink>
@@ -91,7 +75,7 @@ class Navbars extends Component {
                                     <Button href="/register" color="primary" className='nav_button' active>Sign Up</Button>
                                 </NavItem>
                                 <NavItem>
-                                    <Button href="/login" color="secondary" className='nav_button' active>Login</Button>
+                                    <Button href="/login" color="success" className='nav_button'>Login</Button>
                                 </NavItem>
                        </Nav>
                     </Navbar >

@@ -386,20 +386,6 @@ refresh = () => {
                                         </div>
                             </Card>
                                 </div>
-                    
-                
-                    
-          
-                    
-            
-                        
-                    
-                    
-                    
-              {/*<PlayerNotesBar onRef={ref => (this.child = ref)} seektoPass={this.setSeekToPlay}/>*/}
-
-                    
-          
                 </div>
                  
          

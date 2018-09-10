@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import Navbar from '../components/Navbar'
+import { ListGroup, ListGroupItem } from 'reactstrap';
 
 export default class About extends Component {
 
@@ -13,8 +14,16 @@ export default class About extends Component {
         return (
             <div>
                 <Navbar />
-                <h1>ABOUT</h1>
+                <div className=''>
+                <ListGroup flush>
+                    <ListGroupItem>
+                        <h4>About Gotcha</h4>
+                        <p>Lore ipsum</p>
+                    </ListGroupItem>
+                </ListGroup>    
+                </div>
             </div>
         )
     }
 }
+                

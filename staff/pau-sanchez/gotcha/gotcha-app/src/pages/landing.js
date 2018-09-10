@@ -43,7 +43,7 @@ class Landing extends Component {
         urlValid = seturl.match(/^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})?$/)
         console.log(urlValid)
         
-        fieldValidationErrors.url = urlValid ? '' : 'invalid youtube url';
+        fieldValidationErrors.url = urlValid ? '' : 'invalid youtube';
         this.setState({url: seturl})
         this.setState({formErrors: fieldValidationErrors,
                 urlValid: urlValid}, this.validateForm)   
@@ -83,7 +83,9 @@ class Landing extends Component {
         return (
             <div class='landing_back'>
                 <Navbar >
-                    <NavbarBrand href="/">Gotcha</NavbarBrand>
+                        <NavbarBrand href="/">
+                            <Button color="danger" className='nav_button'>GOTCHA!</Button>
+                        </NavbarBrand>
                         <Nav pills>
                             <NavItem>
                                 <NavLink href="/faq">FAQ</NavLink>
@@ -114,13 +116,16 @@ class Landing extends Component {
                     <Input className='landing_input' type='text' name='url' placeholder='paste a youtube link' onChange={this.validateField} />
 
                     <InputGroupAddon addonType="append"><Button onClick={this.gotoRegister}>Sign Up</Button></InputGroupAddon>
+
                 </InputGroup>
+                    <div className='landing_error'>
+                        <FormErrors formErrors={this.state.formErrors} />
+                    </div>
                 
                 
                 
-                <div>
-                <FormErrors formErrors={this.state.formErrors} />
-                </div>
+                
+                
             </div>
 
         )

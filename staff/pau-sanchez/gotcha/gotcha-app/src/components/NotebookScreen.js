@@ -196,7 +196,9 @@ class NotebookScreen extends Component {
             .then(() => {
                 return logic.createNote(gotchaSeconds, notetitle, notetext, noteBookId, userId, token)
             })
-            .then(() => this.child.method(userId, noteBookId))
+            .then(() => {
+                return this.child.method(userId, noteBookId)
+            })
             .then(() => {
                 this.setState({ noteStage: false})
             })
@@ -224,6 +226,13 @@ class NotebookScreen extends Component {
        //STOP PROPAGATION///
       }
       */
+     secondsForm = (secs) => {
+        return Math.floor(secs - (Math.floor(secs/60)) * 60)
+    }
+    
+    minutesForm = (secs) => {
+        return Math.floor(secs/60)
+     }
 
 ///////////////////////////////////////////
 
@@ -257,130 +266,7 @@ class NotebookScreen extends Component {
         return(
             <div>
 
-                {/*<div className='app'>
-                    <section className='section'>
-           
-                        <div className='player-wrapper'>
-                        <ReactPlayer
-                            ref={this.ref}
-                            width='100%'
-                            height='100%'
-                            url={url}
-                            playing={playing}
-                            loop={loop}
-                            playbackRate={playbackRate}
-                            volume={volume}
-                            muted={muted}
-                            onReady={() => console.log('onReady')}
-                            onStart={() => console.log('onStart')}
-                            onPlay={this.onPlay}
-                            onPause={this.onPause}
-                            onBuffer={() => console.log('onBuffer')}
-                            onSeek={e => console.log('onSeek', e)}
-                            onEnded={this.onEnded}
-                            onError={e => console.log('onError', e)}
-                            onProgress={this.onProgress}
-                            onDuration={this.onDuration}
-                        />
-                        </div>
-  
-                        <table><tbody>
-                        <tr>
-                            <p>{this.state.videoTitle}</p>  
-                            <h3>{this.state.notebookTitle}</h3> 
-                            <th>Controls</th>
-                            <td>
-                            <button onClick={this.stop}>Stop</button>
-                            <button onClick={this.playPause}>{playing ? 'Pause' : 'Play'}</button>
-                            <button onClick={this.onClickFullscreen}>Fullscreen</button>
-                            <button onClick={this.setPlaybackRate} value={1}>1</button>
-                            <button onClick={this.setPlaybackRate} value={1.5}>1.5</button>
-                            <button onClick={this.setPlaybackRate} value={2}>2</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>Seek</th>
-                            <td>
-                            <input
-                                type='range' min={0} max={1} step='any'
-                                value={played}
-                                onMouseDown={this.onSeekMouseDown}
-                                onChange={this.onSeekChange}
-                                onMouseUp={this.onSeekMouseUp}
-                            />
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>Volume</th>
-                            <td>
-                            <input type='range' min={0} max={1} step='any' value={volume} onChange={this.setVolume} />
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>
-                            <label htmlFor='muted'>Muted</label>
-                            </th>
-                            <td>
-                            <input id='muted' type='checkbox' checked={muted} onChange={this.toggleMuted} />
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>
-                            <label htmlFor='loop'>Loop</label>
-                            </th>
-                            <td>
-                            <input id='loop' type='checkbox' checked={loop} onChange={this.toggleLoop} />
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>Played</th>
-                            <td><progress max={1} value={played} /></td>
-                        </tr>
-                        <tr>
-                            <th>Loaded</th>
-                            <td><progress max={1} value={loaded} /></td>
-                        </tr>
-                        </tbody></table>
-                    </section>
-          
-                    <section className='section'>
-                        <table><tbody>
-                        <tr>
-                            <th>YouTube</th>
-                            <td>
-                            {this.renderLoadButton('https://www.youtube.com/watch?v=oUFJJNQGwhk', 'Test A')}
-                            {this.renderLoadButton('https://www.youtube.com/watch?v=jNgP6d9HraI', 'Test B')}
-                            </td>
-                        </tr>
-                        
-                        <tr>
-                            <th>Custom URL</th>
-                            <td>
-                            <input ref={input => { this.urlInput = input }} type='text' placeholder='Enter URL' />
-                            <button onClick={() => {
-                                    const url = this.urlInput.value
-                                    this.setState({ url: this.urlInput.value })
-                                    //this.onLoadVideo(url)
-                                    
-                                }
-                                
-                                }>Load</button>
-                            </td>
-                        </tr>
-                        </tbody></table>
-            
-                        <h2>Form Notes</h2>
-                                
-                                <button onClick={() => {this.openNote()}}>Take Note</button>
-                                <button onClick={() => {this.setUrl()}}>Seturl</button>
-                    
-                    
-                    
-                    <PlayerNotesBar onRef={ref => (this.child = ref)} seektoPass={this.setSeekToPlay}/>
-
-                    </section>
-          
-                    </div>*/}
+                
                     <div>
                     <Row className='editor_rowcontainer'>
                 <Col className='editor_coleditor'>
@@ -428,7 +314,7 @@ class NotebookScreen extends Component {
                     {
                         (gotchaStage && loggedOut)
                         ?   <div id="gotchaStage" className='gotchaStage'>
-                                <Button onClick={this.gotcha}>GOTCHA!</Button>
+                                <Button color='danger' onClick={this.gotcha}>GOTCHA!</Button>
                             </div>
                         : <div></div>
                         
@@ -439,9 +325,9 @@ class NotebookScreen extends Component {
                         ?   <div  id="noteStage" className='noteStage'>
                                 <Form onSubmit={this.buildNote}>
                                 <FormGroup row>
-                                        <Label sm={2}>Moment (sec.)</Label>
+                                        <Label sm={2}>Moment</Label>
                                         <Col sm={8}>
-                                        <Input type="text" value={gotchaSeconds} onChange={this.inputNoteTitle} disabled/>
+                                        <Input type="text" value={this.minutesForm(gotchaSeconds)+`:`+this.secondsForm(gotchaSeconds)} onChange={this.inputNoteTitle} disabled/>
                                         </Col>
                                     </FormGroup>
                                     <FormGroup row>

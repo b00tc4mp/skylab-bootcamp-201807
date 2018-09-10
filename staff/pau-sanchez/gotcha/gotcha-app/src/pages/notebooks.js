@@ -80,29 +80,10 @@ class Notebooks extends Component {
 
                 {notebooks.map(({ date, notebooktitle, user, videoid, videothumbnail, videotitle, videourl, _id, newnotebooktitle }) => {
 
-                   {/*return <div>
-                        <span>Date {date}</span>
-                        <span>notebooktitle {notebooktitle}</span>
-                        <span>user {user}</span>
-                        <span>videoid {videoid}</span>
-                        <span>videothumbnail {videothumbnail}</span>
-                        <span>videotitle {videotitle}</span>
-                        <span>videourl {videourl}</span>
-                        <Link to={`/player/${_id}/${user}`}>
-                        <button type='button'>Play Notebook</button>
-                        </Link>
-                        <Link to={`/editnotebook/${_id}/${user}`}>
-                        <button type='button'>Edit Notebook</button>
-                        </Link>
-                        
-                        <button onClick={ e => this.deleteNotebooks(e, _id, user)}>Delete Notebook</button>
-                        {/*onClick={ e => this.upvotes(e, arg1, arg2, arg3) }
-                        <button onClick={this.infotodeleteNotebooks(_id, user)}>Delete Notebook</button>
-                    </div>*/}
-                    
-                    return    <div>
-                            <Card className='NotesCards'>
-                            <Row>
+                    return  <div>
+                                
+                                <Card className='notesCards'>
+                                <Row>
                                 <Col sm={3}>
                                     <div>
                                         <img src={videothumbnail} height='150' width='200'/>
@@ -113,7 +94,7 @@ class Notebooks extends Component {
                                     <FormGroup row>
                                         <Label sm={2}>Video</Label>
                                         <Col sm={8}>
-                                        <Input type="text" value={videotitle} disabled/>
+                                        <Input type="textarea" value={videotitle} disabled/>
                                         </Col>
                                     </FormGroup>
                                     {
@@ -141,19 +122,19 @@ class Notebooks extends Component {
                                     {
                                         (this.state.edit === _id && this.state.newnotebooktitle !== '')
                                         ? <Button sm={2} onClick={() => this.updateNotebookTitle(_id, user)}>Save Changes&#128394;</Button> 
-                                        : <Button onClick={() => this.setState({ edit: _id})}>EDIT NOTEBOOK TITLE &#128394;</Button>
+                                        : <Button onClick={() => this.setState({ edit: _id})}>EDIT TITLE &#128394;</Button>
                                     }    
                                     <Link to={`/player/${_id}/${user}`}>
                                             <Button type='button'>&#9654;</Button>
                                         </Link>
-                                        <Button onClick={ e => this.deleteNotebooks(e, _id, user)}>&#10799;</Button>
+                                        <Button onClick={ e => this.deleteNotebooks(e, _id, user)}>DELETE &#10799;</Button>
                                     </div>
                                 
                                 </Col>
                                 </Row>    
                             </Card>    
                                 
-                                </div> 
+                            </div> 
                     
 
                 }

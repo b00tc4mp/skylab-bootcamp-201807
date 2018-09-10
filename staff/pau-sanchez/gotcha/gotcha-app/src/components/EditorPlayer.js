@@ -370,7 +370,7 @@ validateUrl = e => {
                            
                           <h4>This is a demo!</h4><br/>
                           <h4>if you want to save your notes you should be logged in ;)</h4><br/>
-                          <Button onClick={this.buildFakeNotebook}>Create Demo Notebook</Button>
+                          <Button outline color="success" onClick={this.buildFakeNotebook}>Create Demo Notebook</Button>
                           </div>
                         : <div></div>    
                         
@@ -447,20 +447,11 @@ validateUrl = e => {
                             />
                         </div>
                        
-                    
-                       
-                    
-
-                    
-                    
-                    
-                    
-                    
 
                     {
                         gotchaStage 
                         ?   <div id="gotchaStage" className='gotchaStage'>
-                                <Button onClick={this.gotcha}>GOTCHA!</Button>
+                                <Button color="danger" onClick={this.gotcha}>GOTCHA!</Button>
                             </div>
                         : <div></div>
                         
@@ -471,9 +462,9 @@ validateUrl = e => {
                         ?   <div  id="noteStage" className='noteStage'>
                                 <Form onSubmit={this.state.origin === "landing_edition" ? this.buildFakeNote : this.buildNote}>
                                 <FormGroup row>
-                                        <Label sm={2}>Moment (sec.)</Label>
+                                        <Label sm={2}>Moment</Label>
                                         <Col sm={8}>
-                                        <Input type="text" value={gotchaSeconds} onChange={this.inputNoteTitle} disabled/>
+                                        <Input type="text" value={this.minutesForm(gotchaSeconds)+`:`+this.secondsForm(gotchaSeconds)} onChange={this.inputNoteTitle} disabled/>
                                         </Col>
                                     </FormGroup>
                                     <FormGroup row>
@@ -510,18 +501,6 @@ validateUrl = e => {
                    
                                         {fakenotes.map(({ gotchaSeconds, notetext, notetitle}) => (
                                             
-                                                /*<div>
-                                                <span>Title: {notetitle}  </span> 
-                                                <span>Text: {notetext}  </span>
-                                                <span>Time: {Math.floor(gotchaSeconds/60)}:{Math.floor(gotchaSeconds - (Math.floor(gotchaSeconds/60)) * 60)}  </span>
-                                                <Button
-                                                className="remove-btn"
-                                                color="danger"
-                                                size="sm"
-                                                onClick={() => this.setSeekToPlay(gotchaSeconds)}
-                                                >SeekTo</Button>
-                                                </div>*/
-
                                                 <div>
                                                     <Card className='NotesCards'>    
                                                         <FormGroup row>
@@ -543,7 +522,6 @@ validateUrl = e => {
                                                                 </Col>
                                                         </FormGroup>
                                                                 <div className='optionnotes'>
-                                                                    {/*<Button sm={2} onClick={() => this.deleteNote(_id)}>&#10799;</Button>*/}
                                                                     <Button sm={2} onClick={() => this.setSeekToPlay(gotchaSeconds)}>&#9654;</Button>
                                                                 </div>
                                                     </Card>    
