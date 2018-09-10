@@ -1,0 +1,55 @@
+.Header
+  max-width: 1010px
+  margin: 0px auto
+  padding: 20px
+  display: grid
+  grid-template-columns: 2fr 1.5fr 2fr
+
+  &-logoLink
+    display: grid
+    grid-template-columns: 50px 1fr
+
+  &-iconLogo
+    background-image: url("logo-icon.png")
+    background-size: 45px
+    display: block
+    width: 45px
+    height: 45px
+    background-repeat: no-repeat
+
+  &-logo
+    background-image: url("logo.png")
+    background-size: 100%
+    display: block
+    width: 130px
+    height: 100%
+    background-repeat: no-repeat
+    background-position-y: 70%
+
+  &-searchWrapper
+    display: flex
+    align-items: center
+
+  &-search
+    display: block
+    padding: 7px
+    border-radius: 3px
+    background-color: #fafafa
+    border: 1px solid #dbdbdb
+    font-size: 1rem
+    width: 100%
+    text-align: center
+
+    &:focus
+      outline: none
+
+  &-nav
+    display: flex
+    align-items: center
+    justify-content: flex-end
+
+  &-navIcon
+    color: #272727
+    margin-left: 20px
+    margin-right: 20px
+    font-size: 1.6em

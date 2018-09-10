@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 import logic from '../logic'
-import WallPostItem from '../components/WallPostItem';
 import Header from '../components/Header';
+import Avatar from '../components/Avatar/Avatar';
+import GridPost from '../components/GridPost/GridPost';
 
 class WallPage extends Component {
 
@@ -29,20 +30,36 @@ class WallPage extends Component {
   }
 
   render() {
+    const { user } = this.state
     return (
       <div>
-        <Header />
-        {
-          this.state.posts && this.state.posts.map((post) =>
-            (
-              <WallPostItem
-                key={post._id}
-                post={post}
-                onPostDetailClick={this.handlePostDetailClick}
-              />
-            )
-          )
-        }
+        <div className="header-wrapper">
+          <Header />
+        </div>
+        <div className="main-wrapper">
+          <main>
+            <section>
+              {
+                this.state.posts && this.state.posts.map((post) =>
+                  (
+                    <GridPost
+                      key={post._id}
+                      post={post}
+                      onPostDetailClick={this.handlePostDetailClick}
+                    />
+                  )
+                )
+              }
+            </section>
+            <section>
+              {user && <Avatar
+                username={user.username}
+                name={user.name}
+                imageUrl={user.imageUrl}
+              />}
+            </section>
+          </main>
+        </div>
       </div>
     )
   }

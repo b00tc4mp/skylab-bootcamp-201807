@@ -8,7 +8,8 @@ class ProfilePage extends Component {
 
   state = {
     user: null,
-    posts: []
+    posts: [],
+    isForbidden: true
   }
 
   componentDidMount() {
@@ -30,6 +31,8 @@ class ProfilePage extends Component {
         }
       })
       .then(user => {
+        if (!user.privateAccount) this.setState({ isForbidden: false })
+
         this.setState({ user })
       })
       .then(() => {
@@ -47,10 +50,9 @@ class ProfilePage extends Component {
         }
       })
       .then(posts => {
-        // console.log(posts)
         this.setState({ posts })
       })
-      .catch(err => console.log(err))
+      .catch(({ message }) => console.log(message))
   }
 
   goToEditProfile = () => {
@@ -64,11 +66,12 @@ class ProfilePage extends Component {
 
   render() {
     const { username, loggedInUsername } = this.props
+
     return (
       <div>
         <div>
           {
-            this.state.user && (
+            this.state.user && this.state.posts && (
               <Profile
                 user={this.state.user}
                 editProfile={loggedInUsername === username}
@@ -77,13 +80,18 @@ class ProfilePage extends Component {
             )
           }
         </div>
+        <h2>Posts Section</h2>
         <div>
-          {this.state.posts && (
-            <PostList
-              posts={this.state.posts}
-              onPostClick={this.handlePostClick}
-            />
-          )}
+          {this.state.isForbidden ? (
+            <div>This Account is Private</div>
+          ) : (
+              this.state.posts && (
+                <PostList
+                  posts={this.state.posts}
+                  onPostClick={this.handlePostClick}
+                />
+              )
+            )}
         </div>
       </div>
     )

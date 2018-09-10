@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 // import logic from '../logic'
+import './Header.sass'
 
 class Header extends Component {
 
@@ -41,7 +42,7 @@ class Header extends Component {
 
   goToProfile = event => {
     event.preventDefault()
-    
+
     this.props.history.push(`/giodelabarrera`)
 
     // if (this.props.location.pathname !== `/profile/${logic.userId}`)
@@ -55,14 +56,27 @@ class Header extends Component {
 
   render() {
     return (
-      <header>
-        <span>Logo</span>
-        <input type="text" placeholder="search" />
-        <ul>
-          <li><a href="#/" onClick={this.goToNewPost}>New Post</a></li>
-          <li><a href="#/" onClick={this.goToExplore}>Explore</a></li>
-          <li><a href="#/" onClick={this.goToProfile}>Profile</a></li>
-        </ul>
+      <header className="Header">
+        <div className="Header-logoWrapper">
+          <a href="#/" className="Header-logoLink">
+            <span className="Header-iconLogo"></span>
+            <span className="Header-logo"></span>
+          </a>
+        </div>
+        <div className="Header-searchWrapper">
+          <input className="Header-search" type="text" placeholder="Search" />
+        </div>
+        <div className="Header-nav">
+          <a className="Header-navLink" href="#/" onClick={this.goToNewPost}>
+            <i className="Header-navIcon far fa-plus-square"></i>
+          </a>
+          <a className="Header-navLink" href="#/" onClick={this.goToExplore}>
+            <i className="Header-navIcon far fa-compass"></i>
+          </a>
+          <a className="Header-navLink" href="#/" onClick={this.goToProfile}>
+            <i className="Header-navIcon far fa-user"></i>
+          </a>
+        </div>
       </header>
     )
   }

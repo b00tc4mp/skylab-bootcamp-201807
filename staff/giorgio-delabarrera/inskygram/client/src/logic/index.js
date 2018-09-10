@@ -209,11 +209,13 @@ const logic = {
           this._validateStringField('token', token)
 
           return this._httpClient(`me/posts`, 'GET', { authorization: `bearer ${token}` }, undefined, 200)
+            .then(res => res.json())
 
         } else if (!username && targetUsername) {
           this._validateStringField('target username', targetUsername)
 
           return this._httpClient(`users/${targetUsername}/posts`, 'GET', undefined, undefined, 200)
+            .then(res => res.json())
 
         } else {
           this._validateStringField('username', username)
@@ -221,9 +223,9 @@ const logic = {
           this._validateStringField('token', token)
 
           return this._httpClient(`users/${targetUsername}/posts`, 'GET', { authorization: `bearer ${token}` }, undefined, 200)
+            .then(res => res.json())
         }
       })
-      .then(res => res.json())
   },
 
   listUserWall(token, username, perPage = 10, page = 0) {

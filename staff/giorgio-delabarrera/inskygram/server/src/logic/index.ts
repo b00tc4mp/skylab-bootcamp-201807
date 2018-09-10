@@ -116,6 +116,10 @@ const logic = {
                 __v: 0,
               });
             });
+            // .then((user: UserModelInterface) => {
+            //   console.log(user);
+            //   return user;
+            // });
         }
       });
   },
@@ -322,7 +326,7 @@ const logic = {
               targetUser = _targetUser;
 
               if (targetUser.privateAccount) {
-                this._isFollowingUser(user, targetUser)
+                return this._isFollowingUser(user, targetUser)
                   .then((isFollowingUser: boolean) => {
                     if (isFollowingUser) {
                       return User.find({ "followings.user": targetUser._id }, { password: 0, __v: 0 })
@@ -389,7 +393,7 @@ const logic = {
               targetUser = _targetUser;
 
               if (targetUser.privateAccount) {
-                this._isFollowingUser(user, targetUser)
+                return this._isFollowingUser(user, targetUser)
                   .then((isFollowingUser: boolean) => {
                     if (isFollowingUser) {
                       return User.find({ "followers.user": targetUser._id }, { password: 0, __v: 0 })
@@ -488,7 +492,7 @@ const logic = {
             .populate("likes");
         } else {
           if (targetUser.privateAccount) {
-            this._isFollowingUser(user, targetUser)
+            return this._isFollowingUser(user, targetUser)
               .then((isFollowingUser: boolean) => {
                 if (isFollowingUser) {
                   return Post.findById(postId)
@@ -564,7 +568,7 @@ const logic = {
               targetUser = _targetUser;
 
               if (targetUser.privateAccount) {
-                this._isFollowingUser(user, targetUser)
+                return this._isFollowingUser(user, targetUser)
                   .then((isFollowingUser: boolean) => {
                     if (isFollowingUser) {
                       return Post.find({ user: targetUser._id })
@@ -644,7 +648,7 @@ const logic = {
               targetUser = _targetUser;
 
               if (targetUser.privateAccount) {
-                this._isFollowingUser(user, targetUser)
+                return this._isFollowingUser(user, targetUser)
                   .then((isFollowingUser: boolean) => {
                     if (isFollowingUser) {
                       const postsId = targetUser.savedPosts.map(savedPost => savedPost.post);
