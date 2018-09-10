@@ -16,7 +16,8 @@ class App extends Component {
     code: sessionStorage.getItem('code') || '',
     id: sessionStorage.getItem('id') || '',
     token: sessionStorage.getItem('token') || '',
-    dni: sessionStorage.getItem('dni') || ''
+    patientDni: sessionStorage.getItem('patient dni') || '',
+    caretakerDni: sessionStorage.getItem('caretaker dni') || ''
   }
 
   onLoggedIn = (code, id, token) => {
@@ -47,9 +48,9 @@ class App extends Component {
 
   goToAddPatient = () => this.props.history.push('/addpatient')
 
-  patientData = dni => {
-    this.setState({ dni })
-    sessionStorage.setItem('dni', dni)
+  patientData = patientDni => {
+    this.setState({ patientDni })
+    sessionStorage.setItem('patient dni', patientDni)
   }
 
   removePatient = dni => {
@@ -63,14 +64,14 @@ class App extends Component {
 
   goToAddCaretaker = () => this.props.history.push('/addcaretaker')
 
-  caretakerData = dni => {
-    this.setState({ dni })
-    sessionStorage.setItem('dni', dni)
+  caretakerData = caretakerDni => {
+    this.setState({ caretakerDni })
+    sessionStorage.setItem('caretaker dni', caretakerDni)
   }
 
 
   render() {
-    const { state: { dni, id, token }, onLoggedIn, onLogout, listPatients, goToAddPatient, patientData, removePatient, goToAddCaretaker, caretakerData } = this
+    const { state: { caretakerDni, patientDni, id, token }, onLoggedIn, onLogout, listPatients, goToAddPatient, patientData, removePatient, goToAddCaretaker, caretakerData } = this
 
     return <div>
 
@@ -93,11 +94,11 @@ class App extends Component {
               <Route exact path="/" render={() => this.isLoggedIn() ? <Redirect to="/patients" /> : <Login onLoggedIn={onLoggedIn} />} />
               <Route path="/patients" render={() => this.isLoggedIn() ? <Patients goToAddPatient={goToAddPatient} patientData={patientData} removePatient={removePatient}/> : <Redirect to="/" />} />
               <Route path="/addpatient" render={() => this.isLoggedIn() ? <AddPatient id={id} token={token}/> : <Redirect to="/" />} />
-              <Route path="/patient/:dni" render={() => this.isLoggedIn() ? <PatientData dni={dni} id={id} token={token}/> : <Redirect to="/" />} />
+              <Route path="/patient/:dni" render={() => this.isLoggedIn() ? <PatientData patientDni={patientDni} id={id} token={token}/> : <Redirect to="/" />} />
               <Route path="/doctors" render={() => this.isLoggedIn() ? <Doctors id={id} token={token}/> : <Redirect to="/" />} />
               <Route path="/caretakers" render={() => this.isLoggedIn() ? <Caretakers goToAddCaretaker={goToAddCaretaker} caretakerData={caretakerData} id={id} token={token}/> : <Redirect to="/" />} />
               <Route path="/addcaretaker" render={() => this.isLoggedIn() ? <AddCaretaker id={id} token={token}/> : <Redirect to="/" />} />
-              <Route path="/caretaker/:dni" render={() => this.isLoggedIn() ? <CaretakerData dni={dni} id={id} token={token}/> : <Redirect to="/" />} />
+              <Route path="/caretaker/:dni" render={() => this.isLoggedIn() ? <CaretakerData caretakerDni={caretakerDni} id={id} token={token} patientData={patientData}/> : <Redirect to="/" />} />
             </Switch>
     </div>
   }

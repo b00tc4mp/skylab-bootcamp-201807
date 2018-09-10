@@ -10,14 +10,16 @@ import './styles/css/app.css'
 class App extends Component {
   state = {
     code: sessionStorage.getItem('code') || '',
+    id: sessionStorage.getItem('id') || '',
     token: sessionStorage.getItem('token') || '',
     dni: sessionStorage.getItem('dni') || ''
   }
 
-  onLoggedIn = (code, token) => {
-    this.setState({ code, token })
+  onLoggedIn = (code, id, token) => {
+    this.setState({ code, id, token })
 
     sessionStorage.setItem('code', code)
+    sessionStorage.setItem('id', id)
     sessionStorage.setItem('token', token)
 
     this.props.history.push('/patients')
@@ -29,7 +31,7 @@ class App extends Component {
 
   onLogout = e => {
     e.preventDefault()
-    this.setState({ code: '', token: '' })
+    this.setState({ code: '', id: '', token: '' })
     sessionStorage.clear()
     this.props.history.push('/')
   }

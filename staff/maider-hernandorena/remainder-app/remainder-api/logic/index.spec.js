@@ -2310,12 +2310,8 @@ describe('logic', () => {
 
         beforeEach(() => {
             const dni = caretakerDni
-            debugger
             return Caretaker.create({ dni, password })
-                .then(() => {
-                    debugger
-                    return Patient.create(patient)
-                })
+                .then(() => Patient.create(patient))
         })
 
         it('should assign correctly patients to caretaker', () => 
@@ -2380,6 +2376,90 @@ describe('logic', () => {
 
         it('should fail on trying to assign with a string dni', () =>
             logic.assignPatientToCaretaker(caretakerDni, '123')
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`invalid patient dni`))
+        )
+    })
+
+    true && describe('unassign patient to caretaker', () => {
+
+        const caretakerDni = 11223344
+        const password = `123-${Math.random()}`
+        
+        const patient = { name: 'Pepe', dni: 12345678, surname: 'Doe', age: 78 , gender: 'male', address: 'Barcelona', phone: 123123123}
+        const patientDni = 12345678
+
+        beforeEach(() => {
+            const dni = caretakerDni
+            return Caretaker.create({ dni, password })
+                .then(() => Patient.create(patient))
+        })
+
+        it('should unassign correctly patients to caretaker', () => 
+            logic.assignPatientToCaretaker(caretakerDni, patientDni)
+                .then(res => {
+                    expect(res).to.be.true
+
+                    const dni = caretakerDni
+                    return Caretaker.findOne({ dni })
+                })
+                .then(caretaker => {
+                    expect(caretaker.patients).to.exist
+                    expect(caretaker.patients[0]._id).to.exist
+                    
+                    return logic.unassignPatientToCaretaker(caretakerDni, patientDni)
+                })
+                .then(res => expect(res).to.be.true)
+        )
+
+        it('should fail on unassigning patients to a non existing caretaker', () => {
+            const falseDni = 11220000
+            
+            return logic.unassignPatientToCaretaker(falseDni, patientDni)
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`caretaker with ${falseDni} dni does not exist`))
+        })
+
+        it('should fail on unassigning a non existing patient to a caretaker', () => {
+            const falseDni = 11220000
+            
+            return logic.unassignPatientToCaretaker(caretakerDni, falseDni)
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`patient with ${falseDni} dni does not exist`))
+        })
+
+        it('should fail on trying to unassign with an undefined dni', () =>
+            logic.unassignPatientToCaretaker(undefined, patientDni)
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`invalid caretaker dni`))
+        )
+
+        it('should fail on trying to unassign with an empty dni', () =>
+            logic.unassignPatientToCaretaker('', patientDni)
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`invalid caretaker dni`))
+        )
+
+        it('should fail on trying to unassign with a string dni', () =>
+            logic.unassignPatientToCaretaker('123', patientDni)
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`invalid caretaker dni`))
+        )
+
+        it('should fail on trying to unassign with an undefined dni', () =>
+            logic.unassignPatientToCaretaker(caretakerDni, undefined)
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`invalid patient dni`))
+        )
+
+        it('should fail on trying to unassign with an empty dni', () =>
+            logic.unassignPatientToCaretaker(caretakerDni, '')
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`invalid patient dni`))
+        )
+
+        it('should fail on trying to unassign with a string dni', () =>
+            logic.unassignPatientToCaretaker(caretakerDni, '123')
                 .catch(err => err)
                 .then(({ message }) => expect(message).to.equal(`invalid patient dni`))
         )

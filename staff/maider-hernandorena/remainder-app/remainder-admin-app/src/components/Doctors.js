@@ -59,12 +59,12 @@ class Doctors extends Component {
                 </form>
             </div>
             <div className="doctors__group">
-                <h2 className="doctors__group__title">doctors</h2>
+                <h2 className="doctors__group__title">Doctors</h2>
                 <div className="doctors__group__all">
                     <ul className="doctors__group__all__list">
                         {doctors.map(doctor => <li className="doctors__group__all__list__item" key={doctor.code} >
                             <p><strong>{doctor.code}</strong></p>
-                            <button onClick={() => removeDoctor(doctor.code)} href="">Delete</button>
+                            <button onClick={() => removeDoctor(doctor.code)} href="">Delete Doctor</button>
                         </li> )}
                     </ul>
                 </div>

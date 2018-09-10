@@ -318,5 +318,44 @@ router.patch('/:id/assign-patients', [verifyJwt, jsonBodyParser], (req, res) => 
         })
 })
 
+/**
+ * Unassign patients from caretakers
+ * Needs admin token
+ * 
+ * @throws {LogicError} Message of status
+ * 
+ * @returns {Response} Message 'patient unassigned correctly to caretaker'
+ */
+router.patch('/:id/unassign-patients', [verifyJwt, jsonBodyParser], (req, res) => {
+    const { params: { id }, body: { caretakerDni, patientDni } } = req
+
+    logic.unassignPatientToCaretaker(caretakerDni, patientDni)
+        .then(() => res.status(200).json({ message: 'patient unassigned correctly to caretaker' }))
+        .catch(err => {
+            const { message } = err
+            res.status(err instanceof LogicError ? 400 : 500).json({ message })
+        })
+})
+
+/**
+ * To return the patient the caretaker has
+ * 
+ * @throws {LogicError} Message of status
+ * 
+ * @returns {Response} Patient data
+ */
+router.get('/:dni/patients', jsonBodyParser, (req, res) => {
+    let { params: { dni } } = req
+    
+    dni = parseInt(dni)
+
+    logic.retrieveCaretakerPatients(dni)
+        .then(patients => res.json(patients))
+        .catch(err => {
+            const { message } = err
+            res.status(err instanceof LogicError ? 400 : 500).json({ message })
+        })
+})
+
 
 module.exports = router

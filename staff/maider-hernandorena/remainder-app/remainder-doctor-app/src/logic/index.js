@@ -94,7 +94,7 @@ const logic = {
      * @param {String} code //doctors code
      * @param {String} password //doctors password
      * 
-     * @returns {Object} doctors id and token
+     * @returns {Object} doctors message, id and token
      */
     authenticateDoctor(code, password) {
         return Promise.resolve()
@@ -104,7 +104,7 @@ const logic = {
 
                 return this._call('auth', 'post', {'Content-Type': 'application/json'}, JSON.stringify({ code, password }), 200)
                     .then(res => res.json())
-                    .then(({ id, token }) => {id, token})
+                    .then(res => res)
             })
     },
 

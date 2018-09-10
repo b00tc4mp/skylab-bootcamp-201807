@@ -396,7 +396,46 @@ const logic = {
                     .then(res => res.json())
                     .then(res => res)
             })
+    },
+
+    /**
+     * Unssign a patient to a caretaker
+     * @param {Number} caretakerDni //caretakers dni
+     * @param {Number} patientDni //patients dni
+     * @param {String} id //admin id for authorization
+     * @param {String} token //admin token for authorization
+     * 
+     * @returns {Object} Message of okey
+     */
+    unassignPatientToCaretaker(caretakerDni, patientDni, id, token) {
+        return Promise.resolve()
+            .then(() => {
+                this._validateDniField('caretaker dni', caretakerDni)
+                this._validateDniField('patient dni', patientDni)
+
+                return this._call(`${id}/unassign-patients`, 'PATCH', {'Content-Type': 'application/json', authorization: `bearer ${token}` }, JSON.stringify({ caretakerDni, patientDni }), 200)
+                    .then(res => res.json())
+                    .then(res => res)
+            })
+    },
+
+    /**
+     * Caretakers patient 
+     * @param {Number} dni //caretakers dni
+     * 
+     * @returns {Response} caretakers patient data
+     */
+    retrieveCaretakerPatients(dni) {
+        return Promise.resolve()
+            .then(() => {
+                this._validateDniField('dni', dni)
+
+                return this._call(`${dni}/patients`, 'get', {'Content-Type': 'application/json'}, undefined, 200)
+                    .then(res => res.json())
+                    .then(patient => patient)
+            })
     }
 }
+
 
 module.exports = logic

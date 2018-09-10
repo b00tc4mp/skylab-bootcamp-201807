@@ -348,6 +348,58 @@
 					"name": "Caretakers",
 					"item": [
 						{
+							"name": "Patients",
+							"item": [
+								{
+									"name": "Patient Data",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"body": {},
+										"url": {
+											"raw": "http://localhost:8080/api/doctor/patient/11112222",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api",
+												"doctor",
+												"patient",
+												"11112222"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Caretakers Patient",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"body": {},
+										"url": {
+											"raw": "http://localhost:8080/api/caretaker/99998888/patients",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api",
+												"caretaker",
+												"99998888",
+												"patients"
+											]
+										}
+									},
+									"response": []
+								}
+							],
+							"_postman_isSubFolder": true
+						},
+						{
 							"name": "Register Caretaker",
 							"request": {
 								"auth": {
@@ -476,6 +528,47 @@
 						},
 						{
 							"name": "Assign Patients",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1YjkyNGNlMmUxZWFhOTc1MDQxMjYxYjgiLCJpYXQiOjE1MzYzMTQ4NDQsImV4cCI6MTUzNjM1ODA0NH0.S4TdU_xcONqK00VgqwdY7H4jhDfeBN6G3jivxS-6-TQ",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"caretakerDni\": 99998888,\n\t\"patientDni\": 11112222\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/admin/5b924ce2e1eaa975041261b8/assign-patients",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"admin",
+										"5b924ce2e1eaa975041261b8",
+										"assign-patients"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Unassign Patients",
 							"request": {
 								"auth": {
 									"type": "bearer",
@@ -946,6 +1039,29 @@
 										"caretaker",
 										"99998888",
 										"patients"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Patient Data",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {},
+								"url": {
+									"raw": "http://localhost:8080/api/doctor/patient/11112222",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"doctor",
+										"patient",
+										"11112222"
 									]
 								}
 							},

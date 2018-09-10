@@ -741,7 +741,7 @@ const logic = {
         return Promise.resolve()
             .then(() => {
                 this._validateDniField('dni', dni)
-
+                debugger
                 return Patient.findOne({ dni })
             })
             .then(patient => {
@@ -896,6 +896,40 @@ const logic = {
                         if (!patient) throw new LogicError(`patient with ${patientDni} dni does not exist`)
 
                         return Caretaker.updateOne({ _id: caretaker._id }, { $addToSet: { patients: patient } })
+                    })
+            })
+            .then(() => true)
+    },
+
+    /**
+     * Unassign a patient from his/her caretaker
+     * @param {Number} caretakerDni //caretakers dni
+     * @param {Number} patientDni //patients dni
+     * 
+     * @throws {LogicError} if caretaker does not exist
+     * @throws {LogicError} if patient does not exist
+     * 
+     * @returns {boolean} TRUE => if patient is unassigned to caretaker correctly
+     */
+    unassignPatientToCaretaker(caretakerDni, patientDni) {
+        return Promise.resolve()
+            .then(() => {
+                this._validateDniField('caretaker dni', caretakerDni)
+                this._validateDniField('patient dni', patientDni)
+
+                const dni = caretakerDni
+
+                return Caretaker.findOne({ dni })
+            })
+            .then(caretaker => {
+                if (!caretaker) throw new LogicError(`caretaker with ${caretakerDni} dni does not exist`)
+                const dni = patientDni
+
+                return Patient.findOne({ dni })
+                    .then(patient => {
+                        if (!patient) throw new LogicError(`patient with ${patientDni} dni does not exist`)
+
+                        return Caretaker.updateOne({ _id: caretaker._id }, { $pull: { patients: patient._id } })
                     })
             })
             .then(() => true)

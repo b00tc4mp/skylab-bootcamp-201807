@@ -6,10 +6,18 @@ require('isomorphic-fetch')
 const { expect } = require('chai')
 const logic = require('.')
 const jwt = require('jsonwebtoken')
+const { env: { MONGO_URL, JWT_SECRET } } = process
+const { mongoose, models: { Doctor, Patient, Cite, Caretaker, Treatment } } = require('remainder-data')
 
 describe('logic', () => {
+    let _connection
 
-    let code, password, name, surname, age, gender, address, phone, dni, newAddress, newPhone, date, pill, quantity, frequency
+    before(() =>
+        mongoose.connect(MONGO_URL, { useNewUrlParser: true })
+            .then(conn => _connection = conn)
+    )
+
+    let code, password, name, surname, age, gender, address, phone, dni, date, pill, quantity, frequency
 
     beforeEach(() => { 
         code = `Maider${Math.random()}`
@@ -21,12 +29,12 @@ describe('logic', () => {
         address = 'Barcelona' 
         phone = 123123123
         dni = Math.floor(10000000 + Math.random() * 90000000)
-        newAddress = 'Paris'
-        newPhone = 789789789
         date = new Date()
         pill = `atarax${Math.random()}`
         quantity = `1-${Math.random()}`
         frequency = 'mondays, fridays'
+
+        Promise.all([Doctor.deleteMany(), Patient.deleteMany(), Treatment.deleteMany(), Cite.deleteMany(), Caretaker.deleteMany()])
     })
 
     true && describe('validate fields', () => {
@@ -95,30 +103,25 @@ describe('logic', () => {
 
     true && describe('authenticate doctor', () => {
 
+        beforeEach(() => Doctor.create({ code, password }))
+
         it('should authenticate doctor correctly', () => 
-            logic.registerDoctor(code, password)
-                .then(() => {
-                    logic.authenticateDoctor(code, password)
-                        .then(({ id, token })=> {
-                            expect(id).to.exist
-                            expect(token).to.exist
-        
-                            let payload
-        
-                            expect(() => payload = jwt.verify(token, jwt_secret)).not.to.throw()
-                            expect(payload.sub).to.equal(id)
-                        })
+            logic.authenticateDoctor(code, password)
+                .then(({ id, token }) => {
+                    expect(id).to.exist
+                    expect(token).to.exist
+
+                    let payload
+
+                    expect(() => payload = jwt.verify(token, JWT_SECRET)).not.to.throw()
+                    expect(payload.sub).to.equal(id)
                 })
         )
 
         it('should fail on authenticating with a wrong password', () => {
             const falsePass = '123'
         
-            logic.registerDoctor(code, password)
-                .then(res => {
-                    expect(res).to.be.true
-                    return logic.authenticateDoctor(code, falsePass)
-                })
+            logic.authenticateDoctor(code, falsePass)
                 .catch(err => err)
                 .then(({message}) => expect(message).to.equal(`wrong password`))
         })
@@ -162,12 +165,10 @@ describe('logic', () => {
 
     true && describe('return patient data', () => {
 
+        beforeEach(() => Patient.create({name, dni, surname, age, gender, address, phone}))
+
         it('should be return correctly the patient data', () => 
-            logic.addPatient(name, dni, surname, age, gender, address, phone)                
-                .then(res => {
-                    expect(res).to.exist
-                    return logic.patientData(dni)
-                })
+            logic.patientData(dni)
                 .then(patient => {
                     expect(patient).to.exist
                     expect(patient.name).to.equal(name)
@@ -201,13 +202,10 @@ describe('logic', () => {
 
     true && describe('search and list patients by name', () => {
 
-        true && it('should succeed on correct data', () => 
-            logic.addPatient(name, dni, surname, age, gender, address, phone)
-                .then(res => {
-                    expect(res).to.exist
+        beforeEach(() => Patient.create({name, dni, surname, age, gender, address, phone}))
 
-                    return logic.searchPatients(name)
-                })
+        true && it('should succeed on correct data', () => 
+            logic.searchPatients(name)
                 .then(patients => {
                     expect(patients[0].name).to.equal(name)
                     expect(patients[0].dni).to.equal(dni)
@@ -240,13 +238,10 @@ describe('logic', () => {
 
     true && describe('list all patients', () => {
 
-        true && it('should succeed on correct data', () => 
-            logic.addPatient(name, dni, surname, age, gender, address, phone)
-                .then(res => {
-                    expect(res).to.exist
+        beforeEach(() => Patient.create({name, dni, surname, age, gender, address, phone}))
 
-                    return logic.listPatients()
-                })
+        true && it('should succeed on correct data', () => 
+            logic.listPatients()
                 .then(patients => {
                     expect(patients).to.exist
                 })
@@ -258,7 +253,7 @@ describe('logic', () => {
         let id
 
         beforeEach(() => 
-            logic.addPatient(name, dni, surname, age, gender, address, phone)                
+            Patient.create({name, dni, surname, age, gender, address, phone})               
                 .then(res => {
                     id = res.id
                     return true
@@ -372,7 +367,7 @@ describe('logic', () => {
         let id
 
         beforeEach(() => 
-            logic.addPatient(name, dni, surname, age, gender, address, phone)                
+            Patient.create({name, dni, surname, age, gender, address, phone})               
                 .then(res => {
                     id = res.id
                     return logic.addTreatment(id, dni, pill, quantity, frequency)
@@ -444,7 +439,7 @@ describe('logic', () => {
         let id
 
         beforeEach(() => 
-            logic.addPatient(name, dni, surname, age, gender, address, phone)                
+            Patient.create({name, dni, surname, age, gender, address, phone})               
                 .then(res => {
                     id = res.id
                     return logic.addTreatment(id, dni, pill, quantity, frequency)
@@ -483,12 +478,10 @@ describe('logic', () => {
     true && describe('add cite', () => {
 
         beforeEach(() => 
-            logic.registerDoctor(code, password)
-                .then(res => {
-                    expect(res).to.be.true
-
-                    return logic.addPatient(name, dni, surname, age, gender, address, phone)                
-                })
+            Doctor.create({ code, password })
+                .then(() => 
+                    Patient.create({name, dni, surname, age, gender, address, phone})               
+                )
         )
 
         it('should add cite correctly', () => 
@@ -578,12 +571,10 @@ describe('logic', () => {
     true && describe('remove cite', () => {
 
         beforeEach(() => 
-            logic.registerDoctor(code, password)
-                .then(res => {
-                    expect(res).to.be.true
-
-                    return logic.addPatient(name, dni, surname, age, gender, address, phone)                
-                })
+            Doctor.create({ code, password })
+                .then(() => 
+                    Patient.create({name, dni, surname, age, gender, address, phone})               
+                )
                 .then(res => {
                     expect(res).to.exist
 
@@ -678,12 +669,10 @@ describe('logic', () => {
     true && describe('list cites by date', () => {
 
         beforeEach(() => 
-            logic.registerDoctor(code, password)
-                .then(res => {
-                    expect(res).to.be.true
-
-                    return logic.addPatient(name, dni, surname, age, gender, address, phone)                
-                })
+            Doctor.create({ code, password })
+                .then(() => 
+                    Patient.create({name, dni, surname, age, gender, address, phone})               
+                )
                 .then(res => {
                     expect(res).to.exist
 
@@ -730,12 +719,10 @@ describe('logic', () => {
         let id
 
         beforeEach(() => 
-            logic.registerDoctor(code, password)
-                .then(res => {
-                    expect(res).to.be.true
-
-                    return logic.addPatient(name, dni, surname, age, gender, address, phone)                
-                })
+            Doctor.create({ code, password })
+                .then(() => 
+                    Patient.create({name, dni, surname, age, gender, address, phone})               
+                )
                 .then(res => {
                     expect(res).to.exist
 
@@ -796,4 +783,9 @@ describe('logic', () => {
                 .then(({ message }) => expect(message).to.equal(`invalid date`))
         )
     })
+
+    after(() =>
+        Promise.all([Doctor.deleteMany(), Patient.deleteMany(), Treatment.deleteMany(), Cite.deleteMany(), Caretaker.deleteMany()])
+            .then(() => _connection.disconnect())
+    )
 })

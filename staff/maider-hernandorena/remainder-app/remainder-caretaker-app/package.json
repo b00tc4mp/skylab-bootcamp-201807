@@ -8,7 +8,9 @@
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.3.1",
     "react-scripts": "1.1.4",
-    "remainder-data": "file:../remainder-data"
+    "remainder-data": "file:../remainder-data",
+    "serve": "^10.0.0",
+    "server": "^1.0.18"
   },
   "devDependencies": {
     "chai": "^4.1.2",

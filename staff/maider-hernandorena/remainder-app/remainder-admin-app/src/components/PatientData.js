@@ -22,8 +22,8 @@ class PatientData extends Component {
     }
 
     patientData = () => {
-        let { dni } = this.props
-        dni = parseInt(dni)
+        let { patientDni } = this.props
+        const dni = parseInt(patientDni)
 
         logic.patientData(dni)
             .then(patient => {

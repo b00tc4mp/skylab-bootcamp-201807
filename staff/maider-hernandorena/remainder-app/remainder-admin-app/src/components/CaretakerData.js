@@ -4,6 +4,7 @@ import logic from '../logic'
 class CaretakerData extends Component {
 
     state = {
+        patients: [],
         name: '',
         surname: '',
         dni: null,
@@ -21,8 +22,8 @@ class CaretakerData extends Component {
     }
 
     caretakerData = () => {
-        let { dni } = this.props
-        dni = parseInt(dni)
+        let { caretakerDni } = this.props
+        const dni = parseInt(caretakerDni)
 
         logic.caretakerData(dni)
             .then(caretaker => {
@@ -37,6 +38,7 @@ class CaretakerData extends Component {
                     id: id.toString()
                 })
             })
+            .then(() => this.retrieveCaretakerPatients())
     }
 
     keepPatientDni = e => this.setState({ patientDni: e.target.value, error: '', added: '' })
@@ -51,13 +53,40 @@ class CaretakerData extends Component {
         
         logic.assignPatientToCaretaker(caretakerDni, patientDni, id, token)
             .then(({ message }) => this.setState({ added: message, error: '' }))
+            .then(() => this.retrieveCaretakerPatients())
             .catch(({ message }) => this.setState({ error: message, added: '' }))
+    }
+
+    unassignPatient = patientDni => {
+        let { dni } = this.state
+        const { id, token } = this.props
+
+        const caretakerDni = parseInt(dni)
+        patientDni = parseInt(patientDni)
+        
+        logic.unassignPatientToCaretaker(caretakerDni, patientDni, id, token)
+            .then(() => this.retrieveCaretakerPatients())
+            .catch(({ message }) => this.setState({ error: message, added: '' }))
+    }
+
+    retrieveCaretakerPatients = () => {
+        let { dni } = this.state
+
+        dni = parseInt(dni)
+
+        logic.retrieveCaretakerPatients(dni)
+            .then(patients => this.setState({ patients }))
+            .catch(({ message }) => this.setState({ error: message }))
+    }
+
+    patientData = dni => {
+        this.props.patientData(dni)
     }
 
 
     render() {
 
-        const { state: { name, surname, age, gender, dni, phone, patientDni, added, error }, keepPatientDni, assignPatient } = this
+        const { state: { patients, name, surname, age, gender, dni, phone, patientDni, added, error }, keepPatientDni, assignPatient, patientData } = this
 
         return <main className="caretaker">
                 <div className="caretaker__data">
@@ -75,6 +104,14 @@ class CaretakerData extends Component {
                     </form>
                     {added && <p>{added}</p>}
                     {error && <p>{error}</p>}
+                </div>
+                <div>
+                    <ul className="patients__group__all__list">
+                        {patients.map(patient => <li className="patients__group__all__list__item" key={patient.dni} onClick={() => patientData(patient.dni)}>
+                            <a className="patients__group__all__list__item__link" href={`/#/patient/${patient.dni}`}><p><strong>{patient.name} {patient.surname}</strong>. DNI: {patient.dni}. {patient.age} years old, {patient.gender}.</p></a>
+                            <button onClick={() => this.unassignPatient(patient.dni)}>Unassign Patient</button>
+                        </li> )}
+                    </ul>
                 </div>
         </main>
     }
