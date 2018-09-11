@@ -95,8 +95,9 @@ class App extends Component {
 
       this.socket.on(`error ${nickname}`, message => console.error(message))
 
-      this.socket.on(`update to games ${nickname}`, () => {
-        console.log(`%c update to games ${nickname}`, 'background: #222; color: #bada55');
+      this.socket.on(`update to games ${nickname}`, (message) => {
+        message = message || "no message"
+        console.log(`%c update to games ${nickname}, message =${message}`, 'background: #222; color: #bada55');
         this.getCurrentGamesForUser(nickname, token)
 
       })

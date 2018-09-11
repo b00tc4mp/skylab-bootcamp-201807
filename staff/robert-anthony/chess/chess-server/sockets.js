@@ -26,8 +26,8 @@ const socketLogic = {
   announceMoveMade(mover, receiver) {
     logger.debug(`announceMoveMade,  CONTEXT: "sockets.js"", MOVER:${mover}, RECEIVER:${receiver}`)
 
-    this.io.emit(`update to games ${mover}`)
-    this.io.emit(`update to games ${receiver}`)
+   // this.io.emit(`update to games ${mover}`)
+    this.io.emit(`update to games ${receiver}`,mover)
   },
 
   requestConnection(destination) {
