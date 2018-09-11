@@ -5,7 +5,7 @@ class GridPost extends Component {
 
   handlePostDetailClick = event => {
     event.preventDefault()
-    
+
     this.props.onPostDetailClick(this.props.post._id)
   }
 

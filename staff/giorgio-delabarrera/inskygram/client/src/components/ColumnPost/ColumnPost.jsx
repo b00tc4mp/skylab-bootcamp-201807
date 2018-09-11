@@ -3,10 +3,10 @@ import './ColumnPost.sass'
 
 class ColumnPost extends Component {
 
-  handlePostDetailClick = event => {
+  handleUserClick = event => {
     event.preventDefault()
-
-    this.props.onPostDetailClick(this.props.post._id)
+    const { user } = this.props.post
+    this.props.onUserClick(user.username)
   }
 
   render() {
@@ -15,17 +15,19 @@ class ColumnPost extends Component {
       <div className="ColumnPost">
         <section className="ColumnPost-header">
           <div className="ColumnPost-avatarImageWrapper">
-            <img src={post.user.imageUrl} className="ColumnPost-avatarImage" alt={post.user.username} />
+            <a href="#/" onClick={this.handleUserClick}>
+              <img src={post.user.imageUrl} className="ColumnPost-avatarImage" alt={post.user.username} />
+            </a>
           </div>
           <div className="ColumnPost-headerInfo">
-            <h5 className="ColumnPost-username">{post.user.username}</h5>
+            <a href="#/" className="ColumnPost-headerUsernameLink" onClick={this.handleUserClick}>
+              <h5 className="ColumnPost-username">{post.user.username}</h5>
+            </a>
             <span className="ColumnPost-location">Barcelona, Spain</span>
           </div>
         </section>
         <section className="ColumnPost-imageWrapper">
-          {/* <a href="#/" onClick={this.handlePostDetailClick}> */}
           <img src={post.imageUrl} className="ColumnPost-image" alt={post.caption} />
-          {/* </a> */}
         </section>
         <section className="ColumnPost-body">
           <div className="ColumnPost-actions">

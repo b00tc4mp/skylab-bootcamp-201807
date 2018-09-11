@@ -57,8 +57,23 @@ class App extends Component {
       .catch(err => console.log(err))
   }
 
+  onHomeClick = () => {
+    if (this.props.location.pathname === '/') window.location.reload()
+    else this.props.history.push('/')
+  }
+
   onNewPostClick = () => {
     this.setState({ modalContent: <CreationPost onSubmit={this.handleCreationSubmit} /> }, this.openModal())
+  }
+
+  onExploreClick = () => {
+    if (this.props.location.pathname === '/explore') window.location.reload()
+    else this.props.history.push('/explore')
+  }
+
+  onUserInModalClick = username => {
+    this.closeModal()
+    this.props.history.push(`/${username}`)
   }
 
   onPostDetailClick = async (postId) => {
@@ -67,11 +82,22 @@ class App extends Component {
     let post
     try {
       post = await logic.retrievePost(postId, loggedInUsername, token)
-      
-      this.setState({ modalContent: <PostDetail post={post} /> }, this.openModal())
+
+      this.setState({
+        modalContent: (
+          <PostDetail post={post} onUserClick={this.onUserInModalClick} />
+        )
+      }, this.openModal())
     } catch (err) {
       console.log(err)
     }
+  }
+
+  onProfileClick = () => {
+    const profileRoute = `/${this.state.loggedInUsername}`
+
+    if (this.props.location.pathname === profileRoute) window.location.reload()
+    else this.props.history.push(profileRoute)
   }
 
   openModal = () => {
@@ -92,7 +118,10 @@ class App extends Component {
             <WallPage
               loggedInUsername={loggedInUsername}
               token={token}
+              onHomeClick={this.onHomeClick}
+              onExploreClick={this.onExploreClick}
               onNewPostClick={this.onNewPostClick}
+              onProfileClick={this.onProfileClick}
               onPostDetailClick={this.onPostDetailClick}
             />
           )} />
@@ -100,7 +129,10 @@ class App extends Component {
             <ExplorePage
               loggedInUsername={loggedInUsername}
               token={token}
+              onHomeClick={this.onHomeClick}
+              onExploreClick={this.onExploreClick}
               onNewPostClick={this.onNewPostClick}
+              onProfileClick={this.onProfileClick}
               onPostDetailClick={this.onPostDetailClick}
             />
           )} />
@@ -111,7 +143,10 @@ class App extends Component {
             <EditProfilePage
               loggedInUsername={loggedInUsername}
               token={token}
+              onHomeClick={this.onHomeClick}
+              onExploreClick={this.onExploreClick}
               onNewPostClick={this.onNewPostClick}
+              onProfileClick={this.onProfileClick}
             />
           )
           } />
@@ -119,7 +154,10 @@ class App extends Component {
             <ChangePasswordPage
               loggedInUsername={loggedInUsername}
               token={token}
+              onHomeClick={this.onHomeClick}
+              onExploreClick={this.onExploreClick}
               onNewPostClick={this.onNewPostClick}
+              onProfileClick={this.onProfileClick}
             />
           )
           } />
@@ -127,7 +165,10 @@ class App extends Component {
             <PostDetailPage
               postId={props.match.params.id}
               loggedInUsername={loggedInUsername}
+              onHomeClick={this.onHomeClick}
+              onExploreClick={this.onExploreClick}
               onNewPostClick={this.onNewPostClick}
+              onProfileClick={this.onProfileClick}
               token={token}
             />
           )} />
@@ -136,7 +177,10 @@ class App extends Component {
               username={props.match.params.username}
               loggedInUsername={loggedInUsername}
               token={token}
+              onHomeClick={this.onHomeClick}
+              onExploreClick={this.onExploreClick}
               onNewPostClick={this.onNewPostClick}
+              onProfileClick={this.onProfileClick}
               onPostDetailClick={this.onPostDetailClick}
             />
           )} />
@@ -145,7 +189,10 @@ class App extends Component {
               username={props.match.params.username}
               loggedInUsername={loggedInUsername}
               token={token}
+              onHomeClick={this.onHomeClick}
+              onExploreClick={this.onExploreClick}
               onNewPostClick={this.onNewPostClick}
+              onProfileClick={this.onProfileClick}
               onPostDetailClick={this.onPostDetailClick}
             />
           )} />

@@ -70,7 +70,12 @@ class SavedPage extends Component {
 
       <div>
         <div className="header-wrapper">
-          <Header onNewPostClick={this.props.onNewPostClick} />
+          <Header
+            onHomeClick={this.props.onHomeClick}
+            onExploreClick={this.props.onExploreClick}
+            onNewPostClick={this.props.onNewPostClick}
+            onProfileClick={this.props.onProfileClick}
+          />
         </div>
         <div className="main-wrapper">
           <main>

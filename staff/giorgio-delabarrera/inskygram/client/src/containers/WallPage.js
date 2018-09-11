@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom'
 import logic from '../logic'
 import Header from '../components/Header';
 import Avatar from '../components/Avatar/Avatar';
-import ColumnPost from '../components/ColumnPost';
+import ColumnPostList from '../components/ColumnPostList';
 
 class WallPage extends Component {
 
@@ -22,40 +22,39 @@ class WallPage extends Component {
         const posts = [...this.state.posts, ...newPosts]
         this.setState({ posts })
       })
-      .catch(err => console.log(err))
+      // TODO
+      .catch(err => false)
   }
 
-  // handlePostDetailClick = postId => {
-  //   this.props.history.push(`/p/${postId}`)
-  // }
+  onUserClick = username => this.props.history.push(`/${username}`)
 
   render() {
-    const { user } = this.state
+
     return (
       <div>
         <div className="header-wrapper">
-          <Header onNewPostClick={this.props.onNewPostClick} />
+          <Header
+            onHomeClick={this.props.onHomeClick}
+            onExploreClick={this.props.onExploreClick}
+            onNewPostClick={this.props.onNewPostClick}
+            onProfileClick={this.props.onProfileClick}
+          />
         </div>
         <div className="main-wrapper">
           <main className="is-eight-quarters grid-gap-30">
             <section>
-              {
-                this.state.posts && this.state.posts.map((post) =>
-                  (
-                    <ColumnPost
-                      key={post._id}
-                      post={post}
-                      onPostDetailClick={this.props.onPostDetailClick}
-                    />
-                  )
-                )
-              }
+              {<ColumnPostList
+                posts={this.state.posts}
+                onPostDetailClick={this.props.onPostDetailClick}
+                onUserClick={this.onUserClick}
+              />}
             </section>
             <section>
-              {user && <Avatar
-                username={user.username}
-                name={user.name}
-                imageUrl={user.imageUrl}
+              {this.state.user && <Avatar
+                username={this.state.user.username}
+                name={this.state.user.name}
+                imageUrl={this.state.user.imageUrl}
+                onUserClick={this.onUserClick}
               />}
             </section>
           </main>

@@ -14,8 +14,8 @@ class LoginPage extends Component {
     this.props.history.push('/accounts/register')
   }
 
-  handleLoginSubmit = (username, password) => {
-    logic.authenticate(username, password)
+  handleLoginSubmit = async (username, password) => {
+    await logic.authenticate(username, password)
       .then(token => this.props.onLoggedIn(username, token))
       .catch(({ message }) => this.setState({ loginError: `Upps, ${message}` }))
   }

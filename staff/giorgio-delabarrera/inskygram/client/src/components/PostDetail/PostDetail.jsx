@@ -3,14 +3,16 @@ import './PostDetail.sass'
 
 class PostDetail extends Component {
 
+  handleUserClick = event => {
+    event.preventDefault()
+    const { user } = this.props.post
+    this.props.onUserClick(user.username)
+  }
+
   render() {
     const { post } = this.props
 
     return (
-      // <div>
-      //   <img src={post.imageUrl} alt="" width="250" />
-      //   <div>{post.caption}</div>
-      // </div>
       <section className="PostDetail">
         <section className="PostDetail-imageWrapper">
           <img src={post.imageUrl} className="PostDetail-image" alt={post.caption} />
@@ -19,10 +21,14 @@ class PostDetail extends Component {
           <div className="PostDetail-bodyTop">
             <div className="PostDetail-header">
               <div className="PostDetail-avatarImageWrapper">
-                <img src={post.user.imageUrl} className="PostDetail-avatarImage" alt={post.user.username} />
+                <a href="#/" onClick={this.handleUserClick}>
+                  <img src={post.user.imageUrl} className="PostDetail-avatarImage" alt={post.user.username} />
+                </a>
               </div>
               <div className="PostDetail-headerInfo">
-                <h5 className="PostDetail-username">{post.user.username}</h5>
+                <a href="#/" className="PostDetail-usernameLink" onClick={this.handleUserClick}>
+                  <h5 className="PostDetail-username">{post.user.username}</h5>
+                </a>
                 <span className="PostDetail-location">Barcelona, Spain</span>
               </div>
             </div>

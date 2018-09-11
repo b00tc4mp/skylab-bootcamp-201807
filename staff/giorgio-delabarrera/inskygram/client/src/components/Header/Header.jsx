@@ -1,62 +1,26 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
-// import logic from '../logic'
 import './Header.sass'
 
 class Header extends Component {
 
-  // handleSearchSubmit = query => {
-  //   this.props.history.push('/search/photos/' + query)
-  // }
-
-  goToHome = (event) => {
+  handleHomeClick = event => {
     event.preventDefault()
-    if (this.props.location.pathname !== '/')
-      this.props.history.push('/')
+    this.props.onHomeClick()
   }
 
-  // goToLogin = (event) => {
-  //   event.preventDefault()
-  //   if (this.props.location.pathname !== '/login')
-  //     this.props.history.push('/login')
-  // }
-
-  // goToRegister = (event) => {
-  //   event.preventDefault()
-  //   this.props.history.push('/join')
-  // }
-
-  goToNewPost = event => {
+  handleExploreClick = event => {
     event.preventDefault()
-    if (this.props.location.pathname !== '/p/new')
-      this.props.history.push('/p/new')
+    this.props.onExploreClick()
   }
 
-  goToExplore = event => {
+  handleProfileClick = event => {
     event.preventDefault()
-
-    // if (this.props.location.pathname !== `/profile/${logic.userId}`)
-    //   this.props.history.push(`/profile/${logic.userId}`)
-    this.props.history.push('/explore')
+    this.props.onProfileClick()
   }
-
-  goToProfile = event => {
-    event.preventDefault()
-
-    this.props.history.push(`/giodelabarrera`)
-
-    // if (this.props.location.pathname !== `/profile/${logic.userId}`)
-    //   this.props.history.push(`/profile/${logic.userId}`)
-  }
-
-  // handleLogout = (event) => {
-  //   event.preventDefault()
-  //   this.props.history.push('/logout')
-  // }
 
   handleNewPostClick = event => {
     event.preventDefault()
-
     this.props.onNewPostClick()
   }
 
@@ -64,7 +28,7 @@ class Header extends Component {
     return (
       <header className="Header">
         <div className="Header-logoWrapper">
-          <a href="#/" className="Header-logoLink">
+          <a href="#/" className="Header-logoLink" onClick={this.handleHomeClick}>
             <span className="Header-iconLogo"></span>
             <span className="Header-logo"></span>
           </a>
@@ -76,10 +40,10 @@ class Header extends Component {
           <a className="Header-navLink" href="#/" onClick={this.handleNewPostClick}>
             <i className="Header-navIcon far fa-plus-square"></i>
           </a>
-          <a className="Header-navLink" href="#/" onClick={this.goToExplore}>
+          <a className="Header-navLink" href="#/" onClick={this.handleExploreClick}>
             <i className="Header-navIcon far fa-compass"></i>
           </a>
-          <a className="Header-navLink" href="#/" onClick={this.goToProfile}>
+          <a className="Header-navLink" href="#/" onClick={this.handleProfileClick}>
             <i className="Header-navIcon far fa-user"></i>
           </a>
         </div>

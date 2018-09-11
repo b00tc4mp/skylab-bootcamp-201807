@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 import logic from '../logic'
 import Header from '../components/Header';
-import GridPost from '../components/GridPost';
+import GridPostList from '../components/GridPostList';
 
 class ExplorePage extends Component {
 
@@ -21,81 +21,31 @@ class ExplorePage extends Component {
         const posts = [...this.state.posts, ...newPosts]
         this.setState({ posts })
       })
-      .catch(err => console.log(err))
+      // TODO
+      .catch(err => false)
   }
 
-  // handleSearchSubmit = query => {
-  //   this.props.history.push('/search/photos/' + query)
-  // }
-
-  goToHome = (event) => {
-    event.preventDefault()
-    if (this.props.location.pathname !== '/')
-      this.props.history.push('/')
-  }
-
-  // goToLogin = (event) => {
-  //   event.preventDefault()
-  //   if (this.props.location.pathname !== '/login')
-  //     this.props.history.push('/login')
-  // }
-
-  // goToRegister = (event) => {
-  //   event.preventDefault()
-  //   this.props.history.push('/join')
-  // }
-
-  goToNewPost = event => {
-    event.preventDefault()
-    if (this.props.location.pathname !== '/p/new')
-      this.props.history.push('/p/new')
-  }
-
-  goToExplore = event => {
-    event.preventDefault()
-
-    // if (this.props.location.pathname !== `/profile/${logic.userId}`)
-    //   this.props.history.push(`/profile/${logic.userId}`)
-    this.props.history.push('/explore')
-  }
-
-  goToProfile = event => {
-    event.preventDefault()
-
-    this.props.history.push(`/giodelabarrera`)
-
-    // if (this.props.location.pathname !== `/profile/${logic.userId}`)
-    //   this.props.history.push(`/profile/${logic.userId}`)
-  }
-
-  // handleLogout = (event) => {
-  //   event.preventDefault()
-  //   this.props.history.push('/logout')
-  // }
+  onUserClick = username => this.props.history.push(`/${username}`)
 
   render() {
-    const { user } = this.state
     return (
       <div>
         <div className="header-wrapper">
-          <Header onNewPostClick={this.props.onNewPostClick} />
+          <Header
+            onHomeClick={this.props.onHomeClick}
+            onExploreClick={this.props.onExploreClick}
+            onNewPostClick={this.props.onNewPostClick}
+            onProfileClick={this.props.onProfileClick}
+          />
         </div>
         <div className="main-wrapper">
           <main>
             <h5 className="has-text-gray">Explore</h5>
-            <section className="is-one-thirds grid-gap-30">
-              {
-                this.state.posts && this.state.posts.map((post) =>
-                  (
-                    <GridPost
-                      key={post._id}
-                      post={post}
-                      onPostDetailClick={this.props.onPostDetailClick}
-                    />
-                  )
-                )
-              }
-            </section>
+            {<GridPostList
+              posts={this.state.posts}
+              onPostDetailClick={this.props.onPostDetailClick}
+              onUserClick={this.onUserClick}
+            />}
           </main>
         </div>
       </div>
