@@ -3578,3 +3578,609 @@
 	on connection,  CONTEXT: "sockets.js"", SOCKETID:Cb-Mzp2owwlMwfeFAAAQ
 	on disconnect,  CONTEXT: "sockets.js"", SOCKETID:LJOa0xvdCT62ywhrAAAO, REASON:ping timeout
 	on connection,  CONTEXT: "sockets.js"", SOCKETID:Xv796JWw4KeritmxAAAR
+	on connection,  CONTEXT: "sockets.js"", SOCKETID:qUwO4L3i-71-2rjAAAAA
+	on connection,  CONTEXT: "sockets.js"", SOCKETID:-z4ke1z2a8JnsDSLAAAB
+	on connection,  CONTEXT: "sockets.js"", SOCKETID:wWNmK9dD0pHTJRFvAAAC
+	on connection,  CONTEXT: "sockets.js"", SOCKETID:NnALZqu8c3SV4acCAAAD
+	on disconnect,  CONTEXT: "sockets.js"", SOCKETID:-z4ke1z2a8JnsDSLAAAB, REASON:transport error
+	on disconnect,  CONTEXT: "sockets.js"", SOCKETID:wWNmK9dD0pHTJRFvAAAC, REASON:transport error
+	on disconnect,  CONTEXT: "sockets.js"", SOCKETID:qUwO4L3i-71-2rjAAAAA, REASON:transport close
+	on connection,  CONTEXT: "sockets.js"", SOCKETID:jCuIJ6Byt5sfhmXBAAAE
+	on connection,  CONTEXT: "sockets.js"", SOCKETID:J1iM0L4Dn933TOmaAAAF
+	on connection,  CONTEXT: "sockets.js"", SOCKETID:MJgQer9LxPFqIz7_AAAG
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:tobbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:tobbie
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:robbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:robbie
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:tobbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:tobbie
+	POST:/authenticate,  CONTEXT: "router.js",  PASSWORD:tobbie, NICKNAME:tobbie 
+	authenticate,  CONTEXT: "logic/index.js", NICKNAME:tobbie, PASSWORD:tobbie
+	on connection,  CONTEXT: "sockets.js"", SOCKETID:fjHUsBIO0jV4i_uNAAAH
+	on authenticated,  CONTEXT: "sockets.js"", USERNAME:tobbie
+	userConnected,  CONTEXT: "logic/index.js", NICKNAME:tobbie
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:tobbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:tobbie
+	GET:/user/:nickname/users,  CONTEXT: "router.js", TERM: , NICKNAME:tobbie 
+	getUsersForString,  CONTEXT: "logic/index.js", TERM:
+	GET:/user/:nickname/users,  CONTEXT: "router.js", TERM: , NICKNAME:robbie 
+	getUsersForString,  CONTEXT: "logic/index.js", TERM:
+	GET:/user/:nickname/users,  CONTEXT: "router.js", TERM: , NICKNAME:tobbie 
+	getUsersForString,  CONTEXT: "logic/index.js", TERM:
+	GET:/user/:nickname/users,  CONTEXT: "router.js", TERM: , NICKNAME:tobbie 
+	getUsersForString,  CONTEXT: "logic/index.js", TERM:
+	POST:/authenticate,  CONTEXT: "router.js",  PASSWORD:tobbie, NICKNAME:robbie 
+	authenticate,  CONTEXT: "logic/index.js", NICKNAME:robbie, PASSWORD:tobbie
+	POST:/authenticate,  CONTEXT: "router.js",  PASSWORD:robbie, NICKNAME:robbie 
+	authenticate,  CONTEXT: "logic/index.js", NICKNAME:robbie, PASSWORD:robbie
+	on connection,  CONTEXT: "sockets.js"", SOCKETID:7Q4TPx5Bi7kXSkKbAAAI
+	on authenticated,  CONTEXT: "sockets.js"", USERNAME:robbie
+	userConnected,  CONTEXT: "logic/index.js", NICKNAME:robbie
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:robbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:robbie
+	GET:/user/:nickname/users,  CONTEXT: "router.js", TERM: , NICKNAME:tobbie 
+	getUsersForString,  CONTEXT: "logic/index.js", TERM:
+	GET:/user/:nickname/users,  CONTEXT: "router.js", TERM: , NICKNAME:tobbie 
+	getUsersForString,  CONTEXT: "logic/index.js", TERM:
+	GET:/user/:nickname/users,  CONTEXT: "router.js", TERM: , NICKNAME:tobbie 
+	getUsersForString,  CONTEXT: "logic/index.js", TERM:
+	GET:/user/:nickname/users,  CONTEXT: "router.js", TERM: , NICKNAME:robbie 
+	getUsersForString,  CONTEXT: "logic/index.js", TERM:
+	GET:/user/:nickname/users,  CONTEXT: "router.js", TERM: , NICKNAME:robbie 
+	getUsersForString,  CONTEXT: "logic/index.js", TERM:
+	POST:/user/:nickname/game/:gameID,  CONTEXT: "router.js",  NICKNAME:tobbie,  GAMEID: 5b97be3706cb11148524e194, MOVE:{"from":"f1","to":"e2","promotion":"q"}
+	move,  CONTEXT: "logic/index.js", GAMEID:5b97be3706cb11148524e194, MOVE:{"from":"f1","to":"e2","promotion":"q"}
+	announceMoveMade,  CONTEXT: "sockets.js"", MOVER:tobbie, RECEIVER:robbie
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:robbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:robbie
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:tobbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:tobbie
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:robbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:robbie
+	POST:/user/:nickname/game/:gameID,  CONTEXT: "router.js",  NICKNAME:robbie,  GAMEID: 5b97be3706cb11148524e194, MOVE:{"from":"d8","to":"d7","promotion":"q"}
+	move,  CONTEXT: "logic/index.js", GAMEID:5b97be3706cb11148524e194, MOVE:{"from":"d8","to":"d7","promotion":"q"}
+	announceMoveMade,  CONTEXT: "sockets.js"", MOVER:robbie, RECEIVER:tobbie
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:tobbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:tobbie
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:robbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:robbie
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:tobbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:tobbie
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:tobbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:tobbie
+	on disconnect,  CONTEXT: "sockets.js"", SOCKETID:jCuIJ6Byt5sfhmXBAAAE, REASON:transport close
+	on disconnect,  CONTEXT: "sockets.js"", SOCKETID:7Q4TPx5Bi7kXSkKbAAAI, REASON:transport close
+	on disconnect,  CONTEXT: "sockets.js"", SOCKETID:MJgQer9LxPFqIz7_AAAG, REASON:transport close
+	on disconnect,  CONTEXT: "sockets.js"", SOCKETID:fjHUsBIO0jV4i_uNAAAH, REASON:transport error
+	on disconnect,  CONTEXT: "sockets.js"", SOCKETID:J1iM0L4Dn933TOmaAAAF, REASON:transport error
+	on connection,  CONTEXT: "sockets.js"", SOCKETID:qyqyeJ2m_hfR0gBFAAAJ
+	on connection,  CONTEXT: "sockets.js"", SOCKETID:n9fJNPMU4P0yw-8zAAAK
+	on connection,  CONTEXT: "sockets.js"", SOCKETID:4q5Ozm851rVNZRVtAAAL
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:tobbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:tobbie
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:robbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:robbie
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:tobbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:tobbie
+	POST:/authenticate,  CONTEXT: "router.js",  PASSWORD:tobbie, NICKNAME:tobbie 
+	authenticate,  CONTEXT: "logic/index.js", NICKNAME:tobbie, PASSWORD:tobbie
+	on connection,  CONTEXT: "sockets.js"", SOCKETID:meyDU70UxKubgH6gAAAM
+	on authenticated,  CONTEXT: "sockets.js"", USERNAME:tobbie
+	userConnected,  CONTEXT: "logic/index.js", NICKNAME:tobbie
+	GET:/user/:nickname/users,  CONTEXT: "router.js", TERM: , NICKNAME:tobbie 
+	getUsersForString,  CONTEXT: "logic/index.js", TERM:
+	GET:/user/:nickname/users,  CONTEXT: "router.js", TERM: , NICKNAME:robbie 
+	getUsersForString,  CONTEXT: "logic/index.js", TERM:
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:tobbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:tobbie
+	GET:/user/:nickname/users,  CONTEXT: "router.js", TERM: , NICKNAME:tobbie 
+	getUsersForString,  CONTEXT: "logic/index.js", TERM:
+	GET:/user/:nickname/users,  CONTEXT: "router.js", TERM: , NICKNAME:tobbie 
+	getUsersForString,  CONTEXT: "logic/index.js", TERM:
+	POST:/authenticate,  CONTEXT: "router.js",  PASSWORD:robbie, NICKNAME:robbie 
+	authenticate,  CONTEXT: "logic/index.js", NICKNAME:robbie, PASSWORD:robbie
+	on connection,  CONTEXT: "sockets.js"", SOCKETID:CCUwj02iRvF4aYlXAAAN
+	on authenticated,  CONTEXT: "sockets.js"", USERNAME:robbie
+	userConnected,  CONTEXT: "logic/index.js", NICKNAME:robbie
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:robbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:robbie
+	GET:/user/:nickname/users,  CONTEXT: "router.js", TERM: , NICKNAME:robbie 
+	getUsersForString,  CONTEXT: "logic/index.js", TERM:
+	GET:/user/:nickname/users,  CONTEXT: "router.js", TERM: , NICKNAME:tobbie 
+	getUsersForString,  CONTEXT: "logic/index.js", TERM:
+	GET:/user/:nickname/users,  CONTEXT: "router.js", TERM: , NICKNAME:robbie 
+	getUsersForString,  CONTEXT: "logic/index.js", TERM:
+	GET:/user/:nickname/users,  CONTEXT: "router.js", TERM: , NICKNAME:tobbie 
+	getUsersForString,  CONTEXT: "logic/index.js", TERM:
+	GET:/user/:nickname/users,  CONTEXT: "router.js", TERM: , NICKNAME:tobbie 
+	getUsersForString,  CONTEXT: "logic/index.js", TERM:
+	POST:/user/:nickname/game/:gameID,  CONTEXT: "router.js",  NICKNAME:tobbie,  GAMEID: 5b97be3706cb11148524e194, MOVE:{"from":"f3","to":"g5","promotion":"q"}
+	move,  CONTEXT: "logic/index.js", GAMEID:5b97be3706cb11148524e194, MOVE:{"from":"f3","to":"g5","promotion":"q"}
+	announceMoveMade,  CONTEXT: "sockets.js"", MOVER:tobbie, RECEIVER:robbie
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:tobbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:tobbie
+	on disconnect,  CONTEXT: "sockets.js"", SOCKETID:CCUwj02iRvF4aYlXAAAN, REASON:ping timeout
+	on disconnect,  CONTEXT: "sockets.js"", SOCKETID:qyqyeJ2m_hfR0gBFAAAJ, REASON:ping timeout
+	on disconnect,  CONTEXT: "sockets.js"", SOCKETID:NnALZqu8c3SV4acCAAAD, REASON:ping timeout
+	on connection,  CONTEXT: "sockets.js"", SOCKETID:maly1Wj7g7f8ZQyKAAAO
+	on disconnect,  CONTEXT: "sockets.js"", SOCKETID:n9fJNPMU4P0yw-8zAAAK, REASON:transport close
+	on disconnect,  CONTEXT: "sockets.js"", SOCKETID:meyDU70UxKubgH6gAAAM, REASON:transport error
+	on disconnect,  CONTEXT: "sockets.js"", SOCKETID:4q5Ozm851rVNZRVtAAAL, REASON:transport close
+	on connection,  CONTEXT: "sockets.js"", SOCKETID:7hdy3ymjfnXp0HE9AAAP
+	on connection,  CONTEXT: "sockets.js"", SOCKETID:SF2bu0rMAd0tl80vAAAQ
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:robbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:robbie
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:tobbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:tobbie
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:tobbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:tobbie
+	on connection,  CONTEXT: "sockets.js"", SOCKETID:f3FeXZQ0plrAlfcvAAAR
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:robbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:robbie
+	POST:/authenticate,  CONTEXT: "router.js",  PASSWORD:robbie, NICKNAME:robbie 
+	authenticate,  CONTEXT: "logic/index.js", NICKNAME:robbie, PASSWORD:robbie
+	on connection,  CONTEXT: "sockets.js"", SOCKETID:mSHupNe1StA2qsJ5AAAS
+	on authenticated,  CONTEXT: "sockets.js"", USERNAME:robbie
+	userConnected,  CONTEXT: "logic/index.js", NICKNAME:robbie
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:robbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:robbie
+	GET:/user/:nickname/users,  CONTEXT: "router.js", TERM: , NICKNAME:tobbie 
+	getUsersForString,  CONTEXT: "logic/index.js", TERM:
+	GET:/user/:nickname/users,  CONTEXT: "router.js", TERM: , NICKNAME:robbie 
+	getUsersForString,  CONTEXT: "logic/index.js", TERM:
+	GET:/user/:nickname/users,  CONTEXT: "router.js", TERM: , NICKNAME:robbie 
+	getUsersForString,  CONTEXT: "logic/index.js", TERM:
+	POST:/authenticate,  CONTEXT: "router.js",  PASSWORD:tobbie, NICKNAME:tobbie 
+	authenticate,  CONTEXT: "logic/index.js", NICKNAME:tobbie, PASSWORD:tobbie
+	on connection,  CONTEXT: "sockets.js"", SOCKETID:-_tid1b3xZ5eW-UOAAAT
+	on authenticated,  CONTEXT: "sockets.js"", USERNAME:tobbie
+	userConnected,  CONTEXT: "logic/index.js", NICKNAME:tobbie
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:tobbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:tobbie
+	GET:/user/:nickname/users,  CONTEXT: "router.js", TERM: , NICKNAME:robbie 
+	getUsersForString,  CONTEXT: "logic/index.js", TERM:
+	GET:/user/:nickname/users,  CONTEXT: "router.js", TERM: , NICKNAME:tobbie 
+	getUsersForString,  CONTEXT: "logic/index.js", TERM:
+	GET:/user/:nickname/users,  CONTEXT: "router.js", TERM: , NICKNAME:robbie 
+	getUsersForString,  CONTEXT: "logic/index.js", TERM:
+	GET:/user/:nickname/users,  CONTEXT: "router.js", TERM: , NICKNAME:tobbie 
+	getUsersForString,  CONTEXT: "logic/index.js", TERM:
+	GET:/user/:nickname/users,  CONTEXT: "router.js", TERM: , NICKNAME:tobbie 
+	getUsersForString,  CONTEXT: "logic/index.js", TERM:
+	POST:/user/:nickname/game/:gameID,  CONTEXT: "router.js",  NICKNAME:robbie,  GAMEID: 5b97be3706cb11148524e194, MOVE:{"from":"c6","to":"d4","promotion":"q"}
+	move,  CONTEXT: "logic/index.js", GAMEID:5b97be3706cb11148524e194, MOVE:{"from":"c6","to":"d4","promotion":"q"}
+	announceMoveMade,  CONTEXT: "sockets.js"", MOVER:robbie, RECEIVER:tobbie
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:robbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:robbie
+	on disconnect,  CONTEXT: "sockets.js"", SOCKETID:-_tid1b3xZ5eW-UOAAAT, REASON:ping timeout
+	on disconnect,  CONTEXT: "sockets.js"", SOCKETID:7hdy3ymjfnXp0HE9AAAP, REASON:ping timeout
+	on disconnect,  CONTEXT: "sockets.js"", SOCKETID:SF2bu0rMAd0tl80vAAAQ, REASON:ping timeout
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:tobbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:tobbie
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:tobbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:tobbie
+	on connection,  CONTEXT: "sockets.js"", SOCKETID:DfInF5Cgrw_OFtvTAAAU
+	on connection,  CONTEXT: "sockets.js"", SOCKETID:CV0C6ZJrs7xu4713AAAV
+	on disconnect,  CONTEXT: "sockets.js"", SOCKETID:f3FeXZQ0plrAlfcvAAAR, REASON:transport error
+	on disconnect,  CONTEXT: "sockets.js"", SOCKETID:CV0C6ZJrs7xu4713AAAV, REASON:transport error
+	on disconnect,  CONTEXT: "sockets.js"", SOCKETID:mSHupNe1StA2qsJ5AAAS, REASON:transport close
+	on disconnect,  CONTEXT: "sockets.js"", SOCKETID:DfInF5Cgrw_OFtvTAAAU, REASON:transport close
+	on connection,  CONTEXT: "sockets.js"", SOCKETID:dc_q6OY3jH4B8b3UAAAW
+	on connection,  CONTEXT: "sockets.js"", SOCKETID:pyiVxV1FdoBIkro4AAAX
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:tobbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:tobbie
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:robbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:robbie
+	on disconnect,  CONTEXT: "sockets.js"", SOCKETID:pyiVxV1FdoBIkro4AAAX, REASON:ping timeout
+	on connection,  CONTEXT: "sockets.js"", SOCKETID:74y-dt019o2fflRKAAAY
+	on disconnect,  CONTEXT: "sockets.js"", SOCKETID:74y-dt019o2fflRKAAAY, REASON:ping timeout
+	on connection,  CONTEXT: "sockets.js"", SOCKETID:Xny3WRGvAD-Ia-SFAAAZ
+	on disconnect,  CONTEXT: "sockets.js"", SOCKETID:dc_q6OY3jH4B8b3UAAAW, REASON:ping timeout
+	on connection,  CONTEXT: "sockets.js"", SOCKETID:_3Hzd3SwOIJCqJ2VAAAa
+	on disconnect,  CONTEXT: "sockets.js"", SOCKETID:Xny3WRGvAD-Ia-SFAAAZ, REASON:ping timeout
+	on connection,  CONTEXT: "sockets.js"", SOCKETID:aEJICwcVVBE49es_AAAb
+	on disconnect,  CONTEXT: "sockets.js"", SOCKETID:aEJICwcVVBE49es_AAAb, REASON:ping timeout
+	on connection,  CONTEXT: "sockets.js"", SOCKETID:3HEHCX9yvCp62SgKAAAc
+	on disconnect,  CONTEXT: "sockets.js"", SOCKETID:3HEHCX9yvCp62SgKAAAc, REASON:ping timeout
+	on connection,  CONTEXT: "sockets.js"", SOCKETID:8gjJaWBjOekGOX9WAAAd
+	on disconnect,  CONTEXT: "sockets.js"", SOCKETID:_3Hzd3SwOIJCqJ2VAAAa, REASON:transport close
+	on disconnect,  CONTEXT: "sockets.js"", SOCKETID:8gjJaWBjOekGOX9WAAAd, REASON:transport close
+	on connection,  CONTEXT: "sockets.js"", SOCKETID:_gCFfKmpG1HunjKYAAAe
+	on connection,  CONTEXT: "sockets.js"", SOCKETID:WpMeoz4SCglKpHi1AAAf
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:tobbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:tobbie
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:robbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:robbie
+	on disconnect,  CONTEXT: "sockets.js"", SOCKETID:WpMeoz4SCglKpHi1AAAf, REASON:ping timeout
+	on connection,  CONTEXT: "sockets.js"", SOCKETID:pM6S6kR66Bmd1RP5AAAg
+	on disconnect,  CONTEXT: "sockets.js"", SOCKETID:_gCFfKmpG1HunjKYAAAe, REASON:ping timeout
+	on connection,  CONTEXT: "sockets.js"", SOCKETID:Xs5x235hWo1ewtzqAAAh
+	on disconnect,  CONTEXT: "sockets.js"", SOCKETID:pM6S6kR66Bmd1RP5AAAg, REASON:ping timeout
+	on disconnect,  CONTEXT: "sockets.js"", SOCKETID:Xs5x235hWo1ewtzqAAAh, REASON:ping timeout
+	on connection,  CONTEXT: "sockets.js"", SOCKETID:5Bt5DIicS_0tsQAWAAAi
+	on disconnect,  CONTEXT: "sockets.js"", SOCKETID:5Bt5DIicS_0tsQAWAAAi, REASON:transport error
+	on connection,  CONTEXT: "sockets.js"", SOCKETID:s5TPLl5rEJpbxGH2AAAj
+	on connection,  CONTEXT: "sockets.js"", SOCKETID:j14-wR9oMmWgGtU2AAAk
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:tobbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:tobbie
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:robbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:robbie
+	on disconnect,  CONTEXT: "sockets.js"", SOCKETID:j14-wR9oMmWgGtU2AAAk, REASON:transport close
+	on disconnect,  CONTEXT: "sockets.js"", SOCKETID:s5TPLl5rEJpbxGH2AAAj, REASON:transport close
+	on connection,  CONTEXT: "sockets.js"", SOCKETID:JGt9lA0bEgyzo0vjAAAl
+	on connection,  CONTEXT: "sockets.js"", SOCKETID:RqAZ_sTYhCYH7CeUAAAm
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:tobbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:tobbie
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:robbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:robbie
+	on disconnect,  CONTEXT: "sockets.js"", SOCKETID:RqAZ_sTYhCYH7CeUAAAm, REASON:transport close
+	on disconnect,  CONTEXT: "sockets.js"", SOCKETID:JGt9lA0bEgyzo0vjAAAl, REASON:transport close
+	on connection,  CONTEXT: "sockets.js"", SOCKETID:OHe_6YREDaKLW1OtAAAn
+	on connection,  CONTEXT: "sockets.js"", SOCKETID:ohP3T0wl56ONRoy0AAAo
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:tobbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:tobbie
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:robbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:robbie
+	on disconnect,  CONTEXT: "sockets.js"", SOCKETID:OHe_6YREDaKLW1OtAAAn, REASON:transport close
+	on disconnect,  CONTEXT: "sockets.js"", SOCKETID:ohP3T0wl56ONRoy0AAAo, REASON:transport close
+	on connection,  CONTEXT: "sockets.js"", SOCKETID:2cdIf1QsA5lr8A1AAAAp
+	on connection,  CONTEXT: "sockets.js"", SOCKETID:shQaD1FOIfAtoPbAAAAq
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:tobbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:tobbie
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:robbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:robbie
+	on disconnect,  CONTEXT: "sockets.js"", SOCKETID:shQaD1FOIfAtoPbAAAAq, REASON:transport close
+	on disconnect,  CONTEXT: "sockets.js"", SOCKETID:2cdIf1QsA5lr8A1AAAAp, REASON:transport close
+	on connection,  CONTEXT: "sockets.js"", SOCKETID:SU4GKeyEK2hJOXLIAAAr
+	on connection,  CONTEXT: "sockets.js"", SOCKETID:jhObVY2v6y-9pwNSAAAs
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:tobbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:tobbie
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:robbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:robbie
+	on disconnect,  CONTEXT: "sockets.js"", SOCKETID:jhObVY2v6y-9pwNSAAAs, REASON:ping timeout
+	on connection,  CONTEXT: "sockets.js"", SOCKETID:z8fE8MVn7yis-S9YAAAt
+	on disconnect,  CONTEXT: "sockets.js"", SOCKETID:SU4GKeyEK2hJOXLIAAAr, REASON:ping timeout
+	on disconnect,  CONTEXT: "sockets.js"", SOCKETID:z8fE8MVn7yis-S9YAAAt, REASON:ping timeout
+	on connection,  CONTEXT: "sockets.js"", SOCKETID:u20cFjvCQcO1QpliAAAu
+	on connection,  CONTEXT: "sockets.js"", SOCKETID:7h9EPrULfzZjb7l1AAAv
+	on disconnect,  CONTEXT: "sockets.js"", SOCKETID:7h9EPrULfzZjb7l1AAAv, REASON:ping timeout
+	on disconnect,  CONTEXT: "sockets.js"", SOCKETID:u20cFjvCQcO1QpliAAAu, REASON:ping timeout
+	on connection,  CONTEXT: "sockets.js"", SOCKETID:jnd3z_4HL12H9UGDAAAw
+	on disconnect,  CONTEXT: "sockets.js"", SOCKETID:jnd3z_4HL12H9UGDAAAw, REASON:ping timeout
+	on connection,  CONTEXT: "sockets.js"", SOCKETID:5gQnZ40T3lTL0f-pAAAx
+	on disconnect,  CONTEXT: "sockets.js"", SOCKETID:5gQnZ40T3lTL0f-pAAAx, REASON:ping timeout
+	on connection,  CONTEXT: "sockets.js"", SOCKETID:g9jnmwsIctLsmUt_AAAy
+	on disconnect,  CONTEXT: "sockets.js"", SOCKETID:g9jnmwsIctLsmUt_AAAy, REASON:ping timeout
+	on connection,  CONTEXT: "sockets.js"", SOCKETID:FV38g5GjKhzLFDklAAAz
+	on connection,  CONTEXT: "sockets.js"", SOCKETID:CKG4sp9RTVU6Q9GZAAAA
+	on connection,  CONTEXT: "sockets.js"", SOCKETID:wVF9qAptkSjtYg9PAAAB
+	on disconnect,  CONTEXT: "sockets.js"", SOCKETID:CKG4sp9RTVU6Q9GZAAAA, REASON:ping timeout
+	on connection,  CONTEXT: "sockets.js"", SOCKETID:ucUsCmxGt-6HZrPGAAAC
+	POST:/authenticate,  CONTEXT: "router.js",  PASSWORD:robbie, NICKNAME:robbie 
+	authenticate,  CONTEXT: "logic/index.js", NICKNAME:robbie, PASSWORD:robbie
+	on connection,  CONTEXT: "sockets.js"", SOCKETID:LVH_wmYvL1U_FZE1AAAD
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:robbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:robbie
+	on connection,  CONTEXT: "sockets.js"", SOCKETID:QrE2bKtqo210EX-EAAAE
+	POST:/authenticate,  CONTEXT: "router.js",  PASSWORD:tobbie, NICKNAME:tobbie 
+	authenticate,  CONTEXT: "logic/index.js", NICKNAME:tobbie, PASSWORD:tobbie
+	on connection,  CONTEXT: "sockets.js"", SOCKETID:NK3Yb4vzoIZPOezvAAAF
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:tobbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:tobbie
+	POST:/user/:nickname/game/:gameID,  CONTEXT: "router.js",  NICKNAME:tobbie,  GAMEID: 5b97be3706cb11148524e194, MOVE:{"from":"e1","to":"g1","promotion":"q"}
+	move,  CONTEXT: "logic/index.js", GAMEID:5b97be3706cb11148524e194, MOVE:{"from":"e1","to":"g1","promotion":"q"}
+	announceMoveMade,  CONTEXT: "sockets.js"", MOVER:tobbie, RECEIVER:robbie
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:robbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:robbie
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:robbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:robbie
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:tobbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:tobbie
+	POST:/user/:nickname/game/:gameID,  CONTEXT: "router.js",  NICKNAME:robbie,  GAMEID: 5b97be3706cb11148524e194, MOVE:{"from":"d7","to":"d5","promotion":"q"}
+	move,  CONTEXT: "logic/index.js", GAMEID:5b97be3706cb11148524e194, MOVE:{"from":"d7","to":"d5","promotion":"q"}
+	announceMoveMade,  CONTEXT: "sockets.js"", MOVER:robbie, RECEIVER:tobbie
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:tobbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:tobbie
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:robbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:robbie
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:tobbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:tobbie
+	on disconnect,  CONTEXT: "sockets.js"", SOCKETID:QrE2bKtqo210EX-EAAAE, REASON:transport error
+	on disconnect,  CONTEXT: "sockets.js"", SOCKETID:NK3Yb4vzoIZPOezvAAAF, REASON:transport error
+	on disconnect,  CONTEXT: "sockets.js"", SOCKETID:ucUsCmxGt-6HZrPGAAAC, REASON:transport close
+	on disconnect,  CONTEXT: "sockets.js"", SOCKETID:LVH_wmYvL1U_FZE1AAAD, REASON:transport close
+	on disconnect,  CONTEXT: "sockets.js"", SOCKETID:wVF9qAptkSjtYg9PAAAB, REASON:transport error
+	POST:/authenticate,  CONTEXT: "router.js",  PASSWORD:robbie, NICKNAME:robbie 
+	authenticate,  CONTEXT: "logic/index.js", NICKNAME:robbie, PASSWORD:robbie
+	on connection,  CONTEXT: "sockets.js"", SOCKETID:d2XAMbhdiUzlhXbyAAAG
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:robbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:robbie
+	POST:/authenticate,  CONTEXT: "router.js",  PASSWORD:tobbie, NICKNAME:tobbie 
+	authenticate,  CONTEXT: "logic/index.js", NICKNAME:tobbie, PASSWORD:tobbie
+	on connection,  CONTEXT: "sockets.js"", SOCKETID:-Wl-TgQtTvIilzqwAAAH
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:tobbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:tobbie
+	POST:/user/:nickname/game/:gameID,  CONTEXT: "router.js",  NICKNAME:tobbie,  GAMEID: 5b97be3706cb11148524e194, MOVE:{"from":"f1","to":"f3","promotion":"q"}
+	move,  CONTEXT: "logic/index.js", GAMEID:5b97be3706cb11148524e194, MOVE:{"from":"f1","to":"f3","promotion":"q"}
+	announceMoveMade,  CONTEXT: "sockets.js"", MOVER:tobbie, RECEIVER:robbie
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:tobbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:tobbie
+	on disconnect,  CONTEXT: "sockets.js"", SOCKETID:d2XAMbhdiUzlhXbyAAAG, REASON:ping timeout
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:robbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:robbie
+	on disconnect,  CONTEXT: "sockets.js"", SOCKETID:-Wl-TgQtTvIilzqwAAAH, REASON:ping timeout
+	on connection,  CONTEXT: "sockets.js"", SOCKETID:-L1K0vqCVDLBt64IAAAI
+	on connection,  CONTEXT: "sockets.js"", SOCKETID:5VUCEN0J66Amw848AAAJ
+	on connection,  CONTEXT: "sockets.js"", SOCKETID:sZtpekpdhTOGrpuLAAAK
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:robbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:robbie
+	on connection,  CONTEXT: "sockets.js"", SOCKETID:dbqs88NsjDu_nu7rAAAL
+	on disconnect,  CONTEXT: "sockets.js"", SOCKETID:5VUCEN0J66Amw848AAAJ, REASON:ping timeout
+	on disconnect,  CONTEXT: "sockets.js"", SOCKETID:sZtpekpdhTOGrpuLAAAK, REASON:ping timeout
+	on disconnect,  CONTEXT: "sockets.js"", SOCKETID:dbqs88NsjDu_nu7rAAAL, REASON:ping timeout
+	POST:/authenticate,  CONTEXT: "router.js",  PASSWORD:robbie, NICKNAME:robbie 
+	authenticate,  CONTEXT: "logic/index.js", NICKNAME:robbie, PASSWORD:robbie
+	on connection,  CONTEXT: "sockets.js"", SOCKETID:Cn6MlxjGlsx2RM2sAAAM
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:robbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:robbie
+	POST:/authenticate,  CONTEXT: "router.js",  PASSWORD:robbie, NICKNAME:robbie 
+	authenticate,  CONTEXT: "logic/index.js", NICKNAME:robbie, PASSWORD:robbie
+	on connection,  CONTEXT: "sockets.js"", SOCKETID:kesNyetDyGxFfHSqAAAN
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:robbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:robbie
+	on disconnect,  CONTEXT: "sockets.js"", SOCKETID:-L1K0vqCVDLBt64IAAAI, REASON:ping timeout
+	on connection,  CONTEXT: "sockets.js"", SOCKETID:VCSS4ZWrkl-KkDMMAAAO
+	POST:/authenticate,  CONTEXT: "router.js",  PASSWORD:biffy1, NICKNAME:biffy1 
+	authenticate,  CONTEXT: "logic/index.js", NICKNAME:biffy1, PASSWORD:biffy1
+	POST:/authenticate,  CONTEXT: "router.js",  PASSWORD:robbie, NICKNAME:robbie 
+	authenticate,  CONTEXT: "logic/index.js", NICKNAME:robbie, PASSWORD:robbie
+	on connection,  CONTEXT: "sockets.js"", SOCKETID:MF_30GSjFDs9YW4NAAAP
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:robbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:robbie
+	on disconnect,  CONTEXT: "sockets.js"", SOCKETID:VCSS4ZWrkl-KkDMMAAAO, REASON:ping timeout
+	on connection,  CONTEXT: "sockets.js"", SOCKETID:vFK2JfTd4I5ZwXrrAAAQ
+	on disconnect,  CONTEXT: "sockets.js"", SOCKETID:MF_30GSjFDs9YW4NAAAP, REASON:transport close
+	on connection,  CONTEXT: "sockets.js"", SOCKETID:kdoQxYt2EBu9n-69AAAR
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:robbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:robbie
+	on disconnect,  CONTEXT: "sockets.js"", SOCKETID:vFK2JfTd4I5ZwXrrAAAQ, REASON:transport error
+	on disconnect,  CONTEXT: "sockets.js"", SOCKETID:Cn6MlxjGlsx2RM2sAAAM, REASON:transport error
+	on disconnect,  CONTEXT: "sockets.js"", SOCKETID:kesNyetDyGxFfHSqAAAN, REASON:transport error
+	on connection,  CONTEXT: "sockets.js"", SOCKETID:Ql6SOUONpWOJlLDuAAAS
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:robbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:robbie
+	POST:/authenticate,  CONTEXT: "router.js",  PASSWORD:robbie, NICKNAME:robbie 
+	authenticate,  CONTEXT: "logic/index.js", NICKNAME:robbie, PASSWORD:robbie
+	on connection,  CONTEXT: "sockets.js"", SOCKETID:lSn3izuaaqXqzyTsAAAT
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:robbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:robbie
+	on disconnect,  CONTEXT: "sockets.js"", SOCKETID:lSn3izuaaqXqzyTsAAAT, REASON:transport close
+	on disconnect,  CONTEXT: "sockets.js"", SOCKETID:Ql6SOUONpWOJlLDuAAAS, REASON:transport error
+	on connection,  CONTEXT: "sockets.js"", SOCKETID:TborSCxDiv4CRDbxAAAU
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:robbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:robbie
+	on disconnect,  CONTEXT: "sockets.js"", SOCKETID:kdoQxYt2EBu9n-69AAAR, REASON:transport close
+	on connection,  CONTEXT: "sockets.js"", SOCKETID:Pd72W6yoPaazItTsAAAV
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:robbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:robbie
+	on disconnect,  CONTEXT: "sockets.js"", SOCKETID:TborSCxDiv4CRDbxAAAU, REASON:transport error
+	on connection,  CONTEXT: "sockets.js"", SOCKETID:GsMF9c-v22DW1vnTAAAW
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:robbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:robbie
+	on disconnect,  CONTEXT: "sockets.js"", SOCKETID:Pd72W6yoPaazItTsAAAV, REASON:transport close
+	on connection,  CONTEXT: "sockets.js"", SOCKETID:YYBpwUj34-pMp3eIAAAX
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:robbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:robbie
+	on disconnect,  CONTEXT: "sockets.js"", SOCKETID:GsMF9c-v22DW1vnTAAAW, REASON:transport error
+	on disconnect,  CONTEXT: "sockets.js"", SOCKETID:YYBpwUj34-pMp3eIAAAX, REASON:transport close
+	on connection,  CONTEXT: "sockets.js"", SOCKETID:Vkfs0eiDqKUw0d7KAAAY
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:robbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:robbie
+	on connection,  CONTEXT: "sockets.js"", SOCKETID:FtTuk-X9mbrxiEqeAAAZ
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:robbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:robbie
+	on disconnect,  CONTEXT: "sockets.js"", SOCKETID:Vkfs0eiDqKUw0d7KAAAY, REASON:transport close
+	on disconnect,  CONTEXT: "sockets.js"", SOCKETID:FtTuk-X9mbrxiEqeAAAZ, REASON:transport close
+	on connection,  CONTEXT: "sockets.js"", SOCKETID:TCZ_kd2mE4wwspLoAAAa
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:robbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:robbie
+	on connection,  CONTEXT: "sockets.js"", SOCKETID:AGdXe-ehemaVtj8rAAAb
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:robbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:robbie
+	on disconnect,  CONTEXT: "sockets.js"", SOCKETID:TCZ_kd2mE4wwspLoAAAa, REASON:transport error
+	on disconnect,  CONTEXT: "sockets.js"", SOCKETID:AGdXe-ehemaVtj8rAAAb, REASON:transport close
+	on connection,  CONTEXT: "sockets.js"", SOCKETID:CWg5GPW1YZMxWZAKAAAc
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:robbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:robbie
+	on connection,  CONTEXT: "sockets.js"", SOCKETID:T4ehE5eAtNQsqekeAAAd
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:robbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:robbie
+	on connection,  CONTEXT: "sockets.js"", SOCKETID:2a3GHijmL2ZRa0Z2AAAe
+	POST:/authenticate,  CONTEXT: "router.js",  PASSWORD:tobbie, NICKNAME:tobbie 
+	authenticate,  CONTEXT: "logic/index.js", NICKNAME:tobbie, PASSWORD:tobbie
+	on connection,  CONTEXT: "sockets.js"", SOCKETID:z_5DW0oPVRzgZlkQAAAf
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:tobbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:tobbie
+	POST:/user/:nickname/game/:gameID,  CONTEXT: "router.js",  NICKNAME:robbie,  GAMEID: 5b97be3706cb11148524e194, MOVE:{"from":"c8","to":"a6","promotion":"q"}
+	move,  CONTEXT: "logic/index.js", GAMEID:5b97be3706cb11148524e194, MOVE:{"from":"c8","to":"a6","promotion":"q"}
+	announceMoveMade,  CONTEXT: "sockets.js"", MOVER:robbie, RECEIVER:tobbie
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:tobbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:tobbie
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:robbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:robbie
+	POST:/user/:nickname/game/:gameID,  CONTEXT: "router.js",  NICKNAME:tobbie,  GAMEID: 5b97be3706cb11148524e194, MOVE:{"from":"g2","to":"g4","promotion":"q"}
+	move,  CONTEXT: "logic/index.js", GAMEID:5b97be3706cb11148524e194, MOVE:{"from":"g2","to":"g4","promotion":"q"}
+	announceMoveMade,  CONTEXT: "sockets.js"", MOVER:tobbie, RECEIVER:robbie
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:robbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:robbie
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:robbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:robbie
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:tobbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:tobbie
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:robbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:robbie
+	on disconnect,  CONTEXT: "sockets.js"", SOCKETID:z_5DW0oPVRzgZlkQAAAf, REASON:transport close
+	on disconnect,  CONTEXT: "sockets.js"", SOCKETID:2a3GHijmL2ZRa0Z2AAAe, REASON:transport error
+	on disconnect,  CONTEXT: "sockets.js"", SOCKETID:CWg5GPW1YZMxWZAKAAAc, REASON:transport error
+	on connection,  CONTEXT: "sockets.js"", SOCKETID:btuC4ep4e0kKfoZZAAAg
+	on connection,  CONTEXT: "sockets.js"", SOCKETID:dSJ0kh8GBnQwEGK4AAAh
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:robbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:robbie
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:tobbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:tobbie
+	on disconnect,  CONTEXT: "sockets.js"", SOCKETID:T4ehE5eAtNQsqekeAAAd, REASON:transport close
+	on connection,  CONTEXT: "sockets.js"", SOCKETID:bm-bEWx9gq-KuWKcAAAi
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:robbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:robbie
+	on disconnect,  CONTEXT: "sockets.js"", SOCKETID:dSJ0kh8GBnQwEGK4AAAh, REASON:transport error
+	on disconnect,  CONTEXT: "sockets.js"", SOCKETID:btuC4ep4e0kKfoZZAAAg, REASON:transport close
+	on connection,  CONTEXT: "sockets.js"", SOCKETID:S4p-1aJoi5B9_cq6AAAj
+	on connection,  CONTEXT: "sockets.js"", SOCKETID:y3b1WqFpis4WXvPEAAAk
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:tobbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:tobbie
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:robbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:robbie
+	POST:/authenticate,  CONTEXT: "router.js",  PASSWORD:robbie, NICKNAME:robbie 
+	authenticate,  CONTEXT: "logic/index.js", NICKNAME:robbie, PASSWORD:robbie
+	on connection,  CONTEXT: "sockets.js"", SOCKETID:reSmC6-zZgN2pB6uAAAl
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:robbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:robbie
+	POST:/authenticate,  CONTEXT: "router.js",  PASSWORD:tobbie, NICKNAME:tobbie 
+	authenticate,  CONTEXT: "logic/index.js", NICKNAME:tobbie, PASSWORD:tobbie
+	on connection,  CONTEXT: "sockets.js"", SOCKETID:TeHf7cOfgtjE-YklAAAm
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:tobbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:tobbie
+	POST:/user/:nickname/game/:gameID,  CONTEXT: "router.js",  NICKNAME:robbie,  GAMEID: 5b97be3706cb11148524e194, MOVE:{"from":"a8","to":"c8","promotion":"q"}
+	move,  CONTEXT: "logic/index.js", GAMEID:5b97be3706cb11148524e194, MOVE:{"from":"a8","to":"c8","promotion":"q"}
+	announceMoveMade,  CONTEXT: "sockets.js"", MOVER:robbie, RECEIVER:tobbie
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:tobbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:tobbie
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:tobbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:tobbie
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:robbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:robbie
+	POST:/user/:nickname/game/:gameID,  CONTEXT: "router.js",  NICKNAME:tobbie,  GAMEID: 5b97be3706cb11148524e194, MOVE:{"from":"g1","to":"f1","promotion":"q"}
+	move,  CONTEXT: "logic/index.js", GAMEID:5b97be3706cb11148524e194, MOVE:{"from":"g1","to":"f1","promotion":"q"}
+	announceMoveMade,  CONTEXT: "sockets.js"", MOVER:tobbie, RECEIVER:robbie
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:robbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:robbie
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:tobbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:tobbie
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:robbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:robbie
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:robbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:robbie
+	POST:/user/:nickname/game/:gameID,  CONTEXT: "router.js",  NICKNAME:robbie,  GAMEID: 5b97be3706cb11148524e194, MOVE:{"from":"c8","to":"c7","promotion":"q"}
+	move,  CONTEXT: "logic/index.js", GAMEID:5b97be3706cb11148524e194, MOVE:{"from":"c8","to":"c7","promotion":"q"}
+	announceMoveMade,  CONTEXT: "sockets.js"", MOVER:robbie, RECEIVER:tobbie
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:tobbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:tobbie
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:tobbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:tobbie
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:robbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:robbie
+	POST:/user/:nickname/game/:gameID,  CONTEXT: "router.js",  NICKNAME:tobbie,  GAMEID: 5b97be3706cb11148524e194, MOVE:{"from":"b2","to":"b4","promotion":"q"}
+	move,  CONTEXT: "logic/index.js", GAMEID:5b97be3706cb11148524e194, MOVE:{"from":"b2","to":"b4","promotion":"q"}
+	announceMoveMade,  CONTEXT: "sockets.js"", MOVER:tobbie, RECEIVER:robbie
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:robbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:robbie
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:tobbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:tobbie
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:robbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:robbie
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:robbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:robbie
+	POST:/user/:nickname/game/:gameID,  CONTEXT: "router.js",  NICKNAME:robbie,  GAMEID: 5b97be3706cb11148524e194, MOVE:{"from":"c7","to":"c6","promotion":"q"}
+	move,  CONTEXT: "logic/index.js", GAMEID:5b97be3706cb11148524e194, MOVE:{"from":"c7","to":"c6","promotion":"q"}
+	announceMoveMade,  CONTEXT: "sockets.js"", MOVER:robbie, RECEIVER:tobbie
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:tobbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:tobbie
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:robbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:robbie
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:tobbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:tobbie
+	POST:/user/:nickname/game/:gameID,  CONTEXT: "router.js",  NICKNAME:tobbie,  GAMEID: 5b97be3706cb11148524e194, MOVE:{"from":"h2","to":"h4","promotion":"q"}
+	move,  CONTEXT: "logic/index.js", GAMEID:5b97be3706cb11148524e194, MOVE:{"from":"h2","to":"h4","promotion":"q"}
+	announceMoveMade,  CONTEXT: "sockets.js"", MOVER:tobbie, RECEIVER:robbie
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:robbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:robbie
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:tobbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:tobbie
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:robbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:robbie
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:robbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:robbie
+	POST:/user/:nickname/game/:gameID,  CONTEXT: "router.js",  NICKNAME:robbie,  GAMEID: 5b97be3706cb11148524e194, MOVE:{"from":"e7","to":"e6","promotion":"q"}
+	move,  CONTEXT: "logic/index.js", GAMEID:5b97be3706cb11148524e194, MOVE:{"from":"e7","to":"e6","promotion":"q"}
+	POST:/user/:nickname/game/:gameID,  CONTEXT: "router.js",  NICKNAME:robbie,  GAMEID: 5b97be3706cb11148524e194, MOVE:{"from":"e7","to":"f6","promotion":"q"}
+	move,  CONTEXT: "logic/index.js", GAMEID:5b97be3706cb11148524e194, MOVE:{"from":"e7","to":"f6","promotion":"q"}
+	announceMoveMade,  CONTEXT: "sockets.js"", MOVER:robbie, RECEIVER:tobbie
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:tobbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:tobbie
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:robbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:robbie
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:tobbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:tobbie
+	POST:/user/:nickname/game/:gameID,  CONTEXT: "router.js",  NICKNAME:tobbie,  GAMEID: 5b97be3706cb11148524e194, MOVE:{"from":"g5","to":"e4","promotion":"q"}
+	move,  CONTEXT: "logic/index.js", GAMEID:5b97be3706cb11148524e194, MOVE:{"from":"g5","to":"e4","promotion":"q"}
+	announceMoveMade,  CONTEXT: "sockets.js"", MOVER:tobbie, RECEIVER:robbie
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:robbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:robbie
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:robbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:robbie
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:tobbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:tobbie
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:robbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:robbie
+	POST:/user/:nickname/game/:gameID,  CONTEXT: "router.js",  NICKNAME:robbie,  GAMEID: 5b97be3706cb11148524e194, MOVE:{"from":"f6","to":"e6","promotion":"q"}
+	move,  CONTEXT: "logic/index.js", GAMEID:5b97be3706cb11148524e194, MOVE:{"from":"f6","to":"e6","promotion":"q"}
+	announceMoveMade,  CONTEXT: "sockets.js"", MOVER:robbie, RECEIVER:tobbie
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:tobbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:tobbie
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:robbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:robbie
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:tobbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:tobbie
+	POST:/user/:nickname/game/:gameID,  CONTEXT: "router.js",  NICKNAME:tobbie,  GAMEID: 5b97be3706cb11148524e194, MOVE:{"from":"e4","to":"d6","promotion":"q"}
+	move,  CONTEXT: "logic/index.js", GAMEID:5b97be3706cb11148524e194, MOVE:{"from":"e4","to":"d6","promotion":"q"}
+	announceMoveMade,  CONTEXT: "sockets.js"", MOVER:tobbie, RECEIVER:robbie
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:robbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:robbie
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:tobbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:tobbie
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:robbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:robbie
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:robbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:robbie
+	POST:/user/:nickname/game/:gameID,  CONTEXT: "router.js",  NICKNAME:robbie,  GAMEID: 5b97be3706cb11148524e194, MOVE:{"from":"c6","to":"d6","promotion":"q"}
+	move,  CONTEXT: "logic/index.js", GAMEID:5b97be3706cb11148524e194, MOVE:{"from":"c6","to":"d6","promotion":"q"}
+	announceMoveMade,  CONTEXT: "sockets.js"", MOVER:robbie, RECEIVER:tobbie
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:tobbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:tobbie
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:robbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:robbie
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:tobbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:tobbie
+	POST:/user/:nickname/game/:gameID,  CONTEXT: "router.js",  NICKNAME:tobbie,  GAMEID: 5b97be3706cb11148524e194, MOVE:{"from":"f4","to":"e5","promotion":"q"}
+	move,  CONTEXT: "logic/index.js", GAMEID:5b97be3706cb11148524e194, MOVE:{"from":"f4","to":"e5","promotion":"q"}
+	announceMoveMade,  CONTEXT: "sockets.js"", MOVER:tobbie, RECEIVER:robbie
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:robbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:robbie
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:tobbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:tobbie
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:robbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:robbie
+	GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:robbie 
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:robbie
+	on disconnect,  CONTEXT: "sockets.js"", SOCKETID:TeHf7cOfgtjE-YklAAAm, REASON:ping timeout
+	on disconnect,  CONTEXT: "sockets.js"", SOCKETID:y3b1WqFpis4WXvPEAAAk, REASON:ping timeout
+	on connection,  CONTEXT: "sockets.js"", SOCKETID:68HzsMty9rl07Sd8AAAn
+	on connection,  CONTEXT: "sockets.js"", SOCKETID:okYiEKvbj7r5yTNmAAAo
+	on disconnect,  CONTEXT: "sockets.js"", SOCKETID:68HzsMty9rl07Sd8AAAn, REASON:ping timeout
+	on disconnect,  CONTEXT: "sockets.js"", SOCKETID:okYiEKvbj7r5yTNmAAAo, REASON:ping timeout
+	on connection,  CONTEXT: "sockets.js"", SOCKETID:vTK9xRa36n4R3IeNAAAp
+	on connection,  CONTEXT: "sockets.js"", SOCKETID:F-VrlrrokxymYzD-AAAq
+	on disconnect,  CONTEXT: "sockets.js"", SOCKETID:vTK9xRa36n4R3IeNAAAp, REASON:ping timeout
+	on disconnect,  CONTEXT: "sockets.js"", SOCKETID:F-VrlrrokxymYzD-AAAq, REASON:ping timeout
+	on connection,  CONTEXT: "sockets.js"", SOCKETID:S8u0Uwt5mJPObpmUAAAr
+	on connection,  CONTEXT: "sockets.js"", SOCKETID:TqHigzoaudF5Hh_PAAAs
