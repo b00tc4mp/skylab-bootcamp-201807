@@ -12,14 +12,6 @@ const { PORT } = process.env
 
 const app = express()
 
-// app.use(cors())
-
-// app.use('/api', routes)
-
-// app.listen(PORT, () => console.log(`${package.name} ${package.version} up and running on port ${PORT}`))
-
-// mongoose.connect(MONGO_URL, { useNewUrlParser: true }, () => console.log('DB IS CONNECTED!'))
-
 mongoose.connect(MONGO_URL, { useNewUrlParser: true })
     .then(() => {
         app.use(cors())

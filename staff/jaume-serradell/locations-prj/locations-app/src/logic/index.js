@@ -13,7 +13,7 @@ const logic = {
             .then(res => {
                 if (res.status === expectedStatus) {
                     return res
-                } else{
+                } else {
                     return res.json()
                         .then(({ message }) => {
                             throw new Error(message)
@@ -26,7 +26,7 @@ const logic = {
         if (typeof fieldValue !== 'string' || !fieldValue.length) throw new LogicError(`invalid ${fieldName}`)
     },
 
-    
+
 
     /** Number field validator
      * 
@@ -121,25 +121,54 @@ const logic = {
                 return this._call(`owner/${email}/property`, 'post', { authorization: `bearer ${token}`, 'content-type': 'application/json' }, JSON.stringify({ email, title, subtitle, photo, description, categories, type }), 200)
             })
             .then(res => res.json())
-            .then(id  => {
+            .then(id => {
                 return id
             })
     },
 
+    retrieveProperty(propertyId) {
+        return Promise.resolve()
+            .then(() => {
+
+                return this._call(`properties/${propertyId}`, 'get', undefined, undefined, 200)
+            })
+            .then(res => res.json())
+            .then(property => {
+                return property
+            })
+    },
+
+    updatePropertyById(propertyId, email, token, title, subtitle, description, photo, categories, type) {
+        console.log(arguments)
+        return Promise.resolve()
+            .then(() => {
+                this._validateEmail(email)
+                this._validateStringField('title', title)
+                this._validateStringField('photo', photo)
+                this._validateStringField('type', type)
+                if (!(categories instanceof Array)) throw new LogicError('invalid categories')
+
+                return this._call(`owner/${email}/property/${propertyId}`, 'PATCH', { authorization: `bearer ${token}`, 'content-type': 'application/json' }, JSON.stringify({ title, subtitle, photo, description, categories, type, token }), 200)
+                    .then(res => res.json())
+                    .then(res => res.message)
+            })
+    },
+
     listPropertyByQuery(type = 'all', categories = []) {
+        console.log({type,categories})
         return Promise.resolve()
             .then(() => {
                 let url = 'listProperties'
 
                 // Si vienen filtros
-                if(type !== 'all' || categories.length) {
+                if (type !== 'all' ||  categories.length) {
                     // Vienen ambos filtros
-                    if(type !== 'all' && categories.length) {
+                    if (type !== 'all' && categories.length) {
                         url += `?type=${type}&categories=${categories}`
                     }
                     else { // Viene uno de los dos
-                        if(type !== 'all') url += `?type=${type}`
-                        if(categories.length) url += `?categories=${categories}`
+                        if (type !== 'all') url += `?type=${type}`
+                        if (categories.length) url += `?categories=${categories}`
                     }
                 }
 
@@ -152,8 +181,6 @@ const logic = {
         return Promise.resolve()
             .then(() => {
                 this._validateEmail(email)
-                // this._validateObjectId(propertyId)
-                debugger
                 return this._call(`owner/${email}/property/${propertyId}`, 'delete', { authorization: `bearer ${token}`, 'content-type': 'application/json' }, undefined, 200)
             })
             .then(res => {

@@ -34,12 +34,12 @@ router.post('/authenticate', jsonBodyParser, (req, res) => {
     const { body: { email, password } } = req
 
     logic.authenticate(email, password)
-        .then(() => {
+        .then(id => {
             const { JWT_SECRET, JWT_EXP } = process.env
 
             const token = jwt.sign({ sub: email }, JWT_SECRET, { expiresIn: JWT_EXP })
 
-            res.json({ message: 'owner authenticated', token })
+            res.json({ message: 'owner authenticated', token,id })
         })
         .catch(err => {
             const { message } = err
@@ -129,11 +129,11 @@ router.get('/listProperties', (req, res) => {
 
 // RETRIEVE PROPERTY BY ID
 
-router.get('/retrievePropertyById/:email/property/:id', validateJwt, (req, res) => {
-    const { params: { email, id } } = req
+router.get('/properties/:id', (req, res) => {
+    const { params: { id } } = req
 
-    logic.retrievePropertyById(email, id)
-        .then(res.json.bind(res))
+    logic.retrievePropertyById(id)
+        .then(property => res.json({ property }))
         .catch(err => {
             const { message } = err
 
@@ -143,7 +143,7 @@ router.get('/retrievePropertyById/:email/property/:id', validateJwt, (req, res) 
 
 // UPDATE PROPERTY
 
-router.patch('/updatePropertyById/:email/property/:id', [validateJwt, jsonBodyParser], (req, res) => {
+router.patch('/owner/:email/property/:id', [validateJwt, jsonBodyParser], (req, res) => {
     const { params: { email, id }, body: { title, subtitle, photo, description, categories, type } } = req
     logic.updatePropertyById(email, id, title, subtitle, photo, description, categories, type)
         .then(() => res.json({ message: 'property updated' }))

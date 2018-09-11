@@ -1,9 +1,86 @@
 import React, { Component } from 'react';
+import logic from '../../logic'
 import './Filters.css'
+import PropertyCard from '../Cards/PropertyCard'
+import swal from 'sweetalert';
 
 class Filters extends Component {
 
+    state = {
+        properties: [],
+        type: '',
+        categories: []
+    }
+
+    listProperties = () => {
+        logic.listPropertyByQuery()
+            .then(({ properties }) => {
+                this.setState({ properties })
+            })
+    }
+
+    filterProperties = () => {
+        return logic.listPropertyByQuery(this.state.type || undefined, this.state.categories)
+            .then(({ properties }) => {
+                this.setState({ properties })
+            })
+    }
+
+    componentDidMount() {
+        this.listProperties()
+    }
+
+    onCheckboxChanged = e => {
+
+        const checked = e.target.checked
+        const value = e.target.value
+        const categories = this.state.categories
+
+        if (checked) {
+            categories.push(value)
+        }
+        else {
+            const pos = categories.indexOf(value)
+            categories.splice(pos, 1)
+        }
+
+        this.setState({ categories }, () => this.filterProperties())
+    }
+
+
+    onTypeChanged = e => {
+        return this.setState({ type: e.target.value }, () => {
+            return this.filterProperties()
+        })
+    }
+
+    deleteProperty = (id) => {
+        const { email, token } = this.props
+        return swal({
+                title: "Are you sure?",
+                text: "Once deleted, you will not be able to recover this property!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        return logic.deletePropertyById(email, id, token)
+                        .then(() => swal("Your property has been deleted!", {
+                            icon: "success"
+                        })
+                        .then(() =>  this.listProperties())
+                        )
+                    } else {
+                        swal("Your property is safe!");
+                    }
+                })
+    }
+
     render() {
+
+        const { properties } = this.state
+
         return <div className="container">
             <form>
                 <div className="row">
@@ -11,8 +88,8 @@ class Filters extends Component {
                         <div className="filterBox">
                             <h4>By Type:</h4>
                             <div className="form-group">
-                                <select className="form-control text-muted" onChange={this.onTypeChanged}>
-                                    <option selected>Choose...</option>
+                                <select className="form-control text-muted" onChange={this.onTypeChanged} value={this.state.type}>
+                                    <option selected value="all" name="all">All types</option>
                                     <option name="Penthouse">Penthouse</option>
                                     <option name="Houses">Houses</option>
                                     <option name="Events Spaces">Events Spaces</option>
@@ -26,26 +103,26 @@ class Filters extends Component {
                             <div class="row">
                                 <div class="col">
                                     <div className="form-check form-check-inline">
-                                        <input className="form-check-input" name="Events" type="checkbox" id="inlineCheckbox1" value="option1" onChange={this.onCheckboxChanged} />
-                                        <label className="form-check-label" for="inlineCheckbox1">Events</label>
+                                        <input className="form-check-input" name="Events" type="checkbox" id="inlineCheckbox1" value="Events" onChange={this.onCheckboxChanged} />
+                                        <label className="form-check-label">Events</label>
                                     </div>
                                     <div className="form-check form-check-inline">
-                                        <input className="form-check-input" name="Films" type="checkbox" id="inlineCheckbox2" value="option2" onChange={this.onCheckboxChanged} />
-                                        <label className="form-check-label" for="inlineCheckbox2">Films</label> 
+                                        <input className="form-check-input" name="Films" type="checkbox" id="inlineCheckbox2" value="Films" onChange={this.onCheckboxChanged} />
+                                        <label className="form-check-label">Films</label>
                                     </div>
                                     <div className="form-check form-check-inline">
-                                        <input className="form-check-input" name="Shootings" type="checkbox" id="inlineCheckbox3" value="option3" onChange={this.onCheckboxChanged} />
-                                        <label className="form-check-label" for="inlineCheckbox3">Shootings</label>
+                                        <input className="form-check-input" name="Shootings" type="checkbox" id="inlineCheckbox3" value="Shootings" onChange={this.onCheckboxChanged} />
+                                        <label className="form-check-label">Shootings</label>
                                     </div>
                                 </div>
                                 <div class="col">
                                     <div className="form-check form-check-inline">
-                                        <input className="form-check-input" name="Movies" type="checkbox" id="inlineCheckbox4" value="option4" onChange={this.onCheckboxChanged} />
-                                        <label className="form-check-label" for="inlineCheckbox4">Movies</label>
+                                        <input className="form-check-input" name="Movies" type="checkbox" id="inlineCheckbox4" value="Movies" onChange={this.onCheckboxChanged} />
+                                        <label className="form-check-label">Movies</label>
                                     </div>
                                     <div className="form-check form-check-inline">
-                                        <input className="form-check-input" name="Spots" type="checkbox" id="inlineCheckbox5" value="option5" onChange={this.onCheckboxChanged} />
-                                        <label className="form-check-label" for="inlineCheckbox5">Spots</label>
+                                        <input className="form-check-input" name="Spots" type="checkbox" id="inlineCheckbox5" value="Spots" onChange={this.onCheckboxChanged} />
+                                        <label className="form-check-label">Spots</label>
                                     </div>
                                 </div>
                             </div>
@@ -54,78 +131,78 @@ class Filters extends Component {
                             <div class="row">
                                 <div class="col">
                                     <div className="form-check">
-                                        <input className="form-check-input" name="Balcony" type="checkbox" id="inlineCheckbox1" value="option1" onChange={this.onCheckboxChanged} />
-                                        <label className="form-check-label" for="inlineCheckbox1">Balcony</label>
+                                        <input className="form-check-input" name="Balcony" type="checkbox" id="inlineCheckbox1" value="Balcony" onChange={this.onCheckboxChanged} />
+                                        <label className="form-check-label">Balcony</label>
                                     </div>
                                     <div className="form-check">
-                                        <input className="form-check-input" name="Bathroom" type="checkbox" id="inlineCheckbox2" value="option2" onChange={this.onCheckboxChanged} />
-                                        <label className="form-check-label" for="inlineCheckbox2">Bathroom</label> 
+                                        <input className="form-check-input" name="Bathroom" type="checkbox" id="inlineCheckbox2" value="Bathroom" onChange={this.onCheckboxChanged} />
+                                        <label className="form-check-label">Bathroom</label>
                                     </div>
                                     <div className="form-check">
-                                        <input className="form-check-input" name="Kitchen" type="checkbox" id="inlineCheckbox3" value="option3" onChange={this.onCheckboxChanged} />
-                                        <label className="form-check-label" for="inlineCheckbox3">Kitchen</label>
+                                        <input className="form-check-input" name="Kitchen" type="checkbox" id="inlineCheckbox3" value="Kitchen" onChange={this.onCheckboxChanged} />
+                                        <label className="form-check-label">Kitchen</label>
                                     </div>
                                     <div className="form-check">
-                                        <input className="form-check-input" name="Dinning room" type="checkbox" id="inlineCheckbox4" value="option4" onChange={this.onCheckboxChanged} />
-                                        <label className="form-check-label" for="inlineCheckbox4">Dinning room</label>
+                                        <input className="form-check-input" name="Dinning Room" type="checkbox" id="inlineCheckbox4" value="Dinning Room" onChange={this.onCheckboxChanged} />
+                                        <label className="form-check-label">Dinning Room</label>
                                     </div>
                                     <div className="form-check">
-                                        <input className="form-check-input" name="Office" type="checkbox" id="inlineCheckbox5" value="option5" onChange={this.onCheckboxChanged} />
-                                        <label className="form-check-label" for="inlineCheckbox5">Office</label>
+                                        <input className="form-check-input" name="Office" type="checkbox" id="inlineCheckbox5" value="Office" onChange={this.onCheckboxChanged} />
+                                        <label className="form-check-label">Office</label>
                                     </div>
                                     <div className="form-check">
-                                        <input className="form-check-input" name="Views City" type="checkbox" id="inlineCheckbox5" value="option5" onChange={this.onCheckboxChanged} />
-                                        <label className="form-check-label" for="inlineCheckbox5">Views City</label>
+                                        <input className="form-check-input" name="Views City" type="checkbox" id="inlineCheckbox5" value="Views City" onChange={this.onCheckboxChanged} />
+                                        <label className="form-check-label">Views City</label>
                                     </div>
                                     <div className="form-check">
-                                        <input className="form-check-input" name="Clasic Style" type="checkbox" id="inlineCheckbox1" value="option1" onChange={this.onCheckboxChanged} />
-                                        <label className="form-check-label" for="inlineCheckbox1">Clasic Style</label>
+                                        <input className="form-check-input" name="Classic Style" type="checkbox" id="inlineCheckbox1" value="Classic Style" onChange={this.onCheckboxChanged} />
+                                        <label className="form-check-label">Classic Style</label>
                                     </div>
                                     <div className="form-check">
-                                        <input className="form-check-input" name="Forest Views" type="checkbox" id="inlineCheckbox2" value="option2" onChange={this.onCheckboxChanged} />
-                                        <label className="form-check-label" for="inlineCheckbox2">Forest Views</label> 
+                                        <input className="form-check-input" name="Forest Views" type="checkbox" id="inlineCheckbox2" value="Forest Views" onChange={this.onCheckboxChanged} />
+                                        <label className="form-check-label">Forest Views</label>
                                     </div>
                                     <div className="form-check">
-                                        <input className="form-check-input" name="Modern Style" type="checkbox" id="inlineCheckbox3" value="option3" onChange={this.onCheckboxChanged} />
-                                        <label className="form-check-label" for="inlineCheckbox3">Modern Style</label>
+                                        <input className="form-check-input" name="Modern Style" type="checkbox" id="inlineCheckbox3" value="Modern Style" onChange={this.onCheckboxChanged} />
+                                        <label className="form-check-label">Modern Style</label>
                                     </div>
                                 </div>
                                 <div class="col">
                                     <div className="form-check">
-                                        <input className="form-check-input" name="Parking" type="checkbox"onChange={this.onCheckboxChanged} />
-                                        <label className="form-check-label" for="inlineCheckbox4">Parking</label>
+                                        <input className="form-check-input" name="Parking" type="checkbox" value="Parking" onChange={this.onCheckboxChanged} />
+                                        <label className="form-check-label">Parking</label>
                                     </div>
                                     <div className="form-check">
-                                        <input className="form-check-input" name="Garden" type="checkbox" onChange={this.onCheckboxChanged} />
-                                        <label className="form-check-label" for="inlineCheckbox5">Garden</label>
+                                        <input className="form-check-input" name="Garden" type="checkbox" value="Garden" onChange={this.onCheckboxChanged} />
+                                        <label className="form-check-label">Garden</label>
                                     </div>
                                     <div className="form-check">
-                                        <input className="form-check-input" name="Office" type="checkbox" onChange={this.onCheckboxChanged} />
-                                        <label className="form-check-label" for="inlineCheckbox5">Office</label>
+                                        <input className="form-check-input" name="Pool" type="checkbox" id="inlineCheckbox1" value="Pool" onChange={this.onCheckboxChanged} />
+                                        <label className="form-check-label">Pool</label>
                                     </div>
                                     <div className="form-check">
-                                        <input className="form-check-input" name="Pool" type="checkbox" id="inlineCheckbox1" value="option1" onChange={this.onCheckboxChanged} />
-                                        <label className="form-check-label" for="inlineCheckbox1">Pool</label>
+                                        <input className="form-check-input" name="Elevator" type="checkbox" id="inlineCheckbox2" value="Elevator" onChange={this.onCheckboxChanged} />
+                                        <label className="form-check-label">Elevator</label>
                                     </div>
                                     <div className="form-check">
-                                        <input className="form-check-input" name="Sea views" type="checkbox" id="inlineCheckbox2" value="option2" onChange={this.onCheckboxChanged} />
-                                        <label className="form-check-label" for="inlineCheckbox2">Sea views</label> 
+                                        <input className="form-check-input" name="Sea views" type="checkbox" id="inlineCheckbox2" value="Sea views" onChange={this.onCheckboxChanged} />
+                                        <label className="form-check-label">Sea views</label>
                                     </div>
                                     <div className="form-check">
-                                        <input className="form-check-input" name="Living room" type="checkbox" id="inlineCheckbox3" value="option3" onChange={this.onCheckboxChanged} />
-                                        <label className="form-check-label" for="inlineCheckbox3">Living room</label>
+                                        <input className="form-check-input" name="Living Room" type="checkbox" id="inlineCheckbox3" value="Living Room" onChange={this.onCheckboxChanged} />
+                                        <label className="form-check-label">Living Room</label>
                                     </div>
                                     <div className="form-check">
-                                        <input className="form-check-input" name="Industrial floor" type="checkbox" id="inlineCheckbox4" value="option4" onChange={this.onCheckboxChanged} />
-                                        <label className="form-check-label" for="inlineCheckbox4">Industrial floor</label>
+                                        <input className="form-check-input" name="Industrial" type="checkbox" id="inlineCheckbox4" value="Industrial" onChange={this.onCheckboxChanged} />
+                                        <label className="form-check-label">Industrial</label>
                                     </div>
                                     <div className="form-check">
-                                        <input className="form-check-input" name="Wood floor" type="checkbox" id="inlineCheckbox5" value="option5" onChange={this.onCheckboxChanged} />
-                                        <label className="form-check-label" for="inlineCheckbox5">Wood floor</label>
+                                        <input className="form-check-input" name="Wood Floor" type="checkbox" id="inlineCheckbox5" value="Wood Floor" onChange={this.onCheckboxChanged} />
+                                        <label className="form-check-label">Wood Floor</label>
                                     </div>
                                     <div className="form-check">
-                                        <input className="form-check-input" name="Terrace / Exterior Zone" type="checkbox" id="inlineCheckbox5" value="option5" onChange={this.onCheckboxChanged} />
-                                        <label className="form-check-label" for="inlineCheckbox5">Terrace</label>
+                                        <input className="form-check-input" name="Terrace" type="checkbox" id="inlineCheckbox5" value="Terrace" onChange={this.onCheckboxChanged} />
+                                        <label className="form-check-label">Terrace</label>
                                     </div>
                                 </div>
                             </div>
@@ -134,36 +211,7 @@ class Filters extends Component {
                     <div className="col-1"></div>
                     <div className="col-7">
                         <div class="row">
-                            <div class="col">
-                                <div class="card">
-                                    <img class="card-img-top" src=".../100px180/" alt="Card image cap" />
-                                    <div class="card-body">
-                                        <h5 class="card-title">Card title</h5>
-                                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                        <a href="#" class="btn btn-primary">Go somewhere</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="card">
-                                    <img class="card-img-top" src=".../100px180/" alt="Card image cap" />
-                                    <div class="card-body">
-                                        <h5 class="card-title">Card title</h5>
-                                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                        <a href="#" class="btn btn-primary">Go somewhere</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="card">
-                                    <img class="card-img-top" src=".../100px180/" alt="Card image cap" />
-                                    <div class="card-body">
-                                        <h5 class="card-title">Card title</h5>
-                                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                        <a href="#" class="btn btn-primary">Go somewhere</a>
-                                    </div>
-                                </div>
-                            </div>
+                            {properties.length ? properties.map(propers => <PropertyCard key={propers.id} data={{ ...propers, userId: this.props.userId }} goEdit={this.props.goEdit} deleteProperty={this.deleteProperty} />) : ""}
                         </div>
                     </div>
                 </div>
@@ -174,7 +222,6 @@ class Filters extends Component {
 }
 
 export default Filters
-                                
 
 
 
@@ -183,5 +230,5 @@ export default Filters
 
 
 
-                            
-                            
+
+

@@ -17,10 +17,6 @@ class Register extends Component {
 
     onPasswordChanged = e => this.setState({ password: e.target.value })
 
-    componentDidMount(){
-        this.props.toggleHero()
-    }
-
     onRegisterSubmitted = e => {
         e.preventDefault()
         const { name, email, password } = this.state

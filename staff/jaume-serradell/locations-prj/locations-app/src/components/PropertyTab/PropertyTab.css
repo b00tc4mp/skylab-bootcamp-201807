@@ -4,8 +4,8 @@
 }
 
 .container h4 {
-    font-family: 'Caveat', cursive;
-    font-size: 25px;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 20px;
     text-transform: uppercase;
 }
 
@@ -37,4 +37,8 @@ p {
 
 .infoImg img {
     border-radius: 4px;
+}
+
+.imgProperty {
+    width: 555px;
 }

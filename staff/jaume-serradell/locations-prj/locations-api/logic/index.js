@@ -129,7 +129,7 @@ const logic = {
 
                 if (owner.password !== password) throw new LogicError(`wrong password`)
 
-                return true
+                return owner.id
             })
     },
 
@@ -304,24 +304,15 @@ const logic = {
 
     /** Retrieve properties by ID
      * 
-     * @param {string} email The owner's email
      * @param {string} propertyId The ID of the property
      * 
-     * @throws {LogicError} If owner email does not exist
      * @throws {LogicError} If id property does not exist
      * 
      */
-    retrievePropertyById(email, propertyId) {
+    retrievePropertyById(propertyId) {
         return Promise.resolve()
             .then(() => {
-                this._validateEmail(email)
                 this._validateObjectId(propertyId)
-
-                return Owner.findOne({ email })
-            })
-            .then(owner => {
-                if (!owner) throw new LogicError(`Owner with ${email} email does not exist`)
-
                 return Property.findById(propertyId).lean()
                     .then(property => {
                         if (!property) throw new LogicError(`Property with id ${propertyId} does not exist`)

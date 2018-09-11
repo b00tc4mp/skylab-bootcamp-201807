@@ -19,3 +19,8 @@ html {
 button {
   font-family: 'M PLUS Rounded 1c', sans-serif !important;
 }
+
+.container {
+  padding: 40px 0;
+  font-family: 'M PLUS Rounded 1c', sans-serif;
+}

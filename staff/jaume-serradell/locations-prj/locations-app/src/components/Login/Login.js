@@ -21,7 +21,7 @@ class Login extends Component {
                     title: "Owner logged correctly",
                     icon: "success"
                 })
-                .then(() => this.props.onLoggedIn(this.state.email,res.token))
+                .then(() => this.props.onLoggedIn(this.state.email,res.token,res.id))
             })
             .catch(({ message }) =>
                 swal({
