@@ -1,8 +1,8 @@
 {
   "name": "remainder-app",
   "short_name": "remainder",
-  "theme_color": "#2196f3",
-  "background_color": "#2196f3",
+  "theme_color": "#55bf9f",
+  "background_color": "#55bf9f",
   "display": "standalone",
   "Scope": "/",
   "start_url": ".",

@@ -27,12 +27,12 @@ class Login extends Component {
 
     return <main className="login">
       <div className="login__group">
+        {error && <p className="login__group__error">{error}</p>}
         <form className="login__group__form" onSubmit={onLogin}>
           <input className="login__group__form__input" type="text" value={dni} name="dni" placeholder="dni" autoFocus onChange={keepDni} />
           <input className="login__group__form__input" type="password" value={password} name="password" placeholder="password" onChange={keepPassword} />
           <button className="login__group__form__button" type="submit">Login</button>
         </form>
-        {error && <p className="login__group__error">{error}</p>}
       </div>
     </main>
   }

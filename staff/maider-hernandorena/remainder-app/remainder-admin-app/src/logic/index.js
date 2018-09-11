@@ -2,8 +2,8 @@
 
 const logic = {
 
-    url: 'http://localhost:8080/api/admin',
-    // url: 'https://localhost:8443/api/admin',
+    url: 'https://calm-reaches-30474.herokuapp.com/api/admin',
+    // url: 'http://localhost:8080/api/admin',
 
     /**
      * The call to the API which connects with the data base (on each function later, will be called and sent different parameter for each situation)

@@ -19,10 +19,16 @@
     justify-content: flex-end;
     height: 45px;
     background: linear-gradient(left, #55bf9f 0%, #2fbdbb 100%); }
+    @media screen and (max-width: 600px) {
+      .header__nav {
+        height: 45px; } }
     .header__nav__link {
       color: #ffffff;
       text-decoration: none;
       margin: 10px 20px; }
+      @media screen and (max-width: 600px) {
+        .header__nav__link {
+          font-size: 22px; } }
       .header__nav__link:hover {
         color: #215b63; }
 
@@ -33,5 +39,8 @@
     padding-top: 5%;
     display: block;
     width: 150px; }
+    @media screen and (max-width: 600px) {
+      .noHome__logo {
+        padding-top: 15%; } }
 
 /*# sourceMappingURL=app.css.map */

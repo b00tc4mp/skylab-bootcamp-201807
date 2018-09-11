@@ -6,15 +6,33 @@
     margin: 3% auto 0 auto
     width: 80%
 
+    @media screen and (max-width: 600px)
+        font-size: 22px
+        padding: 5% 0
+
     &__title
-        margin: 7% 0 3% 0
+        margin: 10% 0
 
     &__list
         list-style-type: circle
         color: #2fbdbb
         padding: 0 2%
 
+        @media screen and (max-width: 600px)
+            list-style: none
+            padding: 0
+
         &__item
+            margin: 5% 0
+
+            @media screen and (max-width: 600px)
+                margin: 10% 0
+                border: solid 2px #2fbdbb
+                border-radius: 10px
+                padding: 15px
+
+                &:active
+                    background: linear-gradient(left, rgba(85,191,159,1) 0%, rgba(47,189,187,1) 100%)
 
             &__link
                 text-decoration: none

@@ -37,7 +37,7 @@ class Home extends Component {
                 <h2 className="patients__title">Patients</h2>
                 <ul className="patients__list">
                     {patients.map(patient => <li className="patients__list__item" key={patient.dni} onClick={() => patientData(patient.dni)}>
-                        <a className="patients__list__item__link" href={`/#/patient/${patient.dni}`}><p><strong>{patient.name} {patient.surname}</strong>. DNI: {patient.dni}. {patient.age} years old, {patient.gender}.</p></a>
+                        <a className="patients__list__item__link" href={`/#/patient/${patient.dni}`}><p><strong>{patient.name} {patient.surname}</strong></p><p> DNI: {patient.dni}. {patient.age} years old, {patient.gender}.</p></a>
                     </li> )}
                 </ul>
             </div>

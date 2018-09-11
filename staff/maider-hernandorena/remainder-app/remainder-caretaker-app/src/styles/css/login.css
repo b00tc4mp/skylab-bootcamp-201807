@@ -1,23 +1,21 @@
 .login {
   background: linear-gradient(left, #55bf9f 0%, #2fbdbb 100%);
-  height: 70vh;
+  height: 100vh;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   font-size: 16px; }
+  @media screen and (max-width: 600px) {
+    .login {
+      height: 100vh;
+      width: 100%;
+      margin-top: -5px; } }
   .login__group {
     padding: 5% 0;
     margin: 0 auto;
     width: 20%; }
-    .login__group__text {
-      padding: 0%;
-      text-align: left;
-      color: #ffffff; }
-      .login__group__text__link {
-        color: #308079;
-        text-decoration: none; }
-        .login__group__text__link:hover {
-          color: #215b63; }
-    .login__group__goToLogin {
-      width: 90%; }
+    @media screen and (max-width: 600px) {
+      .login__group {
+        width: 70%;
+        padding: 20% 0; } }
     .login__group__form__input {
       display: block;
       padding: 10px;
@@ -25,6 +23,11 @@
       border: none;
       border-radius: 10px;
       width: 90%; }
+      @media screen and (max-width: 600px) {
+        .login__group__form__input {
+          font-size: 20px;
+          padding: 20px;
+          margin-top: 20px; } }
       .login__group__form__input:focus {
         outline: 0px; }
     .login__group__form__button {
@@ -37,11 +40,20 @@
       cursor: pointer;
       font-size: 18px;
       width: 98%; }
+      @media screen and (max-width: 600px) {
+        .login__group__form__button {
+          font-size: 22px;
+          padding: 20px;
+          margin-top: 20px;
+          width: 104%; } }
       .login__group__form__button:hover {
         background-color: #215b63; }
       .login__group__form__button:focus {
         outline: 0px; }
     .login__group__error {
-      color: #ca6262; }
+      color: #ee7575; }
+      @media screen and (max-width: 600px) {
+        .login__group__error {
+          font-size: 20px; } }
 
 /*# sourceMappingURL=login.css.map */

@@ -38,7 +38,7 @@ class Profile extends Component{
     return <main className="profile">
               <h2 className="profile__title">Update Password</h2>
               <form className="profile__form" onSubmit={onUpdate}>
-                <input className="profile__form__input" type="text" name="dni" placeholder="dni" readOnly value={this.props.dni} />
+                <input className="profile__form__inputReadOnly" type="text" name="dni" placeholder="dni" readOnly value={this.props.dni} />
                 <input className="profile__form__input" type="password" name="password" placeholder="password" onChange={keepPassword} />
                 <input className="profile__form__input" type="password" name="newPassword" placeholder="new password" onChange={keepNewPassword} />
                 <button className="profile__form__button" type="submit">Update</button>

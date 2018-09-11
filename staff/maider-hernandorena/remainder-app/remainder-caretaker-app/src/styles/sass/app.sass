@@ -23,10 +23,16 @@
         height: 45px
         background: linear-gradient(left, rgba(85,191,159,1) 0%, rgba(47,189,187,1) 100%)
 
+        @media screen and (max-width: 600px)
+            height: 45px
+
         &__link
             color: #ffffff
             text-decoration: none
             margin: 10px 20px
+
+            @media screen and (max-width: 600px)
+                font-size: 22px
 
             &:hover
                 color: #215b63
@@ -39,3 +45,6 @@
         padding-top: 5%
         display: block
         width: 150px
+
+        @media screen and (max-width: 600px)
+            padding-top: 15%
