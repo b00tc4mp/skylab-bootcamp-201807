@@ -28,6 +28,15 @@ class WallPage extends Component {
 
   onUserClick = username => this.props.history.push(`/${username}`)
 
+  onToggleLikeClick = async (postId) => {
+    const { loggedInUsername, token } = this.props
+    await logic.toggleLikePost(token, loggedInUsername, postId)
+  }
+
+  onToggleSaveClick = () => {
+    alert('pepe')
+  }
+
   render() {
 
     return (
@@ -47,6 +56,8 @@ class WallPage extends Component {
                 posts={this.state.posts}
                 onPostDetailClick={this.props.onPostDetailClick}
                 onUserClick={this.onUserClick}
+                onToggleLikeClick={this.onToggleLikeClick}
+                onToggleSaveClick={this.onToggleSaveClick}
               />}
             </section>
             <section>

@@ -9,6 +9,22 @@ class ColumnPost extends Component {
     this.props.onUserClick(user.username)
   }
 
+  handleLikeIconClick = event => {
+    event.preventDefault()
+    const { post } = this.props
+    this.props.onToggleLikeClick(post._id)
+  }
+
+  handleCommentIconClick = event => {
+    event.preventDefault()
+    this.refs.addCommentTextarea.select()
+  }
+
+  handleSaveIconClick = event => {
+    event.preventDefault()
+    this.props.onToggleSaveClick()
+  }
+
   render() {
     const { post } = this.props
     return (
@@ -32,15 +48,15 @@ class ColumnPost extends Component {
         <section className="ColumnPost-body">
           <div className="ColumnPost-actions">
             <div className="ColumnPost-leftActions">
-              <a href="#/" className="ColumnPost-actionIconLink">
+              <a href="#/" className="ColumnPost-actionIconLink" onClick={this.handleLikeIconClick}>
                 <i className="ColumnPost-actionIcon far fa-heart"></i>
               </a>
-              <a href="#/" className="ColumnPost-actionIconLink">
+              <a href="#/" className="ColumnPost-actionIconLink" onClick={this.handleCommentIconClick}>
                 <i className="ColumnPost-actionIcon far fa-comment"></i>
               </a>
             </div>
             <div className="ColumnPost-rightActions">
-              <a href="#/" className="ColumnPost-actionIconLink">
+              <a href="#/" className="ColumnPost-actionIconLink" onClick={this.handleSaveIconClick}>
                 <i className="ColumnPost-actionIcon far fa-bookmark"></i>
               </a>
             </div>
@@ -65,7 +81,7 @@ class ColumnPost extends Component {
           <time className="ColumnPost-creation">1 Hour ago</time>
           <div className="ColumnPost-addComment">
             <form>
-              <textarea name="" className="ColumnPost-addCommentTextarea" id="" cols="30" rows="10" placeholder="Add comment"></textarea>
+              <textarea ref="addCommentTextarea" name="" className="ColumnPost-addCommentTextarea" id="" cols="30" rows="10" placeholder="Add comment"></textarea>
             </form>
           </div>
         </section>

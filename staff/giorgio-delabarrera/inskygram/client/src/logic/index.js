@@ -241,6 +241,20 @@ const logic = {
       })
   },
 
+  toggleLikePost(token, username, postId) {
+    return Promise.resolve()
+      .then(() => {
+        this._validateStringField('token', token)
+        this._validateStringField('username', username)
+        this._validateStringField('post id', postId)
+
+        const headers = { authorization: `bearer ${token}`, 'Content-Type': 'application/json' }
+        
+        return this._httpClient(`/posts/${postId}/actions/like`, 'POST', headers, undefined, 200)
+          .then(() => true)
+      })
+  },
+
   listExplorePosts(token, username, perPage = 10, page = 0) {
     return Promise.resolve()
       .then(() => {
