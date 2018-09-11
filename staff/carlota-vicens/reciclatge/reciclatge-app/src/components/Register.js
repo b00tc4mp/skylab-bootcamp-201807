@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 
+import './styles/Register.css'
 class Register extends Component {
     state = {
         email: null,

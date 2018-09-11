@@ -1,33 +1,34 @@
 import React, { Component } from 'react'
+import Navbar from './NavBar.js'
 
+import './styles/Profile.css'
 class Profile extends Component {
 
     state = {
-        password1: null,
+        password: null,
         password2: null,
-        password3: null,
         newPassword: null,
         deleteError: null,
         update1: null,
-        update2: null
+        update: null,
+        email: null
     }
 
-    keepPassword1 = event => this.setState({ password1: event.target.value })
+    keepPassword = event => this.setState({ password: event.target.value })
     keepPassword2 = event => this.setState({ password2: event.target.value })
-    keepPassword3 = event => this.setState({ password3: event.target.value })
     keepNewPassword = event => this.setState({ newPassword: event.target.value })
-    
+
     /** This is the function to update the user password */
     updatePassword = () => {
-        this.props.updateUser(this.state.password2, '', this.state.newPassword)
-            .then(() => this.setState({ update2: 'success' }))
-            .catch(err => this.setState({ update2: err.message }))
+        this.props.updateUser(this.state.email, this.state.password, this.state.newPassword)
+            .then(() => this.setState({ update: 'success' }))
+            .catch(err => this.setState({ update: err.message }))
     }
 
 
     /** This is the function to delete the user */
     deleteUser = () => {
-        this.props.deleteUser(this.state.password3)
+        this.props.deleteUser(this.state.email, this.state.password2)
             .catch(err => {
                 this.setState({ deleteError: err.message })
             })
@@ -37,33 +38,31 @@ class Profile extends Component {
 
         const {
             state: {
-                update1,
-                update2,
+                update,
                 deleteError
             },
-            keepPassword1,
+            keepPassword,
             keepPassword2,
-            keepPassword3,
             keepNewPassword,
             updatePassword,
-            updateEmail,
             deleteUser
         } = this
 
         return (
             <div className="profile">
+                <Navbar />
                 <div className="profile__change-password">
-                    <h3 className="profile__text"> Change password </h3>
-                    <input type="password" className="profile__input" placeholder=" password" onChange={keepPassword2}></input>
+                    <h3 className="profile__text"> Update password </h3>
+                    <input type="password" className="profile__input" placeholder=" password" onChange={keepPassword}></input>
                     <input type="password" className="profile__input" placeholder=" new password" onChange={keepNewPassword}></input>
                     <div>
-                        {update2 === 'success' ? <p className="profile__text--success">{update2}</p> : <p className="profile__text--error">{update2}</p>}
+                        {update === 'success' ? <p className="profile__text--success">{update}</p> : <p className="profile__text--error">{update}</p>}
                     </div>
                     <button type="password" className="profile__btn" onClick={updatePassword}> Update </button>
                 </div>
                 <div className="profile__delete">
                     <h3 className="profile__text"> Delete account </h3>
-                    <input type="password" className="profile__input" placeholder=" password" onChange={keepPassword3}></input>
+                    <input type="password" className="profile__input" placeholder=" password" onChange={keepPassword2}></input>
                     <div>
                         {deleteError && <p className="profile__text--error">{deleteError}</p>}
                     </div>

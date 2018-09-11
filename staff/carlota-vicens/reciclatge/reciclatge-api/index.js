@@ -16,15 +16,10 @@ const userRouter = require('./routes')
 mongoose.connect(MONGO_URL)
     .then(() => {
         const port = 3000;
-
-
-
         const app = express()
 
         app.use(cors())
         app.use('/api', userRouter)
-
-
 
         app.listen(8080, () => console.log(`${package.name} ${package.version} up and running on port 8080`))
 
@@ -35,10 +30,6 @@ mongoose.connect(MONGO_URL)
                 console.log('db connection closed');
 
                 process.exit();
-
-
-
-
 
             })
         })

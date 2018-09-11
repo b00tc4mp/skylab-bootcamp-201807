@@ -1,5 +1,5 @@
 const User = require('../data/models/user')
-const mongoose = require('mongoose');
+const mongoose = require('mongoose')
 const validateEmail = require('../utils/validate-email')
 
 
@@ -37,16 +37,35 @@ const logic = {
 
                 if (user.password !== password) throw new LogicError(`wrong password`)
 
-                return true
+                return user.id
             })
     },
 
     update(email, password, newPassword) {
         return Promise.resolve()
             .then(() => {
-                this._validateStringField('email', email)
+                this._validateEmail(email)
                 this._validateStringField('password', password)
                 this._validateStringField('new password', newPassword)
+
+                return User.findOne({ email })
+            })
+            .then(user => {
+                if (!user) throw new LogicError(`user ${username} does not exists`)
+
+                if (user.password !== password) throw new LogicError('wrong credentials')
+
+                if (password === newPassword) throw new LogicError('new password cannot be same as current password')
+
+                return User.updateOne({ _id: user._id }, { $set: { password: newPassword } })
+            })
+    },
+
+    delete(email, password) {
+        return Promise.resolve()
+            .then(() => {
+                this._validateEmail(email)
+                this._validateStringField('password', password)
 
                 return User.findOne({ email })
             })
@@ -55,15 +74,13 @@ const logic = {
 
                 if (user.password !== password) throw new LogicError(`wrong password`)
 
-                if (password === newPassword) throw new LogicError('new password must be different to old password')
-
-                user.password = newPassword
-
-                return user.save()
+                return User.deleteOne({ _id: user._id })
             })
             .then(() => true)
-    },
+    }
+
 }
+
 
 class LogicError extends Error {
     constructor(message) {

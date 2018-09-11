@@ -1,0 +1,40 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.main {
+  height: 90vh;
+  background-color: yellowgreen;
+  display: flex;
+  justify-items: center;
+  flex-direction: column;
+  margin: 0;
+}
+.main__title {
+  padding: 0;
+  margin: auto;
+  color: white;
+  padding-bottom: 30px;
+}
+.main__btn {
+  text-align: center;
+  padding: 20px;
+  height: 10vh;
+  width: 30vh;
+  margin: 0 auto;
+  background-color: green;
+  border-radius: 20px;
+}
+.main__image {
+  padding: 20px;
+  text-align: center;
+}
+
+/*# sourceMappingURL=Main.css.map */
