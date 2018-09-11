@@ -27,11 +27,13 @@ const user = {
             if(fieldName === 'name' || fieldName === 'surname') {
                 validate._stringField(fieldName, data[fieldName])
             } else if(fieldName === 'birth') {
-                validate._dateField(fieldName, data[fieldName])
+                validate._dateField(fieldName, data[fieldName] ? new Date(data[fieldName]) : data[fieldName])
             } else if(fieldName === 'gender') {
                 this._validateGenderOptions(fieldName, data[fieldName])
-            } else if(fieldName === 'location') {
-                validate._location(data[fieldName])
+            } else if(fieldName === 'longitude') { // loc: [long,lat]
+                validate._longitude(data[fieldName])
+            } else if(fieldName === 'latitude') { // loc: [long,lat]
+                validate._latitude(data[fieldName])
             } else {
                 throw new LogicError(`is not possible to update the user profile with the data provided in ${fieldName}`)
             }

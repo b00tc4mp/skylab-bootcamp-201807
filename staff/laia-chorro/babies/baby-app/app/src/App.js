@@ -9,6 +9,13 @@ import Nav from './components/sections/Nav'
 import Myzone from './components/Myzone'
 import ProductDetail from './components/pages/ProductDetail'
 import PublicUser from './components/pages/PublicUser'
+
+
+import Alert from 'react-s-alert';
+ 
+import 'react-s-alert/dist/s-alert-default.css';
+import 'react-s-alert/dist/s-alert-css-effects/slide.css';
+
 import { Route, withRouter, Redirect } from 'react-router-dom'
 
 
@@ -45,6 +52,7 @@ class App extends Component {
 			.then(() => {
 				//this.setState({loggedIn: true, showFeedback: true})
 				this.setState({loggedIn: true})
+				this.getProfilePhoto()
 				this.props.history.push('/mylist')
 			})
 			.catch(({message}) => {
@@ -59,8 +67,9 @@ class App extends Component {
 		this.props.history.push('/')
 	}
 
-	onProductUpload = (title, cathegory, price, description, photo, longitude, latitude) => {
-		logic.uploadProduct(title, cathegory, price, description, photo, longitude, latitude)
+	onProductUpload = (title, category, price, description, photo, longitude, latitude) => {
+
+		logic.uploadProduct(title, category, price, description, photo, longitude, latitude)
 			.then(() => logic.getPrivateUser() )
 			.then(() => this.props.history.push('/mylist'))
 			.catch(({ message }) => this.setState({ error: message }))
@@ -162,6 +171,7 @@ class App extends Component {
 				<Route path="/user/:idUser" exact render={() => <PublicUser onAddFavourite={onAddFavourite} onRemoveFavourite={onRemoveFavourite} idFavs={idFavs} getIdFavs={getIdFavs}  />} />
 				{/*<Route path="/update" exact render={() => loggedIn ? <Update onUpdateProp={onUpdate} email={logic.userUsername} errorMsg={errorMsg} showFeedback={showFeedback} hideFeedback={hideFeedback}/> : <Redirect to="/login" />} />*/}
 
+				<Alert stack={{limit: 3}} />
 			</div>
 		)
 	}

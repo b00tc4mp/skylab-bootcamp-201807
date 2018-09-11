@@ -47,7 +47,7 @@ const validate = {
 
     //Check that longitude is above -180 and below 180
     _longitude(longitude) { 
-        if (longitude < -90 || longitude > 90)
+        if (longitude < -180 || longitude > 180)
             throw new LogicError(`invalid longitude ${longitude}`)
     },
 

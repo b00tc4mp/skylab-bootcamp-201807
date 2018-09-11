@@ -178,7 +178,7 @@ const product = {
             .then(urlsCloudinary => {
                 data.cathegory = data.cathegory.toLowerCase()
                 const { title, description, price, cathegory, location } = data
-
+debugger;
                 return Product.create({ user: userId, title, description, price, cathegory, location, photos: urlsCloudinary })
             })
             .then(product => product.id)

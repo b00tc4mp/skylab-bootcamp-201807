@@ -1,12 +1,9 @@
 import React, { Component } from 'react'
+import Alert from 'react-s-alert'
 import Autocomplete from '../maps/Autocomplete'
-import CircularProgress from '@material-ui/core/CircularProgress';
-import Avatar from '@material-ui/core/Avatar';
-//import green from '@material-ui/core/colors/green';
-import Button from '@material-ui/core/Button';
-
-//import ImageUploader from 'react-images-upload'
-
+import CircularProgress from '@material-ui/core/CircularProgress'
+import Avatar from '@material-ui/core/Avatar'
+import Button from '@material-ui/core/Button'
 import logic from '../../logic'
 import './Profile.css'
 import { withRouter } from 'react-router-dom'
@@ -27,8 +24,9 @@ class Profile extends Component {
         name: null,
         surnames: null,
         birthday: null,
-        longitude: 2.173403, // Default: Barcelona
-        latitude: 41.385064,
+        gender: null,
+        longitude: null,//2.173403, // Default: Barcelona
+        latitude: null,//41.385064,
         photoFile: null,
         photoUrl: null,
         loading: false,
@@ -58,6 +56,8 @@ class Profile extends Component {
 
     keepBirthday = e => this.setState({birthday: e.target.value})
 
+    keepGender = e => this.setState({gender: e.target.value})
+
     onKeepLocation = (latitude, longitude) => this.setState({ latitude, longitude })
 
     keepPhoto = e => {
@@ -68,18 +68,36 @@ class Profile extends Component {
     }
 
     uploadProfilePhoto = () => this.props.onUploadProfilePhoto(this.state.photoFile)
-
-    //handleButtonClick = () => this.setState({loading: true})
-
-    /*
+    
     submitUpload = e => {
         e.preventDefault()
 
-        const { title, cathegory, price, description, pictures, longitude, latitude } = this.state
+        const { name, surnames, birthday, gender, longitude, latitude } = this.state
 
-        this.props.onProductUpload(title, cathegory, price, description, pictures, longitude, latitude)
+        const data = {}
+        if (name) data.name = name
+        if (surnames) data.surnames = surnames
+        if (birthday) data.birth = (new Date(birthday)).toISOString()
+        if (gender) data.gender = gender
+        if (longitude) data.longitude = longitude
+        if (latitude) data.latitude = latitude
 
-    }*/
+        if (!(Object.keys(data).length === 0 && data.constructor === Object))
+        this.userUpload(data)
+    }
+
+    userUpload = (data) => {
+		logic.uploadUser(data)
+            .then(() => logic.getPrivateUser() )
+            .then(() => Alert.success('Your profile was updated successfully!', { position: 'top-right' }))
+            .catch(({ message }) => {
+                Alert.error(message, {
+                    position: 'bottom-right',
+                    effect: 'slide',
+                    timeout: 'none'
+                })
+            })
+	}
 
     
 
@@ -147,7 +165,7 @@ class Profile extends Component {
                             <div className="form-group row">
                                 <label className="col-sm-2 col-form-label">Birth date:</label>
                                 <div className="col-sm-10">
-                                    <input onChange={this.keepBirthday} type="date" value="2011-08-19" className="form-control" />
+                                    <input onChange={this.keepBirthday} type="date" className="form-control" />
                                 </div>
                             </div>
 
@@ -156,17 +174,17 @@ class Profile extends Component {
                                 <div className="col-sm-10">
                                     <div className="form-check form-check-inline">
                                         <label className="form-check-label">
-                                            <input className="form-check-input" type="radio" name="genderRadioBtn" value="female" /> female
+                                            <input onChange={this.keepGender} className="form-check-input" type="radio" name="genderRadioBtn" value="female" /> female
                                         </label>
                                         </div>
                                         <div className="form-check form-check-inline">
                                         <label className="form-check-label">
-                                            <input className="form-check-input" type="radio" name="genderRadioBtn" value="male" /> male
+                                            <input onChange={this.keepGender} className="form-check-input" type="radio" name="genderRadioBtn" value="male" /> male
                                         </label>
                                         </div>
                                         <div className="form-check form-check-inline">
                                         <label className="form-check-label">
-                                            <input className="form-check-input" type="radio" name="genderRadioBtn" value="other" /> other
+                                            <input onChange={this.keepGender} className="form-check-input" type="radio" name="genderRadioBtn" value="other" /> other
                                         </label>
                                     </div>
                                 </div>
@@ -184,48 +202,14 @@ class Profile extends Component {
                                 </div>
                             </div>                    
                         </div>
-                        
-                            {/*errorMsg && <Message success={false} text={this.props.errorMsg}/>*/}
-                            {/*showFeedback && <Message success={true} text={'Your update was successful'}/>*/}
-
                     </div>
                     <div>
                         <button type="submit" className="profile-btn profile-btn-save">Save</button>
                     </div>
                 </form>
-            </section>
-
-
-
-
-
-
-
-
-
-            
+            </section>            
         )
     }
 }
 
 export default withRouter(Profile)
-
-
-
-/*
-<input onChange={this.keepPhoto} type="file" name="photo" id="profile-btn-photo" accept="jpg|jpeg" />
-                            <label htmlFor="profile-btn-photo">
-                                {<div className={classes.wrapper}>
-                                    <Button
-                                        variant="contained"
-                                        color="primary"
-                                        disabled={loading}
-                                        onClick={this.handleButtonClick}
-                                    >
-                                        Upload your photo
-                                    </Button>}
-                                    {loading && <CircularProgress size={24} className={classes.buttonProgress} />}
-                                </div>
-                            </label>
-*/
-

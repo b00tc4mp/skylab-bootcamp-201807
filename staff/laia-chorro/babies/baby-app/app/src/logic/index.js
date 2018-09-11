@@ -75,6 +75,33 @@ const logic = {
         })
     },
 
+    _validateGenderOptions(name, field) {
+        validate._stringField(name, field)
+        if (!['female', 'male', 'other'].includes(field)) throw new Error(`${name} is not a valid gender`)
+    },
+
+    _validateProfileObj(data) {
+        validate._objectField('profile info data', data)
+
+        const fieldNames = Object.keys(data)
+
+        fieldNames.forEach(fieldName => {
+            if(fieldName === 'name' || fieldName === 'surname') {
+                validate._stringField(fieldName, data[fieldName])
+            } else if(fieldName === 'birth') {
+                validate._dateField(fieldName, data[fieldName] ? new Date(data[fieldName]) : data[fieldName])
+            } else if(fieldName === 'gender') {
+                this._validateGenderOptions(fieldName, data[fieldName])
+            } else if(fieldName === 'longitude') { // loc: [long,lat]
+                validate._longitude(data[fieldName])
+            } else if(fieldName === 'latitude') { // loc: [long,lat]
+                validate._latitude(data[fieldName])
+            } else {
+                throw new Error(`is not possible to update the user profile with the data provided in ${fieldName}`)
+            }
+        })
+    },
+
     _buildQueryParams(filters) {
         const url = new URL(this.url)
 
@@ -144,6 +171,21 @@ const logic = {
     },
 
     //USER//
+    uploadUser(data) {
+        return Promise.resolve()
+            .then(() => {
+                this._validateProfileObj(data)
+
+                const body = { data }
+
+                return this._call(`me/${this._userId}/profile`, 'PATCH', { 
+                    'Authorization': `bearer ${this._userToken}`,
+                    'Content-Type': 'application/json' 
+                }, JSON.stringify(body), 200)
+                    .then(() => true)
+            })
+    },
+
     uploadProfilePhoto(photo) {
         return Promise.resolve()
         .then(() => {
@@ -229,7 +271,6 @@ const logic = {
 
         return Promise.resolve()
             .then(() => {
-                debugger;
                 validate._stringField('title', title)
                 validate._stringField('cathegory', cathegory)
                 validate._floatField('price', price, 0, 999999)
