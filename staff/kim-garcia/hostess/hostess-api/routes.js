@@ -222,7 +222,7 @@ router.post('/create-event/:email', [validateJwt, jsonBodyParser], (req, res) =>
 
     logic.createEvent(email, date, location, title, description)
         .then(() => {
-            res.status(200).json({ status: 'OK' })
+            res.status(200).json({ status: 'OK', id })
         })
         .catch(err => {
             const { message } = err

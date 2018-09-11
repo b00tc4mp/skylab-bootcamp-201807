@@ -3,6 +3,7 @@ import { withRouter } from 'react-router-dom'
 import Header from '../components/Header'
 import logic from '../logic'
 import Contact from '../components/Contact'
+
 var getAge = require('get-age')
 
 

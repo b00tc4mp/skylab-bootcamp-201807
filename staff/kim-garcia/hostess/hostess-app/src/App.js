@@ -18,7 +18,8 @@ class App extends Component {
     token: sessionStorage.getItem('token') || '',
     hostess: false,
     business: false,
-    loggedIn: false
+    loggedIn: false,
+
   }
 
   hostessLogged = (email, token) => {
@@ -51,6 +52,7 @@ class App extends Component {
     sessionStorage.clear()
   }
 
+
   render() {
     const { email, token, hostess, business, loggedIn } = this.state
 
@@ -61,10 +63,10 @@ class App extends Component {
           <Route exact path="/" render={() => hostess ? <Redirect to="/hostess" /> : business ? <Redirect to="/business" /> : <Landing hostessLogged={this.hostessLogged} businessLogged={this.businessLogged} />} />
           <Route exact path="/hostess" render={() => (hostess && loggedIn) ? <Hostess email={email} token={token} onLogout={this.onLogout}/> : <Redirect to="/"/>} />
           <Route exact path="/hostess/profile" render={() => (hostess && loggedIn) ? <HostessEditProfile email={email} token={token} onLogout={this.onLogout}/> : <Redirect to="/" />} />
-          <Route exact path="/business" render={() => (business && loggedIn) ? <Business email={email} token={token} /> : <Redirect to="/"/>} />
-          <Route exact path="/business/profile" render={() => (business && loggedIn) ? <BusinessEditProfile email={email} token={token} /> :  <Redirect to="/"/>} />
-          <Route exact path="/event" render={() => <Event />} />
-          <Route exact path="/event/create" render={() => (business && loggedIn) ? <CreateEvent email={email} token={token} /> : <Redirect to="/"/>} />
+          <Route exact path="/business" render={() => (business && loggedIn) ? <Business email={email} token={token} onLogout={this.onLogout}/> : <Redirect to="/"/>} />
+          <Route exact path="/business/profile" render={() => (business && loggedIn) ? <BusinessEditProfile email={email} token={token} onLogout={this.onLogout} /> :  <Redirect to="/"/>} />
+          {/* <Route exact path="/event" render={() => (event && business) ? <Event eventId={eventId}/> : <Redirect to="/"/>} /> */}
+          <Route exact path="/event/create" render={() => (business && loggedIn) ? <CreateEvent email={email} token={token} onLogout={this.onLogout} /> : <Redirect to="/"/>} />
         </Switch>
 
       </div>

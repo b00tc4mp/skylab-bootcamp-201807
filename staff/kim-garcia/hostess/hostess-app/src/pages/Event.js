@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import Utils from '../utils/validate-email'
 import { withRouter } from 'react-router-dom'
 
 class Events extends Component {
@@ -11,6 +10,7 @@ class Events extends Component {
         return (
             <div>
                 <h1>Events page</h1>
+                <p>{this.props.event}</p>
             </div>
         )
     }

@@ -1,17 +1,27 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 import logic from '../logic'
+import Header from '../components/Header'
+import Host from '../components/Host';
+import Event from '../pages/Event';
 
 class CreateEvent extends Component {
     state = {
         height: 120,
-        languages: [],
+        languagesSelected: [],
+        otherLanguage: [],
         jobType: '',
         gender: '',
+        title: '',
         location: '',
         date: '',
         description: '',
-        hostesses: ''
+        hostesses: '',
+        event: ''
+    }
+
+    handleTitle = (event) => {
+        this.setState({ title: event.target.value })
     }
 
     handleLocation = (event) => {
@@ -35,47 +45,76 @@ class CreateEvent extends Component {
     }
 
     handleLanguages = (event) => {
-        let langs = this.state.languages
-        langs.push(event.target.value)
+        const checked = event.target.checked
+        const value = event.target.value
+        const languages = this.state.languagesSelected
 
-        this.setState({ languages: langs })
-    }
-
-    handleOtherLanguages = (event) => {
-        let langs = this.state.languages
-        langs.push(event.target.value)
-
-        this.setState({ languages: langs })
-    }
-
-    handleHeight = (y) => {
-        const x = parseInt(y)
-        if (isNaN(x) || x < 120 || x > 250) {
-            this.setState({ height: x })
+        if (checked) {
+            languages.push(value)
+        } else {
+            const pos = languages.indexOf(value)
+            languages.splice(pos, 1)
         }
+
+        this.setState({ languagesSelected: languages })
     }
+
+    handleOtherLanguage = (event) => {
+        const value = event.target.value
+        const languages = []
+        if (value.length) languages.push(value)
+        this.setState({ otherLanguage: languages })
+    }
+
+    handleHeight = (event) => {
+        const height = event.target.value
+        const num = parseInt(height)
+        this.setState({ height: num })
+    }
+
+    // handleHeight = (y) => {
+    //     const x = parseInt(y)
+    //     if (isNaN(x) || x < 120 || x > 250) {
+    //         this.setState({ height: x })
+    //     }
+    // }
 
     handleSubmit = event => {
         event.preventDefault()
 
-        const { height, jobType, languages, gender } = this.state
+        const { height, jobType, languagesSelected, otherLanguage, gender } = this.state
+
+        let languages = languagesSelected.concat(otherLanguage)
 
         logic.searchWorkers(this.props.email, gender, jobType, height, languages, this.props.token)
             .then(hostesses => this.setState({ hostesses }))
     }
 
+    handleCreate = event => {
+        event.preventDefault()
 
+        const { location, title, description, date } = this.state
 
+        logic.createEvent(this.props.email, date, location, title, description, this.props.token)
+            .then(id => {
+                debugger
+                this.setState({ event: id })
+            })
+    }
 
 
     render() {
-        const { hostesses } = this.state
-
+        const { hostesses, event } = this.state
 
         return (
             <div>
+                <Header businessEdit={true} onLogout={this.props.onLogout} />
                 <h1>&bull; NEW EVENT &bull;</h1>
                 <form onSubmit={this.handleSubmit}>
+                    <div>
+                        <label htmlFor="title">Title</label>
+                        <input id="title" type="text" placeholder="Title of the event" onChange={this.handleTitle}></input>
+                    </div>
                     <div>
                         <label htmlFor="location">Location</label>
                         <input id="location" type="text" placeholder="The event is going to take place..." onChange={this.handleLocation}></input>
@@ -85,8 +124,8 @@ class CreateEvent extends Component {
                         <input id="date" type="text" placeholder="YYYY/MM/DD" onChange={this.handleDate}></input>
                     </div>
                     <div>
-                        <label htmlFor="date">Description</label>
-                        <textarea id="date" type="text" placeholder="Describe the event" onChange={this.handleDescription}></textarea>
+                        <label htmlFor="description">Description</label>
+                        <textarea id="description" type="text" placeholder="Describe the event" onChange={this.handleDescription}></textarea>
                     </div>
                     <div>
                         <div>SEARCH WORKERS</div>
@@ -127,7 +166,7 @@ class CreateEvent extends Component {
                                 <label for="chinese">Chinese</label>
                                 <input type="checkbox" name="languages" id="chinese" value="chinese" onChange={this.handleLanguages}></input>
                                 <label for="others">Other language</label>
-                                <input type="text" name="languages" id="others" onChange={this.handleOtherLanguages}></input>
+                                <input type="text" name="languages" id="others" onChange={this.handleOtherLanguage}></input>
                             </fieldset>
                         </div>
                         <div>
@@ -140,11 +179,14 @@ class CreateEvent extends Component {
                 {
                     hostesses && (<ul>
                         {hostesses.map(hostess => {
-                            return <li>{hostess.name}</li>
+                            return <Host hostess={hostess} email={this.props.email} token={this.props.token} />
                         })}
                     </ul>)
                 }
-                {/* <button onClick={this.handleCreate}>CREATE EVENT</button> */}
+                <button onClick={this.handleCreate}>CREATE EVENT</button>
+                {/* {
+                    !!(event.length) && <Event event={event}/>
+                } */}
             </div>
         )
     }

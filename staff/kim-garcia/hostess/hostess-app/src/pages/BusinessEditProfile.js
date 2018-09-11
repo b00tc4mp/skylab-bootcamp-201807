@@ -69,7 +69,7 @@ class BusinessEditProfile extends Component {
                             </div>
                             <div>
                                 <label htmlFor="phone">PHONE NUMBER</label>
-                                <input id="phone" type="text" onChange={this.handlePhone} onChange={this.handlePhone}></input>
+                                <input id="phone" type="text" onChange={this.handlePhone}></input>
                             </div>
                         </fieldset>
                     </div>

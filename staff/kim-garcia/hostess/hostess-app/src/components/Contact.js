@@ -5,9 +5,15 @@ const Contact = props => {
         <div className="contact">
             <details>
                 <summary>CONTACT</summary>
-                <p className="contact__name">Contact name: {props.name}</p>
-                <p className="contact__phone">Whatsapp: {props.phone}</p>
-                <p className="contact__email">Email: {props.email}</p>
+                {
+                    props.name && <p className="contact__name">Name: {props.name}</p>
+                }
+                {
+                    props.phone && <p className="contact__phone">Whatsapp: {props.phone}</p>
+                }
+                {
+                    props.email && <p className="contact__email">Email: {props.email}</p>
+                }
             </details>
         </div>
     )

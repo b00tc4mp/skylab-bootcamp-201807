@@ -216,6 +216,22 @@ const logic = {
             .then(res => res.json())
     },
 
+    
+    createEvent(email, date, location, title, description, token) {
+        return Promise.resolve()
+            .then(() => {
+                this._validateEmail(email)
+                this._validateStringField('location', location)
+                this._validateStringField('title', title)
+                this._validateStringField('description', description)
+
+                return this._call(`create-event/${email}`, 'POST', {authorization: `bearer ${token}`, 'Content-Type': 'application/json' }, JSON.stringify({ date, location, title, description }), 200)
+            })
+            .then(res => res.json())
+            .then(res => res.id)
+    },
+
+
 }
 
 

@@ -315,13 +315,11 @@ const logic = {
             })
             .then(host => {
                 idHost = host.id
-                debugger
                 return Business.findOne({ email: emailBus })
             })
             .then(business => {
-                debugger
                 business._doc.selected.map(selectedId => {
-                    if (selectedId = idHost) throw new LogicError('Hostess already selected')
+                    if (selectedId === idHost) throw new LogicError('Hostess already selected')
                 })
 
                 business._doc.selected.push(idHost)
@@ -363,7 +361,13 @@ const logic = {
 
                 return business.save()
             })
-            .then(() => true)
+            .then(() => {
+                return Events.findOne({ title })
+            })
+            .then(event => {
+                const id = event._id
+                return id
+            })
     },
 
     retrieveEventById(id) {

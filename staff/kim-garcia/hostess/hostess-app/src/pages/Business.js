@@ -36,7 +36,7 @@ class Business extends Component {
 
         return (
             <div>
-                <Header businessProfile={true} />
+                <Header businessProfile={true} onLogout={this.props.onLogout} />
                 <div>
                     <h1>&bull; {name.toUpperCase()} &bull;</h1>
                     <div>
