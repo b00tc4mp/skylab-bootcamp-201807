@@ -54,6 +54,12 @@ class Header extends Component {
   //   this.props.history.push('/logout')
   // }
 
+  handleNewPostClick = event => {
+    event.preventDefault()
+
+    this.props.onNewPostClick()
+  }
+
   render() {
     return (
       <header className="Header">
@@ -67,7 +73,7 @@ class Header extends Component {
           <input className="Header-search" type="text" placeholder="Search" />
         </div>
         <div className="Header-nav">
-          <a className="Header-navLink" href="#/" onClick={this.goToNewPost}>
+          <a className="Header-navLink" href="#/" onClick={this.handleNewPostClick}>
             <i className="Header-navIcon far fa-plus-square"></i>
           </a>
           <a className="Header-navLink" href="#/" onClick={this.goToExplore}>

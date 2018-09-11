@@ -25,16 +25,16 @@ class WallPage extends Component {
       .catch(err => console.log(err))
   }
 
-  handlePostDetailClick = postId => {
-    this.props.history.push(`/p/${postId}`)
-  }
+  // handlePostDetailClick = postId => {
+  //   this.props.history.push(`/p/${postId}`)
+  // }
 
   render() {
     const { user } = this.state
     return (
       <div>
         <div className="header-wrapper">
-          <Header />
+          <Header onNewPostClick={this.props.onNewPostClick} />
         </div>
         <div className="main-wrapper">
           <main className="is-eight-quarters grid-gap-30">
@@ -45,7 +45,7 @@ class WallPage extends Component {
                     <ColumnPost
                       key={post._id}
                       post={post}
-                      onPostDetailClick={this.handlePostDetailClick}
+                      onPostDetailClick={this.props.onPostDetailClick}
                     />
                   )
                 )

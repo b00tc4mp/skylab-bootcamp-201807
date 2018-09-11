@@ -166,3 +166,23 @@ main
 .edit-profile-container
   display: grid
   grid-template-columns: 4fr 1fr
+
+.ReactModal__Content
+  top: 50% !important
+  left: 50% !important
+  right: auto !important
+  bottom: auto !important
+  marginRight: -50% !important
+  transform: translate(-50%, -50%) !important
+
+.ReactModal__Overlay
+  background-color: rgba(0,0,0,.75)!important
+
+.ReactModal__Overlay.ReactModal__Overlay--after-open
+  z-index: 2
+
+.ReactModal__Content.ReactModal__Content--after-open
+  border: none !important
+  background: none !important
+  border-radius: 0 !important
+  padding: 0 !important

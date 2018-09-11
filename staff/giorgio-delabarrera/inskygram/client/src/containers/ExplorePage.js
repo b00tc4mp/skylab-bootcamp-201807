@@ -78,7 +78,7 @@ class ExplorePage extends Component {
     return (
       <div>
         <div className="header-wrapper">
-          <Header />
+          <Header onNewPostClick={this.props.onNewPostClick} />
         </div>
         <div className="main-wrapper">
           <main>
@@ -90,7 +90,7 @@ class ExplorePage extends Component {
                     <GridPost
                       key={post._id}
                       post={post}
-                      onPostDetailClick={this.handlePostDetailClick}
+                      onPostDetailClick={this.props.onPostDetailClick}
                     />
                   )
                 )

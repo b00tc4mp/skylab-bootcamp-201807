@@ -31,7 +31,7 @@ class PostDetailPage extends Component {
     return (
       <div>
         <div className="header-wrapper">
-          <Header />
+          <Header onNewPostClick={this.props.onNewPostClick} />
         </div>
         <div className="main-wrapper">
           <main>

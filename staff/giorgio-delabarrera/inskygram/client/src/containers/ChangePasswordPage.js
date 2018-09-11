@@ -62,7 +62,7 @@ class ChangePasswordPage extends Component {
       // </div>
       <div>
         <div className="header-wrapper">
-          <Header />
+          <Header onNewPostClick={this.props.onNewPostClick} />
         </div>
         <div className="main-wrapper">
           <main>

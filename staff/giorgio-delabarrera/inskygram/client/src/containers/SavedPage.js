@@ -58,10 +58,10 @@ class SavedPage extends Component {
     this.props.history.push(`/accounts/edit`)
   }
 
-  handlePostClick = postId => {
-    // console.log(postId)
-    // this.props.history.push(`/photos/${photoId}`)
-  }
+  // handlePostClick = postId => {
+  //   // console.log(postId)
+  //   // this.props.history.push(`/photos/${photoId}`)
+  // }
 
   render() {
     const { username, loggedInUsername } = this.props
@@ -70,7 +70,7 @@ class SavedPage extends Component {
 
       <div>
         <div className="header-wrapper">
-          <Header />
+          <Header onNewPostClick={this.props.onNewPostClick} />
         </div>
         <div className="main-wrapper">
           <main>
@@ -109,7 +109,7 @@ class SavedPage extends Component {
                           <GridPost
                             key={post._id}
                             post={post}
-                            onPostDetailClick={this.handlePostDetailClick}
+                            onPostDetailClick={this.props.onPostDetailClick}
                           />
                         )
                       )}

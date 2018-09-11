@@ -62,12 +62,12 @@ class EditProfilePage extends Component {
       // </div>
       <div>
         <div className="header-wrapper">
-          <Header />
+          <Header onNewPostClick={this.props.onNewPostClick} />
         </div>
         <div className="main-wrapper">
           <main>
             <section className="edit-profile-wrapper">
-            <div className="edit-profile-menu-container">
+              <div className="edit-profile-menu-container">
                 <ul className="Menu">
                   <li className="Menu-item">
                     <a href="#/" className="Menu-itemLink is-active">Edit profile</a>

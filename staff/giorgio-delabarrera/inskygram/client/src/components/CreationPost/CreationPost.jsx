@@ -5,10 +5,11 @@ class CreationPost extends Component {
   state = {
     image: undefined,
     caption: '',
+    modalIsOpen: false
   }
 
-  handleImage = e => {
-    this.setState({ image: e.target.files[0] })
+  handleImage = event => {
+    this.setState({ image: event.target.files[0] })
   }
 
   handleCaption = event => this.setState({ caption: event.target.value })

@@ -5,6 +5,7 @@ class ColumnPost extends Component {
 
   handlePostDetailClick = event => {
     event.preventDefault()
+
     this.props.onPostDetailClick(this.props.post._id)
   }
 
@@ -12,14 +13,6 @@ class ColumnPost extends Component {
     const { post } = this.props
     return (
       <div className="ColumnPost">
-        {/* <div style={{ marginBottom: '50px' }}>
-          <div>
-            <img src={post.user.imageUrl} width="60" alt="" /> {post.user.username}
-          </div>
-          <img src={post.imageUrl} alt="" width="250" />
-          <div>{post.caption}</div>
-          <a href="#/" onClick={this.handlePostDetailClick}>Show detail</a>
-        </div> */}
         <section className="ColumnPost-header">
           <div className="ColumnPost-avatarImageWrapper">
             <img src={post.user.imageUrl} className="ColumnPost-avatarImage" alt={post.user.username} />
@@ -30,7 +23,9 @@ class ColumnPost extends Component {
           </div>
         </section>
         <section className="ColumnPost-imageWrapper">
+          {/* <a href="#/" onClick={this.handlePostDetailClick}> */}
           <img src={post.imageUrl} className="ColumnPost-image" alt={post.caption} />
+          {/* </a> */}
         </section>
         <section className="ColumnPost-body">
           <div className="ColumnPost-actions">
