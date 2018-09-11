@@ -122,6 +122,16 @@ const logic = {
     },
 
     /**
+     * Upload photo
+     * @param {string} photo 
+     */
+    uploadDogPhoto(photo) {
+        return this._call('upload', 'PATCH', {'content-type': 'application/json' }, JSON.stringify({base64Image: photo}), 200)
+            .then(res => res.json())
+            .then(({ photo }) => photo)
+    },
+
+    /**
      * Remove dog to API
      * @param {string} id The shelter id
      * @param {string} dogId The dog´s dogId

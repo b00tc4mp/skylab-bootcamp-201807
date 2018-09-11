@@ -50,7 +50,7 @@ class DetailDog extends Component {
                         <h6>Age: </h6><p>{this.state.dog.age} years</p>
                         <h6>Text:</h6><p>{this.state.dog.description}</p>
                     </div>
-                    <img class="imageDetail" src={this.state.dog.photo} />
+                    <img class="imageDetail" style={{backgroundImage:`url(${this.state.dog.photo})`, height:'215px',backgroundSize:'cover',backgroundPosition:'center'}}/>
                 </div>
                 <Accordion class="accordion">
                     <AccordionItem>

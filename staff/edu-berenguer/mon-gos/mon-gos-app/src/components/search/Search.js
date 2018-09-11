@@ -95,7 +95,7 @@ class Search extends Component {
                         <p class="is-size-3">{`${dog.name}`}</p>
                         <div>
                             <figure class="image is-3by2">
-                                <img src={dog.photo} alt="" />
+                            <img style={{backgroundImage:`url(${dog.photo})`, height:'215px',backgroundSize:'cover',backgroundPosition:'center'}}/>
                             </figure>
                         </div>
                         <p>{`${dog.gender}`}</p>

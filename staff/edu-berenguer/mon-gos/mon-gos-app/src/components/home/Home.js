@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { withRouter, Link } from 'react-router-dom'
 import { logic } from '../../logic'
 import 'bulma/css/bulma.css'
-import Slider from "react-slick";
 import Carousel from "../Carousel"
 import './home.css'
 
@@ -76,7 +75,7 @@ class Home extends Component {
                         <p class="is-size-3">{`${dog.name}`}</p>
                         <div>
                             <figure class="image is-3by2">
-                            <img style={{backgroundImage:`url(${dog.photo})`, height:'215px',backgroundSize:'cover'}}/>
+                            <img style={{backgroundImage:`url(${dog.photo})`, height:'215px',backgroundSize:'cover',backgroundPosition:'center'}}/>
                             </figure>
                         </div>
                         <p>{`${dog.gender}`}</p>

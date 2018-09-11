@@ -3,7 +3,6 @@ import { withRouter } from 'react-router-dom'
 import { logic } from '../../logic'
 import swal from 'sweetalert2'
 import FileBase64 from "react-file-base64";
-import axios from "axios";
 import './updateDog.css'
 
 class UpdateDog extends Component {
@@ -40,14 +39,20 @@ class UpdateDog extends Component {
             })
     }
 
-    getFiles = async files => {
-        await this.setState({ files })
-        return axios
-            .patch(`http://localhost:8080/api/upload`, {
-                base64Image: this.state.files.base64,
-            })
-            .then(({ data: { photo } }) => {
+    getFiles = files => {
+        this.uploadDogPhoto(files.base64)
+    }
+
+    uploadDogPhoto(photo) {
+        logic.uploadDogPhoto(photo)
+            .then(photo => {
                 this.setState({ photo })
+            })
+            .catch(({ message }) => {
+                swal({
+                    type: 'error',
+                    title: `${message}`,
+                })
             })
     }
 
@@ -96,18 +101,18 @@ class UpdateDog extends Component {
                         <div className="parameters-dog">
                             <div class="field">
                                 <p className="parameter-dog">Age</p>
-                                <input class="input" type="number" placeholder="Age" onChange={this.handleChange} name="age" value={this.state.age} />
+                                <input class="input" type="number" placeholder="Age"  min="0" step="0.1" onChange={this.handleChange} name="age" value={this.state.age} />
                             </div>
                             <div class="field">
                                 <p className="parameter-dog">Weight</p>
-                                <input class="input" type="number" placeholder="Weight" onChange={this.handleChange} name="weight" value={this.state.weight} />
+                                <input class="input" type="number" placeholder="Weight"  min="0" step="0.1" onChange={this.handleChange} name="weight" value={this.state.weight} />
                             </div>
                         </div>
                         <textarea class="textarea" name="description"  maxlength="200" placeholder="Description" onChange={this.handleChange} value={this.state.description}></textarea>
                         <button class="button is-success" type="submit">Update</button>
                     </div>
                     <div>
-                        <div className="container-input"><FileBase64 class="file" multiple={false} onDone={this.getFiles.bind(this)} /></div>
+                        <div className="container-input"><FileBase64 class="file" multiple={false} onDone={this.getFiles} /></div>
                         <div>{this.state.photo ? <img src={this.state.photo}></img> : ""}</div>
                     </div>
                 </form>

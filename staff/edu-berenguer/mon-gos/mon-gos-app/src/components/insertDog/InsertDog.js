@@ -3,7 +3,6 @@ import { withRouter } from 'react-router-dom'
 import { logic } from '../../logic'
 import swal from 'sweetalert2'
 import FileBase64 from "react-file-base64";
-import axios from "axios";
 import './insertDog.css'
 
 class InsertDog extends Component {
@@ -17,14 +16,20 @@ class InsertDog extends Component {
         files: "",
     }
 
-    getFiles = async files => {
-        await this.setState({ files })
-        return axios
-            .patch(`http://localhost:8080/api/upload`, {
-                base64Image: this.state.files.base64,
-            })
-            .then(({ data: { photo } }) => {
+    getFiles = files => {
+        this.uploadDogPhoto(files.base64)
+    }
+
+    uploadDogPhoto(photo) {
+        logic.uploadDogPhoto(photo)
+            .then(photo => {
                 this.setState({ photo })
+            })
+            .catch(({ message }) => {
+                swal({
+                    type: 'error',
+                    title: `${message}`,
+                })
             })
     }
 
@@ -98,7 +103,7 @@ class InsertDog extends Component {
                     </div>
                     <div>
                         <div className="container-input">
-                            <FileBase64 className="input" multiple={false} onDone={this.getFiles.bind(this)} />
+                            <FileBase64 className="input" multiple={false} onDone={this.getFiles} />
                         </div>
                         <div>
                             {this.state.photo ? <img src={this.state.photo}></img> : ""}
