@@ -1,4 +1,20 @@
+
+
 .mylist-products-container {
     max-width: 800px;
     margin: auto;
+    /*background-image: url('../../assets/playing-baby.svg');
+    background-color: red;*/
+    /*-webkit-mask:  url('../../assets/playing-baby.svg') no-repeat 50% 50%;
+    mask: url('../../assets/playing-baby.svg') no-repeat 50% 50%;*/
+}
+
+.mylist-products-heading {
+    margin-top: 10px;
+    color: #23383a;
+    font-size: 30px;
+}
+
+.mylist-products-container .MuiCardActionArea-root-318:hover .MuiCardActionArea-focusHighlight-320 {
+    opacity: 0;
 }

@@ -131,7 +131,7 @@ class Upload extends Component {
                         </div>                        
                     </div>
 
-                    <button type="submit" className="btn btn-primary">Upload Product</button>
+                    <button type="submit" className="upload-product-btn">Upload product</button>
                 </form>
             </section>
         )

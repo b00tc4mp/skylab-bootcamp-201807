@@ -25,7 +25,8 @@ const styles = theme => ({
   textField: {
     flexBasis: 200,
     width: 200,
-    margin: 20
+    margin: 20,
+    color: 'red',
   },
   card: {
     maxWidth: 300,
@@ -160,13 +161,13 @@ class FilterCard extends Component {
                     <div style={sliderStyle}>
                         <FormLabel component="legend">Distance</FormLabel>
                         <p style={sliderSubHeadingStyle}>{`${dist}+ Km`}</p>
-                        <Slider onChange={this.onDistChange} onAfterChange={this.onDistAfterChange} defaultValue={400} max={400} />
+                        <Slider trackStyle={[{backgroundColor: '#0097A7'}]} handleStyle={[{borderColor: '#0097A7'}]} onChange={this.onDistChange} onAfterChange={this.onDistAfterChange} defaultValue={400} max={400} />
                     </div>
 
                     <div style={sliderStyle}>
                         <FormLabel component="legend">Price</FormLabel>
                         <p style={sliderSubHeadingStyle}>{minVal === 0 && maxVal === 30000 ? 'Any price' : `${minVal}€ - ${maxVal}€`}</p>
-                        <Range onChange={this.onPriceRangeChange} onAfterChange={this.onPriceRangeAfterChange} allowCross={false} defaultValue={[0, 30000]} min={0} max={30000} />
+                        <Range trackStyle={[{backgroundColor: '#0097A7'}]} handleStyle={[{borderColor: '#0097A7'}, {borderColor: '#0097A7'}]} onChange={this.onPriceRangeChange} onAfterChange={this.onPriceRangeAfterChange} allowCross={false} defaultValue={[0, 30000]} min={0} max={30000} />
                     </div>
 
                     <FormControl component="fieldset" className={classes.formControl}>

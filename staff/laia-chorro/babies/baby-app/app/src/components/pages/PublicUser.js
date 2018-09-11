@@ -27,7 +27,7 @@ class PublicUser extends Component {
     render() {
 
         const { state: { user, tabSelected } } = this
-debugger;
+
         return(
             <main>
             {user ?

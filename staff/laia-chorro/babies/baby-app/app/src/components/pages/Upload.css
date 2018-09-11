@@ -8,14 +8,6 @@
     width: 50%;
 }
 
-/*.upload-form .upload-form-inline:first-child {
-    padding-right: 10px;
-}*/
-
-/*.upload-form .upload-form-inline:nth-child(2) {
-    padding-left: 10px;
-}*/
-
 .upload-container {
     background-color: #ffffff;
     padding: 30px;
@@ -67,6 +59,19 @@
     margin-bottom: 25px;
 }
 
-/*.upload-form-photo-input {
-    display: none;
-}*/
+.upload-product-btn {
+    margin: 0 3px 20px 0px;
+    border: 2px solid #0097A7;
+    border-radius: 50px;
+    padding: 6px 18px;
+    font-size: 16px;
+    cursor: pointer;
+	background: #0097A7;
+	color: #ffffff;
+
+}
+
+.upload-product-btn:hover {
+	background: #067682;
+	color: #ffffff;
+}

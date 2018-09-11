@@ -88,9 +88,10 @@ class Profile extends Component {
 
         return (
             <section >
-
-                {loggedIn && <button className="" onClick={this.props.onLogout}>LogOut</button> }
-
+                <div className="profile-logout">
+                    <h1 className="profile-heading">Your profile</h1>
+                    {loggedIn && <button className="profile-btn" onClick={this.props.onLogout}>LogOut</button> }
+                </div>
 
                 <div className="profile-form-container profile-photo-container">
                     <div>
@@ -104,7 +105,17 @@ class Profile extends Component {
                                 <p>People will recognise you by this photo. Only .jpg format is accepted</p>
                             </div>
                             <div className="button-wrapper">
-                                <Button style={{ alignSelf: 'center', position: 'relative' }} variant="extendedFab" component="label" color="primary" disabled={loading} >
+                                <Button style={{ alignSelf: 'center', 
+                                                position: 'relative', 
+                                                backgroundColor: '#E0F7FA', 
+                                                color:'#0097A7', 
+                                                boxShadow: 'none', 
+                                                textTransform: 'lowercase',
+                                                border: '1px solid #0097A7'
+                                                 }} 
+                                        variant="extendedFab" 
+                                        component="label"
+                                        disabled={loading} >
                                     {'Upload your photo'}
                                     <input onChange={this.keepPhoto} type="file" accept="jpg|jpeg"/>
                                 </Button>
@@ -179,7 +190,7 @@ class Profile extends Component {
 
                     </div>
                     <div>
-                        <button type="submit" className="btn btn-primary">Save</button>
+                        <button type="submit" className="profile-btn profile-btn-save">Save</button>
                     </div>
                 </form>
             </section>

@@ -52,11 +52,7 @@ class UserTabCard extends React.Component {
     value: 0,
   };
 
-  handleChange = (event, value) => {
-      debugger;
-    this.setState({ value }, ()=> this.props.onSelectTab(this.state.value));
-
-  };
+  handleChange = (event, value) => this.setState({ value }, ()=> this.props.onSelectTab(this.state.value))
 
   render() {
 

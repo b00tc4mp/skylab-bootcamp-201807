@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PreEditCard from '../cards/PreEditCard'
 import logic from '../../logic'
 import './Mylist.css'
+import background from '../../assets/playing-baby.svg'
 
 class Mylist extends Component {
 
@@ -38,9 +39,9 @@ class Mylist extends Component {
         
         return (
             <div className="mylist-products-container">
-                <h1 className="text-white pt-4 heading-home">Mylist of products</h1>
                 <section className="flex-container">
-                    {products.map((prod, index) => {
+                    <h1 className="mylist-products-heading">Your products</h1>
+                    {products && products.map((prod, index) => {
                         return(<div key={index} data-prod={prod.id}>
                             <PreEditCard 
                                 state={prod.state} 

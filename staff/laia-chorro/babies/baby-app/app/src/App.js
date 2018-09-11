@@ -142,7 +142,7 @@ class App extends Component {
 				onProductDetail } = this
 
 		return (
-			<div className="App">
+			<div className="baby-app-container">
 				<Nav loggedIn={loggedIn} profilePhoto={profilePhoto}/>
 
 				<Route path="/" exact render={() => <Home onAddFavourite={onAddFavourite} onRemoveFavourite={onRemoveFavourite} idFavs={idFavs} getIdFavs={getIdFavs} onProductDetail={onProductDetail}/>} />
