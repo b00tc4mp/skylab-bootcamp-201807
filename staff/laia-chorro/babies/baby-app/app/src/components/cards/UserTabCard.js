@@ -15,7 +15,9 @@ const styles = theme => ({
     backgroundColor: theme.palette.background.paper,
     display: 'flex',
     flexWrap: 'wrap',
-    alignContent: 'space-between'          
+    alignContent: 'space-between',
+    borderBottomLeftRadius: '.45rem',
+    borderBottomRightRadius: '.45rem'      
   },
   tabsRoot: {
     borderBottom: '1px solid #e8e8e8',
@@ -29,6 +31,7 @@ const styles = theme => ({
     minWidth: 72,
     fontWeight: theme.typography.fontWeightRegular,
     marginRight: theme.spacing.unit * 4,
+    fontSize: '14px',
     '&:hover': {
       color: '#0097A7',
       opacity: 1,
@@ -50,7 +53,9 @@ class UserTabCard extends React.Component {
   };
 
   handleChange = (event, value) => {
-    this.setState({ value });
+      debugger;
+    this.setState({ value }, ()=> this.props.onSelectTab(this.state.value));
+
   };
 
   render() {

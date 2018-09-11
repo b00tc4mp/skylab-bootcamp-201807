@@ -6,8 +6,9 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import IconButton from '@material-ui/core/IconButton';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import VisibilityIcon from '@material-ui/icons/Visibility';
+import FavoriteIcon from '@material-ui/icons/Favorite'
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder'
+import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined'
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import TurnedInNotIcon from '@material-ui/icons/TurnedInNot';
@@ -28,11 +29,7 @@ const styles = theme => ({
   },
   details: {
     display: 'flex',
-    flexDirection: 'column',
-    /*alignItems: 'center',
-    paddingLeft: theme.spacing.unit,
-    paddingBottom: theme.spacing.unit,*/
-    
+    flexDirection: 'column',    
   },
   content: {
     flex: '1 0 auto',
@@ -48,11 +45,10 @@ const styles = theme => ({
     paddingBottom: theme.spacing.unit,
   },
   viewIcon: {
-    height: 38,
-    width: 38,
-  },
-  viewButton: {
+    height: 24,
+    width: 24,
     marginLeft: 20,
+    color: 'rgba(0, 0, 0, 0.54)',
   },
   states: {
     display: 'flex',
@@ -114,12 +110,8 @@ function PreEditCard(props) {
                 </div>
             </CardActionArea>
             <div className={classes.views}>
-                <IconButton className={classes.viewButton} aria-label="num views">
-                    <VisibilityIcon className={classes.viewIcon} /><Typography variant="subheading" color="textSecondary">{numViews}</Typography>
-                </IconButton>
-                <IconButton className={classes.viewButton} aria-label="num favs">
-                    <FavoriteIcon className={classes.viewIcon} /><Typography variant="subheading" color="textSecondary">{numFavs}</Typography>
-                </IconButton>
+                <VisibilityOutlinedIcon className={classes.viewIcon} /><Typography variant="subheading" color="textSecondary">{numViews}</Typography>
+                <FavoriteBorderIcon className={classes.viewIcon} /><Typography variant="subheading" color="textSecondary">{numFavs}</Typography>
             </div>
             <div className={classes.states}>
                 <IconButton className={classes.button} aria-label="Sold" color="primary">

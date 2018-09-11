@@ -32,4 +32,12 @@
     color: grey;
 }
 
+.product-detail-carousel .slick-prev {
+    left: 17px;
+    z-index: 3;
+}
 
+.product-detail-carousel .slick-next {
+    right: 17px;
+    z-index: 3;
+}

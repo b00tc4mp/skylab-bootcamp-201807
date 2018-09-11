@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import PreviewCard from '../cards/PreviewCard'
+import GoogleMapsContainer from '../maps/GoogleMapsContainer'
+import SimplePreviewCard from '../cards/SimplePreviewCard'
 import UserTabCard from '../cards/UserTabCard'
 import './PublicUser.css'
 import { withRouter } from 'react-router-dom'
@@ -7,7 +8,8 @@ import logic from '../../logic'
 
 class PublicUser extends Component {
     state = {
-        user: null
+        user: null,
+        tabSelected: 0,
     }
 
     componentDidMount () {
@@ -19,20 +21,53 @@ class PublicUser extends Component {
             //.catch(({ message }) => this.setState({ errorMsg: message }))
     }
 
+    onSelectTab = tabSelected => this.setState({ tabSelected })
+
 
     render() {
 
-        const { props: { onAddFavourite }, state: { user } } = this
-
+        const { state: { user, tabSelected } } = this
+debugger;
         return(
             <main>
             {user ?
-                <div>
+                <div className="public-user-container">
+                    <div className="public-user-map">
+                        <GoogleMapsContainer lat={user.location[1]} lng={user.location[0]}/>
+                    </div>
                     <UserTabCard 
-                        userName = {user.public_name}
-                        userAvgScore = {user.avg_score}
-                        userPhoto = {user.photo}
+                        userName={user.public_name}
+                        userAvgScore={user.avg_score}
+                        userPhoto={user.photo}
+                        onSelectTab={this.onSelectTab}
                         />
+                    {tabSelected === 0 && user.products.map((prod, index) => {
+                        if (prod.state === 'pending')
+                        return (<SimplePreviewCard 
+                            key={index}
+                            state={prod.state} 
+                            photo={prod.photos[0]}
+                            price={prod.price}
+                            title={prod.title}
+                            idProd={prod.id}
+                            description={prod.description}            
+                        /> )
+                    })}
+                    {tabSelected === 1 && user.products.map((prod, index) => {
+                        if (prod.state === 'sold')
+                        return (<SimplePreviewCard 
+                            key={index}
+                            state={prod.state} 
+                            photo={prod.photos[0]}
+                            price={prod.price}
+                            title={prod.title}
+                            idProd={prod.id}
+                            description={prod.description}            
+                        /> )
+                    })}
+                    {tabSelected === 2 && 
+                        <div>Reviews</div>
+                    }
                 </div> :
 
                 <div className="publicUser-empty">

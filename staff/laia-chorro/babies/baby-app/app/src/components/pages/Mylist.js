@@ -37,7 +37,7 @@ class Mylist extends Component {
         const { state: {products}, onProductUpdateState } = this
         
         return (
-            <div>
+            <div className="mylist-products-container">
                 <h1 className="text-white pt-4 heading-home">Mylist of products</h1>
                 <section className="flex-container">
                     {products.map((prod, index) => {

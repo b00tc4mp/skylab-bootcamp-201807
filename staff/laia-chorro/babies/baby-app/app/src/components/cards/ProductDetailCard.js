@@ -11,6 +11,8 @@ import Typography from '@material-ui/core/Typography'
 import Divider from '@material-ui/core/Divider'
 import Avatar from '@material-ui/core/Avatar'
 
+import GoogleMapsContainer from '../maps/GoogleMapsContainer'
+
 import ReactStars from 'react-stars'
 import { Carousel } from 'react-responsive-carousel'
 import Slider from "react-slick"
@@ -86,12 +88,6 @@ function ProductDetailCard(props) {
     removeFavourite(idProd)
   }
 
-  const onUserDetail = event => {
-    event.preventDefault()
-
-    //removeFavourite(idProd)
-  }
-
   return (
         <Card className="product-detail-card" data-prod={idProd}>
                 <div className="product-detail-flex">
@@ -148,7 +144,6 @@ function ProductDetailCard(props) {
                     <Typography component="p">{description}</Typography>
                 </CardContent>
                 <Divider style={{ margin: '10px 20px' }}/>
-                
                 <div className="product-detail-flex">
                     <CardContent>
                         <Typography variant="subheading" color="textSecondary">{new Date(createdAt).toLocaleDateString('en-GB')}</Typography>
@@ -158,6 +153,12 @@ function ProductDetailCard(props) {
                         <FavoriteBorderIcon style={{color: 'rgba(0, 0, 0, 0.54)'}}/><Typography style={{display: 'inline-block'}} variant="subheading" color="textSecondary">{numFavs}</Typography>
                     </CardContent>                   
                 </div>  
+                <Divider style={{ margin: '10px 20px' }}/>
+                <CardContent>
+                    <div className="public-user-map">
+                        <GoogleMapsContainer lat={latitude} lng={longitude}/>
+                    </div>
+                </CardContent>
         </Card>
   );
 }

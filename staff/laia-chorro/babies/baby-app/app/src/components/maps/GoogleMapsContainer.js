@@ -1,5 +1,5 @@
 import React from 'react'
-import { GoogleApiWrapper, InfoWindow, Map, Marker } from 'google-maps-react'
+import { GoogleApiWrapper, InfoWindow, Map, Marker, Circle } from 'google-maps-react'
 //import Paper from 'material-ui/Paper';
 //import Typography from 'material-ui/Typography';
 //import { typography } from 'material-ui/styles';
@@ -12,31 +12,43 @@ class GoogleMapsContainer extends React.Component {
     this.state = {
       showingInfoWindow: false,
       activeMarker: {},
-      selectedPlace: {}
+      selectedPlace: {},
+      lat: 41.385064,
+      lng: 2.173403
     }
     // binding this to event-handler functions
-    this.onMarkerClick = this.onMarkerClick.bind(this);
-    this.onMapClick = this.onMapClick.bind(this);
+    //this.onMarkerClick = this.onMarkerClick.bind(this);
+    //this.onMapClick = this.onMapClick.bind(this);
   }
-  onMarkerClick = (props, marker, e) => {
+
+
+  static getDerivedStateFromProps(props, state) {
+    if (props.lat !== state.lat || props.lng !== state.lng) 
+      return { lat: props.lat, lng: props.lng }
+
+    return null; // Return null to indicate no change to state.
+  }
+
+  /*onMarkerClick = (props, marker, e) => {
     this.setState({
       selectedPlace: props,
       activeMarker: marker,
       showingInfoWindow: true
     });
-  }
-  onMapClick = (props) => {
+  }*/
+  /*onMapClick = (props) => {
     if (this.state.showingInfoWindow) {
       this.setState({
         showingInfoWindow: false,
         activeMarker: null
       });
     }
-  }
+  }*/
   render() {
+
+    const { lat, lng } = this.state
+
     const style = {
-      width: '50vw',
-      height: '75vh',
       'marginLeft': 'auto',
       'marginRight': 'auto'
     }
@@ -46,17 +58,30 @@ class GoogleMapsContainer extends React.Component {
         xs = { 12 }
         style = { style }
         google = { this.props.google }
-        onClick = { this.onMapClick }
+        //onClick = { this.onMapClick }
         zoom = { 14 }
-        initialCenter = {{ lat: 39.648209, lng: -75.711185 }}
+        initialCenter = {{ lat, lng }}
       >
+      {/*<Circle
+          strokeColor= {'#FF0000'}
+          strokeOpacity= {0.8}
+          strokeWeight= {2}
+          fillColor= {'#FF0000'}
+          fillOpacity= {0.35}
+          //map= {map}
+          center= {{lat: 44.5452, lng: -78.5389}}
+          radius= {100000}
+        />*/}
         <Marker
+          position = {{ lat, lng }}
+        />
+        {/*<Marker
           onClick = { this.onMarkerClick }
           title = { 'Changing Colors Garage' }
           position = {{ lat: 39.648209, lng: -75.711185 }}
           name = { 'Changing Colors Garage' }
-        />
-        <InfoWindow
+        />*/}
+        {/*<InfoWindow
           marker = { this.state.activeMarker }
           visible = { this.state.showingInfoWindow }
         >
@@ -74,11 +99,14 @@ class GoogleMapsContainer extends React.Component {
               302-293-8627
             </Typography>
           </Paper>
-        </InfoWindow>
+          </InfoWindow>*/}
       </Map>
     );
   }
 }
+// const apiKey = process.env.GOOGLE_API_KEY
+
 export default GoogleApiWrapper({
-    api: (process.env.GOOGLE_API_KEY)
+    //apiKey: (process.env.GOOGLE_API_KEY)
+    apiKey: ('AIzaSyBzCWhYRwwfSD9p3rjwusoGIEiV4lXvOBA')
 })(GoogleMapsContainer)

@@ -42,8 +42,8 @@ class ProductDetail extends Component {
                             createdAt = {product.created_at}
                             description = {product.description}
                             idProd = {product.id}
-                            latitude = {product.location[0]}
-                            longitude = {product.location[1]}
+                            latitude = {product.location[1]}
+                            longitude = {product.location[0]}
                             numFavs = {product.num_favs}
                             numViews = {product.num_views}
                             photos = {product.photos}
