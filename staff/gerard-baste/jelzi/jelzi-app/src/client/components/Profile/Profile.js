@@ -87,16 +87,11 @@ class Profile extends Component {
       <div className="mt-4" >
         <Form id="registerForm" onSubmit={this.handleSubmit}>
           <FormGroup>
-            <Label for="examplePassword">Password</Label>
-            <Input
-              type="password" name="password" value={this.state.password} onChange={this.keepPassword}
-              placeholder="Password" required/>
-            <FormText color="muted">
-              Must contain at least one number and one uppercase and lowercase letter, and at least 6 to 15 characters
-            </FormText>
-          </FormGroup>
-          <FormGroup>
-          <Label for="exampleCheckbox">Your Allergens</Label>
+            <div>
+          <Label className="titleProfile">Profile</Label>
+          </div>
+          <Label className="labelAllergens" for="exampleCheckbox">Your Allergens</Label>
+          <div className="allergens">
           <div>
             <CustomInput type="checkbox" value="alcohol-free" onChange={this.keepAllergens} checked={this.state.newUserAllergens['alcohol-free']} name="alcohol-free" id="exampleCustomInline" label="Alcohol-free" inline />
             <CustomInput type="checkbox" value="celery-free"  onChange={this.keepAllergens} checked={this.state.newUserAllergens['celery-free']} name="celery-free" id="exampleCustomInline2" label="Celery-free" inline />     
@@ -121,8 +116,16 @@ class Profile extends Component {
             <CustomInput type="checkbox" value="shellfish-free" onChange={this.keepAllergens} checked={this.state.newUserAllergens['shellfish-free']} name="shellfish-free" id="exampleCustomInline15" label="Shellfish-free" inline />
             <CustomInput type="checkbox" value="soy-free" onChange={this.keepAllergens} checked={this.state.newUserAllergens['soy-free']} name="soy-free" id="exampleCustomInline16" label="Soy-free" inline />
           </div>
+          </div>
         </FormGroup>
-          <Button type="submit" className="submitButton">Submit</Button>
+        <FormGroup>
+            <Input
+              className="passwordInput" type="password" name="password" value={this.state.password} onChange={this.keepPassword}
+              placeholder="Password" required/>
+            <FormText color="muted">
+              You need the password to update your profile            </FormText>
+            <Button type="submit" className="submitButton">Submit</Button>
+          </FormGroup>
         </Form>
       </div>
     );

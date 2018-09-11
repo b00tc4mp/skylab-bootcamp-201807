@@ -1,34 +1,49 @@
-// import { debug } from 'util';
 
 const validateEmail = require('../utils/validate-email')
-const {
-    User,
-    Menu,
-    Dish
-} = require('../data/models')
-
+const { User, Menu, Dish } = require('../data/models')
 const { Types: { ObjectId } } = require('mongoose')
-
 const es6 = require('es6-promise').polyfill();
 const fetch = require('isomorphic-fetch');
 
 const logic = {
+    /**
+     * Validate all strings
+     * @param {string} name 
+     * @param {string} value 
+     */
     _validateStringField(name, value) {
         if (typeof value !== 'string' || !value.length) throw new LogicError(`invalid ${name}`)
     },
-
+/**
+ * Validate user email
+ * @param {email} email The user's email
+ */
     _validateEmail(email) {
         if (!validateEmail(email)) throw new LogicError('invalid email')
     },
-
+/**
+ * Validate numbers
+ * @param {string} name 
+ * @param {number} value 
+ */
     _validateNumberField(name, value){
         if (typeof value !== 'number') throw new LogicError(`invalid ${name}`)
     },
-
+/**
+ * Validate arrays
+ * @param {string} name 
+ * @param {array} value 
+ */
     _validateArrayField(name, value){
         if (!Array.isArray(value) || !value.length) throw new LogicError(`invalid ${name}`)
     },
-
+/**
+ * Register new User
+ * @param {email} email The user's email
+ * @param {string} username The user's username
+ * @param {string} password The user's password
+ * @param {array} allergens The user's Allergens
+ */
     register(email, username, password, allergens = undefined) {
         return Promise.resolve()
             .then(() => {
@@ -63,7 +78,11 @@ const logic = {
                 .then(() => true)
             })
     },
-
+/**
+ * Login user
+ * @param {email} email The user's email
+ * @param {string} password The user's password
+ */
     authenticate(email, password) {
         return Promise.resolve()
             .then(() => {
@@ -81,7 +100,10 @@ const logic = {
                 return user.id
             })
     },
-
+/**
+ * Retrive all profile user information
+ * @param {email} email The user's email
+ */
     retrieveProfileUser(email) {
         return Promise.resolve()
             .then(() => {
@@ -96,8 +118,13 @@ const logic = {
                 return user.allergens
             })
     },
-
-
+/**
+ * Update profile user with new allergens
+ * @param {email} email The user's email
+ * @param {string} password The user's password
+ * @param {array} allergens The user's old allergens
+ * @param {array} newAllergens The user's new allergens
+ */
     updateAllergens(email, password, allergens, newAllergens) {
         return Promise.resolve()
             .then(() => {
@@ -121,7 +148,11 @@ const logic = {
             })
             .then(() => true)
     },
-
+/**
+ * Add new menu on one user
+ * @param {email} email The user's email
+ * @param {string} title The title menu
+ */
     addMenu(email, title) {
         return Promise.resolve()
             .then(() => {
@@ -143,15 +174,22 @@ const logic = {
             })
             .then(user => user.menus )
     },
-
-    addDish(email, titleDish, recipeId, order, menuId) {
+/**
+ * 
+ * @param {*} email The user's email
+ * @param {*} titleDish The title Dish
+ * @param {*} recipeId The Recipe ID
+ * @param {*} sort The sort number
+ * @param {*} menuId The menu ID
+ */
+    addDish(email, titleDish, recipeId, sort, menuId) {
         return Promise.resolve()
             .then(() => {
                 this._validateEmail(email)
                 this._validateStringField('title Dish', titleDish)
                 this._validateStringField('recipe Id', recipeId)
                 this._validateStringField('menuId', menuId)
-                this._validateNumberField('order', order)
+                this._validateNumberField('sort', sort)
 
                 return User.findOne({ email })
             })
@@ -162,9 +200,9 @@ const logic = {
 
                 if (!recipeId) throw new LogicError(`Wrong recipe Id`)
 
-                if (!order) throw new LogicError(`Wrong number order`)
+                if (!sort) throw new LogicError(`Wrong number sort`)
 
-                const dish = {titleDish, recipeId, order}
+                const dish = {titleDish, recipeId, sort}
                 
                 let menuExists = user.menus.find(elem => elem._id.toString() === menuId)
                 if (!menuExists) throw new LogicError(`Menu not found`)
@@ -178,7 +216,12 @@ const logic = {
                 return user 
             })
     },
-
+/**
+ * Delete one recipe from one menu
+ * @param {email} email The user's email
+ * @param {string} menuId The menu ID
+ * @param {string} id The recipe ID
+ */
     removeDish(email, menuId, id) {
         return Promise.resolve()
             .then(() => {
@@ -200,7 +243,11 @@ const logic = {
             })
             .then(() => true)
     },
-
+/**
+ * Delete one menu with recipes
+ * @param {email} email The user's email
+ * @param {menuId} menuId The menu ID
+ */
     removeMenu(email, menuId) {
         
         return Promise.resolve()
@@ -225,37 +272,50 @@ const logic = {
             })
             .then(() => true)
     },
-
+/**
+ * List all menus from one user
+ * @param {email} email The user's email
+ */
     listMenus(email) { 
         return Promise.resolve()
-            .then(() => {
-                this._validateEmail(email)
-                    return User.findOne({ email })
-                })
-                    .then(user => {
-                        if(!user) throw new LogicError (`user ${user} does not exist`)
-                        return menus = user.menus.map(menu => menu)
-                        })
-    },
+        .then(() => {
+            this._validateEmail(email)
 
+            return User.findOne({ email })
+        })
+        .then(user => {
+            if(!user) throw new LogicError (`user ${user} does not exist`)
+
+            return menus = user.menus.map(menu => menu)
+        })
+    },
+/**
+ * List all recipes from one menu
+ * @param {email} email The user's email
+ * @param {string} menuId The menu ID
+ */
     listDishes(email, menuId) { 
         return Promise.resolve()
-            .then(() => {
-                debugger
-                this._validateEmail(email)
-                this._validateStringField('menu ID', menuId)
+        .then(() => {
+
+            this._validateEmail(email)
+            this._validateStringField('menu ID', menuId)
                 
-                return User.findOne({ email })
-                })
-                .then(user => {
-                    if(!user) throw new LogicError(`user ${user} does not exist`)
+            return User.findOne({ email })
+        })
+        .then(user => {
+            if(!user) throw new LogicError(`user ${user} does not exist`)
 
-                    if(!menuId) throw new LogicError('Invalid menu ID')
-                    debugger
-                    return user.menus.find(menu => menu.id === menuId).dishes
-                })
+            if(!menuId) throw new LogicError('Invalid menu ID')
+        
+            return user.menus.find(menu => menu.id === menuId).dishes
+        })
     },
-
+/**
+ * Search one recipe by ID on user loged
+ * @param {email} email The user's email
+ * @param {string} menuId the menu ID
+ */
     searchRecipeById(email, menuId){
 
         const appId = '6b5aa10e',
@@ -279,9 +339,8 @@ const logic = {
 
                 const urls = user.dishes.map(dish => `https://api.edamam.com/search?r=http%3A%2F%2Fwww.edamam.com%2Fontologies%2Fedamam.owl%23recipe_${dish.recipeId}&app_id=${appId}&app_key=${appKey}`)
 
-                return Promise.all(urls.map(fetch)).then(responses =>
-                    Promise.all( responses.map(response => response.json()) )
-                ).then(recipes => {
+                return Promise.all(urls.map(fetch)).then(responses =>Promise.all( responses.map(response => response.json())))
+                .then(recipes => {
                     recipes.forEach(_recipe => {
                         const recipe = _recipe[0]
                         const recipeData = {
@@ -310,52 +369,59 @@ const logic = {
                     return recipesData
                 })
             })
-},
+    },
+/**
+ * Basic search recipe by id without user logged
+ * @param {string} recipeId 
+ */
+    basicSearchRecipeById(recipeId){
+        const appId = '6b5aa10e',
+        appKey = 'ecc14d0ee3cece665188f76abb1ad5ab',
+        recipesData = []
 
-basicSearchRecipeById(recipeId){
-    const appId = '6b5aa10e',
-    appKey = 'ecc14d0ee3cece665188f76abb1ad5ab',
-    recipesData = []
+        return Promise.resolve()
+            .then(() => {
 
-    return Promise.resolve()
-        .then(() => {
-        return fetch (`https://api.edamam.com/search?r=http%3A%2F%2Fwww.edamam.com%2Fontologies%2Fedamam.owl%23recipe_${recipeId}&app_id=${appId}&app_key=${appKey}`)
-        })
-        .then(function(response) {
-            return response.json();
-          })
-        .then(recipe => {
+                return fetch (`https://api.edamam.com/search?r=http%3A%2F%2Fwww.edamam.com%2Fontologies%2Fedamam.owl%23recipe_${recipeId}&app_id=${appId}&app_key=${appKey}`)
+            })
+            .then(function(response) {
+
+                return response.json();
+            })
+            .then(recipe => {
                     const recipeData = {
-                        
-                            uri: recipe[0].uri,
-                            label: recipe[0].label,
-                            image: recipe[0].image,
-                            source: recipe[0].source,
-                            url: recipe[0].url,
-                            yield: recipe[0].yield,
-                            ingredients: recipe[0].ingredientLines,
-                            calories: recipe[0].calories,
-                            time: recipe[0].totalTime,
-                            fat: recipe[0].totalNutrients.FAT,
-                            fasat: recipe[0].totalNutrients.FASAT,
-                            fatrn: recipe[0].totalNutrients.FATRN,
-                            carbs: recipe[0].totalNutrients.CHOCDF,
-                            fiber: recipe[0].totalNutrients.FIBTG,
-                            sugar: recipe[0].totalNutrients.SUGAR,
-                            protein: recipe[0].totalNutrients.PROCNT,
-                            cholesterol: recipe[0].totalNutrients.CHOLE
-                        }
+
+                        uri: recipe[0].uri,
+                        label: recipe[0].label,
+                        image: recipe[0].image,
+                        source: recipe[0].source,
+                        url: recipe[0].url,
+                        yield: recipe[0].yield,
+                        ingredients: recipe[0].ingredientLines,
+                        calories: recipe[0].calories,
+                        time: recipe[0].totalTime,
+                        fat: recipe[0].totalNutrients.FAT,
+                        fasat: recipe[0].totalNutrients.FASAT,
+                        fatrn: recipe[0].totalNutrients.FATRN,
+                        carbs: recipe[0].totalNutrients.CHOCDF,
+                        fiber: recipe[0].totalNutrients.FIBTG,
+                        sugar: recipe[0].totalNutrients.SUGAR,
+                        protein: recipe[0].totalNutrients.PROCNT,
+                        cholesterol: recipe[0].totalNutrients.CHOLE
+                    }
         
-                    recipesData.push(recipeData)
+                recipesData.push(recipeData)
+            })
+            .then(()=> {
                     
-                }).then(()=> {
-
-                    return recipesData
-
-                })
-                
-},
-
+                return recipesData
+            })      
+    },
+/**
+ * Search recipes with allergens from one user
+ * @param {string} query 
+ * @param {email} email 
+ */
     searchRecipeAllergens(query, email){
 
         const appId = '6b5aa10e',
@@ -378,19 +444,26 @@ basicSearchRecipeById(recipeId){
             })
             .then(allergens => {
                 let allergenPath = '';
+
                 allergens.forEach(allergens => {
                     allergenPath += `health=${allergens}&`
                 })
+
                 return fetch(`https://api.edamam.com/search?q=${query}&app_id=${appId}&app_key=${appKey}&${allergenPath}from=0&to=100`)
             })
             .then(function(response) {
+
                 return response.json();
-              })
+            })
 
             .then(recipes => {
+
                 recipes.hits.forEach(recipeObj => {
+
                     const { recipe } = recipeObj
+
                     const recipeData = {
+
                         uri: recipe.uri,
                         label: recipe.label,
                         image: recipe.image,
@@ -410,14 +483,16 @@ basicSearchRecipeById(recipeId){
                         cholesterol: recipe.totalNutrients.CHOLE
 
                     }
-                    results.push(recipeData) 
-            
+                    results.push(recipeData)
+
                 })
-                debugger
                 return results
             })
     },
-
+/**
+ * Basic search without allergens
+ * @param {string} query 
+ */
     basicSearch(query){
         const appId = '6b5aa10e',
         appKey = 'ecc14d0ee3cece665188f76abb1ad5ab',
@@ -431,13 +506,17 @@ basicSearchRecipeById(recipeId){
 
             })
             .then(function(response) {
+
                 return response.json();
               })
 
             .then(recipes => {
+
                 recipes.hits.forEach(recipeObj => {
+
                     const { recipe } = recipeObj
                     const recipeData = {
+
                         uri: recipe.uri,
                         label: recipe.label,
                         image: recipe.image,

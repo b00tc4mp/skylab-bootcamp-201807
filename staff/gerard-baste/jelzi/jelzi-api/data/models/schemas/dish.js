@@ -12,7 +12,7 @@ module.exports = new Schema({
         required: true,
     },
 
-    order: {
+    sort: {
         type: Number,
     }
 

@@ -1,28 +1,11 @@
 require('dotenv').config()
 
-const {
-    logic
-} = require('.')
-const {
-    expect
-} = require('chai')
+const { logic } = require('.')
+const { expect } = require('chai')
 const mongoose = require('mongoose')
-const {
-    Types: {
-        ObjectId
-    }
-} = mongoose
-const {
-    User,
-    Menu,
-    Dish
-} = require('../data/models')
-
-const {
-    env: {
-        MONGO_URL
-    }
-} = process
+const { Types: { ObjectId } } = mongoose
+const { User, Menu, Dish } = require('../data/models')
+const { env: { MONGO_URL } } = process
 
 describe('logic', () => {
     const email = `gerard-${Math.random()}${Math.random()}@gmail.com`,
@@ -31,10 +14,10 @@ describe('logic', () => {
         allergens = ['egg-free', 'gluten-free'],
         title = 'Monday menu'
         menu = {title:'Monday'}
-        dishes = [{titleDish:'Breakfast', recipeId:'8c18f1819743bf2c06358d281db79743', order:1}],
+        dishes = [{titleDish:'Breakfast', recipeId:'8c18f1819743bf2c06358d281db79743', sort:1}],
         titleDish = 'Dinner',
         recipeId = '76850841e0c43087cb56d011602a444a',
-        order = 3
+        sort = 3
 
     let _connection
 
@@ -491,14 +474,14 @@ describe('logic', () => {
             return user.save()
             .then(user => {
                 const menuId = user.menus[0]._id.toString()
-                return logic.addDish(email, titleDish, recipeId, order, menuId)
+                return logic.addDish(email, titleDish, recipeId, sort, menuId)
                     .then((user) => {
                                 expect(user.menus[0]).to.exist
                                 expect(user.menus.length).to.equal(1)
                                 expect(user.menus[0].title).to.equal('Monday menu')
                                 expect(user.menus[0].dishes.length).to.equal(2)
                                 expect(user.menus[0].dishes[1].titleDish).to.equal('Dinner')
-                                expect(user.menus[0].dishes[1].order).to.equal(3)
+                                expect(user.menus[0].dishes[1].sort).to.equal(3)
                     })
             })
             })
@@ -506,7 +489,7 @@ describe('logic', () => {
         )
 
          it('should fail on add undefined email', () =>{
-            return logic.addDish(undefined, titleDish, recipeId, order, '3123123')
+            return logic.addDish(undefined, titleDish, recipeId, sort, '3123123')
             .catch(err => err)
             .then(({
                 message
@@ -515,7 +498,7 @@ describe('logic', () => {
         )
 
         it('should fail on add empty email', () =>{
-            return logic.addDish('', titleDish, recipeId, order, '3123123')
+            return logic.addDish('', titleDish, recipeId, sort, '3123123')
             .catch(err => err)
             .then(({
                 message
@@ -524,7 +507,7 @@ describe('logic', () => {
         )
 
         it('should fail on add number email', () =>{
-            return logic.addDish(123, titleDish, recipeId, order, '3123123')
+            return logic.addDish(123, titleDish, recipeId, sort, '3123123')
             .catch(err => err)
             .then(({
                 message
@@ -533,7 +516,7 @@ describe('logic', () => {
         )
 
         it('should fail on add empty title dish', () =>{
-            return logic.addDish(email, '', recipeId, order, '3123123')
+            return logic.addDish(email, '', recipeId, sort, '3123123')
             .catch(err => err)
             .then(({
                 message
@@ -542,7 +525,7 @@ describe('logic', () => {
         )
 
         it('should fail on add number title dish', () =>{
-            return logic.addDish(email, 123, recipeId, order, '3123123')
+            return logic.addDish(email, 123, recipeId, sort, '3123123')
             .catch(err => err)
             .then(({
                 message
@@ -551,7 +534,7 @@ describe('logic', () => {
         )
 
         it('should fail on add undefined title dish', () =>{
-            return logic.addDish(email, undefined, recipeId, order, '3123123')
+            return logic.addDish(email, undefined, recipeId, sort, '3123123')
             .catch(err => err)
             .then(({
                 message
@@ -560,7 +543,7 @@ describe('logic', () => {
         )
 
         it('should fail on add undefined recipe ID', () =>{
-            return logic.addDish(email, titleDish, undefined, order, '3123123')
+            return logic.addDish(email, titleDish, undefined, sort, '3123123')
             .catch(err => err)
             .then(({
                 message
@@ -569,7 +552,7 @@ describe('logic', () => {
         )
 
         it('should fail on add number recipe ID', () =>{
-            return logic.addDish(email, titleDish, 123, order, '3123123')
+            return logic.addDish(email, titleDish, 123, sort, '3123123')
             .catch(err => err)
             .then(({
                 message
@@ -578,7 +561,7 @@ describe('logic', () => {
         )
 
         it('should fail on add empty recipe ID', () =>{
-            return logic.addDish(email, titleDish, '', order, '3123123')
+            return logic.addDish(email, titleDish, '', sort, '3123123')
             .catch(err => err)
             .then(({
                 message
@@ -586,30 +569,30 @@ describe('logic', () => {
         }
         )
 
-        it('should fail on add empty order', () =>{
+        it('should fail on add empty number sort', () =>{
             return logic.addDish(email, titleDish, recipeId, '', '3123123')
             .catch(err => err)
             .then(({
                 message
-            }) => expect(message).to.equal(`invalid order`))
+            }) => expect(message).to.equal(`invalid sort`))
         }
         )
 
-        it('should fail on add undefined order', () =>{
+        it('should fail on add undefined number sort', () =>{
             return logic.addDish(email, titleDish, recipeId, undefined, '3123123')
             .catch(err => err)
             .then(({
                 message
-            }) => expect(message).to.equal(`invalid order`))
+            }) => expect(message).to.equal(`invalid sort`))
         }
         )
 
-        it('should fail on add string order', () =>{
+        it('should fail on add string number sort', () =>{
             return logic.addDish(email, titleDish, recipeId, 'undefined', '3123123')
             .catch(err => err)
             .then(({
                 message
-            }) => expect(message).to.equal(`invalid order`))
+            }) => expect(message).to.equal(`invalid sort`))
         }
         )
 
@@ -621,7 +604,7 @@ describe('logic', () => {
                 allergens
             })
             .then(user => {
-                return logic.addDish(email, titleDish, recipeId, order,undefined)
+                return logic.addDish(email, titleDish, recipeId, sort, undefined)
                     .catch((err) => err) 
                     .then(({message}) => expect(message).to.equal('invalid menuId'))
             })
@@ -649,7 +632,7 @@ describe('logic', () => {
                     .then(user => {
                         menuId = user.menus[0]._id.toString()
                         const dish = new Dish(dishes[0])
-                        const dish2 = new Dish({titleDish:'Brunch', recipeId:'55450841e0c43087cb56d011602e443z', order:2})
+                        const dish2 = new Dish({titleDish:'Brunch', recipeId:'55450841e0c43087cb56d011602e443z', sort:2})
 
                         dishId = dish.id
                         user.menus.forEach(element => {  
@@ -1052,7 +1035,7 @@ describe('logic', () => {
                     .then(user => {
                         menuId = user.menus[0]._id.toString()
                         const dish = new Dish(dishes[0])
-                        const dish2 = new Dish({titleDish:'Brunch', recipeId:'e22178517a25b7e55626de2f8c6f165a', order:2})
+                        const dish2 = new Dish({titleDish:'Brunch', recipeId:'e22178517a25b7e55626de2f8c6f165a', sort:2})
         
                         dishId = dish.id
                         user.menus.forEach(element => {  
@@ -1119,17 +1102,14 @@ describe('logic', () => {
 
     })
 
-    !!true && describe('Basic search recipe ID', () => {
-    it('Basic search with query', () => {
-        debugger
-        return logic.basicSearchRecipeById('b66666d5c882ca199f43def8f1b8a03f')
+    !true && describe('Basic search recipe ID', () => {
+        it('Basic search with query', () => {
+            return logic.basicSearchRecipeById('b66666d5c882ca199f43def8f1b8a03f')
             .then(recipesData => {
-                debugger
                 expect(recipesData).to.exist
             })
-    })
-})
-    
+        })
+    })   
 })
 
 

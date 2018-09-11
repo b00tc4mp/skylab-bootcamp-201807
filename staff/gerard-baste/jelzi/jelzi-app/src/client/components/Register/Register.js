@@ -59,12 +59,6 @@ class Register extends Component {
       })
       .catch(({message}) => {
         UserError(message)
-        // this.setState({
-        //   errorRegister: message,
-        //   email: "",
-        //   password: "",
-        // })
-
       })
   }
 
@@ -74,31 +68,31 @@ class Register extends Component {
       <div className="mt-4" >
         <Form id="registerForm" onSubmit={this.handleSubmit}>
           <FormGroup>
-            <Label for="Usermail">Email</Label>
-            <Input type="email" value={this.state.email} onChange={this.keepEmail} name="Email" placeholder="Email" required
+            <Label className="titleRegister">Register</Label>
+            <Input className="emailInput" type="email" value={this.state.email} onChange={this.keepEmail} name="Email" placeholder="Email" required
                    autoFocus="true"/>
             <FormText color="muted">
               Email is required
             </FormText>
           </FormGroup>
           <FormGroup>
-            <Label for="Username">Username</Label>
             <Input type="text" value={this.state.username} onChange={this.keepUsername} name="username" placeholder="Username" />
             <FormText color="muted">
               Username is required
             </FormText>
           </FormGroup>
           <FormGroup>
-            <Label for="examplePassword">Password</Label>
             <Input
               type="password" name="password" value={this.state.password} onChange={this.keepPassword}
               placeholder="Password" required/>
             <FormText color="muted">
-              Must contain at least one number and one uppercase and lowercase letter, and at least 6 to 15 characters
+              Min 6 characters
             </FormText>
           </FormGroup>
           <FormGroup>
-          <Label for="exampleCheckbox">Your Allergens</Label>
+          <Label className="allergenTitle">Your Allergens</Label>
+
+        <div className="allergens">
           <div>
             <CustomInput type="checkbox" value="alcohol-free" onChange={this.keepAllergens} checked={this.state.allergens['alcohol-free']} name="alcohol-free" id="exampleCustomInline" label="Alcohol-free" inline />
             <CustomInput type="checkbox" value="celery-free"  onChange={this.keepAllergens} checked={this.state.allergens['celery-free']} name="celery-free" id="exampleCustomInline2" label="Celery-free" inline />     
@@ -123,8 +117,9 @@ class Register extends Component {
             <CustomInput type="checkbox" value="shellfish-free" onChange={this.keepAllergens} checked={this.state.allergens['shellfish-free']} name="shellfish-free" id="exampleCustomInline15" label="Shellfish-free" inline />
             <CustomInput type="checkbox" value="soy-free" onChange={this.keepAllergens} checked={this.state.allergens['soy-free']} name="soy-free" id="exampleCustomInline16" label="Soy-free" inline />
           </div>
+          </div>
+          <Button type="submit" id="submitButton" >Submit</Button>
         </FormGroup>
-          <Button type="submit" className="submitButton">Submit</Button>
         </Form>
       </div>
     );

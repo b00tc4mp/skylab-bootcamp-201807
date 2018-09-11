@@ -123,15 +123,14 @@ router.delete('/user/:email/menus/:id', validateJwt, (req, res) => {
         })
 })
 
-/
-/DISHES RUTES//
+//DISHES RUTES//
 
 //Add dishes//
 
 router.post('/user/:email/menus/:menuId/dishes', [validateJwt, jsonBodyParser], (req, res) => {
-    const { params: { email, menuId }, body: { titleDish, recipeId, order }} = req
+    const { params: { email, menuId }, body: { titleDish, recipeId, sort }} = req
     
-    logic.addDish(email, titleDish, recipeId, order, menuId)
+    logic.addDish(email, titleDish, recipeId, sort, menuId)
         .then((id) => res.json({ message: 'Dish added correctly', id }))
         .catch(err => {
             const { message } = err

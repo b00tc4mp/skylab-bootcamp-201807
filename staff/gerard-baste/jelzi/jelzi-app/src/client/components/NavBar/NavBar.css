@@ -6,6 +6,15 @@ a.nav-link {
     color: white;
 }
 
+.titleNavbar{
+    font-family: 'Courgette', cursive;
+    font-size: 31px;
+    color: white;
+    margin-left: 20px;
+    margin-top: 10px;
+
+}
+
 .navbar{
     padding: 0 !important;
 }
@@ -29,5 +38,4 @@ nav {
     /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); */
     margin-bottom: 1px;
     background-color: rgb(92, 185, 78);
-
 }

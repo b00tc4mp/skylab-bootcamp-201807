@@ -42,15 +42,13 @@ render() {
         <div  className="mt-5" id="RecipeLogin">
       <Form id="LoginForm" onSubmit={this.handleSubmit}>
         <FormGroup>
-          <Label for="exampleEmail">Email</Label>
-          <Input type="text" onChange={this.keepEmail} name="Email" placeholder="Email" required autoFocus="true"/>
+        <Label className="titleLogin">Login</Label>
+          <Input className="emailInput" type="text" onChange={this.keepEmail} name="Email" placeholder="Email" required autoFocus="true"/>
         </FormGroup>
         <FormGroup>
-          <Label for="examplePassword">Password</Label>
           <Input type="password" onChange={this.keepPassword} name="password" placeholder="Password" required/>
+        <Button className="submitButton" id="submitButton">Login</Button>
         </FormGroup>
-        {/* {this.state.errorLogin && <UserError message={this.state.errorLogin}/>} */}
-        <Button>Login</Button>
       </Form>
       </div>
     );

@@ -12,4 +12,14 @@
     }
     .cardButton{
         margin-top: 10px;
+        background-color: #5FB854 !important;
+        border-color: #5FB854 !important;
+    }
+
+    .displayRecipes{
+        min-height: 150px !important;
+    }
+
+    .card-title{
+        height: 100px;
     }

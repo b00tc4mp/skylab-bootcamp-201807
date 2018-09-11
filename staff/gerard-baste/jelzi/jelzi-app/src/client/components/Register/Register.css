@@ -1,6 +1,47 @@
+*{font-family: 'Raleway', sans-serif;
+
+}
+
+
 .position-relative {
-    width: 30em;
-    margin-left: 40em;
+    width: 650px;
+    margin:0 auto;
     text-align: center;
 }
 
+small{
+    text-align: left;
+}
+
+.allergens div{
+    text-align: left;
+    padding-top: 10px
+
+}
+
+.allergens{
+    display: flex;
+    border-top: 1px solid green;
+}
+
+#submitButton{
+    margin-top: 40px;
+    background-color: #5FB854;
+    border-color:  #5FB854;
+    font-size: 20px;
+}
+
+.emailInput{
+    margin-top: 20px;
+}
+
+.titleRegister{
+    margin-top: 20px;
+    font-size: 40px;
+}
+
+.allergenTitle{
+    margin-top: 20px;
+    font-size: 20px;
+
+}

@@ -7,6 +7,7 @@ import Register from './components/Register/Register.js'
 import Profile from './components/Profile/Profile.js'
 import DetailRecipe from './components/DetailRecipe/DetailRecipe.js'
 import Menus from './components/Menus/Menus.js'
+import OneMenu from './components/OneMenu/OneMenu.js'
 
 
 export { 
@@ -19,4 +20,5 @@ export {
     Profile,
     DetailRecipe,
     Menus,
+    OneMenu,
  }

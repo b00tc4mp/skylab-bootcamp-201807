@@ -33,10 +33,9 @@ export default class Search extends React.Component{
 
 render() {
     return  <div id="searchPanel">
-   
       <Form onSubmit={this.onSearch}> 
         <InputGroup>
-          <Input id="searchInput" onChange={this.keepQuery} placeholder="Search a recipe..." autoFocus="true" autoComplete="off"  />
+          <Input id="searchInput" onChange={this.keepQuery} placeholder="Search a recipe..." autoFocus="true" autoComplete="off" required  />
           <InputGroupAddon addonType="append"><Button id="searchButton">Search</Button></InputGroupAddon>
         </InputGroup>
         </Form>

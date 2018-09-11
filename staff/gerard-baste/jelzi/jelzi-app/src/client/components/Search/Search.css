@@ -3,8 +3,22 @@
 #searchPanel{
     margin-top: 50px;
     margin-bottom: 50px;
+    margin-left: -400px;
 }
 
-.form-control:focus {
-    outline: 0;
+
+
+#searchInput{
+    margin-left: 35%;
+    
+}
+
+#searchButton{
+    background-color: #5FB854
+}
+
+.form-control:focus{
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+    border-color: 0  !important;
 }

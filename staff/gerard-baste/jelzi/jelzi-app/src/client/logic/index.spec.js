@@ -10,14 +10,14 @@ const jwt = require('jsonwebtoken')
 
 describe('logic', () => {
     const { JWT_SECRET } = process.env
-    let email, username, password, allergens, newAllergens, title, titleDish, recipeId, order, query
+    let email, username, password, allergens, newAllergens, title, titleDish, recipeId, sort, query
     
 
     beforeEach(() => {
         
         email = `user${Math.random()}@gmail.com`, username = `user${Math.random()}`, 
         password = '123456', allergens = ['egg-free'], newAllergens = ['soy-free'],
-        title = "Monday Menu", titleDish = "Breakfast", recipeId = "76850841e0c43087cb56d011602e452e", order = 1 ,
+        title = "Monday Menu", titleDish = "Breakfast", recipeId = "76850841e0c43087cb56d011602e452e", sort = 1 ,
         query = 'cake'
     })
 
@@ -670,7 +670,7 @@ describe('logic', () => {
                 .then(() => logic.authenticate(email, password))
                 .then(token => {
                     return logic.addMenu(email, title, token)
-                .then(menu => logic.addDish(email, titleDish, recipeId, order, menu.menus[0]._id, token))
+                .then(menu => logic.addDish(email, titleDish, recipeId, sort, menu.menus[0]._id, token))
                 })
                 .then( ({message})  => expect(message).to.equal('Dish added correctly'))
             )
@@ -680,7 +680,7 @@ describe('logic', () => {
                 .then(() => logic.authenticate(email, password))
                 .then(token => {
                     return logic.addMenu(email, title, token)
-                .then(menu => logic.addDish(undefined, titleDish, recipeId, order, menu.menus[0]._id, token))
+                .then(menu => logic.addDish(undefined, titleDish, recipeId, sort, menu.menus[0]._id, token))
             })
             .catch(err => err)
             .then(err => {
@@ -694,7 +694,7 @@ describe('logic', () => {
                 .then(() => logic.authenticate(email, password))
                 .then(token => {
                     return logic.addMenu(email, title, token)
-                .then(menu => logic.addDish('', titleDish, recipeId, order, menu.menus[0]._id, token))
+                .then(menu => logic.addDish('', titleDish, recipeId, sort, menu.menus[0]._id, token))
             })
             .catch(err => err)
             .then(err => {
@@ -708,7 +708,7 @@ describe('logic', () => {
                 .then(() => logic.authenticate(email, password))
                 .then(token => {
                     return logic.addMenu(email, title, token)
-                .then(menu => logic.addDish(123, titleDish, recipeId, order, menu.menus[0]._id, token))
+                .then(menu => logic.addDish(123, titleDish, recipeId, sort, menu.menus[0]._id, token))
             })
             .catch(err => err)
             .then(err => {
@@ -722,7 +722,7 @@ describe('logic', () => {
                 .then(() => logic.authenticate(email, password))
                 .then(token => {
                     return logic.addMenu(email, title, token)
-                .then(menu => logic.addDish(email, '', recipeId, order, menu.menus[0]._id, token))
+                .then(menu => logic.addDish(email, '', recipeId, sort, menu.menus[0]._id, token))
             })
             .catch(err => err)
             .then(err => {
@@ -736,7 +736,7 @@ describe('logic', () => {
                 .then(() => logic.authenticate(email, password))
                 .then(token => {
                     return logic.addMenu(email, title, token)
-                .then(menu => logic.addDish(email, undefined, recipeId, order, menu.menus[0]._id, token))
+                .then(menu => logic.addDish(email, undefined, recipeId, sort, menu.menus[0]._id, token))
             })
             .catch(err => err)
             .then(err => {
@@ -750,7 +750,7 @@ describe('logic', () => {
                 .then(() => logic.authenticate(email, password))
                 .then(token => {
                     return logic.addMenu(email, title, token)
-                .then(menu => logic.addDish(email, 123, recipeId, order, menu.menus[0]._id, token))
+                .then(menu => logic.addDish(email, 123, recipeId, sort, menu.menus[0]._id, token))
             })
             .catch(err => err)
             .then(err => {
@@ -764,7 +764,7 @@ describe('logic', () => {
                 .then(() => logic.authenticate(email, password))
                 .then(token => {
                     return logic.addMenu(email, title, token)
-                .then(menu => logic.addDish(email, titleDish, '', order, menu.menus[0]._id, token))
+                .then(menu => logic.addDish(email, titleDish, '', sort, menu.menus[0]._id, token))
             })
             .catch(err => err)
             .then(err => {
@@ -778,7 +778,7 @@ describe('logic', () => {
                 .then(() => logic.authenticate(email, password))
                 .then(token => {
                     return logic.addMenu(email, title, token)
-                .then(menu => logic.addDish(email, titleDish, undefined, order, menu.menus[0]._id, token))
+                .then(menu => logic.addDish(email, titleDish, undefined, sort, menu.menus[0]._id, token))
             })
             .catch(err => err)
             .then(err => {
@@ -792,7 +792,7 @@ describe('logic', () => {
                 .then(() => logic.authenticate(email, password))
                 .then(token => {
                     return logic.addMenu(email, title, token)
-                .then(menu => logic.addDish(email, titleDish, 123, order, menu.menus[0]._id, token))
+                .then(menu => logic.addDish(email, titleDish, 123, sort, menu.menus[0]._id, token))
             })
             .catch(err => err)
             .then(err => {
@@ -801,7 +801,7 @@ describe('logic', () => {
             })
         )
 
-        it('should fail on empty order', () =>
+        it('should fail on empty sort', () =>
             logic.register(email, username, password, allergens)
                 .then(() => logic.authenticate(email, password))
                 .then(token => {
@@ -811,11 +811,11 @@ describe('logic', () => {
             .catch(err => err)
             .then(err => {
                 expect(err).to.exist
-                expect(err.message).to.equal('invalid order')
+                expect(err.message).to.equal('invalid sort')
             })
         )
 
-        it('should fail on undefined order', () =>
+        it('should fail on undefined sort', () =>
             logic.register(email, username, password, allergens)
                 .then(() => logic.authenticate(email, password))
                 .then(token => {
@@ -825,7 +825,7 @@ describe('logic', () => {
             .catch(err => err)
             .then(err => {
                 expect(err).to.exist
-                expect(err.message).to.equal('invalid order')
+                expect(err.message).to.equal('invalid sort')
             })
         )
 
@@ -834,7 +834,7 @@ describe('logic', () => {
                 .then(() => logic.authenticate(email, password))
                 .then(token => {
                     return logic.addMenu(email, title, token)
-                .then(menu => logic.addDish(email, titleDish, recipeId, order, '', token))
+                .then(menu => logic.addDish(email, titleDish, recipeId, sort, '', token))
             })
             .catch(err => err)
             .then(err => {
@@ -847,7 +847,7 @@ describe('logic', () => {
                 .then(() => logic.authenticate(email, password))
                 .then(token => {
                     return logic.addMenu(email, title, token)
-                .then(menu => logic.addDish(email, titleDish, recipeId, order, 123, token))
+                .then(menu => logic.addDish(email, titleDish, recipeId, sort, 123, token))
             })
             .catch(err => err)
             .then(err => {
@@ -861,7 +861,7 @@ describe('logic', () => {
                 .then(() => logic.authenticate(email, password))
                 .then(token => {
                     return logic.addMenu(email, title, token)
-                .then(menu => logic.addDish(email, titleDish, recipeId, order, undefined, token))
+                .then(menu => logic.addDish(email, titleDish, recipeId, sort, undefined, token))
             })
             .catch(err => err)
             .then(err => {
@@ -877,7 +877,7 @@ describe('logic', () => {
                 .then(() => logic.authenticate(email, password))
                 .then(token => {
                     return logic.addMenu(email, title, token)
-                    .then(menu => logic.addDish(email, titleDish, recipeId, order, menu.menus[0]._id, token))
+                    .then(menu => logic.addDish(email, titleDish, recipeId, sort, menu.menus[0]._id, token))
                     .then(menu => logic.listDishes(email, menu.id.menus[0]._id, token))
                 })
                 .then( res  => expect(res[0].recipeId).to.equal('76850841e0c43087cb56d011602e452e'))
@@ -888,7 +888,7 @@ describe('logic', () => {
                 .then(() => logic.authenticate(email, password))
                 .then(token => {
                     return logic.addMenu(email, title, token)
-                    .then(menu => logic.addDish(email, titleDish, recipeId, order, menu.menus[0]._id, token))
+                    .then(menu => logic.addDish(email, titleDish, recipeId, sort, menu.menus[0]._id, token))
                     .then(menu => logic.listDishes('', menu.id.menus[0]._id, token))
                 })
                 .catch(err => err)
@@ -903,7 +903,7 @@ describe('logic', () => {
                 .then(() => logic.authenticate(email, password))
                 .then(token => {
                     return logic.addMenu(email, title, token)
-                    .then(menu => logic.addDish(email, titleDish, recipeId, order, menu.menus[0]._id, token))
+                    .then(menu => logic.addDish(email, titleDish, recipeId, sort, menu.menus[0]._id, token))
                     .then(menu => logic.listDishes(undefined, menu.id.menus[0]._id, token))
                 })
                 .catch(err => err)
@@ -918,7 +918,7 @@ describe('logic', () => {
                 .then(() => logic.authenticate(email, password))
                 .then(token => {
                     return logic.addMenu(email, title, token)
-                    .then(menu => logic.addDish(email, titleDish, recipeId, order, menu.menus[0]._id, token))
+                    .then(menu => logic.addDish(email, titleDish, recipeId, sort, menu.menus[0]._id, token))
                     .then(menu => logic.listDishes(123, menu.id.menus[0]._id, token))
                 })
                 .catch(err => err)
@@ -933,7 +933,7 @@ describe('logic', () => {
                 .then(() => logic.authenticate(email, password))
                 .then(token => {
                     return logic.addMenu(email, title, token)
-                    .then(menu => logic.addDish(email, titleDish, recipeId, order, menu.menus[0]._id, token))
+                    .then(menu => logic.addDish(email, titleDish, recipeId, sort, menu.menus[0]._id, token))
                     .then(menu => logic.listDishes(email, undefined, token))
                 })
                 .catch(err => err)
@@ -948,7 +948,7 @@ describe('logic', () => {
                 .then(() => logic.authenticate(email, password))
                 .then(token => {
                     return logic.addMenu(email, title, token)
-                    .then(menu => logic.addDish(email, titleDish, recipeId, order, menu.menus[0]._id, token))
+                    .then(menu => logic.addDish(email, titleDish, recipeId, sort, menu.menus[0]._id, token))
                     .then(menu => logic.listDishes(email, '', token))
                 })
                 .catch(err => err)
@@ -963,7 +963,7 @@ describe('logic', () => {
                 .then(() => logic.authenticate(email, password))
                 .then(token => {
                     return logic.addMenu(email, title, token)
-                    .then(menu => logic.addDish(email, titleDish, recipeId, order, menu.menus[0]._id, token))
+                    .then(menu => logic.addDish(email, titleDish, recipeId, sort, menu.menus[0]._id, token))
                     .then(menu => logic.listDishes(email, 123, token))
                 })
                 .catch(err => err)
@@ -981,7 +981,7 @@ describe('logic', () => {
                 .then(() => logic.authenticate(email, password))
                 .then(token => {
                     return logic.addMenu(email, title, token)
-                    .then(menu => logic.addDish(email, titleDish, recipeId, order, menu.menus[0]._id, token))
+                    .then(menu => logic.addDish(email, titleDish, recipeId, sort, menu.menus[0]._id, token))
                     .then(menu => logic.removeDish(email, menu.id.menus[0]._id, menu.id.menus[0].dishes[0]._id, token))
                 })
                 .then( ({message})  => expect(message).to.equal('Dish deleted correctly'))
@@ -992,7 +992,7 @@ describe('logic', () => {
                 .then(() => logic.authenticate(email, password))
                 .then(token => {
                     return logic.addMenu(email, title, token)
-                    .then(menu => logic.addDish(email, titleDish, recipeId, order, menu.menus[0]._id, token))
+                    .then(menu => logic.addDish(email, titleDish, recipeId, sort, menu.menus[0]._id, token))
                     .then(menu => logic.removeDish(undefined, menu.id.menus[0]._id, menu.id.menus[0].dishes[0]._id, token))
                 })
                 .catch(err => err)
@@ -1007,7 +1007,7 @@ describe('logic', () => {
                 .then(() => logic.authenticate(email, password))
                 .then(token => {
                     return logic.addMenu(email, title, token)
-                    .then(menu => logic.addDish(email, titleDish, recipeId, order, menu.menus[0]._id, token))
+                    .then(menu => logic.addDish(email, titleDish, recipeId, sort, menu.menus[0]._id, token))
                     .then(menu => logic.removeDish('', menu.id.menus[0]._id, menu.id.menus[0].dishes[0]._id, token))
                 })
                 .catch(err => err)
@@ -1022,7 +1022,7 @@ describe('logic', () => {
                 .then(() => logic.authenticate(email, password))
                 .then(token => {
                     return logic.addMenu(email, title, token)
-                    .then(menu => logic.addDish(email, titleDish, recipeId, order, menu.menus[0]._id, token))
+                    .then(menu => logic.addDish(email, titleDish, recipeId, sort, menu.menus[0]._id, token))
                     .then(menu => logic.removeDish(123, menu.id.menus[0]._id, menu.id.menus[0].dishes[0]._id, token))
                 })
                 .catch(err => err)
@@ -1037,7 +1037,7 @@ describe('logic', () => {
                 .then(() => logic.authenticate(email, password))
                 .then(token => {
                     return logic.addMenu(email, title, token)
-                    .then(menu => logic.addDish(email, titleDish, recipeId, order, menu.menus[0]._id, token))
+                    .then(menu => logic.addDish(email, titleDish, recipeId, sort, menu.menus[0]._id, token))
                     .then(menu => logic.removeDish(email, '', menu.id.menus[0].dishes[0]._id, token))
                 })
                 .catch(err => err)
@@ -1052,7 +1052,7 @@ describe('logic', () => {
                 .then(() => logic.authenticate(email, password))
                 .then(token => {
                     return logic.addMenu(email, title, token)
-                    .then(menu => logic.addDish(email, titleDish, recipeId, order, menu.menus[0]._id, token))
+                    .then(menu => logic.addDish(email, titleDish, recipeId, sort, menu.menus[0]._id, token))
                     .then(menu => logic.removeDish(email, undefined, menu.id.menus[0].dishes[0]._id, token))
                 })
                 .catch(err => err)
@@ -1067,7 +1067,7 @@ describe('logic', () => {
                 .then(() => logic.authenticate(email, password))
                 .then(token => {
                     return logic.addMenu(email, title, token)
-                    .then(menu => logic.addDish(email, titleDish, recipeId, order, menu.menus[0]._id, token))
+                    .then(menu => logic.addDish(email, titleDish, recipeId, sort, menu.menus[0]._id, token))
                     .then(menu => logic.removeDish(email, 123, menu.id.menus[0].dishes[0]._id, token))
                 })
                 .catch(err => err)
@@ -1082,7 +1082,7 @@ describe('logic', () => {
                 .then(() => logic.authenticate(email, password))
                 .then(token => {
                     return logic.addMenu(email, title, token)
-                    .then(menu => logic.addDish(email, titleDish, recipeId, order, menu.menus[0]._id, token))
+                    .then(menu => logic.addDish(email, titleDish, recipeId, sort, menu.menus[0]._id, token))
                     .then(menu => logic.removeDish(email, menu.id.menus[0]._id, undefined, token))
                 })
                 .catch(err => err)
@@ -1097,7 +1097,7 @@ describe('logic', () => {
                 .then(() => logic.authenticate(email, password))
                 .then(token => {
                     return logic.addMenu(email, title, token)
-                    .then(menu => logic.addDish(email, titleDish, recipeId, order, menu.menus[0]._id, token))
+                    .then(menu => logic.addDish(email, titleDish, recipeId, sort, menu.menus[0]._id, token))
                     .then(menu => logic.removeDish(email, menu.id.menus[0]._id, '', token))
                 })
                 .catch(err => err)
@@ -1112,7 +1112,7 @@ describe('logic', () => {
                 .then(() => logic.authenticate(email, password))
                 .then(token => {
                     return logic.addMenu(email, title, token)
-                    .then(menu => logic.addDish(email, titleDish, recipeId, order, menu.menus[0]._id, token))
+                    .then(menu => logic.addDish(email, titleDish, recipeId, sort, menu.menus[0]._id, token))
                     .then(menu => logic.removeDish(email, menu.id.menus[0]._id, 123, token))
                 })
                 .catch(err => err)
@@ -1238,7 +1238,7 @@ describe('logic', () => {
                     .then(() => logic.authenticate(email, password))
                     .then(token => {
                         return logic.addMenu(email, title, token)
-                    .then(menu => logic.addDish(email, titleDish, recipeId, order, menu.menus[0]._id, token))
+                    .then(menu => logic.addDish(email, titleDish, recipeId, sort, menu.menus[0]._id, token))
                     .then(menu => logic.searchRecipeById(email, menu.id.menus[0]._id, token))
                 })
                 .then( res  => expect(res.length).to.equal(1))
@@ -1249,7 +1249,7 @@ describe('logic', () => {
                     .then(() => logic.authenticate(email, password))
                     .then(token => {
                         return logic.addMenu(email, title, token)
-                    .then(menu => logic.addDish(email, titleDish, recipeId, order, menu.menus[0]._id, token))
+                    .then(menu => logic.addDish(email, titleDish, recipeId, sort, menu.menus[0]._id, token))
                     .then(menu => logic.searchRecipeById('', menu.id.menus[0]._id, token))
                 })
                 .catch(err => err)
@@ -1264,7 +1264,7 @@ describe('logic', () => {
                     .then(() => logic.authenticate(email, password))
                     .then(token => {
                         return logic.addMenu(email, title, token)
-                    .then(menu => logic.addDish(email, titleDish, recipeId, order, menu.menus[0]._id, token))
+                    .then(menu => logic.addDish(email, titleDish, recipeId, sort, menu.menus[0]._id, token))
                     .then(menu => logic.searchRecipeById(undefined, menu.id.menus[0]._id, token))
                 })
                 .catch(err => err)
@@ -1279,7 +1279,7 @@ describe('logic', () => {
                     .then(() => logic.authenticate(email, password))
                     .then(token => {
                         return logic.addMenu(email, title, token)
-                    .then(menu => logic.addDish(email, titleDish, recipeId, order, menu.menus[0]._id, token))
+                    .then(menu => logic.addDish(email, titleDish, recipeId, sort, menu.menus[0]._id, token))
                     .then(menu => logic.searchRecipeById(123, menu.id.menus[0]._id, token))
                 })
                 .catch(err => err)
@@ -1294,7 +1294,7 @@ describe('logic', () => {
                     .then(() => logic.authenticate(email, password))
                     .then(token => {
                         return logic.addMenu(email, title, token)
-                    .then(menu => logic.addDish(email, titleDish, recipeId, order, menu.menus[0]._id, token))
+                    .then(menu => logic.addDish(email, titleDish, recipeId, sort, menu.menus[0]._id, token))
                     .then(menu => logic.searchRecipeById(email, '', token))
                 })
                 .catch(err => err)
@@ -1309,7 +1309,7 @@ describe('logic', () => {
                     .then(() => logic.authenticate(email, password))
                     .then(token => {
                         return logic.addMenu(email, title, token)
-                    .then(menu => logic.addDish(email, titleDish, recipeId, order, menu.menus[0]._id, token))
+                    .then(menu => logic.addDish(email, titleDish, recipeId, sort, menu.menus[0]._id, token))
                     .then(menu => logic.searchRecipeById(email, undefined, token))
                 })
                 .catch(err => err)
@@ -1324,7 +1324,7 @@ describe('logic', () => {
                     .then(() => logic.authenticate(email, password))
                     .then(token => {
                         return logic.addMenu(email, title, token)
-                    .then(menu => logic.addDish(email, titleDish, recipeId, order, menu.menus[0]._id, token))
+                    .then(menu => logic.addDish(email, titleDish, recipeId, sort, menu.menus[0]._id, token))
                     .then(menu => logic.searchRecipeById(email, 123, token))
                 })
                 .catch(err => err)

@@ -1,0 +1,7 @@
+#allMenusList{
+    display: flex;
+}
+
+#breakfastMenu{
+    margin-right: -175px;
+}
