@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 import { Switch, Route, withRouter, Redirect } from 'react-router-dom'
 import './App.css';
-import Home from './components/Home'
-import Register from './components/Register'
-import Login from './components/Login'
-import Landing from './components/Landing'
-import DetailDog from './components/DetailDog'
-import FormAdopted from './components/FormAdopted'
-import InsertDog from './components/InsertDog'
-import UpdateDog from './components/UpdateDog'
-import Search from './components/Search'
+import Home from './components/home/Home'
+import Register from './components/register/Register'
+import Login from './components/login/Login'
+import Landing from './components/landing/Landing'
+import DetailDog from './components/detailDog/DetailDog'
+import FormAdopted from './components/formAdopted/FormAdopted'
+import InsertDog from './components/insertDog/InsertDog'
+import UpdateDog from './components/updateDog/UpdateDog'
+import Search from './components/search/Search'
 import swal from 'sweetalert2';
 
 class App extends Component {

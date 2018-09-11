@@ -1,24 +1,11 @@
 import React, { Component } from 'react'
-import { withRouter } from 'react-router-dom'
-import { logic } from '../logic'
+import { withRouter,Link } from 'react-router-dom'
+import { logic } from '../../logic'
 import 'bulma/css/bulma.css'
-// import { withGoogleMap, GoogleMap, Marker } from 'react-google-maps';
-import {
-    withScriptjs,
-    withGoogleMap,
-    GoogleMap,
-    Marker,
-} from "react-google-maps";
-
-import {
-    Accordion,
-    AccordionItem,
-    AccordionItemTitle,
-    AccordionItemBody,
-} from 'react-accessible-accordion';
-
-// Demo styles, see 'Styles' section below for some notes on use.
+import { withScriptjs, withGoogleMap, GoogleMap, Marker, } from "react-google-maps";
+import { Accordion, AccordionItem, AccordionItemTitle, AccordionItemBody, } from 'react-accessible-accordion';
 import 'react-accessible-accordion/dist/fancy-example.css';
+import './detailDog.css'
 
 class DetailDog extends Component {
 
@@ -34,19 +21,17 @@ class DetailDog extends Component {
                 this.setState({ dog })
                 return logic.retrieveShelter(dog.shelter)
                     .then(shelter => {
-                        debugger
                         this.setState({ shelter })
                     })
             })
     }
-
 
     render() {
         const MapWithAMarker = withScriptjs(withGoogleMap(props =>
             <GoogleMap
                 defaultZoom={13}
                 defaultCenter={{ lat: this.state.shelter.latitude, lng: this.state.shelter.longitude }}>
-                <Marker position={{ lat: this.state.shelter.latitude, lng: this.state.shelter.longitude}}/>
+                <Marker position={{ lat: this.state.shelter.latitude, lng: this.state.shelter.longitude }} />
             </GoogleMap>
         ));
 
@@ -57,7 +42,7 @@ class DetailDog extends Component {
                 </div>
             </nav >
             <div className="detailDog">
-                <h2 className="titleDetaildDog">Information of {this.state.dog.name}</h2>
+                <h2 className="title">Information of {this.state.dog.name}</h2>
                 <div className="infoDog">
                     <div className="dataDog">
                         <h6>Gender: </h6> <p>{this.state.dog.gender}</p>
@@ -84,16 +69,15 @@ class DetailDog extends Component {
                                     {this.state.shelter.latitude ? <MapWithAMarker
                                         googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyBBm1O0T3pA22EiQsEOSgrMyl9uHh87p4o&callback=3.exp&libraries=geometry,drawing,places"
                                         loadingElement={<div style={{ height: `100%` }} />}
-                                        containerElement={<div style={{ height: `250px`, width: '330px' }}/>}
+                                        containerElement={<div style={{ height: `250px`, width: '330px' }} />}
                                         mapElement={<div style={{ height: `100%` }} />}
-                                    />:<div></div>}
+                                    /> : <div></div>}
                                 </div>
                             </div>
                         </AccordionItemBody>
                     </AccordionItem>
                 </Accordion>
                 <a href="/#/adoptar"><button class="button is-success">Adopt</button></a>
-
             </div>
         </div >
     }

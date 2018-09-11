@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import { withRouter, Link } from 'react-router-dom'
-import { logic } from '../logic'
+import { logic } from '../../logic'
 import swal from 'sweetalert2'
+import './landing.css'
 
 class Landing extends Component {
 
@@ -30,7 +31,7 @@ class Landing extends Component {
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, remove it!'
+            confirmButtonText: 'Yes'
         }).then((result) => {
             if (result.value) {
                 swal(
@@ -42,7 +43,6 @@ class Landing extends Component {
                     .then(() => this.listDogs())
             }
         })
-
     }
 
     listDogs = () => {
@@ -64,7 +64,6 @@ class Landing extends Component {
             .then(() => this.listDogs())
     }
     render() {
-        const { open } = this.state;
         return <div>
             <nav class="navbar nav">
                 <div class="navbar-item">
@@ -74,7 +73,7 @@ class Landing extends Component {
             <div className="container-landing">
                 <div className="container-list">
                     <div className="container-title-landing">
-                        <h2 className="titleLanding">LIST OF DOGS</h2>
+                        <h2 className="title">LIST OF DOGS</h2>
                         <a href="/#/insertDog"><button class="button is-success">Add dog</button></a>
                     </div>
                     <ul>
@@ -119,6 +118,5 @@ class Landing extends Component {
         </div>
     }
 }
-
 
 export default withRouter(Landing)

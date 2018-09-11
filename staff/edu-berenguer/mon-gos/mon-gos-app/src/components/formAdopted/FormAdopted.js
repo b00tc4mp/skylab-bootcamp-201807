@@ -45,7 +45,7 @@ class FormAdopted extends Component {
                 </div>
             </nav>
             <div className="container-form">
-                <h1 className="titleDetailForm">Adoption Form</h1>
+                <h1 className="titleDetailForm title">Adoption Form</h1>
                 <form onSubmit={this.sendForm}>
                     <div class="field">
                         <p class="control has-icons-left has-icons-right">

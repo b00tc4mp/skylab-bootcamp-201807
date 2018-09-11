@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
-import { logic } from '../logic'
+import { logic } from '../../logic'
 import swal from 'sweetalert2'
 import 'bulma/css/bulma.css'
 
@@ -40,7 +40,7 @@ class Login extends Component {
                 <a class="navbar-item" href="/#/register"><button class="button is-success">Register</button></a>
             </nav>
             <div class="container-form">
-                <h1>Login</h1>
+                <h1 className="title">Login</h1>
                 <form onSubmit={this.onSubmit}>
                     <div class="field" >
                         <p class="control has-icons-left has-icons-right">

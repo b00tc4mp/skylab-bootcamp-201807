@@ -1,7 +1,10 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
-import { logic } from '../logic'
+import { logic } from '../../logic'
 import swal from 'sweetalert2'
+import FileBase64 from "react-file-base64";
+import axios from "axios";
+import './updateDog.css'
 
 class UpdateDog extends Component {
 
@@ -37,6 +40,17 @@ class UpdateDog extends Component {
             })
     }
 
+    getFiles = async files => {
+        await this.setState({ files })
+        return axios
+            .patch(`http://localhost:8080/api/upload`, {
+                base64Image: this.state.files.base64,
+            })
+            .then(({ data: { photo } }) => {
+                this.setState({ photo })
+            })
+    }
+
     updateDog = (e) => {
         e.preventDefault()
         let { name, id, gender, age, weight, photo, description } = this.state
@@ -69,31 +83,33 @@ class UpdateDog extends Component {
                     <a href="/#/landing" onClick={this.handleLogout}><button class="button is-dark">Return</button></a>
                 </div>
             </nav>
-            <div className="container-form">
+            <div>
                 <div className="container-title-update">
-                    <h1 className="title-update">Update dog</h1>
+                    <h1 className="title">Update dog</h1>
                     <label class="tag">{this.state.gender}</label>
                 </div>
-                <form onSubmit={this.updateDog}>
-                    <div class="field">
-                        <input class="input" type="text" placeholder="Name" maxlength="15" onChange={this.handleChange} value={this.state.name} name="name" />
-                    </div>
-                        
-                    <div class="parameters-dog">
+                <form onSubmit={this.updateDog} className="form-update">
+                    <div>
                         <div class="field">
-                        <p className="parameter-dog">Age</p>
-                            <input class="input" type="number" placeholder="Age" onChange={this.handleChange} name="age" value={this.state.age} />
+                            <input class="input" type="text" placeholder="Name" maxlength="15" onChange={this.handleChange} value={this.state.name} name="name" />
                         </div>
-                        <div class="field">
-                        <p className="parameter-dog">Weight</p>
-                            <input class="input" type="number" placeholder="Weight" onChange={this.handleChange} name="weight" value={this.state.weight} />
+                        <div className="parameters-dog">
+                            <div class="field">
+                                <p className="parameter-dog">Age</p>
+                                <input class="input" type="number" placeholder="Age" onChange={this.handleChange} name="age" value={this.state.age} />
+                            </div>
+                            <div class="field">
+                                <p className="parameter-dog">Weight</p>
+                                <input class="input" type="number" placeholder="Weight" onChange={this.handleChange} name="weight" value={this.state.weight} />
+                            </div>
                         </div>
+                        <textarea class="textarea" name="description"  maxlength="200" placeholder="Description" onChange={this.handleChange} value={this.state.description}></textarea>
+                        <button class="button is-success" type="submit">Update</button>
                     </div>
-                    <div class="field">
-                        <input class="input" type="text" placeholder="Photo" onChange={this.handleChange} name="photo" />
+                    <div>
+                        <div className="container-input"><FileBase64 class="file" multiple={false} onDone={this.getFiles.bind(this)} /></div>
+                        <div>{this.state.photo ? <img src={this.state.photo}></img> : ""}</div>
                     </div>
-                    <textarea class="textarea is-small" name="description" id="" placeholder="Description" onChange={this.handleChange} value={this.state.description}></textarea>
-                    <button class="button is-success" type="submit">Update</button>
                 </form>
             </div>
         </div>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { logic } from '../logic'
+import { logic } from '../../logic'
 import { withRouter, Link } from 'react-router-dom'
 
 class Search extends Component {

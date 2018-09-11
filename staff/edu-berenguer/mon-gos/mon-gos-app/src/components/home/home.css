@@ -1,0 +1,49 @@
+    .logo{
+    font-family: 'Risque', 'cursive';
+    font-size:1.5em;
+    color:#8A4D76 !important;
+  }
+
+  .container{
+    display: flex;
+    justify-content: space-around ;
+    flex-wrap: wrap;
+  }
+
+  .items{
+    margin: 1em;
+    padding-bottom: 1em;
+    width: 20em;
+    height: 20em;
+    border-radius: 5px;
+    border: none; 
+  }
+
+  .items p{
+    margin-left: 0.5em;
+  }
+
+  .breadcrumb{
+    margin-top: 1em;
+    margin-left: 5em;
+  }
+    
+  h5{
+    color: #8A4D76 !important;
+  }
+
+  .search{
+    background-color: #8A4D76 !important;
+    color: white !important;
+  }
+
+  .more-information{
+    background-color: #8A4D76 !important;
+    border-radius:5px !important;
+    margin-left: 23.5em;
+    color:white !important;
+  }
+
+  .more-information:hover{
+    background-color: rgb(155, 94, 135) !important;
+  }

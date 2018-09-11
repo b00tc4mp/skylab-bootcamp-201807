@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
-import { logic } from '../logic'
+import { logic } from '../../logic'
 import swal from 'sweetalert2'
+import Geolocation from 'react-geolocation'
+import './register.css'
 
 class Register extends Component {
 
@@ -10,8 +12,8 @@ class Register extends Component {
         name: "",
         address: "",
         phone: "",
-        latitude: "",
-        longitude: "",
+        lat: "",
+        long: "",
         password: ""
     }
 
@@ -24,12 +26,11 @@ class Register extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault()
-        let { email, name, address, phone, password, latitude, longitude } = this.state
+        let { email, name, address, phone, password, lat, long } = this.state
+        lat = parseFloat(lat)
+        long = parseFloat(long)
 
-        latitude = parseFloat(latitude)
-        longitude = parseFloat(longitude)
-
-        logic.register(email, name, address, phone, password, latitude, longitude)
+        logic.register(email, name, address, phone, password, this.confirmLatitude(), this.confirmLongitude())
             .then(() => {
                 swal({
                     type: 'success',
@@ -49,6 +50,20 @@ class Register extends Component {
             })
     }
 
+    confirmLatitude = (latitude) => {
+        this.setState({
+            lat: latitude
+        })
+
+        return this.state.lat;
+    }
+
+    confirmLongitude = (longitude) => {
+        this.setState({
+            long: longitude
+        })
+        return this.state.long;
+    }
 
     render() {
         return <div>
@@ -57,8 +72,8 @@ class Register extends Component {
                 <a class="navbar-item" href="/#/login"><button class="button is-success">Login</button></a>
             </nav>
             <div class="container-form">
-                <h1>Register</h1>
-                < form onSubmit={this.handleSubmit} >
+                <h1 className="title">Register</h1>
+                <form onSubmit={this.handleSubmit} >
                     <div class="field">
                         <p class="control has-icons-left has-icons-right">
                             <input class="input" type="email" placeholder="Email" onChange={this.handleChange} name="email" />
@@ -86,16 +101,6 @@ class Register extends Component {
                         </p>
                     </div>
                     <div class="field">
-                        <p class="control has-icons-left has-icons-right">
-                            <input class="input" type="number" placeholder="Optional latitude..." step="any" onChange={this.handleChange} name="latitude" />
-                        </p>
-                    </div>
-                    <div class="field">
-                        <p class="control has-icons-left has-icons-right">
-                            <input class="input" type="number" placeholder="Optional longitude..." step="any" onChange={this.handleChange} name="longitude" />
-                        </p>
-                    </div>
-                    <div class="field">
                         <p class="control has-icons-left">
                             <input class="input" name="password" type="password" onChange={this.handleChange} placeholder="Password" />
                             <span class="icon is-small is-left">
@@ -103,11 +108,47 @@ class Register extends Component {
                             </span>
                         </p>
                     </div>
+                    <Geolocation
+                        // lazy
+                        render={({ getCurrentPosition, position: { coords: { latitude, longitude } = {} } = {}, }) => (
+                            <div>
+                                {/* <button class="button is-success position" onClick={getCurrentPosition}>Get Current Position</button> */}
+                                <div className="container-location">
+                                    <input class="input location" type="number" placeholder="Latitude" step="any" value={latitude} onChange={this.handleChange} name="lat" />
+                                    <input class="input location" type="number" placeholder="Longitude" step="any" value={longitude} onChange={this.handleChange} name="long" />
+
+                                    {/* {this.state.lat ? <p class="tag is-success confirm">OK</p> : <div></div>} */}
+                                    
+                                    {this.state.lat && <button class="button no-coordinates" onClick={(e) => {
+                                        e.preventDefault(),
+                                            this.confirmLatitude(latitude)
+                                        this.confirmLongitude(longitude)
+                                    }}>Ok</button>}
+                                    {!this.state.lat && <button class="button coordinates" onClick={(e) => {
+                                        e.preventDefault(),
+                                            this.confirmLatitude(latitude)
+                                        this.confirmLongitude(longitude)
+                                    }}>Ok</button>}
+
+                                     {/* {this.state.lat ? <p class="tag is-success confirm">OK</p> : <div></div>} */}
+                                </div>
+                                {/* <div className="container-location">
+                                    <input class="input location" type="number" placeholder="Longitude" step="any" value={longitude} onChange={this.handleChange} name="long" />
+                                    {this.state.long ? <p class="tag is-success confirm">OK</p> : <div></div>}
+                                    <button class="button coordinates" onClick={(e) => {
+                                        e.preventDefault(),
+                                            this.confirmLongitude(longitude)
+                                    }}>Confirm</button>
+                                </div> */}
+                            </div>
+                        )}
+                    />
+
                     <button class="button is-success" type="submit">Register</button>
+
                 </form >
             </div>
         </div>
     }
 }
-
 export default withRouter(Register)
