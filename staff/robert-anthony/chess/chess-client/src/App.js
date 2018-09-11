@@ -5,6 +5,7 @@ import Main from './components/Main'
 import Login from './components/Login'
 import Games from './components/Games'
 import socketIOClient from 'socket.io-client';
+import * as log from 'loglevel'
 
 import logic from "./logic"
 import NavBar from "./components/NavBar"
@@ -19,7 +20,7 @@ class App extends Component {
     let nickname, token
 
     super()
-
+    log.setLevel('debug')
     this.state = {
       nickname: sessionStorage.getItem('nickname') || '',
       token: sessionStorage.getItem('token') || '',
@@ -36,11 +37,12 @@ class App extends Component {
     }
   }
 
-  clearError = () =>  this.setState({error:''})
+  clearError = () => this.setState({error: ''})
 
   onError = error => this.setState({error})
 
   onAcknowledgeGameOver = (nickname, gameID) => {
+    log.debug(`APP.JS: onAcknowledgeGameOver: NICKNAME: ${nickname}, GAMEID: ${gameID}, THIS.STATE.NICKNAME: ${this.state.nickname}`)
     const {state: {token}} = this
     this.clearError()
     logic.onAcknowledgeGameOver(nickname, gameID, token)
@@ -55,6 +57,8 @@ class App extends Component {
   }
 
   getCurrentGamesForUser = (nickname, token) => {
+    log.debug(`APP.JS: getCurrentGamesForUser: NICKNAME: ${nickname},  THIS.STATE.NICKNAME: ${this.state.nickname}`)
+
     return logic.getGamesForUser(nickname, token)
       .then(currentGames => {
         this.setState({currentGames})
@@ -64,6 +68,8 @@ class App extends Component {
   }
 
   getUsersForString = (str, token) => {
+    log.debug(`APP.JS: getUsersForString: STR: ${str}, THIS.STATE.NICKNAME: ${this.state.nickname}`)
+
     const {state: {nickname}} = this
     logic.getUsersForString(nickname, str, token)
       .then(users => {
@@ -74,6 +80,8 @@ class App extends Component {
   }
 
   onRespondToGameRequest = (destination, gameID, answer) => {
+    log.debug(`APP.JS: onRespondToGameRequest: DESTINATION: ${destination}, GAMEID: ${gameID}, ANSWER: ${answer}, THIS.STATE.NICKNAME: ${this.state.nickname}`)
+
     const {state: {nickname, token}} = this
     this.clearError()
     logic.respondToGameRequest(nickname, destination, gameID, answer, token)
@@ -81,6 +89,8 @@ class App extends Component {
   }
 
   onRequestGame = (destination) => {
+    log.debug(`APP.JS: onRequestGame: DESTINATION: ${destination},  THIS.STATE.NICKNAME: ${this.state.nickname}`)
+
     this.clearError()
     logic.requestGame(this.state.nickname, destination, this.state.token)
       .catch(({message}) => this.onError(message))
@@ -88,67 +98,77 @@ class App extends Component {
 
 
   setupSocketListeners = (nickname, token) => {
+    log.debug(`APP.JS: setupSocketListeners: NICKNAME: ${nickname},  THIS.STATE.NICKNAME: ${this.state.nickname}`)
 
-    //  this.socket = socketIOClient(`https://tranquil-ridge-60570.herokuapp.com/`);
-      this.socket = socketIOClient(process.env.REACT_APP_SOCKET_SERVER_URL);
+    this.socket = socketIOClient(process.env.REACT_APP_SOCKET_SERVER_URL);
+
     if (this.socket) {
 
       this.socket.on(`error ${nickname}`, message => console.error(message))
 
       this.socket.on(`update to games ${nickname}`, (message) => {
+        log.debug(`%c APP.JS: update to games: NICKNAME: ${nickname},  MESSAGE: ${message},  THIS.STATE.NICKNAME: ${this.state.nickname}`,'background: #222; color: #bada55')
+
         message = message || "no message"
-        console.log(`%c update to games ${nickname}, message =${message}`, 'background: #222; color: #bada55');
+
+
         this.getCurrentGamesForUser(nickname, token)
-
       })
+      /*
+            this.socket.on('user disconnected', () => {
+              const {state: {token}} = this
+              if (token) this.getUsersForString('', token)
+            })
 
-      this.socket.on('user disconnected', () => {
-        const {state: {token}} = this
-        if (token) this.getUsersForString('', token)
-      })
-
-      this.socket.on('user connected', () => {
-        const {state: {token}} = this
-        if (token) this.getUsersForString('', token)
-      })
+            this.socket.on('user connected', () => {
+              const {state: {token}} = this
+              if (token) this.getUsersForString('', token)
+            })*/
 
       this.socket.on('reconnect', (attemptNumber) => {
-        console.error(`socket reconnect on client side, attemptNumber = ${attemptNumber}`)
+        log.debug(`APP.JS: reconnect: ATTEMPTNUMBER: ${attemptNumber}, THIS.STATE.NICKNAME: ${this.state.nickname}`)
 
       });
 
       this.socket.on('disconnect', (reason) => {
-        console.error(`socket disconnect on client side, reason = ${reason}`)
-        if (reason === 'io server disconnect') {
-          // the disconnection was initiated by the server, you need to reconnect manually
-          this.onLogout()
-        }
+        log.debug(`APP.JS: disconnect: REASON: ${reason}, THIS.STATE.NICKNAME: ${this.state.nickname}`)
+        /*   if (reason === 'io server disconnect') {
+             // the disconnection was initiated by the server, you need to reconnect manually
+   /!*
+             this.onLogout()
+   *!/
+           }*/
         // else the socket will automatically try to reconnect
       });
 
-    } else console.error("Error establishing connection to socket server")
+    } else  log.debug(`APP.JS: failed to establish connection with socketIO server`)
 
   }
 
 
   onLoggedIn = (nickname, token) => {
+    log.debug(`APP.JS: onLoggedIn: NICKNAME: ${nickname},  THIS.STATE.NICKNAME: ${this.state.nickname}`)
+
     this.setupSocketListeners(nickname, token)
     this.getCurrentGamesForUser(nickname, token)
     this.setState({nickname: nickname, token})
-    this.socket.emit('authenticated', nickname)
     sessionStorage.setItem('nickname', nickname)
     sessionStorage.setItem('token', token)
   }
 
   onGameMove = (move, gameID) => {
+    log.debug(`APP.JS: onGameMove: move: ${JSON.stringify(move)},  GAMEID: ${gameID},  THIS.STATE.NICKNAME: ${this.state.nickname}`)
+
     const {state: {nickname, token}} = this
     this.clearError()
     logic.makeAGameMove(nickname, move, gameID, token)
-      .then(_ =>  this.getCurrentGamesForUser(nickname,token))
+      .then(_ => this.getCurrentGamesForUser(nickname, token))
       .catch(({message}) => this.onError(message))
   }
 
   onInviteUser = user => {
+    log.debug(`APP.JS: onInviteUser: USER: ${user}, THIS.STATE.NICKNAME: ${this.state.nickname}`)
+
     const {state: {nickname, token}} = this
     this.clearError()
     logic.requestGame(this.state.nickname, user, this.state.token)
@@ -162,9 +182,7 @@ class App extends Component {
   }
 
   onLogout = () => {
-    // this.socket.emit('logout', this.state.nickname)
-    this.setState({nickname: '', token: '',users:[],currentGames:[]})
-// removesocketlisteners ??
+    this.setState({nickname: '', token: '', users: [], currentGames: []})
     sessionStorage.clear()
   }
 

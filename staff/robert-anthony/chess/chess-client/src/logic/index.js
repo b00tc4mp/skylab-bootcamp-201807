@@ -1,3 +1,5 @@
+const log = require('loglevel')
+
 const logic = {
   //  url: 'https://tranquil-ridge-60570.herokuapp.com/api',
 
@@ -30,6 +32,8 @@ const logic = {
   register(email, nickname, password) {
     return Promise.resolve()
       .then(() => {
+        log.debug(`LOGIC/INDEX.JS: register: EMAIL: ${email}, register: NICKNAME: ${nickname}, PASSWORD: ${password}`)
+
         this._validateEmail('email', email)
         this._validateStringField('nickname', nickname)
         this._validateStringField('password', password)
@@ -44,6 +48,8 @@ const logic = {
   authenticate(nickname, password) {
     return Promise.resolve()
       .then(() => {
+        log.debug(`LOGIC/INDEX.JS: authenticate: NICKNAME: ${nickname}, PASSWORD: ${password}`)
+
         this._validateStringField('nickname', nickname)
         this._validateStringField('password', password)
 
@@ -78,6 +84,8 @@ const logic = {
 
     return Promise.resolve()
       .then(() => {
+        log.debug(`LOGIC/INDEX.JS: getUsersForString: NICKNAME: ${nickname}, STR: ${str}`)
+
         this._validateStringField('nickname', nickname)
         if (str !== '') this._validateStringField('str', str) //-- empty string is permitted!
         this._validateStringField('token', token)
@@ -110,6 +118,8 @@ const logic = {
   requestGame(nickname, opponent, token) {
     return Promise.resolve()
       .then(() => {
+        log.debug(`LOGIC/INDEX.JS: requestGame: NICKNAME: ${nickname},  OPPONENT: ${opponent}`)
+
         this._validateStringField('nickname', nickname)
         this._validateStringField('opponent', opponent)
         this._validateStringField('token', token)
@@ -122,9 +132,11 @@ const logic = {
       })
   },
 
-  respondToGameRequest(nickname, destination, gameID, answer, token) {
+  respondToGameRequest(nickname, destination, gameID,answer , token) {
     return Promise.resolve()
       .then(() => {
+        log.debug(`LOGIC/INDEX.JS: respondToGameRequest: NICKNAME: ${nickname},  DESTINATION: ${destination}, GAMEID: ${gameID}, ANSWER: ${answer}`)
+
         this._validateStringField('nickname', nickname)
         this._validateStringField('destination', destination)
         this._validateStringField('gameID', gameID)
@@ -160,6 +172,8 @@ const logic = {
 
     return Promise.resolve()
       .then(() => {
+        log.debug(`LOGIC/INDEX.JS: getGamesForUser: NICKNAME: ${nickname}`)
+
         this._validateStringField('nickname', nickname)
         this._validateStringField('token', token)
         return this._call(`user/${nickname}/games`, 'GET', {
@@ -177,6 +191,8 @@ const logic = {
   makeAGameMove(nickname, move, gameID, token) {
     return Promise.resolve()
       .then(() => {
+        log.debug(`LOGIC/INDEX.JS: makeAGameMove: NICKNAME: ${nickname},  MOVE: ${JSON.stringify(move)}, GAMEID: ${gameID}`)
+
         this._validateStringField('nickname', nickname)
         this._validateStringField('gameID', gameID)
         this._validateStringField('token', token)
@@ -194,6 +210,8 @@ const logic = {
   onAcknowledgeGameOver(nickname, gameID, token) {
     return Promise.resolve()
       .then(() => {
+        log.debug(`LOGIC/INDEX.JS: onAcknowledgeGameOver: NICKNAME: ${nickname},  GAMEID: ${gameID}`)
+
         this._validateStringField('nickname', nickname)
         this._validateStringField('gameID', gameID)
         this._validateStringField('token', token)

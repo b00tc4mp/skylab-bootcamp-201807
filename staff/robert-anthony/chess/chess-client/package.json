@@ -3,6 +3,7 @@
   "version": "0.4.0",
   "private": true,
   "dependencies": {
+    "ajv": "^6.5.3",
     "bootstrap": "^4.1.3",
     "chess.js": "^0.10.2",
     "chessboardjsx": "^2.0.1",
@@ -32,6 +33,7 @@
     "chess-data": "file:../chess-data",
     "fetch-mock": "^7.0.0-alpha.6",
     "isomorphic-fetch": "^2.2.1",
+    "loglevel": "^1.6.1",
     "mocha": "^5.2.0",
     "mongoose": "^5.2.13",
     "node-fetch": "^2.2.0",
