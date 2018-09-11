@@ -598,17 +598,13 @@ describe('logic', () => {
 
     it('should succeed for correct nickname and gameID', () =>
       logic.getOpponentForGame(nickname, game.id)
-        .then(_game => {
-          expect(_game._id).to.equal(game.id)
-          expect(_game.initiator).to.equal(nickname)
-          expect(_game.acceptor).to.equal(nickname2)
-        })
+        .then(opponent =>   expect(opponent).to.equal(nickname2))
     )
 
     it('should fail for incorrect nickname and correct gameID', () =>
       logic.getOpponentForGame("ragnar", game.id)
         .catch(err => err)
-        .then(({message}) => expect(message).to.equal(`game with game id ${game.id} does not belong to user ${nickname}`))
+        .then(({message}) => expect(message).to.equal(`game with game id ${game.id} does not belong to user ragnar`))
     )
 
     it('should fail for missing nickname and correct gameID', () =>

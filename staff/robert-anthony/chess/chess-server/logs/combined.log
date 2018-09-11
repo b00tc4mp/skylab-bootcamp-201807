@@ -2825,3 +2825,420 @@
 	authenticate,  CONTEXT: "logic/index.js", NICKNAME:4b7bc661-b5ae-11e8-a3d6-6f89a0633797, PASSWORD:123-0.14628743928959076
 	POST:/authenticate,  CONTEXT: "router.js",  PASSWORD:123-0.14628743928959076, NICKNAME:4b7bc660-b5ae-11e8-a3d6-6f89a0633797 
 	authenticate,  CONTEXT: "logic/index.js", NICKNAME:4b7bc660-b5ae-11e8-a3d6-6f89a0633797, PASSWORD:123-0.14628743928959076
+	register,  CONTEXT: "logic/index.js", EMAIL:blippy-0.6919886912268989@mail.com, PASSWORD:123-0.7814794583465363,  NICKNAME: blippy-0.9327274971285044
+	register,  CONTEXT: "logic/index.js", EMAIL:blippy-0.6919886912268989@mail.com, PASSWORD:123-0.7814794583465363,  NICKNAME: bloopy-0.4597818225305337
+	register,  CONTEXT: "logic/index.js", EMAIL:bloopy-0.11243009911851298@mail.com, PASSWORD:123-0.7814794583465363,  NICKNAME: blippy-0.9327274971285044
+	register,  CONTEXT: "logic/index.js", EMAIL:undefined, PASSWORD:123-0.7814794583465363,  NICKNAME: blippy-0.9327274971285044
+	register,  CONTEXT: "logic/index.js", EMAIL:, PASSWORD:123-0.7814794583465363,  NICKNAME: blippy-0.9327274971285044
+	register,  CONTEXT: "logic/index.js", EMAIL:blippy-0.6919886912268989@mail.com, PASSWORD:123-0.7814794583465363,  NICKNAME: 
+	register,  CONTEXT: "logic/index.js", EMAIL:blippy-0.6919886912268989@mail.com, PASSWORD:123-0.7814794583465363,  NICKNAME: undefined
+	register,  CONTEXT: "logic/index.js", EMAIL:blippy-0.6919886912268989@mail.com, PASSWORD:123-0.7814794583465363,  NICKNAME: 123
+	register,  CONTEXT: "logic/index.js", EMAIL:123, PASSWORD:123-0.7814794583465363,  NICKNAME: undefined
+	register,  CONTEXT: "logic/index.js", EMAIL:blippy-0.6919886912268989@mail.com, PASSWORD:undefined,  NICKNAME: undefined
+	register,  CONTEXT: "logic/index.js", EMAIL:blippy-0.6919886912268989@mail.com, PASSWORD:,  NICKNAME: undefined
+	register,  CONTEXT: "logic/index.js", EMAIL:blippy-0.6919886912268989@mail.com, PASSWORD:123,  NICKNAME: undefined
+	authenticate,  CONTEXT: "logic/index.js", NICKNAME:blippy-0.9327274971285044, PASSWORD:123-0.7814794583465363
+	authenticate,  CONTEXT: "logic/index.js", NICKNAME:undefined, PASSWORD:123-0.7814794583465363
+	authenticate,  CONTEXT: "logic/index.js", NICKNAME:, PASSWORD:123-0.7814794583465363
+	authenticate,  CONTEXT: "logic/index.js", NICKNAME:123, PASSWORD:123-0.7814794583465363
+	authenticate,  CONTEXT: "logic/index.js", NICKNAME:blippy-0.9327274971285044, PASSWORD:undefined
+	authenticate,  CONTEXT: "logic/index.js", NICKNAME:blippy-0.9327274971285044, PASSWORD:
+	authenticate,  CONTEXT: "logic/index.js", NICKNAME:blippy-0.9327274971285044, PASSWORD:123
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:blippy-0.9327274971285044
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:bloopy-0.4597818225305337
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:undefined
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:1234
+	userConnected,  CONTEXT: "logic/index.js", NICKNAME:blippy-0.9327274971285044
+	userConnected,  CONTEXT: "logic/index.js", NICKNAME:george beauregard
+	userConnected,  CONTEXT: "logic/index.js", NICKNAME:undefined
+	userConnected,  CONTEXT: "logic/index.js", NICKNAME:
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:
+	getUsersForString,  CONTEXT: "logic/index.js", TERM:a
+	getUsersForString,  CONTEXT: "logic/index.js", TERM:cadab
+	getUsersForString,  CONTEXT: "logic/index.js", TERM:
+	getUsersForString,  CONTEXT: "logic/index.js", TERM:xxx
+	getUsersForString,  CONTEXT: "logic/index.js", TERM:123
+	getUsersForString,  CONTEXT: "logic/index.js", TERM:a
+	getUsersForString,  CONTEXT: "logic/index.js", TERM:a
+	getUsersForString,  CONTEXT: "logic/index.js", TERM:a
+	acknowledgeGameOverForUser,  CONTEXT: "logic/index.js", NICKNAME:blippy-0.9327274971285044, GAMEID:5b97a05de284e4038d73d1da
+	acknowledgeGameOverForUser,  CONTEXT: "logic/index.js", NICKNAME:bloopy-0.4597818225305337, GAMEID:5b97a05de284e4038d73d219
+	acknowledgeGameOverForUser,  CONTEXT: "logic/index.js", NICKNAME:georgeJones, GAMEID:5b97a05de284e4038d73d25c
+	acknowledgeGameOverForUser,  CONTEXT: "logic/index.js", NICKNAME:, GAMEID:5b97a05de284e4038d73d2e8
+	acknowledgeGameOverForUser,  CONTEXT: "logic/index.js", NICKNAME:undefined, GAMEID:5b97a05ee284e4038d73d348
+	acknowledgeGameOverForUser,  CONTEXT: "logic/index.js", NICKNAME:123, GAMEID:5b97a05ee284e4038d73d37b
+	acknowledgeGameOverForUser,  CONTEXT: "logic/index.js", NICKNAME:blippy-0.9327274971285044, GAMEID:5b97a05ee284e4038d73d40d
+	acknowledgeGameOverForUser,  CONTEXT: "logic/index.js", NICKNAME:blippy-0.9327274971285044, GAMEID:
+	acknowledgeGameOverForUser,  CONTEXT: "logic/index.js", NICKNAME:blippy-0.9327274971285044, GAMEID:undefined
+	acknowledgeGameOverForUser,  CONTEXT: "logic/index.js", NICKNAME:blippy-0.9327274971285044, GAMEID:123434
+	move,  CONTEXT: "logic/index.js", GAMEID:5b97a05ee284e4038d73d571, MOVE:{"from":"e2","to":"e4","promotion":"q"}
+	move,  CONTEXT: "logic/index.js", GAMEID:5b97a05fe284e4038d73d5e0, MOVE:{"from":"d3","to":"b5","promotion":"q"}
+	move,  CONTEXT: "logic/index.js", GAMEID:5b97a05fe284e4038d73d62a, MOVE:{"from":"e2","to":"e6","promotion":"q"}
+	move,  CONTEXT: "logic/index.js", GAMEID:5b97a05fe284e4038d73d650, MOVE:{"from":"e2","to":"e4","promotion":"q"}
+	move,  CONTEXT: "logic/index.js", GAMEID:5b97a05fe284e4038d73d65a, MOVE:{"from":"d8","to":"h4","promotion":"q"}
+	move,  CONTEXT: "logic/index.js", GAMEID:5b97a05fe284e4038d73d66c, MOVE:{"from":"e5","to":"e6","promotion":"q"}
+	move,  CONTEXT: "logic/index.js", GAMEID:5b97a05fe284e4038d73d6d9, MOVE:{"from":"e2","to":"e4","promotion":"q"}
+	move,  CONTEXT: "logic/index.js", GAMEID:, MOVE:{"from":"e2","to":"e4","promotion":"q"}
+	move,  CONTEXT: "logic/index.js", GAMEID:undefined, MOVE:{"from":"e2","to":"e4","promotion":"q"}
+	move,  CONTEXT: "logic/index.js", GAMEID:123, MOVE:{"from":"e2","to":"e4","promotion":"q"}
+	move,  CONTEXT: "logic/index.js", GAMEID:5b97a05fe284e4038d73d7f1, MOVE:{"from":"e2","to":"e4","promotion":"q"}
+	move,  CONTEXT: "logic/index.js", GAMEID:5b97a05fe284e4038d73d813, MOVE:{"from":"e2","to":"e4","promotion":"q"}
+	move,  CONTEXT: "logic/index.js", GAMEID:5b97a05fe284e4038d73d864, MOVE:{"from":"e2","to":"e4","promotion":"q"}
+	move,  CONTEXT: "logic/index.js", GAMEID:5b97a05fe284e4038d73d8b0, MOVE:{"from":"e2","to":"e4","promotion":"q"}
+	move,  CONTEXT: "logic/index.js", GAMEID:5b97a060e284e4038d73d919, MOVE:{"x":"e2","to":"e4","promotion":"q"}
+	move,  CONTEXT: "logic/index.js", GAMEID:5b97a060e284e4038d73d988, MOVE:{}
+	move,  CONTEXT: "logic/index.js", GAMEID:5b97a060e284e4038d73d990, MOVE:undefined
+	move,  CONTEXT: "logic/index.js", GAMEID:5b97a060e284e4038d73d9d6, MOVE:112
+	requestNewGame,  CONTEXT: "logic/index.js", REQUESTER:eb45a910-b5b1-11e8-8057-f1bd07c566e9, DESTINATION:eb45a911-b5b1-11e8-8057-f1bd07c566e9
+	_createGame,  CONTEXT: "logic/index.js", REQUESTER:eb45a910-b5b1-11e8-8057-f1bd07c566e9, CONFIRMER:eb45a911-b5b1-11e8-8057-f1bd07c566e9
+	requestNewGame,  CONTEXT: "logic/index.js", REQUESTER:eb45a910-b5b1-11e8-8057-f1bd07c566e9, DESTINATION:eb45a911-b5b1-11e8-8057-f1bd07c566e9
+	requestNewGame,  CONTEXT: "logic/index.js", REQUESTER:eb45a910-b5b1-11e8-8057-f1bd07c566e9, DESTINATION:sorry charlie
+	requestNewGame,  CONTEXT: "logic/index.js", REQUESTER:tricky rabbit, DESTINATION:eb45a911-b5b1-11e8-8057-f1bd07c566e9
+	requestNewGame,  CONTEXT: "logic/index.js", REQUESTER:, DESTINATION:eb45a911-b5b1-11e8-8057-f1bd07c566e9
+	requestNewGame,  CONTEXT: "logic/index.js", REQUESTER:undefined, DESTINATION:eb45a911-b5b1-11e8-8057-f1bd07c566e9
+	requestNewGame,  CONTEXT: "logic/index.js", REQUESTER:123, DESTINATION:eb45a911-b5b1-11e8-8057-f1bd07c566e9
+	requestNewGame,  CONTEXT: "logic/index.js", REQUESTER:eb45a910-b5b1-11e8-8057-f1bd07c566e9, DESTINATION:
+	requestNewGame,  CONTEXT: "logic/index.js", REQUESTER:eb45a910-b5b1-11e8-8057-f1bd07c566e9, DESTINATION:undefined
+	requestNewGame,  CONTEXT: "logic/index.js", REQUESTER:eb45a910-b5b1-11e8-8057-f1bd07c566e9, DESTINATION:123
+	register,  CONTEXT: "logic/index.js", EMAIL:blippy-0.6652506824685964@mail.com, PASSWORD:123-0.2639782477504953,  NICKNAME: blippy-0.7527484766692092
+	register,  CONTEXT: "logic/index.js", EMAIL:blippy-0.6652506824685964@mail.com, PASSWORD:123-0.2639782477504953,  NICKNAME: bloopy-0.06366190410177186
+	register,  CONTEXT: "logic/index.js", EMAIL:bloopy-0.5767488376685443@mail.com, PASSWORD:123-0.2639782477504953,  NICKNAME: blippy-0.7527484766692092
+	register,  CONTEXT: "logic/index.js", EMAIL:undefined, PASSWORD:123-0.2639782477504953,  NICKNAME: blippy-0.7527484766692092
+	register,  CONTEXT: "logic/index.js", EMAIL:, PASSWORD:123-0.2639782477504953,  NICKNAME: blippy-0.7527484766692092
+	register,  CONTEXT: "logic/index.js", EMAIL:blippy-0.6652506824685964@mail.com, PASSWORD:123-0.2639782477504953,  NICKNAME: 
+	register,  CONTEXT: "logic/index.js", EMAIL:blippy-0.6652506824685964@mail.com, PASSWORD:123-0.2639782477504953,  NICKNAME: undefined
+	register,  CONTEXT: "logic/index.js", EMAIL:blippy-0.6652506824685964@mail.com, PASSWORD:123-0.2639782477504953,  NICKNAME: 123
+	register,  CONTEXT: "logic/index.js", EMAIL:123, PASSWORD:123-0.2639782477504953,  NICKNAME: undefined
+	register,  CONTEXT: "logic/index.js", EMAIL:blippy-0.6652506824685964@mail.com, PASSWORD:undefined,  NICKNAME: undefined
+	register,  CONTEXT: "logic/index.js", EMAIL:blippy-0.6652506824685964@mail.com, PASSWORD:,  NICKNAME: undefined
+	register,  CONTEXT: "logic/index.js", EMAIL:blippy-0.6652506824685964@mail.com, PASSWORD:123,  NICKNAME: undefined
+	authenticate,  CONTEXT: "logic/index.js", NICKNAME:blippy-0.7527484766692092, PASSWORD:123-0.2639782477504953
+	authenticate,  CONTEXT: "logic/index.js", NICKNAME:undefined, PASSWORD:123-0.2639782477504953
+	authenticate,  CONTEXT: "logic/index.js", NICKNAME:, PASSWORD:123-0.2639782477504953
+	authenticate,  CONTEXT: "logic/index.js", NICKNAME:123, PASSWORD:123-0.2639782477504953
+	authenticate,  CONTEXT: "logic/index.js", NICKNAME:blippy-0.7527484766692092, PASSWORD:undefined
+	authenticate,  CONTEXT: "logic/index.js", NICKNAME:blippy-0.7527484766692092, PASSWORD:
+	authenticate,  CONTEXT: "logic/index.js", NICKNAME:blippy-0.7527484766692092, PASSWORD:123
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:blippy-0.7527484766692092
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:bloopy-0.06366190410177186
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:undefined
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:1234
+	userConnected,  CONTEXT: "logic/index.js", NICKNAME:blippy-0.7527484766692092
+	userConnected,  CONTEXT: "logic/index.js", NICKNAME:george beauregard
+	userConnected,  CONTEXT: "logic/index.js", NICKNAME:undefined
+	userConnected,  CONTEXT: "logic/index.js", NICKNAME:
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:
+	getUsersForString,  CONTEXT: "logic/index.js", TERM:a
+	getUsersForString,  CONTEXT: "logic/index.js", TERM:cadab
+	getUsersForString,  CONTEXT: "logic/index.js", TERM:
+	getUsersForString,  CONTEXT: "logic/index.js", TERM:xxx
+	getUsersForString,  CONTEXT: "logic/index.js", TERM:123
+	getUsersForString,  CONTEXT: "logic/index.js", TERM:a
+	getUsersForString,  CONTEXT: "logic/index.js", TERM:a
+	getUsersForString,  CONTEXT: "logic/index.js", TERM:a
+	acknowledgeGameOverForUser,  CONTEXT: "logic/index.js", NICKNAME:blippy-0.7527484766692092, GAMEID:5b97a0a902183803f07802f5
+	acknowledgeGameOverForUser,  CONTEXT: "logic/index.js", NICKNAME:bloopy-0.06366190410177186, GAMEID:5b97a0a902183803f0780370
+	acknowledgeGameOverForUser,  CONTEXT: "logic/index.js", NICKNAME:georgeJones, GAMEID:5b97a0aa02183803f07803fb
+	acknowledgeGameOverForUser,  CONTEXT: "logic/index.js", NICKNAME:, GAMEID:5b97a0aa02183803f0780409
+	acknowledgeGameOverForUser,  CONTEXT: "logic/index.js", NICKNAME:undefined, GAMEID:5b97a0aa02183803f078047e
+	acknowledgeGameOverForUser,  CONTEXT: "logic/index.js", NICKNAME:123, GAMEID:5b97a0aa02183803f07804d5
+	acknowledgeGameOverForUser,  CONTEXT: "logic/index.js", NICKNAME:blippy-0.7527484766692092, GAMEID:5b97a0aa02183803f0780519
+	acknowledgeGameOverForUser,  CONTEXT: "logic/index.js", NICKNAME:blippy-0.7527484766692092, GAMEID:
+	acknowledgeGameOverForUser,  CONTEXT: "logic/index.js", NICKNAME:blippy-0.7527484766692092, GAMEID:undefined
+	acknowledgeGameOverForUser,  CONTEXT: "logic/index.js", NICKNAME:blippy-0.7527484766692092, GAMEID:123434
+	move,  CONTEXT: "logic/index.js", GAMEID:5b97a0ab02183803f07806ac, MOVE:{"from":"e2","to":"e4","promotion":"q"}
+	move,  CONTEXT: "logic/index.js", GAMEID:5b97a0ab02183803f078071e, MOVE:{"from":"d3","to":"b5","promotion":"q"}
+	move,  CONTEXT: "logic/index.js", GAMEID:5b97a0ab02183803f0780794, MOVE:{"from":"e2","to":"e6","promotion":"q"}
+	move,  CONTEXT: "logic/index.js", GAMEID:5b97a0ab02183803f07807f0, MOVE:{"from":"e2","to":"e4","promotion":"q"}
+	move,  CONTEXT: "logic/index.js", GAMEID:5b97a0ab02183803f078084d, MOVE:{"from":"d8","to":"h4","promotion":"q"}
+	move,  CONTEXT: "logic/index.js", GAMEID:5b97a0ab02183803f0780889, MOVE:{"from":"e5","to":"e6","promotion":"q"}
+	move,  CONTEXT: "logic/index.js", GAMEID:5b97a0ab02183803f078088f, MOVE:{"from":"e2","to":"e4","promotion":"q"}
+	move,  CONTEXT: "logic/index.js", GAMEID:, MOVE:{"from":"e2","to":"e4","promotion":"q"}
+	move,  CONTEXT: "logic/index.js", GAMEID:undefined, MOVE:{"from":"e2","to":"e4","promotion":"q"}
+	move,  CONTEXT: "logic/index.js", GAMEID:123, MOVE:{"from":"e2","to":"e4","promotion":"q"}
+	move,  CONTEXT: "logic/index.js", GAMEID:5b97a0ac02183803f07809f0, MOVE:{"from":"e2","to":"e4","promotion":"q"}
+	move,  CONTEXT: "logic/index.js", GAMEID:5b97a0ac02183803f0780a81, MOVE:{"from":"e2","to":"e4","promotion":"q"}
+	move,  CONTEXT: "logic/index.js", GAMEID:5b97a0ac02183803f0780ab7, MOVE:{"from":"e2","to":"e4","promotion":"q"}
+	move,  CONTEXT: "logic/index.js", GAMEID:5b97a0ac02183803f0780b1e, MOVE:{"from":"e2","to":"e4","promotion":"q"}
+	move,  CONTEXT: "logic/index.js", GAMEID:5b97a0ac02183803f0780b34, MOVE:{"x":"e2","to":"e4","promotion":"q"}
+	move,  CONTEXT: "logic/index.js", GAMEID:5b97a0ac02183803f0780baf, MOVE:{}
+	move,  CONTEXT: "logic/index.js", GAMEID:5b97a0ac02183803f0780c06, MOVE:undefined
+	move,  CONTEXT: "logic/index.js", GAMEID:5b97a0ac02183803f0780c0f, MOVE:112
+	requestNewGame,  CONTEXT: "logic/index.js", REQUESTER:18fc3c70-b5b2-11e8-91de-951805171d2a, DESTINATION:18fc6380-b5b2-11e8-91de-951805171d2a
+	_createGame,  CONTEXT: "logic/index.js", REQUESTER:18fc3c70-b5b2-11e8-91de-951805171d2a, CONFIRMER:18fc6380-b5b2-11e8-91de-951805171d2a
+	requestNewGame,  CONTEXT: "logic/index.js", REQUESTER:18fc3c70-b5b2-11e8-91de-951805171d2a, DESTINATION:18fc6380-b5b2-11e8-91de-951805171d2a
+	requestNewGame,  CONTEXT: "logic/index.js", REQUESTER:18fc3c70-b5b2-11e8-91de-951805171d2a, DESTINATION:sorry charlie
+	requestNewGame,  CONTEXT: "logic/index.js", REQUESTER:tricky rabbit, DESTINATION:18fc6380-b5b2-11e8-91de-951805171d2a
+	requestNewGame,  CONTEXT: "logic/index.js", REQUESTER:, DESTINATION:18fc6380-b5b2-11e8-91de-951805171d2a
+	requestNewGame,  CONTEXT: "logic/index.js", REQUESTER:undefined, DESTINATION:18fc6380-b5b2-11e8-91de-951805171d2a
+	requestNewGame,  CONTEXT: "logic/index.js", REQUESTER:123, DESTINATION:18fc6380-b5b2-11e8-91de-951805171d2a
+	requestNewGame,  CONTEXT: "logic/index.js", REQUESTER:18fc3c70-b5b2-11e8-91de-951805171d2a, DESTINATION:
+	requestNewGame,  CONTEXT: "logic/index.js", REQUESTER:18fc3c70-b5b2-11e8-91de-951805171d2a, DESTINATION:undefined
+	requestNewGame,  CONTEXT: "logic/index.js", REQUESTER:18fc3c70-b5b2-11e8-91de-951805171d2a, DESTINATION:123
+	register,  CONTEXT: "logic/index.js", EMAIL:blippy-0.39486731442471834@mail.com, PASSWORD:123-0.6140457840802991,  NICKNAME: blippy-0.17190695518690013
+	register,  CONTEXT: "logic/index.js", EMAIL:blippy-0.39486731442471834@mail.com, PASSWORD:123-0.6140457840802991,  NICKNAME: bloopy-0.5366660907881762
+	register,  CONTEXT: "logic/index.js", EMAIL:bloopy-0.9783125580948804@mail.com, PASSWORD:123-0.6140457840802991,  NICKNAME: blippy-0.17190695518690013
+	register,  CONTEXT: "logic/index.js", EMAIL:undefined, PASSWORD:123-0.6140457840802991,  NICKNAME: blippy-0.17190695518690013
+	register,  CONTEXT: "logic/index.js", EMAIL:, PASSWORD:123-0.6140457840802991,  NICKNAME: blippy-0.17190695518690013
+	register,  CONTEXT: "logic/index.js", EMAIL:blippy-0.39486731442471834@mail.com, PASSWORD:123-0.6140457840802991,  NICKNAME: 
+	register,  CONTEXT: "logic/index.js", EMAIL:blippy-0.39486731442471834@mail.com, PASSWORD:123-0.6140457840802991,  NICKNAME: undefined
+	register,  CONTEXT: "logic/index.js", EMAIL:blippy-0.39486731442471834@mail.com, PASSWORD:123-0.6140457840802991,  NICKNAME: 123
+	register,  CONTEXT: "logic/index.js", EMAIL:123, PASSWORD:123-0.6140457840802991,  NICKNAME: undefined
+	register,  CONTEXT: "logic/index.js", EMAIL:blippy-0.39486731442471834@mail.com, PASSWORD:undefined,  NICKNAME: undefined
+	register,  CONTEXT: "logic/index.js", EMAIL:blippy-0.39486731442471834@mail.com, PASSWORD:,  NICKNAME: undefined
+	register,  CONTEXT: "logic/index.js", EMAIL:blippy-0.39486731442471834@mail.com, PASSWORD:123,  NICKNAME: undefined
+	authenticate,  CONTEXT: "logic/index.js", NICKNAME:blippy-0.17190695518690013, PASSWORD:123-0.6140457840802991
+	authenticate,  CONTEXT: "logic/index.js", NICKNAME:undefined, PASSWORD:123-0.6140457840802991
+	authenticate,  CONTEXT: "logic/index.js", NICKNAME:, PASSWORD:123-0.6140457840802991
+	authenticate,  CONTEXT: "logic/index.js", NICKNAME:123, PASSWORD:123-0.6140457840802991
+	authenticate,  CONTEXT: "logic/index.js", NICKNAME:blippy-0.17190695518690013, PASSWORD:undefined
+	authenticate,  CONTEXT: "logic/index.js", NICKNAME:blippy-0.17190695518690013, PASSWORD:
+	authenticate,  CONTEXT: "logic/index.js", NICKNAME:blippy-0.17190695518690013, PASSWORD:123
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:blippy-0.17190695518690013
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:bloopy-0.5366660907881762
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:undefined
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:1234
+	userConnected,  CONTEXT: "logic/index.js", NICKNAME:blippy-0.17190695518690013
+	userConnected,  CONTEXT: "logic/index.js", NICKNAME:george beauregard
+	userConnected,  CONTEXT: "logic/index.js", NICKNAME:undefined
+	userConnected,  CONTEXT: "logic/index.js", NICKNAME:
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:
+	getUsersForString,  CONTEXT: "logic/index.js", TERM:a
+	getUsersForString,  CONTEXT: "logic/index.js", TERM:cadab
+	getUsersForString,  CONTEXT: "logic/index.js", TERM:
+	getUsersForString,  CONTEXT: "logic/index.js", TERM:xxx
+	getUsersForString,  CONTEXT: "logic/index.js", TERM:123
+	getUsersForString,  CONTEXT: "logic/index.js", TERM:a
+	getUsersForString,  CONTEXT: "logic/index.js", TERM:a
+	getUsersForString,  CONTEXT: "logic/index.js", TERM:a
+	register,  CONTEXT: "logic/index.js", EMAIL:blippy-0.022838412995617174@mail.com, PASSWORD:123-0.9455229861312633,  NICKNAME: blippy-0.16192588575051947
+	register,  CONTEXT: "logic/index.js", EMAIL:blippy-0.022838412995617174@mail.com, PASSWORD:123-0.9455229861312633,  NICKNAME: bloopy-0.7715436254206416
+	register,  CONTEXT: "logic/index.js", EMAIL:bloopy-0.9555474180965373@mail.com, PASSWORD:123-0.9455229861312633,  NICKNAME: blippy-0.16192588575051947
+	register,  CONTEXT: "logic/index.js", EMAIL:undefined, PASSWORD:123-0.9455229861312633,  NICKNAME: blippy-0.16192588575051947
+	register,  CONTEXT: "logic/index.js", EMAIL:, PASSWORD:123-0.9455229861312633,  NICKNAME: blippy-0.16192588575051947
+	register,  CONTEXT: "logic/index.js", EMAIL:blippy-0.022838412995617174@mail.com, PASSWORD:123-0.9455229861312633,  NICKNAME: 
+	register,  CONTEXT: "logic/index.js", EMAIL:blippy-0.022838412995617174@mail.com, PASSWORD:123-0.9455229861312633,  NICKNAME: undefined
+	register,  CONTEXT: "logic/index.js", EMAIL:blippy-0.022838412995617174@mail.com, PASSWORD:123-0.9455229861312633,  NICKNAME: 123
+	register,  CONTEXT: "logic/index.js", EMAIL:123, PASSWORD:123-0.9455229861312633,  NICKNAME: undefined
+	register,  CONTEXT: "logic/index.js", EMAIL:blippy-0.022838412995617174@mail.com, PASSWORD:undefined,  NICKNAME: undefined
+	register,  CONTEXT: "logic/index.js", EMAIL:blippy-0.022838412995617174@mail.com, PASSWORD:,  NICKNAME: undefined
+	register,  CONTEXT: "logic/index.js", EMAIL:blippy-0.022838412995617174@mail.com, PASSWORD:123,  NICKNAME: undefined
+	authenticate,  CONTEXT: "logic/index.js", NICKNAME:blippy-0.16192588575051947, PASSWORD:123-0.9455229861312633
+	authenticate,  CONTEXT: "logic/index.js", NICKNAME:undefined, PASSWORD:123-0.9455229861312633
+	authenticate,  CONTEXT: "logic/index.js", NICKNAME:, PASSWORD:123-0.9455229861312633
+	authenticate,  CONTEXT: "logic/index.js", NICKNAME:123, PASSWORD:123-0.9455229861312633
+	authenticate,  CONTEXT: "logic/index.js", NICKNAME:blippy-0.16192588575051947, PASSWORD:undefined
+	authenticate,  CONTEXT: "logic/index.js", NICKNAME:blippy-0.16192588575051947, PASSWORD:
+	authenticate,  CONTEXT: "logic/index.js", NICKNAME:blippy-0.16192588575051947, PASSWORD:123
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:blippy-0.16192588575051947
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:bloopy-0.7715436254206416
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:undefined
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:1234
+	userConnected,  CONTEXT: "logic/index.js", NICKNAME:blippy-0.16192588575051947
+	userConnected,  CONTEXT: "logic/index.js", NICKNAME:george beauregard
+	userConnected,  CONTEXT: "logic/index.js", NICKNAME:undefined
+	userConnected,  CONTEXT: "logic/index.js", NICKNAME:
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:
+	getUsersForString,  CONTEXT: "logic/index.js", TERM:a
+	getUsersForString,  CONTEXT: "logic/index.js", TERM:cadab
+	getUsersForString,  CONTEXT: "logic/index.js", TERM:
+	getUsersForString,  CONTEXT: "logic/index.js", TERM:xxx
+	getUsersForString,  CONTEXT: "logic/index.js", TERM:123
+	getUsersForString,  CONTEXT: "logic/index.js", TERM:a
+	getUsersForString,  CONTEXT: "logic/index.js", TERM:a
+	getUsersForString,  CONTEXT: "logic/index.js", TERM:a
+	acknowledgeGameOverForUser,  CONTEXT: "logic/index.js", NICKNAME:blippy-0.16192588575051947, GAMEID:5b97a1c2dc642b04d4602a3d
+	acknowledgeGameOverForUser,  CONTEXT: "logic/index.js", NICKNAME:bloopy-0.7715436254206416, GAMEID:5b97a1c2dc642b04d4602aa4
+	acknowledgeGameOverForUser,  CONTEXT: "logic/index.js", NICKNAME:georgeJones, GAMEID:5b97a1c2dc642b04d4602abe
+	acknowledgeGameOverForUser,  CONTEXT: "logic/index.js", NICKNAME:, GAMEID:5b97a1c2dc642b04d4602ad2
+	acknowledgeGameOverForUser,  CONTEXT: "logic/index.js", NICKNAME:undefined, GAMEID:5b97a1c2dc642b04d4602ae1
+	acknowledgeGameOverForUser,  CONTEXT: "logic/index.js", NICKNAME:123, GAMEID:5b97a1c2dc642b04d4602aed
+	acknowledgeGameOverForUser,  CONTEXT: "logic/index.js", NICKNAME:blippy-0.16192588575051947, GAMEID:5b97a1c2dc642b04d4602af7
+	acknowledgeGameOverForUser,  CONTEXT: "logic/index.js", NICKNAME:blippy-0.16192588575051947, GAMEID:
+	acknowledgeGameOverForUser,  CONTEXT: "logic/index.js", NICKNAME:blippy-0.16192588575051947, GAMEID:undefined
+	acknowledgeGameOverForUser,  CONTEXT: "logic/index.js", NICKNAME:blippy-0.16192588575051947, GAMEID:123434
+	move,  CONTEXT: "logic/index.js", GAMEID:5b97a1c3dc642b04d4602cc3, MOVE:{"from":"e2","to":"e4","promotion":"q"}
+	move,  CONTEXT: "logic/index.js", GAMEID:5b97a1c3dc642b04d4602ce6, MOVE:{"from":"d3","to":"b5","promotion":"q"}
+	move,  CONTEXT: "logic/index.js", GAMEID:5b97a1c3dc642b04d4602d1e, MOVE:{"from":"e2","to":"e6","promotion":"q"}
+	move,  CONTEXT: "logic/index.js", GAMEID:5b97a1c4dc642b04d4602d67, MOVE:{"from":"e2","to":"e4","promotion":"q"}
+	move,  CONTEXT: "logic/index.js", GAMEID:5b97a1c4dc642b04d4602dee, MOVE:{"from":"d8","to":"h4","promotion":"q"}
+	move,  CONTEXT: "logic/index.js", GAMEID:5b97a1c4dc642b04d4602e44, MOVE:{"from":"e5","to":"e6","promotion":"q"}
+	move,  CONTEXT: "logic/index.js", GAMEID:5b97a1c4dc642b04d4602ead, MOVE:{"from":"e2","to":"e4","promotion":"q"}
+	move,  CONTEXT: "logic/index.js", GAMEID:, MOVE:{"from":"e2","to":"e4","promotion":"q"}
+	move,  CONTEXT: "logic/index.js", GAMEID:undefined, MOVE:{"from":"e2","to":"e4","promotion":"q"}
+	move,  CONTEXT: "logic/index.js", GAMEID:123, MOVE:{"from":"e2","to":"e4","promotion":"q"}
+	move,  CONTEXT: "logic/index.js", GAMEID:5b97a1c4dc642b04d4602f8b, MOVE:{"from":"e2","to":"e4","promotion":"q"}
+	move,  CONTEXT: "logic/index.js", GAMEID:5b97a1c4dc642b04d4602fce, MOVE:{"from":"e2","to":"e4","promotion":"q"}
+	move,  CONTEXT: "logic/index.js", GAMEID:5b97a1c4dc642b04d4603050, MOVE:{"from":"e2","to":"e4","promotion":"q"}
+	move,  CONTEXT: "logic/index.js", GAMEID:5b97a1c5dc642b04d46030c6, MOVE:{"from":"e2","to":"e4","promotion":"q"}
+	move,  CONTEXT: "logic/index.js", GAMEID:5b97a1c5dc642b04d4603133, MOVE:{"x":"e2","to":"e4","promotion":"q"}
+	move,  CONTEXT: "logic/index.js", GAMEID:5b97a1c5dc642b04d4603151, MOVE:{}
+	move,  CONTEXT: "logic/index.js", GAMEID:5b97a1c5dc642b04d4603159, MOVE:undefined
+	move,  CONTEXT: "logic/index.js", GAMEID:5b97a1c5dc642b04d46031c5, MOVE:112
+	requestNewGame,  CONTEXT: "logic/index.js", REQUESTER:c0b76250-b5b2-11e8-bb68-219f33e716bf, DESTINATION:c0b7b070-b5b2-11e8-bb68-219f33e716bf
+	_createGame,  CONTEXT: "logic/index.js", REQUESTER:c0b76250-b5b2-11e8-bb68-219f33e716bf, CONFIRMER:c0b7b070-b5b2-11e8-bb68-219f33e716bf
+	requestNewGame,  CONTEXT: "logic/index.js", REQUESTER:c0b76250-b5b2-11e8-bb68-219f33e716bf, DESTINATION:c0b7b070-b5b2-11e8-bb68-219f33e716bf
+	requestNewGame,  CONTEXT: "logic/index.js", REQUESTER:c0b76250-b5b2-11e8-bb68-219f33e716bf, DESTINATION:sorry charlie
+	requestNewGame,  CONTEXT: "logic/index.js", REQUESTER:tricky rabbit, DESTINATION:c0b7b070-b5b2-11e8-bb68-219f33e716bf
+	requestNewGame,  CONTEXT: "logic/index.js", REQUESTER:, DESTINATION:c0b7b070-b5b2-11e8-bb68-219f33e716bf
+	requestNewGame,  CONTEXT: "logic/index.js", REQUESTER:undefined, DESTINATION:c0b7b070-b5b2-11e8-bb68-219f33e716bf
+	requestNewGame,  CONTEXT: "logic/index.js", REQUESTER:123, DESTINATION:c0b7b070-b5b2-11e8-bb68-219f33e716bf
+	requestNewGame,  CONTEXT: "logic/index.js", REQUESTER:c0b76250-b5b2-11e8-bb68-219f33e716bf, DESTINATION:
+	requestNewGame,  CONTEXT: "logic/index.js", REQUESTER:c0b76250-b5b2-11e8-bb68-219f33e716bf, DESTINATION:undefined
+	requestNewGame,  CONTEXT: "logic/index.js", REQUESTER:c0b76250-b5b2-11e8-bb68-219f33e716bf, DESTINATION:123
+	register,  CONTEXT: "logic/index.js", EMAIL:blippy-0.3857016304437608@mail.com, PASSWORD:123-0.4927805869041637,  NICKNAME: blippy-0.07571483606829732
+	register,  CONTEXT: "logic/index.js", EMAIL:blippy-0.3857016304437608@mail.com, PASSWORD:123-0.4927805869041637,  NICKNAME: bloopy-0.5715122886269073
+	register,  CONTEXT: "logic/index.js", EMAIL:bloopy-0.10909849498546786@mail.com, PASSWORD:123-0.4927805869041637,  NICKNAME: blippy-0.07571483606829732
+	register,  CONTEXT: "logic/index.js", EMAIL:undefined, PASSWORD:123-0.4927805869041637,  NICKNAME: blippy-0.07571483606829732
+	register,  CONTEXT: "logic/index.js", EMAIL:, PASSWORD:123-0.4927805869041637,  NICKNAME: blippy-0.07571483606829732
+	register,  CONTEXT: "logic/index.js", EMAIL:blippy-0.3857016304437608@mail.com, PASSWORD:123-0.4927805869041637,  NICKNAME: 
+	register,  CONTEXT: "logic/index.js", EMAIL:blippy-0.3857016304437608@mail.com, PASSWORD:123-0.4927805869041637,  NICKNAME: undefined
+	register,  CONTEXT: "logic/index.js", EMAIL:blippy-0.3857016304437608@mail.com, PASSWORD:123-0.4927805869041637,  NICKNAME: 123
+	register,  CONTEXT: "logic/index.js", EMAIL:123, PASSWORD:123-0.4927805869041637,  NICKNAME: undefined
+	register,  CONTEXT: "logic/index.js", EMAIL:blippy-0.3857016304437608@mail.com, PASSWORD:undefined,  NICKNAME: undefined
+	register,  CONTEXT: "logic/index.js", EMAIL:blippy-0.3857016304437608@mail.com, PASSWORD:,  NICKNAME: undefined
+	register,  CONTEXT: "logic/index.js", EMAIL:blippy-0.3857016304437608@mail.com, PASSWORD:123,  NICKNAME: undefined
+	authenticate,  CONTEXT: "logic/index.js", NICKNAME:blippy-0.07571483606829732, PASSWORD:123-0.4927805869041637
+	authenticate,  CONTEXT: "logic/index.js", NICKNAME:undefined, PASSWORD:123-0.4927805869041637
+	authenticate,  CONTEXT: "logic/index.js", NICKNAME:, PASSWORD:123-0.4927805869041637
+	authenticate,  CONTEXT: "logic/index.js", NICKNAME:123, PASSWORD:123-0.4927805869041637
+	authenticate,  CONTEXT: "logic/index.js", NICKNAME:blippy-0.07571483606829732, PASSWORD:undefined
+	authenticate,  CONTEXT: "logic/index.js", NICKNAME:blippy-0.07571483606829732, PASSWORD:
+	authenticate,  CONTEXT: "logic/index.js", NICKNAME:blippy-0.07571483606829732, PASSWORD:123
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:blippy-0.07571483606829732
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:bloopy-0.5715122886269073
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:undefined
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:1234
+	userConnected,  CONTEXT: "logic/index.js", NICKNAME:blippy-0.07571483606829732
+	userConnected,  CONTEXT: "logic/index.js", NICKNAME:george beauregard
+	userConnected,  CONTEXT: "logic/index.js", NICKNAME:undefined
+	userConnected,  CONTEXT: "logic/index.js", NICKNAME:
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:
+	getUsersForString,  CONTEXT: "logic/index.js", TERM:a
+	getUsersForString,  CONTEXT: "logic/index.js", TERM:cadab
+	getUsersForString,  CONTEXT: "logic/index.js", TERM:
+	getUsersForString,  CONTEXT: "logic/index.js", TERM:xxx
+	getUsersForString,  CONTEXT: "logic/index.js", TERM:123
+	getUsersForString,  CONTEXT: "logic/index.js", TERM:a
+	getUsersForString,  CONTEXT: "logic/index.js", TERM:a
+	getUsersForString,  CONTEXT: "logic/index.js", TERM:a
+	acknowledgeGameOverForUser,  CONTEXT: "logic/index.js", NICKNAME:blippy-0.07571483606829732, GAMEID:5b97a1f623af0404e23a8c45
+	acknowledgeGameOverForUser,  CONTEXT: "logic/index.js", NICKNAME:bloopy-0.5715122886269073, GAMEID:5b97a1f623af0404e23a8c6f
+	acknowledgeGameOverForUser,  CONTEXT: "logic/index.js", NICKNAME:georgeJones, GAMEID:5b97a1f623af0404e23a8cbc
+	acknowledgeGameOverForUser,  CONTEXT: "logic/index.js", NICKNAME:, GAMEID:5b97a1f623af0404e23a8d2b
+	acknowledgeGameOverForUser,  CONTEXT: "logic/index.js", NICKNAME:undefined, GAMEID:5b97a1f623af0404e23a8dab
+	acknowledgeGameOverForUser,  CONTEXT: "logic/index.js", NICKNAME:123, GAMEID:5b97a1f623af0404e23a8dda
+	acknowledgeGameOverForUser,  CONTEXT: "logic/index.js", NICKNAME:blippy-0.07571483606829732, GAMEID:5b97a1f623af0404e23a8e6c
+	acknowledgeGameOverForUser,  CONTEXT: "logic/index.js", NICKNAME:blippy-0.07571483606829732, GAMEID:
+	acknowledgeGameOverForUser,  CONTEXT: "logic/index.js", NICKNAME:blippy-0.07571483606829732, GAMEID:undefined
+	acknowledgeGameOverForUser,  CONTEXT: "logic/index.js", NICKNAME:blippy-0.07571483606829732, GAMEID:123434
+	move,  CONTEXT: "logic/index.js", GAMEID:5b97a1f723af0404e23a8f81, MOVE:{"from":"e2","to":"e4","promotion":"q"}
+	move,  CONTEXT: "logic/index.js", GAMEID:5b97a1f723af0404e23a8fb0, MOVE:{"from":"d3","to":"b5","promotion":"q"}
+	move,  CONTEXT: "logic/index.js", GAMEID:5b97a1f723af0404e23a9038, MOVE:{"from":"e2","to":"e6","promotion":"q"}
+	move,  CONTEXT: "logic/index.js", GAMEID:5b97a1f723af0404e23a905e, MOVE:{"from":"e2","to":"e4","promotion":"q"}
+	move,  CONTEXT: "logic/index.js", GAMEID:5b97a1f723af0404e23a90d4, MOVE:{"from":"d8","to":"h4","promotion":"q"}
+	move,  CONTEXT: "logic/index.js", GAMEID:5b97a1f723af0404e23a9170, MOVE:{"from":"e5","to":"e6","promotion":"q"}
+	move,  CONTEXT: "logic/index.js", GAMEID:5b97a1f723af0404e23a91f4, MOVE:{"from":"e2","to":"e4","promotion":"q"}
+	move,  CONTEXT: "logic/index.js", GAMEID:, MOVE:{"from":"e2","to":"e4","promotion":"q"}
+	move,  CONTEXT: "logic/index.js", GAMEID:undefined, MOVE:{"from":"e2","to":"e4","promotion":"q"}
+	move,  CONTEXT: "logic/index.js", GAMEID:123, MOVE:{"from":"e2","to":"e4","promotion":"q"}
+	move,  CONTEXT: "logic/index.js", GAMEID:5b97a1f823af0404e23a9374, MOVE:{"from":"e2","to":"e4","promotion":"q"}
+	move,  CONTEXT: "logic/index.js", GAMEID:5b97a1f823af0404e23a9407, MOVE:{"from":"e2","to":"e4","promotion":"q"}
+	move,  CONTEXT: "logic/index.js", GAMEID:5b97a1f823af0404e23a944d, MOVE:{"from":"e2","to":"e4","promotion":"q"}
+	move,  CONTEXT: "logic/index.js", GAMEID:5b97a1f823af0404e23a94aa, MOVE:{"from":"e2","to":"e4","promotion":"q"}
+	move,  CONTEXT: "logic/index.js", GAMEID:5b97a1f823af0404e23a950a, MOVE:{"x":"e2","to":"e4","promotion":"q"}
+	move,  CONTEXT: "logic/index.js", GAMEID:5b97a1f823af0404e23a9576, MOVE:{}
+	move,  CONTEXT: "logic/index.js", GAMEID:5b97a1f923af0404e23a95e9, MOVE:undefined
+	move,  CONTEXT: "logic/index.js", GAMEID:5b97a1f923af0404e23a95fc, MOVE:112
+	requestNewGame,  CONTEXT: "logic/index.js", REQUESTER:df2a5620-b5b2-11e8-9032-617a5c020843, DESTINATION:df2a5621-b5b2-11e8-9032-617a5c020843
+	_createGame,  CONTEXT: "logic/index.js", REQUESTER:df2a5620-b5b2-11e8-9032-617a5c020843, CONFIRMER:df2a5621-b5b2-11e8-9032-617a5c020843
+	requestNewGame,  CONTEXT: "logic/index.js", REQUESTER:df2a5620-b5b2-11e8-9032-617a5c020843, DESTINATION:df2a5621-b5b2-11e8-9032-617a5c020843
+	requestNewGame,  CONTEXT: "logic/index.js", REQUESTER:df2a5620-b5b2-11e8-9032-617a5c020843, DESTINATION:sorry charlie
+	requestNewGame,  CONTEXT: "logic/index.js", REQUESTER:tricky rabbit, DESTINATION:df2a5621-b5b2-11e8-9032-617a5c020843
+	requestNewGame,  CONTEXT: "logic/index.js", REQUESTER:, DESTINATION:df2a5621-b5b2-11e8-9032-617a5c020843
+	requestNewGame,  CONTEXT: "logic/index.js", REQUESTER:undefined, DESTINATION:df2a5621-b5b2-11e8-9032-617a5c020843
+	requestNewGame,  CONTEXT: "logic/index.js", REQUESTER:123, DESTINATION:df2a5621-b5b2-11e8-9032-617a5c020843
+	requestNewGame,  CONTEXT: "logic/index.js", REQUESTER:df2a5620-b5b2-11e8-9032-617a5c020843, DESTINATION:
+	requestNewGame,  CONTEXT: "logic/index.js", REQUESTER:df2a5620-b5b2-11e8-9032-617a5c020843, DESTINATION:undefined
+	requestNewGame,  CONTEXT: "logic/index.js", REQUESTER:df2a5620-b5b2-11e8-9032-617a5c020843, DESTINATION:123
+	register,  CONTEXT: "logic/index.js", EMAIL:blippy-0.6704921467852272@mail.com, PASSWORD:123-0.8014845919337246,  NICKNAME: blippy-0.8960638946957049
+	register,  CONTEXT: "logic/index.js", EMAIL:blippy-0.6704921467852272@mail.com, PASSWORD:123-0.8014845919337246,  NICKNAME: bloopy-0.009708131089426697
+	register,  CONTEXT: "logic/index.js", EMAIL:bloopy-0.3577642166209485@mail.com, PASSWORD:123-0.8014845919337246,  NICKNAME: blippy-0.8960638946957049
+	register,  CONTEXT: "logic/index.js", EMAIL:undefined, PASSWORD:123-0.8014845919337246,  NICKNAME: blippy-0.8960638946957049
+	register,  CONTEXT: "logic/index.js", EMAIL:, PASSWORD:123-0.8014845919337246,  NICKNAME: blippy-0.8960638946957049
+	register,  CONTEXT: "logic/index.js", EMAIL:blippy-0.6704921467852272@mail.com, PASSWORD:123-0.8014845919337246,  NICKNAME: 
+	register,  CONTEXT: "logic/index.js", EMAIL:blippy-0.6704921467852272@mail.com, PASSWORD:123-0.8014845919337246,  NICKNAME: undefined
+	register,  CONTEXT: "logic/index.js", EMAIL:blippy-0.6704921467852272@mail.com, PASSWORD:123-0.8014845919337246,  NICKNAME: 123
+	register,  CONTEXT: "logic/index.js", EMAIL:123, PASSWORD:123-0.8014845919337246,  NICKNAME: undefined
+	register,  CONTEXT: "logic/index.js", EMAIL:blippy-0.6704921467852272@mail.com, PASSWORD:undefined,  NICKNAME: undefined
+	register,  CONTEXT: "logic/index.js", EMAIL:blippy-0.6704921467852272@mail.com, PASSWORD:,  NICKNAME: undefined
+	register,  CONTEXT: "logic/index.js", EMAIL:blippy-0.6704921467852272@mail.com, PASSWORD:123,  NICKNAME: undefined
+	authenticate,  CONTEXT: "logic/index.js", NICKNAME:blippy-0.8960638946957049, PASSWORD:123-0.8014845919337246
+	authenticate,  CONTEXT: "logic/index.js", NICKNAME:undefined, PASSWORD:123-0.8014845919337246
+	authenticate,  CONTEXT: "logic/index.js", NICKNAME:, PASSWORD:123-0.8014845919337246
+	authenticate,  CONTEXT: "logic/index.js", NICKNAME:123, PASSWORD:123-0.8014845919337246
+	authenticate,  CONTEXT: "logic/index.js", NICKNAME:blippy-0.8960638946957049, PASSWORD:undefined
+	authenticate,  CONTEXT: "logic/index.js", NICKNAME:blippy-0.8960638946957049, PASSWORD:
+	authenticate,  CONTEXT: "logic/index.js", NICKNAME:blippy-0.8960638946957049, PASSWORD:123
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:blippy-0.8960638946957049
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:bloopy-0.009708131089426697
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:undefined
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:1234
+	userConnected,  CONTEXT: "logic/index.js", NICKNAME:blippy-0.8960638946957049
+	userConnected,  CONTEXT: "logic/index.js", NICKNAME:george beauregard
+	userConnected,  CONTEXT: "logic/index.js", NICKNAME:undefined
+	userConnected,  CONTEXT: "logic/index.js", NICKNAME:
+	getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:
+	getUsersForString,  CONTEXT: "logic/index.js", TERM:a
+	getUsersForString,  CONTEXT: "logic/index.js", TERM:cadab
+	getUsersForString,  CONTEXT: "logic/index.js", TERM:
+	getUsersForString,  CONTEXT: "logic/index.js", TERM:xxx
+	getUsersForString,  CONTEXT: "logic/index.js", TERM:123
+	getUsersForString,  CONTEXT: "logic/index.js", TERM:a
+	getUsersForString,  CONTEXT: "logic/index.js", TERM:a
+	getUsersForString,  CONTEXT: "logic/index.js", TERM:a
+	acknowledgeGameOverForUser,  CONTEXT: "logic/index.js", NICKNAME:blippy-0.8960638946957049, GAMEID:5b97a27aef0ce1050ace2ca1
+	acknowledgeGameOverForUser,  CONTEXT: "logic/index.js", NICKNAME:bloopy-0.009708131089426697, GAMEID:5b97a27aef0ce1050ace2cbd
+	acknowledgeGameOverForUser,  CONTEXT: "logic/index.js", NICKNAME:georgeJones, GAMEID:5b97a27aef0ce1050ace2d19
+	acknowledgeGameOverForUser,  CONTEXT: "logic/index.js", NICKNAME:, GAMEID:5b97a27aef0ce1050ace2d63
+	acknowledgeGameOverForUser,  CONTEXT: "logic/index.js", NICKNAME:undefined, GAMEID:5b97a27aef0ce1050ace2d92
+	acknowledgeGameOverForUser,  CONTEXT: "logic/index.js", NICKNAME:123, GAMEID:5b97a27aef0ce1050ace2e00
+	acknowledgeGameOverForUser,  CONTEXT: "logic/index.js", NICKNAME:blippy-0.8960638946957049, GAMEID:5b97a27aef0ce1050ace2e5f
+	acknowledgeGameOverForUser,  CONTEXT: "logic/index.js", NICKNAME:blippy-0.8960638946957049, GAMEID:
+	acknowledgeGameOverForUser,  CONTEXT: "logic/index.js", NICKNAME:blippy-0.8960638946957049, GAMEID:undefined
+	acknowledgeGameOverForUser,  CONTEXT: "logic/index.js", NICKNAME:blippy-0.8960638946957049, GAMEID:123434
+	move,  CONTEXT: "logic/index.js", GAMEID:5b97a27bef0ce1050ace2f8c, MOVE:{"from":"e2","to":"e4","promotion":"q"}
+	move,  CONTEXT: "logic/index.js", GAMEID:5b97a27bef0ce1050ace302a, MOVE:{"from":"d3","to":"b5","promotion":"q"}
+	move,  CONTEXT: "logic/index.js", GAMEID:5b97a27bef0ce1050ace3086, MOVE:{"from":"e2","to":"e6","promotion":"q"}
+	move,  CONTEXT: "logic/index.js", GAMEID:5b97a27bef0ce1050ace30fc, MOVE:{"from":"e2","to":"e4","promotion":"q"}
+	move,  CONTEXT: "logic/index.js", GAMEID:5b97a27bef0ce1050ace3184, MOVE:{"from":"d8","to":"h4","promotion":"q"}
+	move,  CONTEXT: "logic/index.js", GAMEID:5b97a27bef0ce1050ace31ab, MOVE:{"from":"e5","to":"e6","promotion":"q"}
+	move,  CONTEXT: "logic/index.js", GAMEID:5b97a27bef0ce1050ace31b1, MOVE:{"from":"e2","to":"e4","promotion":"q"}
+	move,  CONTEXT: "logic/index.js", GAMEID:, MOVE:{"from":"e2","to":"e4","promotion":"q"}
+	move,  CONTEXT: "logic/index.js", GAMEID:undefined, MOVE:{"from":"e2","to":"e4","promotion":"q"}
+	move,  CONTEXT: "logic/index.js", GAMEID:123, MOVE:{"from":"e2","to":"e4","promotion":"q"}
+	move,  CONTEXT: "logic/index.js", GAMEID:5b97a27bef0ce1050ace3332, MOVE:{"from":"e2","to":"e4","promotion":"q"}
+	move,  CONTEXT: "logic/index.js", GAMEID:5b97a27cef0ce1050ace339b, MOVE:{"from":"e2","to":"e4","promotion":"q"}
+	move,  CONTEXT: "logic/index.js", GAMEID:5b97a27cef0ce1050ace3419, MOVE:{"from":"e2","to":"e4","promotion":"q"}
+	move,  CONTEXT: "logic/index.js", GAMEID:5b97a27cef0ce1050ace3446, MOVE:{"from":"e2","to":"e4","promotion":"q"}
+	move,  CONTEXT: "logic/index.js", GAMEID:5b97a27cef0ce1050ace345c, MOVE:{"x":"e2","to":"e4","promotion":"q"}
+	move,  CONTEXT: "logic/index.js", GAMEID:5b97a27cef0ce1050ace34e6, MOVE:{}
+	move,  CONTEXT: "logic/index.js", GAMEID:5b97a27cef0ce1050ace355c, MOVE:undefined
+	move,  CONTEXT: "logic/index.js", GAMEID:5b97a27cef0ce1050ace35ef, MOVE:112
+	requestNewGame,  CONTEXT: "logic/index.js", REQUESTER:2df95ad0-b5b3-11e8-9abc-9543d8e6f95b, DESTINATION:2df981e0-b5b3-11e8-9abc-9543d8e6f95b
+	_createGame,  CONTEXT: "logic/index.js", REQUESTER:2df95ad0-b5b3-11e8-9abc-9543d8e6f95b, CONFIRMER:2df981e0-b5b3-11e8-9abc-9543d8e6f95b
+	requestNewGame,  CONTEXT: "logic/index.js", REQUESTER:2df95ad0-b5b3-11e8-9abc-9543d8e6f95b, DESTINATION:2df981e0-b5b3-11e8-9abc-9543d8e6f95b
+	requestNewGame,  CONTEXT: "logic/index.js", REQUESTER:2df95ad0-b5b3-11e8-9abc-9543d8e6f95b, DESTINATION:sorry charlie
+	requestNewGame,  CONTEXT: "logic/index.js", REQUESTER:tricky rabbit, DESTINATION:2df981e0-b5b3-11e8-9abc-9543d8e6f95b
+	requestNewGame,  CONTEXT: "logic/index.js", REQUESTER:, DESTINATION:2df981e0-b5b3-11e8-9abc-9543d8e6f95b
+	requestNewGame,  CONTEXT: "logic/index.js", REQUESTER:undefined, DESTINATION:2df981e0-b5b3-11e8-9abc-9543d8e6f95b
+	requestNewGame,  CONTEXT: "logic/index.js", REQUESTER:123, DESTINATION:2df981e0-b5b3-11e8-9abc-9543d8e6f95b
+	requestNewGame,  CONTEXT: "logic/index.js", REQUESTER:2df95ad0-b5b3-11e8-9abc-9543d8e6f95b, DESTINATION:
+	requestNewGame,  CONTEXT: "logic/index.js", REQUESTER:2df95ad0-b5b3-11e8-9abc-9543d8e6f95b, DESTINATION:undefined
+	requestNewGame,  CONTEXT: "logic/index.js", REQUESTER:2df95ad0-b5b3-11e8-9abc-9543d8e6f95b, DESTINATION:123
