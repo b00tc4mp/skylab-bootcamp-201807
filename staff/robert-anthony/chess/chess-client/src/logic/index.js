@@ -1,13 +1,12 @@
 const logic = {
   //  url: 'https://tranquil-ridge-60570.herokuapp.com/api',
-   url:process.env.REACT_APP_API_SERVER_URL,
 
   _call(path, method, headers, body, expectedStatus) {
     const config = {method}
-
+   const url = process.env.REACT_APP_API_SERVER_URL
     if (headers) config.headers = headers
     if (body) config.body = body
-    return fetch(`${this.url}/${path}`, config)
+    return fetch(`${url}/${path}`, config)
       .then(res => {
         if (res.status === expectedStatus) {
           return res

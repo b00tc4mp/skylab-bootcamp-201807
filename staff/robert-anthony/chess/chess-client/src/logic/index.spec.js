@@ -757,7 +757,7 @@ describe('logic', () => {
       logic._currentEngines = engines
     })
 
-    //makeAGameMove(nickname, opponent, move, gameID, token) {
+    //makeAGameMove(nickname, move, gameID, token) {
 
     it('should succeed for correct nickname, move and gameID with game in progress', () =>
       Promise.resolve()
@@ -766,7 +766,7 @@ describe('logic', () => {
             "status": 200,
             "message": "successful move"
           })
-          return logic.makeAGameMove(nickname, nickname2, {
+          return logic.makeAGameMove(nickname, {
             from: "e2",
             to: "e4",
             promotion: "q"
@@ -782,7 +782,7 @@ describe('logic', () => {
 
 
     it('should fail for wrong token', () =>
-      logic.makeAGameMove(nickname, nickname2, {
+      logic.makeAGameMove(nickname, {
         from: "e2",
         to: "e4",
         promotion: "q"
@@ -792,7 +792,7 @@ describe('logic', () => {
     )
 
     it('should fail for bad token', () =>
-      logic.makeAGameMove(nickname, nickname2, {
+      logic.makeAGameMove(nickname, {
         from: "e2",
         to: "e4",
         promotion: "q"
@@ -802,7 +802,7 @@ describe('logic', () => {
     )
 
     it('should fail for empty token', () =>
-      logic.makeAGameMove(nickname, nickname2, {
+      logic.makeAGameMove(nickname, {
         from: "e2",
         to: "e4",
         promotion: "q"
@@ -812,7 +812,7 @@ describe('logic', () => {
     )
 
     it('should fail for undefined token', () =>
-      logic.makeAGameMove(nickname, nickname2, {
+      logic.makeAGameMove(nickname, {
         from: "e2",
         to: "e4",
         promotion: "q"
@@ -822,7 +822,7 @@ describe('logic', () => {
     )
 
     it('should fail for numeric token', () =>
-      logic.makeAGameMove(nickname, nickname2, {
+      logic.makeAGameMove(nickname, {
         from: "e2",
         to: "e4",
         promotion: "q"
@@ -839,7 +839,7 @@ describe('logic', () => {
             "status": 200,
             "message": "successful move"
           })
-          return logic.makeAGameMove(nickname, nickname2, {
+          return logic.makeAGameMove(nickname, {
             from: "d3",
             to: "b5",
             promotion: "q"
@@ -859,7 +859,7 @@ describe('logic', () => {
             "status": 400,
             "message": "move is not allowed"
           })
-          return logic.makeAGameMove(nickname, nickname2, {
+          return logic.makeAGameMove(nickname, {
             from: "e2",
             to: "e6",
             promotion: "q"
@@ -876,7 +876,7 @@ describe('logic', () => {
             "status": 400,
             "message": "game is over, cannot move"
           })
-          return logic.makeAGameMove(nickname, nickname2, {
+          return logic.makeAGameMove(nickname, {
             from: "e2",
             to: "e4",
             promotion: "q"
@@ -893,7 +893,7 @@ describe('logic', () => {
             "status": 200,
             "message": "successful move"
           })
-          return logic.makeAGameMove(nickname2, nickname, {
+          return logic.makeAGameMove(nickname2, {
             from: "d8",
             to: "h4",
             promotion: "q"
@@ -913,7 +913,7 @@ describe('logic', () => {
             "status": 200,
             "message": "successful move"
           })
-          return logic.makeAGameMove(nickname, nickname2, {
+          return logic.makeAGameMove(nickname, {
             from: "e5",
             to: "e6",
             promotion: "q"
@@ -932,27 +932,27 @@ describe('logic', () => {
             "status": 400,
             "message": `game with id ${badGameID} does not exist`
           })
-          return logic.makeAGameMove(nickname, nickname2, {from: "e2", to: "e4", promotion: "q"}, badGameID, token)
+          return logic.makeAGameMove(nickname, {from: "e2", to: "e4", promotion: "q"}, badGameID, token)
         })
         .catch(err => err)
         .then(({message}) => expect(message).to.equal(`game with id ${badGameID} does not exist`))
     )
 
     it('should fail for correct nickname, move and missing gameID', () =>
-      logic.makeAGameMove(nickname, nickname2, {from: "e2", to: "e4", promotion: "q"}, '', token)
+      logic.makeAGameMove(nickname, {from: "e2", to: "e4", promotion: "q"}, '', token)
 
         .catch(err => err)
         .then(({message}) => expect(message).to.equal(`invalid gameID`))
     )
 
     it('should fail for correct nickname, move and undefined gameID', () =>
-      logic.makeAGameMove(nickname, nickname2, {from: "e2", to: "e4", promotion: "q"}, undefined, token)
+      logic.makeAGameMove(nickname, {from: "e2", to: "e4", promotion: "q"}, undefined, token)
         .catch(err => err)
         .then(({message}) => expect(message).to.equal(`invalid gameID`))
     )
 
     it('should fail for correct nickname, move and numeric gameID', () =>
-      logic.makeAGameMove(nickname, nickname2, {from: "e2", to: "e4", promotion: "q"}, 123, token)
+      logic.makeAGameMove(nickname, {from: "e2", to: "e4", promotion: "q"}, 123, token)
 
         .catch(err => err)
         .then(({message}) => expect(message).to.equal(`invalid gameID`))
@@ -960,7 +960,7 @@ describe('logic', () => {
 
 
     it('should fail for correct move, gameID and bad nickname', () =>
-      logic.makeAGameMove(badName, nickname2, {
+      logic.makeAGameMove(badName, {
         from: "e2",
         to: "e4",
         promotion: "q"
@@ -970,12 +970,12 @@ describe('logic', () => {
     )
 
     it('should fail for correct move, gameID and missing nickname', () =>
-      logic.makeAGameMove("", nickname2, {from: "e2", to: "e4", promotion: "q"}, gameInProgress.id, token)
+      logic.makeAGameMove("", {from: "e2", to: "e4", promotion: "q"}, gameInProgress.id, token)
         .catch(err => err)
         .then(({message}) => expect(message).to.equal(`invalid nickname`))
     )
     it('should fail for correct move, gameID and undefined nickname', () =>
-      logic.makeAGameMove(undefined, nickname2, {
+      logic.makeAGameMove(undefined, {
         from: "e2",
         to: "e4",
         promotion: "q"
@@ -986,31 +986,31 @@ describe('logic', () => {
 
 
     it('should fail for correct move, gameID and numeric nickname', () =>
-      logic.makeAGameMove(123, nickname2, {from: "e2", to: "e4", promotion: "q"}, gameInProgress.id, token)
+      logic.makeAGameMove(123, {from: "e2", to: "e4", promotion: "q"}, gameInProgress.id, token)
         .catch(err => err)
         .then(({message}) => expect(message).to.equal(`invalid nickname`))
     )
 
     it('should fail for correct nickname, gameID and malformed move', () =>
-      logic.makeAGameMove(nickname, nickname2, {x: "e2", to: "e4", promotion: "q"}, gameInProgress.id, token)
+      logic.makeAGameMove(nickname, {x: "e2", to: "e4", promotion: "q"}, gameInProgress.id, token)
         .catch(err => err)
         .then(({message}) => expect(message).to.equal(`move is of wrong format`))
     )
 
     it('should fail for correct nickname, gameID and empty move', () =>
-      logic.makeAGameMove(nickname, nickname2, {}, gameInProgress.id, token)
+      logic.makeAGameMove(nickname, {}, gameInProgress.id, token)
         .catch(err => err)
         .then(({message}) => expect(message).to.equal(`move is of wrong format`))
     )
 
     it('should fail for correct nickname, gameID and undefined move', () =>
-      logic.makeAGameMove(nickname, nickname2, undefined, gameInProgress.id, token)
+      logic.makeAGameMove(nickname, undefined, gameInProgress.id, token)
         .catch(err => err)
         .then(({message}) => expect(message).to.equal(`move is of wrong format`))
     )
 
     it('should fail for correct nickname, gameID and numeric move', () =>
-      logic.makeAGameMove(nickname, nickname2, 112, gameInProgress.id, token)
+      logic.makeAGameMove(nickname, 112, gameInProgress.id, token)
         .catch(err => err)
         .then(({message}) => expect(message).to.equal(`move is of wrong format`))
     )
