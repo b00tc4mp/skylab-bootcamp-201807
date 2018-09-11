@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import logic from '../logic'
+import '../styles/css/home.css'
 
 class Home extends Component {
 
@@ -32,15 +33,14 @@ class Home extends Component {
         
         const { state: { patients }, patientData } = this
 
-        return <div>
-            <div>
-                <ul className="patients__group__all__list">
-                    {patients.map(patient => <li className="patients__group__all__list__item" key={patient.dni} onClick={() => patientData(patient.dni)}>
-                        <a className="patients__group__all__list__item__link" href={`/#/patient/${patient.dni}`}><p><strong>{patient.name} {patient.surname}</strong>. DNI: {patient.dni}. {patient.age} years old, {patient.gender}.</p></a>
+        return <div className="patients">
+                <h2 className="patients__title">Patients</h2>
+                <ul className="patients__list">
+                    {patients.map(patient => <li className="patients__list__item" key={patient.dni} onClick={() => patientData(patient.dni)}>
+                        <a className="patients__list__item__link" href={`/#/patient/${patient.dni}`}><p><strong>{patient.name} {patient.surname}</strong>. DNI: {patient.dni}. {patient.age} years old, {patient.gender}.</p></a>
                     </li> )}
                 </ul>
             </div>
-        </div>
     }
 }
 

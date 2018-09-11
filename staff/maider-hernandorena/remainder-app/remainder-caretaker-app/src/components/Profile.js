@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 import logic from '../logic'
+import '../styles/css/profile.css'
 
 class Profile extends Component{
 
@@ -34,23 +35,18 @@ class Profile extends Component{
 
   render(){
     const { state: { updateError, updated }, keepPassword, keepNewPassword, onUpdate } = this
-    return <main>
-            <div>
-              <nav>
-                <p>Update your Password</p>
-              </nav>
-              <form onSubmit={onUpdate}>
-                <input type="text" name="dni" placeholder="dni" readOnly value={this.props.dni} />
-                <input type="password" name="password" placeholder="password" onChange={keepPassword} />
-                <input type="password" name="newPassword" placeholder="New password" onChange={keepNewPassword} />
-                <button type="submit">Update</button>
+    return <main className="profile">
+              <h2 className="profile__title">Update Password</h2>
+              <form className="profile__form" onSubmit={onUpdate}>
+                <input className="profile__form__input" type="text" name="dni" placeholder="dni" readOnly value={this.props.dni} />
+                <input className="profile__form__input" type="password" name="password" placeholder="password" onChange={keepPassword} />
+                <input className="profile__form__input" type="password" name="newPassword" placeholder="new password" onChange={keepNewPassword} />
+                <button className="profile__form__button" type="submit">Update</button>
               </form>
-              {updateError && <p className="error">{updateError}</p>}
-              {updated && <p className="okey">Okey! {updated}. Now you can continue navigating on <a href="/#/home">home</a></p>}
-            </div>
+              {updateError && <p className="profile__error">{updateError}</p>}
+              {updated && <p className="profile__added">Okey! {updated}. Now you can continue navigating on <a className="profile__added__link" href="/#/home">home</a></p>}
           </main>
   }
-  
   
 }
 

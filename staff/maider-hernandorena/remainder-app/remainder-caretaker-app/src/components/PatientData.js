@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import logic from '../logic'
+import '../styles/css/patientdata.css'
 
 class PatientData extends Component {
 
@@ -66,29 +67,31 @@ class PatientData extends Component {
 
         const { state: { name, surname, age, gender, dni, address, phone, treatments, cites } } = this
 
-        return <main className="patient">
-                <div className="patient__data">
-                    <h3>{name} {surname}</h3>
-                    <p>{age} years old, {gender}</p>
-                    <p>DNI: {dni}</p>
-                    <p>Address: {address}</p>
-                    <p>Phone: {phone}</p>
-                </div>
-                <div>
-                    <h3>Treatments</h3>
-                    <ul>
-                        {treatments.map(treatment => <li key={treatment.pill}>
-                            <p>{treatment.pill}, {treatment.quantity}, {treatment.frequency}.</p>
-                        </li> )}
-                    </ul>
-                </div>
-                <div>
-                    <h3>Cites</h3>
-                    <ul>
-                        {cites.map(cite => <li key={cite.name}>
-                            <p>{cite.name}, {new Date(cite.date).toLocaleString()}.</p>
-                        </li> )}
-                    </ul>
+        return <main className="all">
+                <div className="all__data">
+                    <div className="all__data__patient">
+                        <h3>{name} {surname}</h3>
+                        <p>{age} years old, {gender}</p>
+                        <p>DNI: {dni}</p>
+                        <p>Address: {address}</p>
+                        <p>Phone: {phone}</p>
+                    </div>
+                    <div className="all__data__group">
+                        <h3 className="all__data__group__title">Cites</h3>
+                        <ul className="all__data__group__list">
+                            {cites.map(cite => <li className="all__data__group__list__item" key={cite.name}>
+                                <p>{cite.name}, {new Date(cite.date).toLocaleString()}.</p>
+                            </li> )}
+                        </ul>
+                    </div>
+                    <div className="all__data__group">
+                        <h3 className="all__data__group__title">Treatments</h3>
+                        <ul className="all__data__group__list">
+                            {treatments.map(treatment => <li className="all__data__group__list__item" key={treatment.pill}>
+                                <p>{treatment.pill}, {treatment.quantity}, {treatment.frequency}.</p>
+                            </li> )}
+                        </ul>
+                    </div>
                 </div>
         </main>
     }

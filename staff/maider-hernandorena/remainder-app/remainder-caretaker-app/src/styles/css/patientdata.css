@@ -1,0 +1,17 @@
+.all {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 18px;
+  color: #333333;
+  padding: 5% 10%;
+  width: 80%; }
+  .all__data {
+    display: grid;
+    grid-template-columns: 40% 30% 30%; }
+    .all__data__group__title {
+      margin-bottom: 0; }
+    .all__data__group__list {
+      margin-top: 5%;
+      list-style-type: circle;
+      padding: 0 4%; }
+
+/*# sourceMappingURL=patientdata.css.map */

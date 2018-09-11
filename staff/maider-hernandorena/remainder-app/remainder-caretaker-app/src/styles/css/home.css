@@ -1,0 +1,20 @@
+.patients {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 18px;
+  color: #333333;
+  padding: 2% 0;
+  margin: 3% auto 0 auto;
+  width: 80%; }
+  .patients__title {
+    margin: 7% 0 3% 0; }
+  .patients__list {
+    list-style-type: circle;
+    color: #2fbdbb;
+    padding: 0 2%; }
+    .patients__list__item__link {
+      text-decoration: none;
+      color: #333333; }
+      .patients__list__item__link:hover {
+        color: #2fbdbb; }
+
+/*# sourceMappingURL=home.css.map */

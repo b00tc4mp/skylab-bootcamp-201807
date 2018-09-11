@@ -4,6 +4,8 @@ import Login from './components/Login'
 import Home from './components/Home'
 import Profile from './components/Profile'
 import PatientData from './components/PatientData'
+import Error404 from './components/Error404'
+import './styles/css/app.css'
 
 class App extends Component {
   state = {
@@ -64,6 +66,7 @@ class App extends Component {
               <Route path="/home" render={() => this.isLoggedIn() ? <Home dni={dni} patientData={patientData}/> : <Redirect to="/" /> } />
               <Route path="/profile" render={() => this.isLoggedIn() ? <Profile dni={dni} id={id} token={token} /> : <Redirect to="/" />} />
               <Route path="/patient/:dni" render={() => this.isLoggedIn() ? <PatientData patientDni={patientDni}/> : <Redirect to="/" />} />
+              <Route component={Error404} />
             </Switch>  
         </div>
   }
