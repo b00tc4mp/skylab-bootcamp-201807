@@ -167,7 +167,7 @@ router.get('/users/:id/datasets/:datasetId', validateJwt, (req, res) => {
 
 // results management
 
-router.put('/users/:id/result', [validateJwt, jsonBodyParser], (req, res) => {
+router.put('/users/:id/results', [validateJwt, jsonBodyParser], (req, res) => {
     const { params: { id }, body: { datasetId, modelId, settings } } = req
     debugger
     logic.buildResult(id, datasetId, modelId, settings)
