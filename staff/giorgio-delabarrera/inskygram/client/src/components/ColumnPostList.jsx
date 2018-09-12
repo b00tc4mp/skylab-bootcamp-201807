@@ -1,19 +1,19 @@
 import React from 'react'
 import ColumnPost from './ColumnPost';
 
-const ColumnPostList = (props) => {
+const ColumnPostList = props => {
 
-  const { posts, onPostDetailClick, onUserClick, onToggleLikeClick, onToggleSaveClick } = props
-
-  if (posts.length > 0) {
-    return posts.map((post) =>
+  if (props.posts.length > 0) {
+    return props.posts.map(post =>
       (<ColumnPost
         key={post._id}
         post={post}
-        onPostDetailClick={onPostDetailClick}
-        onUserClick={onUserClick}
-        onToggleLikeClick={onToggleLikeClick}
-        onToggleSaveClick={onToggleSaveClick}
+        onPostDetailClick={props.onPostDetailClick}
+        onUserClick={props.onUserClick}
+        onToggleLikeClick={props.onToggleLikeClick}
+        onToggleSaveClick={props.onToggleSaveClick}
+        onAddCommentSubmit={props.onAddCommentSubmit}
+        isLiked={props.isLiked}
       />)
     )
   } else {

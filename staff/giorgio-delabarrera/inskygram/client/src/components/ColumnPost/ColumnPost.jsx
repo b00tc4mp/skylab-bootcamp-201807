@@ -1,16 +1,40 @@
 import React, { Component } from 'react'
 import './ColumnPost.sass'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 class ColumnPost extends Component {
 
+  state = {
+    isLiked: this.props.isLiked,
+    isSaved: this.props.isSaved,
+    likes: this.props.post.likes,
+    numLikes: this.props.post.likes.length,
+    comments: this.props.post.comments,
+    comment: ''
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.post.comments.length !== this.state.comments.length)
+      this.setState({ comments: nextProps.post.comments })
+  }
+
   handleUserClick = event => {
     event.preventDefault()
-    const { user } = this.props.post
-    this.props.onUserClick(user.username)
+    const username = event.currentTarget.dataset.user
+    this.props.onUserClick(username)
   }
 
   handleLikeIconClick = event => {
     event.preventDefault()
+
+    this.setState({ isLiked: !this.state.isLiked }, () => {
+      this.setState({
+        numLikes: (this.state.isLiked) ?
+          this.state.numLikes + 1 :
+          this.state.numLikes - 1
+      })
+    })
+
     const { post } = this.props
     this.props.onToggleLikeClick(post._id)
   }
@@ -22,24 +46,49 @@ class ColumnPost extends Component {
 
   handleSaveIconClick = event => {
     event.preventDefault()
-    this.props.onToggleSaveClick()
+
+    this.setState({ isSaved: !this.state.isSaved })
+
+    const { post } = this.props
+    this.props.onToggleSaveClick(post._id)
+  }
+
+  handleCommentChange = event => this.setState({ comment: event.target.value })
+
+  handleAddCommentSubmit = event => {
+    event.preventDefault()
+
+    const { post } = this.props
+
+    if (this.state.comment) {
+      this.props.onAddCommentSubmit(post._id, this.state.comment)
+        .then(() => this.setState({ comment: '' }))
+    }
   }
 
   render() {
     const { post } = this.props
+
+    const createdAtFormated = new Date(post.createdAt).toLocaleDateString('en-EN', {
+      month: 'long', day: 'numeric'
+    })
+
     return (
       <div className="ColumnPost">
         <section className="ColumnPost-header">
           <div className="ColumnPost-avatarImageWrapper">
-            <a href="#/" onClick={this.handleUserClick}>
+            <a href="#/" data-user={post.user.username} onClick={this.handleUserClick}>
               <img src={post.user.imageUrl} className="ColumnPost-avatarImage" alt={post.user.username} />
             </a>
           </div>
           <div className="ColumnPost-headerInfo">
-            <a href="#/" className="ColumnPost-headerUsernameLink" onClick={this.handleUserClick}>
+            <a href="#/"
+              className="ColumnPost-headerUsernameLink"
+              data-user={post.user.username}
+              onClick={this.handleUserClick}>
               <h5 className="ColumnPost-username">{post.user.username}</h5>
             </a>
-            <span className="ColumnPost-location">Barcelona, Spain</span>
+            {/* <span className="ColumnPost-location">Barcelona, Spain</span> */}
           </div>
         </section>
         <section className="ColumnPost-imageWrapper">
@@ -48,40 +97,78 @@ class ColumnPost extends Component {
         <section className="ColumnPost-body">
           <div className="ColumnPost-actions">
             <div className="ColumnPost-leftActions">
-              <a href="#/" className="ColumnPost-actionIconLink" onClick={this.handleLikeIconClick}>
-                <i className="ColumnPost-actionIcon far fa-heart"></i>
+              <a href="#/" className="ColumnPost-actionLikeIconLink" onClick={this.handleLikeIconClick}>
+                {
+                  this.state.isLiked ?
+                    <FontAwesomeIcon
+                      icon={['fas', 'heart']}
+                      className="ColumnPost-actionLikeIcon ColumnPost-actionLikeIcon--marked" /> :
+                    <FontAwesomeIcon
+                      icon={['far', 'heart']}
+                      className="ColumnPost-actionLikeIcon" />
+                }
               </a>
-              <a href="#/" className="ColumnPost-actionIconLink" onClick={this.handleCommentIconClick}>
-                <i className="ColumnPost-actionIcon far fa-comment"></i>
+              <a href="#/" className="ColumnPost-addCommentIconLink" onClick={this.handleCommentIconClick}>
+                <FontAwesomeIcon
+                  icon={['far', 'comment']}
+                  className="ColumnPost-actionAddCommentIcon" />
               </a>
             </div>
             <div className="ColumnPost-rightActions">
-              <a href="#/" className="ColumnPost-actionIconLink" onClick={this.handleSaveIconClick}>
-                <i className="ColumnPost-actionIcon far fa-bookmark"></i>
+              <a href="#/" className="ColumnPost-actionSaveIconLink" onClick={this.handleSaveIconClick}>
+                {
+                  this.state.isSaved ?
+                    <FontAwesomeIcon
+                      icon={['fas', 'bookmark']}
+                      className="ColumnPost-actionSaveIcon ColumnPost-actionSaveIcon--marked" /> :
+                    <FontAwesomeIcon
+                      icon={['far', 'bookmark']}
+                      className="ColumnPost-actionSaveIcon" />
+                }
               </a>
             </div>
           </div>
-          <span className="ColumnPost-numLikes">2 likes</span>
-          <div className="ColumnPost-caption">
-            <span className="ColumnPost-captionUsername">{post.user.username}</span> {post.caption}
-          </div>
-          <div className="ColumnPost-comments">
-            <div className="ColumnPost-comment">
-              <span className="ColumnPost-commentUsername">steve_jobs</span> Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
+          <span className="ColumnPost-numLikes">{this.state.numLikes} likes</span>
+          {
+            post.caption &&
+            <div className="ColumnPost-caption">
+              <a href="#/" data-user={post.user.username} onClick={this.handleUserClick}>
+                <span className="ColumnPost-captionUsername">{post.user.username} </span>
+              </a>
+              {post.caption}
             </div>
-            <div className="ColumnPost-comment">
-              <span className="ColumnPost-commentUsername">giodelabarrera</span> 😎😏 Lorem ipsum dolor sit amet consectetur 💤😴 adipisicing elit.
+          }
+          {
+            this.state.comments.length > 0 &&
+            <div className="ColumnPost-comments">
+              {this.state.comments && this.state.comments.map(comment => (
+                <div className="ColumnPost-comment" key={comment._id}>
+                  <a href="#/" data-user={comment.user.username} onClick={this.handleUserClick}>
+                    <span className="ColumnPost-commentUsername">{comment.user.username} </span>
+                  </a>
+                  {comment.description}
+                </div>
+              ))}
             </div>
-            <div className="ColumnPost-comment">
-              <span className="ColumnPost-commentUsername">steve_jobs</span> Lorem ipsum dolor sit amet consectetur adipisicing elit.
-            </div>
-          </div>
-          <time className="ColumnPost-creation">1 Hour ago</time>
+          }
+          <time className="ColumnPost-creation">{createdAtFormated}</time>
           <div className="ColumnPost-addComment">
-            <form>
-              <textarea ref="addCommentTextarea" name="" className="ColumnPost-addCommentTextarea" id="" cols="30" rows="10" placeholder="Add comment"></textarea>
+            <form onSubmit={this.handleAddCommentSubmit}>
+              {/* <textarea
+                ref="addCommentTextarea"
+                name=""
+                className="ColumnPost-addCommentTextarea"
+                placeholder="Add comment"
+                onChange={this.handleCommentChange}
+              ></textarea> */}
+              <input
+                type="text"
+                ref="addCommentTextarea"
+                className="ColumnPost-addCommentTextarea"
+                placeholder="Add comment"
+                value={this.state.comment}
+                onChange={this.handleCommentChange}
+              />
             </form>
           </div>
         </section>

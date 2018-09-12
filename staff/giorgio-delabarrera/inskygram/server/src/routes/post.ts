@@ -38,8 +38,6 @@ router.post("/posts", [validateJwt, upload.single("image")], (req: Request | any
   }
 });
 
-// BUX_FIXED: falla cuando usuario logueado es privado quiere ver un post suyo
-// TODO: test
 router.get("/posts/:id", publicPrivateAccessJwt, (req: Request, res: Response) => {
   const username = req.user;
   const postId = req.params.id;

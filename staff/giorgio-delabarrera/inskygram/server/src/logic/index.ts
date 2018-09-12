@@ -5,7 +5,7 @@ import cloudinary from "../config/cloudinary";
 import Post, { PostModelInterface } from "../models/post";
 import Following from "../models/following";
 import Follower from "../models/follower";
-import Comment from "../models/comment";
+import Comment, { CommentModelInterface } from "../models/comment";
 import Like from "../models/like";
 import SavedPost, { SavedPostModelInterface } from "../models/saved-post";
 
@@ -116,10 +116,10 @@ const logic = {
                 __v: 0,
               });
             });
-            // .then((user: UserModelInterface) => {
-            //   console.log(user);
-            //   return user;
-            // });
+          // .then((user: UserModelInterface) => {
+          //   console.log(user);
+          //   return user;
+          // });
         }
       });
   },
@@ -482,14 +482,14 @@ const logic = {
           } else {
             return Post.findById(postId)
               .populate({ path: "user", select: "-password -__v" })
-              .populate("comments")
-              .populate("likes");
+              .populate({ path: "comments.user", select: "username" })
+              .populate({ path: "likes.user", select: "username" });
           }
         } else if (username && this._isSameUser(user, targetUser)) {
           return Post.findById(postId)
             .populate({ path: "user", select: "-password -__v" })
-            .populate("comments")
-            .populate("likes");
+            .populate({ path: "comments.user", select: "username" })
+            .populate({ path: "likes.user", select: "username" });
         } else {
           if (targetUser.privateAccount) {
             return this._isFollowingUser(user, targetUser)
@@ -497,8 +497,8 @@ const logic = {
                 if (isFollowingUser) {
                   return Post.findById(postId)
                     .populate({ path: "user", select: "-password -__v" })
-                    .populate("comments")
-                    .populate("likes");
+                    .populate({ path: "comments.user", select: "username" })
+                    .populate({ path: "likes.user", select: "username" });
                 } else {
                   throw new AccessDeniedError(`user ${username} can not see the post of user ${targetUser.username}`);
                 }
@@ -506,8 +506,8 @@ const logic = {
           } else {
             return Post.findById(postId)
               .populate({ path: "user", select: "-password -__v" })
-              .populate("comments")
-              .populate("likes");
+              .populate({ path: "comments.user", select: "username" })
+              .populate({ path: "likes.user", select: "username" });
           }
         }
       })
@@ -531,8 +531,8 @@ const logic = {
 
               return Post.find({ user: user._id })
                 .populate({ path: "user", select: "-password -__v" })
-                .populate("comments")
-                .populate("likes")
+                .populate({ path: "comments.user", select: "username" })
+                .populate({ path: "likes.user", select: "username" })
                 .sort({ createdAt: -1 });
             })
             .then((posts: PostModelInterface[]) => posts);
@@ -548,8 +548,8 @@ const logic = {
               } else {
                 return Post.find({ user: targetUser._id })
                   .populate({ path: "user", select: "-password -__v" })
-                  .populate("comments")
-                  .populate("likes")
+                  .populate({ path: "comments.user", select: "username" })
+                  .populate({ path: "likes.user", select: "username" })
                   .sort({ createdAt: -1 });
               }
             });
@@ -573,8 +573,8 @@ const logic = {
                     if (isFollowingUser) {
                       return Post.find({ user: targetUser._id })
                         .populate({ path: "user", select: "-password -__v" })
-                        .populate("comments")
-                        .populate("likes")
+                        .populate({ path: "comments.user", select: "username" })
+                        .populate({ path: "likes.user", select: "username" })
                         .sort({ createdAt: -1 });
                     } else {
                       throw new AccessDeniedError(`user ${username} in can not see the posts of user ${targetUsername}`);
@@ -583,8 +583,8 @@ const logic = {
               } else {
                 return Post.find({ user: targetUser._id })
                   .populate({ path: "user", select: "-password -__v" })
-                  .populate("comments")
-                  .populate("likes")
+                  .populate({ path: "comments.user", select: "username" })
+                  .populate({ path: "likes.user", select: "username" })
                   .sort({ createdAt: -1 });
               }
             });
@@ -611,8 +611,8 @@ const logic = {
 
               return Post.find({ _id: { $in: postsId } })
                 .populate({ path: "user", select: "-password -__v" })
-                .populate("comments")
-                .populate("likes");
+                .populate({ path: "comments.user", select: "username" })
+                .populate({ path: "likes.user", select: "username" });
             })
             .then((posts: PostModelInterface[]) => posts);
         } else if (!username && targetUsername) {
@@ -629,8 +629,8 @@ const logic = {
 
                 return Post.find({ _id: { $in: postsId } })
                   .populate({ path: "user", select: "-password -__v" })
-                  .populate("comments")
-                  .populate("likes");
+                  .populate({ path: "comments.user", select: "username" })
+                  .populate({ path: "likes.user", select: "username" });
               }
             });
         } else {
@@ -655,8 +655,8 @@ const logic = {
 
                       return Post.find({ _id: { $in: postsId } })
                         .populate({ path: "user", select: "-password -__v" })
-                        .populate("comments")
-                        .populate("likes");
+                        .populate({ path: "comments.user", select: "username" })
+                        .populate({ path: "likes.user", select: "username" });
                     } else {
                       throw new AccessDeniedError(`user ${username} can not see the saved posts of user ${targetUsername}`);
                     }
@@ -666,8 +666,8 @@ const logic = {
 
                 return Post.find({ _id: { $in: postsId } })
                   .populate({ path: "user", select: "-password -__v" })
-                  .populate("comments")
-                  .populate("likes");
+                  .populate({ path: "comments.user", select: "username" })
+                  .populate({ path: "likes.user", select: "username" });
               }
             });
         }
@@ -692,14 +692,14 @@ const logic = {
 
             return Post.find({ user: { $in: usersId } })
               .populate({ path: "user", select: "-password -__v" })
-              .populate("comments")
-              .populate("likes")
+              .populate({ path: "comments.user", select: "username" })
+              .populate({ path: "likes.user", select: "username" })
               .sort({ createdAt: -1 })
               .skip(page)
               .limit(perPage)
               ;
-          })
-          .then((posts: PostModelInterface[]) => posts);
+          });
+        // .then((posts: PostModelInterface[]) => posts);
 
       });
   },
@@ -773,13 +773,14 @@ const logic = {
 
           post.likes.push(like);
 
-          return post.save();
+          return post.save()
+            .then(() => true);
 
         } else {
-          return Post.update({ _id: post._id }, { $pull: { likes: { _id: likedPost._id } } });
+          return Post.update({ _id: post._id }, { $pull: { likes: { user: user._id } } })
+            .then(() => false);
         }
-      })
-      .then(() => true);
+      });
   },
 
   toggleSavePost(username: string, postId: string): Promise<boolean> | never {
@@ -845,8 +846,8 @@ const logic = {
 
         return Post.find({ user: { $in: publicUsersId } })
           .populate({ path: "user", select: "-password -__v" })
-          .populate("comments")
-          .populate("likes")
+          .populate({ path: "comments.user", select: "username" })
+          .populate({ path: "likes.user", select: "username" })
           .sort({ createdAt: -1 })
           .skip(page)
           .limit(perPage);
@@ -863,7 +864,7 @@ const logic = {
       })
       .then((users: UserModelInterface[]) => users);
   },
-
+  
 };
 
 export default logic;

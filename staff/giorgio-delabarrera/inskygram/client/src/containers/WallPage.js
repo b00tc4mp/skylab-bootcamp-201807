@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom'
 import logic from '../logic'
 import Header from '../components/Header';
 import Avatar from '../components/Avatar/Avatar';
-import ColumnPostList from '../components/ColumnPostList';
+import ColumnPost from '../components/ColumnPost';
 
 class WallPage extends Component {
 
@@ -30,15 +30,50 @@ class WallPage extends Component {
 
   onToggleLikeClick = async (postId) => {
     const { loggedInUsername, token } = this.props
-    await logic.toggleLikePost(token, loggedInUsername, postId)
+
+    try {
+      await logic.toggleLikePost(token, loggedInUsername, postId)
+    } catch (err) {
+      // TODO
+    }
   }
 
-  onToggleSaveClick = () => {
-    alert('pepe')
+  onToggleSaveClick = async (postId) => {
+    const { loggedInUsername, token } = this.props
+    try {
+      await logic.toggleSavePost(token, loggedInUsername, postId)
+    } catch (err) {
+      // TODO
+    }
   }
+
+  onAddCommentSubmit = async (postId, description) => {
+    const { loggedInUsername, token } = this.props
+
+    try {
+      await logic.addCommentToPost(token, loggedInUsername, postId, description)
+      const postUpdated = await logic.retrievePost(postId, loggedInUsername, token)
+
+      const postsToUpdated = this.state.posts
+
+      const postsUpdated = postsToUpdated.map(post => {
+        if (post._id === postUpdated._id) post.comments = postUpdated.comments
+        return post
+      })
+      this.setState({ posts: postsUpdated })
+
+      return postUpdated.comments
+
+    } catch (err) {
+      // TODO
+    }
+  }
+
+  isLiked = likes => likes.find(like => like.user.username === this.props.loggedInUsername) ? true : false
+
+  isSaved = (post, savedPosts) => savedPosts.find(savedPost => savedPost.post === post._id) ? true : false
 
   render() {
-
     return (
       <div>
         <div className="header-wrapper">
@@ -52,13 +87,25 @@ class WallPage extends Component {
         <div className="main-wrapper">
           <main className="is-eight-quarters grid-gap-30">
             <section>
-              {<ColumnPostList
-                posts={this.state.posts}
-                onPostDetailClick={this.props.onPostDetailClick}
-                onUserClick={this.onUserClick}
-                onToggleLikeClick={this.onToggleLikeClick}
-                onToggleSaveClick={this.onToggleSaveClick}
-              />}
+              {
+                this.state.posts.length > 0 ?
+                  this.state.posts.map(post => (
+                    <ColumnPost
+                      key={post._id}
+                      post={post}
+                      onPostDetailClick={this.onPostDetailClick}
+                      onUserClick={this.onUserClick}
+                      onToggleLikeClick={this.onToggleLikeClick}
+                      onToggleSaveClick={this.onToggleSaveClick}
+                      onAddCommentSubmit={this.onAddCommentSubmit}
+                      isLiked={this.isLiked(post.likes)}
+                      isSaved={this.isSaved(post, post.user.savedPosts)}
+                    />)) :
+                  (<div>This is very empty <span role="img" aria-label="sad">😔</span>.
+                    Upload a photo or follow friends to be able to do what they do
+                    <span role="img" aria-label="wink"> 😉</span>
+                  </div>)
+              }
             </section>
             <section>
               {this.state.user && <Avatar

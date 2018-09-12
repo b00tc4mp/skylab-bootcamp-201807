@@ -226,6 +226,7 @@ const logic = {
             .then(res => res.json())
         }
       })
+      .catch(() => [])
   },
 
   listUserWall(token, username, perPage = 10, page = 0) {
@@ -241,6 +242,23 @@ const logic = {
       })
   },
 
+  addCommentToPost(token, username, postId, description) {
+    return Promise.resolve()
+      .then(() => {
+        this._validateStringField('token', token)
+        this._validateStringField('username', username)
+        this._validateStringField('post id', postId)
+        this._validateStringField('description', description)
+
+        const headers = { authorization: `bearer ${token}`, 'Content-Type': 'application/json' }
+
+        const body = JSON.stringify({ description })
+
+        return this._httpClient(`posts/${postId}/actions/add-comment`, 'POST', headers, body, 200)
+          .then(() => true)
+      })
+  },
+
   toggleLikePost(token, username, postId) {
     return Promise.resolve()
       .then(() => {
@@ -249,8 +267,22 @@ const logic = {
         this._validateStringField('post id', postId)
 
         const headers = { authorization: `bearer ${token}`, 'Content-Type': 'application/json' }
-        
-        return this._httpClient(`/posts/${postId}/actions/like`, 'POST', headers, undefined, 200)
+
+        return this._httpClient(`posts/${postId}/actions/like`, 'POST', headers, {}, 200)
+          .then(() => true)
+      })
+  },
+
+  toggleSavePost(token, username, postId) {
+    return Promise.resolve()
+      .then(() => {
+        this._validateStringField('token', token)
+        this._validateStringField('username', username)
+        this._validateStringField('post id', postId)
+
+        const headers = { authorization: `bearer ${token}`, 'Content-Type': 'application/json' }
+
+        return this._httpClient(`posts/${postId}/actions/save`, 'POST', headers, {}, 200)
           .then(() => true)
       })
   },

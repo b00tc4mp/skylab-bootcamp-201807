@@ -14,7 +14,15 @@ class ProfilePage extends Component {
   }
 
   componentDidMount() {
-    const { username, loggedInUsername, token } = this.props
+    this.loadProfile(this.props)
+  }
+
+  componentWillReceiveProps(props) {
+    this.loadProfile(props)
+  }
+
+  loadProfile(props) {
+    const { username, loggedInUsername, token } = props
 
     Promise.resolve()
       .then(() => {
