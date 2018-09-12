@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 import './Header.sass'
 import Autosuggest from 'react-autosuggest';
-import logic from '../../logic'
 
 // TODO: define env variables
 const DEFAULT_AVATAR = 'https://goo.gl/F65XTo'
@@ -66,6 +65,16 @@ class Header extends Component {
 
   onSuggestionSelected = (event, { suggestion: user }) => this.props.onSearchResultClick(user)
 
+  handleLoginClick = event => {
+    event.preventDefault()
+    this.props.onLoginClick() 
+  }
+
+  handleRegisterClick = event => {
+    event.preventDefault()
+    this.props.onRegisterClick() 
+  }
+
   render() {
     const { query, results } = this.state;
 
@@ -94,24 +103,31 @@ class Header extends Component {
             inputProps={inputProps}
           />
         </div>
-        <div className="Header-nav">
-          <a className="Header-navLink" href="#/" onClick={this.handleNewPostClick}>
-            <i className="Header-navIcon far fa-plus-square"></i>
-          </a>
-          <a className="Header-navLink" href="#/" onClick={this.handleExploreClick}>
-            <i className="Header-navIcon far fa-compass"></i>
-          </a>
-          <a className="Header-navLink" href="#/" onClick={this.handleProfileClick}>
-            <i className="Header-navIcon far fa-user"></i>
-          </a>
-        </div>
+        {this.props.isLoggedIn ?
+          <div className="Header-nav">
+            <a className="Header-navLink" href="#/" onClick={this.handleNewPostClick}>
+              <i className="Header-navIcon far fa-plus-square"></i>
+            </a>
+            <a className="Header-navLink" href="#/" onClick={this.handleExploreClick}>
+              <i className="Header-navIcon far fa-compass"></i>
+            </a>
+            <a className="Header-navLink" href="#/" onClick={this.handleProfileClick}>
+              <i className="Header-navIcon far fa-user"></i>
+            </a>
+          </div>
+          :
+          <div className="Header-nav">
+            <button className="Header-actionLogin button is-primary" onClick={this.handleLoginClick}>
+              Entrar
+            </button>
+            <a href="#/" className="Header-actionRegister text-link push-10-l" onClick={this.handleRegisterClick}>
+              Registrarte
+            </a>
+          </div>
+        }
       </header>
     )
   }
 }
-
-// Header.defaultProps = {
-//   visibleSearch: true
-// };
 
 export default withRouter(Header)

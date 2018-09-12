@@ -41,6 +41,10 @@ class ChangePasswordPage extends Component {
     this.props.history.push('/accounts/edit')
   }
 
+  onLoginClick = () => this.props.history.push('/accounts/login')
+
+  onRegisterClick = () => this.props.history.push('/accounts/register')
+
   render() {
     const { user } = this.state
     return (
@@ -53,6 +57,9 @@ class ChangePasswordPage extends Component {
             onProfileClick={this.props.onProfileClick}
             onSearch={this.props.onSearch}
             onSearchResultClick={this.props.onSearchResultClick}
+            isLoggedIn={this.props.loggedInUsername ? true : false}
+            onLoginClick={this.onLoginClick}
+            onRegisterClick={this.onRegisterClick}
           />
         </div>
         <div className="main-wrapper">

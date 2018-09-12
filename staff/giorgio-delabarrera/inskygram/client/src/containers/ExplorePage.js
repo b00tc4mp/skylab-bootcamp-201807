@@ -27,6 +27,10 @@ class ExplorePage extends Component {
 
   onUserClick = username => this.props.history.push(`/${username}`)
 
+  onLoginClick = () => this.props.history.push('/accounts/login')
+
+  onRegisterClick = () => this.props.history.push('/accounts/register')
+
   render() {
     return (
       <div>
@@ -38,6 +42,9 @@ class ExplorePage extends Component {
             onProfileClick={this.props.onProfileClick}
             onSearch={this.props.onSearch}
             onSearchResultClick={this.props.onSearchResultClick}
+            isLoggedIn={this.props.loggedInUsername ? true : false}
+            onLoginClick={this.onLoginClick}
+            onRegisterClick={this.onRegisterClick}
           />
         </div>
         <div className="main-wrapper">
