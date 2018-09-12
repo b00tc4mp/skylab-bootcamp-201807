@@ -344,7 +344,20 @@ const logic = {
         return this._httpClient(`me/explore?${uri}`, 'GET', { authorization: `bearer ${token}` }, undefined, 200)
           .then(res => res.json())
       })
+  },
+
+  search(query) {
+    return Promise.resolve()
+      .then(() => {
+        this._validateStringField('query', query)
+
+        const uri = this._buildUri({ q: query })
+
+        return this._httpClient(`search?${uri}`, 'GET', undefined, undefined, 200)
+          .then(res => res.json())
+      })
   }
+
 }
 
 module.exports = logic

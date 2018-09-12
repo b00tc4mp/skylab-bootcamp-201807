@@ -863,7 +863,7 @@ const logic = {
       .then(() => {
         const regexp = new RegExp(`.*${query}.*`);
 
-        return User.find({ privateAccount: false, username: regexp }, "-password -__v");
+        return User.find({ username: regexp }, "-password -__v");
       })
       .then((users: UserModelInterface[]) => users);
   },
