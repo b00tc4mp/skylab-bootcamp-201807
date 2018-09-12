@@ -2,11 +2,13 @@ import React, { Component } from 'react'
 import ProductDetailCard from '../cards/ProductDetailCard'
 import './ProductDetail.css'
 import { withRouter } from 'react-router-dom'
+import Loader from 'react-loader'
 
 class ProductDetail extends Component {
     state = {
         product: null,
-        idFavs: []
+        idFavs: [],
+        loaded: false
     }
 
     static getDerivedStateFromProps(props, state) {
@@ -27,43 +29,45 @@ class ProductDetail extends Component {
 
     render() {
 
-        const { props: { onProductDetail, onAddFavourite, onRemoveFavourite }, state: { product, idFavs } } = this
+        const { props: { onProductDetail, onAddFavourite, onRemoveFavourite, loaded }, state: { product, idFavs } } = this
 
         return(
             <main>
-                {product ?
-                    <div>
-                        <ProductDetailCard 
-                            onProductDetail={onProductDetail}
-                            isFav = {idFavs && idFavs.length && idFavs.includes(product.id)}
-                            addFavourite={onAddFavourite}
-                            removeFavourite={onRemoveFavourite}
-                            category = {product.cathegory}
-                            createdAt = {product.created_at}
-                            description = {product.description}
-                            idProd = {product.id}
-                            latitude = {product.location[1]}
-                            longitude = {product.location[0]}
-                            numFavs = {product.num_favs}
-                            numViews = {product.num_views}
-                            photos = {product.photos}
-                            price = {product.price}
-                            state = {product.state}
-                            title = {product.title}
-                            updatedAt = {product.updated_at}
-                            userName = {product.user_name || ''}
-                            userAvgScore = {product.user_avg_score}
-                            userProducts = {product.user_products}
-                            userReviews = {product.user_reviews}
-                            userPhoto = {product.user_photo}
-                            userId = {product.user_id}
-                            />
-                    </div> :
+                <Loader loaded={loaded}>
+                    {product ?
+                        <div>
+                            <ProductDetailCard 
+                                onProductDetail={onProductDetail}
+                                isFav = {idFavs && idFavs.length && idFavs.includes(product.id)}
+                                addFavourite={onAddFavourite}
+                                removeFavourite={onRemoveFavourite}
+                                category = {product.cathegory}
+                                createdAt = {product.created_at}
+                                description = {product.description}
+                                idProd = {product.id}
+                                latitude = {product.location[1]}
+                                longitude = {product.location[0]}
+                                numFavs = {product.num_favs}
+                                numViews = {product.num_views}
+                                photos = {product.photos}
+                                price = {product.price}
+                                state = {product.state}
+                                title = {product.title}
+                                updatedAt = {product.updated_at}
+                                userName = {product.user_name || ''}
+                                userAvgScore = {product.user_avg_score}
+                                userProducts = {product.user_products}
+                                userReviews = {product.user_reviews}
+                                userPhoto = {product.user_photo}
+                                userId = {product.user_id}
+                                />
+                        </div> :
 
-                    <div className="prodDetail-empty-product">
-                        <h1>Something went wrong, we couldn't find this product</h1>
-                    </div>
-                }
+                        <div className="prodDetail-empty-product">
+                            <h1>Something went wrong, we couldn't find this product</h1>
+                        </div>
+                    }
+                </Loader>
             </main>
         )
     }

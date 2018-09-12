@@ -54,8 +54,8 @@ const product = {
                 product.user_name = user.email.substring(0, user.email.lastIndexOf("@"))
             }
 
-            if (user.products) product.user_products = user.products.length || 0
- 
+            if (user.products) product.user_products = user.products.filter(prod => prod.state ==='pending' || prod.state === 'reserved').length || 0
+
             if (user.reviews && user.reviews.length) {
                 numReviews = user.reviews.length
                 avgReviews = user.reviews.reduce((sum, review) => sum + parseFloat(review.score), 0) / numReviews
@@ -178,7 +178,7 @@ const product = {
             .then(urlsCloudinary => {
                 data.cathegory = data.cathegory.toLowerCase()
                 const { title, description, price, cathegory, location } = data
-debugger;
+
                 return Product.create({ user: userId, title, description, price, cathegory, location, photos: urlsCloudinary })
             })
             .then(product => product.id)
@@ -207,6 +207,12 @@ debugger;
                         path: 'user'
                         , select: 'email name surname photo products reviews'
                         , options: { lean: true}
+                        , populate: {
+                            path: 'products'
+                            , select: 'state'
+                            , where: { 'state': { '$in': ['sold', 'reserved', 'pending']}}
+                            , options: { lean: true}
+                        }
                     }).
                     lean()
             })
@@ -216,7 +222,6 @@ debugger;
                 return this._parseProductItems(product)
             })
     },
-
 
     /**
      * Update state product to  'sold', 'reserved', 'pending', 'expired' or 'removed'
@@ -325,7 +330,7 @@ debugger;
             .then(product => {
                 if (!product) throw new LogicError(`product with id ${productId} does not exist`)
 
-                product.num_favs--
+                if (product.num_favs) product.num_favs--
 
                 return product.save()
             })

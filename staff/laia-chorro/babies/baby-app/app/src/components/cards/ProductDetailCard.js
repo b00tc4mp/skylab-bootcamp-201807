@@ -123,7 +123,7 @@ function ProductDetailCard(props) {
                         {photos.map((photo, index) => (<img key={index} src={photo} />)) }
                     </Carousel>*/}
                     <Slider arrows={true} dots={true} infinite={true} speed={500} slidesToShow={1} slidesToScroll={1}>
-                        {photos.map((photo, index) => (<img key={index} src={photo} />)) }
+                        {photos.map((photo, index) => (<img key={index} height={'506px'} src={photo} />)) }
                     </Slider>
                 </div>
                 <div className="product-detail-flex">

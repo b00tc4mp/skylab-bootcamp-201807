@@ -209,7 +209,8 @@ const logic = {
                     'Content-Type': 'application/json' 
                 }, undefined, 200)
                     .then(res => res.json() )
-                    .then(res => this._user = res )
+                    .then(res => {
+                        this._user = res })
             })
     },
 

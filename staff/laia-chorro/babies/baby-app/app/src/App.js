@@ -10,13 +10,15 @@ import Myzone from './components/Myzone'
 import ProductDetail from './components/pages/ProductDetail'
 import PublicUser from './components/pages/PublicUser'
 
+import Loader from 'react-loader'
+
 
 import Alert from 'react-s-alert';
  
 import 'react-s-alert/dist/s-alert-default.css';
 import 'react-s-alert/dist/s-alert-css-effects/slide.css';
 
-import { Route, withRouter, Redirect } from 'react-router-dom'
+import { Route, withRouter, Redirect, Switch } from 'react-router-dom'
 
 
 class App extends Component {
@@ -27,7 +29,8 @@ class App extends Component {
 		showFeedback: false,
 		idFavs: [],
 		profilePhoto: null,
-		detailProduct: null
+		detailProduct: null,
+		loaded: false
 	}
 
 	hideFeedback = () => this.setState({errorMsg: null, showFeedback: false})
@@ -68,19 +71,31 @@ class App extends Component {
 	}
 
 	onProductUpload = (title, category, price, description, photo, longitude, latitude) => {
-
 		logic.uploadProduct(title, category, price, description, photo, longitude, latitude)
 			.then(() => logic.getPrivateUser() )
 			.then(() => this.props.history.push('/mylist'))
-			.catch(({ message }) => this.setState({ error: message }))
-			/*.then(() => this.setState({ succeeded: true }))
-			.catch(({ message }) => this.setState({ error: message }))*/
+			.then(() => Alert.success('Your product was upload correctly!', { position: 'top-right', timeout: 3000 }))
+            .catch(({ message }) => Alert.error(message, { position: 'bottom-right', effect: 'slide', timeout: 3000 }) )
 	}
+
+
+	/**userUpload = (data) => {
+		logic.uploadUser(data)
+            .then(() => logic.getPrivateUser() )
+            .then(() => Alert.success('Your profile was updated successfully!', { position: 'top-right' }))
+            .catch(({ message }) => {
+                Alert.error(message, {
+                    position: 'bottom-right',
+                    effect: 'slide',
+                    timeout: 'none'
+                })
+            })
+	} */
 
 	getIdFavs = () => {
         const favs = logic.getUserField('favs')
 
-        if (logic.loggedIn && favs && favs.length) {
+        if (logic.loggedIn && favs) {
 			const idFavs = favs.map(fav => fav.id)
             this.setState({ idFavs })
         }
@@ -93,9 +108,7 @@ class App extends Component {
 			.then(() => logic.addProductToFavourites(idProduct))
 			.then(() => logic.getPrivateUser() )
 			.then(() => this.getIdFavs() )
-			.catch(res => {
-			})
-			//.catch(({ message }) => this.setState({ errorMsg: message }))
+			.catch(({ message }) => Alert.error(message, { position: 'bottom-right', effect: 'slide', timeout: 3000 }) )
 	}
 
 	onRemoveFavourite = idProduct => {
@@ -103,9 +116,7 @@ class App extends Component {
 			.then(() => logic.removeProductFromFavourites(idProduct))
 			.then(() => logic.getPrivateUser() )
 			.then(() => this.getIdFavs() )
-			.catch(res => {
-			})
-			//.catch(({ message }) => this.setState({ errorMsg: message }))
+			.catch(({ message }) => Alert.error(message, { position: 'bottom-right', effect: 'slide', timeout: 3000 }) )
 	}
 
 	getProfilePhoto = () => {
@@ -120,17 +131,18 @@ class App extends Component {
 			.then(() => logic.uploadProfilePhoto(photo))
 			.then(() => logic.getPrivateUser() )
 			.then(() => this.getProfilePhoto() )
-			.catch(res => {
-			})
+			.catch(({ message }) => Alert.error(message, { position: 'bottom-right', effect: 'slide', timeout: 3000 }) )
 	}
 
 	onProductDetail = productId => {
+		this.setState({ loaded: false })
 		return Promise.resolve()
 			.then(() => logic.incrementProductViewsById(productId))
             .then(() => logic.getProductDetailById(productId))
 			.then(product => this.setState({ product }) )
-			.then(() => this.props.history.push(`/item/${productId}`))
-            //.catch(({ message }) => this.setState({ errorMsg: message }))
+			.then(() => this.props.history.push(`/item/${productId}`) )
+			.catch(({ message }) => Alert.error(message, { position: 'bottom-right', effect: 'slide', timeout: 3000 }) )
+			.finally(() => this.setState({ loaded: true }) )
 	}
 
   /*onUpdate = (password, newUsername, newPassword) => {
@@ -145,7 +157,7 @@ class App extends Component {
 
 
 	render() {
-		const { loggedIn, errorMsg, showFeedback, idFavs, profilePhoto, product } =  this.state
+		const { loggedIn, errorMsg, showFeedback, idFavs, profilePhoto, product, loaded } =  this.state
 		const { onRegister, onLogin, onLogout, onProductUpload, hideFeedback, 
 				getIdFavs, onAddFavourite, onRemoveFavourite, onUploadProfilePhoto,
 				onProductDetail } = this
@@ -153,24 +165,25 @@ class App extends Component {
 		return (
 			<div className="baby-app-container">
 				<Nav loggedIn={loggedIn} profilePhoto={profilePhoto}/>
-
-				<Route path="/" exact render={() => <Home onAddFavourite={onAddFavourite} onRemoveFavourite={onRemoveFavourite} idFavs={idFavs} getIdFavs={getIdFavs} onProductDetail={onProductDetail}/>} />
-				<Route path="/login" exact render={() => <Login onLogin={onLogin} errorMsg={errorMsg} showFeedback={showFeedback} hideFeedback={hideFeedback}/>} />
-				<Route path="/register" exact render={() => <Register onRegister={onRegister} errorMsg={errorMsg} showFeedback={showFeedback} hideFeedback={hideFeedback}/>} />
-				<Route path="/(profile|mylist|favourites|reviews|prod/upload)" exact render={() => 
-					loggedIn ? 
-						<Myzone onLogout={onLogout} 
-								onProductUpload={onProductUpload} 
-								onRemoveFavourite={onRemoveFavourite} 
-								idFavs={idFavs} 
-								onUploadProfilePhoto={onUploadProfilePhoto}
-								profilePhoto={profilePhoto}/> : 
-						<Redirect to="/login" />
-				} />
-				<Route path="/item/:idProd" exact render={() => <ProductDetail onAddFavourite={onAddFavourite} onRemoveFavourite={onRemoveFavourite} idFavs={idFavs} getIdFavs={getIdFavs} onProductDetail={onProductDetail} product={product}/>} />
-				<Route path="/user/:idUser" exact render={() => <PublicUser onAddFavourite={onAddFavourite} onRemoveFavourite={onRemoveFavourite} idFavs={idFavs} getIdFavs={getIdFavs}  />} />
-				{/*<Route path="/update" exact render={() => loggedIn ? <Update onUpdateProp={onUpdate} email={logic.userUsername} errorMsg={errorMsg} showFeedback={showFeedback} hideFeedback={hideFeedback}/> : <Redirect to="/login" />} />*/}
-
+					<Switch>
+						<Route path="/" exact render={() => <Home onAddFavourite={onAddFavourite} onRemoveFavourite={onRemoveFavourite} idFavs={idFavs} getIdFavs={getIdFavs} onProductDetail={onProductDetail}/>} />
+						<Route path="/login" exact render={() => <Login onLogin={onLogin} errorMsg={errorMsg} showFeedback={showFeedback} hideFeedback={hideFeedback}/>} />
+						<Route path="/register" exact render={() => <Register onRegister={onRegister} errorMsg={errorMsg} showFeedback={showFeedback} hideFeedback={hideFeedback}/>} />
+						<Route path="/(profile|mylist|favourites|reviews|prod/upload)" exact render={() => 
+							loggedIn ? 
+								<Myzone onLogout={onLogout} 
+										onProductUpload={onProductUpload} 
+										onRemoveFavourite={onRemoveFavourite} 
+										idFavs={idFavs} 
+										onUploadProfilePhoto={onUploadProfilePhoto}
+										profilePhoto={profilePhoto}
+										onProductDetail={onProductDetail}/> : 
+								<Redirect to="/login" />
+						} />
+						<Route path="/item/:idProd" exact render={() => <ProductDetail onAddFavourite={onAddFavourite} onRemoveFavourite={onRemoveFavourite} idFavs={idFavs} getIdFavs={getIdFavs} onProductDetail={onProductDetail} product={product} loaded={loaded}/>} />
+						<Route path="/user/:idUser" exact render={() => <PublicUser onAddFavourite={onAddFavourite} onRemoveFavourite={onRemoveFavourite} idFavs={idFavs} getIdFavs={getIdFavs} onProductDetail={onProductDetail} />} />
+						{/*<Route path="/update" exact render={() => loggedIn ? <Update onUpdateProp={onUpdate} email={logic.userUsername} errorMsg={errorMsg} showFeedback={showFeedback} hideFeedback={hideFeedback}/> : <Redirect to="/login" />} />*/}
+					</Switch>
 				<Alert stack={{limit: 3}} />
 			</div>
 		)

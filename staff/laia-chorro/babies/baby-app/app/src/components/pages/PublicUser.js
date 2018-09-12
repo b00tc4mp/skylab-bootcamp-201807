@@ -4,6 +4,7 @@ import SimplePreviewCard from '../cards/SimplePreviewCard'
 import UserTabCard from '../cards/UserTabCard'
 import './PublicUser.css'
 import { withRouter } from 'react-router-dom'
+import Alert from 'react-s-alert';
 import logic from '../../logic'
 
 class PublicUser extends Component {
@@ -18,7 +19,7 @@ class PublicUser extends Component {
         return Promise.resolve()
             .then(() => logic.getPublicUser(idUser))
             .then(user => this.setState({ user }) )
-            //.catch(({ message }) => this.setState({ errorMsg: message }))
+            .catch(({ message }) => Alert.error(message, { position: 'bottom-right', effect: 'slide', timeout: 3000 }) )
     }
 
     onSelectTab = tabSelected => this.setState({ tabSelected })
@@ -26,7 +27,7 @@ class PublicUser extends Component {
 
     render() {
 
-        const { state: { user, tabSelected } } = this
+        const { state: { user, tabSelected }, props: { onProductDetail } } = this
 
         return(
             <main>
@@ -41,29 +42,20 @@ class PublicUser extends Component {
                         userPhoto={user.photo}
                         onSelectTab={this.onSelectTab}
                         />
-                    {tabSelected === 0 && user.products.map((prod, index) => {
-                        if (prod.state === 'pending')
-                        return (<SimplePreviewCard 
-                            key={index}
-                            state={prod.state} 
-                            photo={prod.photos[0]}
-                            price={prod.price}
-                            title={prod.title}
-                            idProd={prod.id}
-                            description={prod.description}            
-                        /> )
-                    })}
-                    {tabSelected === 1 && user.products.map((prod, index) => {
-                        if (prod.state === 'sold')
-                        return (<SimplePreviewCard 
-                            key={index}
-                            state={prod.state} 
-                            photo={prod.photos[0]}
-                            price={prod.price}
-                            title={prod.title}
-                            idProd={prod.id}
-                            description={prod.description}            
-                        /> )
+                    {tabSelected < 2 && user.products.map((prod, index) => {
+                        if ((tabSelected === 0 && prod.state === 'pending') || 
+                            (tabSelected === 1 && prod.state === 'sold'))
+                            return (<SimplePreviewCard 
+                                key={index}
+                                state={prod.state} 
+                                photo={prod.photos[0]}
+                                price={prod.price}
+                                title={prod.title}
+                                idProd={prod.id}
+                                description={prod.description}  
+                                getProductDetail={onProductDetail}          
+                            /> )
+                        return
                     })}
                     {tabSelected === 2 && 
                         <div>Reviews</div>

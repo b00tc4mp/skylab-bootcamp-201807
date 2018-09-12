@@ -21,13 +21,13 @@ class Favourites extends Component {
 
     render() {
 
-        const { state: { favs }, props: { onRemoveFavourite } } = this
+        const { state: { favs }, props: { onRemoveFavourite, onProductDetail } } = this
 
         return(
-            <div>
-                <h1 className="text-white pt-4 heading-home">MY FAVOURITES</h1>
+            <div className="myfavs-products-container">
+                <h1 className="myfavs-products-heading">Your favourites</h1>
                 <section className="flex-container">
-                    {favs.map((prod, index) => {
+                    {favs && favs.map((prod, index) => {
                         return(<div key={index} data-prod={prod.id}>
                             <PreviewCard 
                                 state={prod.state} 
@@ -37,7 +37,8 @@ class Favourites extends Component {
                                 idProd={prod.id}
                                 isFav = {true}
                                 description={prod.description}
-                                removeFavourite={onRemoveFavourite}                     
+                                removeFavourite={onRemoveFavourite}
+                                getProductDetail={onProductDetail}                    
                             /> 
                         </div>)
                         })}

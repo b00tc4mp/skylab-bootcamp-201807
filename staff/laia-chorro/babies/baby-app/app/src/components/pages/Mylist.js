@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 import PreEditCard from '../cards/PreEditCard'
 import logic from '../../logic'
 import './Mylist.css'
-import background from '../../assets/playing-baby.svg'
+//import background from '../../assets/playing-baby.svg'
+
 
 class Mylist extends Component {
 
@@ -35,7 +36,7 @@ class Mylist extends Component {
 
     render() {
 
-        const { state: {products}, onProductUpdateState } = this
+        const { state: {products}, onProductUpdateState, props: {onProductDetail} } = this
         
         return (
             <div className="mylist-products-container">
@@ -43,7 +44,7 @@ class Mylist extends Component {
                     <h1 className="mylist-products-heading">Your products</h1>
                     {products && products.map((prod, index) => {
                         return(<div key={index} data-prod={prod.id}>
-                            <PreEditCard 
+                        <PreEditCard 
                                 state={prod.state} 
                                 photo={prod.photos[0]}
                                 price={prod.price}
@@ -52,6 +53,7 @@ class Mylist extends Component {
                                 numFavs={prod.num_favs}
                                 idProd={prod.id}
                                 onProductUpdateState={onProductUpdateState}
+                                getProductDetail={onProductDetail}
                             />
                         </div>)
                         })}

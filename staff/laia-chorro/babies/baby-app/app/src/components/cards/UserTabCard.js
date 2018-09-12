@@ -17,7 +17,8 @@ const styles = theme => ({
     flexWrap: 'wrap',
     alignContent: 'space-between',
     borderBottomLeftRadius: '.45rem',
-    borderBottomRightRadius: '.45rem'      
+    borderBottomRightRadius: '.45rem',
+    marginBottom: '20px',    
   },
   tabsRoot: {
     borderBottom: '1px solid #e8e8e8',

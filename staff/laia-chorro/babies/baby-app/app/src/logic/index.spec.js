@@ -10,37 +10,78 @@ const rimraf = require('rimraf')
 const FormData = require('form-data')
 const Jimp = require('jimp')
 const jwt = require('jsonwebtoken')
+const validate = require('./validate')
 
 global.FormData = FormData
 
 describe('logic', () => {
     const { JWT_SECRET } = process.env
-    let username, password
+    let email, password
 
-    before(() => {
+    const score = 4, text = 'My review from me to you',
+        product1 = {
+            title: 'My title product',
+            description: 'My description of my product',
+            price: 23,
+            photos: 'url_photo',
+        },
+        product2 = {
+            title: 'My second title product',
+            description: 'My second description of my product',
+            price: 232,
+            photos: 'second_url_photo',
+        }
+
+debugger;
+
+    /*before(() => {
         if (fs.existsSync('tests'))
             rimraf.sync('tests')
 
         fs.mkdirSync('tests')
-    })
+    })*/
+    
 
     beforeEach(() => {
-        username = `user-${Math.random()}`, password = '123'
+        email = `laia-chorro-${Math.random()}@mail.com`, password = `123-${Math.random()}`
     })
 
+    true && describe('validate fields', () => {
+        it('should succeed on correct value', () => {
+            expect(() => validate._stringField('email', email).to.equal(email))
+            expect(() => validate._stringField('password', password).to.equal(password))
+        })
+
+        it('should fail on undefined value', () => {
+            expect(() => validate._stringField('name', undefined)).to.throw(`invalid name`)
+        })
+
+        it('should fail on empty value', () => {
+            expect(() => validate._stringField('name', '')).to.throw(`invalid name`)
+        })
+
+        it('should fail on numeric value', () => {
+            expect(() => validate._stringField('name', 123)).to.throw(`invalid name`)
+        })
+    })
+    
     describe('register user', () => {
         it('should succeed on new user', () =>
-            logic.register(username, password)
-                .then(res => expect(res).to.be.true)
+            logic.register(email, password)
+                .then(res => 
+                    {
+                        debugger;
+                        return expect(res).to.be.true})
         )
 
         it('should fail on already existing user', () =>
-            logic.register(username, password)
-                .then(() => logic.register(username, password))
+            logic.register(email, password)
+                .then(() => logic.register(email, password))
                 .catch(err => err)
                 .then(err => {
                     expect(err).to.exist
-                    expect(err.message).to.equal(`user ${username} already exists`)
+                    debugger;
+                    expect(err.message).to.equal(`user with ${email} email already exist`)
                 })
         )
 
@@ -49,12 +90,12 @@ describe('logic', () => {
                 .catch(err => err)
                 .then(err => {
                     expect(err).to.exist
-                    expect(err.message).to.equal(`invalid username`)
+                    expect(err.message).to.equal(`invalid email`)
                 })
         )
 
         it('should fail on password user', () =>
-            logic.register(username, '')
+            logic.register(email, '')
                 .catch(err => err)
                 .then(err => {
                     expect(err).to.exist
@@ -64,25 +105,25 @@ describe('logic', () => {
     })
 
     describe('authenticate user', () => {
-        it('should succeed on existing user', () =>
-            logic.register(username, password)
-                .then(() => logic.authenticate(username, password))
+        /*it('should succeed on existing user', () =>
+            logic.register(email, password)
+                .then(() => logic.authenticate(email, password))
                 .then(token => {
                     expect(token).to.be.a('string')
 
                     let payload
 
                     expect(() => payload = jwt.verify(token, JWT_SECRET)).not.to.throw()
-                    expect(payload.sub).to.equal(username)
+                    expect(payload.sub).to.equal(email)
                 })
-        )
+        )*/
 
         it('should fail on unregistered user', () =>
-            logic.authenticate(username, password)
+            logic.authenticate(email, password)
                 .catch(err => err)
                 .then(err => {
                     expect(err).to.exist
-                    expect(err.message).to.equal(`user ${username} does not exist`)
+                    expect(err.message).to.equal(`user with ${email} email does not exist`)
                 })
         )
 
@@ -91,12 +132,12 @@ describe('logic', () => {
                 .catch(err => err)
                 .then(err => {
                     expect(err).to.exist
-                    expect(err.message).to.equal(`invalid username`)
+                    expect(err.message).to.equal(`invalid email`)
                 })
         )
 
         it('should fail on password user', () =>
-            logic.authenticate(username, '')
+            logic.authenticate(email, '')
                 .catch(err => err)
                 .then(err => {
                     expect(err).to.exist
@@ -105,7 +146,7 @@ describe('logic', () => {
         )
     })
 
-    describe('save file', () => {
+    /*describe('save file', () => {
         beforeEach(() => {
             fs.writeFileSync('tests/hello-world.txt', 'hola mundo!')
         })
@@ -235,7 +276,6 @@ describe('logic', () => {
                     })
                 })
                 .then(() => {
-                    debugger
                     const from = fs.readFileSync('tests/hello-world.png')
                     const to = fs.readFileSync('tests/hello-world-retrieved.png')
 
@@ -352,7 +392,7 @@ describe('logic', () => {
                     expect(err.message).to.equal(`invalid file`)
                 })
         )
-    })
+    })*/
 
     after(() => {
         if (fs.existsSync('tests'))

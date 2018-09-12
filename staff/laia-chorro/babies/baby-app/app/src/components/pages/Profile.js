@@ -89,16 +89,9 @@ class Profile extends Component {
     userUpload = (data) => {
 		logic.uploadUser(data)
             .then(() => logic.getPrivateUser() )
-            .then(() => Alert.success('Your profile was updated successfully!', { position: 'top-right' }))
-            .catch(({ message }) => {
-                Alert.error(message, {
-                    position: 'bottom-right',
-                    effect: 'slide',
-                    timeout: 'none'
-                })
-            })
+            .then(() => Alert.success('Your profile was updated successfully!', { position: 'top-right', timeout: 3000 }))
+            .catch(({ message }) => Alert.error(message, { position: 'bottom-right', effect: 'slide', timeout: 3000 }))
 	}
-
     
 
     render() {

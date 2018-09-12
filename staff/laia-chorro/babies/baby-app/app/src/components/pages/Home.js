@@ -3,13 +3,16 @@ import PreviewCard from '../cards/PreviewCard'
 import FilterCard from '../cards/FilterCard'
 import Footer from '../sections/Footer'
 import logic from '../../logic'
-import './Home.css';
+import './Home.css'
+import Loader from 'react-loader'
+import Alert from 'react-s-alert';
 
 class Home extends Component {
 
     state = {
         products: [],
-        idFavs: []
+        idFavs: [],
+        loaded: true
 
     }
 
@@ -25,10 +28,12 @@ class Home extends Component {
     }
 
     getProducts = (query) => {
+        this.setState({ loaded: false })
         return Promise.resolve()
             .then(() => logic.getSimpleProductsByFilters(query))
             .then(products => this.setState({ products: products || [] }) )
-            //.catch(({ message }) => this.setState({ errorMsg: message }))
+            .catch(({ message }) => Alert.error(message, { position: 'bottom-right', effect: 'slide', timeout: 3000 }) )
+			.finally(() => this.setState({ loaded: true }))
     }
 
 
@@ -38,9 +43,11 @@ class Home extends Component {
 
        return(
             <main >
+                
                     <div className="filter-container" >
                         <FilterCard filterProducts={this.getProducts}/>
                     </div>
+                    <Loader loaded={this.state.loaded}>
                     <section className="flex-container">
                         {products.length ? 
                             products.map((prod, index) => {
@@ -64,7 +71,8 @@ class Home extends Component {
                             </div>
                         }
                     </section>
-                <Footer />
+                    <Footer />
+                </Loader>
             </main>
         )
     }

@@ -7,12 +7,15 @@ import CardMedia from '@material-ui/core/CardMedia'
 import TurnedInIcon from '@material-ui/icons/TurnedIn'
 import WorkIcon from '@material-ui/icons/Work'
 import Typography from '@material-ui/core/Typography'
-import { Link } from 'react-router-dom'
 
 const styles = {
   card: {
     width: 200,
     height: 350
+  },
+  link: {
+    textDecoration: 'none !important',
+    cursor: 'pointer',
   },
   content: {
     height: 186,
@@ -34,17 +37,26 @@ const styles = {
 };
 
 function PreviewCard(props) {
+
+  const { getProductDetail } = props
+
+  const onProductDetail = event => {
+    event.preventDefault()
+
+    getProductDetail(idProd)
+  }
+
   const { classes, state, photo, price, title, description, idProd } = props
 
   return (
     <Card className={classes.card}>
-      <Link to={`/prod/${idProd}`}>
+      <a className={classes.link} onClick={onProductDetail}>
         {state === 'sold' &&  <WorkIcon  className={classes.state}/>}
         {state === 'reserved' &&  <TurnedInIcon  className={classes.state}/>}
         <CardMedia
           component="img"
           className={classes.media}
-          height="200"
+          height="170"
           image={photo}
           title={title}
         />
@@ -59,7 +71,7 @@ function PreviewCard(props) {
             {description}
           </Typography>
         </CardContent>
-      </Link>
+      </a>
     </Card>
   );
 }

@@ -112,9 +112,9 @@ class Upload extends Component {
                                 withIcon={false}
                                 buttonText='Choose images'
                                 onChange={this.keepPhoto}
-                                imgExtension={['.jpg', '.jpeg']}
+                                imgExtension={['.jpg', '.jpeg', '.png']}
                                 maxFileSize={5242880}
-                                label={'Choose until 4 images Max file size: 5mb, accepted: jpg'}
+                                label={'Choose until 4 images Max file size: 5mb, accepted: jpg or png'}
                                 fileContainerStyle={{
                                     width: '170px',
                                     margin: '10px',

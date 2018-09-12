@@ -63,7 +63,7 @@ const styles = theme => ({
 
 function PreEditCard(props) {
 
-    const { classes, theme, state, photo, price, title, numViews, numFavs, idProd, onProductUpdateState } = props;
+    const { classes, state, photo, price, title, numViews, numFavs, idProd, onProductUpdateState, getProductDetail } = props;
 
     const onDelete = event => {
         event.preventDefault()
@@ -89,10 +89,16 @@ function PreEditCard(props) {
         onProductUpdateState(idProd, 'pending')
     }
 
+    const onProductDetail = event => {
+        event.preventDefault()
+    
+        getProductDetail(idProd)
+      }
+
 
     return (
         <Card className={classes.card}>
-            <CardActionArea className={classes.card}>
+            <CardActionArea className={classes.card} onClick={onProductDetail}>
                 <CardMedia
                     className={classes.cover}
                     image={photo}

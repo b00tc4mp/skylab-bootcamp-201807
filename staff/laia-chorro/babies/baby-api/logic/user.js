@@ -200,7 +200,11 @@ const user = {
                 if (!user) throw new LogicError(`user with id: ${userId} does not exist`)
 
                 Object.keys(data).forEach(field => {
-                    if (!user[field] || user[field] !== data[field]) {
+                    if (field === 'longitude') {
+                        user.location.set(0, Number(data[field]))
+                    } else if (field === 'latitude') {
+                        user.location.set(1, Number(data[field]))
+                    } else if (!user[field] || user[field] !== data[field]) {
                         user[field] = data[field]
                     }
                 })
