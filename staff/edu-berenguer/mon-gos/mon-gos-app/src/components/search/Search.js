@@ -49,14 +49,18 @@ class Search extends Component {
         return <div>
             <nav class="navbar nav">
                 <div class="navbar-start">
-                    <a href="/" class="navbar-item logo">MON-GOS</a>
+                    {/* <a href="/" class="navbar-item logo">MON-GOS</a> */}
+                    <Link to={'/'}><button class="navbar-item logo">MON-GOS</button></Link>
                 </div>
                 <div class="navbar-end">
-                    <nav class="breadcrumb has-succeeds-separator" >
+                    <nav class="breadcrumb" >
                         <ul>
                             <li>Are you a shelter?</li>
-                            <li><a href="/#/register" class="navbar-item goShelter ">Register</a></li>
-                            <li><a href="/#/login" class="navbar-item goShelter">login</a></li>
+                            {/* <li><a href="/#/register" class="navbar-item goShelter ">Register</a></li> */}
+                            <li><Link to={'/register'}><li class="navbar-item goShelter">Register</li></Link></li>
+                            {/* <li><a href="/#/login" class="navbar-item goShelter">login</a></li> */}
+                            <li><Link to={'/login'}><li class="navbar-item goShelter">Login</li></Link></li>
+
                         </ul>
                     </nav>
                 </div>

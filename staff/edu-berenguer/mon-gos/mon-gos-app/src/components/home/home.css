@@ -1,7 +1,10 @@
     .logo{
     font-family: 'Risque', 'cursive';
-    font-size:1.5em;
+    font-size:2em;
     color:#8A4D76 !important;
+    background-color: transparent !important;
+    border: none !important;
+    cursor: pointer;
   }
 
   .container{
@@ -27,6 +30,26 @@
     margin-top: 1em;
     margin-left: 5em;
   }
+
+  .dogAdopted{
+    cursor: pointer;
+  }
+
+  .navbar-item, .navbar-link {
+    color: #4a4a4a;
+    display: block;
+    line-height: 1.5;
+    padding: 0.3rem 0.3rem;
+    position: relative;
+  }
+
+  .navbar.is-fixed-bottom, .navbar.is-fixed-top {
+  margin-top: -5px;
+  left: 0;
+  position: fixed;
+  right: 0;
+  z-index: 30;
+  }
     
   h5{
     color: #8A4D76 !important;
@@ -35,6 +58,7 @@
   .search{
     background-color: #8A4D76 !important;
     color: white !important;
+    margin-top:0.3em;
   }
 
   .more-information{

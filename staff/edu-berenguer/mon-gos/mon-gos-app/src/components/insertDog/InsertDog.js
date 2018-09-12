@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { withRouter } from 'react-router-dom'
+import { withRouter, Link } from 'react-router-dom'
 import { logic } from '../../logic'
 import swal from 'sweetalert2'
 import FileBase64 from "react-file-base64";
@@ -65,7 +65,7 @@ class InsertDog extends Component {
         return <div>
             <nav class="navbar nav">
                 <div class="navbar-item">
-                    <a href="/"><button class="button is-success">Return</button></a>
+                    <Link to={'/'}><button class="button is-success">Return</button></Link>
                 </div>
             </nav>
             <div>

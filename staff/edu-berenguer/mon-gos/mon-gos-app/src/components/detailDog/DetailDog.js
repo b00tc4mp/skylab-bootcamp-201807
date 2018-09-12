@@ -38,7 +38,7 @@ class DetailDog extends Component {
         return <div>
             < nav class="navbar nav" >
                 <div class="navbar-start">
-                    <a href="/" class="navbar-item logo">MON-GOS</a>
+                    <Link to='/'><button class="navbar-item logo">MON-GOS</button></Link>
                 </div>
             </nav >
             <div className="detailDog">
@@ -77,7 +77,7 @@ class DetailDog extends Component {
                         </AccordionItemBody>
                     </AccordionItem>
                 </Accordion>
-                <a href="/#/adoptar"><button class="button is-success">Adopt</button></a>
+                <Link to="/adoptar"><button class="button is-success">Adopt</button></Link>
             </div>
         </div >
     }

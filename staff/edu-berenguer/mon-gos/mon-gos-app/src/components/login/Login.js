@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { withRouter } from 'react-router-dom'
+import { withRouter, Link } from 'react-router-dom'
 import { logic } from '../../logic'
 import swal from 'sweetalert2'
 import 'bulma/css/bulma.css'
@@ -36,8 +36,8 @@ class Login extends Component {
     render() {
         return <div>
             <nav class="navbar is-primary nav">
-                <a class="navbar-item" href="/"><button class="button is-success">Home</button></a>
-                <a class="navbar-item" href="/#/register"><button class="button is-success">Register</button></a>
+                <Link to='/' class="navbar-item" ><button class="button is-success">Home</button></Link>
+                <Link to='/register' class="navbar-item"><button class="button is-success">Register</button></Link>
             </nav>
             <div class="container-form">
                 <h1 className="title">Login</h1>

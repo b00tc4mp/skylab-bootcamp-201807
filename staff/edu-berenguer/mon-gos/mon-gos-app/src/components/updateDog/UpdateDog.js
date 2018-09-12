@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { withRouter } from 'react-router-dom'
+import { withRouter, Link } from 'react-router-dom'
 import { logic } from '../../logic'
 import swal from 'sweetalert2'
 import FileBase64 from "react-file-base64";
@@ -85,7 +85,7 @@ class UpdateDog extends Component {
         return <div>
             <nav class="navbar nav">
                 <div class="navbar-item">
-                    <a href="/#/landing" onClick={this.handleLogout}><button class="button is-dark">Return</button></a>
+                    <Link to='/landing' onClick={this.handleLogout}><button class="button is-dark">Return</button></Link>
                 </div>
             </nav>
             <div>
@@ -101,14 +101,14 @@ class UpdateDog extends Component {
                         <div className="parameters-dog">
                             <div class="field">
                                 <p className="parameter-dog">Age</p>
-                                <input class="input" type="number" placeholder="Age"  min="0" step="0.1" onChange={this.handleChange} name="age" value={this.state.age} />
+                                <input class="input" type="number" placeholder="Age" min="0" step="0.1" onChange={this.handleChange} name="age" value={this.state.age} />
                             </div>
                             <div class="field">
                                 <p className="parameter-dog">Weight</p>
-                                <input class="input" type="number" placeholder="Weight"  min="0" step="0.1" onChange={this.handleChange} name="weight" value={this.state.weight} />
+                                <input class="input" type="number" placeholder="Weight" min="0" step="0.1" onChange={this.handleChange} name="weight" value={this.state.weight} />
                             </div>
                         </div>
-                        <textarea class="textarea" name="description"  maxlength="200" placeholder="Description" onChange={this.handleChange} value={this.state.description}></textarea>
+                        <textarea class="textarea" name="description" maxlength="200" placeholder="Description" onChange={this.handleChange} value={this.state.description}></textarea>
                         <button class="button is-success" type="submit">Update</button>
                     </div>
                     <div>

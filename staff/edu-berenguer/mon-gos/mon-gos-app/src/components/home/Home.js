@@ -49,15 +49,15 @@ class Home extends Component {
         return <div>
             <nav class="navbar is-fixed-top nav">
                 <div class="navbar-start">
-                    <a href="/" class="navbar-item logo">MON-GOS</a>
+                    <p class="navbar-item logo">MON-GOS</p>
                 </div>
                 <div class="navbar-end">
-                    <a href="/#/search" class="navbar-item"><button class="button search"><i class="fas fa-search"></i></button></a>
+                    <Link to='/search' class="navbar-item"><button class="button search"><i class="fas fa-search"></i></button></Link>
                     <nav class="breadcrumb" >
                         <ul>
                             <li>Are you a shelter?</li>
-                            <li><a href="/#/register" class="navbar-item goShelter">Register</a></li>
-                            <li><a href="/#/login" class="navbar-item goShelter">login</a></li>
+                            <Link to='/register'><li class="navbar-item goShelter">Register</li></Link>
+                            <Link to='/login'><li class="navbar-item goShelter">Login</li></Link>
                         </ul>
                     </nav>
                 </div>
@@ -65,8 +65,8 @@ class Home extends Component {
             <Carousel />
             <div class="breadcrumb is-large">
                 <ul>
-                    <li><a href="" onClick={this.showNotAdopteds} style={this.state.dogsNotAdopteds.length ? { textDecoration: "underline", textDecorationColor: "#8A4D76" } : {}}><h5>For adoption</h5></a></li>
-                    <li><a href="" onClick={this.showAdopteds} style={this.state.dogsAdopted.length ? { textDecoration: "underline", textDecorationColor: "#8A4D76" } : {}}><h5>Adopted</h5></a></li>
+                    <li><p class="dogAdopted" onClick={this.showNotAdopteds} style={this.state.dogsNotAdopteds.length ? { textDecoration: "underline", textDecorationColor: "#8A4D76" } : {}}><h5>For adoption</h5></p></li>
+                    <li><p class="dogAdopted" onClick={this.showAdopteds} style={this.state.dogsAdopted.length ? { textDecoration: "underline", textDecorationColor: "#8A4D76" } : {}}><h5>Adopted</h5></p></li>
                 </ul>
             </div>
             <div className="container">

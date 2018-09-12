@@ -72,10 +72,12 @@ body {
 
    .nav{
     background-color: #FFFFFF !important;
+    margin-top: 0.2em;
   }
 
   .goShelter{
     color: #8A4D76 !important;
+    margin-top: -5px;
   }
 
   .goShelter:hover{

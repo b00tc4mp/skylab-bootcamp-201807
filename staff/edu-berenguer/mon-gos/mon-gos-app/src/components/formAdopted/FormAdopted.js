@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { withRouter } from 'react-router-dom'
+import { withRouter, Link } from 'react-router-dom'
 import swal from 'sweetalert2'
 
 class FormAdopted extends Component {
@@ -41,7 +41,7 @@ class FormAdopted extends Component {
         return <div>
             <nav class="navbar nav">
                 <div class="navbar-start">
-                    <a href="/" class="navbar-item logo">MON-GOS</a>
+                    <Link to='/'><button class="navbar-item logo">MON-GOS</button></Link>
                 </div>
             </nav>
             <div className="container-form">
@@ -54,7 +54,7 @@ class FormAdopted extends Component {
                     </div>
                     <div class="field">
                         <p class="control has-icons-left has-icons-right">
-                            <input class="input" type="email" placeholder="Email" onChange={this.handleChange} name="email"/>
+                            <input class="input" type="email" placeholder="Email" onChange={this.handleChange} name="email" />
                             <span class="icon is-small is-left">
                                 <i class="fas fa-envelope"></i>
                             </span>

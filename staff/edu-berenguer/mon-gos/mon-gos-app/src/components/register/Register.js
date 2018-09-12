@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { withRouter } from 'react-router-dom'
+import { withRouter, Link } from 'react-router-dom'
 import { logic } from '../../logic'
 import swal from 'sweetalert2'
 import Geolocation from 'react-geolocation'
@@ -68,8 +68,10 @@ class Register extends Component {
     render() {
         return <div>
             <nav class="navbar is-primary nav">
-                <a class="navbar-item" href="/"><button class="button is-success">Home</button></a>
-                <a class="navbar-item" href="/#/login"><button class="button is-success">Login</button></a>
+                {/* <a class="navbar-item" href="/"><button class="button is-success">Home</button></a> */}
+                <Link to={'/'} class="navbar-item"><button class="button is-success">Home</button></Link>
+                {/* <a class="navbar-item" href="/#/login"><button class="button is-success">Login</button></a> */}
+                <Link to={'/login'} class="navbar-item"><button class="button is-success">Login</button></Link>
             </nav>
             <div class="container-form">
                 <h1 className="title">Register</h1>
@@ -109,16 +111,11 @@ class Register extends Component {
                         </p>
                     </div>
                     <Geolocation
-                        // lazy
                         render={({ getCurrentPosition, position: { coords: { latitude, longitude } = {} } = {}, }) => (
                             <div>
-                                {/* <button class="button is-success position" onClick={getCurrentPosition}>Get Current Position</button> */}
                                 <div className="container-location">
                                     <input class="input location" type="number" placeholder="Latitude" step="any" value={latitude} onChange={this.handleChange} name="lat" />
                                     <input class="input location" type="number" placeholder="Longitude" step="any" value={longitude} onChange={this.handleChange} name="long" />
-
-                                    {/* {this.state.lat ? <p class="tag is-success confirm">OK</p> : <div></div>} */}
-                                    
                                     {this.state.lat && <button class="button no-coordinates" onClick={(e) => {
                                         e.preventDefault(),
                                             this.confirmLatitude(latitude)
@@ -129,17 +126,7 @@ class Register extends Component {
                                             this.confirmLatitude(latitude)
                                         this.confirmLongitude(longitude)
                                     }}>Ok</button>}
-
-                                     {/* {this.state.lat ? <p class="tag is-success confirm">OK</p> : <div></div>} */}
                                 </div>
-                                {/* <div className="container-location">
-                                    <input class="input location" type="number" placeholder="Longitude" step="any" value={longitude} onChange={this.handleChange} name="long" />
-                                    {this.state.long ? <p class="tag is-success confirm">OK</p> : <div></div>}
-                                    <button class="button coordinates" onClick={(e) => {
-                                        e.preventDefault(),
-                                            this.confirmLongitude(longitude)
-                                    }}>Confirm</button>
-                                </div> */}
                             </div>
                         )}
                     />

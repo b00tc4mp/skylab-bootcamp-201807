@@ -67,7 +67,7 @@ class Landing extends Component {
         return <div>
             <nav class="navbar nav">
                 <div class="navbar-item">
-                    <a href="/" onClick={this.handleLogout}><button class="button is-dark">Logout</button></a>
+                    <Link to='/' onClick={this.handleLogout}><button class="button is-dark">Logout</button></Link>
                 </div>
             </nav>
             <div className="container-landing">
@@ -83,31 +83,31 @@ class Landing extends Component {
                                     <div className="element-list">
                                         <img class="image-list" src={dog.photo}></img>
                                         <p className="landing-label">{dog.name}</p>
-                                        <a href="" onClick={(e) => {
+                                        <p onClick={(e) => {
                                             e.preventDefault();
                                             this.deleteDog(dog._id)
                                         }}>
-                                            <button class="button is-danger is-small button-landing">X</button></a>
+                                            <button class="button is-danger is-small button-landing">X</button></p>
                                         <Link to={`/updateDog/${dog._id}`} class="button is-light is-small button-landing"> Update/Information</Link>
-                                        <a href="" onClick={(e) => {
+                                        <p onClick={(e) => {
                                             e.preventDefault()
                                             this.adopted(dog._id)
                                         }}
-                                        ><button class="button is-light is-small button-landing">Not adopted</button></a>
+                                        ><button class="button is-light is-small button-landing">Not adopted</button></p>
                                     </div>
                                 </li>
                             } else {
                                 return <li>
                                     <div className="element-list">
                                         <img class="image-list" src={dog.photo}></img>
-                                        <p className="landing-label">{dog.name} </p><a href="" onClick={(e) => {
+                                        <p className="landing-label">{dog.name} </p><p onClick={(e) => {
                                             e.preventDefault(); this.deleteDog(dog._id)
-                                        }}><button class="button is-danger is-small button-landing">X</button></a>
-                                        <a href="" onClick={(e) => {
+                                        }}><button class="button is-danger is-small button-landing">X</button></p>
+                                        <p onClick={(e) => {
                                             e.preventDefault()
                                             this.notAdopted(dog._id)
                                         }}>
-                                            <button class="button is-light is-small button-landing adopted" >Adopted</button></a>
+                                            <button class="button is-light is-small button-landing adopted" >Adopted</button></p>
                                     </div>
                                 </li>
                             }
