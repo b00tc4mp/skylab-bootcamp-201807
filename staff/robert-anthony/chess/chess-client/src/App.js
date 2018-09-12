@@ -115,16 +115,6 @@ class App extends Component {
         this.needToUpdateGamesFlagFromSocketIO = true
         this.getCurrentGamesForUser(nickname, token)
       })
-      /*
-            this.socket.on('user disconnected', () => {
-              const {state: {token}} = this
-              if (token) this.getUsersForString('', token)
-            })
-
-            this.socket.on('user connected', () => {
-              const {state: {token}} = this
-              if (token) this.getUsersForString('', token)
-            })*/
 
       this.socket.on('reconnect', (attemptNumber) => {
         log.debug(`APP.JS: reconnect: ATTEMPTNUMBER: ${attemptNumber}, THIS.STATE.NICKNAME: ${this.state.nickname}`)

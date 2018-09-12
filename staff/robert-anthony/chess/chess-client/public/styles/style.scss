@@ -10,9 +10,19 @@ $text_color15: #890017;
 $text_color2: #ac9319;
 $text_color3: #a5a5a5;
 $text_color4: #e3e3e3;
-$background_color1: rgba(50, 50, 60, 0.8);
-$background_color2: rgba(87, 87, 87, 0.8);
+$background_color1: rgba(50, 50, 60, 0.7);
+$background_color2: rgba(87, 87, 87, 0.7);
 $dark_menu_background_color: rgb(51, 58, 64);
+
+@mixin input-styling() {
+  background-color: $background_color1;
+  color: $text_color1;
+  border-color: $text_color15;
+  &:focus,&.focus {
+    border-color:$text_color1;
+    box-shadow: none;
+  }
+}
 
 * {
   box-sizing: border-box;
@@ -68,6 +78,33 @@ main div.games__mainChessRow.row div.chessBoardGroup__gameInfoArea.col-12.col-md
 main div.games__mainChessRow span.games__notPlayingGames {
   color: $text_color1;
 
+}
+
+main  div.mainContainer.register__container.container,main div.mainContainer.login__container.container {
+  button[type=submit] {
+    @include input-styling;
+    border-radius:.5em;
+    padding:.5em;
+    cursor:pointer;
+    &:focus,&.focus,&.active {
+      border-color:$text_color1;
+      box-shadow: none;
+      outline: none !important;
+    }
+  }
+div.input-group{
+  input.form-control {
+ @include input-styling;
+  }
+  div.input-group-prepend {
+    background-color: $background_color1;
+    span.input-group-text {
+      @include input-styling;
+
+    }
+
+  }
+}
 }
 
 main div.games__mainChessRow.row div.chessBoardGroup__gameInfoArea.col-12.col-md-3 {
@@ -153,13 +190,13 @@ nav.register__navAfterRegister {
   background: $background_color1;
   padding: 1em;
   span {
-    color:$text_color1;
+    color: $text_color1;
   }
   a:visited, a:link {
     color: $text_color1;
   }
-  a:hover,a:active {
-    color:$text_color15;
+  a:hover, a:active {
+    color: $text_color15;
   }
 }
 

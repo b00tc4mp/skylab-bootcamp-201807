@@ -51,10 +51,9 @@ class Register extends Component {
   render() {
     const {succeeded,nickname} = this.state
 
-    return <div className="mainContainer login__container">
 
 
-      <Container className="mainContainer login__container">
+      return  <Container className="mainContainer register__container">
         <Col xs="12" md="3">
           {!succeeded ? <form onSubmit={this.onRegisterSubmitted}>
               <Row className="mb-2">
@@ -92,7 +91,6 @@ class Register extends Component {
 
         </Col>
       </Container>
-    </div>
 
 
   }
