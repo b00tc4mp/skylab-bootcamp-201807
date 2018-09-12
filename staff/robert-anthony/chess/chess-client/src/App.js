@@ -16,6 +16,8 @@ class App extends Component {
 
   socket = null
 
+  needToUpdateGamesFlagFromSocketIO = false
+
   constructor() {
     let nickname, token
 
@@ -27,6 +29,7 @@ class App extends Component {
       users: JSON.parse(sessionStorage.getItem('users')) || [],
       error: "",
       currentGames: JSON.parse(sessionStorage.getItem('currentGames')) || [],
+
     }
 
     if (sessionStorage.getItem('nickname')) // we are returning from a page refresh
@@ -57,10 +60,11 @@ class App extends Component {
   }
 
   getCurrentGamesForUser = (nickname, token) => {
-    log.debug(`APP.JS: getCurrentGamesForUser: NICKNAME: ${nickname},  THIS.STATE.NICKNAME: ${this.state.nickname}`)
+    log.debug(`APP.JS: getCurrentGamesForUser: NICKNAME: ${nickname},  NEEDTOUPDATEGAMESFLAG: ${this.needToUpdateGamesFlagFromSocketIO},  THIS.STATE.NICKNAME: ${this.state.nickname}`)
 
     return logic.getGamesForUser(nickname, token)
       .then(currentGames => {
+        this.needToUpdateGamesFlagFromSocketIO = false
         this.setState({currentGames})
         sessionStorage.setItem('currentGames', JSON.stringify(currentGames))
       })
@@ -68,7 +72,7 @@ class App extends Component {
   }
 
   getUsersForString = (str, token) => {
-    log.debug(`APP.JS: getUsersForString: STR: ${str}, THIS.STATE.NICKNAME: ${this.state.nickname}`)
+    log.debug(`APP.JS: getUsersForString: STR: ${str},   NEEDTOUPDATEGAMESFLAG: ${this.needToUpdateGamesFlagFromSocketIO},  THIS.STATE.NICKNAME: ${this.state.nickname}`)
 
     const {state: {nickname}} = this
     logic.getUsersForString(nickname, str, token)
@@ -108,10 +112,7 @@ class App extends Component {
 
       this.socket.on(`update to games ${nickname}`, (message) => {
         log.debug(`%c APP.JS: update to games: NICKNAME: ${nickname},  MESSAGE: ${message},  THIS.STATE.NICKNAME: ${this.state.nickname}`,'background: #222; color: #bada55')
-
-        message = message || "no message"
-
-
+        this.needToUpdateGamesFlagFromSocketIO = true
         this.getCurrentGamesForUser(nickname, token)
       })
       /*
@@ -157,7 +158,7 @@ class App extends Component {
   }
 
   onGameMove = (move, gameID) => {
-    log.debug(`APP.JS: onGameMove: move: ${JSON.stringify(move)},  GAMEID: ${gameID},  THIS.STATE.NICKNAME: ${this.state.nickname}`)
+    log.debug(`APP.JS: onGameMove: move: ${JSON.stringify(move)},  GAMEID: ${gameID},  NEEDTOUPDATEGAMESFLAG: ${this.needToUpdateGamesFlagFromSocketIO},  THIS.STATE.NICKNAME: ${this.state.nickname}`)
 
     const {state: {nickname, token}} = this
     this.clearError()
@@ -188,6 +189,7 @@ class App extends Component {
 
   render() {
     const {nickname, users, error, token, currentGames} = this.state
+    log.debug(`APP.JS: render: NICKNAME: ${nickname}, NEEDTOUPDATEGAMESFLAG: ${this.needToUpdateGamesFlagFromSocketIO}`)
 
     return <div>
       <header>
