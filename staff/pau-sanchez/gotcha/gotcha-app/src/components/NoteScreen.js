@@ -5,7 +5,8 @@ import { withRouter } from 'react-router-dom'
 import screenfull from 'screenfull'
 import { findDOMNode } from 'react-dom'
 import {FormGroup, Input, Button, Label, Col, Row} from 'reactstrap'
-import { CopyToClipboard } from 'react-copy-to-clipboard' 
+import { CopyToClipboard } from 'react-copy-to-clipboard'
+import Loader from 'react-loader-spinner'
 
 
 class NoteScreen extends Component {
@@ -59,6 +60,7 @@ class NoteScreen extends Component {
         /////ORIGIN///////
         origin: '',
         loggedOut: '',
+        loading: false
 
 
     }
@@ -66,10 +68,12 @@ class NoteScreen extends Component {
     componentDidMount() {
         const {editor, noteid} = this.props.match.params
         const token = sessionStorage.getItem('token')
-        
         return logic.listNotesbyNoteId(editor, noteid)
         .then(res => {
+            this.setState({loading: true})
+            /*this.setState({loading: false})*/
             this.setState({ seconds: res.seconds })
+            console.log(res.seconds)
             this.setState({ noteBookId: res.notebook })
             this.setState({ notetitle: res.notetitle})
             this.setState({ notetext: res.notetext})
@@ -82,12 +86,11 @@ class NoteScreen extends Component {
             this.setState({ url : res.videourl})
             this.setState({ notebooktitle: res.notebooktitle})
             this.setState({ videoTitle: res.videotitle})
-        })        
-        .then( () => {
-            this.setSeekToPlay(this.state.seconds)
         })
+        .then( () => this.setSeekToPlay(this.state.seconds))
         .then(() => this.setState({noteId: noteid}))
         .then(this.setState({ loggedOut: token}))
+        
    }
 
 refresh = () => {
@@ -247,22 +250,27 @@ refresh = () => {
 ///////////////////////////////////////////
 
     
-    setSeekToPlay = (seconds) => {
+    setSeekToPlay(seconds) {
         this.player.seekTo(seconds)
     }
+        
+        
     
     
 /////////////////////////////////////////
 
     render () 
         {
-        const { url, playing, volume, muted, loop, playbackRate, notebooktitle, noteId, seconds, notetitle, notetext, videoTitle, loggedOut } = this.state
+        const { url, playing, volume, muted, loop, playbackRate, noteId, seconds, notetitle, notetext, loggedOut, loading } = this.state
         const urlToShare = window.location.href
         
         return(
             <div className='center-note-player'>
                     <div className='player-wrapper-note'>
-                        <ReactPlayer
+                        {
+                        (!loading)
+                        ?<Loader type="Puff" color="#00BFFF" height="100" width="100"/> 
+                        :<ReactPlayer
                             ref={this.ref}
                             width='100%'
                             height='100%'
@@ -284,6 +292,7 @@ refresh = () => {
                             onDuration={this.onDuration}
                             youtubeConfig={{ playerVars: { controls: 1 } }}
                             />
+                        }
                     </div>
                     <div className='gotcha_noteplayer'>
                         <Row >
