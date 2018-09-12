@@ -274,10 +274,10 @@ returns the **stream** object of the model.
 
 The API uses **Node** and **Express** to set up the server. The routes are defined in **routes.js**. Files are stored locally inside the **data** and **model** folders. User and files information is stored in **MongoDB**. The business **logic** controlls the data flow between the API endpoints, the local storage and the database.
 
-![component-diagram](documentation/component-diagram-api.png)
+![component-diagram](docs/component-diagram-api.png)
 
 ### Data diagram
 
 The API uses **mongoose** to define schemas and models. Files information are stored in the User model as arrays of ids, linking the different collections.
 
-![data-diagram](documentation/data-diagram-api.png)
+![data-diagram](docs/data-diagram-api.png)
