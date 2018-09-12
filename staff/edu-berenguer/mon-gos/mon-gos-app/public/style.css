@@ -87,4 +87,8 @@ body {
     border-radius: 10px;
   }
 
+  /* SPINNER */
+  .spinner{
+    margin-top: 2em;
+  }
    

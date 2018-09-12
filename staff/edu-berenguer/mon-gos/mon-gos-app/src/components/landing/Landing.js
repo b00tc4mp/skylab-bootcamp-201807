@@ -3,17 +3,20 @@ import { withRouter, Link } from 'react-router-dom'
 import { logic } from '../../logic'
 import swal from 'sweetalert2'
 import './landing.css'
+import MDSpinner from "react-md-spinner";
 
 class Landing extends Component {
 
     state = {
         dogs: [],
+        loading:true
     }
 
     componentDidMount() {
         logic.listDogsByShelter(this.props.id, this.props.token)
             .then(dogs => {
                 this.setState({
+                    loading:false,
                     dogs
                 })
             })
@@ -49,17 +52,24 @@ class Landing extends Component {
         logic.listDogsByShelter(this.props.id, this.props.token)
             .then(dogs => {
                 this.setState({
+                    loading:false,
                     dogs
                 })
             })
     }
 
     adopted(id) {
+        this.setState({
+            loading:true
+        })
         logic.dogAdopted(this.props.id, id, this.props.token)
             .then(() => this.listDogs())
     }
 
     notAdopted(id) {
+        this.setState({
+            loading:true
+        })
         logic.dogNotAdopted(this.props.id, id, this.props.token)
             .then(() => this.listDogs())
     }
@@ -74,8 +84,9 @@ class Landing extends Component {
                 <div className="container-list">
                     <div className="container-title-landing">
                         <h2 className="title">LIST OF DOGS</h2>
+                        {this.state.loading ? <MDSpinner /> : ''}
                         <a href="/#/insertDog"><button class="button is-success">Add dog</button></a>
-                    </div>
+                    </div>       
                     <ul>
                         {this.state.dogs.map(dog => {
                             if (dog.adopted === false) {

@@ -2,8 +2,9 @@ import React, { Component } from 'react'
 import { withRouter, Link } from 'react-router-dom'
 import { logic } from '../../logic'
 import swal from 'sweetalert2'
-import FileBase64 from "react-file-base64";
+import FileBase64 from "react-file-base64"
 import './insertDog.css'
+import MDSpinner from "react-md-spinner"
 
 class InsertDog extends Component {
     state = {
@@ -14,16 +15,23 @@ class InsertDog extends Component {
         photo: "",
         description: "",
         files: "",
+        loading:true
     }
 
     getFiles = files => {
+        this.setState({
+            loading:false
+        })
         this.uploadDogPhoto(files.base64)
     }
 
     uploadDogPhoto(photo) {
         logic.uploadDogPhoto(photo)
             .then(photo => {
-                this.setState({ photo })
+                this.setState({
+                    photo,
+                    loading:true
+                     })
             })
             .catch(({ message }) => {
                 swal({
@@ -106,7 +114,8 @@ class InsertDog extends Component {
                             <FileBase64 className="input" multiple={false} onDone={this.getFiles} />
                         </div>
                         <div>
-                            {this.state.photo ? <img src={this.state.photo}></img> : ""}
+                            <div>{this.state.photo ? <img src={this.state.photo}></img> : ""}</div>
+                            <div className="spinner">{!this.state.loading ? <MDSpinner /> : ''}</div>
                         </div>
                     </div>
                 </form>
