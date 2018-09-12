@@ -44,6 +44,10 @@ class Sidebar extends Component {
                     <i className="material-icons md-48">format_list_bulleted</i>
                     <span>Products</span>
                 </Link>
+                <Link className="" to="/mychats">
+                    <i className="material-icons md-48">message</i>
+                    <span>Messages</span>
+                </Link>
                 <Link className="" to="/favourites">
                     <i className="material-icons md-48">favorite_border</i>
                     <span>Favourites</span>

@@ -1,3 +1,5 @@
+'use strict'
+
 const validateEmail = require('../utils/validate-email')
 const validateBase64Image = require('../utils/validate-base64-img')
 const { LogicError } = require('./LogicError.js')
@@ -72,4 +74,4 @@ const validate = {
 
 }
 
-module.exports = { validate }
+module.exports = validate

@@ -1,4 +1,4 @@
-require('dotenv').config()
+'use strict'
 
 const cloudinary = require('cloudinary')
 const { env } = process
@@ -9,8 +9,7 @@ cloudinary.config({
     api_secret: env.API_SECRET
 })
 
-logicCloudinary = {
-
+const cloudinaryLogic = {
     uploadBuffer(name, buffer) {
         return new Promise((resolve, reject) => 
             cloudinary.v2.uploader.upload_stream((err, data) => {
@@ -21,4 +20,4 @@ logicCloudinary = {
 
 }
 
-module.exports = { logicCloudinary }
+module.exports = cloudinaryLogic
