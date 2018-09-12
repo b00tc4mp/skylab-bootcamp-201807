@@ -12,8 +12,7 @@ class App extends Component {
     dni: sessionStorage.getItem('dni') || '',
     id: sessionStorage.getItem('id') || '',
     token: sessionStorage.getItem('token') || '',
-    patientDni: sessionStorage.getItem('patient dni') || '',
-    unregisterError: ''
+    patientDni: sessionStorage.getItem('patient dni') || ''
   }
 
   onLoggedIn = (dni, id, token) => {

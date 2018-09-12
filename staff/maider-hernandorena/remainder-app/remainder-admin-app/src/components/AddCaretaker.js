@@ -17,13 +17,20 @@ class AddCaretaker extends Component {
     }
 
     keepDni = e => this.setState({ dni: e.target.value, error: '', added: '' })
-    keepPassword = e => this.setState({ password: e.target.value, error: '', added: '' })
     keepName = e => this.setState({ name: e.target.value, error: '', added: '' })
     keepSurname = e => this.setState({ surname: e.target.value, error: '', added: '' })
     keepAge = e => this.setState({ age: e.target.value, error: '', added: '' })
     keepGender = e => this.setState({ gender: e.target.value, error: '', added: '' })
-    keepAddress = e => this.setState({ address: e.target.value, error: '', added: '' })
     keepPhone = e => this.setState({ phone: e.target.value, error: '', added: '' })
+
+    keepPassword = e => this.checkPassword(e.target.value) 
+
+    checkPassword = value => {
+        const regex = (/^[a-zA-Z0-9]+$/)
+        let regexOk = value.match(regex)
+
+        if (regexOk !== null ) this.setState({ password: value, error: '', added: '' })    
+    }
 
     addCaretaker = e => {
         e.preventDefault()
