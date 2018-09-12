@@ -124,7 +124,9 @@ GET /api/users/:id/videos
 authorization: Bearer TOKEN
 ```
 
-Downlad a video
+returns an **array** with the **ids** of all the users' videos.
+
+Download a video
 
 ```bash
 GET /api/users/:id/videos/:videoId
@@ -133,6 +135,8 @@ GET /api/users/:id/videos/:videoId
 ```bash
 authorization: Bearer TOKEN
 ```
+
+returns the **stream** object of the video.
 
 ### Dataset management
 
@@ -172,8 +176,9 @@ GET /api/users/:id/datasets
 ```bash
 authorization: Bearer TOKEN
 ```
+returns an **array** with the **ids** of all the users' datasets.
 
-Downlad a dataset
+Download a dataset
 
 ```bash
 GET /api/users/:id/datasets/:datasetId
@@ -182,6 +187,9 @@ GET /api/users/:id/datasets/:datasetId
 ```bash
 authorization: Bearer TOKEN
 ```
+
+returns the **stream** object of the dataset.
+
 
 ### Results management
 
@@ -219,8 +227,9 @@ GET /api/users/:id/results
 ```bash
 authorization: Bearer TOKEN
 ```
+returns an **array** with the **ids** of all the users' results.
 
-Downlad a result
+Download a result
 
 ```bash
 GET /api/users/:id/results/:resultId
@@ -229,6 +238,9 @@ GET /api/users/:id/results/:resultId
 ```bash
 authorization: Bearer TOKEN
 ```
+
+returns the **stream** object of the result.
+
 
 ### Models management
 
@@ -241,8 +253,9 @@ GET /api/users/:id/models
 ```bash
 authorization: Bearer TOKEN
 ```
+returns an **array** with the **ids** of all the users' models.
 
-Download a models
+Download a model
 
 ```bash
 GET /api/users/:id/models/:modelId
@@ -251,6 +264,10 @@ GET /api/users/:id/models/:modelId
 ```bash
 authorization: Bearer TOKEN
 ```
+
+returns the **stream** object of the model.
+
+
 ## Technical description
 
 ### Block diagram
