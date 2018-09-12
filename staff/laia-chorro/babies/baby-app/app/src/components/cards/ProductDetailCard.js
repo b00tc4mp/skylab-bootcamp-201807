@@ -115,7 +115,9 @@ function ProductDetailCard(props) {
                             <Typography style={{textAlign: 'center'}} variant="subheading" color="textSecondary">{`${userReviews} reviews`}</Typography>
                     </CardContent>
                     <CardContent className="product-detail-chat">
-                        {/*<Typography variant="subheading" color="textSecondary">{'chat'}</Typography>*/}
+                        <Link to={`/chat/${idProd}`}>
+                            <button className="nav-btn nav-btn-upload">{'Chat'}</button>
+                        </Link>
                     </CardContent>
                 </div>
                 <div className="product-detail-carousel">

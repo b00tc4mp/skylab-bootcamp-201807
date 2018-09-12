@@ -145,6 +145,10 @@ class App extends Component {
 			.finally(() => this.setState({ loaded: true }) )
 	}
 
+	onGoToChat = () => {
+		this.props.history.push('/my')
+	}
+
   /*onUpdate = (password, newUsername, newPassword) => {
     this.hideFeedback()
     logic.updateUser(password, newUsername, newPassword)
@@ -169,7 +173,7 @@ class App extends Component {
 						<Route path="/" exact render={() => <Home onAddFavourite={onAddFavourite} onRemoveFavourite={onRemoveFavourite} idFavs={idFavs} getIdFavs={getIdFavs} onProductDetail={onProductDetail}/>} />
 						<Route path="/login" exact render={() => <Login onLogin={onLogin} errorMsg={errorMsg} showFeedback={showFeedback} hideFeedback={hideFeedback}/>} />
 						<Route path="/register" exact render={() => <Register onRegister={onRegister} errorMsg={errorMsg} showFeedback={showFeedback} hideFeedback={hideFeedback}/>} />
-						<Route path="/(profile|mylist|favourites|reviews|prod/upload)" exact render={() => 
+						<Route path="/(profile|mylist|mychats|favourites|reviews|prod/upload)" exact render={() => 
 							loggedIn ? 
 								<Myzone onLogout={onLogout} 
 										onProductUpload={onProductUpload} 
