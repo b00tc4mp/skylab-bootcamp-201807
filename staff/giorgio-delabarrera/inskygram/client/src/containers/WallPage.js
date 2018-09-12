@@ -33,6 +33,17 @@ class WallPage extends Component {
 
     try {
       await logic.toggleLikePost(token, loggedInUsername, postId)
+
+      const postUpdated = await logic.retrievePost(postId, loggedInUsername, token)
+
+      const postsToUpdated = this.state.posts
+
+      const postsUpdated = postsToUpdated.map(post => {
+        if (post._id === postUpdated._id) post.likes = postUpdated.likes
+        return post
+      })
+      this.setState({ posts: postsUpdated })
+
     } catch (err) {
       // TODO
     }
@@ -61,8 +72,6 @@ class WallPage extends Component {
         return post
       })
       this.setState({ posts: postsUpdated })
-
-      return postUpdated.comments
 
     } catch (err) {
       // TODO
@@ -99,7 +108,7 @@ class WallPage extends Component {
                       onToggleSaveClick={this.onToggleSaveClick}
                       onAddCommentSubmit={this.onAddCommentSubmit}
                       isLiked={this.isLiked(post.likes)}
-                      isSaved={this.isSaved(post, post.user.savedPosts)}
+                      isSaved={this.isSaved(post, this.state.user.savedPosts)}
                     />)) :
                   (<div>This is very empty <span role="img" aria-label="sad">😔</span>.
                     Upload a photo or follow friends to be able to do what they do

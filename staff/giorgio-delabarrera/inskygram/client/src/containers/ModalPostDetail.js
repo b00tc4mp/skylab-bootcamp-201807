@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
 import logic from '../logic'
 import { withRouter } from 'react-router-dom'
-import Header from '../components/Header';
 import PostDetail from '../components/PostDetail';
 
-class PostDetailPage extends Component {
+class ModalPostDetail extends Component {
 
   state = {
     user: null,
@@ -18,7 +17,7 @@ class PostDetailPage extends Component {
       const user = await logic.retrieveUser(loggedInUsername, undefined, token)
 
       this.setState({ user })
-
+      
       const post = await logic.retrievePost(postId, loggedInUsername, token)
 
       this.setState({ post })
@@ -70,39 +69,25 @@ class PostDetailPage extends Component {
 
   isSaved = (post, savedPosts) => savedPosts.find(savedPost => savedPost.post === post._id) ? true : false
 
-  onUserClick = username => this.props.history.push(`/${username}`)
-
   render() {
     return (
       <div>
-        <div className="header-wrapper">
-          <Header
-            onHomeClick={this.props.onHomeClick}
-            onExploreClick={this.props.onExploreClick}
-            onNewPostClick={this.props.onNewPostClick}
-            onProfileClick={this.props.onProfileClick}
-          />
-        </div>
-        <div className="main-wrapper">
-          <main>
-            {
-              this.state.post && (
-                <PostDetail
-                  post={this.state.post}
-                  onUserClick={this.onUserClick}
-                  onToggleLikeClick={this.onToggleLikeClick}
-                  onToggleSaveClick={this.onToggleSaveClick}
-                  onAddCommentSubmit={this.onAddCommentSubmit}
-                  isLiked={this.isLiked(this.state.post.likes)}
-                  isSaved={this.isSaved(this.state.post, this.state.user.savedPosts)}
-                />
-              )
-            }
-          </main>
-        </div>
+        {
+          this.state.post && (
+            <PostDetail
+              post={this.state.post}
+              onUserClick={this.props.onUserClick}
+              onToggleLikeClick={this.onToggleLikeClick}
+              onToggleSaveClick={this.onToggleSaveClick}
+              onAddCommentSubmit={this.onAddCommentSubmit}
+              isLiked={this.isLiked(this.state.post.likes)}
+              isSaved={this.isSaved(this.state.post, this.state.user.savedPosts)}
+            />
+          )
+        }
       </div>
     )
   }
 }
 
-export default withRouter(PostDetailPage)
+export default withRouter(ModalPostDetail)

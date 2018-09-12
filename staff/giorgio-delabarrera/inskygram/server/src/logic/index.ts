@@ -143,7 +143,7 @@ const logic = {
       .then((user: UserModelInterface) => {
         if (!user) { throw new NotFoundError(`user with username ${username} does not exists`); }
 
-        if (newEmail) {
+        if (newEmail && user.email !== newEmail) {
           return new Promise((resolve, reject) => {
             User.findOne({ email: newEmail })
               .then((foundUser: UserModelInterface) => {

@@ -13,7 +13,7 @@ import SavedPage from './containers/SavedPage';
 import Modal from 'react-modal';
 import CreationPost from './components/CreationPost/CreationPost';
 import logic from './logic'
-import PostDetail from './components/PostDetail';
+import ModalPostDetail from './containers/ModalPostDetail';
 
 class App extends Component {
   state = {
@@ -79,15 +79,26 @@ class App extends Component {
   onPostDetailClick = async (postId) => {
     const { loggedInUsername, token } = this.state
 
-    let post
+    // let post
     try {
-      post = await logic.retrievePost(postId, loggedInUsername, token)
+      // post = await logic.retrievePost(postId, loggedInUsername, token)
+
+      // this.setState({
+      //   modalContent: (
+      //     <PostDetail post={post} onUserClick={this.onUserInModalClick} />
+      //   )
+      // }, this.openModal())
 
       this.setState({
         modalContent: (
-          <PostDetail post={post} onUserClick={this.onUserInModalClick} />
+          <ModalPostDetail
+            postId={postId}
+            loggedInUsername={loggedInUsername}
+            token={token}
+            onUserClick={this.onUserInModalClick} />
         )
       }, this.openModal())
+
     } catch (err) {
       console.log(err)
     }
@@ -165,11 +176,11 @@ class App extends Component {
             <PostDetailPage
               postId={props.match.params.id}
               loggedInUsername={loggedInUsername}
+              token={token}
               onHomeClick={this.onHomeClick}
               onExploreClick={this.onExploreClick}
               onNewPostClick={this.onNewPostClick}
               onProfileClick={this.onProfileClick}
-              token={token}
             />
           )} />
           <Route path="/:username/saved" render={props => (

@@ -50,11 +50,6 @@ class EditProfile extends Component {
       privateAccountError: '',
     })
 
-    if (validator.isEmpty(this.state.name)) {
-      this.setState({ nameError: `Name can't be blank` })
-      isValid = false
-    }
-
     if (validator.isEmpty(this.state.newEmail)) {
       this.setState({ newEmailError: `Email can't be blank` })
       isValid = false
@@ -86,7 +81,12 @@ class EditProfile extends Component {
         <form className="EditProfile-form" onSubmit={this.handleSubmit}>
           <div className="EditProfile-field">
             <label htmlFor="name" className="EditProfile-label">Name</label>
-            <input type="text" className="EditProfile-input" value={this.state.name} id="name" onChange={this.handleNameChange} />
+            <input
+              type="text"
+              className="EditProfile-input"
+              value={this.state.name}
+              id="name"
+              onChange={this.handleNameChange} />
             {
               this.state.nameError &&
               <div className="EditProfile-fieldError">{this.state.nameError}</div>
@@ -94,11 +94,22 @@ class EditProfile extends Component {
           </div>
           <div className="EditProfile-field">
             <label htmlFor="name" className="EditProfile-label">Username</label>
-            <input type="text" disabled className="EditProfile-input" value={this.props.user.username} id="username" />
+            <input
+              type="text"
+              disabled
+              className="EditProfile-input"
+              value={this.props.user.username}
+              id="username" />
           </div>
           <div className="EditProfile-field">
             <label htmlFor="website" className="EditProfile-label">Website</label>
-            <input type="text" className="EditProfile-input" value={this.state.website} name="website" id="website" onChange={this.handleWebsiteChange} />
+            <input
+              type="text"
+              className="EditProfile-input"
+              value={this.state.website}
+              name="website"
+              id="website"
+              onChange={this.handleWebsiteChange} />
             {
               this.state.websiteError &&
               <div className="EditProfile-fieldError">{this.state.websiteError}</div>
@@ -106,7 +117,12 @@ class EditProfile extends Component {
           </div>
           <div className="EditProfile-field">
             <label htmlFor="biography" className="EditProfile-label">Bio</label>
-            <textarea className="EditProfile-textarea" value={this.state.biography} name="biography" id="biography" onChange={this.handleBiographyChange} />
+            <textarea
+              className="EditProfile-textarea"
+              value={this.state.biography}
+              name="biography"
+              id="biography"
+              onChange={this.handleBiographyChange} />
             {
               this.state.biographyError &&
               <div className="EditProfile-fieldError">{this.state.biographyError}</div>
@@ -114,7 +130,13 @@ class EditProfile extends Component {
           </div>
           <div className="EditProfile-field">
             <label htmlFor="newEmail" className="EditProfile-label">Email</label>
-            <input type="text" className="EditProfile-input" value={this.state.newEmail} name="newEmail" id="newEmail" onChange={this.handleNewEmailChange} />
+            <input
+              type="text"
+              className="EditProfile-input"
+              value={this.state.newEmail}
+              name="newEmail"
+              id="newEmail"
+              onChange={this.handleNewEmailChange} />
             {
               this.state.newEmailError &&
               <div className="EditProfile-fieldError">{this.state.newEmailError}</div>
@@ -122,7 +144,13 @@ class EditProfile extends Component {
           </div>
           <div className="EditProfile-field">
             <label htmlFor="phoneNumber" className="EditProfile-label">Phone number</label>
-            <input type="text" className="EditProfile-input" value={this.state.phoneNumber} name="phoneNumber" id="phoneNumber" onChange={this.handlePhoneNumberChange} />
+            <input
+              type="text"
+              className="EditProfile-input"
+              value={this.state.phoneNumber}
+              name="phoneNumber"
+              id="phoneNumber"
+              onChange={this.handlePhoneNumberChange} />
             {
               this.state.phoneNumberError &&
               <div className="EditProfile-fieldError">{this.state.phoneNumberError}</div>
@@ -130,7 +158,12 @@ class EditProfile extends Component {
           </div>
           <div className="EditProfile-field">
             <label htmlFor="gender" className="EditProfile-label">Gender</label>
-            <select className="EditProfile-select" name="gender" id="gender" value={this.state.gender} onChange={this.handleGenderChange}>
+            <select
+              className="EditProfile-select"
+              name="gender"
+              id="gender"
+              value={this.state.gender}
+              onChange={this.handleGenderChange}>
               <option value="">Choose gender</option>
               <option value="male">Male</option>
               <option value="female">Female</option>
@@ -159,10 +192,17 @@ class EditProfile extends Component {
             <div>
               <button type="submit" className="button is-primary">Submit</button>
             </div>
-            {
-              this.props.error && <div className="EditProfile-formError">{this.props.error}</div>
-            }
           </div>
+          {
+            this.props.error && (
+              <div className="EditProfile-formFeedback EditProfile-formFeedback--error">{this.props.error}</div>
+            )
+          }
+          {
+            this.props.success && (
+              <div className="EditProfile-formFeedback EditProfile-formFeedback--success">{this.props.success}</div>
+            )
+          }
         </form>
       </div>
     )

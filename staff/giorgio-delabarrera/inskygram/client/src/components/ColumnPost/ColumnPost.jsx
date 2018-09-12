@@ -8,12 +8,14 @@ class ColumnPost extends Component {
     isLiked: this.props.isLiked,
     isSaved: this.props.isSaved,
     likes: this.props.post.likes,
-    numLikes: this.props.post.likes.length,
     comments: this.props.post.comments,
     comment: ''
   }
 
   componentWillReceiveProps(nextProps) {
+    if (nextProps.post.likes.length !== this.state.likes.length)
+      this.setState({ likes: nextProps.post.likes })
+
     if (nextProps.post.comments.length !== this.state.comments.length)
       this.setState({ comments: nextProps.post.comments })
   }
@@ -27,13 +29,7 @@ class ColumnPost extends Component {
   handleLikeIconClick = event => {
     event.preventDefault()
 
-    this.setState({ isLiked: !this.state.isLiked }, () => {
-      this.setState({
-        numLikes: (this.state.isLiked) ?
-          this.state.numLikes + 1 :
-          this.state.numLikes - 1
-      })
-    })
+    this.setState({ isLiked: !this.state.isLiked })
 
     const { post } = this.props
     this.props.onToggleLikeClick(post._id)
@@ -108,7 +104,7 @@ class ColumnPost extends Component {
                       className="ColumnPost-actionLikeIcon" />
                 }
               </a>
-              <a href="#/" className="ColumnPost-addCommentIconLink" onClick={this.handleCommentIconClick}>
+              <a href="#/" className="ColumnPost-actionAddCommentIconLink" onClick={this.handleCommentIconClick}>
                 <FontAwesomeIcon
                   icon={['far', 'comment']}
                   className="ColumnPost-actionAddCommentIcon" />
@@ -128,7 +124,7 @@ class ColumnPost extends Component {
               </a>
             </div>
           </div>
-          <span className="ColumnPost-numLikes">{this.state.numLikes} likes</span>
+          <span className="ColumnPost-numLikes">{this.state.likes.length} likes</span>
           {
             post.caption &&
             <div className="ColumnPost-caption">

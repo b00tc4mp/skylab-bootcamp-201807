@@ -1,11 +1,17 @@
 import React, { Component } from 'react'
+import validator from 'validator'
 import './ChangePassword.sass'
+
+// TODO: define env variables
+const DEFAULT_AVATAR = 'https://goo.gl/F65XTo'
 
 class ChangePassword extends Component {
 
   state = {
     password: '',
     newPassword: '',
+    passwordError: '',
+    newPasswordError: '',
   }
 
   handlePasswordChange = event => this.setState({ password: event.target.value })
@@ -15,56 +21,25 @@ class ChangePassword extends Component {
   handleSubmit = event => {
     event.preventDefault()
 
-    // let isValid = true
+    let isValid = true
 
-    // this.setState({
-    //   firstNameError: '',
-    //   lastNameError: '',
-    //   emailError: '',
-    //   usernameError: '',
-    //   passwordError: '',
-    // })
+    this.setState({ passwordError: '', newPasswordError: '' })
 
-    // if (Utils.isBlank(this.state.firstName)) {
-    //   this.setState({ firstNameError: `First name can't be blank` })
-    //   isValid = false
-    // }
+    if (validator.isEmpty(this.state.password)) {
+      this.setState({ passwordError: `Password can't be blank` })
+      isValid = false
+    }
 
-    // if (Utils.isBlank(this.state.lastName)) {
-    //   this.setState({ lastNameError: `Last name can't be blank` })
-    //   isValid = false
-    // }
+    if (validator.isEmpty(this.state.newPassword)) {
+      this.setState({ newPasswordError: `New password can't be blank` })
+      isValid = false
+    }
 
-    // if (Utils.isBlank(this.state.email)) {
-    //   this.setState({ emailError: `Email can't be blank` })
-    //   isValid = false
-    // }
+    if (isValid) {
+      const { password, newPassword } = this.state
 
-    // if (Utils.isBlank(this.state.username)) {
-    //   this.setState({ usernameError: `Username can't be blank` })
-    //   isValid = false
-    // }
-
-    // if (Utils.isBlank(this.state.password)) {
-    //   this.setState({ passwordError: `Password can't be blank` })
-    //   isValid = false
-    // }
-
-    // if (isValid) {
-    //   const {
-    //     firstNameError,
-    //     lastNameError,
-    //     emailError,
-    //     usernameError,
-    //     passwordError,
-    //     ...formData
-    //   } = this.state
-    //   this.props.onSubmit(formData)
-    // }
-
-    const { password, newPassword } = this.state
-
-    this.props.onSubmit(password, newPassword)
+      this.props.onSubmit(password, newPassword)
+    }
   }
 
   render() {
@@ -75,11 +50,11 @@ class ChangePassword extends Component {
             <div className="ChangePassword-avatarWrapper">
               <img
                 className="ChangePassword-avatar"
-                src="https://instagram.fmad8-1.fna.fbcdn.net/vp/1e9c78654a0a62a43b1cbd1fd1904d3d/5C3B620A/t51.2885-19/s150x150/13397430_249362202098918_754420597_a.jpg"
-                alt="" />
+                src={this.props.imageUrl ? this.props.imageUrl : DEFAULT_AVATAR}
+                alt={this.props.username} />
             </div>
             <div className="ChangePassword-userInfo">
-              <h1 className="ChangePassword-username">giodelabarrera</h1>
+              <h1 className="ChangePassword-username">{this.props.username}</h1>
             </div>
           </div>
           <div className="ChangePassword-field">
@@ -103,10 +78,13 @@ class ChangePassword extends Component {
             <div>
               <button type="submit" className="button is-primary">Submit</button>
             </div>
-            {
-              this.props.error && <div className="ChangePassword-formError">{this.props.error}</div>
-            }
           </div>
+          {
+            this.props.error && <div className="ChangePassword-formFeedback ChangePassword-formFeedback--error">{this.props.error}</div>
+          }
+          {
+            this.props.success && <div className="ChangePassword-formFeedback ChangePassword-formFeedback--success">{this.props.success}</div>
+          }
         </form>
       </div>
     )

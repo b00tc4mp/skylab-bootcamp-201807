@@ -8,7 +8,9 @@ import EditAvatar from '../components/EditAvatar';
 class EditProfilePage extends Component {
 
   state = {
-    user: null
+    user: null,
+    editProfileError: '',
+    editProfileSuccess: ''
   }
 
   componentDidMount() {
@@ -24,21 +26,26 @@ class EditProfilePage extends Component {
   handleEditProfileSubmit = (newEmail, name, website, phoneNumber, gender, biography, privateAccount) => {
     const { loggedInUsername, token } = this.props
 
+    this.setState({ editProfileError: '', editProfileSuccess: '' })
+
     logic.updateUser(loggedInUsername, newEmail, name, website, phoneNumber, gender, biography, privateAccount, token)
-      .then(() => console.log('actualizado!!!'))
-      .catch(error => {
-        console.log(error);
-      })
+      .then(() => this.setState({ editProfileSuccess: 'Your profile has been updated correctly 👏' }))
+      .catch(() => this.setState({
+        editProfileError: 'Something has been missing 😮. Check your fields and try again please'
+      }))
   }
 
   handleEditAvatarSubmit = file => {
     const { loggedInUsername, token } = this.props
 
-    logic.updateUserAvatar(loggedInUsername, file, token)
-      .then(() => console.log('avatar actualizado!!!'))
-      .catch(error => {
-        console.log(error);
+    return logic.updateUserAvatar(loggedInUsername, file, token)
+      .then(() => {
+        this.setState({ editProfileSuccess: 'Your avatar has been updated correctly 👏' })
+        return true
       })
+      .catch(({ message }) => this.setState({
+        editProfileError: `${message} 😮. Try again or upload a correct image`
+      }))
   }
 
   goToChangePassword = event => {
@@ -49,17 +56,6 @@ class EditProfilePage extends Component {
   render() {
     const { user } = this.state
     return (
-      // <div>
-      //   <div>
-      //     <a href="#/" onClick={this.goToChangePassword}>Change password</a>
-      //   </div>
-      //   <div>
-      //     <h2>Avatar</h2>
-      //     {this.state.user && <EditAvatar imageUrl={user.imageUrl} onSubmit={this.handleEditAvatarSubmit} />}
-      //     <h2>Profile</h2>
-      //     {this.state.user && <EditProfile user={this.state.user} onSubmit={this.handleEditProfileSubmit} />}
-      //   </div>
-      // </div>
       <div>
         <div className="header-wrapper">
           <Header
@@ -75,17 +71,28 @@ class EditProfilePage extends Component {
               <div className="edit-profile-menu-container">
                 <ul className="Menu">
                   <li className="Menu-item">
-                    <a href="#/" className="Menu-itemLink is-active">Edit profile</a>
+                    <span className="Menu-itemLink is-active">Edit profile</span>
                   </li>
                   <li className="Menu-item">
-                    <a href="#/" className="Menu-itemLink">Change password</a>
+                    <a href="#/" onClick={this.goToChangePassword} className="Menu-itemLink">Change password</a>
                   </li>
                 </ul>
               </div>
               <div className="edit-profile-container">
                 <div>
-                  {this.state.user && <EditAvatar imageUrl={user.imageUrl} onSubmit={this.handleEditAvatarSubmit} />}
-                  {this.state.user && <EditProfile user={this.state.user} onSubmit={this.handleEditProfileSubmit} />}
+                  {this.state.user && (
+                    <EditAvatar
+                      username={user.username}
+                      imageUrl={user.imageUrl}
+                      onSubmit={this.handleEditAvatarSubmit} />
+                  )}
+                  {this.state.user && (
+                    <EditProfile
+                      user={this.state.user}
+                      success={this.state.editProfileSuccess}
+                      error={this.state.editProfileError}
+                      onSubmit={this.handleEditProfileSubmit} />
+                  )}
                 </div>
               </div>
             </section>

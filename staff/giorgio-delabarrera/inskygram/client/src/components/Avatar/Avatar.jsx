@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom'
 import './Avatar.sass'
 
 // TODO: define env variables
-const DEFAULT_AVATAR = 'https://cdn.vox-cdn.com/images/verge/default-avatar.v989902574302a6378709709f7baab789b242ebbb.gif'
+const DEFAULT_AVATAR = 'https://goo.gl/F65XTo'
 
 class Avatar extends Component {
 
