@@ -1,15 +1,11 @@
 import React, {Component} from 'react';
-
-//import {Container, ListGroup, ListGroupItem, Button, FormGroup, FormControl, ControlLabel} from 'reactstrap';
 import ReactPlayer from 'react-player'
-import PlayerNotesBar from './PlayerNotesBar';
 import {logic} from '../logic'
 import { withRouter } from 'react-router-dom'
 import screenfull from 'screenfull'
 import { findDOMNode } from 'react-dom'
-import {FormGroup, Input, Button, Form, Label, Col, Card} from 'reactstrap'
+import {FormGroup, Input, Button, Label, Col, Row} from 'reactstrap'
 import { CopyToClipboard } from 'react-copy-to-clipboard' 
-
 
 
 class NoteScreen extends Component {
@@ -73,7 +69,6 @@ class NoteScreen extends Component {
         
         return logic.listNotesbyNoteId(editor, noteid)
         .then(res => {
-            console.log(res)
             this.setState({ seconds: res.seconds })
             this.setState({ noteBookId: res.notebook })
             this.setState({ notetitle: res.notetitle})
@@ -84,13 +79,11 @@ class NoteScreen extends Component {
             return logic.listNotebooksByNotebookId(editor, this.state.noteBookId)
         })
         .then(res => {
-            console.log(res)
             this.setState({ url : res.videourl})
             this.setState({ notebooktitle: res.notebooktitle})
             this.setState({ videoTitle: res.videotitle})
         })        
         .then( () => {
-            console.log(this.state.seconds)
             this.setSeekToPlay(this.state.seconds)
         })
         .then(() => this.setState({noteId: noteid}))
@@ -101,7 +94,6 @@ refresh = () => {
     const {userId, noteId } = this.state
     return logic.listNotesbyNoteId(userId, noteId)
     .then(res => {
-        console.log(res)
         this.setState({ seconds: res.seconds })
         this.setState({ noteBookId: res.notebook })
         this.setState({ notetitle: res.notetitle})
@@ -112,13 +104,11 @@ refresh = () => {
         return logic.listNotebooksByNotebookId(userId, this.state.noteBookId)
     })
     .then(res => {
-        console.log(res)
         this.setState({ url : res.videourl})
         this.setState({ notebooktitle: res.notebooktitle})
         this.setState({ videoTitle: res.videotitle})
     })        
     .then( () => {
-        console.log(this.state.seconds)
         this.setSeekToPlay(this.state.seconds)
     })
     
@@ -154,11 +144,9 @@ refresh = () => {
         this.setState({ playbackRate: parseFloat(e.target.value) })
       }
       onPlay = () => {
-        console.log('onPlay')
         this.setState({ playing: true })
       }
       onPause = () => {
-        console.log('onPause')
         this.setState({ playing: false })
       }
       onSeekMouseDown = e => {
@@ -172,24 +160,19 @@ refresh = () => {
         this.player.seekTo(parseFloat(e.target.value))
       }
       onProgress = state => {
-        console.log('onProgress', state)
-        // We only want to update time slider if we are not currently seeking
         if (!this.state.seeking) {
           this.setState(state)
-          //this.props.secondsPass(state)
+          
         }
       }
       onEnded = () => {
-        console.log('onEnded')
         this.setState({ playing: this.state.loop })
       }
       onDuration = (duration) => {
-        console.log('onDuration', duration)
         this.setState({ duration })
       }
 
       onClickFullscreen = () => {
-        console.log('onClickFullScrenn')
         screenfull.request(findDOMNode(this.player))
       }
       
@@ -213,7 +196,6 @@ refresh = () => {
             const token = sessionStorage.getItem('token')
             const sessionuserid = sessionStorage.getItem('userId')
             
-            console.log(userId, sessionuserid, noteId, newnotetitle, newnotetext, token)
             logic.updateNote(userId, sessionuserid, noteId, newnotetitle, newnotetext, token)
             .then(() => {this.setState({ edit: ''})})
             .then(() => {this.setState({ newnotetitle: ''})})
@@ -224,17 +206,17 @@ refresh = () => {
             
         }
     
-        //idState = (_id) => this.setState({noteIdtoEdit : _id})
-        //idState = (_id) => sessionStorage.setItem('noteIdtoEdit', _id)
+        
     
         onChangeNoteTitle = e => this.setState({ newnotetitle: e.target.value})
         onChangeNoteText = e => this.setState({ newnotetext: e.target.value})
     
-        
+        /*
         editable = e => {
             e.preventDefault()
             console.log(e.target.name)
         }
+        */
             
         
     ////////////////////////////////////////////////
@@ -264,21 +246,18 @@ refresh = () => {
 
 ///////////////////////////////////////////
 
-    //
+    
     setSeekToPlay = (seconds) => {
-        console.log(seconds)
         this.player.seekTo(seconds)
     }
-    //
+    
     
 /////////////////////////////////////////
 
     render () 
         {
-        const {items, notes} = this.state;
-        const { url, playing, volume, muted, loop, playbackRate, gotchaSeconds, notebooktitle, fakenotes, noteId, seconds, notetitle, notetext, videoTitle, loggedOut } = this.state
+        const { url, playing, volume, muted, loop, playbackRate, notebooktitle, noteId, seconds, notetitle, notetext, videoTitle, loggedOut } = this.state
         const urlToShare = window.location.href
-        const SEPARATOR = ' · '
         
         return(
             <div className='center-note-player'>
@@ -293,105 +272,106 @@ refresh = () => {
                             playbackRate={playbackRate}
                             volume={volume}
                             muted={muted}
-                            onReady={() => console.log('onReady')}
-                            onStart={() => console.log('onStart')}
+                            //onReady={() => console.log('onReady')}
+                            //onStart={() => console.log('onStart')}
                             onPlay={this.onPlay}
                             onPause={this.onPause}
-                            onBuffer={() => console.log('onBuffer')}
-                            onSeek={e => console.log('onSeek', e)}
+                            //onBuffer={() => console.log('onBuffer')}
+                            //onSeek={e => console.log('onSeek', e)}
                             onEnded={this.onEnded}
-                            onError={e => console.log('onError', e)}
+                            //onError={e => console.log('onError', e)}
                             onProgress={this.onProgress}
                             onDuration={this.onDuration}
                             youtubeConfig={{ playerVars: { controls: 1 } }}
                             />
                     </div>
-                    <div>
-                                    <Card className='NotesCards'>    
-                                <FormGroup row>
-                                        <Label sm={2}>Moment</Label>
-                                        <Col sm={8}>
-                                        <Input type="text" value={this.minutesForm(seconds)+`:`+this.secondsForm(seconds)} disabled/>
-                                        </Col>
-                                    </FormGroup>
-                                    {
-                                        (this.state.edit === noteId)
-                                        ? <div>
-                                            <FormGroup row>
-                                                <Label sm={2}>Title</Label>
-                                                    <Col sm={8}>
-                                                    <Input type="text" name='notetitle' defaultValue={notetitle} onChange={this.onChangeNoteTitle}   required/>
-                                                </Col>
-                                            </FormGroup>
-                                            <FormGroup row>
-                                                <Label  sm={2}>Text</Label>
-                                                <Col sm={8}>
-                                                    <Input type="textarea" name="notetext" defaultValue={notetext} onChange={this.onChangeNoteText} />
-                                                </Col>
-                                            </FormGroup>
-                                        </div>
-                                        : <div>
-                                        <FormGroup row>
-                                            <Label sm={2}>Title</Label>
-                                                <Col sm={8}>
-                                                <Input type="text" name='notetitle' value={notetitle} onChange={this.onChangeNoteTitle}  disabled required/>
-                                            </Col>
-                                        </FormGroup>
-                                        <FormGroup row>
-                                            <Label  sm={2}>Text</Label>
-                                            <Col sm={8}>
-                                                <Input type="textarea" name="notetext" value={notetext} onChange={this.onChangeNoteText} disabled/>
-                                            </Col>
-                                        </FormGroup>
-                                    </div>
-                                    }
-                                    
-                                        <FormGroup row>
-                                        <Label  sm={2}>notebooktitle</Label>
-                                        <Col sm={8}>
-                                            <p>{notebooktitle}</p>
-                                            
-                                    
-                                        </Col>
-                                        
-                                        </FormGroup>
-                                        <FormGroup row>
-                                        <Label  sm={2}>videotitle</Label>
-                                        <Col sm={8}>
-                                            <p>{videoTitle}</p>
-                                        </Col>
-                                        
-                                        </FormGroup>
-                                        <div className='optionnotes'>
-                                        {
-                                            (loggedOut)
-                                            ?<div>
-                                                {
-                                                    (this.state.edit === noteId)
-                                                    ? <Button sm={2} onClick={() => this.updateNoteForm(noteId)}>Save Changes&#128394;</Button>
-                                                    : <Button onClick={() => this.setState({ edit: noteId})}>Edit&#128394;</Button>
-                                                }
-                                                    <Button sm={2} onClick={() => {this.deleteNote(noteId)}}>&#10799;</Button>
-                                            </div>
-                                            :<div></div>
-                                        
-                                        }
-                                        
+                    <div className='gotcha_noteplayer'>
+                        <Row >
+                            <Col>
+                                <Button className="remove-btn" color="danger" size="sm"  onClick={() => this.setSeekToPlay(seconds)}>Play Gotcha! {this.minutesForm(seconds)+`:`+this.secondsForm(seconds)}</Button>
+                            </Col>
+                            
+                        </Row>
+                    </div>
+                                
 
+                        {
+                            (loggedOut)
+                            ?<div>
+                                {
+                                    (this.state.edit === noteId)
+                                    ? <div className='actions_noteplayer'>
+                                        <Button outline className='mx-2' onClick={() => this.updateNoteForm(noteId)}>Save Changes&#128394;</Button>
                                         <CopyToClipboard text={urlToShare}>
-                                        <Button>Copy to Share Note Url</Button>
+                                            <Button outline className='mx-2'>Copy Url</Button>
                                         </CopyToClipboard>
-                                        
-                                            
+                                        <Button outline className='mx-2' onClick={() => {this.deleteNote(noteId)}}>Delete&#10799;</Button>
                                         </div>
-                            </Card>
-                                </div>
-                </div>
-                 
-         
-        )
+                                    : <div className='actions_noteplayer'>
+                                        <Button outline className='mx-2'onClick={() => this.setState({ edit: noteId})}>Edit&#128394;</Button>
+                                        <CopyToClipboard text={urlToShare}>
+                                            <Button outline className='mx-2'>Copy Url</Button>
+                                        </CopyToClipboard>
+                                        <Button outline className='mx-2' onClick={() => {this.deleteNote(noteId)}}>Delete&#10799;</Button>
+                                    </div>
+                                }
+                            </div>
+                            :<div></div>
+                        }
+                    <div>
+                        {
+                            (this.state.edit === noteId)
+                            ? <div className='noteplayer_input'>
+                                <FormGroup row>
+                                    <Col sm={1}></Col>
+                                    <Label sm={1}>Title</Label>
+                                        <Col sm={9}>
+                                        <Input type="text" name='notetitle' defaultValue={notetitle} onChange={this.onChangeNoteTitle}   required/>
+                                    </Col>
+                                    <Col sm={1}></Col>
+                                </FormGroup>
+                                <FormGroup row>
+                                <Col sm={1}></Col>
+                                    <Label  sm={1}>Text</Label>
+                                    <Col sm={9}>
+                                        <Input type="textarea" name="notetext" defaultValue={notetext} onChange={this.onChangeNoteText} />
+                                    </Col>
+                                    <Col sm={1}></Col>
+                                </FormGroup>
+                            </div>
+                            : <div className='noteplayer_input'>
+                            <FormGroup row>
+                            <Col sm={3}></Col>
+                                <Col sm={6}>
+                                    <h5>{notetitle}</h5>
+                                </Col>
+                                <Col sm={3}></Col>
+                            </FormGroup>
+                            <FormGroup row>
+                            <Col sm={3}></Col>
+                                <Col sm={6}>
+                                    <p>{notetext}</p>
+                                </Col>
+                                <Col sm={3}></Col>
+                            </FormGroup>
+                        </div>
+                        }
+                        
+                                        
+                                    
+                        
+                    </div>
+                    </div>
+                        
+                
+            )
+        }
+    
     }
-
-}
-
-export default withRouter(NoteScreen)
+    
+    export default withRouter(NoteScreen)
+                                            
+                                    
+                                        
+                                        
+                                        

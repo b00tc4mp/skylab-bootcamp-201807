@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import { withRouter } from 'react-router-dom'
 import FormErrors from '../components/formerrors'
 import Navbars from '../components/Navbar'
-import { Button, Input, InputGroup, InputGroupAddon, Col, Container , FormGroup } from 'reactstrap';
+import { Button, Input, InputGroup, InputGroupAddon, Container } from 'reactstrap';
 
 class Home extends Component {
     
@@ -11,12 +11,19 @@ class Home extends Component {
         notebookTitle: '',
         formErrors: {url: ''},
         urlValid: false,
-        formValid: false
+        formValid: false,
+        loggedin: ''
+    }
+
+    componentDidMount = () => {
+        sessionStorage.getItem('token') !== null ? this.setState({ loggedin: false}) : this.setState({ loggedin: true})
     }
 
     handleTitle = e => {
-        this.state.notebookTitle = e.target.value
+        const notebookTitle = e.target.value
+        this.setState({ notebookTitle: notebookTitle})
     }
+        
 
     validateField = e => {
         const seturl = e.target.value
@@ -26,7 +33,7 @@ class Home extends Component {
         
         
         urlValid = seturl.match(/^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})?$/)
-        console.log(urlValid)
+        
         
         fieldValidationErrors.url = urlValid ? '' : 'invalid youtube url';
         this.setState({url: seturl})
@@ -56,14 +63,14 @@ class Home extends Component {
         this.props.history.push('/notes')
     }
     
-    
-    
-    
     render() {
+        
+        const {loggedin} = this.state
+        
         return (
             <div >
                 
-                <Navbars />
+                <Navbars loggedinHome={loggedin}/>
                     <Container>
                         <div className='home_options' >
                             <Button color="info" onClick={this.gotoNotebooks} size="lg">NOTEBOOKS</Button>
@@ -78,8 +85,8 @@ class Home extends Component {
                         <div className='home_options'>
                             <p>Create a new notebook</p>
                                 <InputGroup >
-                                    <Input type='text' name='notetitle' placeholder='A title to your Notebook' onChange={this.handleTitle} required/>
-                                    <Input type='text' name='url' placeholder='youtube.com...' onChange={this.validateField} required/>
+                                    <Input type='text' name='notetitle' placeholder='A title for your Notebook' onChange={this.handleTitle} required/>
+                                    <Input type='text' name='url' placeholder='paste a youtube link' onChange={this.validateField} required/>
                                     <InputGroupAddon addonType='append'>
                                         <Button onClick={this.gotoHomeEditor} disabled={!this.state.formValid} >GO</Button>
                                     </InputGroupAddon>
@@ -94,9 +101,9 @@ class Home extends Component {
     }
 }
 
+export default withRouter(Home) 
                                 
                                
-export default withRouter(Home) 
                                
 
                         

@@ -1,6 +1,6 @@
 
 import React, {Component} from 'react'
-import UpdateNotebook from '../components/UpdateNotebook'
+import UpdateNotebook from '../components/_UpdateNotebook'
 import Navbar from '../components/Navbar'
 
 

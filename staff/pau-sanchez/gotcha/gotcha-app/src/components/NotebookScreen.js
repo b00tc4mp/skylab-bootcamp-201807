@@ -1,15 +1,9 @@
 import React, {Component} from 'react';
-//import {Container, ListGroup, ListGroupItem, Button, FormGroup, FormControl, ControlLabel} from 'reactstrap';
 import ReactPlayer from 'react-player'
-import PlayerNotesBar from './PlayerNotesBar';
 import EditorNotesBar from './EditorNotesBar';
 import {logic} from '../logic'
 import { withRouter } from 'react-router-dom'
-import FormErrors from './formerrors'
-import { Form, FormGroup, Label, Row, Col, Button, Input, InputGroup, InputGroupAddon } from 'reactstrap';
-
-
-
+import { Form, FormGroup, Label, Row, Col, Button, Input } from 'reactstrap';
 
 class NotebookScreen extends Component {
 
@@ -65,7 +59,6 @@ class NotebookScreen extends Component {
         
         return logic.listNotebooksByNotebookId(editor, id)
         .then(res => {
-            console.log(res)
             this.setState({ url: res.videourl})
             this.setState({ noteBookId: res._id})
             this.setState({ notebookTitle: res.notebooktitle })
@@ -108,11 +101,9 @@ class NotebookScreen extends Component {
         this.setState({ playbackRate: parseFloat(e.target.value) })
       }
       onPlay = () => {
-        console.log('onPlay')
         this.setState({ playing: true })
       }
       onPause = () => {
-        console.log('onPause')
         this.setState({ playing: false })
       }
       onSeekMouseDown = e => {
@@ -126,19 +117,14 @@ class NotebookScreen extends Component {
         this.player.seekTo(parseFloat(e.target.value))
       }
       onProgress = state => {
-        console.log('onProgress', state)
-        // We only want to update time slider if we are not currently seeking
         if (!this.state.seeking) {
           this.setState(state)
-          //this.props.secondsPass(state)
         }
       }
       onEnded = () => {
-        console.log('onEnded')
         this.setState({ playing: this.state.loop })
       }
       onDuration = (duration) => {
-        console.log('onDuration', duration)
         this.setState({ duration })
       }
       
@@ -218,15 +204,8 @@ class NotebookScreen extends Component {
         
 
     }
-    /*
-    onKeyPressed = e => {
-        e.preventDefault()
-        this.gotcha()
-       console.log('gotcha')
-       //STOP PROPAGATION///
-      }
-      */
-     secondsForm = (secs) => {
+    
+    secondsForm = (secs) => {
         return Math.floor(secs - (Math.floor(secs/60)) * 60)
     }
     
@@ -247,7 +226,6 @@ class NotebookScreen extends Component {
     loggedOut = () => {
         const token = sessionStorage.getItem('token')
         (!!token) ? this.setState({loggedOut: false}) : this.setState({loggedOut: true})
-        console.log('loggedOut: '+this.state.loggedOut)
     }
 
 
@@ -255,10 +233,7 @@ class NotebookScreen extends Component {
 
     render () 
         {
-        const {items, notes} = this.state;
-        
         const { url, playing, volume, muted, loop, playbackRate, gotchaSeconds, notebookTitle, fakenotes } = this.state
-        const SEPARATOR = ' · '
         const gotchaStage = this.state.gotchaStage
         const noteStage = this.state.noteStage
         const loggedOut = this.state.loggedOut
@@ -287,14 +262,14 @@ class NotebookScreen extends Component {
                             playbackRate={playbackRate}
                             volume={volume}
                             muted={muted}
-                            onReady={() => console.log('onReady')}
-                            onStart={() => console.log('onStart')}
+                            /*onReady={() => console.log('onReady')}*/
+                            /*onStart={() => console.log('onStart')}*/
                             onPlay={this.onPlay}
                             onPause={this.onPause}
-                            onBuffer={() => console.log('onBuffer')}
-                            onSeek={e => console.log('onSeek', e)}
+                            /*onBuffer={() => console.log('onBuffer')}*/
+                            /*onSeek={e => console.log('onSeek', e)}*/
                             onEnded={this.onEnded}
-                            onError={e => console.log('onError', e)}
+                            /*onError={e => console.log('onError', e)}*/
                             onProgress={this.onProgress}
                             onDuration={this.onDuration}
                             youtubeConfig={{ playerVars: { controls: 1 } }}
@@ -368,12 +343,7 @@ class NotebookScreen extends Component {
                                             <span>Title: {notetitle}  </span> 
                                                 <span>Text: {notetext}  </span>
                                                 <span>Time: {Math.floor(gotchaSeconds/60)}:{Math.floor(gotchaSeconds - (Math.floor(gotchaSeconds/60)) * 60)}  </span>
-                                                <Button
-                                                className="remove-btn"
-                                                color="danger"
-                                                size="sm"
-                                                onClick={() => this.setSeekToPlay(gotchaSeconds)}
-                                                >SeekTo</Button>
+                                                <Button className="remove-btn" color="danger" size="sm"  onClick={() => this.setSeekToPlay(gotchaSeconds)}>SeekTo</Button>
                                                 </div>
                                             
                                         ))}

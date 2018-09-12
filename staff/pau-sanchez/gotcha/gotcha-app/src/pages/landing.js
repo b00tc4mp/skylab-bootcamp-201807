@@ -1,24 +1,7 @@
 import React, {Component} from 'react'
-import { withRouter } from 'react-router-dom'
+import { withRouter, Link } from 'react-router-dom'
 import FormErrors from '../components/formerrors'
-import {
-    Collapse,
-    Navbar,
-    NavbarToggler,
-    NavbarBrand,
-    Nav,
-    NavItem,
-    NavLink,
-    UncontrolledDropdown,
-    DropdownToggle,
-    DropdownMenu,
-    DropdownItem,
-    Button,
-    Input,
-    InputGroup,
-    InputGroupAddon,
-    Col
-} from 'reactstrap';
+import {Navbar, NavbarBrand, Nav, NavItem, Button, Input, InputGroup, InputGroupAddon} from 'reactstrap';
 
 class Landing extends Component {
     
@@ -56,9 +39,10 @@ class Landing extends Component {
     isLoggedIn() {
         if (sessionStorage.getItem('token') === null){
             return false
-        } else true
-        
-      }
+        } else {
+            return true
+        }
+    }
 
     gotoLandingEditor = () => {
         sessionStorage.setItem('landingUrl', this.state.url)
@@ -78,27 +62,26 @@ class Landing extends Component {
     
     render() {
 
-        const {url} = this.state
-
         return (
             <div class='landing_back'>
                 <Navbar >
-                        <NavbarBrand href="/">
+                        <NavbarBrand>
+                            <Link to='/'>
                             <Button color="danger" className='nav_button'>GOTCHA!</Button>
+                            </Link>
                         </NavbarBrand>
                         <Nav pills>
                             <NavItem>
-                                <NavLink href="/faq">FAQ</NavLink>
+                                <Link to='/register'>
+                                <Button color="primary" className='nav_button' active>Sign Up</Button>
+                                </Link>
                             </NavItem>
                             <NavItem>
-                                <NavLink href="/about">About</NavLink>
+                                <Link to='/login'>
+                                <Button  color="secondary" className='nav_button' active>Login</Button>
+                                </Link>
                             </NavItem>
-                            <NavItem>
-                                <Button href="/register" color="primary" className='nav_button' active>Sign Up</Button>
-                            </NavItem>
-                            <NavItem>
-                                <Button href="/login" color="secondary" className='nav_button' active>Login</Button>
-                            </NavItem>
+                            
                         
                         
                         </Nav>
@@ -122,10 +105,6 @@ class Landing extends Component {
                         <FormErrors formErrors={this.state.formErrors} />
                     </div>
                 
-                
-                
-                
-                
             </div>
 
         )
@@ -133,3 +112,7 @@ class Landing extends Component {
 }
 
 export default withRouter(Landing)
+                
+                
+                
+                

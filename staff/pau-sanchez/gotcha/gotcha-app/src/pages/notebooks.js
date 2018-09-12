@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import { withRouter, Link } from 'react-router-dom'
 import {logic} from '../logic'
 import Navbar from '../components/Navbar'
-import {FormGroup, Input, Button, Form, Label, Col, Card, Row} from 'reactstrap'
+import {FormGroup, Input, Button, Label, Col, Row, ListGroup, ListGroupItem} from 'reactstrap'
 
 class Notebooks extends Component {
     
@@ -10,9 +10,8 @@ class Notebooks extends Component {
         notebooks: [],
         edit: '',
         newnotebooktitle: ''
-        
     }
-
+        
     componentDidMount() {
         this.getNotebooks()
     }
@@ -22,26 +21,19 @@ class Notebooks extends Component {
         const token = sessionStorage.getItem('token')
         logic.listNotebooks(sessionuserid, token)
         .then(res => {
-            console.log(res)
             this.setState({notebooks:res})
         })
     }
 
     deleteNotebooks = (e, _id, user) => {
         e.preventDefault()
-        console.log('delete')
         const sessionuserid = sessionStorage.getItem('userId')
         const token = sessionStorage.getItem('token')
         return Promise.resolve()
-            .then(()=> {
-                console.log(_id)
-                logic.removeNotebooksNotes(user, sessionuserid, _id, token)
-            })
-            .then(() => {
-                logic.removeNotebook(user, sessionuserid, _id, token)
-            })
+            .then(()=> logic.removeNotebooksNotes(user, sessionuserid, _id, token) )
+            .then(() => logic.removeNotebook(user, sessionuserid, _id, token))
             .then(()=> this.getNotebooks())
-            .then(() => window.location.reload())
+            
     }
     updateNotebookTitle = (_id, userId) => {
         const sessionuserid = sessionStorage.getItem('userId')
@@ -50,17 +42,17 @@ class Notebooks extends Component {
         return Promise.resolve()
             .then( () => {
                 logic.updateNotebook(userId, sessionuserid, _id, newnotebooktitle, token)
-                console.log('logic.updateNotebook')
             })
             .then(() => this.setState({ edit: ''}))
             .then(() => this.setState({ newnotebooktitle: ''}))
             .then(()=> this.getNotebooks())
-            //.then(() => window.location.reload())
-
-            
     }
 
     changeTitle = e => this.setState({ newnotebooktitle: e.target.value })
+            
+
+            
+
 
   
 
@@ -77,18 +69,20 @@ class Notebooks extends Component {
             <div>
                 <Navbar />
                 
-
-                {notebooks.map(({ date, notebooktitle, user, videoid, videothumbnail, videotitle, videourl, _id, newnotebooktitle }) => {
+                {notebooks.map(({ notebooktitle, user, videothumbnail, videotitle, _id }) => {
 
                     return  <div>
-                                
-                                <Card className='notesCards'>
+
+                            <ListGroup>
+                                <ListGroupItem>
                                 <Row>
+                                <Col sm={1}></Col>    
                                 <Col sm={3}>
                                     <div>
-                                        <img src={videothumbnail} height='150' width='200'/>
+                                        <img src={videothumbnail} height='150' width='200' alt='thumbnail'/>
                                     </div>
                                 </Col>
+                                <Col sm={1}></Col> 
                                 <Col sm={5}>
                                     
                                     <FormGroup row>
@@ -121,31 +115,26 @@ class Notebooks extends Component {
                                     <div className='optionnotebooks'>
                                     {
                                         (this.state.edit === _id && this.state.newnotebooktitle !== '')
-                                        ? <Button sm={2} onClick={() => this.updateNotebookTitle(_id, user)}>Save Changes&#128394;</Button> 
-                                        : <Button onClick={() => this.setState({ edit: _id})}>EDIT TITLE &#128394;</Button>
+                                        ? <Button className='mr-1' onClick={() => this.updateNotebookTitle(_id, user)}>Save Changes&#128394;</Button> 
+                                        : <Button className='mr-1' onClick={() => this.setState({ edit: _id})}>EDIT TITLE &#128394;</Button>
                                     }    
                                     <Link to={`/player/${_id}/${user}`}>
-                                            <Button type='button'>&#9654;</Button>
+                                            <Button className='mr-1' type='button'>&#9654;</Button>
                                         </Link>
-                                        <Button onClick={ e => this.deleteNotebooks(e, _id, user)}>DELETE &#10799;</Button>
+                                        <Button className='mr-1' onClick={ e => this.deleteNotebooks(e, _id, user)}>DELETE &#10799;</Button>
                                     </div>
                                 
                                 </Col>
-                                </Row>    
-                            </Card>    
                                 
-                            </div> 
-                    
-
-                }
-
-
-        )}
+                                </Row> 
+                                </ListGroupItem>
+                            </ListGroup>
+                        </div> 
+                                
+                })}
 
             </div>
-        )
-    }
-}
+)}}
 
 export default withRouter(Notebooks)
 

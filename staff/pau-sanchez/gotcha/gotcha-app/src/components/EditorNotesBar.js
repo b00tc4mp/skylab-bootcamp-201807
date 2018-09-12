@@ -1,12 +1,8 @@
 import React from 'react'
 import {logic} from '../logic'
-import {FormGroup, Input, Button, Form, Label, Col, Card} from 'reactstrap'
-
-
+import {FormGroup, Input, Button, Card} from 'reactstrap'
 
 class EditorNotesBar extends React.Component {
-
-    
 
     state = {
         notes : [],
@@ -22,12 +18,11 @@ class EditorNotesBar extends React.Component {
     componentDidMount() {
         this.props.onRef(this)
       }
-      componentWillUnmount() {
+    componentWillUnmount() {
         this.props.onRef(null)
       }
       
-      method(userId, notebookid) {
-        console.log('do stuff')
+    method(userId, notebookid) {
         this.setState({userId : userId})
         this.setState({ notebookid: notebookid})
         const token = sessionStorage.getItem('token')
@@ -35,13 +30,13 @@ class EditorNotesBar extends React.Component {
             .then(() => {
                 logic.listNotebyNotebookId(userId, notebookid)
                 .then(res => {
-                console.log(res)
                 this.setState({notes: res})
                 this.setState({ loggedOut: token})
                 })
             
             })
     }
+                
 
     refreshList = () => {
         const {userId, notebookid} = this.state
@@ -66,8 +61,6 @@ class EditorNotesBar extends React.Component {
     const {userId, newnotetitle, newnotetext } = this.state
         const token = sessionStorage.getItem('token')
         const sessionuserid = sessionStorage.getItem('userId')
-        //const noteIdtoEdit = sessionStorage.getItem('noteIdtoEdit')
-        console.log(_id)
         logic.updateNote(userId, sessionuserid, _id, newnotetitle, newnotetext, token)
         .then(() => {
             return this.refreshList()
@@ -76,23 +69,19 @@ class EditorNotesBar extends React.Component {
         .then( this.setState({ newnotetext: ''}))
         .then( this.setState({ newnotetitle: ''}))
     }
-
-    
-
+        
     onChangeNoteTitle = e => this.setState({ newnotetitle: e.target.value})
     onChangeNoteText = e => this.setState({ newnotetext: e.target.value})
 
-    
     secondsForm = (secs) => {
         return Math.floor(secs - (Math.floor(secs/60)) * 60)
     }
     
     minutesForm = (secs) => {
         return Math.floor(secs/60)
-     }
+    }
 
-
-      render() {
+    render() {
                         const {notes, loggedOut, edit} = this.state
         return <div>
             
@@ -101,63 +90,51 @@ class EditorNotesBar extends React.Component {
                         {notes.map(({ notetext, notetitle, seconds, _id }) => (
                             
                                 <div>
-                            <Card className='NotesCards'>    
+                            <Card className='notesCards'>    
                                 <FormGroup row>
-                                        <Label sm={2}>Moment</Label>
-                                        <Col sm={8}>
-                                        <Input type="text" value={this.minutesForm(seconds)+`:`+this.secondsForm(seconds)} disabled/>
-                                        </Col>
+                                        
+                                        
+                                        <Input className='inputCard' type="text" value={this.minutesForm(seconds)+`:`+this.secondsForm(seconds)} disabled/>
+                                        
                                     </FormGroup>
                                     {
-                                        (this.state.edit === _id)
+                                        (edit === _id)
                                         ?<div>
                                             <FormGroup row>
-                                                <Label sm={2}>Title</Label>
-                                                <Col sm={8}>
-                                                <Input type="text" name="notetitle" defaultValue={notetitle} onChange={this.onChangeNoteTitle} required/>
-                                                </Col>
+                                                <Input className='inputCard' type="text" name="notetitle" defaultValue={notetitle} onChange={this.onChangeNoteTitle} required/>
                                             </FormGroup>
                                             <FormGroup row>
-                                                <Label  sm={2}>Text</Label>
-                                                <Col sm={8}>
-                                                <Input type="textarea" name="notetext" defaultValue={notetext} onChange={this.onChangeNoteText} />
-                                                </Col>
+                                                <Input className='inputCard' type="textarea" name="notetext" defaultValue={notetext} onChange={this.onChangeNoteText} />
                                             </FormGroup>
-
                                         </div>
                                         :<div>
                                             <FormGroup row>
-                                                <Label sm={2}>Title</Label>
-                                                <Col sm={8}>
-                                                <Input type="text" name="notetitle" defaultValue={notetitle} onChange={this.onChangeNoteTitle} required disabled/>
-                                                </Col>
+                                                <Input type="text" className='inputCard' name="notetitle" defaultValue={notetitle} onChange={this.onChangeNoteTitle} required disabled/>
                                             </FormGroup>
                                             <FormGroup row>
-                                                <Label  sm={2}>Text</Label>
-                                                <Col sm={8}>
-                                                <Input type="textarea" name="notetext" defaultValue={notetext} onChange={this.onChangeNoteText} disabled/>
-                                                </Col>
+                                                <Input type="textarea" className='inputCard' name="notetext" defaultValue={notetext} onChange={this.onChangeNoteText} disabled/>
                                             </FormGroup>
                                         </div>
                                     }
-                                    
+                                                
                                         {
                                             (loggedOut)
                                             ?<div className='optionnotes'>
                                                 {
                                                     (this.state.edit === _id && (this.state.newnotetitle !== '' || this.state.newnotetext !== ''))
-                                                    ? <Button sm={2} onClick={() => this.updateNoteForm(_id)}>Save Changes&#128394;</Button>
-                                                    : <Button onClick={() => this.setState({ edit: _id})}>Edit Note&#128394;</Button>
+                                                    ? <Button className='mr-1' onClick={() => this.updateNoteForm(_id)}>Save Changes&#128394;</Button>
+                                                    : <Button className='mr-1' onClick={() => this.setState({ edit: _id})}>Edit Note&#128394;</Button>
                                                 }
                                                 
-                                                <Button sm={2} onClick={() => this.deleteNote(_id)}>&#10799;</Button>
-                                                <Button sm={2} onClick={() => this.props.seektoPass(seconds)}>&#9654;</Button>
+                                                <Button className='mr-1' onClick={() => this.deleteNote(_id)}>&#10799;</Button>
+                                                <Button className='mr-1' onClick={() => this.props.seektoPass(seconds)}>&#9654;</Button>
                                             </div>
                                             :<div className='optionnotes'>
-                                                <Button sm={2} onClick={() => this.props.seektoPass(seconds)}>&#9654;</Button>
+                                                <Button  onClick={() => this.props.seektoPass(seconds)}>&#9654;</Button>
                                             </div>
 
                                         }
+                                                
                             </Card>    
                                 
                                 </div>
@@ -171,3 +148,16 @@ class EditorNotesBar extends React.Component {
     
 
 export default EditorNotesBar;
+                                                
+                                                
+                                                
+                                                
+                                                
+
+                                                
+                                                
+                                               
+                                                
+                                                
+                                               
+                                    

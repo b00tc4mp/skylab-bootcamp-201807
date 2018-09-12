@@ -26,7 +26,7 @@ class Login extends Component {
             
             .then(res => this.props.onLoggedIn(res.id, res.token))
             .catch(({ message }) => this.setState({ error: message }))
-            window.location.reload()
+            //window.location.reload()
     }
     
     render() {

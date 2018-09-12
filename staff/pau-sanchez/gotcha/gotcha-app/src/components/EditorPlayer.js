@@ -73,14 +73,11 @@ class EditorPlayer extends Component {
         
         return Promise.resolve()
             .then(() => {
-
-                //this.setState({ url : url})
                 this.setState({ preurl : url})
                 this.setState({ notebooktitle: notebooktitle })
                 this.setState({ origin: origin})
             })
             .then(() => {
-
                 sessionStorage.setItem('landingUrl', '')
                 sessionStorage.setItem('homeUrl', '')
                 sessionStorage.setItem('landingNotebookTitle', '')
@@ -128,11 +125,9 @@ class EditorPlayer extends Component {
         this.setState({ playbackRate: parseFloat(e.target.value) })
       }
       onPlay = () => {
-        console.log('onPlay')
         this.setState({ playing: true })
       }
       onPause = () => {
-        console.log('onPause')
         this.setState({ playing: false })
       }
       onSeekMouseDown = e => {
@@ -150,19 +145,14 @@ class EditorPlayer extends Component {
         screenfull.request(findDOMNode(this.player))
       }
       onProgress = state => {
-        console.log('onProgress', state)
-        // We only want to update time slider if we are not currently seeking
         if (!this.state.seeking) {
           this.setState(state)
-          //this.props.secondsPass(state)
         }
       }
       onEnded = () => {
-        console.log('onEnded')
         this.setState({ playing: this.state.loop })
       }
       onDuration = (duration) => {
-        console.log('onDuration', duration)
         this.setState({ duration })
       }
       
@@ -185,17 +175,12 @@ class EditorPlayer extends Component {
 
 
     buildNotebook = e => {
-        console.log('buildNotebook')
         e.preventDefault()
         const { preurl, notebooktitle} = this.state
-        
-
-
         
         const userId = sessionStorage.getItem('userId')
         const token = sessionStorage.getItem('token')
 
-        
         return Promise.resolve()
         .then(() => {
             this.setState({url: preurl})
@@ -206,7 +191,6 @@ class EditorPlayer extends Component {
 
         })
         .then(() =>{
-            console.log('hi')
             this.setState({ notebookStage: false})
             this.setState({ gotchaStage: true})
             this.setState({ origin: ''})
@@ -217,13 +201,12 @@ class EditorPlayer extends Component {
 
     buildFakeNotebook = e => {
         e.preventDefault()
-        const { preurl, notebooktitle} = this.state
+        const { preurl } = this.state
         return Promise.resolve()
         .then(() => {
             this.setState({url: preurl})
         })
         .then(() =>{
-            console.log('hi')
             this.setState({ notebookStage: false})
             this.setState({ gotchaStage: true})
             this.setState({ origin: 'landing_edition'})
@@ -232,8 +215,7 @@ class EditorPlayer extends Component {
 
     buildFakeNote = e => {
         e.preventDefault()
-        console.log('buildFakeNote')
-        
+                
         const { gotchaSeconds, notetitle, notetext, notebook, fakenotes} = this.state
         
         return Promise.resolve()
@@ -320,7 +302,7 @@ validateUrl = e => {
     
     
     urlValid = seturl.match(/^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})?$/)
-    console.log(urlValid)
+    
     
     fieldValidationErrors.url = urlValid ? '' : 'invalid youtube url';
     this.setState({preurl: seturl})
@@ -354,8 +336,6 @@ validateUrl = e => {
         const gotchaStage = this.state.gotchaStage
         const noteStage = this.state.noteStage
         
-        const SEPARATOR = ' · '
-        
         return(
             <div onKeyPress={this.onKeyPressed} tabIndex='0' className='editormain'>
                     <Row className={(gotchaStage) ? 'editor_headerrow-nocontent': 'editor_headerrow'} >
@@ -365,7 +345,7 @@ validateUrl = e => {
 
                 
                     {
-                        (this.state.origin == "landing")
+                        (this.state.origin === "landing")
                         ? <div className='landing_header'>
                            
                           <h4>This is a demo!</h4><br/>
@@ -415,7 +395,7 @@ validateUrl = e => {
                                 }
                 </Row>
                 <Row className='editor_rowcontainer'>
-                <Col className='editor_coleditor'>
+                <Col sm='6' className='editor_coleditor'>
                 
                 
 
@@ -433,14 +413,14 @@ validateUrl = e => {
                             playbackRate={playbackRate}
                             volume={volume}
                             muted={muted}
-                            onReady={() => console.log('onReady')}
-                            onStart={() => console.log('onStart')}
+                            /*onReady={() => console.log('onReady')}*/
+                            /*onStart={() => console.log('onStart')}*/
                             onPlay={this.onPlay}
                             onPause={this.onPause}
-                            onBuffer={() => console.log('onBuffer')}
-                            onSeek={e => console.log('onSeek', e)}
+                            /*onBuffer={() => console.log('onBuffer')}*/
+                            /*onSeek={e => console.log('onSeek', e)}*/
                             onEnded={this.onEnded}
-                            onError={e => console.log('onError', e)}
+                            /*onError={e => console.log('onError', e)}*/
                             onProgress={this.onProgress}
                             onDuration={this.onDuration}
                             youtubeConfig={{ playerVars: { controls: 1 } }}
@@ -489,8 +469,10 @@ validateUrl = e => {
                     </div>
 
                 </Col>
+                <Col sm='1'>
+                </Col>
                    
-                <Col className='editor_colsidebar'>
+                <Col sm='5' className='editor_colsidebar'>
                     { (!gotchaStage) ?  null :  <h3>{notebooktitle}</h3> }
                     <EditorNotesBar onRef={ref => (this.child = ref)} seektoPass={this.setSeekToPlay}/>
 
@@ -502,28 +484,39 @@ validateUrl = e => {
                                         {fakenotes.map(({ gotchaSeconds, notetext, notetitle}) => (
                                             
                                                 <div>
-                                                    <Card className='NotesCards'>    
+                                                    <Card className='notesCards'>    
                                                         <FormGroup row>
-                                                                <Label sm={2}>Moment</Label>
-                                                                <Col sm={8}>
-                                                                <Input type="text" value={this.minutesForm(gotchaSeconds)+`:`+this.secondsForm(gotchaSeconds)} disabled/>
+                                                                <Col sm='2'></Col>
+                                                                <Col sm='8'>
+                                                                <Input className='inputCard' type="text" value={this.minutesForm(gotchaSeconds)+`:`+this.secondsForm(gotchaSeconds)} disabled/>
                                                                 </Col>
+                                                                <Col sm='2'></Col>
                                                         </FormGroup>
                                                         <FormGroup row>
-                                                                <Label sm={2}>Title</Label>
-                                                                <Col sm={8}>
-                                                                <Input type="text" name="notetitle" defaultValue={notetitle} onChange={this.onChangeNoteTitle} required disabled/>
+                                                                <Col sm='2'></Col>
+                                                                <Col sm='8'>
+                                                                <Input className='inputCard' type="text" name="notetitle" defaultValue={notetitle} onChange={this.onChangeNoteTitle} required disabled/>
                                                                 </Col>
+                                                                <Col sm='2'></Col>
                                                         </FormGroup>
                                                         <FormGroup row>
-                                                                <Label  sm={2}>Text</Label>
-                                                                <Col sm={8}>
-                                                                <Input type="textarea" name="notetext" defaultValue={notetext} onChange={this.onChangeNoteText} disabled/>
+                                                                <Col sm='2'></Col>
+                                                                <Col sm='8'>
+                                                                <Input className='inputCard' type="textarea" name="notetext" defaultValue={notetext} onChange={this.onChangeNoteText} disabled/>
                                                                 </Col>
+                                                                <Col sm='2'></Col>
                                                         </FormGroup>
                                                                 <div className='optionnotes'>
                                                                     <Button sm={2} onClick={() => this.setSeekToPlay(gotchaSeconds)}>&#9654;</Button>
                                                                 </div>
+                                                                
+                                                                
+                                                                
+                                                                
+                                                                
+                                                                
+                                                                
+                                                                
                                                     </Card>    
                                                 </div>
                                             

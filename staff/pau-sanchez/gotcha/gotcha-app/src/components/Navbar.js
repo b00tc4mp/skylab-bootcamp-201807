@@ -5,7 +5,7 @@ import {Navbar, NavbarBrand, Nav, NavItem, NavLink, Button} from 'reactstrap';
 
 class Navbars extends Component {
     state = {
-        loggedin: false
+        loggedin: this.props.loggedinHome,
     }
     onLogout = e => {
         e.preventDefault()
@@ -16,73 +16,72 @@ class Navbars extends Component {
       }
 
     componentDidMount(){
-        if (sessionStorage.getItem('token') !== null) {
-            this.setState({ loggedin: true})
-        }
+        sessionStorage.getItem('token') !== null ? this.setState({ loggedin: true}) : this.setState({ loggedin: false})
     }
     
     render () 
         {
         const {loggedin} = this.state
         
-        return (
-            <div>
+        return <div>
             { 
-                (loggedin) 
+                ((this.props.loggedinHome || loggedin) === true) 
                 
                 ? <div>
                     <Navbar >
-                        <NavbarBrand href="/home">
-                            <Button color="danger" className='nav_button'>GOTCHA!</Button>
+                        <NavbarBrand >
+                            <Link to='/home'>
+                                <Button outline color="danger" className='nav_button'>GOTCHA!</Button>
+                            </Link>
                         </NavbarBrand>
                             <Nav pills>
                                 <NavItem>
-                                    <NavLink href="/editor">New Notebook</NavLink>
+                                    <Link to='/editor'>
+                                        <NavLink >New Notebook</NavLink>
+                                    </Link>
                                 </NavItem>
                                 <NavItem>
-                                    <NavLink href="/notebooks">Notebooks</NavLink>
+                                    <Link to='/notebooks'>
+                                        <NavLink >Notebooks</NavLink>
+                                    </Link>
                                 </NavItem>
                                 <NavItem>
-                                    <NavLink href="/notes">Notes</NavLink>
+                                    <Link to='/notes'>
+                                        <NavLink >Notes</NavLink>
+                                    </Link>
                                 </NavItem>
-                                <NavItem>
-                                    <NavLink href="/faq">FAQ</NavLink>
-                                </NavItem>
-                                <NavItem>
-                                    <NavLink href="/about">About</NavLink>
-                                </NavItem>                                
                                 <NavItem>
                                     <Button outline color="primary" onClick={this.onLogout} className='nav_button'>Logout</Button>
                                 </NavItem>
-                                </Nav>
+                            </Nav>
                     </Navbar >
                       
                   </div>
 
                 : <div>
                     <Navbar >
-                        <NavbarBrand href="/">
-                            <Button color="danger" className='nav_button'>GOTCHA!</Button>
+                        <NavbarBrand>
+                            <Link to='/'>
+                                <Button color="danger" className='nav_button'>GOTCHA!</Button>
+                            </Link>
                         </NavbarBrand>
                             <Nav pills>
                                 <NavItem>
-                                    <NavLink href="/faq">FAQ</NavLink>
+                                    <Link to='/register'>
+                                        <Button  color="primary" className='nav_button' active>Sign Up</Button>
+                                    </Link>
                                 </NavItem>
                                 <NavItem>
-                                    <NavLink href="/about">About</NavLink>
-                                </NavItem>
-                                <NavItem>
-                                    <Button href="/register" color="primary" className='nav_button' active>Sign Up</Button>
-                                </NavItem>
-                                <NavItem>
-                                    <Button href="/login" color="success" className='nav_button'>Login</Button>
+                                    <Link to='/login'>
+                                        <Button  color="success" className='nav_button'>Login</Button>
+                                    </Link>
                                 </NavItem>
                        </Nav>
                     </Navbar >
                  </div>
             }
             </div>
-        )
+        
     }
     
 }

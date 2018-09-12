@@ -17,7 +17,6 @@ class Register extends Component {
         passwordValid: false,
         nameValid: false,
         formValid: false,
-        
         error:''
     }
 
@@ -27,11 +26,7 @@ class Register extends Component {
         this.setState({[name]: value},
             () => {this.validateField(name, value) })
     }
-    /*
-    nameChange = e => this.setState({ name: e.target.value})
-    passwordChange = e => this.setState({ password: e.target.value})
-    emailChange = e => this.setState({email: e.target.value})
-    */
+    
 
     validateField(Fieldname, value) {
         let fieldValidationErrors = this.state.formErrors;
@@ -85,26 +80,12 @@ class Register extends Component {
         this.props.history.push('/login')
     }
 
-    /*
-    onRegister = e => {
-        e.preventDefault()
-
-        const { name, password, email } = this.state
-
-        logic.register(email, password, name)
-            .then(() => this.setState({ succedeed: true }))
-            .catch(({ message }) => this.setState({ error: message }))
-    }
-    */
-
     render() {
-        const { success, error } = this.state
-
+        
         return (
             <main >
                 <Navbars />
                 
-
                 <Form onSubmit={this.handleSubmit} className='signuplogin_group'>
                     <FormGroup>
                         
@@ -141,24 +122,7 @@ class Register extends Component {
                             </div>
                     </FormGroup>
                 </Form>
-                {/*{!success ? 
-                <div>
-                    <nav>
-
-                    </nav>
-                    <form onSubmit={this.onRegister}>
-                        <input type="text" name="name" placeholder="Name" onChange={this.nameChange} />
-                        <input type="password" name="password" placeholder="Password" onChange={this.passwordChange} />
-                        <input type="email" name="email" placeholder="e@mail.com" onChange={this.emailChange} />
-                        <button type="submit">register</button>
-
-                    </form>
-                    {error && <p>{error}</p>}
-                </div> : <div>
-                    <nav>
-                        User register success
-                    </nav>
-                </div>}*/}
+                
              </main>
             
         )
