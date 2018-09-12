@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
-import {Container, Row, Col} from 'reactstrap';
-import {ListGroup, ListGroupItem} from 'reactstrap'
-import PropTypes from 'prop-types'; // ES6
+import {Container, Row,Input, Col, InputGroupText, ListGroup, InputGroupAddon, InputGroup, ListGroupItem} from 'reactstrap'
+import PropTypes from 'prop-types';
 
 
 class Invite extends Component {
@@ -17,7 +16,7 @@ class Invite extends Component {
 
   state = {
     usersNotPlayingWith: [],
-    usersInvited:[],
+    usersInvited: [],
     userSearchTerm: '',
 
   }
@@ -34,7 +33,7 @@ class Invite extends Component {
       return game.state === 'invited' && game.acceptor !== props.nickname
     }).map(game => game.opponent)
     const usersNotPlayingWith = allUsers.filter(user => usersPlayingWith.indexOf(user) === -1)
-    return {usersNotPlayingWith,usersInvited}
+    return {usersNotPlayingWith, usersInvited}
   }
 
   onKeepUserSearchTermAndDoSearch = e => {
@@ -46,50 +45,50 @@ class Invite extends Component {
   }
 
   render() {
-    let {props: {nickname}, state: {usersInvited,userSearchTerm, usersNotPlayingWith}} = this
+    let {props: {nickname}, state: {usersInvited, userSearchTerm, usersNotPlayingWith}} = this
 
-    return   <div className="invite__mainContainer" >
+    return    <Container>
 
-        <Container>
+        <Row className="mb-2">
+        <Col className="invite__explainText" xs="12" md="6">
+          <form className="invite__searchForm">
 
-          <Row> <Col className="invite__explainText" xs="12" md="6">
-            Users you can invite
-
-            <form className="invite__searchForm">
-              <input autoFocus className="invite__searchInput" placeholder="Enter a search term" value={userSearchTerm}
+            <InputGroup>
+              <InputGroupAddon addonType="prepend">
+                <InputGroupText>Search for users</InputGroupText>
+              </InputGroupAddon>
+              <Input autoFocus className="invite__searchInput" placeholder="Enter a search term" value={userSearchTerm}
                      onChange={this.onKeepUserSearchTermAndDoSearch} type="text"/>
-            </form>
+
+            </InputGroup>
+
+          </form>
+
+        </Col>
+          <Col xs="12" md="6">
+            <div className="userList">
+              {usersNotPlayingWith.length !==0 &&  <ListGroup className="userList__invitedUsersListGroup">
+                {usersNotPlayingWith.length && usersNotPlayingWith.map(user => {
+                  return user !== nickname ?
+                    <ListGroupItem className="userList__invitedUsersListGroupItem" tag="a" href="#" key={user + Math.random()}
+                                   onClick={e => this.onUserClick(e, user)}><span
+                      className="userList__invitedUser-explainText">Click to invite:</span> {`${user}`}
+                    </ListGroupItem> : null
+                })}
+              </ListGroup>}
+              {usersInvited.length && <ListGroup className="userList__searchedUsersListGroup">
+                {usersInvited.length && usersInvited.map(user => {
+                  return <ListGroupItem key={user + Math.random()}> <span
+                    className="userList__searchedUser-explainText">√ Invited:</span> {`${user}`}</ListGroupItem>
+                }) }
+              </ListGroup>}
+
+            </div>
           </Col>
-            <Col className="invite__explainText invite__explainText-explain" xs="12" md="6">
-              Users you have invited who are waiting to accept
-            </Col>
-          </Row>
-          <Row>
+        </Row>
 
-            <Col xs="12" md="6">
-              <div className="userList">
+      </Container>
 
-                <ListGroup>
-                  {usersNotPlayingWith.length ? usersNotPlayingWith.map(user => {
-                   return user !== nickname ? <ListGroupItem   className="userList__invitedUsers" tag="a" href="#" key={user + Math.random()}
-                                                                 onClick={e => this.onUserClick(e, user)}> {`${user}`}</ListGroupItem>: null
-                  }) : <ListGroupItem   className="userList__searchedUsers" >No match</ListGroupItem>}
-                </ListGroup>
-              </div>
-            </Col>
-            <Col xs="12" md="6">
-              <div className="userList">
-
-                <ListGroup >
-                  {usersInvited.length ? usersInvited.map(user => {
-                    return <ListGroupItem  key={user + Math.random()}> {`${user}`}</ListGroupItem>
-                  }) : <li className="invite__explainText invite__noinvitedUsers">You have no invited users</li>}
-                </ListGroup>
-              </div>
-            </Col>
-          </Row>
-        </Container>
-      </div>
 
 
 

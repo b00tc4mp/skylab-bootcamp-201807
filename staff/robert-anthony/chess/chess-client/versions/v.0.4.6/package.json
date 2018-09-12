@@ -1,6 +1,6 @@
 {
   "name": "chess-client",
-  "version": "0.5.0",
+  "version": "0.4.6",
   "private": true,
   "dependencies": {
     "ajv": "^6.5.3",

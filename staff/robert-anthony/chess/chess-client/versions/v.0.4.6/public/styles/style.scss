@@ -4,6 +4,7 @@
 font-family: 'Uncial Antiqua', cursive;
 font-family: 'Vollkorn', serif;
 */
+
 $text_color1: #ff002d;
 $text_color15: #890017;
 $text_color2: #ac9319;
@@ -78,23 +79,6 @@ main div.games__mainChessRow span.games__notPlayingGames {
   color: $text_color1;
 
 }
-
-
-.invite__searchForm div.input-group {
-  input.form-control {
-    @include input-styling;
-  }
-  div.input-group-prepend {
-    background-color: $background_color1;
-    span.input-group-text {
-      @include input-styling;
-
-    }
-
-  }
-}
-
-
 
 main  div.mainContainer.register__container.container,main div.mainContainer.login__container.container {
   button[type=submit] {
@@ -215,7 +199,7 @@ nav.register__navAfterRegister {
     color: $text_color15;
   }
 }
-/*
+
 .invite__searchInput {
   margin-top: 3em;
   margin-bottom: 3em;
@@ -225,8 +209,8 @@ nav.register__navAfterRegister {
     outline: none !important;
 
   }
-}*/
-/*
+}
+
 .invite__explainText {
   color: $text_color1;
   size: 1.2em;
@@ -239,14 +223,7 @@ nav.register__navAfterRegister {
     color: $text_color3;
     padding: 1em;
   }
-}*/
 
-span.userList__invitedUser-explainText, span.userList__searchedUser-explainText {
-  color:$text_color3;
-}
-
-ul.userList__invitedUsersListGroup.list-group, ul.userList__searchedUsersListGroup.list-group.list-group {
-  padding-top:0;
 }
 
 body {

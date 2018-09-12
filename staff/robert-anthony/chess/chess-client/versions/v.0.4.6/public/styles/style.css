@@ -41,23 +41,6 @@ main div.games__mainChessRow.row div.chessBoardGroup__gameInfoArea.col-12.col-md
 main div.games__mainChessRow span.games__notPlayingGames {
   color: #ff002d; }
 
-.invite__searchForm div.input-group input.form-control {
-  background-color: rgba(50, 50, 60, 0.7);
-  color: #ff002d;
-  border-color: #890017; }
-  .invite__searchForm div.input-group input.form-control:focus, .invite__searchForm div.input-group input.form-control.focus {
-    border-color: #ff002d;
-    box-shadow: none; }
-.invite__searchForm div.input-group div.input-group-prepend {
-  background-color: rgba(50, 50, 60, 0.7); }
-  .invite__searchForm div.input-group div.input-group-prepend span.input-group-text {
-    background-color: rgba(50, 50, 60, 0.7);
-    color: #ff002d;
-    border-color: #890017; }
-    .invite__searchForm div.input-group div.input-group-prepend span.input-group-text:focus, .invite__searchForm div.input-group div.input-group-prepend span.input-group-text.focus {
-      border-color: #ff002d;
-      box-shadow: none; }
-
 main div.mainContainer.register__container.container button[type=submit], main div.mainContainer.login__container.container button[type=submit] {
   background-color: rgba(50, 50, 60, 0.7);
   color: #ff002d;
@@ -157,36 +140,24 @@ nav.register__navAfterRegister {
   nav.register__navAfterRegister a:hover, nav.register__navAfterRegister a:active {
     color: #890017; }
 
-/*
 .invite__searchInput {
   margin-top: 3em;
   margin-bottom: 3em;
-  color: $text_color1;
-  border-color: rgba(255, 75, 5, 0.7);
-  &:focus {
-    outline: none !important;
+  color: #ff002d;
+  border-color: rgba(255, 75, 5, 0.7); }
+  .invite__searchInput:focus {
+    outline: none !important; }
 
-  }
-}*/
-/*
 .invite__explainText {
-  color: $text_color1;
+  color: #ff002d;
   size: 1.2em;
-  font-weight: 700;
-  &.invite__explainText-explain {
-    color: $text_color3;
-  }
-  &.invite__noinvitedUsers {
-    background: $background_color1;
-    color: $text_color3;
-    padding: 1em;
-  }
-}*/
-span.userList__invitedUser-explainText, span.userList__searchedUser-explainText {
-  color: #a5a5a5; }
-
-ul.userList__invitedUsersListGroup.list-group, ul.userList__searchedUsersListGroup.list-group.list-group {
-  padding-top: 0; }
+  font-weight: 700; }
+  .invite__explainText.invite__explainText-explain {
+    color: #a5a5a5; }
+  .invite__explainText.invite__noinvitedUsers {
+    background: rgba(50, 50, 60, 0.7);
+    color: #a5a5a5;
+    padding: 1em; }
 
 body {
   height: 100%;
