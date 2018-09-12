@@ -1,3 +1,5 @@
+'use strict'
+
 //const validateBase64Image = require('../utils/validate-base64-img')
 const { validate } = require('./validate.js')
 const { LogicError } = require('./LogicError.js')
@@ -8,7 +10,7 @@ const { logicCloudinary } = require('./cloudinary.js')
 const { User, Product } = require('../data/models')
 
 
-const product = {
+const productLogic = {
 
     /**
      * Validate that the field is a valid state defined as an enum in the Product Schema
@@ -379,4 +381,4 @@ const product = {
     }
 }
 
-module.exports = { product }
+module.exports = productLogic

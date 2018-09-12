@@ -1,3 +1,4 @@
+'use strict'
 
 class LogicError extends Error {
     constructor(message) {
@@ -5,4 +6,4 @@ class LogicError extends Error {
     }
 }
 
-module.exports = { LogicError }
+module.exports = LogicError

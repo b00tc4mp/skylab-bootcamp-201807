@@ -2,7 +2,7 @@ require('dotenv').config()
 
 const express = require('express')
 const bodyParser = require('body-parser')
-const { logicUser, logicProduct, LogicError } = require('../logic')
+const { userLogic, productLogic, LogicError } = require('../logic')
 const jwt = require('jsonwebtoken')
 const validateJwt = require('../helpers/validate-jwt')
 const fileUpload = require('express-fileupload')
@@ -15,7 +15,7 @@ const jsonBodyParser = bodyParser.json()
 userRouter.post('/register', jsonBodyParser, (req, res) => {
     const { body: { email, password } } = req
 
-    logicUser.register(email, password)
+    userLogic.register(email, password)
         .then(() => res.status(201).json({ message: 'user registered' }))
         .catch(err => {
             const { message } = err
@@ -27,7 +27,7 @@ userRouter.post('/register', jsonBodyParser, (req, res) => {
 userRouter.post('/authenticate', jsonBodyParser, (req, res) => {
     const { body: { email, password } } = req
 
-    logicUser.authenticate(email, password)
+    userLogic.authenticate(email, password)
         .then(userId => {
             const { JWT_SECRET, JWT_EXP } = process.env
 
@@ -45,7 +45,7 @@ userRouter.post('/authenticate', jsonBodyParser, (req, res) => {
 userRouter.get('/me/:user', validateJwt, (req, res) => {
     const { params: { user } } = req
 
-    logicUser.listPrivateUser(user)
+    userLogic.listPrivateUser(user)
         .then(res.json.bind(res))
         .catch(err => {
             const { message } = err
@@ -57,7 +57,7 @@ userRouter.get('/me/:user', validateJwt, (req, res) => {
 userRouter.get('/user/:user', (req, res) => {
     const { params: { user } } = req
 
-    logicUser.listPublicUser(user)
+    userLogic.listPublicUser(user)
         .then(res.json.bind(res))
         .catch(err => {
             const { message } = err
@@ -69,7 +69,7 @@ userRouter.get('/user/:user', (req, res) => {
 userRouter.patch('/me/:user/password', [validateJwt, jsonBodyParser], (req, res) => {
     const { params: { user }, body: { old_password, new_password } } = req
 
-    logicUser.updatePassword(user, old_password, new_password)
+    userLogic.updatePassword(user, old_password, new_password)
         .then(() => res.json({ message: 'user password updated' }))
         .catch(err => {
             const { message } = err
@@ -81,7 +81,7 @@ userRouter.patch('/me/:user/password', [validateJwt, jsonBodyParser], (req, res)
 userRouter.patch('/me/:user/email', [validateJwt, jsonBodyParser], (req, res) => {
     const { params: { user }, body: { old_email, new_email } } = req
 
-    logicUser.updateEmail(user, old_email, new_email)
+    userLogic.updateEmail(user, old_email, new_email)
         .then(() => res.json({ message: 'user email updated' }))
         .catch(err => {
             const { message } = err
@@ -93,7 +93,7 @@ userRouter.patch('/me/:user/email', [validateJwt, jsonBodyParser], (req, res) =>
 userRouter.patch('/me/:user/profile', [validateJwt, jsonBodyParser], (req, res) => {
     const { params: { user }, body: { data } } = req
 
-    logicUser.updateProfile(user, data)
+    userLogic.updateProfile(user, data)
         .then(() => res.json({ message: 'user profile updated' }))
         .catch(err => {
             const { message } = err
@@ -119,7 +119,7 @@ userRouter.patch('/me/:user/photo', [validateJwt, fileUpload()], (req, res) => {
     if (files && files.image) {
         const { image: { name, data } } = files
     
-        logicUser.updateProfilePhoto(user, name, data)
+        userLogic.updateProfilePhoto(user, name, data)
             .then(() => res.status(200).json({ message: 'photo uploaded' }))
             .catch((err) => {
                 const { message } = err
@@ -133,7 +133,7 @@ userRouter.patch('/me/:user/photo', [validateJwt, fileUpload()], (req, res) => {
 userRouter.post('/unregister', jsonBodyParser, (req, res) => {
     const { body: { email, password } } = req
 
-    logicUser.unregister(email, password)
+    userLogic.unregister(email, password)
         .then(() => res.status(201).json({ message: 'user unregister' }))
         .catch(err => {
             const { message } = err
@@ -145,7 +145,7 @@ userRouter.post('/unregister', jsonBodyParser, (req, res) => {
 userRouter.post('/me/:user/review', [validateJwt, jsonBodyParser], (req, res) => {
     const { params: { user }, body: { userTo, score, idProd, description } } = req
 
-    logicUser.addReview(user, userTo, score, idProd, description)
+    userLogic.addReview(user, userTo, score, idProd, description)
         .then(() => res.json({ message: 'review added' }))
         .catch(err => {
             const { message } = err
@@ -157,8 +157,8 @@ userRouter.post('/me/:user/review', [validateJwt, jsonBodyParser], (req, res) =>
 userRouter.patch('/me/:user/prod/:prod/favs', [validateJwt, jsonBodyParser], (req, res) => {
     const { params: { user, prod } } = req
 
-    logicUser.addFavourite(user, prod)
-        .then(() => logicProduct.incrementFavs(user, prod))
+    userLogic.addFavourite(user, prod)
+        .then(() => productLogic.incrementFavs(user, prod))
         .then(() => {
             return res.json({ message: 'product added as favourites', user, product: prod })})
         .catch(err => {
@@ -171,8 +171,8 @@ userRouter.patch('/me/:user/prod/:prod/favs', [validateJwt, jsonBodyParser], (re
 userRouter.patch('/me/:user/prod/:prod/unfavs', [validateJwt, jsonBodyParser], (req, res) => {
     const { params: { user, prod } } = req
 
-    logicUser.removeFavourite(user, prod)
-        .then(() => logicProduct.decrementFavs(user, prod))
+    userLogic.removeFavourite(user, prod)
+        .then(() => productLogic.decrementFavs(user, prod))
         .then(() => {
             return res.json({ message: 'product removed from favourites', user, product: prod })})
         .catch(err => {

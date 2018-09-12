@@ -3,7 +3,7 @@ const { LogicError } = require('./LogicError.js')
 const { logicCloudinary } = require('./cloudinary.js')
 const { Review, User, Product } = require('../data/models')
 
-const user = {
+const userLogic = {
 
     /**
      * Validate that the field is a valid gender defined as an enum in the User Schema
@@ -451,4 +451,4 @@ const user = {
 
 }
 
-module.exports = { user }
+module.exports = userLogic
