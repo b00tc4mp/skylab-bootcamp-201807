@@ -1,24 +1,55 @@
 @import url('https://fonts.googleapis.com/css?family=Merriweather:400,700,900|Uncial+Antiqua|Vollkorn:400,700,900');
+@import url('https://fonts.googleapis.com/css?family=Aladin|Cinzel+Decorative:400,700,900|Cormorant+Unicase:300,400,500,600,700|Domine:400,700|Marcellus+SC|Mate+SC|Megrim');
+@import url('https://fonts.googleapis.com/css?family=Josefin+Sans');
+@import url('https://fonts.googleapis.com/css?family=Pathway+Gothic+One');
 
 /*font-family: 'Merriweather', serif;
+
 font-family: 'Uncial Antiqua', cursive;
 font-family: 'Vollkorn', serif;
+
+
 */
+
+/*
+
+font-family: 'Domine', serif;
+font-family: 'Cormorant Unicase', serif;
+font-family: 'Marcellus SC', serif;
+font-family: 'Cinzel Decorative', cursive;
+font-family: 'Aladin', cursive;
+font-family: 'Megrim', cursive;
+font-family: 'Mate SC', serif;
+*/
+
+$text_font: 'Megrim', cursive;
+$text_font: 'Marcellus SC', serif;
+$text_font: 'Pathway Gothic One', sans-serif;
+
+$text_font: 'Josefin Sans', sans-serif;
+$text_font: 'Mate SC', serif;
+
+$headline_font: 'Cormorant Unicase', serif;
+$headline_font: 'Megrim', cursive;
+
+$headline_font: 'Cinzel Decorative', cursive;
+$headline_font: 'Marcellus SC', serif;
+
 $text_color1: #ff002d;
 $text_color15: #890017;
 $text_color2: #ac9319;
 $text_color3: #a5a5a5;
 $text_color4: #e3e3e3;
-$background_color1: rgba(50, 50, 60, 0.7);
-$background_color2: rgba(87, 87, 87, 0.7);
+$background_color1: rgba(50, 50, 60, 0.8);
+$background_color2: rgba(87, 87, 87, 0.8);
 $dark_menu_background_color: rgb(51, 58, 64);
 
 @mixin input-styling() {
   background-color: $background_color1;
   color: $text_color1;
   border-color: $text_color15;
-  &:focus,&.focus {
-    border-color:$text_color1;
+  &:focus, &.focus {
+    border-color: $text_color1;
     box-shadow: none;
   }
 }
@@ -31,20 +62,27 @@ $dark_menu_background_color: rgb(51, 58, 64);
 
 html {
   height: 100%;
-  font-family: 'Merriweather', serif;
+  //font-family: 'Merriweather', serif;
+  font-family: $text_font;
 
 }
 
-.navbar__brand.navbar-brand {
-  font-family: 'Uncial Antiqua', cursive;
-  font-size: 1.8em;
-  letter-spacing: .2em;
-  font-weight: 700;
+.app_main {
+  width:100%;
+}
 
-  img {
-    max-width: 50px;
+nav {
+
+  .navbar__brand.navbar-brand {
+    font-family: $headline_font;
+    font-size: 1.8em;
+    letter-spacing: .2em;
+    font-weight: 400;
+    img {
+      max-width: 50px;
+
+    }
   }
-
 }
 
 h2.navbar__nickname {
@@ -58,10 +96,11 @@ h2.navbar__nickname {
     position: relative;
     margin-top: 5%;
   }
-  .chessBoardGroup__chessBoardArea {
-    margin-bottom: 20px;
-  }
 
+
+}
+div.chessBoardComponent__chessBoardArea {
+  margin-bottom: 15px;
 }
 
 main div.games__mainChessRow.row div.chessBoardGroup__gameInfoArea.col-12.col-md-3 h3.chessBoardGroup__players {
@@ -79,7 +118,6 @@ main div.games__mainChessRow span.games__notPlayingGames {
 
 }
 
-
 .invite__searchForm div.input-group {
   input.form-control {
     @include input-styling;
@@ -90,37 +128,35 @@ main div.games__mainChessRow span.games__notPlayingGames {
       @include input-styling;
 
     }
-
+  margin-bottom:1em;
   }
 }
 
-
-
-main  div.mainContainer.register__container.container,main div.mainContainer.login__container.container {
+main div.mainContainer.register__container.container, main div.mainContainer.login__container.container {
   button[type=submit] {
     @include input-styling;
-    border-radius:.5em;
-    padding:.5em;
-    cursor:pointer;
-    &:focus,&.focus,&.active {
-      border-color:$text_color1;
+    border-radius: .5em;
+    padding: .5em;
+    cursor: pointer;
+    &:focus, &.focus, &.active {
+      border-color: $text_color1;
       box-shadow: none;
       outline: none !important;
     }
   }
-div.input-group{
-  input.form-control {
- @include input-styling;
-  }
-  div.input-group-prepend {
-    background-color: $background_color1;
-    span.input-group-text {
+  div.input-group {
+    input.form-control {
       @include input-styling;
+    }
+    div.input-group-prepend {
+      background-color: $background_color1;
+      span.input-group-text {
+        @include input-styling;
+
+      }
 
     }
-
   }
-}
 }
 
 main div.games__mainChessRow.row div.chessBoardGroup__gameInfoArea.col-12.col-md-3 {
@@ -190,10 +226,22 @@ main div.userList ul.list-group li.list-group-item {
 main {
   margin: 2em;
 
+  .main__mainImage1 {
+    max-width: 400px;
+    float: right;
+    margin: 10px;
+    @media  (max-width: 600px) {
+      display:none;
+    }
+  }
   .main__mainText {
-    color: $text_color1;
-    font-size: 1em;
-    letter-spacing: 0.1em;
+    div.main__mainTextHolder {
+      font-family: $text_font;
+      color: $text_color3;
+      font-size: 1.2em;
+      padding: 1em;
+    }
+
     background: $background_color1;
   }
 
@@ -215,38 +263,23 @@ nav.register__navAfterRegister {
     color: $text_color15;
   }
 }
-/*
-.invite__searchInput {
-  margin-top: 3em;
-  margin-bottom: 3em;
-  color: $text_color1;
-  border-color: rgba(255, 75, 5, 0.7);
-  &:focus {
-    outline: none !important;
 
-  }
-}*/
-/*
-.invite__explainText {
-  color: $text_color1;
-  size: 1.2em;
-  font-weight: 700;
-  &.invite__explainText-explain {
-    color: $text_color3;
-  }
-  &.invite__noinvitedUsers {
-    background: $background_color1;
-    color: $text_color3;
-    padding: 1em;
-  }
-}*/
+span.userList__searchedUser-explainText {
+  color: $text_color3;
+}
+span.userList__invitedUser-explainText {
+  color: $text_color3;
 
-span.userList__invitedUser-explainText, span.userList__searchedUser-explainText {
-  color:$text_color3;
 }
 
 ul.userList__invitedUsersListGroup.list-group, ul.userList__searchedUsersListGroup.list-group.list-group {
-  padding-top:0;
+  padding-top: 0;
+}
+
+.login__loginImage {
+  max-width:500px;
+  margin:20px;
+
 }
 
 body {

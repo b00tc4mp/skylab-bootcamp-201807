@@ -40,6 +40,7 @@ class Login extends Component {
   render() {
 
     return  <Container className="mainContainer login__container">
+      <Row>
     <Col xs="12" md="3">
         <form onSubmit={this.onLoginSubmitted}>
           <Row className="mb-2">
@@ -63,6 +64,7 @@ class Login extends Component {
           </Row>
         </form>
     </Col>
+      </Row>
       </Container>
 
   }

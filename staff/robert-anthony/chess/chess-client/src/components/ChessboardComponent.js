@@ -83,7 +83,7 @@ class ChessboardComponent extends Component {
       <Row>
         <Col xs="12" md="8">
 
-          <div className="chessBoardGroup__chessBoardArea">
+          <div className="chessBoardComponent__chessBoardArea">
             {currentGame && <Chessboard orientation={isWhite ? 'white' : 'black'} onDrop={this.onDrop}
                                         lightSquareStyle={{backgroundColor: 'rgba(180, 180, 180,0.85)' }}
                                         darkSquareStyle={{backgroundColor: 'rgba(120, 120, 120,0.85)' }}

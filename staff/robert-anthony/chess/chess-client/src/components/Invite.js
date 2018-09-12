@@ -72,14 +72,18 @@ class Invite extends Component {
                   return user !== nickname ?
                     <ListGroupItem className="userList__invitedUsersListGroupItem" tag="a" href="#" key={user + Math.random()}
                                    onClick={e => this.onUserClick(e, user)}><span
-                      className="userList__invitedUser-explainText">Click to invite:</span> {`${user}`}
+                      className="userList__invitedUser-explainText"><i className="fas fa-envelope-open fa-lg"></i>
+
+&nbsp;Invite:&nbsp;</span> {`${user}`}
                     </ListGroupItem> : null
                 })}
               </ListGroup>}
               {usersInvited.length && <ListGroup className="userList__searchedUsersListGroup">
                 {usersInvited.length && usersInvited.map(user => {
                   return <ListGroupItem key={user + Math.random()}> <span
-                    className="userList__searchedUser-explainText">√ Invited:</span> {`${user}`}</ListGroupItem>
+                    className="userList__searchedUser-explainText"><i className="fas fa-user-check fa-lg"></i>&nbsp;
+
+ Invited:&nbsp;</span> {`${user}`}</ListGroupItem>
                 }) }
               </ListGroup>}
 

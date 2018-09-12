@@ -181,7 +181,7 @@ class App extends Component {
     const {nickname, users, error, token, currentGames} = this.state
     log.debug(`APP.JS: render: NICKNAME: ${nickname}, NEEDTOUPDATEGAMESFLAG: ${this.needToUpdateGamesFlagFromSocketIO}`)
 
-    return <div>
+    return <div className="app__main">
       <header>
         <NavBar nickname={nickname} isLoggedIn={this.isLoggedIn()} onLogout={this.onLogout}/>
       </header>
