@@ -1,49 +1,176 @@
-import React, { Component } from 'react'
-import {withRouter} from 'react-router-dom'
+import React, {
+    Component
+} from 'react'
+import {
+    withRouter
+} from 'react-router-dom'
 import logic from '../logic/logic'
+import History from './History'
+import Stats from './Stats'
+import ScrollUpButton from 'react-scroll-up-button'
 import moment from 'moment'
-import swal from 'sweetalert';
+import swal from 'sweetalert'
+import './styles/Portfolio.css'
+import {
+    Col,
+    Button,
+    Form,
+    FormGroup,
+    Label,
+    Input
+} from 'reactstrap'
 
-class Portfolio extends Component{
+class Portfolio extends Component {
 
     state = {
+        chartData: {},
+        getChartDataQuantity: {},
+        portfolioInvestment: {},
         transactions: [],
         name: '',
         quantity: '',
         value: '',
         date: moment().format('YYYY-MM-DD'),
         coinId: '',
-        portfolioInvestment: {}
     }
 
-
-    componentDidMount(){
+    componentDidMount() {
         this.listCoins()
     }
 
-    listCoins = () => {
-        const {email, token} = this.props
-        logic.listCoins(email, token)
-        .then((transactions) => {
-            this.setState({
-                transactions
-            },() => {
-                this.calculatePortfolioInvestment() 
-            })
+    getChartData() {
+        const {
+            portfolioInvestment
+        } = this.state
+
+        const labels = Object.keys(portfolioInvestment)
+        const data = Object.values(portfolioInvestment).map(coin => coin.val)
+        const data2 = Object.values(portfolioInvestment).map(coin => coin.quantity)
+
+        this.setState({
+            chartData: {
+                labels,
+                datasets: [{
+                    label: 'Portfolio Value',
+                    data,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.6',
+                        'rgba(54, 162, 235, 0.6',
+                        'rgba(255, 206, 86, 0.6',
+                        'rgba(75, 192, 192, 0.6',
+                        'rgba(153, 102, 255, 0.6',
+                        'rgba(255, 159, 64, 0.6',
+                        'rgba(255, 99, 132, 0.6',
+                    ]
+                }]
+            },
+            chartData2: {
+                labels,
+                datasets: [{
+                    label: 'Portfolio Quantity',
+                    data:data2,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.6',
+                        'rgba(255, 159, 64, 0.6',
+                        'rgba(153, 102, 255, 0.6',
+                        'rgba(255, 99, 132, 0.6',
+                        'rgba(75, 192, 192, 0.6',
+                        'rgba(255, 206, 86, 0.6',
+                        'rgba(54, 162, 235, 0.6',
+                    ]
+                }]
+            }
         })
-        .catch(({ message }) => alert(message))
+    }
+
+
+
+    handleChange = (e) => {
+        const {
+            name,
+            value
+        } = e.target
+        console.log(value)
+        this.setState({
+            [name]: value
+        })
+    }
+
+    handleSubmit = (e) => {
+        e.preventDefault()
+        const {
+            email,
+            token
+        } = this.props
+        const {
+            name,
+            quantity,
+            value,
+            date,
+            coinId
+        } = this.state
+        if (coinId) {
+            logic.updateCoin(email, coinId, value, date, name, quantity, token)
+                .then(() => this.setState({
+                    name: '',
+                    quantity: '',
+                    value: '',
+                    date: moment().format('YYYY-MM-DD'),
+                    coinId: ''
+                }))
+                .then(() => this.listCoins())
+                .catch(({
+                    message
+                }) => swal("Error", message, "error"))
+        } else {
+            logic.addCoin(email, name, quantity, value, date, token)
+                .then(() => this.setState({
+                    name: '',
+                    quantity: '',
+                    value: '',
+                    date: '',
+                    coinId: ''
+                }))
+                .then(() => this.listCoins())
+                .catch(({
+                    message
+                }) => swal("Error", message, "error"))
+        }
+    }
+
+    listCoins = () => {
+        const {
+            email,
+            token
+        } = this.props
+        logic.listCoins(email, token)
+            .then((transactions) => {
+                this.setState({
+                    transactions
+                }, () => {
+                    this.calculatePortfolioInvestment()
+                })
+            })
+            .catch(({
+                message
+            }) => alert(message))
     }
 
     removeCoin = (coinId) => {
-        const {email, token} = this.props
+        const {
+            email,
+            token
+        } = this.props
         logic.removeCoin(email, coinId, token)
             .then(() => {
                 this.setState({
-                    coinId: ''  
+                    coinId: ''
                 })
                 this.listCoins()
             })
-            .catch(({ message }) => alert(message))
+            .catch(({
+                message
+            }) => swal(message))
     }
 
     editCoin = (name, quantity, value, date, coinId) => {
@@ -52,113 +179,89 @@ class Portfolio extends Component{
             quantity,
             value,
             date: moment(date).format('YYYY-MM-DD'),
-            coinId 
+            coinId
         })
     }
 
-    calculatePortfolioInvestment(){
-        const { transactions } = this.state
+    calculatePortfolioInvestment() {
+        const {
+            transactions
+        } = this.state
 
-        if (transactions.length){
+        if (transactions.length) {
             logic.calculatePortfolioInvestment(transactions)
                 .then(portfolioInvestment => {
                     this.setState({
                         portfolioInvestment
+                    }, () => {
+                        this.getChartData()
                     })
                 })
-                .catch(({ message }) => alert(message))
+                .catch(({
+                    message
+                }) => swal(message))
         }
     }
 
-    handleChange = (e) => {
-        const { name, value } = e.target
-        this.setState({
-            [name]: value
-        })
-    }
-
-    handleSubmit = (e) => {
-        e.preventDefault()
-        const { email, token } = this.props
-        const { name, quantity, value , date, coinId  } = this.state
-        if(coinId){
-            logic.updateCoin(email, coinId, value, date, name, quantity, token )
-                    .then(() => this.setState({
-                        name: '',
-                        quantity: '',
-                        value: '',
-                        date: moment().format('YYYY-MM-DD'),
-                        coinId:''
-                    }))
-                    .then(() => this.listCoins())
-                    .catch(({ message }) => alert(message))
-        }else{
-            logic.addCoin(email, name, quantity, value, date, token)
-                .then(() => this.setState({
-                    name: '',
-                    quantity: '',
-                    value: '',
-                    date: '',
-                    coinId:''
-                }))
-                .then(() => this.listCoins())
-                .catch(({ message }) => alert(message))
-        }
-    }
 
     renderPortFolioInvestment = () => {
-        const { portfolioInvestment } = this.state
+        const {
+            portfolioInvestment
+        } = this.state
 
-        if(Object.keys(portfolioInvestment).length) {
+        if (Object.keys(portfolioInvestment).length) {
             return Object.keys(portfolioInvestment)
                 .map(coin => {
-                    return <li>Coin: {coin} - Value: {portfolioInvestment[coin]}</li>
+                    return (
+
+                        <li> Coin: {coin} - Value: {portfolioInvestment[coin].val}, Quantity: {portfolioInvestment[coin].quantity} </li>
+                    )
                 })
         }
 
         return ''
     }
 
-    render(){
+    render() {
         return <div>
-            <div>Portfolio</div><br/>
-                
-            <h2>Add a transaction</h2>
+            <div> Portfolio </div><br/>
+                <Form className = 'form_add_transaction'onSubmit = {this.handleSubmit}>
+                    <FormGroup row>
+                        <Label for ='Symbol' sm={1}> Symbol </Label> 
+                        <Col sm = {1} >
+                            <Input onChange = {this.handleChange} value = {this.state.name} name='name' type ='text' placeholder ='BTC...' />
+                        </Col> 
+                        <Label for ='Symbol' sm={1}> Quantity </Label> 
+                        <Col sm={2}>
+                            <Input onChange = {this.handleChange} value = {this.state.quantity}name='quantity' type ='number'placeholder = '5, 0.1, -3...' />
+                        </Col> 
+                            <Label for ='Symbol' sm={1}> Price $ </Label> 
+                        <Col sm={2}>
+                            <Input onChange = {this.handleChange} value = {this.state.value} name='value' type = 'number' placeholder ='1 , 6500, 0.05...' />
+                        </Col>
+                            <Label for ='Symbol' sm={1}> Date </Label> 
+                        <Col sm={2}>
+                            <Input onChange = {this.handleChange} value = {this.state.date} name='date' type = 'date' placeholder ='BTC, ETH...' />
+                        </Col> 
+                        <FormGroup check row>
+                            <Col sm = {{
+                                    size: 10,
+                                    offset: 2
+                                    }}>
+                        <Button type = 'submit' > Add </Button> 
+                        </Col>
+                        </FormGroup>
+                    </FormGroup>
+                </Form>
 
-            <form onSubmit={this.handleSubmit}>
-                <label>Symbol:</label>
-                <input onChange={this.handleChange} value={this.state.name} name='name' type='text' placeholder='BTC, ETH ...'/><button>?</button><br/><br/>
-                <label>Quantity:</label>
-                <input onChange={this.handleChange} value={this.state.quantity} name='quantity' type='number' step='any' placeholder='quantity'/><br/><br/>
 
-                <label>Price unit:</label>
-                <input onChange={this.handleChange} value={this.state.value} name='value' type='number' step='any' placeholder='value'/><br/><br/>
+        {this.renderPortFolioInvestment()} <History transactions = {this.state.transactions}/>
 
-                <label>Date:</label>
-                <input onChange={this.handleChange} value={this.state.date} name='date' type='date'/><br/><br/>
+        <Stats chartData = {this.state.chartData} chartData2 = {this.state.chartData2}/>
 
-                <button type='submit'>Submit</button>
-                <br/>
-            </form>
-           <div>
-                {this.state.transactions.map(
-                    trans => 
-                        <div key={trans.coinId}> {
-                            `Name: ${trans.name} 
-                            Quantity: ${trans.quantity}
-                            Price unit: ${trans.value} 
-                            Date: ${moment(trans.date).format('DD/MM/YYYY')}`}
-                                <a href='' onClick={(e) =>  {e.preventDefault();this.removeCoin(trans.coinId)}} >X</a>
-                                <a href='' onClick={(e) => {e.preventDefault();this.editCoin(trans.name, trans.quantity, trans.value, trans.date, trans.coinId)}}> E</a>
-                        </div>
-                )}
+        <ScrollUpButton />
             </div>
-
-            {this.renderPortFolioInvestment()}
-
-        </div>
     }
 }
 
-export default withRouter (Portfolio)
-
+export default withRouter(Portfolio)

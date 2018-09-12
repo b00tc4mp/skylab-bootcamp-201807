@@ -1,15 +1,20 @@
 import React, { Component } from 'react'
-// import logic from '../logic/logic'
-import ResultList from './ResultList'
+import ListCoins from './ListCoins'
+import SearchMarket from './SearchMarket'
+import GlobalStats from './GlobalStats'
+import ScrollUpButton from 'react-scroll-up-button'
+import './styles/Market.css'
 
 
-class Market extends Component {
 
-    
+class Market extends Component {    
+
     render(){
         return <div>
-                <div>Market</div>
-                <ResultList />
+                <GlobalStats />      
+                <SearchMarket />
+                <ListCoins />
+                <ScrollUpButton />              
             </div>
     }
 }

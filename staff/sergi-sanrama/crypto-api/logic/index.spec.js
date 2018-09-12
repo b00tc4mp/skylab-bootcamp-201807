@@ -360,6 +360,15 @@ describe('logic', () => {
         })
     })
 
+    true && describe('get global stats crypto correctly', () => {
+        it('retrieve global stats correctly', () => {
+            return logic.getGlobalMarketData()
+            .then(res =>  {
+                expect(res).to.exist
+            })
+        })
+    })
+
 
     after(() =>
         Promise.all([

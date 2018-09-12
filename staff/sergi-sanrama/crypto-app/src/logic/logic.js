@@ -24,6 +24,12 @@ const logic = {
         if (typeof fieldValue !== 'string' || !fieldValue.length) throw new Error(`invalid ${fieldName}`)
     },
 
+    _validateSymbol(symbol) {
+       return this.getValue(symbol, 'USD')
+            .catch(() => {
+                throw Error(`${symbol} is not valid`)
+            })
+    },
    
     //// USER ////
     
@@ -62,9 +68,15 @@ const logic = {
         return Promise.resolve()
             .then(() => {
                 this._validateStringField('name', name)
+
+                name = name.toUpperCase()
+
+                return this._validateSymbol(name)
+            })
+            .then(() => {
                 return this._call(`user/${email}/portfolio/add`,'POST',
                     { authorization: `bearer ${token}`,'content-type': 'application/json' }
-                , JSON.stringify({ email, name, quantity, value, date }), 201) 
+                    , JSON.stringify({ email, name, quantity, value, date }), 201)
                 .then(res => res.json())
             })
     },
@@ -110,22 +122,29 @@ const logic = {
             const result = {}
             
             let val = 0
+            let quantity = 0
             let prev = ordered[0].name
             ordered.forEach(transaction => {
                 if (transaction.name !== prev) {
                     prev = transaction.name
                     val = 0
+                    quantity = 0
                 }
+
+                quantity += transaction.quantity
                 
                 val += transaction.value * transaction.quantity
-                result[transaction.name] = val
+
+                result[transaction.name] = {
+                    val,
+                    quantity
+                }
             })
             
             return result
         })
     },
-
-    
+   
 
     //// Market ////
     //TODO with $limits
@@ -139,25 +158,36 @@ const logic = {
     },
 
     getCryptoNews(site){
-        return Promise.resolve()
+        return Promise.resolve()   
             .then(() => {
                 return this._call(`/news?site=${site}`, 'GET', undefined, undefined, 200)
             })
             .then(res => res.json())
             .then(({news}) => news)
-    }
+    },
 
-    // getCoins(limit) {
-    //     return axios.get(`https://api.coinmarketcap.com/v1/ticker/?limit=${limit}`)
-    //          .then(res => {
-    //              return res.data
-    //          })
-    //          .then(res => {
-    //              if (!res.data) throw new LogicError(`Something has failed, it was not possible to load the ${limit} cryptocurrencies, try later`)
-    //          })
-    //          .then(() => true)
-    //  },
+    getGlobalStats(){
+        return Promise.resolve()
+            .then(() => {
+                return this._call(`market/stats`, 'GET', undefined, undefined, 200)
+            })
+            .then(stats => {
+                return stats.json()
+            })
+    },
 
+
+    //// Portfolio ////
+
+    //COMPARE CURRENCIES
+    getValue(coin, coin2){
+        return Promise.resolve()
+           .then(() => {
+               return this._call(`portfolio/compare?coin=${coin}&coin2=${coin2}`, 'GET', undefined, undefined, 200)
+           })
+           .then(data => data.json())
+    },
+    
 }
 
 module.exports = logic

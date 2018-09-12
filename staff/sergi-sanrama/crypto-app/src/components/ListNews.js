@@ -1,28 +1,30 @@
 import React, { Component } from 'react'
-import {Link} from 'react-router-dom'
-import { Card, Button, CardImg, CardTitle, CardText, CardDeck,
-    CardSubtitle, CardBody, Row, Col} from 'reactstrap';
+import ScrollUpButton from 'react-scroll-up-button'
+import { Card, CardImg, CardTitle, CardText, CardDeck, CardSubtitle, CardBody, Row, Col, CardLink} from 'reactstrap'
 
 class ListNews extends Component{
     render(){
         const { news } = this.props
-        return (
+        return (<div>
             <Row>
+                <Col>
                 <CardDeck>
-                    {news.map(data => <Col sm='3'>      
+                    {news.map(data => <Col sm='2' md='4' lg='3'>      
                         <Card key={news.idNew}>
-                                <CardImg top width="100%" src={data.imageurl} alt="New image" />
-                                <CardBody >
-                                <CardTitle>{data.title}</CardTitle>
-                                <CardSubtitle>{data.source}</CardSubtitle>
-                                <CardText>{data.body}</CardText>
-                                <Link to={data.url}><Button className="cardButton">Source: {data.source}</Button></Link>
-                            </CardBody>
-                            </Card>
-                        </Col>
-                    )}    
+                                <CardImg top width='100%' src={data.imageurl} alt='New image' />
+                                <CardBody className='card-body'>
+                                    <CardTitle>{data.title}</CardTitle>
+                                    <CardSubtitle>{data.source}</CardSubtitle>
+                                    <CardText>{data.body}</CardText>
+                                    <CardLink href={data.url} target='_blank'>Go to {data.source}</CardLink>
+                                </CardBody>
+                        </Card>
+                        </Col>)}    
                 </CardDeck>
+                </Col>
             </Row>
+            <ScrollUpButton />
+            </div>
         )
 
     }

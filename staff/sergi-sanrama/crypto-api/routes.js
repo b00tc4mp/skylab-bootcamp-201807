@@ -134,6 +134,19 @@ router.delete('/user/:email/portfolio/remove', [validateJwt, jsonBodyParser], (r
         })
 })
 
+//COMPARE CURRENCIES
+router.get('/portfolio/compare', (req, res) => {
+    const { query: { coin, coin2 } } = req
+
+    logic.getValue(coin, coin2)
+    .then(data => res.status(200).json({message: 'coins compare succesfully', data}))
+    .catch(err => {
+        const { message } = err
+
+        res.status(err instanceof LogicError ? 400 : 500).json({ message })
+    })
+
+})
 
 //COINMARKET API ROUTES //
 
@@ -154,7 +167,7 @@ router.get('/market/list', (req, res) => {
 
 //CRYPTOCOMPARE API ROUTES//
 
-//GET VALUE
+//PORTFOLIO - GET VALUE
 router.get('/market/value', (req, res) => {
     const { query: { coin, fiduciary } } = req
 
@@ -167,7 +180,20 @@ router.get('/market/value', (req, res) => {
         })   
 })
 
-// GET CRYPTO NEWS
+// MARKET - GET GLOBAL STATS
+router.get('/market/stats', (req, res) => {
+   
+    logic.getGlobalStats()
+        .then(stats => res.status(200).json({message: 'retrieved global stats correctly', stats}))
+        .catch(err => {
+            const { message } = err
+
+            res.status(err instanceof LogicError ? 400 : 500).json({ message })
+        })
+})
+
+
+// NEWS - GET CRYPTO NEWS
 router.get('/news', (req, res) => {
     const { query: { site }} = req
 

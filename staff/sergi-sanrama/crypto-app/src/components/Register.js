@@ -43,9 +43,9 @@ class Register extends Component {
 
                     <button className='button_form' type='submit'>Register</button>
                     <br/>
+            <div className='button_return btn'><a href='/#/user/authenticate'> Login</a></div>
                 </form>
             </div>
-            <div className='button_return'><a href='/#/user/authenticate'>return to Login</a></div>
         </div>
         
     }

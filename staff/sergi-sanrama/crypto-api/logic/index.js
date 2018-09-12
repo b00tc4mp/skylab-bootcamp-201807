@@ -212,22 +212,21 @@ const logic = {
     getCoins(limit = 10) {
        return axios.get(`https://api.coinmarketcap.com/v1/ticker/?limit=${limit}`)
             .then(res => {
-                debugger
                 if (!res || !res.data) throw new LogicError(`Something has failed, it was not possible to load the cryptocurrencies, try later`)
                 return res.data
             })
     },
 
     //GET GLOBAL STATS CRYPTO MARKET
-    getGlobalMarketData(){  
+    getGlobalStats(){  
         return axios.get(`https://api.coinmarketcap.com/v2/global/`)
             .then(res => {
                 return res.data
             })
             .then(res => {
-                if (!res.data) throw new LogicError(`Something has failed, it was not possible to load the global market stats, try later`)
+                if (!res.data) throw new LogicError(`Something has failed, it was not possible to retrieved the global market stats, try later`)
+                return res.data
             })
-            .then(() => true)
     },
 
 
@@ -241,7 +240,6 @@ const logic = {
             .then(res => {
                 const result = res.map((results) => {
                     const { symbol } = results
-                    debugger
                     return symbol
                 })
                 .then(res => {
@@ -254,13 +252,15 @@ const logic = {
 
 
     //COMPARE CURRENCIES
-    getValue(coin, fiduciary){
-        return axios.get(`https://min-api.cryptocompare.com/data/price?fsym=${coin}&tsyms=${fiduciary}`)
+    getValue(coin, coin2){
+        return axios.get(`https://min-api.cryptocompare.com/data/price?fsym=${coin}&tsyms=${coin2}`)
             .then(res => {
                 return res.data
             })
             .then(res => {
-                if (!res.data) throw new LogicError(`Something has failed, it was not possible to get the value: ${coin} vs ${fiduciary}, try later`)
+                if(res.Response === 'Error') throw new LogicError(res.Message)
+                
+                return res
             })
     },
 
