@@ -1,0 +1,574 @@
+{
+	"info": {
+		"_postman_id": "a491f346-1949-4996-a942-f7473cbcc0f6",
+		"name": "babyboom-api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "user",
+			"item": [
+				{
+					"name": "update user_password",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1YjhjZjA2NDcyNzMzZDNkMTIzMjZhOTciLCJpYXQiOjE1MzU5NjMyNDAsImV4cCI6MTUzNTk2Njg0MH0.tsyVRRs0IncehlmlUDDBfIqzCYY8Usbj-thiKVdC46c",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"old_password\": \"12345678\",\n\t\"new_password\": \"123456789\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/me/5b86ad2fdd52c667a5a9b21a/password",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"me",
+								"5b86ad2fdd52c667a5a9b21a",
+								"password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update user_email",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1Yjg2YWQyZmRkNTJjNjY3YTVhOWIyMWEiLCJpYXQiOjE1MzU1NTI4MjcsImV4cCI6MTUzNTU1NjQyN30.ne2BB9DaflsELKZwcHh1cM6rHaqlLRXsaEH-_BWoovI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"old_email\": \"laia@gmail.com\",\n\t\"new_email\": \"laia2@gmail.com\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/me/5b86ad2fdd52c667a5a9b21a/email",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"me",
+								"5b86ad2fdd52c667a5a9b21a",
+								"email"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update user_photo",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1YjhjZjA2NDcyNzMzZDNkMTIzMjZhOTciLCJpYXQiOjE1MzU5NjMyNDAsImV4cCI6MTUzNTk2Njg0MH0.tsyVRRs0IncehlmlUDDBfIqzCYY8Usbj-thiKVdC46c",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"disabled": true
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "image",
+									"description": "description",
+									"type": "file"
+								},
+								{
+									"key": "api_key",
+									"value": "937668882673492",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/me/5b8cf06472733d3d12326a97/photo",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"me",
+								"5b8cf06472733d3d12326a97",
+								"photo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update user_profile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1Yjg2YWQyZmRkNTJjNjY3YTVhOWIyMWEiLCJpYXQiOjE1MzU1NTI4MjcsImV4cCI6MTUzNTU1NjQyN30.ne2BB9DaflsELKZwcHh1cM6rHaqlLRXsaEH-_BWoovI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"old_email\": \"laia@gmail.com\",\n\t\"new_email\": \"laia2@gmail.com\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/me/5b86ad2fdd52c667a5a9b21a/email",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"me",
+								"5b86ad2fdd52c667a5a9b21a",
+								"email"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "list private_user",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1YjhkNGM5ZDMwNDJlNDdiZmMwZTc1MzAiLCJpYXQiOjE1MzYxNDU0MjgsImV4cCI6MTUzNjE0OTAyOH0.G9VMTrulbaTCE6aheQdRe8s05B3wsyTyPxn7xlcI4d4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:8080/api/me/5b8d4c9d3042e47bfc0e7530",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"me",
+								"5b8d4c9d3042e47bfc0e7530"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "list public_user",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:8080/api/user/5b8d4c9d3042e47bfc0e7530",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"user",
+								"5b8d4c9d3042e47bfc0e7530"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "register user",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"laia@gmail.com\",\n\t\"password\": \"12345678\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "authenticate user",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"laia@gmail.com\",\n\t\"password\": \"12345678\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/authenticate",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"authenticate"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "product",
+			"item": [
+				{
+					"name": "list product by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:8080/api/prod/5b8d4ccb3042e47bfc0e7531",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"prod",
+								"5b8d4ccb3042e47bfc0e7531"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "filter products",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:8080/api/prod?date=2018-09-03T00:00:00.000Z&cath=books&dist=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"prod"
+							],
+							"query": [
+								{
+									"key": "date",
+									"value": "2018-09-03T00:00:00.000Z"
+								},
+								{
+									"key": "cath",
+									"value": "books"
+								},
+								{
+									"key": "dist",
+									"value": "1"
+								}
+							]
+						},
+						"description": "can be filter by:\ntxt, cath(cathegory), date, valMax(priceMax), valMin(priceMin), dist, long, lat\n\nEx1: http://localhost:8080/api/prod?date=2018-09-03T00:00:00.000Z&cath=clothes&dist=1\nEx2: http://localhost:8080/api/prod"
+					},
+					"response": []
+				},
+				{
+					"name": "upload product",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1YjhkNGM5ZDMwNDJlNDdiZmMwZTc1MzAiLCJpYXQiOjE1MzYwMDgyMDcsImV4cCI6MTUzNjAxMTgwN30.S0OEF5lIzFADGq1TKvRv4OGG4bi-d2pjOijSked5ocg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"disabled": true
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "image",
+									"description": "description",
+									"type": "file"
+								},
+								{
+									"key": "title",
+									"value": "My title2",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "My description2",
+									"type": "text"
+								},
+								{
+									"key": "price",
+									"value": "232",
+									"type": "text"
+								},
+								{
+									"key": "cathegory",
+									"value": "books",
+									"type": "text"
+								},
+								{
+									"key": "location",
+									"value": "[-3.703790, 40.416775]",
+									"type": "text"
+								},
+								{
+									"key": "image2",
+									"type": "file"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/me/prod/5b8d4c9d3042e47bfc0e7530",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"me",
+								"prod",
+								"5b8d4c9d3042e47bfc0e7530"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "increment views in product",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"laia@gmail.com\",\n\t\"password\": \"12345678\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/prod/5b8d4ccb3042e47bfc0e7531/views",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"prod",
+								"5b8d4ccb3042e47bfc0e7531",
+								"views"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update state in product",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1YjhkNGM5ZDMwNDJlNDdiZmMwZTc1MzAiLCJpYXQiOjE1MzYyNjU5MTUsImV4cCI6MTUzNjI2OTUxNX0.oS4DmPlb31yhEH9A7pdpmu_WNGIs6ZEQWbemOokb04g",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"state\": \"removed\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/me/5b8d4c9d3042e47bfc0e7530/prod/5b9137af99a1ba78636a50b7/state",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"me",
+								"5b8d4c9d3042e47bfc0e7530",
+								"prod",
+								"5b9137af99a1ba78636a50b7",
+								"state"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add product to favourites",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1YjhkNGM5ZDMwNDJlNDdiZmMwZTc1MzAiLCJpYXQiOjE1MzYwMDgyMDcsImV4cCI6MTUzNjAxMTgwN30.S0OEF5lIzFADGq1TKvRv4OGG4bi-d2pjOijSked5ocg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/me/5b8d4c9d3042e47bfc0e7530/prod/5b8d4ccb3042e47bfc0e7531/favs",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"me",
+								"5b8d4c9d3042e47bfc0e7530",
+								"prod",
+								"5b8d4ccb3042e47bfc0e7531",
+								"favs"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
