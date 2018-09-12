@@ -162,6 +162,22 @@ const logic = {
       })
   },
 
+  toggleFollowUser(token, username, targetUsername) {
+    return Promise.resolve()
+      .then(() => {
+        this._validateStringField('token', token)
+        this._validateStringField('username', username)
+        this._validateStringField('target username', targetUsername)
+
+        const headers = { authorization: `bearer ${token}`, 'Content-Type': 'application/json' }
+
+        const body = JSON.stringify({ targetUsername })
+
+        return this._httpClient(`users/${targetUsername}/actions/follow`, 'POST', headers, body, 200)
+          .then(() => true)
+      })
+  },
+
   createPost(username, file, caption = '', token) {
     return Promise.resolve()
       .then(() => {
@@ -223,6 +239,36 @@ const logic = {
           this._validateStringField('token', token)
 
           return this._httpClient(`users/${targetUsername}/posts`, 'GET', { authorization: `bearer ${token}` }, undefined, 200)
+            .then(res => res.json())
+        }
+      })
+      .catch(() => [])
+  },
+
+  listUserSavedPosts(username = '', targetUsername = '', token = '') {
+    return Promise.resolve()
+      .then(() => {
+        if (!username && !targetUsername) throw new Error('invalid username and target username')
+
+        if (username && !targetUsername) {
+          this._validateStringField('username', username)
+          this._validateStringField('token', token)
+
+          return this._httpClient(`me/saved`, 'GET', { authorization: `bearer ${token}` }, undefined, 200)
+            .then(res => res.json())
+
+        } else if (!username && targetUsername) {
+          this._validateStringField('target username', targetUsername)
+
+          return this._httpClient(`users/${targetUsername}/saved`, 'GET', undefined, undefined, 200)
+            .then(res => res.json())
+
+        } else {
+          this._validateStringField('username', username)
+          this._validateStringField('target username', targetUsername)
+          this._validateStringField('token', token)
+
+          return this._httpClient(`users/${targetUsername}/saved`, 'GET', { authorization: `bearer ${token}` }, undefined, 200)
             .then(res => res.json())
         }
       })

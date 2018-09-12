@@ -128,7 +128,11 @@ class ColumnPost extends Component {
           {
             post.caption &&
             <div className="ColumnPost-caption">
-              <a href="#/" data-user={post.user.username} onClick={this.handleUserClick}>
+              <a
+                href="#/"
+                data-user={post.user.username}
+                className="ColumnPost-captionUsernameLink"
+                onClick={this.handleUserClick}>
                 <span className="ColumnPost-captionUsername">{post.user.username} </span>
               </a>
               {post.caption}
@@ -139,7 +143,11 @@ class ColumnPost extends Component {
             <div className="ColumnPost-comments">
               {this.state.comments && this.state.comments.map(comment => (
                 <div className="ColumnPost-comment" key={comment._id}>
-                  <a href="#/" data-user={comment.user.username} onClick={this.handleUserClick}>
+                  <a
+                    href="#/"
+                    data-user={comment.user.username}
+                    className="ColumnPost-commentUsernameLink"
+                    onClick={this.handleUserClick}>
                     <span className="ColumnPost-commentUsername">{comment.user.username} </span>
                   </a>
                   {comment.description}

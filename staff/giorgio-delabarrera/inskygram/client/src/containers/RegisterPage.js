@@ -27,7 +27,9 @@ class RegisterPage extends Component {
       <div className="push-t-50">
         <Register onSubmit={this.handleRegisterSubmit} error={this.state.registerError} />
         <section className="block">
-          <div className="block-message">Have an account? <a href="#/" onClick={this.goToLogin}>Log in</a></div>
+          <div className="block-message">Have an account?
+            <a href="#/" className="text-link" onClick={this.goToLogin}> Log in</a>
+          </div>
         </section>
       </div>
     )

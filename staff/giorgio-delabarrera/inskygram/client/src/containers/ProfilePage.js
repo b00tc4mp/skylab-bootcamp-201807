@@ -9,73 +9,166 @@ class ProfilePage extends Component {
 
   state = {
     user: null,
-    posts: [],
-    isForbidden: true
+    posts: []
   }
 
   componentDidMount() {
     this.loadProfile(this.props)
   }
 
-  componentWillReceiveProps(props) {
-    this.loadProfile(props)
+  componentWillReceiveProps(nextProps) {
+    // if (nextProps.username !== this.props.username) this.loadProfile(nextProps)
+    this.loadProfile(nextProps)
   }
 
-  loadProfile(props) {
+  async loadProfile(props) {
     const { username, loggedInUsername, token } = props
 
-    Promise.resolve()
-      .then(() => {
-        if (loggedInUsername) {
-          if (loggedInUsername === username) {
-            return logic.retrieveUser(username, undefined, token)
-          } else {
-            const targetUsername = username
-            return logic.retrieveUser(loggedInUsername, targetUsername, token)
-          }
-        }
-        else {
-          const targetUsername = username
-          return logic.retrieveUser(undefined, targetUsername)
-        }
-      })
-      .then(user => this.setState({ user }))
-      .then(() => {
-        if (loggedInUsername) {
-          if (loggedInUsername === username) {
-            this.setState({ isForbidden: false })
+    let user
+    let posts = []
 
-            return logic.listUserPosts(username, undefined, token)
-          } else {
-            const targetUsername = username
-            return logic.listUserPosts(loggedInUsername, targetUsername, token)
-          }
-        }
-        else {
+    try {
+      if (loggedInUsername) {
+        if (loggedInUsername === username) {
+          user = await logic.retrieveUser(username, undefined, token)
+          posts = await logic.listUserPosts(username, undefined, token)
+        } else {
           const targetUsername = username
-          return logic.listUserPosts(undefined, targetUsername)
+          user = await logic.retrieveUser(loggedInUsername, targetUsername, token)
+          posts = await logic.listUserPosts(loggedInUsername, targetUsername, token)
         }
-      })
-      .then(posts => {
-        this.setState({ posts })
-      })
-      .catch(({ message }) => console.log(message))
+      }
+      else {
+        const targetUsername = username
+        user = await logic.retrieveUser(undefined, targetUsername)
+        posts = await logic.listUserPosts(undefined, targetUsername)
+      }
+    } catch (err) { }
+
+    if (user) this.setState({ user }, () => this.setState({ posts }))
   }
 
-  goToEditProfile = () => {
+  onEditProfileClick = () => {
     this.props.history.push(`/accounts/edit`)
   }
 
-  // handlePostClick = postId => {
-  //   // console.log(postId)
-  //   // this.props.history.push(`/photos/${photoId}`)
-  // }
+  onToggleFollowClick = async () => {
+    const { username, loggedInUsername, token } = this.props
+
+    try {
+      const targetUsername = username
+
+      await logic.toggleFollowUser(token, loggedInUsername, targetUsername)
+
+      const user = await logic.retrieveUser(loggedInUsername, targetUsername, token)
+
+      this.setState({ user })
+
+    } catch ({ message }) {
+      if (message === 'invalid token') this.redirectToLogin()
+    }
+  }
+
+  onUserPostsClick = username => {
+    this.props.history.push(`/${username}`)
+  }
+
+  onUserSavedPostsClick = username => {
+    this.props.history.push(`/${username}/saved`)
+  }
+
+  isEdit = () => {
+    return this.props.loggedInUsername === this.state.user.username
+  }
+
+  isFollowing = () => {
+    const { user } = this.state
+    const { loggedInUsername } = this.props
+    return user.followers.find(follower => follower.user.username === loggedInUsername) ? true : false
+  }
+
+  _hasPermissions() {
+    const { user } = this.state
+
+    if (user) {
+      if (this.isEdit()) {
+        return true
+      } else {
+        if (user.privateAccount) {
+          if (this.isFollowing()) return true
+        } else {
+          return true
+        }
+      }
+    }
+    return false
+  }
+
+  redirectToLogin = () => this.props.history.push('/accounts/login')
+
+  handleLoginClick = event => {
+    event.preventDefault()
+    this.props.history.push('/accounts/login')
+  }
+
+  handleSavedPostsClick = event => {
+    event.preventDefault()
+    const { user } = this.state
+    this.props.history.push(`/${user.username}/saved`)
+  }
+
+  _renderPrivateAccount() {
+    const { user } = this.state
+    if (user) {
+      return (
+        <section className="AccountPrivate">
+          <div className="AccountPrivate-contentWrapper">
+            <div className="AccountPrivate-title">This Account is Private</div>
+            <div className="AccountPrivate-body">
+              <span>Already follow {this.state.user.username}? </span><br />
+              <span>
+                <a href="#/" className="text-link" onClick={this.handleLoginClick}>Log in</a>
+              </span><br />
+              <span>to see their photos</span>
+            </div>
+          </div>
+        </section>
+      )
+    }
+  }
+
+  _renderPosts() {
+    return (
+      <section className="profile-posts-wrapper">
+        <div className="tabs-wrapper">
+          <ul className="Tabs">
+            <li className="Tabs-item">
+              <span href="#/" className="Tabs-itemLink is-active">
+                <i className="fas fa-th"></i> Posts
+              </span>
+            </li>
+            <li className="Tabs-item">
+              <a href="#/" className="Tabs-itemLink" onClick={this.handleSavedPostsClick}>
+                <i className="far fa-bookmark"></i> Saved
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div className="is-one-thirds grid-gap-30">
+          {this.state.posts && this.state.posts.map(post => (
+            <GridPost
+              key={post._id}
+              post={post}
+              onPostDetailClick={this.props.onPostDetailClick}
+            />)
+          )}
+        </div>
+      </section>
+    )
+  }
 
   render() {
-    const { username, loggedInUsername } = this.props
-
     return (
-
       <div>
         <div className="header-wrapper">
           <Header
@@ -88,45 +181,18 @@ class ProfilePage extends Component {
         <div className="main-wrapper">
           <main>
             {
-              this.state.user && this.state.posts && (
+              this.state.user && (
                 <Profile
                   user={this.state.user}
-                  editProfile={loggedInUsername === username}
-                  onEditClick={this.goToEditProfile}
+                  numPosts="?"
+                  isEdit={this.isEdit()}
+                  isFollowing={this.isFollowing()}
+                  onEditProfileClick={this.onEditProfileClick}
+                  onToggleFollowClick={this.onToggleFollowClick}
                 />
               )
             }
-            <section className="profile-posts-wrapper">
-              <div className="tabs-wrapper">
-                <ul className="Tabs">
-                  <li className="Tabs-item">
-                    <a href="#/" className="Tabs-itemLink is-active">
-                      <i className="fas fa-th"></i> Posts
-                    </a>
-                  </li>
-                  <li className="Tabs-item">
-                    <a href="#/" className="Tabs-itemLink">
-                      <i className="far fa-bookmark"></i> Saved
-                    </a>
-                  </li>
-                </ul>
-              </div>
-              <div className="is-one-thirds grid-gap-30">
-                {this.state.isForbidden ? (
-                  <div>This Account is Private</div>
-                ) : (
-                    this.state.posts && this.state.posts.map((post) =>
-                      (
-                        <GridPost
-                          key={post._id}
-                          post={post}
-                          onPostDetailClick={this.props.onPostDetailClick}
-                        />
-                      )
-                    )
-                  )}
-              </div>
-            </section>
+            {this._hasPermissions() ? this._renderPosts() : this._renderPrivateAccount()}
           </main>
         </div>
       </div>

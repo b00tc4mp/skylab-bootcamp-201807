@@ -80,7 +80,10 @@ const logic = {
             .then((_user: UserModelInterface) => {
               if (!_user) { throw new NotFoundError(`user with username ${username} does not exists`); }
 
-              return User.findOne({ username }, { password: 0, __v: 0 });
+              return User.findOne({ username }, { password: 0, __v: 0 })
+                .populate({ path: "followings.user", select: "username" })
+                .populate({ path: "followers.user", select: "username" })
+                ;
             });
 
         } else if (!username && targetUsername) {
@@ -95,7 +98,9 @@ const logic = {
                 phoneNumber: 0,
                 enable: 0,
                 __v: 0,
-              });
+              })
+                .populate({ path: "followings.user", select: "username" })
+                .populate({ path: "followers.user", select: "username" });
             });
         } else {
 
@@ -114,12 +119,10 @@ const logic = {
                 phoneNumber: 0,
                 enable: 0,
                 __v: 0,
-              });
+              })
+                .populate({ path: "followings.user", select: "username" })
+                .populate({ path: "followers.user", select: "username" });
             });
-          // .then((user: UserModelInterface) => {
-          //   console.log(user);
-          //   return user;
-          // });
         }
       });
   },
@@ -270,8 +273,8 @@ const logic = {
             })
             .then(() => true);
         } else {
-          return User.update({ _id: user._id }, { $pull: { followings: { _id: targetUser._id } } })
-            .then(() => User.update({ _id: targetUser._id }, { $pull: { followers: { _id: user._id } } }))
+          return User.update({ _id: user._id }, { $pull: { followings: { user: targetUser._id } } })
+            .then(() => User.update({ _id: targetUser._id }, { $pull: { followers: { user: user._id } } }))
             .then(() => true);
         }
       });
@@ -864,7 +867,7 @@ const logic = {
       })
       .then((users: UserModelInterface[]) => users);
   },
-  
+
 };
 
 export default logic;

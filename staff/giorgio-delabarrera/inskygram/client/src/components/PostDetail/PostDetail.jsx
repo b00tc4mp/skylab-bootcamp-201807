@@ -98,7 +98,7 @@ class PostDetail extends Component {
               {
                 post.caption &&
                 <div className="PostDetail-caption">
-                  <a href="#/" data-user={post.user.username} onClick={this.handleUserClick}>
+                  <a href="#/" className="PostDetail-captionUsernameLink" data-user={post.user.username} onClick={this.handleUserClick}>
                     <span className="PostDetail-captionUsername">{post.user.username} </span>
                   </a>
                   {post.caption}
@@ -109,7 +109,7 @@ class PostDetail extends Component {
                 <div className="PostDetail-comments">
                   {this.state.comments && this.state.comments.map(comment => (
                     <div className="PostDetail-comment" key={comment._id}>
-                      <a href="#/" data-user={comment.user.username} onClick={this.handleUserClick}>
+                      <a href="#/" className="PostDetail-commentUsernameLink" data-user={comment.user.username} onClick={this.handleUserClick}>
                         <span className="PostDetail-commentUsername">{comment.user.username} </span>
                       </a>
                       {comment.description}

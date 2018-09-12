@@ -24,12 +24,11 @@ h6
   padding: 0
   margin-bottom: 1em
 
-// a
-//   text-decoration: none
-//   color: inherit
-
-a:focus
-  outline: none
+a
+  text-decoration: none
+  
+  &:focus
+    outline: none
 
 body
   margin: 0
@@ -44,6 +43,9 @@ main
   padding-left: 20px
   padding-right: 20px
   margin-bottom: 60px
+
+.text-link
+  color: #3e99ed
 
 .header-wrapper
   background-color: #ffffff
@@ -78,6 +80,9 @@ main
   font-weight: 500
   cursor: pointer
   min-width: 100px
+
+  &:focus
+    outline: none
 
   &.is-primary
     color: #ffffff
@@ -191,3 +196,26 @@ main
   background: none !important
   border-radius: 0 !important
   padding: 0 !important
+
+.AccountPrivate
+  background-color: #ffffff
+  border: 1px solid #efefef
+  padding: 50px
+  text-align: center
+  color: #262626
+
+  &-contentWrapper
+    max-width: 500px
+    margin: 0 auto
+
+  &-title
+    font-size: .9em
+    font-weight: bold
+    margin-bottom: 1.5em
+
+  &-body
+    font-size: .9em
+
+    & span
+      margin-bottom: .6em
+      display: inline-block  

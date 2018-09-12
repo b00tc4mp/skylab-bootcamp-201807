@@ -1,53 +1,77 @@
 import React, { Component } from 'react'
 import './Profile.sass'
 
+// TODO: define env variables
+const DEFAULT_AVATAR = 'https://goo.gl/F65XTo'
+
 class Profile extends Component {
-
-  // handleClickEdit = event => {
-  //   event.preventDefault()
-
-  //   this.props.onClickEdit()
-  // }
 
   handleEditClick = event => {
     event.preventDefault()
 
-    this.props.onEditClick()
+    this.props.onEditProfileClick()
+  }
+
+  handleToggleFollowClick = event => {
+    event.preventDefault()
+
+    this.props.onToggleFollowClick()
+  }
+
+  _renderProfileActions = () => {
+    if (this.props.isEdit) {
+      return (
+        <button
+          className="Profile-button button"
+          onClick={this.handleEditClick}
+        >
+          Edit profile
+        </button>
+      )
+    } else {
+      if (this.props.isFollowing) {
+        return (
+          <button
+            className="Profile-button button"
+            onClick={this.handleToggleFollowClick}
+          >
+            Following
+          </button>
+        )
+      } else {
+        return (
+          <button
+            className="Profile-button button is-primary"
+            onClick={this.handleToggleFollowClick}
+          >
+            Follow
+          </button>
+        )
+      }
+    }
   }
 
   render() {
     const { user } = this.props
     return (
-      // <section className="Profile">
-      //   {this.props.editProfile && (
-      //     <a href="#/" onClick={this.handleEditClick}>Edit profile</a>
-      //   )}
-      //   <img src={user.imageUrl} alt="" />
-      //   <div><strong>{user.username}</strong></div>
-
-      //   {/* <div>{numberPosts} posts</div> */}
-      //   <div>{user.followers.length} followers</div>
-      //   <div>{user.followings.length} followings</div>
-
-      //   <div>{user.name}</div>
-      //   <div>{user.website}</div>
-      //   <div>{user.biography}</div>
-      // </section>
       <section className="Profile">
         <div className="Profile-avatarWrapper">
-          <img src={user.imageUrl} className="Profile-avatarImage" alt={user.username} />
+          <img
+            src={user.imageUrl ? user.imageUrl : DEFAULT_AVATAR}
+            className="Profile-avatarImage"
+            alt={user.username}
+          />
         </div>
         <div className="Profile-detailWrapper">
           <div className="Profile-detailHeader">
             <h1 className="Profile-username">{user.username}</h1>
             <div className="Profile-actions">
-              <button className="Profile-button button">Edit profile</button>
-              {/* <button className="Profile-button button is-primary">Follow</button> */}
+              {this._renderProfileActions()}
             </div>
           </div>
           <div className="Profile-counters">
             <div className="Profile-counter">
-              <strong>5</strong> posts
+              <strong>?</strong> posts
             </div>
             <div className="Profile-counter">
               <strong>{user.followers.length}</strong> followers
@@ -57,8 +81,12 @@ class Profile extends Component {
             </div>
           </div>
           <h2 className="Profile-name">{user.name}</h2>
-          <div className="Profile-biography">{user.biography} Lorem ipsum dolor sit amet consectetur adipisicing elit.</div>
-          <div className="Profile-website">{user.website}</div>
+          <div className="Profile-biography">{user.biography}</div>
+          {user.website && (
+            <div className="Profile-website">
+              <a href={user.website} target="_blank" className="Profile-websiteLink">{user.website}</a>
+            </div>
+          )}
         </div>
       </section>
     )
