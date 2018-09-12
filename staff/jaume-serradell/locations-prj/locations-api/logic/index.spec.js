@@ -125,13 +125,6 @@ describe('logic', () => {
     true && describe('authenticate owner', () => {
         beforeEach(() => Owner.create({ name, email, password }))
 
-        it('should login correctly', () =>
-            logic.authenticate(email, password)
-                .then(res => {
-                    expect(res).to.be.true
-                })
-        )
-
         it('should fail on trying to login with an undefined email', () =>
             logic.authenticate(undefined, password)
                 .catch(err => err)
@@ -305,7 +298,7 @@ describe('logic', () => {
 
         beforeEach(() => Owner.create({ email, password, name }))
 
-        it('should succeed on correct data', () => 
+        it('should succeed on correct data', () =>
             logic.addProperty(email, title, subtitle, photo, description, categories, type)
                 .then(res => {
                     expect(res.title).to.equal(title)
@@ -404,7 +397,7 @@ describe('logic', () => {
         const subtitle = 'New subtitle'
         const photo = 'http://cci10.com/blog/wp-content/uploads/2017/11/%C3%A1ticos-680x365.jpg'
         const description = 'new Blablabla'
-        const categories = ['Adult Bedroom', 'Office']
+        const categories = ['Elevator', 'Office']
         const type = 'Events Spaces'
 
         let propertyId
@@ -431,7 +424,7 @@ describe('logic', () => {
         const subtitle = 'New Subtitle'
         const photo = 'http://cci10.com/blog/wp-content/uploads/2017/11/%C3%A1ticos-680x365.jpg'
         const description = 'new Blablabla'
-        const categories = ['Adult Bedroom', 'Office']
+        const categories = ['Elevator', 'Office']
         const type = 'Events Spaces'
 
         let propertyId
@@ -538,7 +531,7 @@ describe('logic', () => {
         const subtitle = 'New Subtitle'
         const photo = 'http://cci10.com/blog/wp-content/uploads/2017/11/%C3%A1ticos-680x365.jpg'
         const description = 'new Blablabla'
-        const categories = ['Adult Bedroom', 'Office']
+        const categories = ['Elevator', 'Office']
         const type = 'Events Spaces'
         let propertyId
 
@@ -554,7 +547,7 @@ describe('logic', () => {
         })
 
         it('should retrieve property succesfully', () => {
-            return logic.retrievePropertyById(email, propertyId)
+            return logic.retrievePropertyById(propertyId)
                 .then(property => {
                     expect(property.title).to.equal(title)
                     expect(property.subtitle).to.equal(subtitle)
@@ -568,7 +561,7 @@ describe('logic', () => {
         it('should fail with invalid propertyId', () => {
             let propertyId = '123456789'
 
-            return logic.retrievePropertyById(email, propertyId)
+            return logic.retrievePropertyById(propertyId)
                 .catch(err => err)
                 .then(({ message }) => expect(message).to.equal(`invalid property id: ${propertyId}`))
         })
@@ -576,7 +569,7 @@ describe('logic', () => {
         it('should fail with not found propertyId', () => {
             let propertyId = ObjectId()
 
-            return logic.retrievePropertyById(email, propertyId)
+            return logic.retrievePropertyById(propertyId)
                 .catch(err => err)
                 .then(({ message }) => expect(message).to.equal(`Property with id ${propertyId} does not exist`))
         })
@@ -587,7 +580,7 @@ describe('logic', () => {
         const subtitle = 'New Subtitle'
         const photo = 'http://cci10.com/blog/wp-content/uploads/2017/11/%C3%A1ticos-680x365.jpg'
         const description = 'new Blablabla'
-        const categories = ['Adult Bedroom', 'Office']
+        const categories = ['Elevator', 'Office']
         const type = 'Events Spaces'
         let propertyId
 

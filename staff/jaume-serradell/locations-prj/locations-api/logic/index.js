@@ -270,6 +270,16 @@ const logic = {
             })
     },
 
+    
+    /** List properties by query
+     * 
+     * @param {string} type The ID of the property
+     * @param {array} categories The categories of the property
+     * 
+     * @throws {LogicError} If categories are invalid
+     * @throws {LogicError} If criteria are invalid
+     * 
+     */
     listPropertyByQuery(type, categories) {
         return Promise.resolve()
             .then(() => {

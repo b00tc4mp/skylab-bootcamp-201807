@@ -21,10 +21,10 @@ class PropertyInfo extends Component {
             <div className="col-5">
                 <div className="infoImg">
                     <h4><i className="fa fa-picture-o"></i> Space Image</h4>
-                    <img class="img-fluid" src={photo} alt={title} />
+                    <img className="img-fluid" src={photo} alt={title} />
                 </div>
                 <br />
-                <button onClick={() => this.props.history.push('/')} className="btn btn-danger"><i class="fa fa-arrow-circle-left"></i> Back</button>
+                <button onClick={() => this.props.history.push('/')} className="btn btn-danger"><i className="fa fa-arrow-circle-left"></i> Back</button>
             </div>
             <div className="col-1"></div>
             <div className="col-6">
@@ -35,7 +35,7 @@ class PropertyInfo extends Component {
                     <p className="description">{description}</p>
                 </div>
                 <br />
-                <h4><i class="fa fa-home"></i> Space Type</h4>
+                <h4><i className="fa fa-home"></i> Space Type</h4>
                 <div className="infoBox bottom">
                     <p>{type}</p>
                 </div>

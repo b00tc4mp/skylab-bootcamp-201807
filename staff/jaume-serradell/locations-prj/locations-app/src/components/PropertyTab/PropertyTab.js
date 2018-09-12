@@ -35,7 +35,7 @@ class PropertyTab extends Component {
                 <div className="col-6">
                     <div className="infoImg">
                         <h4><i className="fa fa-picture-o"></i> Space Image</h4>
-                        <img class="img-fluid" src={photo} alt={title} />
+                        <img className="img-fluid" src={photo} alt={title} />
                     </div>
                     <br />
                     <h4><i className="fa fa-info-circle"></i> Space Information</h4>
@@ -45,7 +45,7 @@ class PropertyTab extends Component {
                         <p className="description">{description}</p>
                     </div>
                     <br />
-                    <h4><i class="fa fa-home"></i> Space Type</h4>
+                    <h4><i className="fa fa-home"></i> Space Type</h4>
                     <div className="infoBox bottom">
                         <p>{type}</p>
                     </div>
@@ -57,7 +57,7 @@ class PropertyTab extends Component {
                         </div>
                     </div>
                     <br />
-                    <button onClick={() => this.props.history.push('/')} className="btn btn-danger"><i class="fa fa-arrow-circle-left"></i> Back</button>
+                    <button onClick={() => this.props.history.push('/')} className="btn btn-danger"><i className="fa fa-arrow-circle-left"></i> Back</button>
                 </div>
                 <div className="col-1"></div>
                 <div className="col-5">
@@ -71,18 +71,6 @@ class PropertyTab extends Component {
                         </div>
                         <div className="form-group">
                             <input type="text" className="form-control" placeholder="Telephone" />
-                        </div>
-                        <div className="form-group">
-                            <label>Use for:</label>
-                            <select className="form-control text-muted">
-                                <option selected>Choose...</option>
-                                <option name="Penthouse">Penthouse</option>
-                                <option name="Houses">Houses</option>
-                                <option name="Events Spaces">Events Spaces</option>
-                                <option name="Singular Spaces">Singular Spaces</option>
-                                <option name="Loft">Loft</option>
-                                <option name="Flats">Flats</option>
-                            </select>
                         </div>
                         <div className="form-group">
                             <label>Comments</label>

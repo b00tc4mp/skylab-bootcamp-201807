@@ -41,7 +41,7 @@ class App extends Component {
     const { email, token } = this.state
     return <div className="Site">
       <Nav loggedIn={this.isLoggedIn()} onLogout={this.onLogout} />
-      <div class="Site-content">
+      <div className="Site-content">
         <Switch>
           <Route exact path='/' render={() => this.isLoggedIn() ? <Home id={this.state.id} email={email} token={token} /> : <Home />} />
           <Route path='/register' render={() => this.isLoggedIn() ? <Redirect to='/property' /> : <Register toggleHero={this.toggleHeroFalse} />} />

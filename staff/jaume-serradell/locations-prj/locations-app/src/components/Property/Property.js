@@ -3,6 +3,7 @@ import logic from '../../logic'
 import { withRouter } from 'react-router-dom'
 import swal from 'sweetalert';
 import './Property.css'
+import FileBase64 from "react-file-base64";
 
 const initialState = {
     title: '',
@@ -21,11 +22,28 @@ class Property extends Component {
 
     state = initialState
 
+    getFiles = files => {
+        this.uploadPropertyPhoto(files.base64)
+    }
+
+    uploadPropertyPhoto(photo) {
+        logic.uploadPropertyPhoto(photo)
+            .then(photo => {
+                this.setState({ photo })
+            })
+            .catch(({ message }) => {
+                swal({
+                    type: 'error',
+                    title: `${message}`,
+                })
+            })
+    }
+
     onTitleChanged = e => this.setState({ title: e.target.value })
     onSubtitleChanged = e => this.setState({ subtitle: e.target.value })
     onDescriptionChanged = e => this.setState({ description: e.target.value })
     onTypeChanged = e => this.setState({ type: e.target.value })
-    onPhotoChanged = e => this.setState({ photo: e.target.value })
+    // onPhotoChanged = e => this.setState({ photo: e.target.value })
 
     onCheckboxChanged = e => {
         const checked = e.target.checked
@@ -89,11 +107,14 @@ class Property extends Component {
                         <div className="form-group">
                             <input type="text" className="form-control" placeholder="Property Title" onChange={this.onTitleChanged} value={this.state.title} />
                         </div>
-                        <div class="form-group">
+                        <div className="form-group">
                             <input type="text" className="form-control" placeholder="Property Subtitle" onChange={this.onSubtitleChanged} value={this.state.subtitle} />
                         </div>
-                        <div class="form-group">
-                            <input type="text" className="form-control" placeholder="Photo" onChange={this.onPhotoChanged} value={this.state.photo} />
+                        <div className="form-group editedForm">
+                            <FileBase64 className="input" multiple={false} onDone={this.getFiles} />
+                            <div className="form-group">
+                                {this.state.photo ? <img className="img-fluid editedImg" alt={this.state.title} src={this.state.photo}></img> : ""}
+                            </div>
                         </div>
                         <div className="form-group">
                             <textarea className="form-control" rows="3" placeholder="Property Description" onChange={this.onDescriptionChanged} value={this.state.description}></textarea>
@@ -102,122 +123,122 @@ class Property extends Component {
                             <label className="text-muted">Type of Space</label>
                             <select className="form-control text-muted" onChange={this.onTypeChanged} value={this.state.type}>
                                 <option selected>Choose...</option>
-                                <option name="Penthouse">Penthouse</option>
-                                <option name="Houses">Houses</option>
-                                <option name="Events Spaces">Events Spaces</option>
-                                <option name="Singular Spaces">Singular Spaces</option>
-                                <option name="Loft">Loft</option>
-                                <option name="Flats">Flats</option>
+                                <option value="Penthouse" name="Penthouse">Penthouse</option>
+                                <option value="Houses" name="Houses">Houses</option>
+                                <option value="Events Spaces" name="Events Spaces">Events Spaces</option>
+                                <option value="Singular Spaces" name="Singular Spaces">Singular Spaces</option>
+                                <option value="Loft" name="Loft">Loft</option>
+                                <option value="Flats" name="Flats">Flats</option>
                             </select>
                         </div>
-                       {!editId ? <button type="submit" className="btn btn-success">Add Property</button> : <button type="submit" className="btn btn-success">Update Property</button> }
                     </div>
                     <div className="col-1"></div>
                     <div className="col-6">
                         <h4>Events</h4>
                         <div className="rowEvents">
                             <div className="form-check form-check-inline">
-                                <input className="form-check-input" name="Events" type="checkbox" checked={this.state.categories.includes('Events')} onChange={this.onCheckboxChanged} />
-                                <label className="form-check-label">Events</label>
+                                <input className="form-check-input" name="Events" type="checkbox" id="Events" checked={this.state.categories.includes('Events')} onChange={this.onCheckboxChanged} />
+                                <label className="form-check-label" htmlFor="Events">Events</label>
                             </div>
                             <div className="form-check form-check-inline">
-                                <input className="form-check-input" name="Films" type="checkbox" checked={this.state.categories.includes('Films')} onChange={this.onCheckboxChanged} />
-                                <label className="form-check-label">Films</label>
+                                <input className="form-check-input" name="Films" type="checkbox" id="Films" checked={this.state.categories.includes('Films')} onChange={this.onCheckboxChanged} />
+                                <label className="form-check-label" htmlFor="Films">Films</label>
                             </div>
                             <div className="form-check form-check-inline">
-                                <input className="form-check-input" name="Shootings" type="checkbox" checked={this.state.categories.includes('Shootings')} onChange={this.onCheckboxChanged} />
-                                <label className="form-check-label">Shootings</label>
+                                <input className="form-check-input" name="Shootings" type="checkbox" id="Shootings" checked={this.state.categories.includes('Shootings')} onChange={this.onCheckboxChanged} />
+                                <label className="form-check-label" htmlFor="Shootings">Shootings</label>
                             </div>
                             <div className="form-check form-check-inline">
-                                <input className="form-check-input" name="Movies" type="checkbox" checked={this.state.categories.includes('Movies')} onChange={this.onCheckboxChanged} />
-                                <label className="form-check-label">Movies</label>
+                                <input className="form-check-input" name="Movies" type="checkbox" id="Movies" checked={this.state.categories.includes('Movies')} onChange={this.onCheckboxChanged} />
+                                <label className="form-check-label" htmlFor="Movies">Movies</label>
                             </div>
                             <div className="form-check form-check-inline">
-                                <input className="form-check-input" name="Spots" type="checkbox" checked={this.state.categories.includes('Spots')} onChange={this.onCheckboxChanged} />
-                                <label className="form-check-label">Spots</label>
+                                <input className="form-check-input" name="Spots" type="checkbox" id="Spots" checked={this.state.categories.includes('Spots')} onChange={this.onCheckboxChanged} />
+                                <label className="form-check-label" htmlFor="Spots">Spots</label>
                             </div>
                         </div>
                         <h4>Categories</h4>
                         <div className="row rowEvents">
                             <div className="col">
                                 <div className="form-check">
-                                    <input className="form-check-input" name="Balcony" type="checkbox" checked={this.state.categories.includes('Balcony')} onChange={this.onCheckboxChanged} />
-                                    <label className="form-check-label">Balcony</label>
+                                    <input className="form-check-input" name="Balcony" id="Balcony" type="checkbox" checked={this.state.categories.includes('Balcony')} onChange={this.onCheckboxChanged} />
+                                    <label className="form-check-label" htmlFor="Balcony">Balcony</label>
                                 </div>
                                 <div className="form-check">
-                                    <input className="form-check-input" name="Bathroom" type="checkbox" checked={this.state.categories.includes('Bathroom')} onChange={this.onCheckboxChanged} />
-                                    <label className="form-check-label">Bathroom</label>
+                                    <input className="form-check-input" name="Bathroom" id="Bathroom" type="checkbox" checked={this.state.categories.includes('Bathroom')} onChange={this.onCheckboxChanged} />
+                                    <label className="form-check-label" htmlFor="Bathroom">Bathroom</label>
                                 </div>
                                 <div className="form-check">
-                                    <input className="form-check-input" name="Kitchen" type="checkbox" checked={this.state.categories.includes('Kitchen')} onChange={this.onCheckboxChanged} />
-                                    <label className="form-check-label">Kitchen</label>
+                                    <input className="form-check-input" name="Kitchen" id="Kitchen" type="checkbox" checked={this.state.categories.includes('Kitchen')} onChange={this.onCheckboxChanged} />
+                                    <label className="form-check-label" htmlFor="Kitchen">Kitchen</label>
                                 </div>
                                 <div className="form-check">
-                                    <input className="form-check-input" name="Dinning Room" type="checkbox" checked={this.state.categories.includes('Dinning Room')} onChange={this.onCheckboxChanged} />
-                                    <label className="form-check-label">Dinning Room</label>
+                                    <input className="form-check-input" name="Dinning Room" id="Dinning Room" type="checkbox" checked={this.state.categories.includes('Dinning Room')} onChange={this.onCheckboxChanged} />
+                                    <label className="form-check-label" htmlFor="Dinning Room">Dinning Room</label>
                                 </div>
                                 <div className="form-check">
-                                    <input className="form-check-input" name="Office" type="checkbox" checked={this.state.categories.includes('Office')} onChange={this.onCheckboxChanged} />
-                                    <label className="form-check-label">Office</label>
+                                    <input className="form-check-input" name="Office" id="Office" type="checkbox" checked={this.state.categories.includes('Office')} onChange={this.onCheckboxChanged} />
+                                    <label className="form-check-label" htmlFor="Office">Office</label>
                                 </div>
                                 <div className="form-check">
-                                    <input className="form-check-input" name="Views City" type="checkbox" checked={this.state.categories.includes('Views City')} onChange={this.onCheckboxChanged} />
-                                    <label className="form-check-label">Views City</label>
-                                </div>
-                            </div>
-                            <div className="col">
-                                <div className="form-check">
-                                    <input className="form-check-input" name="Classic Style" type="checkbox" checked={this.state.categories.includes('Classic Style')} onChange={this.onCheckboxChanged} />
-                                    <label className="form-check-label">Classic Style</label>
-                                </div>
-                                <div className="form-check">
-                                    <input className="form-check-input" name="Forest Views" type="checkbox" checked={this.state.categories.includes('Forest Views')} onChange={this.onCheckboxChanged} />
-                                    <label className="form-check-label">Forest Views</label>
-                                </div>
-                                <div className="form-check">
-                                    <input className="form-check-input" name="Modern Style" type="checkbox" checked={this.state.categories.includes('Modern Style')} onChange={this.onCheckboxChanged} />
-                                    <label className="form-check-label">Modern Style</label>
-                                </div>
-                                <div className="form-check">
-                                    <input className="form-check-input" name="Parking" type="checkbox" checked={this.state.categories.includes('Parking')} onChange={this.onCheckboxChanged} />
-                                    <label className="form-check-label">Parking</label>
-                                </div>
-                                <div className="form-check">
-                                    <input className="form-check-input" name="Garden" type="checkbox" checked={this.state.categories.includes('Garden')} onChange={this.onCheckboxChanged} />
-                                    <label className="form-check-label">Garden</label>
-                                </div>
-                                <div className="form-check">
-                                    <input className="form-check-input" name="Pool" type="checkbox" checked={this.state.categories.includes('Pool')} onChange={this.onCheckboxChanged} />
-                                    <label className="form-check-label">Pool</label>
+                                    <input className="form-check-input" name="Views City" id="Views City" type="checkbox" checked={this.state.categories.includes('Views City')} onChange={this.onCheckboxChanged} />
+                                    <label className="form-check-label" htmlFor="Views City">Views City</label>
                                 </div>
                             </div>
                             <div className="col">
                                 <div className="form-check">
-                                    <input className="form-check-input" name="Elevator" type="checkbox" checked={this.state.categories.includes('Elevator')} onChange={this.onCheckboxChanged} />
-                                    <label className="form-check-label">Elevator</label>
+                                    <input className="form-check-input" name="Classic Style" id="Classic Style" type="checkbox" checked={this.state.categories.includes('Classic Style')} onChange={this.onCheckboxChanged} />
+                                    <label className="form-check-label" htmlFor="Classic Style">Classic Style</label>
                                 </div>
                                 <div className="form-check">
-                                    <input className="form-check-input" name="Sea Views" type="checkbox" checked={this.state.categories.includes('Sea Views')} onChange={this.onCheckboxChanged} />
-                                    <label className="form-check-label">Sea Views</label>
+                                    <input className="form-check-input" name="Forest Views" id="Forest Views" type="checkbox" checked={this.state.categories.includes('Forest Views')} onChange={this.onCheckboxChanged} />
+                                    <label className="form-check-label" htmlFor="Forest Views">Forest Views</label>
                                 </div>
                                 <div className="form-check">
-                                    <input className="form-check-input" name="Living Room" type="checkbox" checked={this.state.categories.includes('Living Room')} onChange={this.onCheckboxChanged} />
-                                    <label className="form-check-label">Living Room</label>
+                                    <input className="form-check-input" name="Modern Style" id="Modern Style" type="checkbox" checked={this.state.categories.includes('Modern Style')} onChange={this.onCheckboxChanged} />
+                                    <label className="form-check-label" htmlFor="Modern Style">Modern Style</label>
                                 </div>
                                 <div className="form-check">
-                                    <input className="form-check-input" name="Industrial" type="checkbox" checked={this.state.categories.includes('Industrial')} onChange={this.onCheckboxChanged} />
-                                    <label className="form-check-label">Industrial</label>
+                                    <input className="form-check-input" name="Parking" id="Parking" type="checkbox" checked={this.state.categories.includes('Parking')} onChange={this.onCheckboxChanged} />
+                                    <label className="form-check-label" htmlFor="Parking">Parking</label>
                                 </div>
                                 <div className="form-check">
-                                    <input className="form-check-input" name="Wood Floor" type="checkbox" checked={this.state.categories.includes('Wood Floor')} onChange={this.onCheckboxChanged} />
-                                    <label className="form-check-label">Wood Floor</label>
+                                    <input className="form-check-input" name="Garden" id="Garden" type="checkbox" checked={this.state.categories.includes('Garden')} onChange={this.onCheckboxChanged} />
+                                    <label className="form-check-label" htmlFor="Garden">Garden</label>
                                 </div>
                                 <div className="form-check">
-                                    <input className="form-check-input" name="Terrace" type="checkbox" checked={this.state.categories.includes('Terrace')} onChange={this.onCheckboxChanged} />
-                                    <label className="form-check-label">Terrace</label>
+                                    <input className="form-check-input" name="Pool" id="Pool" type="checkbox" checked={this.state.categories.includes('Pool')} onChange={this.onCheckboxChanged} />
+                                    <label className="form-check-label" htmlFor="Pool">Pool</label>
+                                </div>
+                            </div>
+                            <div className="col">
+                                <div className="form-check">
+                                    <input className="form-check-input" name="Elevator" id="Elevator" type="checkbox" checked={this.state.categories.includes('Elevator')} onChange={this.onCheckboxChanged} />
+                                    <label className="form-check-label" htmlFor="Elevator">Elevator</label>
+                                </div>
+                                <div className="form-check">
+                                    <input className="form-check-input" name="Sea Views" id="Sea Views" type="checkbox" checked={this.state.categories.includes('Sea Views')} onChange={this.onCheckboxChanged} />
+                                    <label className="form-check-label" htmlFor="Sea Views">Sea Views</label>
+                                </div>
+                                <div className="form-check">
+                                    <input className="form-check-input" name="Living Room" id="Living Room" type="checkbox" checked={this.state.categories.includes('Living Room')} onChange={this.onCheckboxChanged} />
+                                    <label className="form-check-label" htmlFor="Living Room">Living Room</label>
+                                </div>
+                                <div className="form-check">
+                                    <input className="form-check-input" name="Industrial" id="Industrial" type="checkbox" checked={this.state.categories.includes('Industrial')} onChange={this.onCheckboxChanged} />
+                                    <label className="form-check-label" htmlFor="Industrial">Industrial</label>
+                                </div>
+                                <div className="form-check">
+                                    <input className="form-check-input" name="Wood Floor" id="Wood Floor" type="checkbox" checked={this.state.categories.includes('Wood Floor')} onChange={this.onCheckboxChanged} />
+                                    <label className="form-check-label" htmlFor="Wood Floor">Wood Floor</label>
+                                </div>
+                                <div className="form-check">
+                                    <input className="form-check-input" name="Terrace" id="Terrace" type="checkbox" checked={this.state.categories.includes('Terrace')} onChange={this.onCheckboxChanged} />
+                                    <label className="form-check-label" htmlFor="Terrace">Terrace</label>
                                 </div>
                             </div>
                         </div>
+                        {!editId ? <button type="submit" className="btn btn-success mt-3">Add Property</button> : <button type="submit" className="btn btn-success">Update Property</button> }
                     </div>
                 </div>
             </form>

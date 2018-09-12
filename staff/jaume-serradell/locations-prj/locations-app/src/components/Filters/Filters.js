@@ -30,6 +30,16 @@ class Filters extends Component {
         this.listProperties()
     }
 
+    resetFilters = e => {
+        this.setState({
+            type:'',
+            categories:[]
+        },() => {
+            this.myFormRef.reset()
+            return this.listProperties()
+        })
+    }
+
     onCheckboxChanged = e => {
 
         const checked = e.target.checked
@@ -82,7 +92,7 @@ class Filters extends Component {
         const { properties } = this.state
 
         return <div className="container">
-            <form>
+            <form ref={(el) => this.myFormRef = el}>
                 <div className="row">
                     <div className="col-4">
                         <div className="filterBox">
@@ -90,127 +100,128 @@ class Filters extends Component {
                             <div className="form-group">
                                 <select className="form-control text-muted" onChange={this.onTypeChanged} value={this.state.type}>
                                     <option selected value="all" name="all">All types</option>
-                                    <option name="Penthouse">Penthouse</option>
-                                    <option name="Houses">Houses</option>
-                                    <option name="Events Spaces">Events Spaces</option>
-                                    <option name="Singular Spaces">Singular Spaces</option>
-                                    <option name="Loft">Loft</option>
-                                    <option name="Flats">Flats</option>
+                                    <option value="Penthouse" name="Penthouse">Penthouse</option>
+                                    <option value="Houses" name="Houses">Houses</option>
+                                    <option value="Events Spaces" name="Events Spaces">Events Spaces</option>
+                                    <option value="Singular Spaces" name="Singular Spaces">Singular Spaces</option>
+                                    <option value="Loft" name="Loft">Loft</option>
+                                    <option value="Flats" name="Flats">Flats</option>
                                 </select>
                             </div>
                             <br />
                             <h4>By Events:</h4>
-                            <div class="row">
-                                <div class="col">
+                            <div className="row">
+                                <div className="col">
                                     <div className="form-check form-check-inline">
-                                        <input className="form-check-input" name="Events" type="checkbox" id="inlineCheckbox1" value="Events" onChange={this.onCheckboxChanged} />
-                                        <label className="form-check-label">Events</label>
+                                        <input className="form-check-input" name="Events" type="checkbox" id="Events" value="Events" onChange={this.onCheckboxChanged} />
+                                        <label className="form-check-label" htmlFor="Events">Events</label>
                                     </div>
                                     <div className="form-check form-check-inline">
-                                        <input className="form-check-input" name="Films" type="checkbox" id="inlineCheckbox2" value="Films" onChange={this.onCheckboxChanged} />
-                                        <label className="form-check-label">Films</label>
+                                        <input className="form-check-input" name="Films" type="checkbox" id="Films" value="Films" onChange={this.onCheckboxChanged} />
+                                        <label className="form-check-label" htmlFor="Films">Films</label>
                                     </div>
                                     <div className="form-check form-check-inline">
-                                        <input className="form-check-input" name="Shootings" type="checkbox" id="inlineCheckbox3" value="Shootings" onChange={this.onCheckboxChanged} />
-                                        <label className="form-check-label">Shootings</label>
+                                        <input className="form-check-input" name="Shootings" type="checkbox" id="Shootings" value="Shootings" onChange={this.onCheckboxChanged} />
+                                        <label className="form-check-label" htmlFor="Shootings">Shootings</label>
                                     </div>
                                 </div>
-                                <div class="col">
+                                <div className="col">
                                     <div className="form-check form-check-inline">
-                                        <input className="form-check-input" name="Movies" type="checkbox" id="inlineCheckbox4" value="Movies" onChange={this.onCheckboxChanged} />
-                                        <label className="form-check-label">Movies</label>
+                                        <input className="form-check-input" name="Movies" type="checkbox" id="Movies" value="Movies" onChange={this.onCheckboxChanged} />
+                                        <label className="form-check-label" htmlFor="Movies">Movies</label>
                                     </div>
                                     <div className="form-check form-check-inline">
-                                        <input className="form-check-input" name="Spots" type="checkbox" id="inlineCheckbox5" value="Spots" onChange={this.onCheckboxChanged} />
-                                        <label className="form-check-label">Spots</label>
+                                        <input className="form-check-input" name="Spots" type="checkbox" id="Spots" value="Spots" onChange={this.onCheckboxChanged} />
+                                        <label className="form-check-label" htmlFor="Spots">Spots</label>
                                     </div>
                                 </div>
                             </div>
                             <br />
                             <h4>By Categories:</h4>
-                            <div class="row">
-                                <div class="col">
+                            <div className="row">
+                                <div className="col">
                                     <div className="form-check">
-                                        <input className="form-check-input" name="Balcony" type="checkbox" id="inlineCheckbox1" value="Balcony" onChange={this.onCheckboxChanged} />
-                                        <label className="form-check-label">Balcony</label>
+                                        <input className="form-check-input" name="Balcony" type="checkbox" id="Balcony" value="Balcony" onChange={this.onCheckboxChanged} />
+                                        <label className="form-check-label" htmlFor="Balcony">Balcony</label>
                                     </div>
                                     <div className="form-check">
-                                        <input className="form-check-input" name="Bathroom" type="checkbox" id="inlineCheckbox2" value="Bathroom" onChange={this.onCheckboxChanged} />
-                                        <label className="form-check-label">Bathroom</label>
+                                        <input className="form-check-input" name="Bathroom" type="checkbox" id="Bathroom" value="Bathroom" onChange={this.onCheckboxChanged} />
+                                        <label className="form-check-label" htmlFor="Bathroom">Bathroom</label>
                                     </div>
                                     <div className="form-check">
-                                        <input className="form-check-input" name="Kitchen" type="checkbox" id="inlineCheckbox3" value="Kitchen" onChange={this.onCheckboxChanged} />
-                                        <label className="form-check-label">Kitchen</label>
+                                        <input className="form-check-input" name="Kitchen" type="checkbox" id="Kitchen" value="Kitchen" onChange={this.onCheckboxChanged} />
+                                        <label className="form-check-label" htmlFor="Kitchen">Kitchen</label>
                                     </div>
                                     <div className="form-check">
-                                        <input className="form-check-input" name="Dinning Room" type="checkbox" id="inlineCheckbox4" value="Dinning Room" onChange={this.onCheckboxChanged} />
-                                        <label className="form-check-label">Dinning Room</label>
+                                        <input className="form-check-input" name="Dinning Room" type="checkbox" id="Dinning Room" value="Dinning Room" onChange={this.onCheckboxChanged} />
+                                        <label className="form-check-label" htmlFor="Dinning Room">Dinning Room</label>
                                     </div>
                                     <div className="form-check">
-                                        <input className="form-check-input" name="Office" type="checkbox" id="inlineCheckbox5" value="Office" onChange={this.onCheckboxChanged} />
-                                        <label className="form-check-label">Office</label>
+                                        <input className="form-check-input" name="Office" type="checkbox" id="Office" value="Office" onChange={this.onCheckboxChanged} />
+                                        <label className="form-check-label" htmlFor="Office">Office</label>
                                     </div>
                                     <div className="form-check">
-                                        <input className="form-check-input" name="Views City" type="checkbox" id="inlineCheckbox5" value="Views City" onChange={this.onCheckboxChanged} />
-                                        <label className="form-check-label">Views City</label>
+                                        <input className="form-check-input" name="Views City" type="checkbox" id="Views City" value="Views City" onChange={this.onCheckboxChanged} />
+                                        <label className="form-check-label" htmlFor="Views City">Views City</label>
                                     </div>
                                     <div className="form-check">
-                                        <input className="form-check-input" name="Classic Style" type="checkbox" id="inlineCheckbox1" value="Classic Style" onChange={this.onCheckboxChanged} />
-                                        <label className="form-check-label">Classic Style</label>
+                                        <input className="form-check-input" name="Classic Style" type="checkbox" id="Classic Style" value="Classic Style" onChange={this.onCheckboxChanged} />
+                                        <label className="form-check-label" htmlFor="Classic Style">Classic Style</label>
                                     </div>
                                     <div className="form-check">
-                                        <input className="form-check-input" name="Forest Views" type="checkbox" id="inlineCheckbox2" value="Forest Views" onChange={this.onCheckboxChanged} />
-                                        <label className="form-check-label">Forest Views</label>
+                                        <input className="form-check-input" name="Forest Views" type="checkbox" id="Forest Views" value="Forest Views" onChange={this.onCheckboxChanged} />
+                                        <label className="form-check-label" htmlFor="Forest Views">Forest Views</label>
                                     </div>
                                     <div className="form-check">
-                                        <input className="form-check-input" name="Modern Style" type="checkbox" id="inlineCheckbox3" value="Modern Style" onChange={this.onCheckboxChanged} />
-                                        <label className="form-check-label">Modern Style</label>
+                                        <input className="form-check-input" name="Modern Style" type="checkbox" id="Modern Style" value="Modern Style" onChange={this.onCheckboxChanged} />
+                                        <label className="form-check-label" htmlFor="Modern Style">Modern Style</label>
                                     </div>
                                 </div>
-                                <div class="col">
+                                <div className="col">
                                     <div className="form-check">
-                                        <input className="form-check-input" name="Parking" type="checkbox" value="Parking" onChange={this.onCheckboxChanged} />
-                                        <label className="form-check-label">Parking</label>
+                                        <input className="form-check-input" name="Parking" type="checkbox" id="Parking" value="Parking" onChange={this.onCheckboxChanged} />
+                                        <label className="form-check-label" htmlFor="Parking">Parking</label>
                                     </div>
                                     <div className="form-check">
-                                        <input className="form-check-input" name="Garden" type="checkbox" value="Garden" onChange={this.onCheckboxChanged} />
-                                        <label className="form-check-label">Garden</label>
+                                        <input className="form-check-input" name="Garden" type="checkbox" id="Garden" value="Garden" onChange={this.onCheckboxChanged} />
+                                        <label className="form-check-label" htmlFor="Garden">Garden</label>
                                     </div>
                                     <div className="form-check">
-                                        <input className="form-check-input" name="Pool" type="checkbox" id="inlineCheckbox1" value="Pool" onChange={this.onCheckboxChanged} />
-                                        <label className="form-check-label">Pool</label>
+                                        <input className="form-check-input" name="Pool" type="checkbox" id="Pool" value="Pool" onChange={this.onCheckboxChanged} />
+                                        <label className="form-check-label" htmlFor="Pool">Pool</label>
                                     </div>
                                     <div className="form-check">
-                                        <input className="form-check-input" name="Elevator" type="checkbox" id="inlineCheckbox2" value="Elevator" onChange={this.onCheckboxChanged} />
-                                        <label className="form-check-label">Elevator</label>
+                                        <input className="form-check-input" name="Elevator" type="checkbox" id="Elevator" value="Elevator" onChange={this.onCheckboxChanged} />
+                                        <label className="form-check-label" htmlFor="Elevator">Elevator</label>
                                     </div>
                                     <div className="form-check">
-                                        <input className="form-check-input" name="Sea views" type="checkbox" id="inlineCheckbox2" value="Sea views" onChange={this.onCheckboxChanged} />
-                                        <label className="form-check-label">Sea views</label>
+                                        <input className="form-check-input" name="Sea views" type="checkbox" id="Sea views" value="Sea views" onChange={this.onCheckboxChanged} />
+                                        <label className="form-check-label" htmlFor="Sea views">Sea views</label>
                                     </div>
                                     <div className="form-check">
-                                        <input className="form-check-input" name="Living Room" type="checkbox" id="inlineCheckbox3" value="Living Room" onChange={this.onCheckboxChanged} />
-                                        <label className="form-check-label">Living Room</label>
+                                        <input className="form-check-input" name="Living Room" type="checkbox" id="Living Room" value="Living Room" onChange={this.onCheckboxChanged} />
+                                        <label className="form-check-label" htmlFor="Living Room">Living Room</label>
                                     </div>
                                     <div className="form-check">
-                                        <input className="form-check-input" name="Industrial" type="checkbox" id="inlineCheckbox4" value="Industrial" onChange={this.onCheckboxChanged} />
-                                        <label className="form-check-label">Industrial</label>
+                                        <input className="form-check-input" name="Industrial" type="checkbox" id="Industrial" value="Industrial" onChange={this.onCheckboxChanged} />
+                                        <label className="form-check-label" htmlFor="Industrial">Industrial</label>
                                     </div>
                                     <div className="form-check">
-                                        <input className="form-check-input" name="Wood Floor" type="checkbox" id="inlineCheckbox5" value="Wood Floor" onChange={this.onCheckboxChanged} />
-                                        <label className="form-check-label">Wood Floor</label>
+                                        <input className="form-check-input" name="Wood Floor" type="checkbox" id="Wood Floor" value="Wood Floor" onChange={this.onCheckboxChanged} />
+                                        <label className="form-check-label" htmlFor="Wood Floor">Wood Floor</label>
                                     </div>
                                     <div className="form-check">
-                                        <input className="form-check-input" name="Terrace" type="checkbox" id="inlineCheckbox5" value="Terrace" onChange={this.onCheckboxChanged} />
-                                        <label className="form-check-label">Terrace</label>
+                                        <input className="form-check-input" name="Terrace" type="checkbox" id="Terrace" value="Terrace" onChange={this.onCheckboxChanged} />
+                                        <label className="form-check-label" htmlFor="Terrace">Terrace</label>
                                     </div>
                                 </div>
                             </div>
+                            <button type="button" className="btn btn-primary mt-4" onClick={this.resetFilters}>Clear Filters</button>
                         </div>
                     </div>
                     <div className="col-1"></div>
                     <div className="col-7">
-                        <div class="row">
+                        <div className="row">
                             {properties.length ? properties.map(propers => <PropertyCard key={propers.id} data={{ ...propers, userId: this.props.userId }} goEdit={this.props.goEdit} deleteProperty={this.deleteProperty} />) : ""}
                         </div>
                     </div>

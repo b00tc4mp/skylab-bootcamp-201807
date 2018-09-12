@@ -8,7 +8,7 @@ const validateJwt = require('./helpers/validate-jwt')
 
 const router = express.Router()
 
-const jsonBodyParser = bodyParser.json()
+const jsonBodyParser = bodyParser.json({limit:'10mb'})
 
 
 //USER ROUTES//
@@ -39,7 +39,7 @@ router.post('/authenticate', jsonBodyParser, (req, res) => {
 
             const token = jwt.sign({ sub: email }, JWT_SECRET, { expiresIn: JWT_EXP })
 
-            res.json({ message: 'owner authenticated', token,id })
+            res.json({ message: 'owner authenticated', token, id })
         })
         .catch(err => {
             const { message } = err
@@ -103,7 +103,7 @@ router.get('/listProperties', (req, res) => {
 
     if (query.hasOwnProperty('type') || query.hasOwnProperty('categories')) {
         const type = req.query.type
-        const categories = req.query.categories ? req.query.categories.split('|') : undefined
+        const categories = req.query.categories ? req.query.categories.split(',') : undefined
 
         logic.listPropertyByQuery(type, categories)
             .then(properties => {
@@ -166,8 +166,22 @@ router.delete('/owner/:email/property/:id', [validateJwt], (req, res) => {
 
             res.status(err instanceof LogicError ? 400 : 500).json({ message })
         })
-
 })
+
+//ADD PHOTO CLOUDINARY
+router.patch('/upload', jsonBodyParser, (req, res) => {
+    const {
+        body: { base64Image },
+    } = req;
+
+    return logic._saveImage(base64Image)
+        .then(photo => res.status(200).json({ status: 'OK', photo }))
+        .catch((err) => {
+            const { message } = err;
+            res.status(err instanceof LogicError ? 400 : 500).json({ message });
+        });
+});
+
 
 module.exports = router
 

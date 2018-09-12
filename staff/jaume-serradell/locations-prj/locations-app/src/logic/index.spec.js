@@ -22,7 +22,7 @@ describe('logic', () => {
                 .then(res => expect(res).to.be.true)
         )
 
-        it('should fail on already existing owner', () => 
+        it('should fail on already existing owner', () => {
             logic.register(name, email, password)
                 .then(() => logic.register(name, email, password))
                 .catch(err => err)
@@ -30,6 +30,8 @@ describe('logic', () => {
                     expect(err).to.exist
                     expect(err.message).to.equal(`owner ${name} already exist`)
                 })
+
+            }
         )
 
         it('should fail on empty owner name', () => {
@@ -129,15 +131,26 @@ describe('logic', () => {
         })
     })
 
-    true && describe('delete property', () => {
+    !true && describe('unregister owner', () => {
+        it('should succeed on existing owner', () => {
+            logic.register(name, email, password)
+                .then(() => logic.authenticate(email, password))
+                .then(token => logic.unregisterOwner(email, password, token))
+                .then(res => expect(res).to.be.true)
+
+
+            }
+        )
+    })
+
+    !true && describe('delete property', () => {
 
         it('should delete property', () => {
-            return logic.register(email, password, name)
+            return logic.register(name, email, password)
                 .then(() => {
                     return logic.authenticate(email, password)
                 })
                 .then(token => {
-                    debugger
                     return logic.addProperty(email, title, subtitle, photo, description, categories, type, token)
                         .then(propertyId => {
                             return logic.deletePropertyById(email, propertyId, token)
@@ -145,15 +158,6 @@ describe('logic', () => {
                         })
                 })
         })
-    })
-
-    true && describe('unregister owner', () => {
-        it('should succeed on existing owner', () => 
-            logic.register(email, password, name)
-                .then(() => logic.authenticate(email, password))
-                .then(token => logic.unregisterOwner(email, password, token))
-                .then(res => expect(res).to.be.true)
-        )
     })
 })
 

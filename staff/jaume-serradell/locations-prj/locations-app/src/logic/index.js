@@ -3,6 +3,17 @@ const validateEmail = require('../utils/validate-email')
 const logic = {
     url: 'http://localhost:8080/api',
 
+   /** Method to api called
+     * 
+     * @param {string} path
+     * @param {string} method
+     * @param {string} headers
+     * @param {json} body
+     * @param {number} expectedStatus
+     * 
+     * @throws {Error} Fetch error
+     * 
+     */
     _call(path, method, headers, body, expectedStatus) {
         const config = { method }
 
@@ -22,11 +33,17 @@ const logic = {
             })
     },
 
+    /** String field validator
+     * 
+     * @param {string} fieldName The name of the value
+     * @param {string} fieldValue The value of the value
+     * 
+     * @throws {LogicError} If field name is invalid
+     * 
+     */
     _validateStringField(fieldName, fieldValue) {
         if (typeof fieldValue !== 'string' || !fieldValue.length) throw new LogicError(`invalid ${fieldName}`)
     },
-
-
 
     /** Number field validator
      * 
@@ -51,6 +68,13 @@ const logic = {
         if (!validateEmail(email)) throw new LogicError('invalid email')
     },
 
+    /** Register owner with email, password and name
+     * 
+     * @param {string} email The owner's email
+     * @param {string} password The owner's password
+     * @param {string} name The owner's name
+     * 
+     */
     register(name, email, password) {
         return Promise.resolve()
             .then(() => {
@@ -65,6 +89,12 @@ const logic = {
             })
     },
 
+    /** Authenticate owner with email and password
+     * 
+     * @param {string} email The owner's email
+     * @param {string} password The owner's password
+     * 
+     */
     authenticate(email, password) {
         return Promise.resolve()
             .then(() => {
@@ -75,15 +105,18 @@ const logic = {
                     'Content-Type': 'application/json'
                 }, JSON.stringify({ email, password }), 200)
                     .then(res => res.json())
-                    // .then(({ token }) => {
-                    //     debugger
-                    //     token
-                    // })
                     .then(res => res)
             })
-
     },
 
+    /** Update owner password
+     * 
+     * @param {string} email The owner's email
+     * @param {string} password The owner's password
+     * @param {string} newPassword The owner's new password
+     * @param {string} token The owner's provided token
+     * 
+     */
     updatePassword(email, password, newPassword, token) {
         return Promise.resolve()
             .then(() => {
@@ -97,6 +130,13 @@ const logic = {
 
     },
 
+    /** Unregister owner
+     * 
+     * @param {string} email The owner's email
+     * @param {string} password The owner's password
+     * @param {string} token The owner's provided token
+     * 
+     */
     unregisterOwner(email, password, token) {
         return Promise.resolve()
             .then(() => {
@@ -109,6 +149,18 @@ const logic = {
             .then(() => true)
     },
 
+    /** Add new property
+     * 
+     * @param {string} email The owner's email
+     * @param {string} title The title of the property
+     * @param {string} subtitle The subtitle of the property
+     * @param {string} photo The url of the photo
+     * @param {string} description The description of the property
+     * @param {string} categories The categories of the property
+     * @param {string} type The type of the property
+     * @param {string} token The owner's provided token
+     * 
+     */
     addProperty(email, title, subtitle, photo, description, categories, type, token) {
         return Promise.resolve()
             .then(() => {
@@ -126,6 +178,11 @@ const logic = {
             })
     },
 
+    /** Retrieve properties by ID
+     * 
+     * @param {string} propertyId The ID of the property
+     * 
+     */
     retrieveProperty(propertyId) {
         return Promise.resolve()
             .then(() => {
@@ -138,8 +195,20 @@ const logic = {
             })
     },
 
+    /** Update property
+     * 
+     * @param {string} propertyId The ID of the property
+     * @param {string} email The owner's email
+     * @param {string} token The owner's provided token
+     * @param {string} title The title of the property
+     * @param {string} subtitle The Subtitle of the property
+     * @param {string} photo The photo of the property
+     * @param {string} description The description of the property
+     * @param {string} categories The categories of the property
+     * @param {string} type The type of the property
+     * 
+     */
     updatePropertyById(propertyId, email, token, title, subtitle, description, photo, categories, type) {
-        console.log(arguments)
         return Promise.resolve()
             .then(() => {
                 this._validateEmail(email)
@@ -154,8 +223,13 @@ const logic = {
             })
     },
 
+    /** List properties by query
+     * 
+     * @param {string} type The ID of the property
+     * @param {array} categories The categories of the property
+     * 
+     */
     listPropertyByQuery(type = 'all', categories = []) {
-        console.log({type,categories})
         return Promise.resolve()
             .then(() => {
                 let url = 'listProperties'
@@ -177,6 +251,13 @@ const logic = {
             .then(res => res.json())
     },
 
+    /** Delete property
+     * 
+     * @param {string} email The owner's email
+     * @param {string} propertyId The ID of the property
+     * @param {string} token The owner's provided token
+     * 
+     */
     deletePropertyById(email, propertyId, token) {
         return Promise.resolve()
             .then(() => {
@@ -187,7 +268,18 @@ const logic = {
                 return res.json()
             })
             .then(res => res)
-    }
+    },
+
+    /**
+     * Upload photo
+     * 
+     * @param {string} photo 
+     */
+    uploadPropertyPhoto(photo) {
+        return this._call('upload', 'PATCH', {'content-type': 'application/json' }, JSON.stringify({base64Image: photo}), 200)
+            .then(res => res.json())
+            .then(({ photo }) => photo)
+    },
 }
 
 class LogicError extends Error {

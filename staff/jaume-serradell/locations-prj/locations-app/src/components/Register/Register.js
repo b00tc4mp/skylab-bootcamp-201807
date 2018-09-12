@@ -31,29 +31,29 @@ class Register extends Component {
     }
 
     render() {
-        return <div class="container">
-            <div class="row">
-                <div class="col-3"></div>
-                <div class="col-6 borderBox">
+        return <div className="container">
+            <div className="row">
+                <div className="col-3"></div>
+                <div className="col-6 borderBox">
                     <h4>Register</h4>
                     <form onSubmit={this.onRegisterSubmitted}>
-                        <div class="form-group">
+                        <div className="form-group">
                             <label for="exampleInputEmail1">Name</label>
-                            <input type="name" class="form-control" placeholder="Enter name" onChange={this.onNameChanged} />
+                            <input type="name" className="form-control" placeholder="Enter name" onChange={this.onNameChanged} />
                         </div>
-                        <div class="form-group">
+                        <div className="form-group">
                             <label for="exampleInputEmail1">Email address</label>
-                            <input type="email" class="form-control" placeholder="Enter email" onChange={this.onEmailChanged} />
+                            <input type="email" className="form-control" placeholder="Enter email" onChange={this.onEmailChanged} />
                         </div>
-                        <div class="form-group">
+                        <div className="form-group">
                             <label for="exampleInputPassword1">Password</label>
-                            <input type="password" class="form-control" placeholder="Password" onChange={this.onPasswordChanged} />
-                            <small class="form-text text-muted">The password must be more than 6 characters</small>
+                            <input type="password" className="form-control" placeholder="Password" onChange={this.onPasswordChanged} />
+                            <small className="form-text text-muted">The password must be more than 6 characters</small>
                         </div>
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="submit" className="btn btn-primary">Submit</button>
                     </form>
                 </div>
-                <div class="col-3"></div>
+                <div className="col-3"></div>
             </div>
       </div>
     }
