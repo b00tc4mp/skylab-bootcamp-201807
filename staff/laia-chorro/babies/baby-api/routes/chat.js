@@ -25,6 +25,18 @@ chatRouter.post('/me/:user/chat/:chat/message', [validateJwt, jsonBodyParser], (
     const { params: { user, chat }, body: { text } } = req
 
     chatLogic.addMessageToChat(user, chat, text)
+    .then(() => res.status(201).json({ message: 'message added to chat' }))
+        .catch(err => {
+            const { message } = err
+
+            res.status(err instanceof LogicError ? 400 : 500).json({ message })
+        })
+})
+
+chatRouter.get('/me/:user/chat/:chat', validateJwt, (req, res) => {
+    const { params: { user, chat } } = req
+
+    chatLogic.getChat(user, chat)
         .then(res.json.bind(res))
         .catch(err => {
             const { message } = err
@@ -33,10 +45,10 @@ chatRouter.post('/me/:user/chat/:chat/message', [validateJwt, jsonBodyParser], (
         })
 })
 
-chatRouter.get('/me/:user/chat/:chat', [validateJwt, jsonBodyParser], (req, res) => {
-    const { params: { user, chat } } = req
+chatRouter.get('/me/:user/chat', validateJwt, (req, res) => {
+    const { params: { user } } = req
 
-    chatLogic.getChat(user, chat)
+    chatLogic.listChats(user)
         .then(res.json.bind(res))
         .catch(err => {
             const { message } = err
