@@ -937,3 +937,17 @@ class App extends Component {
   
   
   export default App;
+
+
+
+  //////////// switchers con sesion
+
+  <Switch>
+  <Route exact path="/" render={() => hostess ? <Redirect to="/hostess" /> : business ? <Redirect to="/business" /> : <Landing hostessLogged={this.hostessLogged} businessLogged={this.businessLogged} />} />
+  <Route exact path="/hostess" render={() => (hostess && loggedIn) ? <Hostess email={email} token={token} onLogout={this.onLogout}/> : <Redirect to="/"/>} />
+  <Route exact path="/hostess/profile" render={() => (hostess && loggedIn) ? <HostessEditProfile email={email} token={token} onLogout={this.onLogout}/> : <Redirect to="/" />} />
+  <Route exact path="/business" render={() => (business && loggedIn) ? <Business email={email} token={token} onLogout={this.onLogout}/> : <Redirect to="/"/>} />
+  <Route exact path="/business/profile" render={() => (business && loggedIn) ? <BusinessEditProfile email={email} token={token} onLogout={this.onLogout} /> :  <Redirect to="/"/>} />
+  <Route exact path="/event/create" render={() => ( business && loggedIn) ? <CreateEvent email={email} token={token} onLogout={this.onLogout} idEvent={this.handleIdEvent}/> : <Redirect to="/"/>} />
+  <Route exact path="/event/:id" render={props => (email) ? <Event eventId={props.match.params.id}/> : <Redirect to="/"/>} />
+</Switch>

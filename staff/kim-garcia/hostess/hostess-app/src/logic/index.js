@@ -231,6 +231,17 @@ const logic = {
             .then(res => res.id)
     },
 
+    
+    retrieveEventById(id) {
+        return Promise.resolve()
+            .then(() => {
+
+                return this._call(`event/${id}`, 'GET', undefined, undefined, 200)
+            })
+            .then(res => res.json())
+            .then(res => res.event)
+    },
+
 
 }
 

@@ -97,14 +97,17 @@ class CreateEvent extends Component {
 
         logic.createEvent(this.props.email, date, location, title, description, this.props.token)
             .then(id => {
-                debugger
-                this.setState({ event: id })
+                // this.setState({ event: id })
+                
+                // this.props.idEvent(id)
+
+                this.props.history.push(`/event/${id}`)
             })
     }
 
 
     render() {
-        const { hostesses, event } = this.state
+        const { hostesses } = this.state
 
         return (
             <div>
@@ -184,9 +187,6 @@ class CreateEvent extends Component {
                     </ul>)
                 }
                 <button onClick={this.handleCreate}>CREATE EVENT</button>
-                {/* {
-                    !!(event.length) && <Event event={event}/>
-                } */}
             </div>
         )
     }

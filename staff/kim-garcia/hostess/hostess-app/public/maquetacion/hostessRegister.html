@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <!-- <link rel="stylesheet" href="style.css"> -->
+    <link rel="stylesheet" href="style.css">
     <title>Register</title>
 </head>
 
@@ -101,41 +101,3 @@
 </body>
 
 </html>
-
-
-
-///////////////
-
-
-
-
-<div>
-    <label htmlFor="name"> NAME </label>
-    <input id="name" type="text" placeholder="my name is..." value={name} onChange={this.handleName} />
-    {
-        errorName && <div>{errorName}</div>
-    }
-</div>
-
-<div>
-    <label htmlFor="birth"> BIRTHDATE </label>
-    <input id="birth" type="text" value={birth} onChange={this.handleBirth} placeholder="YYYY/MM/DD" />
-</div>
-
-<div>
-    <label htmlFor="origin"> ORIGIN </label>
-    <input id="origin" type="text" placeholder="I come from..." value={origin} onChange={this.handleOrigin} />
-    {
-        errorOrigin && <div>{errorOrigin}</div>
-    }
-</div>
-<div>
-    <RadioGroup name="gender" selectedValue={this.state.gender} onChange={this.handleGender}>
-        <Radio value="W" /> Woman
-        <Radio value="M" /> Man
-    </RadioGroup>
-</div>
-
-
-
-    { success && <div>{success}</div>}

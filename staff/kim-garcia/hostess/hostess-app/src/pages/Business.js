@@ -1,9 +1,7 @@
 import React, { Component } from 'react'
-import Utils from '../utils/validate-email'
 import { withRouter } from 'react-router-dom'
 import logic from '../logic'
 import Header from '../components/Header'
-import ToTop from '../components/Title'
 import Contact from '../components/Contact';
 
 class Business extends Component {
@@ -39,13 +37,11 @@ class Business extends Component {
                 <Header businessProfile={true} onLogout={this.props.onLogout} />
                 <div>
                     <h1>&bull; {name.toUpperCase()} &bull;</h1>
-                    <div>
-                        <details>
-                            <summary>Philosophy of {name}</summary>
-                            <p>{philosophy}</p>
-                        </details>
-                    </div>
-                    <Contact name={boss} phone={phone} email={this.props.email}/>
+                    <details>
+                        <summary>Philosophy of {name}</summary>
+                        <p>{philosophy}</p>
+                    </details>
+                    <Contact name={boss} phone={phone} email={this.props.email} />
                     <p>Web: {web}</p>
                 </div>
                 <div>
@@ -56,9 +52,9 @@ class Business extends Component {
                 <div>
                     <h1>&bull; YOUR BEST HOSTESSES &bull;</h1>
                     <ul>
-                    {favs.map(favorit => {
-                        return <li>{favorit.name}</li>
-                    })}
+                        {favs.map(favorit => {
+                            return <li>{favorit.name}</li>
+                        })}
                     </ul>
                 </div>
             </div>

@@ -23,32 +23,28 @@ class Landing extends Component {
         this.setState({password: event.target.value})
     }
 
-    handleHostess = (event) => {
+    handleHostess = () => {
         this.setState({ hostess: true })
     }
 
-    handleBusiness = (event) => {
+    handleBusiness = () => {
         this.setState({ business: true })
     }
 
     handleHostessRegister = () => {
-        this.setState({ register: true })
-        this.setState({ login: false })
+        this.setState({ register: true, login: false })
     }
 
     handleHostessLogin = () => {
-        this.setState({ login: true })
-        this.setState({ register: false})
+        this.setState({ login: true, register: false})
     }
 
     handleBusinessRegister = () => {
-        this.setState({ register: true })
-        this.setState({ login: false })
+        this.setState({ register: true, login: false })
     }
 
     handleBusinessLogin = () => {
-        this.setState({ login: true })
-        this.setState({ register: false})
+        this.setState({ login: true, register: false })
     }
 
     handleSubmit = (event) => {
@@ -94,7 +90,7 @@ class Landing extends Component {
 
     render() {
         return (
-            <div className="block__landing">
+            <div className="block">
                 <header>
                     <h1>&bull; WELCOME TO HOSTESS &bull;</h1>
                     <details>
@@ -116,7 +112,7 @@ class Landing extends Component {
                     )
                 }
                 {
-                    this.state.hostess && (
+                    this.state.hostess && !this.state.register &&  !this.state.login && (
                         <div className="buttons">
                             <button type="button" onClick={this.handleHostessLogin} className="buttons__hostess">LOGIN</button>
                             <button type="button" onClick={this.handleHostessRegister} className="buttons__business">REGISTER</button>
@@ -124,7 +120,7 @@ class Landing extends Component {
                     )
                 }
                 {
-                    this.state.business && (
+                    this.state.business && !this.state.register &&   !this.state.login && (
                         <div className="buttons">
                             <button type="button" onClick={this.handleBusinessLogin} className="buttons__hostess">LOGIN</button>
                             <button type="button" onClick={this.handleBusinessRegister} className="buttons__business">REGISTER</button>

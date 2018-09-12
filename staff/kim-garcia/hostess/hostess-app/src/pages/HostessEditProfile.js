@@ -5,6 +5,7 @@ import { withRouter } from 'react-router-dom'
 import Header from '../components/Header'
 import logic from '../logic'
 import { RadioGroup, Radio } from 'react-radio-group'
+import DeleteUnregister from '../components/DeleteUnregister';
 
 class HostessEditProfile extends Component {
     state = {
@@ -28,16 +29,6 @@ class HostessEditProfile extends Component {
         oldPassword: '',
         newPassword: ''
     }
-
-    // componentDidMount() {
-    //     logic.retrieveHostess(this.props.email, this.props.token)
-    //         .then(hostess => {
-    //             const { name, birth, origin, gender, phone, languages, jobType, height, myself, skills } = hostess
-
-    //             this.setState({ name, birth, origin, gender, phone, languages, jobType, height, myself, skills })
-    //             return true
-    //         })
-    // }
 
     handleName = (event) => {
         this.setState({ name: event.target.value })
@@ -119,35 +110,10 @@ class HostessEditProfile extends Component {
 
     goToProfile = (event) => {
         event.preventDefault()
-        this.history.push('/hostess')
+
+        this.props.history.push('/hostess')
     }
 
-    handleChangePas = () => this.setState({changePas: true})
-
-    handleUnregister = () => this.setState({delete: true})
-
-    handleNo = event => {
-        event.preventDefault()
-        this.setState({changePas: false, delete: false})
-    }
-
-    handleYes = event => {
-        event.preventDefault()
-        const {email, token, oldPassword } = this.state
-        logic.unregisterHostess(email, oldPassword, token)
- 
-    }
-
-    handleOld = event => this.setState({ oldPassword: event.target.value })
-
-    handleNew = event => this.setState({ newPassword: event.target.value })
-
-    handleTheChange = event => {
-        event.preventDefault()
-        const {email, token, oldPassword, newPassword} = this.state
-        logic.updatePasswordHostess(email, oldPassword, newPassword, token)
-        this.setState({ changePas: false, delete: false })
-    }
 
     render() {
         const { name, birth, origin, gender, phone, languages, jobType, height, myself, skills, errorName, errorBirth, errorOrigin, errorGender, errorPhone, errorLanguages, errorJobType, errorHeight, errorMyself, errorSkills, error, success } = this.state
@@ -156,35 +122,8 @@ class HostessEditProfile extends Component {
         return (
             <div>
                 <Header hostessEdit={true} onLogout={this.props.onLogout} />
+                <DeleteUnregister onLogout={this.props.onLogout} email={this.props.email} token={this.props.token}/>
                 <div>
-
-                    {
-                        !this.state.changePas && !this.state.delete && (
-                            <div className="buttons">
-                                <button type="button" onClick={this.handleChangePas} className="buttons__hostess">CHANGE PASSWORD</button>
-                                <button type="button" onClick={this.handleUnregister} className="buttons__business">DELETE ACOUNT</button>
-                            </div>
-                        )
-                    }
-                    {
-                        !this.state.changePas && this.state.delete && (
-                            <div className="buttons">
-                                <p>Are you sure you wana delete the acount for ever?</p>
-                                <input type="password" onChange={this.handleOld} placeholder="Insert password to delete the acount"></input>
-                                <button type="button" onClick={this.handleNo} className="buttons__hostess">NO</button>
-                                <button type="button" onClick={this.handleYes} className="buttons__business">YES</button>
-                            </div>
-                        )
-                    }
-                    {
-                        this.state.changePas && !this.state.delete && (
-                            <div className="buttons">
-                                <input type="password" placeholder="Password" onChange={this.handleOld}></input>
-                                <input type="text" placeholder="New password" onChange={this.handleNew}></input>
-                                <button type="button" onClick={this.handleTheChange} className="buttons__business">CHANGE PASSWORD</button>
-                            </div>
-                        )
-                    }
                     <form onSubmit={this.handleSubmit}>
                         <div>
                             <label html="name">NAME</label>

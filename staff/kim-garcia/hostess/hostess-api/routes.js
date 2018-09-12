@@ -221,7 +221,7 @@ router.post('/create-event/:email', [validateJwt, jsonBodyParser], (req, res) =>
     const { params: { email }, body: { date, location, title, description } } = req
 
     logic.createEvent(email, date, location, title, description)
-        .then(() => {
+        .then(id => {
             res.status(200).json({ status: 'OK', id })
         })
         .catch(err => {

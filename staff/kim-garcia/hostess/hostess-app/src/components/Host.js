@@ -30,7 +30,7 @@ class Host extends Component {
         const age = getAge(birth)
 
         return (
-            <div>
+            <li>
                 <div className="cuadricula__hostess">
                     <div className="cuadricula__hostess__photo" >FOTO</div>
                     <div className="cuadricula__hostess__details">
@@ -54,7 +54,7 @@ class Host extends Component {
                         error && (<div>{error}</div>)
                     }
                 </div>
-            </div>
+            </li>
         )
     }
 }

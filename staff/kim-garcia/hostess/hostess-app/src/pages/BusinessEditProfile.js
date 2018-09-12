@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 import Header from '../components/Header'
-import ToTop from '../components/Title'
 import logic from '../logic'
+import DeleteUnregister from '../components/DeleteUnregister';
 
 class BusinessEditProfile extends Component {
     state = {
@@ -11,6 +11,7 @@ class BusinessEditProfile extends Component {
         boss: '',
         phone: '',
         web: '',
+        error: ''
     }
 
     handlePhilo = (event) => {
@@ -41,14 +42,16 @@ class BusinessEditProfile extends Component {
             .then(() => {
                 this.props.history.push('/business')
             })
-            .catch(err => err.message)
-    }
+            .catch(err => this.setState({ error: 'Please, fill all the camps' }))
+        }
 
     render() {
         return (
             <div>
                 <Header businessEdit={true} onLogout={this.props.top}></Header>
+
                 <h1 className="header__title"> &bull; CREATE YOUR BUSINESS PROFILE &bull; </h1>
+
                 <form onSubmit={this.handleSubmit}>
                     <div>
                         <label html="company">COMPANY NAME</label>
@@ -75,6 +78,12 @@ class BusinessEditProfile extends Component {
                     </div>
                     <button type="submit" >UPDATE PROFILE</button>
                 </form>
+                {
+                    this.state.error && (
+                        <div className="error">{this.state.error}</div>
+                    )
+                }
+                <DeleteUnregister onLogout={this.props.onLogout} email={this.props.email} token={this.props.token} />
             </div>
         )
     }

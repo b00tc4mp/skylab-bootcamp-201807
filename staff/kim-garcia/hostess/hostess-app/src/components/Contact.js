@@ -2,9 +2,9 @@ import React from 'react'
 
 const Contact = props => {
     return (
-        <div className="contact">
+        <li className="contact">
             <details>
-                <summary>CONTACT</summary>
+                <summary>{props.name} contact card</summary>
                 {
                     props.name && <p className="contact__name">Name: {props.name}</p>
                 }
@@ -15,7 +15,7 @@ const Contact = props => {
                     props.email && <p className="contact__email">Email: {props.email}</p>
                 }
             </details>
-        </div>
+        </li>
     )
 }
 

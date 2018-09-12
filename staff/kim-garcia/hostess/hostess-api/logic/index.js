@@ -362,10 +362,11 @@ const logic = {
                 return business.save()
             })
             .then(() => {
+                debugger
                 return Events.findOne({ title })
             })
             .then(event => {
-                const id = event._id
+                const id = event._doc._id.toString()
                 return id
             })
     },
