@@ -1,6 +1,8 @@
+'use strict'
+
 require('dotenv').config()
 
-const { logicUser, logicProduct, validate } = require('./index.js')
+const { userLogic, productLogic, validate, cloudinaryLogic, chatLogic } = require('./index.js')
 const { expect } = require('chai')
 const mongoose = require('mongoose')
 const { Types: { ObjectId } } = mongoose
@@ -77,7 +79,7 @@ describe('logic', () => {
                     .then(user => {
                         expect(user).to.be.null
     
-                        return logicUser.register(email, password)
+                        return userLogic.register(email, password)
                     })
                     .then(res => {
                         expect(res).to.be.true
@@ -96,67 +98,67 @@ describe('logic', () => {
     
             it('should fail on trying to register an already registered user', () =>
                 User.create({ email, password })
-                    .then(() => logicUser.register(email, password))
+                    .then(() => userLogic.register(email, password))
                     .catch(err => err)
                     .then(({ message }) => expect(message).to.equal(`user with ${email} email already exist`))
             )
     
             it('should fail on trying to register with an undefined email', () =>
-                logicUser.register(undefined, password)
+                userLogic.register(undefined, password)
                     .catch(err => err)
                     .then(({ message }) => expect(message).to.equal(`invalid email`))
             )
     
             it('should fail on trying to register with an empty email', () =>
-                logicUser.register('', password)
+                userLogic.register('', password)
                     .catch(err => err)
                     .then(({ message }) => expect(message).to.equal(`invalid email`))
             )
     
             it('should fail on trying to register with a numeric email', () =>
-                logicUser.register(123, password)
+                userLogic.register(123, password)
                     .catch(err => err)
                     .then(({ message }) => expect(message).to.equal(`invalid email`))
             )
     
             it('should fail on trying to register with an undefined password', () =>
-                logicUser.register(email, undefined)
+                userLogic.register(email, undefined)
                     .catch(err => err)
                     .then(({ message }) => expect(message).to.equal(`invalid password`))
             )
     
             it('should fail on trying to register with an empty password', () =>
-                logicUser.register(email, '')
+                userLogic.register(email, '')
                     .catch(err => err)
                     .then(({ message }) => expect(message).to.equal(`invalid password`))
             )
     
             it('should fail on trying to register with a numeric password', () =>
-                logicUser.register(email, 123)
+                userLogic.register(email, 123)
                     .catch(err => err)
                     .then(({ message }) => expect(message).to.equal(`invalid password`))
             )
     
             it('should fail on trying to register with 6 empty spaces as a password', () =>
-                logicUser.register(email, '      ')
+                userLogic.register(email, '      ')
                     .catch(err => err)
                     .then(({ message }) => expect(message).to.equal('password cannot contain any space'))
             )
     
             it('should fail on trying to register with a password containing empty spaces', () =>
-                logicUser.register(email, 'pa ssword')
+                userLogic.register(email, 'pa ssword')
                     .catch(err => err)
                     .then(({ message }) => expect(message).to.equal('password cannot contain any space'))
             )
     
             it('should fail on trying to register with a password starting and ending with empty spaces', () =>
-                logicUser.register(email, ' password ')
+                userLogic.register(email, ' password ')
                     .catch(err => err)
                     .then(({ message }) => expect(message).to.equal('password cannot contain any space'))
             )
     
             it('should fail on trying to register with a too short password', () =>
-                logicUser.register(email, '123')
+                userLogic.register(email, '123')
                     .catch(err => err)
                     .then(({ message }) => expect(message).to.equal('password length is too short'))
             )
@@ -166,68 +168,68 @@ describe('logic', () => {
             beforeEach(() => User.create({ email, password }))
     
             it('should login correctly', () =>
-                logicUser.authenticate(email, password)
+                userLogic.authenticate(email, password)
                     .then(user => {
                         expect(user).to.exist
                     })
             )
     
             it('should fail on trying to login with an undefined email', () =>
-                logicUser.authenticate(undefined, password)
+                userLogic.authenticate(undefined, password)
                     .catch(err => err)
                     .then(({ message }) => expect(message).to.equal(`invalid email`))
             )
     
             it('should fail on trying to login with an empty email', () =>
-                logicUser.authenticate('', password)
+                userLogic.authenticate('', password)
                     .catch(err => err)
                     .then(({ message }) => expect(message).to.equal(`invalid email`))
             )
     
             it('should fail on trying to login with a numeric email', () =>
-                logicUser.authenticate(123, password)
+                userLogic.authenticate(123, password)
                     .catch(err => err)
                     .then(({ message }) => expect(message).to.equal(`invalid email`))
             )
     
             it('should fail on trying to login with an undefined password', () =>
-                logicUser.authenticate(email, undefined)
+                userLogic.authenticate(email, undefined)
                     .catch(err => err)
                     .then(({ message }) => expect(message).to.equal(`invalid password`))
             )
     
             it('should fail on trying to login with an empty password', () =>
-                logicUser.authenticate(email, '')
+                userLogic.authenticate(email, '')
                     .catch(err => err)
                     .then(({ message }) => expect(message).to.equal(`invalid password`))
             )
     
             it('should fail on trying to login with a numeric password', () =>
-                logicUser.authenticate(email, 123)
+                userLogic.authenticate(email, 123)
                     .catch(err => err)
                     .then(({ message }) => expect(message).to.equal(`invalid password`))
             )
     
             it('should fail on trying to login with 6 empty spaces as a password', () =>
-                logicUser.authenticate(email, '      ')
+                userLogic.authenticate(email, '      ')
                     .catch(err => err)
                     .then(({ message }) => expect(message).to.equal('password cannot contain any space'))
             )
     
             it('should fail on trying to login with a password containing empty spaces', () =>
-                logicUser.authenticate(email, 'pa ssword')
+                userLogic.authenticate(email, 'pa ssword')
                     .catch(err => err)
                     .then(({ message }) => expect(message).to.equal('password cannot contain any space'))
             )
     
             it('should fail on trying to login with a password starting and ending with empty spaces', () =>
-                logicUser.authenticate(email, ' password ')
+                userLogic.authenticate(email, ' password ')
                     .catch(err => err)
                     .then(({ message }) => expect(message).to.equal('password cannot contain any space'))
             )
     
             it('should fail on trying to login with a too short password', () =>
-                logicUser.authenticate(email, '123')
+                userLogic.authenticate(email, '123')
                     .catch(err => err)
                     .then(({ message }) => expect(message).to.equal('password length is too short'))
             )
@@ -244,7 +246,7 @@ describe('logic', () => {
             )
     
             it('should update password correctly', () =>
-                logicUser.updatePassword(user, password, newPassword)
+                userLogic.updatePassword(user, password, newPassword)
                     .then(res => {
                         expect(res).to.be.true
     
@@ -258,109 +260,109 @@ describe('logic', () => {
             )
     
             it('should fail on trying to update password with an undefined user', () =>
-                logicUser.updatePassword(undefined, password, newPassword)
+                userLogic.updatePassword(undefined, password, newPassword)
                     .catch(err => err)
                     .then(({ message }) => expect(message).to.equal(`invalid user`))
             )
     
             it('should fail on trying to update password with an empty user', () =>
-                logicUser.updatePassword('', password, newPassword)
+                userLogic.updatePassword('', password, newPassword)
                     .catch(err => err)
                     .then(({ message }) => expect(message).to.equal(`invalid user`))
             )
     
             it('should fail on trying to update password with a numeric user', () =>
-                logicUser.updatePassword(123, password, newPassword)
+                userLogic.updatePassword(123, password, newPassword)
                     .catch(err => err)
                     .then(({ message }) => expect(message).to.equal(`invalid user`))
             )
     
             it('should fail on trying to update password with an undefined password', () =>
-                logicUser.updatePassword(user, undefined, newPassword)
+                userLogic.updatePassword(user, undefined, newPassword)
                     .catch(err => err)
                     .then(({ message }) => expect(message).to.equal(`invalid password`))
             )
     
             it('should fail on trying to update password with an empty password', () =>
-                logicUser.updatePassword(user, '', newPassword)
+                userLogic.updatePassword(user, '', newPassword)
                     .catch(err => err)
                     .then(({ message }) => expect(message).to.equal(`invalid password`))
             )
     
             it('should fail on trying to update password with a numeric password', () =>
-                logicUser.updatePassword(user, 123, newPassword)
+                userLogic.updatePassword(user, 123, newPassword)
                     .catch(err => err)
                     .then(({ message }) => expect(message).to.equal(`invalid password`))
             )
     
             it('should fail on trying to update password with 6 empty spaces as a password', () =>
-                logicUser.updatePassword(user, '      ', newPassword)
+                userLogic.updatePassword(user, '      ', newPassword)
                     .catch(err => err)
                     .then(({ message }) => expect(message).to.equal('password cannot contain any space'))
             )
     
             it('should fail on trying to update password with a password containing empty spaces', () =>
-                logicUser.updatePassword(user, 'pa ssword', newPassword)
+                userLogic.updatePassword(user, 'pa ssword', newPassword)
                     .catch(err => err)
                     .then(({ message }) => expect(message).to.equal('password cannot contain any space'))
             )
     
             it('should fail on trying to update password with a password starting and ending with empty spaces', () =>
-                logicUser.updatePassword(user, ' password ', newPassword)
+                userLogic.updatePassword(user, ' password ', newPassword)
                     .catch(err => err)
                     .then(({ message }) => expect(message).to.equal('password cannot contain any space'))
             )
     
             it('should fail on trying to update password with a too short password', () =>
-                logicUser.updatePassword(user, '123', newPassword)
+                userLogic.updatePassword(user, '123', newPassword)
                     .catch(err => err)
                     .then(({ message }) => expect(message).to.equal('password length is too short'))
             )
     
             it('should fail on trying to update password with an undefined new password', () =>
-                logicUser.updatePassword(user, password, undefined)
+                userLogic.updatePassword(user, password, undefined)
                     .catch(err => err)
                     .then(({ message }) => expect(message).to.equal(`invalid new password`))
             )
     
             it('should fail on trying to update password with an empty new password', () =>
-                logicUser.updatePassword(user, password, '')
+                userLogic.updatePassword(user, password, '')
                     .catch(err => err)
                     .then(({ message }) => expect(message).to.equal(`invalid new password`))
             )
     
             it('should fail on trying to update password with a numeric new password', () =>
-                logicUser.updatePassword(user, password, 123)
+                userLogic.updatePassword(user, password, 123)
                     .catch(err => err)
                     .then(({ message }) => expect(message).to.equal(`invalid new password`))
             )
     
             it('should fail on trying to update password with the same old value in the new password', () =>
-                logicUser.updatePassword(user, password, password)
+                userLogic.updatePassword(user, password, password)
                     .catch(err => err)
                     .then(({ message }) => expect(message).to.equal(`new password must be different from old password`))
             )
     
             it('should fail on trying to update password with 6 empty spaces as the new password', () =>
-                logicUser.updatePassword(user, password, '      ')
+                userLogic.updatePassword(user, password, '      ')
                     .catch(err => err)
                     .then(({ message }) => expect(message).to.equal('new password cannot contain any space'))
             )
     
             it('should fail on trying to update password with a new password containing empty spaces', () =>
-                logicUser.updatePassword(user, password, 'pa ssword')
+                userLogic.updatePassword(user, password, 'pa ssword')
                     .catch(err => err)
                     .then(({ message }) => expect(message).to.equal('new password cannot contain any space'))
             )
     
             it('should fail on trying to update password with a new password starting and ending with empty spaces', () =>
-                logicUser.updatePassword(user, password, ' password ')
+                userLogic.updatePassword(user, password, ' password ')
                     .catch(err => err)
                     .then(({ message }) => expect(message).to.equal('new password cannot contain any space'))
             )
     
             it('should fail on trying to update password with a too short new password', () =>
-                logicUser.updatePassword(user, password, '123')
+                userLogic.updatePassword(user, password, '123')
                     .catch(err => err)
                     .then(({ message }) => expect(message).to.equal('new password length is too short'))
             )
@@ -377,7 +379,7 @@ describe('logic', () => {
             )
     
             it('should update email correctly', () =>
-                logicUser.updateEmail(user, email, newEmail)
+                userLogic.updateEmail(user, email, newEmail)
                     .then(res => {
                         expect(res).to.be.true
     
@@ -391,61 +393,61 @@ describe('logic', () => {
             )
     
             it('should fail on trying to update email with an undefined user', () =>
-                logicUser.updateEmail(undefined, email, newEmail)
+                userLogic.updateEmail(undefined, email, newEmail)
                     .catch(err => err)
                     .then(({ message }) => expect(message).to.equal(`invalid user`))
             )
     
             it('should fail on trying to update email with an empty user', () =>
-                logicUser.updateEmail('', email, newEmail)
+                userLogic.updateEmail('', email, newEmail)
                     .catch(err => err)
                     .then(({ message }) => expect(message).to.equal(`invalid user`))
             )
     
             it('should fail on trying to update email with a numeric user', () =>
-                logicUser.updateEmail(123, email, newEmail)
+                userLogic.updateEmail(123, email, newEmail)
                     .catch(err => err)
                     .then(({ message }) => expect(message).to.equal(`invalid user`))
             )
     
             it('should fail on trying to update email with an undefined email', () =>
-                logicUser.updateEmail(user, undefined, newEmail)
+                userLogic.updateEmail(user, undefined, newEmail)
                     .catch(err => err)
                     .then(({ message }) => expect(message).to.equal(`invalid email`))
             )
     
             it('should fail on trying to update email with an empty email', () =>
-                logicUser.updateEmail(user, '', newEmail)
+                userLogic.updateEmail(user, '', newEmail)
                     .catch(err => err)
                     .then(({ message }) => expect(message).to.equal(`invalid email`))
             )
     
             it('should fail on trying to update email with a numeric email', () =>
-                logicUser.updateEmail(user, 123, newEmail)
+                userLogic.updateEmail(user, 123, newEmail)
                     .catch(err => err)
                     .then(({ message }) => expect(message).to.equal(`invalid email`))
             )
     
             it('should fail on trying to update email with an undefined new email', () =>
-                logicUser.updateEmail(user, email, undefined)
+                userLogic.updateEmail(user, email, undefined)
                     .catch(err => err)
                     .then(({ message }) => expect(message).to.equal(`invalid email`))
             )
     
             it('should fail on trying to update email with an empty new email', () =>
-                logicUser.updateEmail(user, email, '')
+                userLogic.updateEmail(user, email, '')
                     .catch(err => err)
                     .then(({ message }) => expect(message).to.equal(`invalid email`))
             )
     
             it('should fail on trying to update email with a numeric new email', () =>
-                logicUser.updateEmail(user, email, 123)
+                userLogic.updateEmail(user, email, 123)
                     .catch(err => err)
                     .then(({ message }) => expect(message).to.equal(`invalid email`))
             )
     
             it('should fail on trying to update email with the same old value in the new email', () =>
-                logicUser.updateEmail(user, email, email)
+                userLogic.updateEmail(user, email, email)
                     .catch(err => err)
                     .then(({ message }) => expect(message).to.equal(`new email must be different from old email`))
             )
@@ -467,7 +469,7 @@ describe('logic', () => {
             )
     
             it('should update profile correctly with all possible fields from data', () =>
-                logicUser.updateProfile(userId, completeData)
+                userLogic.updateProfile(userId, completeData)
                     .then(res => {
                         expect(res).to.be.true
     
@@ -486,7 +488,7 @@ describe('logic', () => {
             )
 
             it('should update profile correctly with some but not all fields from data', () =>
-                logicUser.updateProfile(userId, partialData)
+                userLogic.updateProfile(userId, partialData)
                     .then(res => {
                         expect(res).to.be.true
     
@@ -502,49 +504,49 @@ describe('logic', () => {
             )
 
             it('should fail on trying to update profile with a non existent field in data', () =>
-                logicUser.updateProfile(userId, nonExistentFieldInData)
+                userLogic.updateProfile(userId, nonExistentFieldInData)
                     .catch(err => err)
                     .then(({ message }) => expect(message).to.equal('is not possible to update the user profile with the data provided in made_up_field'))
             )
 
             it('should fail on trying to update profile with an undefined user', () =>
-                logicUser.updateProfile(undefined, completeData)
+                userLogic.updateProfile(undefined, completeData)
                     .catch(err => err)
                     .then(({ message }) => expect(message).to.equal(`invalid user`))
             )
     
             it('should fail on trying to update profile with an empty user', () =>
-                logicUser.updateProfile('', completeData)
+                userLogic.updateProfile('', completeData)
                     .catch(err => err)
                     .then(({ message }) => expect(message).to.equal(`invalid user`))
             )
     
             it('should fail on trying to update profile with a numeric user', () =>
-                logicUser.updateProfile(123, completeData)
+                userLogic.updateProfile(123, completeData)
                     .catch(err => err)
                     .then(({ message }) => expect(message).to.equal(`invalid user`))
             )
 
             it('should fail on trying to update profile with an undefined data', () =>
-                logicUser.updateProfile(userId, undefined)
+                userLogic.updateProfile(userId, undefined)
                     .catch(err => err)
                     .then(({ message }) => expect(message).to.equal('data for the profile updating is not defined'))
             )
     
             it('should fail on trying to update profile with an empty data', () =>
-                logicUser.updateProfile(userId, '')
+                userLogic.updateProfile(userId, '')
                     .catch(err => err)
                     .then(({ message }) => expect(message).to.equal('data for the profile updating is not defined'))
             )
     
             it('should fail on trying to update profile with a numeric data', () =>
-                logicUser.updateProfile(userId, 123)
+                userLogic.updateProfile(userId, 123)
                     .catch(err => err)
                     .then(({ message }) => expect(message).to.equal('invalid profile info data'))
             )
 
             it('should fail on trying to update profile with a non valid existent field', () =>
-                logicUser.updateProfile(userId, inValidFieldInData)
+                userLogic.updateProfile(userId, inValidFieldInData)
                     .catch(err => err)
                     .then(({ message }) => expect(message).to.equal('invalid name'))
             )
@@ -554,7 +556,7 @@ describe('logic', () => {
             beforeEach(() => User.create({ email, password }))
     
             it('should unregister user correctly', () =>
-                logicUser.unregisterUser(email, password)
+                userLogic.unregisterUser(email, password)
                     .then(res => {
                         expect(res).to.be.true
     
@@ -566,37 +568,37 @@ describe('logic', () => {
             )
     
             it('should fail on trying to unregister user with an undefined email', () =>
-                logicUser.unregisterUser(undefined, password)
+                userLogic.unregisterUser(undefined, password)
                     .catch(err => err)
                     .then(({ message }) => expect(message).to.equal(`invalid email`))
             )
     
             it('should fail on trying to unregister user with an empty email', () =>
-                logicUser.unregisterUser('', password)
+                userLogic.unregisterUser('', password)
                     .catch(err => err)
                     .then(({ message }) => expect(message).to.equal(`invalid email`))
             )
     
             it('should fail on trying to unregister user with a numeric email', () =>
-                logicUser.unregisterUser(123, password)
+                userLogic.unregisterUser(123, password)
                     .catch(err => err)
                     .then(({ message }) => expect(message).to.equal(`invalid email`))
             )
     
             it('should fail on trying to unregister user with an undefined password', () =>
-                logicUser.unregisterUser(email, undefined)
+                userLogic.unregisterUser(email, undefined)
                     .catch(err => err)
                     .then(({ message }) => expect(message).to.equal(`invalid password`))
             )
     
             it('should fail on trying to unregister user with an empty password', () =>
-                logicUser.unregisterUser(email, '')
+                userLogic.unregisterUser(email, '')
                     .catch(err => err)
                     .then(({ message }) => expect(message).to.equal(`invalid password`))
             )
     
             it('should fail on trying to unregister user with a numeric password', () =>
-                logicUser.unregisterUser(email, 123)
+                userLogic.unregisterUser(email, 123)
                     .catch(err => err)
                     .then(({ message }) => expect(message).to.equal(`invalid password`))
             )
@@ -621,7 +623,7 @@ describe('logic', () => {
             )
     
             it('should save review on correct data', () =>
-                logicUser.addReview(idUserFrom, idUserTo, score, idProd, text)
+                userLogic.addReview(idUserFrom, idUserTo, score, idProd, text)
                     .then(res => {
                         expect(res).to.be.true
     
@@ -638,110 +640,110 @@ describe('logic', () => {
             )
     
             it('should fail on trying to add a review with an undefined idUserFrom', () =>
-                logicUser.addReview(undefined, idUserTo, score, idProd, text)
+                userLogic.addReview(undefined, idUserTo, score, idProd, text)
                     .catch(err => err)
                     .then(({ message }) => expect(message).to.equal('invalid id in userFrom'))
             )
     
             it('should fail on trying to add a review with an empty idUserFrom', () =>
-                logicUser.addReview('', idUserTo, score, idProd, text)
+                userLogic.addReview('', idUserTo, score, idProd, text)
                     .catch(err => err)
                     .then(({ message }) => expect(message).to.equal('invalid id in userFrom'))
             )
     
             it('should fail on trying to add a review with an invalid idUserFrom', () =>
-                logicUser.addReview('fake userFrom id', idUserTo, score, idProd, text)
+                userLogic.addReview('fake userFrom id', idUserTo, score, idProd, text)
                     .catch(err => err)
                     .then(({ message }) => expect(message).to.equal('invalid id in userFrom'))
             )
     
             it('should fail on trying to add a review with an undefined idUserTo', () =>
-                logicUser.addReview(idUserFrom, undefined, score, idProd, text)
+                userLogic.addReview(idUserFrom, undefined, score, idProd, text)
                     .catch(err => err)
                     .then(({ message }) => expect(message).to.equal('invalid id in userTo'))
             )
     
             it('should fail on trying to add a review with an empty idUserTo', () =>
-                logicUser.addReview(idUserFrom, '', score, idProd, text)
+                userLogic.addReview(idUserFrom, '', score, idProd, text)
                     .catch(err => err)
                     .then(({ message }) => expect(message).to.equal('invalid id in userTo'))
             )
     
             it('should fail on trying to add a review with an invalid idUserTo', () =>
-                logicUser.addReview(idUserFrom, 'fake userTo id', score, idProd, text)
+                userLogic.addReview(idUserFrom, 'fake userTo id', score, idProd, text)
                     .catch(err => err)
                     .then(({ message }) => expect(message).to.equal('invalid id in userTo'))
             )
     
             it('should fail on trying to add a review with an undefined score', () =>
-                logicUser.addReview(idUserFrom, idUserTo, undefined, idProd, text)
+                userLogic.addReview(idUserFrom, idUserTo, undefined, idProd, text)
                     .catch(err => err)
                     .then(({ message }) => expect(message).to.equal('invalid score'))
             )
     
             it('should fail on trying to add a review with an empty score', () =>
-                logicUser.addReview(idUserFrom, idUserTo, '', idProd, text)
+                userLogic.addReview(idUserFrom, idUserTo, '', idProd, text)
                     .catch(err => err)
                     .then(({ message }) => expect(message).to.equal('invalid score'))
             )
     
             it('should fail on trying to add a review with a float score', () =>
-                logicUser.addReview(idUserFrom, idUserTo, 2.3, idProd, text)
+                userLogic.addReview(idUserFrom, idUserTo, 2.3, idProd, text)
                     .catch(err => err)
                     .then(({ message }) => expect(message).to.equal('invalid score'))
             )
     
             it('should fail on trying to add a review with a too big score', () =>
-                logicUser.addReview(idUserFrom, idUserTo, 6, idProd, text)
+                userLogic.addReview(idUserFrom, idUserTo, 6, idProd, text)
                     .catch(err => err)
                     .then(({ message }) => expect(message).to.equal('invalid score'))
             )
     
             it('should fail on trying to add a review with a too low score', () =>
-                logicUser.addReview(idUserFrom, idUserTo, -1, idProd, text)
+                userLogic.addReview(idUserFrom, idUserTo, -1, idProd, text)
                     .catch(err => err)
                     .then(({ message }) => expect(message).to.equal('invalid score'))
             )
     
             it('should fail on trying to add a review with an undefined idUserTo', () =>
-                logicUser.addReview(idUserFrom, idUserTo, score, undefined, text)
+                userLogic.addReview(idUserFrom, idUserTo, score, undefined, text)
                     .catch(err => err)
                     .then(({ message }) => expect(message).to.equal('invalid id in idProd'))
             )
     
             it('should fail on trying to add a review with an empty idUserTo', () =>
-                logicUser.addReview(idUserFrom, idUserTo, score, '', text)
+                userLogic.addReview(idUserFrom, idUserTo, score, '', text)
                     .catch(err => err)
                     .then(({ message }) => expect(message).to.equal('invalid id in idProd'))
             )
     
             it('should fail on trying to add a review with an invalid idUserTo', () =>
-                logicUser.addReview(idUserFrom, idUserTo, score, 'fake idProd id', text)
+                userLogic.addReview(idUserFrom, idUserTo, score, 'fake idProd id', text)
                     .catch(err => err)
                     .then(({ message }) => expect(message).to.equal('invalid id in idProd'))
             )
     
             it('should fail on trying to add a review with an undefined description', () =>
-                logicUser.addReview(idUserFrom, idUserTo, score, idProd, undefined)
+                userLogic.addReview(idUserFrom, idUserTo, score, idProd, undefined)
                     .catch(err => err)
                     .then(({ message }) => expect(message).to.equal(`invalid description`))
             )
     
             it('should fail on trying to add a review with an empty description', () =>
-                logicUser.addReview(idUserFrom, idUserTo, score, idProd, '')
+                userLogic.addReview(idUserFrom, idUserTo, score, idProd, '')
                     .catch(err => err)
                     .then(({ message }) => expect(message).to.equal(`invalid description`))
             )
     
             it('should fail on trying to add a review with a numeric description', () =>
-                logicUser.addReview(idUserFrom, idUserTo, score, idProd, 123)
+                userLogic.addReview(idUserFrom, idUserTo, score, idProd, 123)
                     .catch(err => err)
                     .then(({ message }) => expect(message).to.equal(`invalid description`))
             )
     
             it('should fail on trying to add a review with a description longer than the maximum length permited', () => {
                 const tooLongDesc = 'Lorem ipsum dolor sit amet, quo ut denique incorrupte, audiam voluptaria no nec, quo maiorum mnesarchum an. Eu pri albucius voluptatum, sed suscipit partiendo at, quando debitis scriptorem eu vim. Vis ex perfecto democritum liberavisse, vel modus ignota graeci ea. Quis suas debet in vis. Ne sed modo elit animal, cu expetendis consectetuer eam, eam possim maiestatis contentiones te. Sea an ignota instructior, cum mentitum laboramus deseruisse id, nam magna discere at. Laudem maiorum sed no, ne sit audiam malorum. Lorem ipsum dolor sit amet, quo ut denique incorrupte, audiam voluptaria no nec, quo maiorum mnesarchum an. Eu pri albucius voluptatum, sed suscipit partiendo at, quan.'
-                return logicUser.addReview(idUserFrom, idUserTo, score, idProd, tooLongDesc)
+                return userLogic.addReview(idUserFrom, idUserTo, score, idProd, tooLongDesc)
                 .catch(err => err)
                 .then(({ message }) => expect(message).to.equal('User validation failed: reviews.0.description: Path `description` (`' + tooLongDesc + '`) is longer than the maximum allowed length (650).'))
             })
@@ -790,7 +792,7 @@ describe('logic', () => {
             )
     
             it('should only list public user info on correct user id', () =>
-                logicUser.listPublicUser(idUserTo)
+                userLogic.listPublicUser(idUserTo)
                     .then(user => {
                         expect(user).to.exist
     
@@ -814,25 +816,25 @@ describe('logic', () => {
             )
     
             it('should fail on trying to list public user info with an undefined id user', () =>
-                logicUser.listPublicUser(undefined)
+                userLogic.listPublicUser(undefined)
                     .catch(err => err)
                     .then(({ message }) => expect(message).to.equal('invalid id in user'))
             )
     
             it('should fail on trying to list public user info with an empty id user', () =>
-                logicUser.listPublicUser('')
+                userLogic.listPublicUser('')
                     .catch(err => err)
                     .then(({ message }) => expect(message).to.equal('invalid id in user'))
             )
     
             it('should fail on trying to list public user info with an invalid id user', () =>
-                logicUser.listPublicUser('fake userId')
+                userLogic.listPublicUser('fake userId')
                     .catch(err => err)
                     .then(({ message }) => expect(message).to.equal('invalid id in user'))
             )
     
             it('should not list private field password on public user', () =>
-                logicUser.listPublicUser(idUserTo)
+                userLogic.listPublicUser(idUserTo)
                     .then(user => {
                         expect(user.password).not.to.exist
                 })
@@ -882,7 +884,7 @@ describe('logic', () => {
             )
     
             it('should only list private user info on correct user id', () =>
-                logicUser.listPrivateUser(idUserTo)
+                userLogic.listPrivateUser(idUserTo)
                     .then(user => {
                         expect(user).to.exist
     
@@ -903,25 +905,25 @@ describe('logic', () => {
             )
     
             it('should fail on trying to list private user info with an undefined id user', () =>
-                logicUser.listPrivateUser(undefined)
+                userLogic.listPrivateUser(undefined)
                     .catch(err => err)
                     .then(({ message }) => expect(message).to.equal('invalid id in user'))
             )
     
             it('should fail on trying to list private user info with an empty id user', () =>
-                logicUser.listPrivateUser('')
+                userLogic.listPrivateUser('')
                     .catch(err => err)
                     .then(({ message }) => expect(message).to.equal('invalid id in user'))
             )
     
             it('should fail on trying to list private user info with an invalid id user', () =>
-                logicUser.listPrivateUser('fake userId')
+                userLogic.listPrivateUser('fake userId')
                     .catch(err => err)
                     .then(({ message }) => expect(message).to.equal('invalid id in user'))
             )
     
             it('should not list private field password on private user', () =>
-                logicUser.listPrivateUser(idUserTo)
+                userLogic.listPrivateUser(idUserTo)
                     .then(user => {
                         expect(user.password).not.to.exist
                 })
@@ -936,7 +938,7 @@ describe('logic', () => {
                     .then(user => {
                         expect(user).to.be.null
     
-                        return logicUser.register(email, password)
+                        return userLogic.register(email, password)
                     })
                     .then(res => {
                         expect(res).to.be.true
@@ -1051,7 +1053,7 @@ describe('logic', () => {
         )
 
         it('should list all user notes', () => {
-            return logicUser.listNotes(email, new Date('2018-08-24'))
+            return userLogic.listNotes(email, new Date('2018-08-24'))
                 .then(_notes => {
                     const expectedNotes = notes.slice(2)
 
@@ -1101,7 +1103,7 @@ describe('logic', () => {
         )
 
         it('should succeed on correct note id', () =>
-            logicUser.removeNote(email, noteId)
+            userLogic.removeNote(email, noteId)
                 .then(res => {
                     expect(res).to.be.true
 
@@ -1122,7 +1124,7 @@ describe('logic', () => {
         it('should fail on non existing note', () => {
             const nonExistingId = ObjectId().toString()
 
-            return logicUser.removeNote(email, nonExistingId)
+            return userLogic.removeNote(email, nonExistingId)
                 .catch(err => err)
                 .then(({ message }) => expect(message).to.equal(`note with id ${nonExistingId} does not exist`))
         })
@@ -1162,7 +1164,7 @@ describe('logic', () => {
         it('should list all contacts that their name starts with a specific letter', () => {
             const startsWith = 'J'
 
-            return logicUser.listContacts(email, startsWith)
+            return userLogic.listContacts(email, startsWith)
                 .then(_contacts => {
                     const expectedContacts = contacts.slice(3)
 
@@ -1185,6 +1187,31 @@ describe('logic', () => {
 
     //////////////////// END CONTACT /////////////////
 
+    describe('chat logic', () => {
+        describe('add chat', () => {
+            it('should succeed on correct data', ()  => {
+                // TODO
+            })
+
+            // TODO error cases
+        })
+
+        describe('get chat', () => {
+            it('should succeed on correct data', ()  => {
+                // TODO
+            })
+
+            // TODO error cases
+        })
+
+        describe('list chats', () => {
+            it('should succeed on correct data', ()  => {
+                // TODO
+            })
+
+            // TODO error cases
+        })
+    })
 
     after(() =>
         Promise.all([

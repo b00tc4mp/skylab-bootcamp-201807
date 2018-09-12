@@ -2,7 +2,7 @@ require('dotenv').config()
 
 const express = require('express')
 const bodyParser = require('body-parser')
-const { logicProduct, logicUser, LogicError } = require('../logic')
+const { productLogic, userLogic, LogicError } = require('../logic')
 const validateJwt = require('../helpers/validate-jwt')
 //const fileUpload = require('express-fileupload')
 
@@ -21,8 +21,8 @@ productRouter.post('/me/prod/:user', [validateJwt, upload.any()], (req, res) => 
         const location = [JSON.parse(longitude), JSON.parse(latitude)]
         const data = { title, description, price: JSON.parse(price), cathegory, location }
 
-        logicProduct.addProduct(user, data, files)
-            .then(productId => logicUser.addProduct(user, productId))
+        productLogic.addProduct(user, data, files)
+            .then(productId => userLogic.addProduct(user, productId))
             .then(product => res.status(201).json({ message: 'product uploaded', user, product }))
             .catch((err) => {
                 const { message } = err
@@ -36,7 +36,7 @@ productRouter.post('/me/prod/:user', [validateJwt, upload.any()], (req, res) => 
 productRouter.get('/prod/:prod', (req, res) => {
     const { params: { prod } } = req
 
-    logicProduct.listProductById(prod)
+    productLogic.listProductById(prod)
         .then(res.json.bind(res))
         .catch(err => {
             const { message } = err
@@ -48,7 +48,7 @@ productRouter.get('/prod/:prod', (req, res) => {
 productRouter.patch('/prod/:prod/views', (req, res) => {
     const { params: { prod } } = req
 
-    logicProduct.incrementViews(prod)
+    productLogic.incrementViews(prod)
         .then(() => res.json({ message: 'product visit incremented', product: prod }))
         .catch(err => {
             const { message } = err
@@ -67,7 +67,7 @@ productRouter.get('/prod', (req, res) => {
     if (query.long) req.query.long = JSON.parse(query.long)
     if (query.lat) req.query.lat = JSON.parse(query.lat)
 
-    logicProduct.listFilteredProducts(query)
+    productLogic.listFilteredProducts(query)
         .then(res.json.bind(res))
         .catch(err => {
             const { message } = err
@@ -79,7 +79,7 @@ productRouter.get('/prod', (req, res) => {
 productRouter.patch('/me/:user/prod/:prod/state', [validateJwt, jsonBodyParser], (req, res) => {
     const { params: { prod, user }, body: { state } } = req
 
-    logicProduct.updateStateProd(user, prod, state)
+    productLogic.updateStateProd(user, prod, state)
         .then(() => res.json({ message: `product state updated to ${state}`, product: prod }))
         .catch(err => {
             const { message } = err
