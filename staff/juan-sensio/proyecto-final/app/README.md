@@ -8,8 +8,8 @@ It was developed as a full-stack project for the Skylab Coders bootcamp (Barcelo
 
  - Web: HTML, CSS, Javascript (ES6)
  - Styling: Sass, BEM
- - Front-end framworks: React, React Router, Redux
- - Back-end framworks: Node, Express
+ - Front-end frameworks: React, React Router, Redux
+ - Back-end frameworks: Node, Express
  - Database: MongoDB, Mongoose
  - TDD: Mocha, Chai
 
