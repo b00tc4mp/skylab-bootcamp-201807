@@ -40,3 +40,8 @@ small{
     font-size: 40px;
 }
 
+.custom-checkbox .custom-control-input:checked~.custom-control-label::after {
+    
+    background-color: #5FB854;
+    border-radius: 4px;
+}

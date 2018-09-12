@@ -1,7 +1,26 @@
-#allMenusList{
-    display: flex;
+#allMenusRecipes {
+  display: flex;
+  margin: 1% 10%;
 }
 
-#breakfastMenu{
-    margin-right: -175px;
+.heroMenu {
+  background-image: url("./menu.jpg");
+  height: 400px;
+  background-size: cover;
+  background-position: top;
+  background-position: 65% 9%;
+  margin-bottom: 30px;
+}
+
+#btnDanger {
+  background-color: #da3749 !important;
+  border-color: #da3749 !important;
+}
+
+#dropdownRecipesMenu {
+  margin-left: 5%;
+  margin-bottom: 2%;
+}
+.recipeError {
+  font-size: 25px;
 }

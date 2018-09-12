@@ -46,7 +46,7 @@ class App extends Component {
       <Route path="/register" render={() => this.state.email ? <Redirect to="/home" /> : <Register />} />
       <Route path="/login" render={() => this.state.email ? <Redirect to="/home" /> : <Login handleLogin={this.handleLogin} />} />
       <Route path="/profile" render={() => !this.state.email ? <Redirect to="/register" /> : <Profile email={this.state.email} token={this.state.token} />} />
-      <Route path="/recipe/:recipeId" render={(props) => !this.state.email ? <Redirect to="/home" /> : <DetailRecipe recipeId={props.match.params.recipeId} email={this.state.email} token={this.state.token} />} />
+      <Route path="/recipe/:recipeId" render={(props) =>  <DetailRecipe recipeId={props.match.params.recipeId} email={this.state.email} token={this.state.token} />} />
       <Route exact path="/menu/:menuId" render={(props) => !this.state.email ? <Redirect to="/home" /> : <OneMenu email={this.state.email} token={this.state.token} menuId={props.match.params.menuId} />} />
 
       </div>

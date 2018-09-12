@@ -90,3 +90,7 @@
     background-color: #5FB854;
     border-color: #5FB854;
 }
+
+.listDetailRecipe{
+    list-style: none !important;
+}

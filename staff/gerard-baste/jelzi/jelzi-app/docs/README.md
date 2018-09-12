@@ -2,13 +2,15 @@
 
 ## Intro
 
-This application is thought of as an aid in planning for a museum trip to the Rijksmuseum in Amsterdam, allowing a user to search, review and save favorite images for viewing when they go to the Rijksmuseum.
+This application is thought to help people with different allergies. The user can create full menus and save recipes without the allergens indicated in their personal profiles.
 
 ## Functional description
 
-The "Rainy Saturday App" allows the user to access the vast realm of artwork in the Rijksmuseum and plan a visit for the next "rainy Saturday" Once registered and logged in, the user may search through the artwork -- which consists not only of paintings, sculptures and drawings, but also of material objects such as shoes -- using any search term. Clicking on the image of the artwork, the user may find out details about the materials used in its manufacture as well as wehn it was created.  The user may also filter the results by period, by principal maker (artist), and by century.  
+The APP Jelzi Food allows the user to access to thousands of recipes with allergen filters.
 
-The user can select artworks as "favourites" and save them for later reference, so that when the user visits the museum they may know which artworks are the first they want to see.
+Once registered with their allergens and logged into the application, the user can search filtering by a “query”. By clicking on the recipe, they can find nutritional details and also save the recipes in their own menus, created before.
+
+The user can create menus and, when the recipe has been saved, he can choose the menu and then, enter in the menu. For example, you can save a recipe as breakfast or dinner inside a menu.
 
 ### Use Cases
 
