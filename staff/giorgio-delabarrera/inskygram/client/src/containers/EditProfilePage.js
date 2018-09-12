@@ -63,6 +63,8 @@ class EditProfilePage extends Component {
             onExploreClick={this.props.onExploreClick}
             onNewPostClick={this.props.onNewPostClick}
             onProfileClick={this.props.onProfileClick}
+            onSearch={this.props.onSearch}
+            onSearchResultClick={this.props.onSearchResultClick}
           />
         </div>
         <div className="main-wrapper">

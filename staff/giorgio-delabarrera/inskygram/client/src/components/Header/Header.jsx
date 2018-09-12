@@ -7,29 +7,6 @@ import logic from '../../logic'
 // TODO: define env variables
 const DEFAULT_AVATAR = 'https://goo.gl/F65XTo'
 
-function getSuggestionValue(suggestion) {
-  return suggestion.username;
-}
-
-function renderSuggestion(suggestion) {
-  const user = suggestion
-  return (
-    <div className="Header-suggestion">
-      <div className="Header-suggestionImageWrapper">
-        <img
-          src={user.imageUrl ? user.imageUrl : DEFAULT_AVATAR}
-          alt={user.username}
-          className="Header-suggestionImage"
-        />
-      </div>
-      <div className="Header-suggestionUser">
-        <div className="Header-suggestionUsername">{user.username}</div>
-        {user.name && <div className="Header-suggestionName">{user.name}</div>}
-      </div>
-    </div>
-  );
-}
-
 class Header extends Component {
   state = {
     query: '',
@@ -56,23 +33,38 @@ class Header extends Component {
     this.props.onNewPostClick()
   }
 
-  onQueryChange = (event, { newValue }) => {
-    this.setState({
-      query: newValue
-    });
-  };
+  onQueryChange = (event, { newValue }) => this.setState({ query: newValue })
 
-  onSuggestionsFetchRequested = ({ value }) => {
-    logic.search(value)
-      .then(results => this.setState({ results }))
+  _getSuggestionValue = suggestion => suggestion.username
+
+  _renderSuggestion = suggestion => {
+    const user = suggestion
+    return (
+      <div className="Header-suggestion">
+        <div className="Header-suggestionImageWrapper">
+          <img
+            src={user.imageUrl ? user.imageUrl : DEFAULT_AVATAR}
+            alt={user.username}
+            className="Header-suggestionImage"
+          />
+        </div>
+        <div className="Header-suggestionUser">
+          <div className="Header-suggestionUsername">{user.username}</div>
+          {user.name && <div className="Header-suggestionName">{user.name}</div>}
+        </div>
+      </div>
+    )
+  }
+
+  onSuggestionsFetchRequested = async ({ value }) => {
+    const results = await this.props.onSearch(value)
+
+    this.setState({ results })
   };
 
   onSuggestionsClearRequested = () => this.setState({ query: '', results: [] })
 
-  onSuggestionSelected = (event, { suggestion }) => {
-    const user = suggestion
-    this.props.history.push(`/${user.username}`)
-  };
+  onSuggestionSelected = (event, { suggestion: user }) => this.props.onSearchResultClick(user)
 
   render() {
     const { query, results } = this.state;
@@ -92,14 +84,13 @@ class Header extends Component {
           </a>
         </div>
         <div className="Header-searchWrapper">
-          {/* <input className="Header-search" type="text" placeholder="Search" /> */}
           <Autosuggest
             suggestions={results}
             onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
             onSuggestionsClearRequested={this.onSuggestionsClearRequested}
             onSuggestionSelected={this.onSuggestionSelected}
-            getSuggestionValue={getSuggestionValue}
-            renderSuggestion={renderSuggestion}
+            getSuggestionValue={this._getSuggestionValue}
+            renderSuggestion={this._renderSuggestion}
             inputProps={inputProps}
           />
         </div>

@@ -79,16 +79,7 @@ class App extends Component {
   onPostDetailClick = async (postId) => {
     const { loggedInUsername, token } = this.state
 
-    // let post
     try {
-      // post = await logic.retrievePost(postId, loggedInUsername, token)
-
-      // this.setState({
-      //   modalContent: (
-      //     <PostDetail post={post} onUserClick={this.onUserInModalClick} />
-      //   )
-      // }, this.openModal())
-
       this.setState({
         modalContent: (
           <ModalPostDetail
@@ -99,9 +90,7 @@ class App extends Component {
         )
       }, this.openModal())
 
-    } catch (err) {
-      console.log(err)
-    }
+    } catch (err) { }
   }
 
   onProfileClick = () => {
@@ -110,6 +99,10 @@ class App extends Component {
     if (this.props.location.pathname === profileRoute) window.location.reload()
     else this.props.history.push(profileRoute)
   }
+
+  onSearch = query => logic.search(query)
+
+  onSearchResultClick = ({ username }) => this.props.history.push(`/${username}`)
 
   openModal = () => {
     this.setState({ modalIsOpen: true });
@@ -134,6 +127,8 @@ class App extends Component {
               onNewPostClick={this.onNewPostClick}
               onProfileClick={this.onProfileClick}
               onPostDetailClick={this.onPostDetailClick}
+              onSearch={this.onSearch}
+              onSearchResultClick={this.onSearchResultClick}
             />
           )} />
           <Route exact path="/explore" render={() => !this.isLoggedIn() ? <Redirect to="/accounts/login" /> : (
@@ -145,6 +140,8 @@ class App extends Component {
               onNewPostClick={this.onNewPostClick}
               onProfileClick={this.onProfileClick}
               onPostDetailClick={this.onPostDetailClick}
+              onSearch={this.onSearch}
+              onSearchResultClick={this.onSearchResultClick}
             />
           )} />
           <Route exact path="/accounts/login" render={() => this.isLoggedIn() ? <Redirect to="/" /> : <LoginPage onLoggedIn={this.onLoggedIn} />} />
@@ -158,6 +155,8 @@ class App extends Component {
               onExploreClick={this.onExploreClick}
               onNewPostClick={this.onNewPostClick}
               onProfileClick={this.onProfileClick}
+              onSearch={this.onSearch}
+              onSearchResultClick={this.onSearchResultClick}
             />
           )
           } />
@@ -169,6 +168,8 @@ class App extends Component {
               onExploreClick={this.onExploreClick}
               onNewPostClick={this.onNewPostClick}
               onProfileClick={this.onProfileClick}
+              onSearch={this.onSearch}
+              onSearchResultClick={this.onSearchResultClick}
             />
           )
           } />
@@ -181,6 +182,8 @@ class App extends Component {
               onExploreClick={this.onExploreClick}
               onNewPostClick={this.onNewPostClick}
               onProfileClick={this.onProfileClick}
+              onSearch={this.onSearch}
+              onSearchResultClick={this.onSearchResultClick}
             />
           )} />
           <Route path="/:username/saved" render={props => (
@@ -193,6 +196,8 @@ class App extends Component {
               onNewPostClick={this.onNewPostClick}
               onProfileClick={this.onProfileClick}
               onPostDetailClick={this.onPostDetailClick}
+              onSearch={this.onSearch}
+              onSearchResultClick={this.onSearchResultClick}
             />
           )} />
           <Route path="/:username" render={props => (
@@ -205,6 +210,8 @@ class App extends Component {
               onNewPostClick={this.onNewPostClick}
               onProfileClick={this.onProfileClick}
               onPostDetailClick={this.onPostDetailClick}
+              onSearch={this.onSearch}
+              onSearchResultClick={this.onSearchResultClick}
             />
           )} />
         </Switch>
