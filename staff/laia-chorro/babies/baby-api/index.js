@@ -20,14 +20,14 @@ mongoose.connect(MONGO_URL, { useNewUrlParser: true })
 
         app.use('/api', [userRouter, productRouter, chatRouter])
 
-        //app.listen(PORT, () => console.log(`${package.name} ${package.version} up and running on port ${PORT}`))
+        app.listen(PORT, () => console.log(`${package.name} ${package.version} up and running on port ${PORT}`))
 
 
 
-        const server = require('http').Server(app);
+        /*const server = require('http').Server(app);
         const io = socket(server);
 
-        server.listen(PORT, () => console.log(`${package.name} ${package.version} up and running on port ${PORT}`))
+        server.listen(PORT, () => console.log(`${package.name} ${package.version} up and running on port ${PORT}`))*/
         /*io.on('connection', (socket) => {
             console.log(socket.id);
         

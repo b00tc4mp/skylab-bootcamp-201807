@@ -1,6 +1,6 @@
-const { validate } = require('./validate.js')
-const { LogicError } = require('./LogicError.js')
-const { logicCloudinary } = require('./cloudinary.js')
+const validate = require('./validate.js')
+const LogicError = require('./LogicError.js')
+const logicCloudinary = require('./cloudinary.js')
 const { Review, User, Product } = require('../data/models')
 
 const userLogic = {

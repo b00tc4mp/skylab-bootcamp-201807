@@ -1,8 +1,8 @@
 'use strict'
 
-const { validate } = require('./validate.js')
-const { LogicError } = require('./LogicError.js')
-const { Chat, Message } = require('../data/models/index.js')
+const validate = require('./validate.js')
+const LogicError = require('./LogicError.js')
+const { Chat, Message, User, Product } = require('../data/models/index.js')
 
 const chatLogic = {
     /**
@@ -25,14 +25,14 @@ const chatLogic = {
 
                 return Product.findById(productId).select('user')
             })
-            .then(productOwner =>
-                User.findById(productOwner)
+            .then(productOwner => 
+                User.findById(productOwner.user)
                     .then(user => {
                         if (!user) throw new LogicError(`user with id: ${productOwner} does not exist`)
 
                         return Chat.create({ users: [userId, productOwner], product: productId })
                     })
-            )
+                )
             .then(chat => chat.id)
     },
 

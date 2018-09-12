@@ -3,17 +3,33 @@ import './Mychats.css'
 
 class Mychats extends Component {
     state = {
-        messagesFrom: ['hola', 'Què tal?'],
-        messagesTo: ['']
+        messages: ['hola', 'Què tal?'],
+        message: ''
     }
 
-    keepMsgFrom = e => {
-        return this.setState({messagesFrom: this.state.messagesFrom.push(e.target.value)})
+    keepMessage = e => this.setState({message: e.target.value})
+
+    // to sockets
+    addToMessages = data => this.setState({messages: [...this.state.messages, data]})
+
+    sendMessage = e => {
+        e.preventDefault();
+        /*this.socket.emit('SEND_MESSAGE', {
+            author: this.state.username,
+            message: this.state.message
+        })
+        this.setState({message: ''});*/
+
+        const data = this.state.message
+
+        this.setState({messages: [...this.state.messages, data]})
+
+        
 
     }
 
     render() {
-        const { messagesFrom, messagesTo } = this.state
+        const { messages } = this.state
 
         return(
             <div className="mychats-container">
@@ -26,13 +42,16 @@ class Mychats extends Component {
                 </div>
                 <div className="mychats-chat-container">
                     <div className="mychats-messages-container">
-                        { (messagesFrom || messagesTo) && messagesFrom.map((msg, index) => {
-                            debugger;
-                                return (<p key={index}>{msg}</p>)
-                            })
-                        }
+                        {this.state.messages.map((message, index) => {
+                            return (
+                                <div key={index}>{message}</div>
+                            )
+                        })}
                     </div>
-                    <input onChange={this.keepMsgFrom} type="text"/>
+                    <form onSubmit={this.sendMessage}>
+                        <input value={this.state.message} onChange={this.keepMessage} type="text" placeholder="Message"/>
+                        <button type="submit" >Send</button>
+                    </form>
                 </div>
                 <div>
                     Product
