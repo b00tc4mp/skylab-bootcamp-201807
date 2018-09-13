@@ -1,23 +1,19 @@
 import React, {Component} from 'react'
 import EditorPlayer from '../components/EditorPlayer'
-import Navbar from '../components/Navbar'
+import Navbar from '../components/Navbars'
 
-
-export default class NotebookEditor extends Component {
+class NotebookEditor extends Component {
     
-   
-    render() {
+   render() {
  
         return (
             <div>
                 <Navbar />
-                
-                
                 <EditorPlayer />
-                
-
             </div>
         )
     }
 }
+
+export default NotebookEditor
 

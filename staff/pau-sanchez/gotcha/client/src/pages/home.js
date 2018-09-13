@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import { withRouter } from 'react-router-dom'
-import FormErrors from '../components/formerrors'
-import Navbars from '../components/Navbar'
+import FormErrors from '../components/FormErrors'
+import Navbars from '../components/Navbars'
 import { Button, Input, InputGroup, InputGroupAddon, Container } from 'reactstrap';
 
 class Home extends Component {
@@ -68,8 +68,7 @@ class Home extends Component {
         const {loggedin} = this.state
         
         return (
-            <div >
-                
+            <div>
                 <Navbars loggedinHome={loggedin}/>
                     <Container>
                         <div className='home_options' >
@@ -92,10 +91,8 @@ class Home extends Component {
                                     </InputGroupAddon>
                                 </InputGroup>
                             <FormErrors formErrors={this.state.formErrors} />
-
                         </div>
                     </Container>
-                
             </div>
         )
     }

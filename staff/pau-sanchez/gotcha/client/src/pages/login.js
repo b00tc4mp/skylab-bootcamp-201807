@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {logic} from '../logic'
 import { withRouter } from 'react-router-dom'
-import Navbars from '../components/Navbar'
+import Navbars from '../components/Navbars'
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import Loader from 'react-loader-spinner'
 
@@ -14,8 +14,6 @@ class Login extends Component {
         loading: false
     }
     
-    
-
     onEmailChange = e => this.setState({ email: e.target.value })
     onPasswordChange = e => this.setState({ password: e.target.value })
     
@@ -25,10 +23,9 @@ class Login extends Component {
         const {email, password} = this.state
         this.setState({loading: true})
         logic.authenticate(email, password)
-            
             .then(res => this.props.onLoggedIn(res.id, res.token))
             .catch(({ message }) => this.setState({ error: message }))
-            //window.location.reload()
+            
     }
     
     render() {
@@ -38,6 +35,7 @@ class Login extends Component {
         return <div>
                 
                 <Navbars />
+
                 {
                 (loading && !error)
                 ?<div className='loadinglogin_group'>
@@ -61,6 +59,7 @@ class Login extends Component {
                 {error && <p>{error}</p>}
                 </Form>
                 }
+                
             </div>
         
     }

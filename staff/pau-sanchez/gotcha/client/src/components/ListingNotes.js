@@ -76,7 +76,6 @@ class ListingNotes extends React.Component {
                         return this.getNotebookInfo()
                     })
                 })
-              
     }
         
     deleteNote =(noteid)=> {
@@ -105,10 +104,11 @@ class ListingNotes extends React.Component {
           
           
     render() {
-                        const {notesNotebooksInfo, loading } = this.state
+            const {notesNotebooksInfo, loading } = this.state
             return <div>
                         <div>
                             <div>
+
                                 {
                                 (loading)
                                 ?<div className='player-wrapper-note'>
@@ -117,7 +117,6 @@ class ListingNotes extends React.Component {
                                 :<Table responsive>
                                         <thead>
                                             <tr>
-                                                
                                                 <th>Moment</th>
                                                 <th>Title</th>
                                                 <th>Text</th>
@@ -126,7 +125,6 @@ class ListingNotes extends React.Component {
                                                 <th>Actions</th>
                                             </tr>
                                         </thead>
-                                        
                                         {notesNotebooksInfo.map(({ notetext, notetitle, seconds, _id, user, notebook, notebooktitle, videotitle, videothumbnail}) => (
                                         <tbody>
                                             <tr>
@@ -158,13 +156,13 @@ class ListingNotes extends React.Component {
                                         </tbody>
 
                                     ))}
-
-                                    </Table>
+                                </Table>
                                 }
-                                </div>
-                </div>
-            </div>
-            }
+
+                            </div>
+                        </div>
+                    </div>
+    }
 }
 
             

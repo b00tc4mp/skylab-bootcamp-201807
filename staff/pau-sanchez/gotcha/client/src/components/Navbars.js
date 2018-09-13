@@ -6,27 +6,28 @@ class Navbars extends Component {
     state = {
         loggedin: this.props.loggedinHome,
     }
+
+    componentDidMount(){
+        sessionStorage.getItem('token') !== null ? this.setState({ loggedin: true}) : this.setState({ loggedin: false})
+    }
+
     onLogout = e => {
         e.preventDefault()
         this.setState({ userId: '', token: '' })
         sessionStorage.clear()
         this.props.history.push('/')
         window.location.reload()
-      }
-
-    componentDidMount(){
-        sessionStorage.getItem('token') !== null ? this.setState({ loggedin: true}) : this.setState({ loggedin: false})
     }
-    
-    render () 
-        {
+
+    render () {
+        
         const {loggedin} = this.state
         
         return <div>
-            { 
+            
+                { 
                 ((this.props.loggedinHome || loggedin) === true) 
-                
-                ? <div>
+                ?<div>
                     <Navbar >
                         <NavbarBrand >
                             <Link to='/home'>
@@ -54,10 +55,8 @@ class Navbars extends Component {
                                 </NavItem>
                             </Nav>
                     </Navbar >
-                      
-                  </div>
-
-                : <div>
+                </div>
+                :<div>
                     <Navbar >
                         <NavbarBrand>
                             <Link to='/'>
@@ -75,10 +74,11 @@ class Navbars extends Component {
                                         <Button  color="success" className='nav_button'>Login</Button>
                                     </Link>
                                 </NavItem>
-                       </Nav>
+                        </Nav>
                     </Navbar >
-                 </div>
-            }
+                </div>
+                }
+
             </div>
         
     }

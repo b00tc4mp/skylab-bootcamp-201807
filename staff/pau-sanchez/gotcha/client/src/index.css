@@ -4,7 +4,6 @@ body {
   font-family: sans-serif;
 }
 
-
 /* Landing Page */
 
 .center_landing{
@@ -201,8 +200,6 @@ body {
   }
 }
 
-
-
 .editor_rowcontainer {
   width: 100vmax; 
 }
@@ -235,8 +232,6 @@ body {
   margin: 10px;
   
 }
-
-
 
 .inputCard{
   margin-left: 10px;
@@ -293,6 +288,7 @@ body {
 }
 
 /*Note player*/
+
 .player-wrapper-note {
   text-align: center;
   display: flex;
@@ -303,10 +299,6 @@ body {
   margin: auto;
   margin-bottom: 1em;
 }
-
-
-
-
 
 @media (max-width: 1024px) { 
     
@@ -427,7 +419,7 @@ body {
    }
 }
 
-
+/* Listing Notebooks */
 
 .optionnotebooks{
   text-align: center;
@@ -435,8 +427,10 @@ body {
   align-items: center;
   justify-content: center;
   margin: auto;
-  
 }
+
+/* Players / Screen */
+
 .gotcha_noteplayer{
   width: 100vh;
   text-align: center;
@@ -473,11 +467,6 @@ body {
   text-align: center;
   margin-left: auto;
   margin-right: auto;
-  
-  
-  
-  
-
 }
 
 

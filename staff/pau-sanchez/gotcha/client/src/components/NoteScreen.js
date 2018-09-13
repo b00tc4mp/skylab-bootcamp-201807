@@ -73,7 +73,6 @@ class NoteScreen extends Component {
             this.setState({loading: true})
             /*this.setState({loading: false})*/
             this.setState({ seconds: res.seconds })
-            console.log(res.seconds)
             this.setState({ noteBookId: res.notebook })
             this.setState({ notetitle: res.notetitle})
             this.setState({ notetext: res.notetext})

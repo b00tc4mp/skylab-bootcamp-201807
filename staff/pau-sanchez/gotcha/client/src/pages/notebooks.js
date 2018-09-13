@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import { withRouter, Link } from 'react-router-dom'
 import {logic} from '../logic'
-import Navbar from '../components/Navbar'
+import Navbar from '../components/Navbars'
 import {FormGroup, Input, Button, Label, Col, Row, ListGroup, ListGroupItem} from 'reactstrap'
 import Loader from 'react-loader-spinner'
 
@@ -45,30 +45,17 @@ class Notebooks extends Component {
         const {newnotebooktitle} = this.state
         return Promise.resolve()
             .then( () => {
-                logic.updateNotebook(userId, sessionuserid, _id, newnotebooktitle, token)
+                return logic.updateNotebook(userId, sessionuserid, _id, newnotebooktitle, token)////////by laia
             })
-            .then(() => this.setState({ edit: ''}))
-            .then(() => this.setState({ newnotebooktitle: ''}))
-            .then(()=> this.getNotebooks())
-    }
+            .then(() => this.setState({ edit: '',newnotebooktitle:''}, () => this.getNotebooks()))
+        }
 
     changeTitle = e => this.setState({ newnotebooktitle: e.target.value })
             
-
-            
-
-
-  
-
-   
-
-    
- 
-
-
-
     render() {
+        
         const {notebooks, loading} = this.state
+        
         return (
             <div>
                 <Navbar />
@@ -95,16 +82,16 @@ class Notebooks extends Component {
                                 <Col sm={5}>
                                     
                                     <FormGroup row>
-                                        <Label sm={2}>Video</Label>
+                                        <Col sm={2}></Col>
                                         <Col sm={8}>
-                                        <Input type="textarea" value={videotitle} disabled/>
+                                        <p>{videotitle}</p>
                                         </Col>
                                     </FormGroup>
                                     {
                                         (this.state.edit === _id)
                                         ? <div>
                                             <FormGroup row>
-                                                <Label sm={2}>Notebook</Label>
+                                                <Col sm={2}></Col>
                                                 <Col sm={8}>
                                                     <Input type="text" name="notebooktitle" defaultValue={notebooktitle} onChange={this.changeTitle} required/>
                                                 </Col>
@@ -113,9 +100,9 @@ class Notebooks extends Component {
                                         </div>
                                         :<div>
                                             <FormGroup row>
-                                                <Label sm={2}>Notebook</Label>
+                                                <Col sm={2}></Col>
                                                 <Col sm={8}>
-                                                    <Input type="text" name="notebooktitle" defaultValue={notebooktitle} disabled/>
+                                                    <p>{notebooktitle}</p>
                                                 </Col>
                                             </FormGroup>
                                         </div>

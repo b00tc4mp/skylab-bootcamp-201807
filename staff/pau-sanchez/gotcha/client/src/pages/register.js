@@ -1,10 +1,9 @@
 import React, {Component} from 'react'
 import {logic} from '../logic'
-import FormErrors from '../components/formerrors'
+import FormErrors from '../components/FormErrors'
 import { withRouter } from 'react-router-dom'
-import Navbars from '../components/Navbar'
+import Navbars from '../components/Navbars'
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
-
 
 class Register extends Component {
 
@@ -67,13 +66,9 @@ class Register extends Component {
             })
             .then(() => {
                 this.props.history.push('/login')
-                console.log('gotologin')
             })
             .then(() => this.setState({ succedeed: true }))
             .catch(({ message }) => this.setState({ error: message }))
-
-            
-
     }
 
     gotoLogin = () => {
@@ -83,48 +78,41 @@ class Register extends Component {
     render() {
         
         return (
-            <main >
+            <div>
                 <Navbars />
-                
                 <Form onSubmit={this.handleSubmit} className='signuplogin_group'>
                     <FormGroup>
-                        
-                            <FormGroup>
-                                <Label>Name</Label>
-                                <Input 
-                                type='text' name='name' placeholder='name'
-                                value={this.state.name}
-                                onChange={this.handlerUserInput}
-                                required/>
-                            </FormGroup>
-                            <FormGroup>
-                                <Label>Email</Label>
-                                <Input
-                                type='text'name='email' placeholder='email@email.com'
-                                value={this.state.email}
-                                onChange={this.handlerUserInput}
-                                required/>
-                            </FormGroup>
-                            <FormGroup>
-                                <Label>Password</Label>
-                                <Input 
-                                type='password' name='password' placeholder='Password'
-                                value={this.state.password}
-                                onChange={this.handlerUserInput}
-                                required/>
-                            </FormGroup>
-                            <Button type='submit' disabled={!this.state.formValid}>
-                            Sign Up
-                            </Button>
-
-                            <div>
-                                <FormErrors formErrors={this.state.formErrors} />
-                            </div>
+                        <FormGroup>
+                            <Label>Name</Label>
+                            <Input 
+                            type='text' name='name' placeholder='name'
+                            value={this.state.name}
+                            onChange={this.handlerUserInput}
+                            required/>
+                        </FormGroup>
+                        <FormGroup>
+                            <Label>Email</Label>
+                            <Input
+                            type='text'name='email' placeholder='email@email.com'
+                            value={this.state.email}
+                            onChange={this.handlerUserInput}
+                            required/>
+                        </FormGroup>
+                        <FormGroup>
+                            <Label>Password</Label>
+                            <Input 
+                            type='password' name='password' placeholder='Password'
+                            value={this.state.password}
+                            onChange={this.handlerUserInput}
+                            required/>
+                        </FormGroup>
+                        <Button type='submit' disabled={!this.state.formValid}>Sign Up</Button>
+                        <div>
+                            <FormErrors formErrors={this.state.formErrors} />
+                        </div>
                     </FormGroup>
                 </Form>
-                
-             </main>
-            
+            </div>
         )
     }
 }

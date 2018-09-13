@@ -1,9 +1,9 @@
 import React, {Component} from 'react'
 import EditorPlayer from '../components/EditorPlayer'
-import Navbars from '../components/Navbar'
+import Navbars from '../components/Navbars'
 
 
-export default class NotebookEditorLanding extends Component {
+class NotebookEditorLanding extends Component {
     
    
     render() {
@@ -11,13 +11,11 @@ export default class NotebookEditorLanding extends Component {
         return (
             <div>
                 <Navbars />
-                
-                
                 <EditorPlayer />
-                
-
             </div>
         )
     }
 }
+
+export default NotebookEditorLanding
 

@@ -1,16 +1,10 @@
 import React, {Component} from 'react';
-//import {Container, ListGroup, ListGroupItem, Button, FormGroup, FormControl, ControlLabel} from 'reactstrap';
 import ReactPlayer from 'react-player'
 import EditorNotesBar from './EditorNotesBar';
 import {logic} from '../logic'
 import { withRouter } from 'react-router-dom'
-import screenfull from 'screenfull'
-import { findDOMNode } from 'react-dom'
-import FormErrors from './formerrors'
+import FormErrors from './FormErrors'
 import { Form, FormGroup, Label, Row, Col, Button, Input, InputGroup, InputGroupAddon, Card } from 'reactstrap';
-
-
-
 
 class EditorPlayer extends Component {
     state = {
@@ -18,53 +12,31 @@ class EditorPlayer extends Component {
         notetitle: '',
         notetext: '',
         notebook: '',
-        //////////
-        items: [
-            
-        ],
         notes:[],
         fakenotes:[],
         url: null ,
         preurl: null,
-        //////////////////////
-        videoSlugId: '',
-        playing: true,
-        volume: 0.8,
-        muted: false,
         played: 0,
         loaded: 0,
-        duration: 0,
-        playbackRate: 1.0,
-        loop: false,
-        /////////////////////
         newNoteTitle: '',
         newNoteText: '',
         newNoteSeconds: '',
         videoTitle:'',
         noteBookId: '',
-        /////////////////////
         isLoggedin: false,
         gotchaSeconds: '',
-        ////////////////////
         notebookStage: true, /*IF TRUE Display only notebook title & url form// IF FALSE Hide form*/
         gotchaStage: false, /*IF TRUE Display gotcha button//IF FALSE Hide Button*/
         noteStage: false, /*IF TRUE Display note form//IF FALSE Hide form notes*/
-        /////////////////
         formErrors: {url: ''},
         urlValid: false,
         formValid: false,
-        /////////////
         notebooktitle: '',
         homeNotebookTitle: '',
         landingNotebookTitle: '',
-        /////ORIGIN///////
         origin: ''
-
-
     }
 
-    
-    
     componentDidMount () {
         
         const url = sessionStorage.getItem('landingUrl') || sessionStorage.getItem('homeUrl')
@@ -89,16 +61,8 @@ class EditorPlayer extends Component {
             }).then(() => {
                 sessionStorage.getItem('token') === null ? this.setState({isLoggedin: false}) : this.setState({isLoggedin: true})
             })
-            
-
     }
     
-
-    
-
-                     
-  
-
     load = url => {
         this.setState({
           url,
@@ -106,73 +70,22 @@ class EditorPlayer extends Component {
           loaded: 0
         })
       }
-      playPause = () => {
-        this.setState({ playing: !this.state.playing })
-      }
-      stop = () => {
-        this.setState({ url: null, playing: false })
-      }
-      toggleLoop = () => {
-        this.setState({ loop: !this.state.loop })
-      }
-      setVolume = e => {
-        this.setState({ volume: parseFloat(e.target.value) })
-      }
-      toggleMuted = () => {
-        this.setState({ muted: !this.state.muted })
-      }
-      setPlaybackRate = e => {
-        this.setState({ playbackRate: parseFloat(e.target.value) })
-      }
-      onPlay = () => {
-        this.setState({ playing: true })
-      }
-      onPause = () => {
-        this.setState({ playing: false })
-      }
-      onSeekMouseDown = e => {
-        this.setState({ seeking: true })
-      }
-      onSeekChange = e => {
-        this.setState({ played: parseFloat(e.target.value) })
-      }
-      onSeekMouseUp = e => {
-        this.setState({ seeking: false })
-        this.player.seekTo(parseFloat(e.target.value))
-      }
-      onClickFullscreen = () => {
-        console.log('onClickFullScrenn')
-        screenfull.request(findDOMNode(this.player))
-      }
+      
       onProgress = state => {
         if (!this.state.seeking) {
           this.setState(state)
         }
       }
-      onEnded = () => {
-        this.setState({ playing: this.state.loop })
-      }
-      onDuration = (duration) => {
-        this.setState({ duration })
-      }
       
-      renderLoadButton = (url, label) => {
-        return (
-          <Button onClick={() => this.load(url)}>
-            {label}
-          </Button>
-        )
-      }
       ref = player => {
         this.player = player
       }
     
-    /////////////////////////////////////////
-    /////////NOTEBOOK CREATOR///////////////
+     /**
+     * NOTEBOOK CREATOR
+     */
 
-    //inputVideoUrl = e => this.setState({ preurl: e.target.value})
     inputTitle = e => this.setState({ notebooktitle: e.target.value})
-
 
     buildNotebook = e => {
         e.preventDefault()
@@ -196,8 +109,6 @@ class EditorPlayer extends Component {
             this.setState({ origin: ''})
         })
     }        
-
-    /////////////////////////////////////////
 
     buildFakeNotebook = e => {
         e.preventDefault()
@@ -234,11 +145,10 @@ class EditorPlayer extends Component {
             })
         
     }
-    /////////NOTES CREATOR///////////////
 
-    
-    
-      
+    /**
+     * NOTES CREATOR
+     */
     
     inputNoteTitle = e => this.setState({ notetitle: e.target.value})
     inputNoteText = e => this.setState({ notetext: e.target.value})
@@ -275,41 +185,41 @@ class EditorPlayer extends Component {
         
 
     }
-    /*
-    onKeyPressed = e => {
-        e.preventDefault()
-        this.gotcha()
-       console.log('gotcha')
-       //STOP PROPAGATION///
-      }
-      */
+    
 
-///////////////////////////////////////////
-
-    //
+    /**
+     * 
+     * GO TO MOMENT
+     * 
+     */
+    
     setSeekToPlay = (seconds) => {
         this.player.seekTo(seconds)
     }
-    //
     
-////////////VALIDATE YOUTUBE URL//////////////////
+    
+    /**
+     * 
+     * VALIDATE YOUTUBE URL
+     * 
+     */
 
-validateUrl = e => {
-    const seturl = e.target.value
-    
-    let fieldValidationErrors = this.state.formErrors;
-    let urlValid = this.state.urlValid;
-    
-    
-    urlValid = seturl.match(/^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})?$/)
-    
-    
-    fieldValidationErrors.url = urlValid ? '' : 'invalid youtube url';
-    this.setState({preurl: seturl})
-    this.setState({formErrors: fieldValidationErrors,
-        urlValid: urlValid}, this.validateForm)   
-    }
-    
+    validateUrl = e => {
+        const seturl = e.target.value
+        
+        let fieldValidationErrors = this.state.formErrors;
+        let urlValid = this.state.urlValid;
+        
+        
+        urlValid = seturl.match(/^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})?$/)
+        
+        
+        fieldValidationErrors.url = urlValid ? '' : 'invalid youtube url';
+        this.setState({preurl: seturl})
+        this.setState({formErrors: fieldValidationErrors,
+            urlValid: urlValid}, this.validateForm)   
+        }
+        
     validateForm = () => this.setState({formValid: this.state.urlValid})
 
     secondsForm = (secs) => {
@@ -318,19 +228,11 @@ validateUrl = e => {
     
     minutesForm = (secs) => {
         return Math.floor(secs/60)
-     }
+    }
 
-    ////////////////////////////////////////////
-     
+    render () {
 
-    
-    
-    
-    /////////////////////////////////////////
-    
-    render () 
-    {
-        const { url, playing, volume, muted, loop, playbackRate, gotchaSeconds, notebooktitle, fakenotes, isLoggedin } = this.state
+        const { url, gotchaSeconds, notebooktitle, fakenotes, isLoggedin } = this.state
         
         const notebookStage = this.state.notebookStage
         const gotchaStage = this.state.gotchaStage
@@ -339,198 +241,153 @@ validateUrl = e => {
         return(
             <div onKeyPress={this.onKeyPressed} tabIndex='0' className='editormain'>
                     <Row className={(gotchaStage) ? 'editor_headerrow-nocontent': 'editor_headerrow'} >
-                        
-                     
-                
-
-                
+                    
                     {
-                        (this.state.origin === "landing")
-                        ? <div className='landing_header'>
-                           
+                    (this.state.origin === "landing")
+                    ? <div className='landing_header'>
                           <h4>This is a demo!</h4><br/>
                           <h4>if you want to save your notes you should be logged in ;)</h4><br/>
                           <Button outline color="success" onClick={this.buildFakeNotebook}>Create Demo Notebook</Button>
-                          </div>
-                        : <div></div>    
-                        
+                    </div>
+                    : <div></div>    
                     }
-
+                    
                     {
-                        (this.state.origin === "home")
-                        ? <Button onClick={this.buildNotebook}>Start Notebook</Button>
-                        : <div></div>    
-                                    
+                    (this.state.origin === "home")
+                    ? <Button onClick={this.buildNotebook}>Start Notebook</Button>
+                    : <div></div>    
                     }
                             
-                                
-                            {
-                                    (notebookStage)
-                                    ?   <div id="notebookStage">
-                                    
-                                            
-                                                {
-                                                    (!isLoggedin)
-                                                    ?<InputGroup >
-                                                        <Input type="text" name="url" placeholder='Paste a Youtube link' onChange={this.validateUrl} required/>
-                                                        <InputGroupAddon addonType='append'>
-                                                            <Button onClick={this.buildFakeNotebook} disabled={!this.state.formValid} >Submit</Button>
-                                                        </InputGroupAddon>
-                                                    </InputGroup>
-                                                    :<InputGroup >
-                                                        <Input type="text" name="notebooktitle" placeholder='Add a title' onChange={this.inputTitle} required/>
-                                                        <Input type="text" name="url" placeholder='Paste a Youtube link' onChange={this.validateUrl} required/>
-                                                        <InputGroupAddon addonType='append'>
-                                                            <Button onClick={this.buildNotebook} disabled={!this.state.formValid} >Submit</Button>
-                                                        </InputGroupAddon>
-                                                    </InputGroup>
-                                                }
-                                            
-                                            
-                                        <div>
-                                                <FormErrors formErrors={this.state.formErrors} />
-                                            </div>
-                                        </div>
-                                    : <div></div>
-                                }
-                </Row>
-                <Row className='editor_rowcontainer'>
-                <Col sm='6' className='editor_coleditor'>
-                
-                
-
-                    <div className='appeditor'>
-                    
-           
-                        <div className='player-wrapper'>
-                        <ReactPlayer
-                            ref={this.ref}
-                            width='100%'
-                            height='100%'
-                            url={url}
-                            playing={playing}
-                            loop={loop}
-                            playbackRate={playbackRate}
-                            volume={volume}
-                            muted={muted}
-                            /*onReady={() => console.log('onReady')}*/
-                            /*onStart={() => console.log('onStart')}*/
-                            onPlay={this.onPlay}
-                            onPause={this.onPause}
-                            /*onBuffer={() => console.log('onBuffer')}*/
-                            /*onSeek={e => console.log('onSeek', e)}*/
-                            onEnded={this.onEnded}
-                            /*onError={e => console.log('onError', e)}*/
-                            onProgress={this.onProgress}
-                            onDuration={this.onDuration}
-                            youtubeConfig={{ playerVars: { controls: 1 } }}
-                            />
+                    {
+                    (notebookStage)
+                    ?   <div id="notebookStage">
+                        {
+                        (!isLoggedin)
+                        ?<InputGroup >
+                            <Input type="text" name="url" placeholder='Paste a Youtube link' onChange={this.validateUrl} required/>
+                            <InputGroupAddon addonType='append'>
+                                <Button onClick={this.buildFakeNotebook} disabled={!this.state.formValid} >Submit</Button>
+                            </InputGroupAddon>
+                        </InputGroup>
+                        :<InputGroup >
+                            <Input type="text" name="notebooktitle" placeholder='Add a title' onChange={this.inputTitle} required/>
+                            <Input type="text" name="url" placeholder='Paste a Youtube link' onChange={this.validateUrl} required/>
+                            <InputGroupAddon addonType='append'>
+                                <Button onClick={this.buildNotebook} disabled={!this.state.formValid} >Submit</Button>
+                            </InputGroupAddon>
+                        </InputGroup>
+                        }
+                            <div>
+                                <FormErrors formErrors={this.state.formErrors} />
+                            </div>
                         </div>
+                    :<div></div>
+                    }
+
+                    </Row>
+
+                    <Row className='editor_rowcontainer'>
+                        <Col sm='6' className='editor_coleditor'>
+                            <div className='appeditor'>
+                                <div className='player-wrapper'>
+                                    <ReactPlayer
+                                        ref={this.ref}
+                                        width='100%'
+                                        height='100%'
+                                        url={url}
+                                        onProgress={this.onProgress}
+                                        youtubeConfig={{ playerVars: { controls: 1 } }}
+                                        />
+                                </div>
                        
 
-                    {
-                        gotchaStage 
-                        ?   <div id="gotchaStage" className='gotchaStage'>
-                                <Button color="danger" onClick={this.gotcha}>GOTCHA!</Button>
-                            </div>
-                        : <div></div>
-                        
-                    }
-                    
-                    {
-                        noteStage
-                        ?   <div  id="noteStage" className='noteStage'>
-                                <Form onSubmit={this.state.origin === "landing_edition" ? this.buildFakeNote : this.buildNote}>
-                                <FormGroup row>
-                                        <Label sm={2}>Moment</Label>
-                                        <Col sm={8}>
-                                        <Input type="text" value={this.minutesForm(gotchaSeconds)+`:`+this.secondsForm(gotchaSeconds)} onChange={this.inputNoteTitle} disabled/>
-                                        </Col>
-                                    </FormGroup>
-                                    <FormGroup row>
-                                        <Label sm={2}>Title</Label>
-                                        <Col sm={8}>
-                                            <Input type="text" name="notetitle" placeholder="notetitle" onChange={this.inputNoteTitle} required/>
-                                        </Col>
-                                    </FormGroup>
-                                    <FormGroup row>
-                                        <Label  sm={2}>Text</Label>
-                                        <Col sm={8}>
-                                            <Input type="textarea" name="notetext" placeholder="notext" onChange={this.inputNoteText} />
-                                        </Col>
-                                        <Button sm={2} type="submit">Submit</Button>
-                                    </FormGroup>
-                                    
-                                </Form>
-                            </div>
-                        : <div></div>
-                    }
-
-                    </div>
-
-                </Col>
-                <Col sm='1'>
-                </Col>
-                   
-                <Col sm='5' className='editor_colsidebar'>
-                    { (!gotchaStage) ?  null :  <h3>{notebooktitle}</h3> }
-                    <EditorNotesBar onRef={ref => (this.child = ref)} seektoPass={this.setSeekToPlay}/>
-
-                    {(this.state.origin === "landing_edition")
-                        ? <div>
-                               
-                                    <div>
-                   
-                                        {fakenotes.map(({ gotchaSeconds, notetext, notetitle}) => (
+                                {
+                                gotchaStage 
+                                ?<div id="gotchaStage" className='gotchaStage'>
+                                        <Button color="danger" onClick={this.gotcha}>GOTCHA!</Button>
+                                </div>
+                                :<div></div>
+                                }
+                            
+                                {   
+                                noteStage
+                                ?<div  id="noteStage" className='noteStage'>
+                                        <Form onSubmit={this.state.origin === "landing_edition" ? this.buildFakeNote : this.buildNote}>
+                                        <FormGroup row>
+                                                <Label sm={2}>Moment</Label>
+                                                <Col sm={8}>
+                                                <Input type="text" value={this.minutesForm(gotchaSeconds)+`:`+this.secondsForm(gotchaSeconds)} onChange={this.inputNoteTitle} disabled/>
+                                                </Col>
+                                            </FormGroup>
+                                            <FormGroup row>
+                                                <Label sm={2}>Title</Label>
+                                                <Col sm={8}>
+                                                    <Input type="text" name="notetitle" onChange={this.inputNoteTitle} required/>
+                                                </Col>
+                                            </FormGroup>
+                                            <FormGroup row>
+                                                <Label  sm={2}>Text</Label>
+                                                <Col sm={8}>
+                                                    <Input type="textarea" name="notetext" onChange={this.inputNoteText} />
+                                                </Col>
+                                                <Button sm={2} type="submit">Submit</Button>
+                                            </FormGroup>
                                             
-                                                <div>
-                                                    <Card className='notesCards'>    
-                                                        <FormGroup row>
-                                                                <Col sm='2'></Col>
-                                                                <Col sm='8'>
-                                                                <Input className='inputCard' type="text" value={this.minutesForm(gotchaSeconds)+`:`+this.secondsForm(gotchaSeconds)} disabled/>
-                                                                </Col>
-                                                                <Col sm='2'></Col>
-                                                        </FormGroup>
-                                                        <FormGroup row>
-                                                                <Col sm='2'></Col>
-                                                                <Col sm='8'>
-                                                                <Input className='inputCard' type="text" name="notetitle" defaultValue={notetitle} onChange={this.onChangeNoteTitle} required disabled/>
-                                                                </Col>
-                                                                <Col sm='2'></Col>
-                                                        </FormGroup>
-                                                        <FormGroup row>
-                                                                <Col sm='2'></Col>
-                                                                <Col sm='8'>
-                                                                <Input className='inputCard' type="textarea" name="notetext" defaultValue={notetext} onChange={this.onChangeNoteText} disabled/>
-                                                                </Col>
-                                                                <Col sm='2'></Col>
-                                                        </FormGroup>
-                                                                <div className='optionnotes'>
-                                                                    <Button sm={2} onClick={() => this.setSeekToPlay(gotchaSeconds)}>&#9654;</Button>
-                                                                </div>
-                                                                
-                                                                
-                                                                
-                                                                
-                                                                
-                                                                
-                                                                
-                                                                
-                                                    </Card>    
-                                                </div>
-                                            
-                                        ))}
-                    
+                                        </Form>
                                     </div>
-                            </div>
-                        :<div></div>    
-                    }
+                                : <div></div>
+                                }
 
-                    
-          
-                </Col>
-                </Row>
+                            </div>
+                        </Col>
+                
+                        <Col sm='1'></Col>
+                   
+                        <Col sm='5' className='editor_colsidebar'>
+                            { (!gotchaStage) ?  null :  <h3>{notebooktitle}</h3> }
+                            
+                            <EditorNotesBar onRef={ref => (this.child = ref)} seektoPass={this.setSeekToPlay}/>
+
+                            {
+                            (this.state.origin === "landing_edition")
+                            ?<div>
+                                <div>
+                                    {fakenotes.map(({ gotchaSeconds, notetext, notetitle}) => (
+                                        <div>
+                                            <Card className='notesCards'>    
+                                                <FormGroup row>
+                                                        <Col sm='2'></Col>
+                                                        <Col sm='8'>
+                                                        <Input className='inputCard' type="text" value={this.minutesForm(gotchaSeconds)+`:`+this.secondsForm(gotchaSeconds)} disabled/>
+                                                        </Col>
+                                                        <Col sm='2'></Col>
+                                                </FormGroup>
+                                                <FormGroup row>
+                                                        <Col sm='2'></Col>
+                                                        <Col sm='8'>
+                                                        <Input className='inputCard' type="text" name="notetitle" defaultValue={notetitle} onChange={this.onChangeNoteTitle} required disabled/>
+                                                        </Col>
+                                                        <Col sm='2'></Col>
+                                                </FormGroup>
+                                                <FormGroup row>
+                                                        <Col sm='2'></Col>
+                                                        <Col sm='8'>
+                                                        <Input className='inputCard' type="textarea" name="notetext" defaultValue={notetext} onChange={this.onChangeNoteText} disabled/>
+                                                        </Col>
+                                                        <Col sm='2'></Col>
+                                                </FormGroup>
+                                                        <div className='optionnotes'>
+                                                            <Button sm={2} onClick={() => this.setSeekToPlay(gotchaSeconds)}>&#9654;</Button>
+                                                        </div>
+                                            </Card>    
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                            :<div></div>    
+                            }
+                        </Col>
+                    </Row>
             </div>      
          
         )

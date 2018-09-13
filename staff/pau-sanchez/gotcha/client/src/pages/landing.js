@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import { withRouter, Link } from 'react-router-dom'
-import FormErrors from '../components/formerrors'
+import FormErrors from '../components/FormErrors'
 import {Navbar, NavbarBrand, Nav, NavItem, Button, Input, InputGroup, InputGroupAddon} from 'reactstrap';
 
 class Landing extends Component {
@@ -11,10 +11,6 @@ class Landing extends Component {
         urlValid: false,
         formValid: false
     }
-
-    
-
-    
 
     validateField = e => {
         const seturl = e.target.value
@@ -30,7 +26,7 @@ class Landing extends Component {
         this.setState({url: seturl})
         this.setState({formErrors: fieldValidationErrors,
                 urlValid: urlValid}, this.validateForm)   
-        }
+    }
 
     validateForm = () => this.setState({formValid: this.state.urlValid})
 
@@ -58,18 +54,17 @@ class Landing extends Component {
         this.props.history.push('/register')
     }
 
-
-    
     render() {
 
         return (
+
             <div class='landing_back'>
                 <Navbar >
-                        <NavbarBrand>
-                            <Link to='/'>
-                            <Button color="danger" className='nav_button'>GOTCHA!</Button>
-                            </Link>
-                        </NavbarBrand>
+                    <NavbarBrand>
+                        <Link to='/'>
+                        <Button color="danger" className='nav_button'>GOTCHA!</Button>
+                        </Link>
+                    </NavbarBrand>
                         <Nav pills>
                             <NavItem>
                                 <Link to='/register'>
@@ -81,11 +76,9 @@ class Landing extends Component {
                                 <Button  color="secondary" className='nav_button' active>Login</Button>
                                 </Link>
                             </NavItem>
-                            
-                        
-                        
                         </Nav>
                 </Navbar >
+                
                 <header className='landing_header'>
                     <h1 className='landing_title'>CATCH THE RIGHT MOMENT</h1>
                     <h3 className='landing_subtitle'>Take notes from YouTube videos</h3>

@@ -1,20 +1,18 @@
 import React, {Component} from 'react'
 import NotebookScreen from '../components/NotebookScreen'
-import Navbar from '../components/Navbar'
+import Navbar from '../components/Navbars'
 
-export default class NotebookPlayer extends Component {
+class NotebookPlayer extends Component {
     
-   
     render() {
  
         return (
             <div>
                 <Navbar />
-                               
                 <NotebookScreen />
-                
-
             </div>
         )
     }
 }
+
+export default NotebookPlayer

@@ -12,13 +12,9 @@ class NotebookScreen extends Component {
         notetitle: '',
         notetext: '',
         notebook: '',
-        //////////
-        items: [
-            
-        ],
+        items: [],
         notes:[],
         url: null ,
-        //////////////////////
         videoSlugId: '',
         playing: true,
         volume: 0.8,
@@ -28,27 +24,21 @@ class NotebookScreen extends Component {
         duration: 0,
         playbackRate: 1.0,
         loop: false,
-        /////////////////////
         newNoteTitle: '',
         newNoteText: '',
         newNoteSeconds: '',
         videoTitle:'',
         noteBookId: '',
         notebookTitle: '',
-        /////////////////////
-        ////////////////////
         notebookStage: true, /*IF TRUE Display only notebook title & url form// IF FALSE Hide form*/
         gotchaStage: false, /*IF TRUE Display gotcha button//IF FALSE Hide Button*/
         noteStage: false, /*IF TRUE Display note form//IF FALSE Hide form notes*/
-        /////////////////
         formErrors: {url: ''},
         urlValid: false,
         formValid: false,
-        /////////////
         notebooktitle: '',
         homeNotebookTitle: '',
         landingNotebookTitle: '',
-        /////ORIGIN///////
         origin: '',
         loggedOut: '',
     }
@@ -67,13 +57,7 @@ class NotebookScreen extends Component {
         })
         .then(() => this.child.method(editor, id) )
         .then(this.setState({ gotchaStage: true}))
-        
-        
-        
     }
-
-                     
-  
 
     load = url => {
         this.setState({
@@ -82,66 +66,18 @@ class NotebookScreen extends Component {
           loaded: 0
         })
       }
-      playPause = () => {
-        this.setState({ playing: !this.state.playing })
-      }
-      stop = () => {
-        this.setState({ url: null, playing: false })
-      }
-      toggleLoop = () => {
-        this.setState({ loop: !this.state.loop })
-      }
-      setVolume = e => {
-        this.setState({ volume: parseFloat(e.target.value) })
-      }
-      toggleMuted = () => {
-        this.setState({ muted: !this.state.muted })
-      }
-      setPlaybackRate = e => {
-        this.setState({ playbackRate: parseFloat(e.target.value) })
-      }
-      onPlay = () => {
-        this.setState({ playing: true })
-      }
-      onPause = () => {
-        this.setState({ playing: false })
-      }
-      onSeekMouseDown = e => {
-        this.setState({ seeking: true })
-      }
-      onSeekChange = e => {
-        this.setState({ played: parseFloat(e.target.value) })
-      }
-      onSeekMouseUp = e => {
-        this.setState({ seeking: false })
-        this.player.seekTo(parseFloat(e.target.value))
-      }
+    
       onProgress = state => {
         if (!this.state.seeking) {
           this.setState(state)
         }
       }
-      onEnded = () => {
-        this.setState({ playing: this.state.loop })
-      }
-      onDuration = (duration) => {
-        this.setState({ duration })
-      }
-      
-      renderLoadButton = (url, label) => {
-        return (
-          <button onClick={() => this.load(url)}>
-            {label}
-          </button>
-        )
-      }
-      ref = player => {
-        this.player = player
-      }
     
-    /////////////////////////////////////////
-    /////////NOTEBOOK CREATOR///////////////
-
+    
+    ref = player => {
+        this.player = player
+    }
+    
     inputVideoUrl = e => this.setState({ url: e.target.value})
     inputTitle = e => this.setState({ notebooktitle: e.target.value})
 
@@ -161,12 +97,6 @@ class NotebookScreen extends Component {
             })
     }        
 
-    /////////NOTES CREATOR///////////////
-
-    
-    
-      
-    
     inputNoteTitle = e => this.setState({ notetitle: e.target.value})
     inputNoteText = e => this.setState({ notetext: e.target.value})
     
@@ -201,8 +131,6 @@ class NotebookScreen extends Component {
 
         this.setState({gotchaSeconds : playedSeconds})
         this.setState({ noteStage: true})
-        
-
     }
     
     secondsForm = (secs) => {
@@ -213,152 +141,110 @@ class NotebookScreen extends Component {
         return Math.floor(secs/60)
      }
 
-///////////////////////////////////////////
-
-    //
     setSeekToPlay = (seconds) => {
         this.player.seekTo(seconds)
     }
-    //
     
-/////////////////////////////////////////
-
     loggedOut = () => {
         const token = sessionStorage.getItem('token')
         (!!token) ? this.setState({loggedOut: false}) : this.setState({loggedOut: true})
     }
 
 
-/////////////////////////////////////////
-
     render () 
         {
-        const { url, playing, volume, muted, loop, playbackRate, gotchaSeconds, notebookTitle, fakenotes } = this.state
+        const { url, playing, gotchaSeconds, notebookTitle, fakenotes } = this.state
         const gotchaStage = this.state.gotchaStage
         const noteStage = this.state.noteStage
         const loggedOut = this.state.loggedOut
         
         return(
-            <div>
-
-                
+                <div>               
                     <div>
-                    <Row className='editor_rowcontainer'>
-                <Col className='editor_coleditor'>
-                
-                
-
-                    <div className='appeditor'>
-                    
-           
-                        <div className='player-wrapper'>
-                        <ReactPlayer
-                            ref={this.ref}
-                            width='100%'
-                            height='100%'
-                            url={url}
-                            playing={playing}
-                            loop={loop}
-                            playbackRate={playbackRate}
-                            volume={volume}
-                            muted={muted}
-                            /*onReady={() => console.log('onReady')}*/
-                            /*onStart={() => console.log('onStart')}*/
-                            onPlay={this.onPlay}
-                            onPause={this.onPause}
-                            /*onBuffer={() => console.log('onBuffer')}*/
-                            /*onSeek={e => console.log('onSeek', e)}*/
-                            onEnded={this.onEnded}
-                            /*onError={e => console.log('onError', e)}*/
-                            onProgress={this.onProgress}
-                            onDuration={this.onDuration}
-                            youtubeConfig={{ playerVars: { controls: 1 } }}
-                            />
-                        </div>
-                       
-                    
-                       
-                    
-
-                    
-                    
-                    
-                    
-                    
-
-                    {
-                        (gotchaStage && loggedOut)
-                        ?   <div id="gotchaStage" className='gotchaStage'>
-                                <Button color='danger' onClick={this.gotcha}>GOTCHA!</Button>
-                            </div>
-                        : <div></div>
-                        
-                    }
-                    
-                    {
-                        noteStage
-                        ?   <div  id="noteStage" className='noteStage'>
-                                <Form onSubmit={this.buildNote}>
-                                <FormGroup row>
-                                        <Label sm={2}>Moment</Label>
-                                        <Col sm={8}>
-                                        <Input type="text" value={this.minutesForm(gotchaSeconds)+`:`+this.secondsForm(gotchaSeconds)} onChange={this.inputNoteTitle} disabled/>
-                                        </Col>
-                                    </FormGroup>
-                                    <FormGroup row>
-                                        <Label sm={2}>Title</Label>
-                                        <Col sm={8}>
-                                            <Input type="text" name="notetitle" placeholder="notetitle" onChange={this.inputNoteTitle} required/>
-                                        </Col>
-                                    </FormGroup>
-                                    <FormGroup row>
-                                        <Label  sm={2}>Text</Label>
-                                        <Col sm={8}>
-                                            <Input type="textarea" name="notetext" placeholder="notext" onChange={this.inputNoteText} />
-                                        </Col>
-                                        <Button sm={2} type="submit">Submit</Button>
-                                    </FormGroup>
-                                    
-                                </Form>
-                            </div>
-                        : <div></div>
-                    }
-
-                    </div>
-
-                </Col>
-                   
-                <Col className='editor_colsidebar'>
-                    <h3>{notebookTitle}</h3>
-                    <EditorNotesBar onRef={ref => (this.child = ref)} seektoPass={this.setSeekToPlay}/>
-
-                    {(this.state.origin === "landing")
-                        ? <div>
-                                <h1>FakeNotes</h1>
-                                    <div>
-                   
-                                        {fakenotes.map(({ gotchaSeconds, notetext, notetitle}) => (
-                                            
-                                                <div>
-                                            <span>Title: {notetitle}  </span> 
-                                                <span>Text: {notetext}  </span>
-                                                <span>Time: {Math.floor(gotchaSeconds/60)}:{Math.floor(gotchaSeconds - (Math.floor(gotchaSeconds/60)) * 60)}  </span>
-                                                <Button className="remove-btn" color="danger" size="sm"  onClick={() => this.setSeekToPlay(gotchaSeconds)}>SeekTo</Button>
-                                                </div>
-                                            
-                                        ))}
-                    
+                        <Row className='editor_rowcontainer'>
+                            <Col className='editor_coleditor'>
+                                <div className='appeditor'>
+                                    <div className='player-wrapper'>
+                                        <ReactPlayer
+                                            ref={this.ref}
+                                            width='100%'
+                                            height='100%'
+                                            url={url}
+                                            playing={playing}
+                                            onPlay={this.onPlay}
+                                            onProgress={this.onProgress}
+                                            youtubeConfig={{ playerVars: { controls: 1 } }}
+                                            />
                                     </div>
-                            </div>
-                        :<div></div>    
-                    }
-
+                       
+                                    {
+                                    (gotchaStage && loggedOut)
+                                    ?<div id="gotchaStage" className='gotchaStage'>
+                                        <Button color='danger' onClick={this.gotcha}>GOTCHA!</Button>
+                                    </div>
+                                    : <div></div>
+                                    }
                     
-          
-                </Col>
-                </Row>
+                                    {
+                                    noteStage
+                                    ?<div  id="noteStage" className='noteStage'>
+                                        <Form onSubmit={this.buildNote}>
+                                            <FormGroup row>
+                                                <Label sm={2}>Moment</Label>
+                                                <Col sm={8}>
+                                                <Input type="text" value={this.minutesForm(gotchaSeconds)+`:`+this.secondsForm(gotchaSeconds)} onChange={this.inputNoteTitle} disabled/>
+                                                </Col>
+                                            </FormGroup>
+                                            <FormGroup row>
+                                                <Label sm={2}>Title</Label>
+                                                <Col sm={8}>
+                                                    <Input type="text" name="notetitle" onChange={this.inputNoteTitle} required/>
+                                                </Col>
+                                            </FormGroup>
+                                            <FormGroup row>
+                                                <Label  sm={2}>Text</Label>
+                                                <Col sm={8}>
+                                                    <Input type="textarea" name="notetext" onChange={this.inputNoteText} />
+                                                </Col>
+                                                <Button sm={2} type="submit">Submit</Button>
+                                            </FormGroup>
+                                        </Form>
+                                    </div>
+                                    : <div></div>
+                                    }
+
+                                </div>
+                            </Col>
+                            <Col className='editor_colsidebar'>
+                                <h3>{notebookTitle}</h3>
+                                <EditorNotesBar onRef={ref => (this.child = ref)} seektoPass={this.setSeekToPlay}/>
+
+                                {
+                                (this.state.origin === "landing")
+                                ?<div>
+                                    <h1>FakeNotes</h1>
+                                        <div>
+                        
+                                            {fakenotes.map(({ gotchaSeconds, notetext, notetitle}) => (
+                                                
+                                                    <div>
+                                                        <span>Title: {notetitle}  </span> 
+                                                        <span>Text: {notetext}  </span>
+                                                        <span>Time: {Math.floor(gotchaSeconds/60)}:{Math.floor(gotchaSeconds - (Math.floor(gotchaSeconds/60)) * 60)}  </span>
+                                                        <Button className="remove-btn" color="danger" size="sm"  onClick={() => this.setSeekToPlay(gotchaSeconds)}>SeekTo</Button>
+                                                    </div>
+                                                
+                                            ))}
+                        
+                                        </div>
+                                </div>
+                                :<div></div>    
+                                }
+  
+                            </Col>
+                        </Row>
                     </div>
-            </div>      
+                </div>      
          
         )
     }
