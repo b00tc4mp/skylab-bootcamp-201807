@@ -29,7 +29,7 @@ class App extends Component {
 		idFavs: [],
 		profilePhoto: null,
 		detailProduct: null,
-		loaded: false,
+		loaded: true,
 		searchVal: ''
 	}
 
@@ -71,11 +71,13 @@ class App extends Component {
 	}
 
 	onProductUpload = (title, category, price, description, photo, longitude, latitude) => {
+		this.setState({ loaded: false })
 		logic.uploadProduct(title, category, price, description, photo, longitude, latitude)
 			.then(() => logic.getPrivateUser() )
 			.then(() => this.props.history.push('/mylist'))
 			.then(() => Alert.success('Your product was upload correctly!', { position: 'top-right', timeout: 3000 }))
-            .catch(({ message }) => Alert.error(message, { position: 'bottom-right', effect: 'slide', timeout: 3000 }) )
+			.catch(({ message }) => Alert.error(message, { position: 'bottom-right', effect: 'slide', timeout: 3000 }) )
+			.finally(() => this.setState({ loaded: true }) )
 	}
 
 
@@ -181,7 +183,8 @@ class App extends Component {
 						<Route path="/register" exact render={() => <Register onRegister={onRegister} errorMsg={errorMsg} showFeedback={showFeedback} hideFeedback={hideFeedback}/>} />
 						<Route path="/(profile|mylist|mychats|favourites|reviews|prod/upload)" exact render={() => 
 							loggedIn ? 
-								<Myzone onLogout={onLogout} 
+								<Myzone loaded={loaded}
+										onLogout={onLogout} 
 										onProductUpload={onProductUpload} 
 										onRemoveFavourite={onRemoveFavourite} 
 										idFavs={idFavs} 

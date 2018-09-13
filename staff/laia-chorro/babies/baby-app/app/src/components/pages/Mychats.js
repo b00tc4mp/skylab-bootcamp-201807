@@ -8,6 +8,7 @@ import socketIOClient from 'socket.io-client'
 
 class Mychats extends Component {
     state = {
+        //loaded: false,
         messages: [],
         message: '',
         chatId: '',
@@ -100,7 +101,7 @@ class Mychats extends Component {
             .then(productId => logic.getProductDetailById(productId))
             .then(product => {
                 this.setState({prodTitle: product.title, 
-                    prodPhoto: product.photos[0], 
+                    prodPhoto: product, 
                     prodOwner: product.user_name,
                     prodPrice: product.price,
                     prodDescription: product.descrition,
@@ -139,7 +140,7 @@ class Mychats extends Component {
                                 <li key={index}>
                                     <ChatCard 
                                         title={chat.product.title}
-                                        photo={chat.product.photos[0]}
+                                        photo={chat.product}
                                         prodOwner={'Pepito'}
                                         onGoToChat={this.onGoToChatById}
                                     />
