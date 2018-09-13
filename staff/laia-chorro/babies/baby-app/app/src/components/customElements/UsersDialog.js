@@ -10,12 +10,11 @@ import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import ListItemText from '@material-ui/core/ListItemText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Dialog from '@material-ui/core/Dialog';
-import PersonIcon from '@material-ui/icons/Person';
 import blue from '@material-ui/core/colors/blue';
 import Alert from 'react-s-alert'
 import logic from '../../logic'
 
-//const emails = ['username@gmail.com', 'user02@gmail.com'];
+
 const styles = {
   avatar: {
     backgroundColor: blue[100],
@@ -62,9 +61,6 @@ class UsersDialog extends React.Component {
                 {prodBuyers && prodBuyers.map((buyer, index) => (
                 <ListItem button onClick={() => this.handleListItemClick(buyer.user_id)} key={index}>
                     <ListItemAvatar>
-                    {/*<Avatar className={classes.avatar}>
-                        <PersonIcon />
-                </Avatar>*/}
                     {buyer.user_photo?
                         <Avatar style={{display: 'inline-block', marginRight: '5px'}} alt="profile photo" style={{ height: '48px', width: '48px', margin: '10px auto' }} src={buyer.user_photo} className={classes.avatar} /> : 
                         <i className="material-icons md-48">face</i>

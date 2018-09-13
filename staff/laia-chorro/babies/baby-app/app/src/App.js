@@ -146,7 +146,8 @@ class App extends Component {
 			.finally(() => this.setState({ loaded: true }) )
 	}
 
-	onGoToChat = () => {
+	onGoToChat = (idProd) => {
+		this.setState({idProd})
 		this.props.history.push('/mychats')
 	}
 
@@ -167,10 +168,10 @@ class App extends Component {
 
 
 	render() {
-		const { loggedIn, errorMsg, showFeedback, idFavs, profilePhoto, product, loaded, searchVal } =  this.state
+		const { loggedIn, errorMsg, showFeedback, idFavs, profilePhoto, product, loaded, searchVal, idProd } =  this.state
 		const { onRegister, onLogin, onLogout, onProductUpload, hideFeedback, 
 				getIdFavs, onAddFavourite, onRemoveFavourite, onUploadProfilePhoto,
-				onProductDetail, onSearchFilter } = this
+				onProductDetail, onSearchFilter, onGoToChat } = this
 
 		return (
 			<div className="baby-app-container">
@@ -187,10 +188,11 @@ class App extends Component {
 										idFavs={idFavs} 
 										onUploadProfilePhoto={onUploadProfilePhoto}
 										profilePhoto={profilePhoto}
-										onProductDetail={onProductDetail}/> : 
+										onProductDetail={onProductDetail}
+										idProd={idProd}/> : 
 								<Redirect to="/login" />
 						} />
-						<Route path="/item/:idProd" exact render={() => <ProductDetail onAddFavourite={onAddFavourite} onRemoveFavourite={onRemoveFavourite} idFavs={idFavs} getIdFavs={getIdFavs} onProductDetail={onProductDetail} product={product} loaded={loaded}/>} />
+						<Route path="/item/:idProd" exact render={() => <ProductDetail onAddFavourite={onAddFavourite} onRemoveFavourite={onRemoveFavourite} idFavs={idFavs} getIdFavs={getIdFavs} onProductDetail={onProductDetail} product={product} loaded={loaded} onGoToChat={onGoToChat}/>} />
 						<Route path="/user/:idUser" exact render={() => <PublicUser onAddFavourite={onAddFavourite} onRemoveFavourite={onRemoveFavourite} idFavs={idFavs} getIdFavs={getIdFavs} onProductDetail={onProductDetail} />} />
 						{/*<Route path="/update" exact render={() => loggedIn ? <Update onUpdateProp={onUpdate} email={logic.userUsername} errorMsg={errorMsg} showFeedback={showFeedback} hideFeedback={hideFeedback}/> : <Redirect to="/login" />} />*/}
 					</Switch>

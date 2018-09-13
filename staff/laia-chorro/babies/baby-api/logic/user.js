@@ -309,6 +309,40 @@ const userLogic = {
             .then(() => true)
     },
 
+    /**
+     * User has add a review of a product that she has bought and we remove 
+     * thisr pendent feeback from the array
+     * 
+     * @param {String} userId 
+     * @param {String} productId 
+     */
+    removeFeedback(userId, productId) {
+        return Promise.resolve()
+            .then(() => {
+                validate._objectId('user', userId)
+                validate._objectId('product', productId)
+
+                return Product.findById(productId)
+            })
+            .then(prod => { 
+                if (!prod) throw new LogicError(`product with id: ${productId} does not exist`)
+
+                //return User.findById(userId)
+
+                return User.findByIdAndUpdate(userId, 
+                    { '$pull': { 'feedbacks': productId } }, 
+                    { 'new': true })
+            })
+            /*.then(user => {
+                if (!user) throw new LogicError(`user with id: ${userId} does not exist`)
+
+                user.feedbacks.pull(productId)
+
+                return user.save()
+            })*/
+            .then(() => true)
+    },
+
 
     /**
      * Save a new user's review writted by another user who has bought a product from him.
@@ -370,12 +404,18 @@ const userLogic = {
                 return User.
                     findById(userId).
                     select('email name surname reviews products photo location feedbacks').
-                    populate({
+                    populate([{
                         path: 'products'
                         , select: 'title description price state cathegory location photos num_favs num_views created_at'
                         , match: { state: { $in: ['pending', 'sold', 'reserved'] }}
                         , options: { sort: { created_at: -1 }, lean: true}
-                    }).
+                    },
+                    {
+                        path: 'feedbacks'
+                        , select: 'title photos user'
+                        , match: { state: { $in: ['sold'] }}
+                        , options: { sort: { created_at: -1 }, lean: true}
+                    }]).
                     lean()
             })
             .then(user => {
@@ -414,7 +454,7 @@ const userLogic = {
                     },
                     {
                         path: 'feedbacks'
-                        , select: 'title photos'
+                        , select: 'title photos user'
                         , match: { state: { $in: ['sold'] }}
                         , options: { sort: { created_at: -1 }, lean: true}
                     }]).

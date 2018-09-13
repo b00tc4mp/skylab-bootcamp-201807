@@ -9,7 +9,7 @@ import IconButton from '@material-ui/core/IconButton';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder'
 import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined'
 import DeleteIcon from '@material-ui/icons/Delete';
-import EditIcon from '@material-ui/icons/Edit';
+//import EditIcon from '@material-ui/icons/Edit';
 import TurnedInNotIcon from '@material-ui/icons/TurnedInNot';
 import TurnedInIcon from '@material-ui/icons/TurnedIn';
 import WorkIcon from '@material-ui/icons/Work';
@@ -122,12 +122,12 @@ class PreEditCard extends React.Component {
                     />
                     <div className={classes.details}>
                         <CardContent className={classes.content}>
-                        <Typography variant="headline"component="h1">{`${price}€`}</Typography>
+                            <Typography variant="headline"component="h1">{`${price}€`}</Typography>
                         </CardContent>
                     </div>
                     <div className={classes.details}>
                         <CardContent className={classes.content}>
-                        <Typography variant="subheading" color="textSecondary">{title}</Typography>
+                            <Typography variant="subheading" color="textSecondary">{title}</Typography>
                         </CardContent>
                     </div>
                 </CardActionArea>
@@ -142,9 +142,9 @@ class PreEditCard extends React.Component {
                     <IconButton className={classes.button} aria-label="Reserved" color="primary">
                         {state === 'reserved' ?  <TurnedInIcon onClick={this.onPending}/> : <TurnedInNotIcon onClick={this.onReserved} />}
                     </IconButton>
-                    <IconButton className={classes.button} aria-label="Edit" color="primary">
+                    {/*<IconButton className={classes.button} aria-label="Edit" color="primary">
                         <EditIcon />
-                    </IconButton>
+                    </IconButton>*/}
 
                     <UsersDialog
                         selectedValue={this.state.selectedUser}

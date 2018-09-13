@@ -32,7 +32,8 @@ class Mychats extends Component {
             })*/
 
 
-        let productId = '5b994d419f25b20e139acf36'
+        //let productId = '5b994d419f25b20e139acf36'
+        const productId = this.props.idProd
 
         /*logic.listChatsByUserId()
             .then(chats => {
@@ -71,7 +72,7 @@ class Mychats extends Component {
         return logic.listChatsByUserId()
             .then(chats => {
                 this.setState({chats})
-
+debugger;
                 if (!productId) productId = chats[0].product
 
                 return productId

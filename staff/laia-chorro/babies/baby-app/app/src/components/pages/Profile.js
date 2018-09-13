@@ -113,7 +113,7 @@ class Profile extends Component {
                             }
                             <div className="profile-photo-description">
                                 <h5>Change your image profile here</h5>
-                                <p>People will recognise you by this photo. Only .jpg format is accepted</p>
+                                <p>People will recognise you by this photo. Only .jpg or .png format is accepted</p>
                             </div>
                             <div className="button-wrapper">
                                 <Button style={{ alignSelf: 'center', 

@@ -1,3 +1,8 @@
+.feedback-container{
+    overflow: hidden;
+    padding-bottom: 12px;
+}
+
 .feedback-container textarea{
     height: 60px;
 }
@@ -9,4 +14,17 @@
 
 .feedback-detail-name h1 {
     font-size: 23px;
+}
+
+.feedback-product-btn {
+    align-self: center; 
+    position: relative; 
+    background-color: #E0F7FA; 
+    color:#0097A7; 
+    box-shadow: none; 
+    border: 1px solid #0097A7;
+    cursor: pointer;
+    padding: 6px 10px;
+    border-radius: 50px;
+    float: right;
 }

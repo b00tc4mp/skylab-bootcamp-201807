@@ -3,6 +3,8 @@ import ReviewCard from '../cards/ReviewCard'
 import logic from '../../logic'
 import Avatar from '@material-ui/core/Avatar'
 import ReactStars from 'react-stars'
+import Alert from 'react-s-alert'
+import Loader from 'react-loader'
 import './Reviews.css'
 
 class Reviews extends Component {
@@ -10,8 +12,8 @@ class Reviews extends Component {
         reviews: logic.getUserField('reviews') || [],
         feedbacks: logic.getUserField('feedbacks') || [],
         description: null,
-        starsRating: 0
-
+        starsRating: 0,
+        loaded: true
     }
     
     componentDidMount(){
@@ -25,23 +27,40 @@ class Reviews extends Component {
 
     ratingChanged = newRating => this.setState({starsRating: newRating})
 
+    submitReview = e => {
+        e.preventDefault()
+
+        this.setState({ loaded: false })
+
+        const { starsRating, description, feedbacks } = this.state
+
+        const feedback = feedbacks.find( item  => item.id === e.target.dataset.feedback )
+
+        const idProd = feedback.id
+        const userTo = feedback.user
+
+        logic.addReview(userTo, starsRating, idProd, description)
+            .then(() => logic.getPrivateUser() )
+            .then(() => Alert.success('Thank you for your review!', { position: 'top-right', timeout: 3000 }))
+            .catch(({ message }) => Alert.error(message, { position: 'bottom-right', effect: 'slide', timeout: 3000 }))
+            .finally(() => this.setState({ loaded: true }))
+    }
+
 
     render() {
         const { state: { reviews, feedbacks } } = this
         
         return (
             <div className="mylist-products-container">
+                <Loader loaded={this.state.loaded}>
                 
-                    {feedbacks && ( <h1 className="mylist-products-heading">Some people is waiting for your feedback</h1> )}
+                    {feedbacks && ( <h1 className="mylist-products-heading">Some people are waiting for your feedback</h1> )}
                        {feedbacks && feedbacks.map((feedback, index) => {
                            return(
                            <div key={index} data-feedback={feedback.id}>
                             
-                                <form onSubmit={this.submitUpload} className="upload-form">
+                                <form onSubmit={this.submitReview} className="upload-form" data-feedback={feedback.id}>
                                     <div className="upload-container feedback-container">
-                                        <h2 className="upload-title">Rate your purchase</h2>
-
-
                                         <div className="product-detail-flex">
                                             <div className="product-detail-flex product-detail-user">
                                                     {feedback.photos[0]?
@@ -59,6 +78,7 @@ class Reviews extends Component {
                                                     size={24}
                                                     value={this.state.starsRating}
                                                     onChange={this.ratingChanged}
+                                                    half={false}
                                                     color2={'#ffd700'} />
                                             </div>
                                         </div>
@@ -67,25 +87,26 @@ class Reviews extends Component {
                                             <label className="">Review</label>
                                             <textarea onChange={this.keepDescription} className="form-control" rows="5" placeholder="Rate your purchase" maxLength="650"></textarea>
                                         </div>
+                                        <button type="submit" className="feedback-product-btn">Rate your purchase</button>
                                     </div>
-                                    <button type="submit" className="upload-product-btn">Upload product</button>
                                 </form>
                            </div>)
                            })} 
-                <section className="flex-container">
-                    <h1 className="mylist-products-heading">Your reviews</h1>
-                    {reviews && reviews.map((review, index) => {
-                        return(<div key={index} data-review={review.id}>
-                        <ReviewCard
-                            createdAt={review.created_at}
-                            description={review.description}
-                            idProd={review.productId}
-                            score={review.score}
-                            userFrom={review.userId_from}
-                            />
-                        </div>)
-                        })}
-                </section>
+                    <section className="flex-container">
+                        <h1 className="mylist-products-heading">Your reviews</h1>
+                        {reviews && reviews.map((review, index) => {
+                            return(<div key={index} data-review={review.id}>
+                            <ReviewCard
+                                createdAt={review.created_at}
+                                description={review.description}
+                                idProd={review.productId}
+                                score={review.score}
+                                userFrom={review.userId_from}
+                                />
+                            </div>)
+                            })}
+                    </section>
+                </Loader>
             </div>
 
         )

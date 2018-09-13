@@ -278,12 +278,6 @@ const logic = {
         })
     },
 
-    /*visitProductDetail(productId){
-        return Promise.resolve()
-            .then(() => this.incrementProductViewsById(productId))
-            .then(() => this.getProductDetailById(productId) )
-    },*/
-
     uploadProduct(title, cathegory, price, description, photos, longitude, latitude) {
 
         return Promise.resolve()
@@ -417,7 +411,6 @@ const logic = {
     },
 
     listChatsByProductId(productId) {
-        debugger;
         validate._stringField('productId', productId)
 
         return Promise.resolve()
@@ -444,17 +437,6 @@ const logic = {
     },
 
     //// REVIEWS //////
-
-    /*listReviewsByUserId() {
-        return Promise.resolve()
-            .then(() => {
-                return this._call(`/me/${this._userId}/chat`, 'GET', { 
-                    'Authorization': `bearer ${this._userToken}`,
-                    'Content-Type': 'application/json' 
-                }, undefined, 200)
-                    .then(res => res.json())
-            })
-    },*/
 
     addReview(userTo, score, idProd, description) {
         return Promise.resolve()

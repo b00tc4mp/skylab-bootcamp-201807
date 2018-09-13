@@ -14,7 +14,6 @@ import Avatar from '@material-ui/core/Avatar'
 import GoogleMapsContainer from '../maps/GoogleMapsContainer'
 
 import ReactStars from 'react-stars'
-import { Carousel } from 'react-responsive-carousel'
 import Slider from "react-slick"
 
 import { Link } from 'react-router-dom'
@@ -24,7 +23,6 @@ import './ProductDetailCard.css'
 const styles = {
   card: {
     maxWidth: 1000,
-    //height: 450
   },
   content: {
     height: 186,
@@ -70,7 +68,8 @@ function ProductDetailCard(props) {
             userProducts,
             userReviews,
             userPhoto,
-            userId
+            userId,
+            goToChat
 
         } = props
 
@@ -84,6 +83,12 @@ function ProductDetailCard(props) {
     event.preventDefault()
 
     removeFavourite(idProd)
+  }
+
+  const onGoToChat = event => {
+      event.preventDefault()
+
+      goToChat(idProd)
   }
 
   return (
@@ -113,15 +118,10 @@ function ProductDetailCard(props) {
                             <Typography style={{textAlign: 'center'}} variant="subheading" color="textSecondary">{`${userReviews} reviews`}</Typography>
                     </CardContent>
                     <CardContent className="product-detail-chat">
-                        <Link to={`/chat/${idProd}`}>
-                            <button className="nav-btn nav-btn-upload">{'Chat'}</button>
-                        </Link>
+                        <button onClick={onGoToChat} className="nav-btn nav-btn-upload">{'Chat'}</button>
                     </CardContent>
                 </div>
                 <div className="product-detail-carousel">
-                    {/*<Carousel showArrows={true} showThumbs={true}>
-                        {photos.map((photo, index) => (<img key={index} src={photo} />)) }
-                    </Carousel>*/}
                     <Slider arrows={true} dots={true} infinite={true} speed={500} slidesToShow={1} slidesToScroll={1}>
                         {photos.map((photo, index) => (<img key={index} height={'506px'} src={photo} />)) }
                     </Slider>
