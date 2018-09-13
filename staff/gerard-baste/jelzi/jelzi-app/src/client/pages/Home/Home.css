@@ -26,3 +26,7 @@
 .loading {
   color: rgb(95, 184, 84) !important;
 }
+
+#searchHome {
+  margin-left: 24%;
+}

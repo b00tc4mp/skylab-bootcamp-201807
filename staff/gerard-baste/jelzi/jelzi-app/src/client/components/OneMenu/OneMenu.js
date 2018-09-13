@@ -99,7 +99,7 @@ export default class OneMenu extends React.Component {
       confirmButtonText: "Yes, delete it!"
     }).then(result => {
       if (result.value) {
-        swal("Deleted!", "Your Menu has been deleted.", "success");
+        swal("Deleted!", "Your Recipe has been deleted.", "success");
 
         return logic
           .removeDish(
@@ -393,7 +393,9 @@ export default class OneMenu extends React.Component {
                   }
                 )
               ) : (
-                <p>Recipes for {this.state.selectText} not found</p>
+                <p className="recipeError">
+                  Recipes for {this.state.selectText} not found
+                </p>
               ))}
           </Row>
         </div>

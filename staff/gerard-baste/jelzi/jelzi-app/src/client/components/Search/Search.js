@@ -50,8 +50,8 @@ export default class Search extends React.Component {
           </InputGroup>
           {!this.props.isLoggedIn ? (
             <FormText className="textInformation" color="muted">
-              If you want filter by allergens and add recipes to menu, please go
-              to Register.
+              For a full search experience (filter, save recipes...) you have to
+              be logged in.
             </FormText>
           ) : (
             ""

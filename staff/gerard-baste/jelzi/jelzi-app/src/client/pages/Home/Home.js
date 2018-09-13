@@ -12,7 +12,8 @@ export default class Home extends React.Component {
     recipesError: false,
     recipesErrorQuery: "",
     query: "",
-    loading: false
+    loading: false,
+    carrousel: true
   };
 
   onSearch = query => {
@@ -23,12 +24,14 @@ export default class Home extends React.Component {
           this.setState({
             loading: false,
             recipesError: true,
-            recipesErrorQuery: `Recipes not found with ${query}`
+            recipesErrorQuery: `Recipes not found with ${query}`,
+            carrousel: true
           });
         } else {
           this.setState({
             loading: false,
             recipesError: false,
+            carrousel: false,
             recipes
           });
         }
@@ -42,12 +45,14 @@ export default class Home extends React.Component {
           this.setState({
             loading: false,
             recipesError: true,
-            recipesErrorQuery: `Recipes not found with ${query}`
+            recipesErrorQuery: `Recipes not found with ${query}`,
+            carrousel: true
           });
         } else {
           this.setState({
             loading: false,
             recipesError: false,
+            carrousel: false,
             recipes
           });
         }
@@ -71,25 +76,29 @@ export default class Home extends React.Component {
     };
     return (
       <div id="home-cont">
-        <Slider {...settings}>
-          <div>
-            <img alt="" className="carousel image01" />
-          </div>
-          <div>
-            <img alt="" className="carousel image02" />
-          </div>
-          <div>
-            <img alt="" className="carousel image03" />
-          </div>
-        </Slider>
-
+        {this.state.carrousel ? (
+          <Slider {...settings}>
+            <div>
+              <img alt="" className="carousel image01" />
+            </div>
+            <div>
+              <img alt="" className="carousel image02" />
+            </div>
+            <div>
+              <img alt="" className="carousel image03" />
+            </div>
+          </Slider>
+        ) : (
+          ""
+        )}
+        <Col id="searchHome" sm="6">
+          <Search onSearch={this.onSearch} isLoggedIn={this.isLoggedIn()} />
+          {this.state.loading ? <MDSpinner className="loading" /> : ""}
+        </Col>
         <Container>
           <Row>
             <Col />
-            <Col sm="6">
-              <Search onSearch={this.onSearch} isLoggedIn={this.isLoggedIn()} />
-              {this.state.loading ? <MDSpinner className="loading" /> : ""}
-            </Col>
+
             <section className="container-name">
               <ResultList
                 recipesResults={this.state.recipes}

@@ -33,7 +33,10 @@ export default class NavBar extends React.Component {
   render() {
     return (
       <div class="nav-cont">
-        <nav class="navbar navbar-expand-lg justify-content-around">
+        <nav
+          class="navbar navbar-expand-lg justify-content-around"
+          id="marginPhoto"
+        >
           <Link to="/" class="navbar-brand">
             <p className="titleNavbar">Jelzi Food</p>
           </Link>

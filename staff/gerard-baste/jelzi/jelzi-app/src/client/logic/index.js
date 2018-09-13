@@ -1,7 +1,8 @@
 const validateEmail = require("../../utils/validate-email");
 
 const logic = {
-  url: "https://serene-ravine-93515.herokuapp.com/api",
+  // url: "https://serene-ravine-93515.herokuapp.com/api",
+  url: "http://localhost:8080/api",
 
   _call(path, method, headers, body, expectedStatus) {
     const config = { method };
@@ -122,16 +123,14 @@ const logic = {
   /**
    * Update profile user to API
    * @param {email} email The user's email
-   * @param {string} password The user's password
    * @param {array} allergens The user's allergens
    * @param {array} newAllergens The user's new allergens
    * @param {string} token The user's token
    */
-  updateAllergens(email, password, allergens, newAllergens, token) {
+  updateAllergens(email, allergens, newAllergens, token) {
     return Promise.resolve()
       .then(() => {
         this._validateEmail(email);
-        this._validateStringField("password", password);
         this._validateArrayField("allergens", allergens);
         this._validateArrayField("new allergens", newAllergens);
 
@@ -142,7 +141,7 @@ const logic = {
             authorization: `bearer ${token}`,
             "content-type": "application/json"
           },
-          JSON.stringify({ email, password, allergens, newAllergens }),
+          JSON.stringify({ email, allergens, newAllergens }),
           200
         );
       })

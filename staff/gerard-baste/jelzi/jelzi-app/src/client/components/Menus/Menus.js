@@ -32,7 +32,6 @@ export default class Menus extends React.Component {
     logic
       .listMenus(email, token)
       .then(menus => {
-        debugger;
         this.setState({ menus });
       })
       .then(() => {
