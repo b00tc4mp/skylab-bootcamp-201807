@@ -9,16 +9,22 @@
   padding: 0;
 }
 
+* {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
 .profile {
+  background: #DCE35B;
+  background: -webkit-linear-gradient(to top, #45B649, #DCE35B);
+  background: linear-gradient(to top, #45B649, #DCE35B);
+  color: white;
   height: 90vh;
-  background-color: yellowgreen;
   display: grid;
   grid-template: repeat(3, 150px) 100px/1fr;
   align-items: center;
   justify-items: center;
   padding: 0 30px;
   padding-top: 30px;
-  background-color: yellowgreen;
   justify-content: space-between;
 }
 .profile__change-password {
@@ -44,9 +50,10 @@
   border: 1px solid grey;
   border-radius: 10px;
   background-color: rgba(255, 255, 255, 0.7);
-  width: 100%;
+  width: 50%;
   height: 30px;
   font-size: 15px;
+  padding: 5px;
 }
 .profile__btn {
   background-color: green;
@@ -76,13 +83,13 @@
   background-color: red;
 }
 .profile__text {
-  justify-self: left;
+  justify-self: center;
 }
 .profile__text--success {
   color: green;
 }
 .profile__text--error {
-  color: red;
+  color: white;
 }
 @media screen and (orientation: landscape) {
   .profile {

@@ -16,8 +16,8 @@ class Register extends Component {
         const { state: { email, password, password2 } } = this
         if (password === password2) {
             this.props.onRegister(email, password)
-                .catch(err => this.setStatet({ error: err.message }))
-        } else this.setStatet({ error: 'password do not match' })
+                .catch(err => this.setState({ error: 'invalid email' }))
+        } else this.setState({ error: 'password do not match' })
 
     }
 

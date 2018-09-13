@@ -22,9 +22,9 @@ class PuntVerd extends Component {
     render() {
         return (
             <div className="puntverd" >
-                <h2>Green Spot</h2>
+                <h1 className='puntverd__title'>Green Spot</h1>
                 <h4 className='puntverd__words'>Map of GreenSpots of Catalonia</h4>
-                <div style={{ height: '60vh', width: '60vh' }}>
+                <div className='puntverd__map'>
                     <GoogleMapReact
                         bootstrapURLKeys={{ key: 'AIzaSyBUyonJznX8TMaJ0HbpikgKbm5j2g5G_mk' }}
                         defaultCenter={this.props.center}

@@ -20,18 +20,18 @@ class Profile extends Component {
 
     /** This is the function to update the user password */
     updatePassword = () => {
-        this.props.updateUser(this.state.email, this.state.password, this.state.newPassword)
+        this.props.updateUser(this.state.password, this.state.newPassword)
             .then(() => this.setState({ update: 'success' }))
-            .catch(err => this.setState({ update: err.message }))
-    }
+            .catch(err => this.setState({ error: 'wrong password' }))
+    } 
 
 
     /** This is the function to delete the user */
     deleteUser = () => {
-        this.props.deleteUser(this.state.email, this.state.password2)
-            .catch(err => {
-                this.setState({ deleteError: err.message })
-            })
+        this.props.deleteUser(this.state.password2)
+        .catch(err => {
+            this.setState({ deleteError: 'wrong password' })
+        })
     }
 
     render() {
@@ -51,6 +51,7 @@ class Profile extends Component {
         return (
             <div className="profile">
                 <Navbar />
+                <h1>Profile</h1>
                 <div className="profile__change-password">
                     <h3 className="profile__text"> Update password </h3>
                     <input type="password" className="profile__input" placeholder=" password" onChange={keepPassword}></input>

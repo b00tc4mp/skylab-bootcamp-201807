@@ -1,8 +1,10 @@
 @import 'Common'
 
 .login
+    background-image: url('./register.jpg')
+    background-repeat: no-repeat
+    background-size: 300%
     height: $app-max-height + $nav-height
-    background-color: $background-color-yellowgreen
     display: grid
     grid-template: 30% 5% 5% 1% 5% 5% / 1fr    
     grid-gap: 30px
@@ -18,15 +20,17 @@
         justify-items: start
     &__text
         margin: 0
+        justify-self: center
     &__input
         color: white
         margin: 0 auto
-        width: 100%
+        width: 50%
         max-width: 400px
         height: 30px
         border-radius: 10px
         border: none
         background: fade-out(#000, 0.7) 
+        padding: 5px
     &__btn
         color: white
         border: none
@@ -42,4 +46,4 @@
         &--secondary
             color: darkgray
     &__error
-        color: red
+        color: white

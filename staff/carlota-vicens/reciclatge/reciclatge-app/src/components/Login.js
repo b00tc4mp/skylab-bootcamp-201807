@@ -15,8 +15,13 @@ class Login extends Component {
     /** This is the function to login a user */
     loginUser = () => {
         const { state: { email, password } } = this
+
         this.props.onLogin(email, password)
-            .catch(err => this.setState({ error: err.message }))
+            .catch(error => {
+                this.setState({ error: error.message })
+            })
+        
+
     }
     render() {
         const {

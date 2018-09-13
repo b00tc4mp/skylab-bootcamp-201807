@@ -9,9 +9,15 @@
   padding: 0;
 }
 
+* {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
 .container {
+  background: #DCE35B;
+  background: -webkit-linear-gradient(to left, #45B649, #DCE35B);
+  background: linear-gradient(to left, #45B649, #DCE35B);
   height: 90vh;
-  background-color: yellowgreen;
   color: white;
   display: flex;
   flex-direction: column;

@@ -9,9 +9,15 @@
   padding: 0;
 }
 
+* {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
 .login {
+  background-image: url("./register.jpg");
+  background-repeat: no-repeat;
+  background-size: 300%;
   height: 100vh;
-  background-color: yellowgreen;
   display: grid;
   grid-template: 30% 5% 5% 1% 5% 5%/1fr;
   grid-gap: 30px;
@@ -30,16 +36,18 @@
 }
 .login__text {
   margin: 0;
+  justify-self: center;
 }
 .login__input {
   color: white;
   margin: 0 auto;
-  width: 100%;
+  width: 50%;
   max-width: 400px;
   height: 30px;
   border-radius: 10px;
   border: none;
   background: rgba(0, 0, 0, 0.3);
+  padding: 5px;
 }
 .login__btn {
   color: white;
@@ -59,7 +67,7 @@
   color: darkgray;
 }
 .login__error {
-  color: red;
+  color: white;
 }
 
 /*# sourceMappingURL=Login.css.map */

@@ -1,8 +1,8 @@
 import React from 'react'
 import Webcam from '../utils/react-webcam'
 import { withRouter } from 'react-router'
-import Navbar from './NavBar.js'
-
+import Navbar from './NavBar'
+import FileBase64 from 'react-file-base64'
 import './styles/Main.css'
 
 class WebcamCapture extends React.Component {
@@ -22,7 +22,6 @@ class WebcamCapture extends React.Component {
     this.setState({ imageSrc })
   }
 
-
   uploadImage = () => {
     return this.props.upload(this.state.imageSrc)
       .then(namecontainer => {
@@ -34,14 +33,7 @@ class WebcamCapture extends React.Component {
         }
       })
   }
-  
-  componentWillMount = () =>{
-    console.log('montar')
-  }
 
-  componentWillUnmount = ()  =>{
-    console.log('desmontar')
-  }
 
   render() {
     const videoConstraints = {
@@ -50,16 +42,20 @@ class WebcamCapture extends React.Component {
       facingMode: 'user',
     }
     return (
+
       <div className='main'>
         <h1 className='main__title'> Be Green, RECYCLE! </h1>
         <button className='main__btn' onClick={this.capture}>Capture</button>
+        <label className='main__file'>
+          <FileBase64 className='main__file--btn' multiple={false} onDone={data => this.setState({ imageSrc: data.base64 })} />
+          <span> or choose a picture</span>
+          </label>
         <div className='main__image'>
           {!this.state.imageSrc && <Webcam audio={false} height={350} ref={this.setRef} screenshotFormat="image/jpeg"
             width={350} videoConstraints={videoConstraints} />}
         </div>
-        {this.state.imageSrc ? <div className='main__image'> <img alt='' src={this.state.imageSrc} />
+        {this.state.imageSrc ? <div className='main__image'> <img style={{ height: '350px', width: '350px' }} alt='' src={this.state.imageSrc} />
           <br></br><button className='main__btn' onClick={this.uploadImage}>Save</button> </div> : null}
-
         <Navbar />
       </div>
     )

@@ -9,16 +9,29 @@
   padding: 0;
 }
 
+* {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
 .puntverd {
-  height: 90vh;
-  background-color: yellowgreen;
-  margin: 0 auto;
+  background: #DCE35B;
+  background: -webkit-linear-gradient(to top, #45B649, #DCE35B);
+  background: linear-gradient(to top, #45B649, #DCE35B);
+  height: 100vh;
   display: grid;
   justify-items: center;
   color: white;
 }
 .puntverd__words {
   margin: 0 auto;
+}
+.puntverd__map {
+  height: 55vh;
+  width: 55vh;
+}
+.puntverd__title {
+  margin: 20px;
+  margin-bottom: 0;
 }
 
 /*# sourceMappingURL=PuntVerd.css.map */
