@@ -207,10 +207,7 @@ router.get('/users/:id/results', validateJwt, (req, res) => {
 router.get('/users/:id/results/:resultId', validateJwt, (req, res) => {
     const { params: { id, resultId } } = req
     logic.retrieveResult(id, resultId)
-        .then(filename => {
-            console.log(filename)
-            res.download(filename)
-        })
+        .then(filename => { res.download(filename) })
 })
 
 // models managament

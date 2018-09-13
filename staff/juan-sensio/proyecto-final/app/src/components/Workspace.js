@@ -212,7 +212,7 @@ class Workspace extends Component {
 
                 <nav className='workspace__nav'>
                     <div className='workspace__nav__upload'>
-                        <button><label htmlFor='fileInput'><img src={uploadIcon} alt='upload' /></label></button>
+                        {loggedIn && <button><label htmlFor='fileInput'><img src={uploadIcon} alt='upload' /></label></button>}
                         <input id='fileInput' type="file" accept="video/*" onChange={uploadVideo} style={{ display: 'none' }} />
                         {save && loggedIn && <button onClick={saveVideo}><img src={saveIcon} alt='save' /></button>}
                     </div>

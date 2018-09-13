@@ -5,7 +5,6 @@ const fs = require('fs')
 const rimraf = require('rimraf');
 const posenet = require('./posenet')
 const pix2pix = require('./pix2pix')
-const { exec } = require('child_process');
 
 const dataPath = './data'
 if (!fs.existsSync(dataPath))
@@ -291,10 +290,13 @@ const logic = {
                             const userPath = `./data/${userId}`
                             const datasetPath = this.getDatasetPath(userId, name)
                             const modelPath = `./models/${model.name}`
-                            // si pongo el nombre del dataset se sobreescribe al usar el mismo dataset 
-                            // con distintos modelos
-                            const resultName = name //+ '-' + model.name
+
+                            let modelSourceArray = model.source.split('.')
+                            modelSourceArray.pop()
+                            
+                            const resultName = modelSourceArray.join('.') + '-' + name
                             const resultPath = this.getResultsPath(userId, resultName)
+
                             const exist = fs.existsSync(resultPath)
                             return pix2pix.buildResult(userPath, datasetPath, modelPath, resultPath, settings)
                                 .then(() => {

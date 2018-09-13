@@ -1,7 +1,8 @@
-//const API_BASE_URL = 'http://192.168.1.185:8080/api/' // mac
+const API_BASE_URL = 'http://192.168.1.185:8080/api/' // mac
 //const API_BASE_URL = 'http://192.168.1.191:8080/api/' // casa
 
-const API_BASE_URL = 'http://localhost:8080/api/'
+//const API_BASE_URL = 'http://localhost:8080/api/'
+
 
 const logic = {
 
@@ -219,7 +220,7 @@ const logic = {
             'authorization': `bearer ${this._userToken}`
         }
         const body = JSON.stringify({datasetId, modelId, settings})
-        return this._callApi(`users/${this._userId}/result`, 'put', headers, body, 201)
+        return this._callApi(`users/${this._userId}/results`, 'put', headers, body, 201)
             .then(() => true)
     },
 
