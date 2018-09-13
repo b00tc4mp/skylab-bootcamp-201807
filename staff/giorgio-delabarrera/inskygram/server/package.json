@@ -45,6 +45,7 @@
     "@types/rimraf": "^2.0.2",
     "@types/validator": "^9.4.1",
     "awesome-typescript-loader": "^5.2.0",
+    "clean-webpack-plugin": "^0.1.19",
     "concurrently": "^4.0.1",
     "eslint": "^5.4.0",
     "jest": "^23.5.0",
