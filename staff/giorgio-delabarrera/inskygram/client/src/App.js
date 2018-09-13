@@ -52,8 +52,12 @@ class App extends Component {
   handleCreationSubmit = (image, caption) => {
     const { loggedInUsername, token } = this.state
 
-    logic.createPost(loggedInUsername, image, caption, token)
-      .then(() => console.log("post creado"))
+    return logic.createPost(loggedInUsername, image, caption, token)
+      .then(() => {
+        //alert("post creado")
+        this.closeModal()
+        this.onHomeClick()
+      })
       .catch(err => console.log(err))
   }
 

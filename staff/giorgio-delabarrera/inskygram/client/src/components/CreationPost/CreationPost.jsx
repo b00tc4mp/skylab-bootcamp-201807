@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import './CreationPost.sass'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 class CreationPost extends Component {
 
@@ -24,17 +26,32 @@ class CreationPost extends Component {
 
   render() {
     return (
-      <div>
-        <form onSubmit={this.handleSubmit}>
-          <div>
-            <label htmlFor="image">Image</label>
-            <input type="file" name="image" id="image" onChange={this.handleImage} />
+      <div className="CreationPost">
+        <form className="CreationPost-form" onSubmit={this.handleSubmit}>
+          <div className="CreationPost-imageWrapper">
+            <label htmlFor="image">
+              <input type="file" name="image" id="image" onChange={this.handleImage} style={{ display: 'none' }} />
+              <span className="CreationPost-uploadButton button" type="button">
+                <FontAwesomeIcon
+                  icon={['fas', 'upload']}
+                  className="" />
+                <span className="CreationPost-uploadButtonLabel"> Choose a file</span>
+              </span>
+            </label>
           </div>
-          <div>
-            <label htmlFor="caption">Caption</label>
-            <input type="text" name="" id="caption" onChange={this.handleCaption} />
+          <div className="CreationPost-fieldsWrapper">
+            <div className="CreationPost-field">
+              <label htmlFor="caption" className="CreationPost-label">Caption</label>
+              <textarea
+                id="caption"
+                className="CreationPost-textarea"
+                onChange={this.handleCaption}
+              ></textarea>
+            </div>
+            <div>
+              <button className="button is-primary" type="submit" >Submit</button>
+            </div>
           </div>
-          <button type="submit" >Submit</button>
         </form>
       </div>
     )
