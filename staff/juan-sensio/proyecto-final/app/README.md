@@ -25,8 +25,19 @@ As a user, you can upload a **video** and save it in your gallery. Then, you can
 
 ### Block diagram
 
-### Components diagram
+The front end of the application was built using **React**, **React Router** and **Redux**. The back end is connected to the API in order to manage the users, store the videos and create the datasets and results using the different models.
+
+![block-diagram](docs/block-diagram-app.png)
 
 ### Sequence diagram
+
+- Upload and save a video
+![save-video](docs/save-video.png)
+
+- Create a dataset
+![create-dataset](docs/create-dataset.png)
+
+- Create a result
+![create-result](docs/create-result.png)
 
 ### Class diagram
