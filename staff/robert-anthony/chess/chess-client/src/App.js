@@ -23,13 +23,13 @@ class App extends Component {
   _notificationStyle = {
     NotificationItem: { // Override the notification item
       DefaultStyle: {
-        borderRadius: '5px',
+        borderRadius: '3px',
         fontSize: '15px',
       },
       info: {
         color: '#ff002d',
         background: 'rgba(60,60,65,0.7',
-        borderTop: '3px solid #ff002d',
+        borderTop: '3px solid #a5a5a5',
         WebkitBoxShadow: '1px 1px 1px 1px rgba(30,30,30,0.9)',
         MozBoxShadow: '1px 1px 1px 1px rgba(30,30,30,0.9)',
         boxShadow: '1px 1px 1px 1px rgba(30,30,30,0.9)',
