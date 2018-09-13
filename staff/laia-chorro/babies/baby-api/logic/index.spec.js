@@ -53,7 +53,7 @@ describe('logic', () => {
             })
     )
 
-    !true && describe('validate fields', () => {
+    true && describe('validate fields', () => {
         it('should succeed on correct value', () => {
             expect(() => validate._stringField('email', email).to.equal(email))
             expect(() => validate._stringField('password', password).to.equal(password))
@@ -72,8 +72,8 @@ describe('logic', () => {
         })
     })
 
-    !true && describe('user logic', () => {
-        !true && describe('register user', () => {
+    true && describe('user logic', () => {
+        true && describe('register user', () => {
             it('should register correctly', () =>
                 User.findOne({ email })
                     .then(user => {
@@ -164,7 +164,7 @@ describe('logic', () => {
             )
         })
     
-        !true && describe('authenticate user', () => {
+        true && describe('authenticate user', () => {
             beforeEach(() => User.create({ email, password }))
     
             it('should login correctly', () =>
@@ -235,7 +235,7 @@ describe('logic', () => {
             )
         })
     
-        !true && describe('update password from user', () => {
+        true && describe('update password from user', () => {
             const newPassword = `${password}-${Math.random()}`
             let userId, user
             
@@ -368,7 +368,7 @@ describe('logic', () => {
             )
         })
     
-        !true && describe('update email from user', () => {
+        true && describe('update email from user', () => {
             const newEmail = `laia-chorro-${Math.random()}@mail.com`
             let userId, user
             
@@ -453,7 +453,7 @@ describe('logic', () => {
             )
         })
 
-        !true && describe('update info profile from user', () => {
+        true && describe('update info profile from user', () => {
             const Barcelona = [2.168365, 41.346176] //[Long, Lat]
             const name = 'Laia', surname = 'Chorro', birth = new Date('1989-03-27'), gender = 'female', location = Barcelona
             const completeData = {name, surname, birth, gender, location},
@@ -468,7 +468,7 @@ describe('logic', () => {
                     .then(_user => user = userId = _user.id )
             )
     
-            it('should update profile correctly with all possible fields from data', () =>
+            /*it('should update profile correctly with all possible fields from data', () =>
                 userLogic.updateProfile(userId, completeData)
                     .then(res => {
                         expect(res).to.be.true
@@ -485,7 +485,7 @@ describe('logic', () => {
                         expect(user.location[0]).to.equal(location[0])
                         expect(user.location[1]).to.equal(location[1])
                     })
-            )
+            )*/
 
             it('should update profile correctly with some but not all fields from data', () =>
                 userLogic.updateProfile(userId, partialData)
@@ -552,7 +552,7 @@ describe('logic', () => {
             )
         })
     
-        !true && describe('unregister user', () => {
+        true && describe('unregister user', () => {
             beforeEach(() => User.create({ email, password }))
     
             it('should unregister user correctly', () =>
@@ -604,7 +604,7 @@ describe('logic', () => {
             )
         })
     
-        !true && describe('add review', () => {
+        true && describe('add review', () => {
             const userFrom = { email, password },
                 email2 = `laia-chorro2-${Math.random()}@mail.com`,
                 userTo = { email: email2, password },
@@ -749,7 +749,7 @@ describe('logic', () => {
             })
         })
     
-        !true && describe('list public user', () => {
+        true && describe('list public user', () => {
             const userFrom = { email, password, name: 'Laia', surname: 'Chorro' },
                 email2 = `laia-chorro2-${Math.random()}@mail.com`,
                 userTo = { email: email2, password, name: 'Fulanito', surname: 'Mengano' },
@@ -791,7 +791,7 @@ describe('logic', () => {
                     })
             )
     
-            it('should only list public user info on correct user id', () =>
+            /*it('should only list public user info on correct user id', () =>
                 userLogic.listPublicUser(idUserTo)
                     .then(user => {
                         expect(user).to.exist
@@ -813,7 +813,7 @@ describe('logic', () => {
                         expect(user.publicName).to.equal('Fulanito M.')
                         expect(user.avg_score).to.equal(4.5)
                     })
-            )
+            )*/
     
             it('should fail on trying to list public user info with an undefined id user', () =>
                 userLogic.listPublicUser(undefined)
@@ -841,7 +841,7 @@ describe('logic', () => {
             )
         })
     
-        !true && describe('list private user', () => {
+        true && describe('list private user', () => {
             const userFrom = { email, password },
                 email2 = `laia-chorro2-${Math.random()}@mail.com`,
                 userTo = { email: email2, password },
@@ -954,240 +954,11 @@ describe('logic', () => {
                     })
                     .then(users => expect(users.length).to.equal(usersCount + 1))
             )
-    
-            /*it('should fail on trying to register an already registered user', () =>
-                User.create({ email, password })
-                    .then(() => logicUser.register(email, password))
-                    .catch(err => err)
-                    .then(({ message }) => expect(message).to.equal(`user with ${email} email already exist`))
-            )
-    
-            it('should fail on trying to register with an undefined email', () =>
-                logicUser.register(undefined, password)
-                    .catch(err => err)
-                    .then(({ message }) => expect(message).to.equal(`invalid email`))
-            )
-    
-            it('should fail on trying to register with an empty email', () =>
-                logicUser.register('', password)
-                    .catch(err => err)
-                    .then(({ message }) => expect(message).to.equal(`invalid email`))
-            )
-    
-            it('should fail on trying to register with a numeric email', () =>
-                logicUser.register(123, password)
-                    .catch(err => err)
-                    .then(({ message }) => expect(message).to.equal(`invalid email`))
-            )
-    
-            it('should fail on trying to register with an undefined password', () =>
-                logicUser.register(email, undefined)
-                    .catch(err => err)
-                    .then(({ message }) => expect(message).to.equal(`invalid password`))
-            )
-    
-            it('should fail on trying to register with an empty password', () =>
-                logicUser.register(email, '')
-                    .catch(err => err)
-                    .then(({ message }) => expect(message).to.equal(`invalid password`))
-            )
-    
-            it('should fail on trying to register with a numeric password', () =>
-                logicUser.register(email, 123)
-                    .catch(err => err)
-                    .then(({ message }) => expect(message).to.equal(`invalid password`))
-            )
-    
-            it('should fail on trying to register with 6 empty spaces as a password', () =>
-                logicUser.register(email, '      ')
-                    .catch(err => err)
-                    .then(({ message }) => expect(message).to.equal('password cannot contain any space'))
-            )
-    
-            it('should fail on trying to register with a password containing empty spaces', () =>
-                logicUser.register(email, 'pa ssword')
-                    .catch(err => err)
-                    .then(({ message }) => expect(message).to.equal('password cannot contain any space'))
-            )
-    
-            it('should fail on trying to register with a password starting and ending with empty spaces', () =>
-                logicUser.register(email, ' password ')
-                    .catch(err => err)
-                    .then(({ message }) => expect(message).to.equal('password cannot contain any space'))
-            )
-    
-            it('should fail on trying to register with a too short password', () =>
-                logicUser.register(email, '123')
-                    .catch(err => err)
-                    .then(({ message }) => expect(message).to.equal('password length is too short'))
-            )*/
-        })
-    })
-
-    
-
-
-
-
-
-    ////////////NOTES /////////////////////////////7
-    !true && describe('list notes', () => {
-        let notes = [
-            { date: new Date('2018-08-20T12:10:15.474Z'), text: 'text 1' },
-            { date: new Date('2018-08-23T13:00:00.000Z'), text: 'cumple jordi' },
-            { date: new Date('2018-08-24T13:15:00.000Z'), text: 'pizza' },
-            { date: new Date('2018-08-24T13:19:00.000Z'), text: 'la china' },
-            { date: new Date('2018-08-24T13:21:00.000Z'), text: 'party hard' }
-        ]
-
-        beforeEach(() =>
-            new User({ email, password }).save()
-                .then(user => {
-                    const userId = user.id
-
-                    notes.forEach(note => note.user = userId)
-
-                    return Note.insertMany(notes)
-                })
-                .then(_notes => notes = _notes.map(note => note._doc))
-        )
-
-        it('should list all user notes', () => {
-            return userLogic.listNotes(email, new Date('2018-08-24'))
-                .then(_notes => {
-                    const expectedNotes = notes.slice(2)
-
-                    expect(_notes.length).to.equal(expectedNotes.length)
-
-                    const normalizedNotes = expectedNotes.map(note => {
-                        note.id = note._id.toString()
-
-                        delete note._id
-
-                        delete note.user
-
-                        delete note.__v
-
-                        return note
-                    })
-
-                    expect(_notes).to.deep.equal(normalizedNotes)
-                })
-        })
-    })
-
-    !true && describe('remove note', () => {
-        let notes = [
-            { date: new Date(), text: 'text 1' },
-            { date: new Date(), text: 'text 2' },
-            { date: new Date(), text: 'text 3' },
-            { date: new Date(), text: 'text 4' }
-        ]
-
-        let noteId
-
-        beforeEach(() =>
-            new User({ email, password }).save()
-                .then(user => {
-                    const userId = user.id
-
-                    notes.forEach(note => note.user = userId)
-
-                    return Note.insertMany(notes)
-                })
-                .then(_notes => {
-                    notes = _notes.map(note => note._doc)
-
-                    noteId = notes[0]._id.toString()
-                })
-        )
-
-        it('should succeed on correct note id', () =>
-            userLogic.removeNote(email, noteId)
-                .then(res => {
-                    expect(res).to.be.true
-
-                    return User.findOne({ email })
-                })
-                .then(user => {
-                    return Note.find({ user: user.id }).lean()
-                })
-                .then(_notes => {
-                    const expectedNotes = notes.slice(1)
-
-                    expect(_notes.length).to.equal(expectedNotes.length)
-
-                    expect(_notes).to.deep.equal(expectedNotes)
-                })
-        )
-
-        it('should fail on non existing note', () => {
-            const nonExistingId = ObjectId().toString()
-
-            return userLogic.removeNote(email, nonExistingId)
-                .catch(err => err)
-                .then(({ message }) => expect(message).to.equal(`note with id ${nonExistingId} does not exist`))
         })
     })
 
 
-    ////////////////////  CONTACT /////////////////
-
-    !true && describe('list contacts', () => {
-        let contacts = [
-            new Contact({ name:'Isabel', surname:'López', phone: '658510208', email: 'email@gemail.org' }),
-            new Contact({ name:'Ramona', surname:'López', phone: '658510208', email: 'email@gemail.org' }),
-            new Contact({ name:'Amor', surname:'Garcia', phone: '658510208', email: 'email@gemail.org' }),
-            new Contact({ name: 'Jordi', surname:'López', phone: '658510208', email: 'email@gemail.org' }),
-            new Contact({ name:'Jaume', surname:'Garcia', phone: '658510208', email: 'email@gemail.org' })
-        ]
-
-        /*let contacts = [
-            { name: 'Isabel', surname: 'López', phone: '658510208', email: 'email@gemail.org' },
-            { name: 'Ramona', surname: 'López', phone: '658510208', email: 'email@gemail.org' },
-            { name: 'Amor', surname: 'Garcia', phone: '658510208', email: 'email@gemail.org' },
-            { name: 'Jordi', surname: 'López', phone: '658510208', email: 'email@gemail.org' },
-            { name: 'Jaume', surname: 'Garcia', phone: '658510208', email: 'email@gemail.org' }
-        ]*/
-
-        beforeEach(() =>
-            new User({ email, password }).save()
-                .then(user => {
-                    //contacts.map(contact => new Contact(contact))
-
-                    user.contacts = contacts
-                    
-                    return user.save()
-                })
-        )
-
-        it('should list all contacts that their name starts with a specific letter', () => {
-            const startsWith = 'J'
-
-            return userLogic.listContacts(email, startsWith)
-                .then(_contacts => {
-                    const expectedContacts = contacts.slice(3)
-
-                    expect(_contacts.length).to.equal(expectedContacts.length)
-
-                    const docContacts = expectedContacts.map(contact => contact._doc)
-
-                    const normalizedContacts = docContacts.map(contact => {
-                        contact.id = contact._id.toString()
-
-                        delete contact._id
-
-                        return contact
-                    })
-
-                    expect(_contacts).to.deep.equal(normalizedContacts)
-                })
-        })
-    })
-
-    //////////////////// END CONTACT /////////////////
-
-    describe('chat logic', () => {
+    !true && describe('chat logic', () => {
         describe('add chat', () => {
             it('should succeed on correct data', ()  => {
                 // TODO

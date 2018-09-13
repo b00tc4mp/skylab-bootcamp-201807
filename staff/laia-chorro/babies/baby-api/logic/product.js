@@ -4,9 +4,6 @@
 const validate = require('./validate.js')
 const LogicError = require('./LogicError.js')
 const logicCloudinary = require('./cloudinary.js')
-
-//const moment = require('moment')
-//const mongoose = require('mongoose')
 const { User, Product } = require('../data/models')
 
 
