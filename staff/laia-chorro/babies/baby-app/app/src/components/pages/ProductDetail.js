@@ -21,7 +21,7 @@ class ProductDetail extends Component {
 
     componentDidMount () {
         const { idProd } = this.props.match.params
-
+        
         this.props.onProductDetail(idProd)
         this.props.getIdFavs()
     }

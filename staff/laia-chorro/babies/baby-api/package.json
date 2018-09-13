@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha debug logic"
+    "test": "mocha debug logic",
+    "start": "node ."
   },
   "keywords": [],
   "author": "",

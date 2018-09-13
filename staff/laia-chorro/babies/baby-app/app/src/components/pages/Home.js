@@ -85,7 +85,7 @@ class Home extends Component {
                             </div>
                         }
                     </section>
-                    <Footer />
+                    {/* <Footer /> */}
                 </Loader>
             </main>
         )

@@ -35,7 +35,7 @@ productRouter.post('/me/prod/:user', [validateJwt, upload.any()], (req, res) => 
 
 productRouter.get('/prod/:prod', (req, res) => {
     const { params: { prod } } = req
-
+debugger;
     productLogic.listProductById(prod)
         .then(res.json.bind(res))
         .catch(err => {

@@ -2,6 +2,7 @@ const validate = require('./validate')
 
 const logic = {
     url: 'http://localhost:8080/api',
+    //url: 'https://rocky-harbor-82379.herokuapp.com/api',
 
     _call(path, method, headers, body, expectedStatus) {
         const config = { method }
@@ -370,13 +371,15 @@ const logic = {
             })
     },
 
-    addMessageToChat(chatId, text) {
+    addMessageToChat(chatId, text, receiver) {
         return Promise.resolve()
             .then(() => {
+                debugger
                 validate._stringField('chatId', chatId)
                 validate._stringField('text message', text)
+                validate._stringField('receiverId', receiver)
 
-                const body = { text }
+                const body = { text, receiver }
 
                 return this._call(`me/${this._userId}/chat/${chatId}/message`, 'POST', { 
                     'Authorization': `bearer ${this._userToken}`,

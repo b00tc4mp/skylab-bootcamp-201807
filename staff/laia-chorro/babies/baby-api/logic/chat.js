@@ -48,6 +48,17 @@ const chatLogic = {
                 if (!user) throw new LogicError(`user with id: ${userId} does not exist`)
 
                 return Chat.findById(chatId)
+                    .populate({
+                        path: 'product'
+                        , select: 'title photos price description'
+                        , options: { lean: true}
+                        , populate: {
+                            path: 'user'
+                            , select: 'name '
+                            , options: { lean: true}
+                        }
+                    }).
+                    lean()
             })
             .then(chat => {
                 if (!chat.users.some(user => user.toString() === userId)) throw new LogicError(`user with id: ${userId} does not participate on chat with id: ${chatId}`)
@@ -115,6 +126,17 @@ const chatLogic = {
                 if (!user) throw new LogicError(`user with id: ${userId} does not exist`)
 
                 return Chat.findOne({ users: userId, product: productId })
+                        .populate({
+                            path: 'product'
+                            , select: 'title photos price description'
+                            , options: { lean: true}
+                            , populate: {
+                                path: 'user'
+                                , select: 'name '
+                                , options: { lean: true}
+                            }
+                        }).
+                        lean()
             })
             .then(chat => {
                 delete chat._id
@@ -134,6 +156,17 @@ const chatLogic = {
                 if (!user) throw new LogicError(`user with id: ${userId} does not exist`)
 
                 return Chat.findById(chatId)
+                    .populate({
+                        path: 'product'
+                        , select: 'title photos price description'
+                        , options: { lean: true}
+                        , populate: {
+                            path: 'user'
+                            , select: 'name '
+                            , options: { lean: true}
+                        }
+                    }).
+                    lean()
             })
             .then(chat => {
                 if (!chat.users.some(user => user.toString() === userId)) throw new LogicError(`user with id: ${userId} does not participate on chat with id: ${chatId}`)

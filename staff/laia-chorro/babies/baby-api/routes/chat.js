@@ -4,6 +4,7 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const { chatLogic, LogicError } = require('../logic')
 const validateJwt = require('../helpers/validate-jwt')
+const sockets = require('./sockets')
 
 const chatRouter = express.Router()
 
@@ -22,10 +23,15 @@ chatRouter.post('/me/:user/chat', [validateJwt, jsonBodyParser], (req, res) => {
 })
 
 chatRouter.post('/me/:user/chat/:chat/message', [validateJwt, jsonBodyParser], (req, res) => {
-    const { params: { user, chat }, body: { text } } = req
+    const { params: { user, chat }, body: { receiver, text } } = req
+
+    debugger
 
     chatLogic.addMessageToChat(user, chat, text)
-    .then(() => res.status(201).json({ message: 'message added to chat' }))
+    .then(() => {
+        sockets.sendChat(receiver)
+        return res.status(201).json({ message: 'message added to chat' })
+    })
         .catch(err => {
             const { message } = err
 

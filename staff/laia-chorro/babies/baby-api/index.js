@@ -6,9 +6,9 @@ const package = require('./package.json')
 const { userRouter, productRouter, chatRouter } = require('./routes/index')
 const mongoose = require('mongoose')
 const socket = require('socket.io')
+const socketLogic = require('./routes/sockets')
 
 const { env: { MONGO_URL } } = process
-
 
 mongoose.connect(MONGO_URL, { useNewUrlParser: true })
     .then(() => {
@@ -28,6 +28,9 @@ mongoose.connect(MONGO_URL, { useNewUrlParser: true })
 
         const server = require('http').Server(app);
         const io = socket(server);
+
+
+        socketLogic.setIO(io)
 
         server.listen(PORT, () => console.log(`${package.name} ${package.version} up and running on port ${PORT}`))
         /*io.on('connection', (socket) => {

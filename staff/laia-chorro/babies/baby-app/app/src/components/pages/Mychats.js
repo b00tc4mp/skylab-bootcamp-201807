@@ -4,6 +4,7 @@ import ChatCard from '../cards/ChatCard'
 import SimplePreviewCard from '../cards/SimplePreviewCard'
 import Alert from 'react-s-alert'
 import './Mychats.css'
+import socketIOClient from 'socket.io-client'
 
 class Mychats extends Component {
     state = {
@@ -19,32 +20,31 @@ class Mychats extends Component {
         prodDescription: null
     }
 
+    socket = null
+
+    setSocketListeners = (userId, token) => {
+        this.socket = socketIOClient(process.env.REACT_APP_SOCKET_API) // connect with server
+
+        if (this.socket) {
+            // TODO: make it socketIo-nonDependant
+            this.socket.on(`chat message for ${userId}`, () =>  this.isEmptyChats() )
+        }
+    }
+
     keepMessage = e => this.setState({message: e.target.value})
 
     // to sockets
     addToMessages = data => this.setState({messages: [...this.state.messages, data]})
 
     componentDidMount() {
-        /*logic.getChatById('5b99370de2a09c27448ac4be')
-            .then(res => {
-                this.setState({messages: res.messages})
-                debugger;
-            })*/
+        // this.updateChats()
+        this.isEmptyChats()
+    }
 
-
-        //let productId = '5b994d419f25b20e139acf36'
-        const productId = this.props.idProd
-
-        /*logic.listChatsByUserId()
-            .then(chats => {
-                debugger;
-                this.setState({chats})
-                if (!productId) productId = chats[0].product
-                return productId
-            })*/
-        return this.getInfoFromMyChats(productId)
-            .then(() => logic.listChatByProductAndUserId(productId))
-            .catch(() => logic.addChat(productId) )
+    updateChats = () => {
+        return this.getInfoFromMyChats(this.props.productId)
+            .then(_ => logic.listChatByProductAndUserId(this.state.productId) )
+            .catch(() => logic.addChat(this.state.productId))
             .then(chat => {
                 const chatId = chat._id || chat.chat
                 return logic.getChatById(chatId)
@@ -52,31 +52,51 @@ class Mychats extends Component {
             .catch(({ message }) => Alert.error(message, { position: 'bottom-right', effect: 'slide', timeout: 3000 }))
     }
 
+    createVeryFirstChat = () => {
+        logic.addChat(this.props.productId)
+            .then(chat => {
+                debugger;
+                const chatId = chat.chat
+
+                return logic.getChatById(chatId)
+            }).then(chat => this.setState({messages: chat.messages, chatId: chat._id, chats: [ chat ]}) )
+            .catch(({ message }) => Alert.error(message, { position: 'bottom-right', effect: 'slide', timeout: 3000 }))
+    }
+
     sendMessage = e => {
         e.preventDefault();
-        /*this.socket.emit('SEND_MESSAGE', {
-            author: this.state.username,
-            message: this.state.message
-        })
-        this.setState({message: ''});*/
-
         const data = {}
         data.text = this.state.message
 
         this.setState({messages: [...this.state.messages, data]})
 
-        this.addMessageToChat(this.state.chatId, data.text)
+        this.addMessageToChat(this.state.chatId, data.text, this.state.productId)
+    }
+
+    isEmptyChats = () => {
+        logic.listChatsByUserId()
+            .then(chats => {
+                if(chats && chats.length) {
+                    this.updateChats()
+                }
+                else if(this.props.productId) {
+                   this.createVeryFirstChat()
+                }
+            })
     }
 
     getInfoFromMyChats = productId => {
         return logic.listChatsByUserId()
             .then(chats => {
+                if (!chats || !chats.length) throw new Error()
+
                 this.setState({chats})
-debugger;
+
                 if (!productId) productId = chats[0].product
 
                 return productId
             })
+            .catch(() => this.setState({chats: []}) )
             .then(productId => logic.getProductDetailById(productId))
             .then(product => {
                 this.setState({prodTitle: product.title, 
@@ -86,12 +106,11 @@ debugger;
                     prodDescription: product.descrition,
                     productId: product.id
                 })})
-            //.then(() => logic.getPublicUser(this.state.chats.user))
-            .catch(({ message }) => Alert.error(message, { position: 'bottom-right', effect: 'slide', timeout: 3000 }))
+            //.catch(({ message }) => Alert.error(message, { position: 'bottom-right', effect: 'slide', timeout: 3000 }))
     }
 
-    addMessageToChat(chatId, text) {
-        logic.addMessageToChat(chatId, text)
+    addMessageToChat(chatId, text, receiver) {
+        logic.addMessageToChat(chatId, text, receiver)
             .then(() => logic.getChatById(chatId))
             .then(res => this.setState({messages: res.messages}))
             .catch(({ message }) => Alert.error(message, { position: 'bottom-right', effect: 'slide', timeout: 3000 }))
@@ -115,12 +134,13 @@ debugger;
                 <div className="mychats-user-container">
                     <ul>
                         {chats && chats.map((chat, index) => {
+                            debugger;
                             return (
                                 <li key={index}>
                                     <ChatCard 
-                                        title={prodTitle}
-                                        photo={prodPhoto}
-                                        prodOwner={prodOwner}
+                                        title={chat.product.title}
+                                        photo={chat.product.photos[0]}
+                                        prodOwner={'Pepito'}
                                         onGoToChat={this.onGoToChatById}
                                     />
                                 </li>
