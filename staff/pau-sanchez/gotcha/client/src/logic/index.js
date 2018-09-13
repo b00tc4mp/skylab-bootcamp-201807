@@ -1,6 +1,17 @@
 const logic = {
     url: 'https://intense-reef-68642.herokuapp.com/api',
 
+    /**
+     * 
+     * @description Api server call
+     * 
+     * @param {string} path
+     * @param {string} method
+     * @param {string} headers
+     * @param {string} body
+     * @param {number} expectedStatus
+     */
+
     _call(path, method, headers, body, expectedStatus) {
         const config = { method }
 
@@ -20,20 +31,31 @@ const logic = {
     
     },
 
+    /**
+     * @description Validate inputs registration and login
+     * 
+     * @param {string} fieldName
+     * @param {string} fieldValue
+     * 
+     */
+
     _validateStringField(fieldName, fieldValue) {
         if (typeof fieldValue !== 'string' || !fieldValue.length) throw Error (`invalid ${fieldName}`)
     },
 
-    //@route    POST api/register
-    //@desc     Register User
-    //@access   Public
+    /**
+     * @description Register User
+     * 
+     * @param {string} email
+     * @param {string} password
+     * @param {string} name
+     *
+     */
+    
 
     register(email, password, name) {
         return Promise.resolve()
             .then(() => {
-                //this._validateStringField('username', username)
-                //this._validateStringField('password', password)
-
                 return this._call('register', 'post', {
                     'Content-Type': 'application/json'
                 }, JSON.stringify({ email, password, name}), 201)
@@ -41,10 +63,14 @@ const logic = {
             })
     },
 
-    //@route    POST api/authenticate
-    //@desc     Authenticate User
-    //@access   Public
-
+    
+    /**
+     * @description Authenticate User
+     * 
+     * @param {string} email
+     * @param {string} password
+     *
+     */
 
     authenticate(email, password) {
         return Promise.resolve()
@@ -59,9 +85,19 @@ const logic = {
             })
     },
 
-    //@route    POST api/unregister
-    //@desc     Unregister User
-    //@access   Private
+
+
+    /**
+     * 
+     * @description  Unregister User 
+     * 
+     * @param {string} email
+     * @param {string} password
+     * @param {string} userId
+     * @param {string} token
+     *
+     */
+    
 
     unregister(email, password, userId, token) {
         return Promise.resolve()
@@ -74,10 +110,18 @@ const logic = {
     },
        
 
-
-    //@route    POST api/update
-    //@desc     Update User Password
-    //@access   Private-Token
+    /**
+     * 
+     * @description  Update User Password
+     * 
+     * @param {string} email
+     * @param {string} password
+     * @param {string} newPassword
+     * @param {string} userId
+     * @param {string} token 
+     * 
+     */
+    
 
     updatePassword(email, password, newPassword, userId, token) {
         return Promise.resolve()
@@ -89,11 +133,15 @@ const logic = {
     },
 
 
-
-
-    //@route    POST api/:id/notebook
-    //@desc     Create notebook
-    //@access   Private-Token
+    /**
+     * @description Create notebook
+     * 
+     * @param {string} userId
+     * @param {string} notebooktitle
+     * @param {string} videourl
+     * @param {string} token
+     * 
+     */
 
     createNotebook(userId, notebooktitle, videourl, token) {
         return Promise.resolve()
@@ -106,10 +154,13 @@ const logic = {
 
 
 
-
-    //@@    GET api/:id/notebooks
-    //@@    List all user notebooks
-    //@@    Private-Token
+    /**
+     * @description List all user notebooks
+     * 
+     * @param {string} userId 
+     * @param {string} token 
+     * 
+     */
 
     listNotebooks(userId, token) {
         return Promise.resolve()
@@ -118,13 +169,15 @@ const logic = {
                 undefined, 200)
                 .then(res => res.json())
             })
-            
     },
-
-
-    //@@    GET api/:id/notebooks/:notebookid
-    //@@    List user notebooks by id
-    //@@    Public-Share
+            
+    /**
+     * @description List user notebooks by id
+     * 
+     * @param {string} userId
+     * @param {string} notebookid
+     * 
+     */
 
     listNotebooksByNotebookId(userId, notebookid) {
         return Promise.resolve()
@@ -134,9 +187,17 @@ const logic = {
             })
     },
 
-    //@@    GET api/:id/notebooks/:notebookid/update
-    //@@    Update notebook
-    //@@    Private-Token
+     /**
+     * 
+     * @description Update notebook
+     * 
+     * @param {string} userId
+     * @param {string} sessionuserid
+     * @param {string} notebookid
+     * @param {string} newnotebooktitle
+     * @param {string} token
+     * 
+     */
 
     updateNotebook(userId, sessionuserid, notebookid, newnotebooktitle, token) {
         return Promise.resolve()
@@ -150,10 +211,16 @@ const logic = {
                 })
     },
     
-
-    //@@    DELETE api/:id/notebooks/:notebookid/delete
-    //@@    Delete notebook
-    //@@    Private-Token
+    /**
+     * 
+     * @description Delete notebook
+     * 
+     * @param {string} userId
+     * @param {string} sessionuserid
+     * @param {string} notebookid
+     * @param {string} token
+     * 
+     */
 
     removeNotebook(userId, sessionuserid, notebookid, token) {
         return Promise.resolve()
@@ -167,10 +234,18 @@ const logic = {
             })
     },
         
-
-    //@@    POST api/:id/note
-    //@@    Create note
-    //@@    Private-Token
+    /**
+     * 
+     * @description Create note
+     * 
+     * @param {number} seconds
+     * @param {string} notetitle
+     * @param {string} notetext
+     * @param {string} notebook
+     * @param {string} userId
+     * @param {string} token
+     * 
+     */
 
     createNote(seconds, notetitle, notetext, notebook, userId, token) {
         return Promise.resolve()
@@ -185,9 +260,14 @@ const logic = {
     },
 
 
-    //@@    GET api/:id/notes
-    //@@    List notes by user id
-    //@@    Private-Token
+    /**
+     * 
+     * @description List notes by user id
+     * 
+     * @param {string} userId
+     * @param {string} token
+     * 
+     */
 
     listNotesbyUser(userId, token) {
         return Promise.resolve()
@@ -201,9 +281,14 @@ const logic = {
             })
     },
 
-    //@@    GET api/:id/:notebookdid/notes
-    //@@    List notes by notebook id
-    //@@    Public/Share
+    /**
+     * 
+     * @description List notes by notebook id
+     * 
+     * @param {string} userId
+     * @param {string} notebookid
+     * 
+     */
 
     listNotebyNotebookId(userId, notebookid) {
         return Promise.resolve()
@@ -218,9 +303,14 @@ const logic = {
             
     },
 
-    //@@    GET api/:id/note/:noteid
-    //@@    List note by note id
-    //@@    Public-Share
+    /**
+     * 
+     * @description List note by note id
+     * 
+     * @param {string} userId
+     * @param {string} noteId
+     * 
+     */
 
     listNotesbyNoteId(userId, noteId) {
         return Promise.resolve()
@@ -234,9 +324,16 @@ const logic = {
             })
     },
 
-    //@@    DELETE api/:id/removenote/:noteid
-    //@@    Remove note by noteid
-    //@@    Private-Token
+    /**
+     * 
+     * @description Remove note by noteid
+     * 
+     * @param {string} userId
+     * @param {string} sessionuserid
+     * @param {string} noteid
+     * @param {string} token
+     * 
+     */
 
     removeNote(userId, sessionuserid, noteid, token) {
         return Promise.resolve()
@@ -250,10 +347,17 @@ const logic = {
             
             })
     },
-    ////////////////////////
-    //@@    DELETE api/:id/removenotebooksnotes/:notebookid/:sessionUserId
-    //@@    Remove all notes in a notebooks by notebookid
-    //@@    Private-Token
+    
+    /**
+     * 
+     * @description Remove all notes in a notebook by notebook id
+     * 
+     * @param {string} userId
+     * @param {string} sessionuserid
+     * @param {string} notebookid
+     * @param {string} token
+     *  
+     */
 
     removeNotebooksNotes(userId, sessionuserid, notebookid, token) {
         return Promise.resolve()
@@ -267,10 +371,19 @@ const logic = {
             
             })
     },
-    /////////////////////////////
-    //@@    UPDATE api/:id/updatenote/:noteid
-    //@@    Update note
-    //@@    Private-Token
+    
+    /**
+     * 
+     * @description Update note
+     * 
+     * @param {string} userId
+     * @param {string} sessionuserid
+     * @param {string} noteId
+     * @param {string} newnotetitle
+     * @param {string} newnotetext
+     * @param {string} token
+     * 
+     */
 
     updateNote(userId, sessionuserid, noteId, newnotetitle, newnotetext, token) {
         return Promise.resolve()

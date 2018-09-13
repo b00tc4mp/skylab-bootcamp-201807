@@ -2,6 +2,7 @@ import React from 'react'
 import {logic} from '../logic'
 import { withRouter, Link } from 'react-router-dom'
 import {Button, Table} from 'reactstrap'
+import Loader from 'react-loader-spinner'
 class ListingNotes extends React.Component {
 
     state = {
@@ -11,13 +12,15 @@ class ListingNotes extends React.Component {
         newnotetitle: '',
         newnotetext: '',
         notesNotebooksInfo: [],
-        edit: ''
+        edit: '',
+        loading: false
     }
     
     componentDidMount() {
         const token = sessionStorage.getItem('token')
         const sessionuserid = sessionStorage.getItem('userId')
         this.setState({userId : sessionuserid})
+        this.setState({ loading: true})
         return Promise.resolve()
             .then(() => {
                 logic.listNotesbyUser(sessionuserid, token)
@@ -25,6 +28,7 @@ class ListingNotes extends React.Component {
                     this.setState({notes: res})
                   })
                   .then(() => this.getNotebookInfo())
+                  .then(() => this.setState({ loading: false}))
               })
     }
 
@@ -101,11 +105,16 @@ class ListingNotes extends React.Component {
           
           
     render() {
-                        const {notesNotebooksInfo } = this.state
+                        const {notesNotebooksInfo, loading } = this.state
             return <div>
                         <div>
                             <div>
-                                <Table responsive>
+                                {
+                                (loading)
+                                ?<div className='player-wrapper-note'>
+                                    <Loader type="Puff" color="#00BFFF" height="100" width="100"/> 
+                                </div>
+                                :<Table responsive>
                                         <thead>
                                             <tr>
                                                 
@@ -118,7 +127,7 @@ class ListingNotes extends React.Component {
                                             </tr>
                                         </thead>
                                         
-                        {notesNotebooksInfo.map(({ notetext, notetitle, seconds, _id, user, notebook, notebooktitle, videotitle, videothumbnail}) => (
+                                        {notesNotebooksInfo.map(({ notetext, notetitle, seconds, _id, user, notebook, notebooktitle, videotitle, videothumbnail}) => (
                                         <tbody>
                                             <tr>
                                                 <td>
@@ -151,6 +160,7 @@ class ListingNotes extends React.Component {
                                     ))}
 
                                     </Table>
+                                }
                                 </div>
                 </div>
             </div>

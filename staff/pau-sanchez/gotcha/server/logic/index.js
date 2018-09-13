@@ -10,25 +10,72 @@ const axios = require('axios')
 
 const logic = {
 
+    /**
+     * @description Validate input is a string
+     * 
+     * @param {string} name
+     * @param {string} value
+     * 
+     */
+
     _validateStringField(name, value) {
         if (typeof value !== 'string' || !value.length) throw new LogicError(`invalid ${name}`)
     },
+
+    /**
+     * @description Validate input is a valid name
+     * 
+     * @param {string}  name
+     * @param {string} value
+     * 
+     */
 
     _validateNameField(name, value) {
         if (!value.length) throw new LogicError(`invalid name`)
     },
 
+    /**
+     * @description Validate input is a valid email
+     * 
+     * @param {string} email
+     * 
+     */
+
     _validateEmail(email) {
         if (!validateEmail(email)) throw new LogicError('invalid email')
     },
+
+    /**
+     * @description Validate input is a valid date
+     * 
+     * @param {string} name
+     * @param {string} field
+     * 
+     */
 
     _validateDateField(name, field) {
         if (!(field instanceof Date)) throw new LogicError(`invalid ${name}`)
     },
 
+    /**
+     * @description Validate input is a valid Youtube url
+     * 
+     * @param {string} url
+     * 
+     */
+
     _validateYouTube(url) {
         if (!validateYouTube) throw new LogicError(`invalid Youtube url`)
     },
+
+    /**
+     * @description Register user
+     * 
+     * @param {string} email
+     * @param {string} password
+     * @param {string} name
+     * 
+     */
 
     register(email, password, name) {
         return Promise.resolve()
@@ -47,6 +94,14 @@ const logic = {
             .then(() => true)
     },
 
+    /**
+     * @description Authenticate user
+     * 
+     * @param {string} email
+     * @param {string} password
+     * 
+     */
+
     authenticate(email, password) {
         return Promise.resolve()
             .then(() => {
@@ -64,6 +119,15 @@ const logic = {
             })
     },
 
+    /**
+     * @description Update user password
+     * 
+     * @param {string} email
+     * @param {string} password
+     * @param {string} newPassword
+     * 
+     */
+
     updatePassword(email, password, newPassword) {
         return Promise.resolve()
             .then(() => {
@@ -80,13 +144,18 @@ const logic = {
 
                 if (password === newPassword) throw new LogicError('new password must be different to old password')
 
-                //user.password = newPassword
-
-                //return user.save
                 return User.findByIdAndUpdate({ "_id": user.id }, { "password": newPassword })
             })
             .then(() => true)
     },
+
+    /**
+     * @description Unregister user
+     * 
+     * @param {string} email
+     * @param {string} password
+     * 
+     */
 
     unregisterUser(email, password) {
         return Promise.resolve()
@@ -114,9 +183,15 @@ const logic = {
             .then(() => true)
     },
 
-    //@@create notebook
-    //@@logic.createNotebook
-    //€€
+    /**
+     * @description Create notebook
+     * 
+     * @param {string} userid
+     * @param {string} notebooktitle
+     * @param {string} videourl
+     * 
+     */
+
     createNotebook(userid, notebooktitle, videourl) {
         let videotitle
         const regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
@@ -139,19 +214,19 @@ const logic = {
                 const notebook = { notebooktitle, videotitle, videoid, videourl, videothumbnail, user: userid }
                 return Notebook.create(notebook)
             })
-            //.then(() => true)
     },
 
-    //@@list user notebooks
-    //@@logic.listeNotebooks
+    /**
+     * @description List user's notebooks
+     * 
+     * @param {string} userId
+     * 
+     */
 
     listNotebooks(userId) {
         return Promise.resolve()
             .then(() => {
-                //this._validateEmail(email)
-                //debugger
                 return User.findOne({ _id: userId })
-
             })
             .then(user => {
                 if (!user) throw new LogicError(`user does not exists`)
@@ -159,6 +234,14 @@ const logic = {
                 return Notebook.find({ user: user._id }).sort({ date: -1 })
             })
     },
+
+    /**
+     * @description List notebook by notebook id
+     * 
+     * @param {string} userId
+     * @param {string} notebookid
+     * 
+     */
 
     listNotebooksByNotebookId(userId, notebookid) {
         return Promise.resolve()
@@ -176,6 +259,16 @@ const logic = {
     },
 
     //€€
+    /**
+     * @description Update notebook title, only allowing user's creator
+     * 
+     * @param {string} userId
+     * @param {string} sessionUserId
+     * @param {string} notebookid
+     * @param {string} newnotebooktitle
+     * 
+     */
+
     updateNotebook(userId, sessionUserId, notebookid, newnotebooktitle) {
         return Promise.resolve()
             .then(() => {
@@ -200,11 +293,15 @@ const logic = {
             })
     },
 
+    /**
+     * @description Remove notebook
+     * 
+     * @param {string} id
+     * @param {string} sessionUserId
+     * @param {string} notebookid 
+     * 
+     */
     
-    //@@remove notebook
-    //@@logic.removeNotebook
-
-    //€€
     removeNotebook(id, sessionUserId, notebookid) {
         return Promise.resolve()
             .then(() => {
@@ -221,8 +318,16 @@ const logic = {
             .then(() => true)
     },
 
-    //@@create note
-    //@@logic.createNote
+    /**
+     * @description Create note
+     * 
+     * @param {number} seconds
+     * @param {string} notetitle
+     * @param {string} notetext
+     * @param {string} notebook
+     * @param {string} user
+     * 
+     */
     
     createNote(seconds, notetitle, notetext, notebook, user) {
         return Promise.resolve()
@@ -234,14 +339,15 @@ const logic = {
                 const note = { seconds, notetitle, notetext, notebook, user }
                 return Note.create(note)
             })
-            //.then(() => true)
-
     },
 
-    //@@list note by user
-    //@@logic.listNotesbyUser
-    
-   
+   /**
+     * @description List notes by user
+     * 
+     * @param {string} 
+     * 
+     */
+
    listNotesbyUser(userId) {
         return Promise.resolve()
             .then(() => {
@@ -254,13 +360,14 @@ const logic = {
                 
                 return notesByUser
             })
-            
-
-             
-},
-
-    //@@list note by noteid
-    //@@logic.listNotebyNotebookId
+    },
+    
+    /**
+     * @description List note by note id
+     * 
+     * @param {string} notebookid
+     * 
+     */
     
     listNotebyNotebookId(notebookid) {
         return Promise.resolve()
@@ -276,32 +383,14 @@ const logic = {
 
                 return notesbynotebooksids
             })
-
-            
-
     },
     
-    /*
-    listNotebyNotebookId(notebookid) {
-        return Promise.resolve()
-            .then(() => {
-
-                return Notebook.findOne({ _id: notebookid })
-            })
-            .then(notebook => {
-
-                if (!notebook) throw new LogicError(`notebook does not exists`)
-
-                return Note.find({ notebook: notebook.id })
-            }).sort({ seconds: 1})
-            .then(notes => {
-                return notes
-            })
-    },
-    */
-
-    //@@list note by noteid
-    //@@logic.listNotesbyNoteId
+    /**
+     * @description List note by note id
+     * 
+     * @param {string} noteId
+     * 
+     */
 
     listNotesbyNoteId(noteId) {
         return Promise.resolve()
@@ -310,12 +399,15 @@ const logic = {
             })
     },
 
+    /**
+     * @description Remove note
+     * 
+     * @param {string} id
+     * @param {string} sessionUserId
+     * @param {string} noteId
+     * 
+     */
     
-    //@@remove note
-    //@@logic.removeNote
-
-    
-    //€€
     removeNote(id, sessionUserId, noteId) {
         return Promise.resolve()
             .then(() => {
@@ -327,13 +419,16 @@ const logic = {
             .then(() => true)
     },
 
-    //////////////////////////////////////////////
-
-    //@@Remove all notes in a notebook by notebookid
-    //@@logic.removeNotebooksNotes
-
     
-    //€€
+    /**
+     * @description Remove all notes in a notebook by notebook id
+     * 
+     * @param {string} id
+     * @param {string} sessionUserId
+     * @param {string} notebookid
+     * 
+     */
+    
     removeNotebooksNotes(id, sessionUserId, notebookid) {
         return Promise.resolve()
             .then(() => {
@@ -346,12 +441,17 @@ const logic = {
             .then(() => true)
     },
 
-    //////////////////////////////////////////////
-
-    //@@update note
-    //@@logic.updateNote 
-
-    //€€
+    /**
+     * @description Update title or and text of a note
+     * 
+     * @param {string} id
+     * @param {string} sessionUserId
+     * @param {string} noteId
+     * @param {string} newnotetitle
+     * @param {string} newnotetext
+     * 
+     */
+    
     updateNote(id, sessionUserId, noteId, newnotetitle, newnotetext) {
         let updatetitle
         let updatetext
@@ -396,15 +496,6 @@ const logic = {
             
 
     },
-
-
-
-
-
-
-
-
-
 
 
 }

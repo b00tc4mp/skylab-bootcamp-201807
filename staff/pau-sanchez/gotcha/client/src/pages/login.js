@@ -3,13 +3,15 @@ import {logic} from '../logic'
 import { withRouter } from 'react-router-dom'
 import Navbars from '../components/Navbar'
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import Loader from 'react-loader-spinner'
 
 class Login extends Component {
 
     state = {
         email: '',
         password: '',
-        error: ''
+        error: '',
+        loading: false
     }
     
     
@@ -21,7 +23,7 @@ class Login extends Component {
         e.preventDefault()
 
         const {email, password} = this.state
-        
+        this.setState({loading: true})
         logic.authenticate(email, password)
             
             .then(res => this.props.onLoggedIn(res.id, res.token))
@@ -31,13 +33,17 @@ class Login extends Component {
     
     render() {
 
-        const { error } = this.state
+        const { error, loading } = this.state
 
         return <div>
                 
                 <Navbars />
-                
-                <Form onSubmit={this.onLoginSubmit} className='signuplogin_group'>
+                {
+                (loading && !error)
+                ?<div className='loadinglogin_group'>
+                    <Loader type="Puff" color="#00BFFF" height="100" width="100"/> 
+                </div>
+                :<Form onSubmit={this.onLoginSubmit} className='signuplogin_group'>
                     <FormGroup>
                         <Label>Email</Label>
                         <Input type="email" name="email" placeholder="email" 
@@ -54,6 +60,7 @@ class Login extends Component {
                     <Button>Login</Button>
                 {error && <p>{error}</p>}
                 </Form>
+                }
             </div>
         
     }

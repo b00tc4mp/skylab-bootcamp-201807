@@ -12,8 +12,8 @@ import NotebookPlayer from '../pages/notebookplayer'
 import Notebooks from '../pages/notebooks'
 import Listnotes from '../pages/listnotes'
 import NotePlayer from '../pages/noteplayer'
-import Faq from '../pages/faq'
-import About from '../pages/about'
+/*import Faq from '../pages/faq'*/
+/*import About from '../pages/about'*/
 
 
 /*import Navbar from './Navbar'*/
@@ -60,9 +60,7 @@ class App extends Component {
     return (
       <Router>
         <div>
-          
-
-            <Switch>
+          <Switch>
               <Route path='/' exact component={Landing} />
               <Route path='/register' render={() => this.isLoggedIn() ? <Redirect to='/home'/> : <Register/>} />
               <Route path='/login' render={() => this.isLoggedIn() ? <Redirect to='/home' /> : <Login onLoggedIn={this.onLoggedIn} onLogout={this.onLogout}/>} />
@@ -76,8 +74,8 @@ class App extends Component {
               <Route path='/notebooks' render={() => this.isLoggedIn() ? <Notebooks userId={userId} token={token} onLogout={this.onLogout}/> : <Redirect to='/'/>} />
               <Route path='/notes' render={() => this.isLoggedIn() ? <Listnotes userId={userId} token={token} onLogout={this.onLogout}/> : <Redirect to='/'/>}/>
               <Route path='/noteplayer/:noteid/:editor' render={(props) => <NotePlayer noteid={props.match.params.noteid} editor={props.match.params.editor} />} />
-              <Route path='/faq' component={Faq} />
-              <Route path='/about' component={About} />
+              {/*<Route path='/faq' component={Faq} />*/}
+              {/*<Route path='/about' component={About} />*/}
               <Route render={() => <h1>404</h1>} />
             </Switch>
         </div>

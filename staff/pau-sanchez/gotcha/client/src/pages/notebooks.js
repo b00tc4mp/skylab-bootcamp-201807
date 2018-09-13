@@ -3,13 +3,15 @@ import { withRouter, Link } from 'react-router-dom'
 import {logic} from '../logic'
 import Navbar from '../components/Navbar'
 import {FormGroup, Input, Button, Label, Col, Row, ListGroup, ListGroupItem} from 'reactstrap'
+import Loader from 'react-loader-spinner'
 
 class Notebooks extends Component {
     
     state = {
         notebooks: [],
         edit: '',
-        newnotebooktitle: ''
+        newnotebooktitle: '',
+        loading: false
     }
         
     componentDidMount() {
@@ -17,11 +19,13 @@ class Notebooks extends Component {
     }
 
     getNotebooks = () => {
+        this.setState({ loading: true})
         const sessionuserid = sessionStorage.getItem('userId')
         const token = sessionStorage.getItem('token')
         logic.listNotebooks(sessionuserid, token)
         .then(res => {
             this.setState({notebooks:res})
+            this.setState({ loading: false})
         })
     }
 
@@ -64,11 +68,16 @@ class Notebooks extends Component {
 
 
     render() {
-        const {notebooks} = this.state
+        const {notebooks, loading} = this.state
         return (
             <div>
                 <Navbar />
-                
+                {
+                (loading)
+                ?<div className='player-wrapper-note'>
+                    <Loader type="Puff" color="#00BFFF" height="100" width="100"/> 
+                </div>
+                :<div>
                 {notebooks.map(({ notebooktitle, user, videothumbnail, videotitle, _id }) => {
 
                     return  <div>
@@ -132,7 +141,8 @@ class Notebooks extends Component {
                         </div> 
                                 
                 })}
-
+                </div>
+                }
             </div>
 )}}
 

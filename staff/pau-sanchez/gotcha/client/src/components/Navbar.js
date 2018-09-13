@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom'
 import {Navbar, NavbarBrand, Nav, NavItem, NavLink, Button} from 'reactstrap';
 
-
 class Navbars extends Component {
     state = {
         loggedin: this.props.loggedinHome,
@@ -62,7 +61,7 @@ class Navbars extends Component {
                     <Navbar >
                         <NavbarBrand>
                             <Link to='/'>
-                                <Button color="danger" className='nav_button'>GOTCHA!</Button>
+                                <Button outline color="danger" className='nav_button'>GOTCHA!</Button>
                             </Link>
                         </NavbarBrand>
                             <Nav pills>

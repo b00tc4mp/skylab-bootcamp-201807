@@ -164,6 +164,15 @@ body {
   margin-top: 10%;
 }
 
+.loadinglogin_group{
+  position: relative;
+  padding: 3em 1em 1em;
+  margin: auto;
+  width: 50%;
+  text-align: center;
+  margin-top: 10%;
+}
+
 /*Home*/
 
 .home_options{
