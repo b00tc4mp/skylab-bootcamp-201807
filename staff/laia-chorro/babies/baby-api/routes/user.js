@@ -154,6 +154,18 @@ userRouter.post('/me/:user/review', [validateJwt, jsonBodyParser], (req, res) =>
         })
 })
 
+userRouter.patch('/me/:user/feedback', [validateJwt, jsonBodyParser], (req, res) => {
+    const { body: { user, product } } = req
+
+    userLogic.allowFeedback(user, product)
+        .then(() => res.status(200).json({ message: 'user profile updated' }))
+        .catch(err => {
+            const { message } = err
+
+            res.status(err instanceof LogicError ? 400 : 500).json({ message })
+        })
+})
+
 userRouter.patch('/me/:user/prod/:prod/favs', [validateJwt, jsonBodyParser], (req, res) => {
     const { params: { user, prod } } = req
 

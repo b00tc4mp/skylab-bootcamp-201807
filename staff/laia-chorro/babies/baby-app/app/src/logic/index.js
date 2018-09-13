@@ -224,6 +224,22 @@ const logic = {
             })
     },
 
+    allowProdReviewToUser(user, product) {
+        return Promise.resolve()
+            .then(() => {
+                validate._stringField('user id', user)
+                validate._stringField('product id', product)
+
+                const body = { user, product }
+
+                return this._call(`me/${this._userId}/feedback`, 'PATCH', { 
+                    'Authorization': `bearer ${this._userToken}`,
+                    'Content-Type': 'application/json' 
+                }, JSON.stringify(body), 200)
+                    .then(() => true)
+            })
+    },
+
     //PRODUCTS//
     getSimpleProductsByFilters(filters) {
         return Promise.resolve()
@@ -393,6 +409,20 @@ const logic = {
         return Promise.resolve()
             .then(() => {
                 return this._call(`/me/${this._userId}/chat`, 'GET', { 
+                    'Authorization': `bearer ${this._userToken}`,
+                    'Content-Type': 'application/json' 
+                }, undefined, 200)
+                    .then(res => res.json())
+            })
+    },
+
+    listChatsByProductId(productId) {
+        debugger;
+        validate._stringField('productId', productId)
+
+        return Promise.resolve()
+            .then(() => {
+                return this._call(`/me/${this._userId}/prod/${productId}/chats`, 'GET', { 
                     'Authorization': `bearer ${this._userToken}`,
                     'Content-Type': 'application/json' 
                 }, undefined, 200)

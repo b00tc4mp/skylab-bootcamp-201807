@@ -39,7 +39,9 @@ const User = new Schema({
 
     products: [{ type: ObjectId, ref: 'Product' }],
 
-    reviews: [Review]
+    reviews: [Review],
+
+    feedbacks: [{ type: ObjectId, ref: 'Product' }],
 })
 
 // Indexes this schema in 2dsphere format (critical for running proximity searches)

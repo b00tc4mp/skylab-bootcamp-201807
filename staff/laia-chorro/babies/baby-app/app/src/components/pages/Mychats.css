@@ -4,6 +4,7 @@
     height: 400px;
     align-content: space-between;
     height: 90vh;
+    min-width: 1090px;
 }
 
 .mychats-container ul {

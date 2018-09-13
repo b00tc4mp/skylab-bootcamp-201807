@@ -1,0 +1,12 @@
+.feedback-container textarea{
+    height: 60px;
+}
+
+.feedback-detail-name {
+    margin-top: 20px;
+    margin-left: 20px;
+}
+
+.feedback-detail-name h1 {
+    font-size: 23px;
+}

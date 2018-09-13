@@ -60,7 +60,7 @@ const chatLogic = {
             })
     },
 
-    listChats(userId) {
+    listChatsByUserId(userId) {
         return Promise.resolve()
             .then(() => {
                 validate._objectId('user', userId)
@@ -71,6 +71,25 @@ const chatLogic = {
                 if (!user) throw new LogicError(`user with id: ${userId} does not exist`)
 
                 return Chat.find({ users: userId })
+            })
+            .then(chats => chats.map(chat => {
+                delete chat._id
+
+                return chat
+            }))
+    },
+
+    listChatsByProductId(productId) {
+        return Promise.resolve()
+            .then(() => {
+                validate._objectId('product', productId)
+
+                return Product.findById(productId)
+            })
+            .then(product => {
+                if (!product) throw new LogicError(`product with id: ${productId} does not exist`)
+
+                return Chat.find({ product: productId })
             })
             .then(chats => chats.map(chat => {
                 delete chat._id

@@ -48,7 +48,19 @@ chatRouter.get('/me/:user/chat/:chat', validateJwt, (req, res) => {
 chatRouter.get('/me/:user/chat', validateJwt, (req, res) => {
     const { params: { user } } = req
 
-    chatLogic.listChats(user)
+    chatLogic.listChatsByUserId(user)
+        .then(res.json.bind(res))
+        .catch(err => {
+            const { message } = err
+
+            res.status(err instanceof LogicError ? 400 : 500).json({ message })
+        })
+})
+
+chatRouter.get('/me/:user/prod/:prod/chats', validateJwt, (req, res) => {
+    const { params: { prod } } = req
+
+    chatLogic.listChatsByProductId(prod)
         .then(res.json.bind(res))
         .catch(err => {
             const { message } = err
