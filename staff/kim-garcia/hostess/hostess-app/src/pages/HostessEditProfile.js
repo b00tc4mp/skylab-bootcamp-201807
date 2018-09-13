@@ -116,81 +116,81 @@ class HostessEditProfile extends Component {
 
 
     render() {
-        const { name, birth, origin, gender, phone, languages, jobType, height, myself, skills, errorName, errorBirth, errorOrigin, errorGender, errorPhone, errorLanguages, errorJobType, errorHeight, errorMyself, errorSkills, error, success } = this.state
+        const { error, success } = this.state
 
 
         return (
             <div>
                 <Header hostessEdit={true} onLogout={this.props.onLogout} />
-                <DeleteUnregister onLogout={this.props.onLogout} email={this.props.email} token={this.props.token}/>
-                <div>
+                <div className="block">
+                <h1 className="header-title"> &bull; EDIT YOUR HOSTESS PROFILE &bull; </h1>
                     <form onSubmit={this.handleSubmit}>
                         <div>
                             <label html="name">NAME</label>
                             <input id="name" type='text' placeholder="My name is..." onChange={this.handleName}></input>
                         </div>
                         <div>
-                            <label html="birth">BIRTHDATE</label>
+                            <label html="birth">BORN</label>
                             <input id="birth" type='text' placeholder="DD/MM/YYYY" onChange={this.handleBirth}></input>
                         </div>
                         <div>
                             <label html="origin">ORIGIN</label>
-                            <input id="origin" type='text' placeholder="i come from..." onChange={this.handleOrigin}></input>
-                        </div>
-                        <fieldset data-role="controlgroup" onClick={this.handleGender}>
-                            <legend>Choose your gender:</legend>
-                            <label for="woman">Woman</label>
-                            <input type="radio" name="gender" id="woman" value="W"></input>
-                            <label for="man">Man</label>
-                            <input type="radio" name="gender" id="man" value="M"></input>
-                        </fieldset>
-                        <div>
-                            <label htmlFor="phone">PHONE NUMBER</label>
-                            <input id="phone" type="text" onChange={this.handlePhone} ></input>
+                            <input id="origin" type='text' placeholder="I come from..." onChange={this.handleOrigin}></input>
                         </div>
                         <div>
-                            <fieldset data-role="controlgroup" >
-                                <legend>In wich languages is going to work?</legend>
-                                <label htmlFor="catalan">Catalan</label>
-                                <input type="checkbox" name="languages" id="catalan" value="catalan" onChange={this.handleLanguages} ></input>
-                                <label htmlFor="spanish">Spanish</label>
-                                <input type="checkbox" name="languages" id="spanish" value="spanish" onChange={this.handleLanguages}></input>
-                                <label htmlFor="english">English</label>
-                                <input type="checkbox" name="languages" id="english" value="english" onChange={this.handleLanguages}></input>
-                                <label htmlFor="german">German</label>
-                                <input type="checkbox" name="languages" id="german" value="german" onChange={this.handleLanguages}></input>z
-                                <label htmlFor="french">French</label>
-                                <input type="checkbox" name="languages" id="french" value="french" onChange={this.handleLanguages}></input>
-                                <label htmlFor="japanese">Japanese</label>
-                                <input type="checkbox" name="languages" id="japanese" value="japanese" onChange={this.handleLanguages}></input>
-                                <label htmlFor="chinese">Chinese</label>
-                                <input type="checkbox" name="languages" id="chinese" value="chinese" onChange={this.handleLanguages}></input>
-                                <label htmlFor="others">Other language</label>
-                                <input type="text" name="languages" id="others" onChange={this.handleOtherLanguages}></input>
-                            </fieldset>
+                            <label htmlFor="phone">PHONE</label>
+                            <input id="phone" type="text" placeholder="Whatsapp" onChange={this.handlePhone} ></input>
                         </div>
                         <div>
                             <select name="hostess_profile" onClick={this.handleJobType}>
-                                <option value="" disabled hidden selected>What type of profile are you looking for?</option>
-                                <option value="info">Information hostess </option>
+                                <option value="" disabled hidden selected>What type of job do you prefer?</option>
+                                <option value="info">Information hostess</option>
                                 <option value="image">Image hostess</option>
                                 <option value="animation">Animation</option>
                                 <option value="sells">Comercial profile</option>
                             </select>
                         </div>
-                        <div>
-                            <label htmlFor="skills">SKILLS</label>
-                            <input type="text" id="skills" placeholder="#sports #music #dance" onChange={this.handleSkills}></input>
+                        <div className="height-box">
+                            <label for="hieght">HOW HIGH ARE YOU?</label>
+                            <input type="text" name="height" id="height" placeholder="cm" onChange={this.handleHeight} className="height"></input>
+                        </div>
+                        <div className="flex-box">
+                            <fieldset data-role="controlgroup" onClick={this.handleGender} className="gender-box">
+                                <legend>Choose your gender:</legend>
+                                <input type="radio" name="gender" id="woman" value="W"></input>
+                                <label for="woman">Woman</label>
+                                <input type="radio" name="gender" id="man" value="M"></input>
+                                <label for="man">Man</label>
+                            </fieldset>
+                        </div>
+                        <div className="flex-box">
+                            <fieldset data-role="controlgroup" className="languages-box" >
+                                <legend>In wich languages is going to work?</legend>
+                                <input type="checkbox" name="languages" id="catalan" value="catalan" onChange={this.handleLanguages} ></input>
+                                <label htmlFor="catalan">CATALAN</label>
+                                <input type="checkbox" name="languages" id="spanish" value="spanish" onChange={this.handleLanguages}></input>
+                                <label htmlFor="spanish">SPANISH</label>
+                                <input type="checkbox" name="languages" id="english" value="english" onChange={this.handleLanguages}></input>
+                                <label htmlFor="english">ENGLISH</label>
+                                <input type="checkbox" name="languages" id="german" value="german" onChange={this.handleLanguages}></input>
+                                <label htmlFor="german">GERMAN</label>
+                                <input type="checkbox" name="languages" id="french" value="french" onChange={this.handleLanguages}></input>
+                                <label htmlFor="french">FRENCH</label>
+                                <input type="checkbox" name="languages" id="japanese" value="japanese" onChange={this.handleLanguages}></input>
+                                <label htmlFor="japanese">JAPANESE</label>
+                                <input type="checkbox" name="languages" id="chinese" value="chinese" onChange={this.handleLanguages}></input>
+                                <label htmlFor="chinese">CHINESE</label>
+                                <input type="text" name="languages" id="others" placeholder="Any other language?" onChange={this.handleOtherLanguages}></input>
+                            </fieldset>
                         </div>
                         <div>
-                            <label for="hieght">HOW TALL ARE YOU</label>
-                            <input type="text" name="height" id="height" onChange={this.handleHeight}></input>
-                        </div>
-                        <div>
-                            <textarea placeholder='Brief description of yourself, your interests, your previous jobs, your studies, your pasion...' onChange={this.handleMyself} />
+                            <textarea rows={5} placeholder='Brief description about yourself, your interests, your previous jobs, your studies, your pasion...' onChange={this.handleMyself} />
                         </div>
 
-                        <button type="submit"> UPDATE PROFILE</button>
+                        <div>
+                            <input type="text" id="skills" placeholder="#skills #sports #music #dance" onChange={this.handleSkills}></input>
+                        </div>
+                        <button type="submit" className="landing-submit"> UPDATE PROFILE</button>
                     </form>
                     {
                         success && (<div>{success}</div>)
@@ -198,7 +198,8 @@ class HostessEditProfile extends Component {
                     {
                         error && (<div>{error}</div>)
                     }
-                    <a onClick={this.goToProfile}>GO TO PROFILE</a>
+                    <a onClick={this.goToProfile} className="go-profile-link">GO TO PROFILE</a>
+                    <DeleteUnregister onLogout={this.props.onLogout} email={this.props.email} token={this.props.token} />
                 </div>
             </div>
         )

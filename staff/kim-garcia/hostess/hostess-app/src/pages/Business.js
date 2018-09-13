@@ -11,14 +11,18 @@ class Business extends Component {
         web: '',
         boss: '',
         phone: '',
-        favs: []
+        favs: [],
+        business: '',
     }
 
     componentDidMount() {
         logic.retrieveBusiness(this.props.email, this.props.token)
             .then(business => {
-                const { name, philosophy, web, boss, phone, favs } = business
-                this.setState({ name, phone, philosophy, web, boss, favs })
+                this.setState({ business })
+
+
+                // const { name, philosophy, web, boss, phone, favs } = business
+                // this.setState({ name, phone, philosophy, web, boss, favs })
             })
     }
 
@@ -28,34 +32,58 @@ class Business extends Component {
         this.props.history.push('/event/create')
     }
 
+    goToProfile = (event) => {
+        event.preventDefault()
+
+        this.props.history.push('/business/profile')
+    }
+
 
     render() {
-        const { name, philosophy, web, boss, phone, favs } = this.state
+        const { name, philosophy, web, boss, phone, favs } = this.state.business
+        // const { name, philosophy, web, boss, phone, favs } = this.state
 
         return (
             <div>
                 <Header businessProfile={true} onLogout={this.props.onLogout} />
-                <div>
-                    <h1>&bull; {name.toUpperCase()} &bull;</h1>
-                    <details>
-                        <summary>Philosophy of {name}</summary>
-                        <p>{philosophy}</p>
-                    </details>
-                    <Contact name={boss} phone={phone} email={this.props.email} />
-                    <p>Web: {web}</p>
-                </div>
-                <div>
-                    <h1>&bull; EVENTS &bull;</h1>
-                    <button onClick={this.handleNewEvent}>CREATE EVENT</button>
-                    <p>Events on the past</p>
-                </div>
-                <div>
-                    <h1>&bull; YOUR BEST HOSTESSES &bull;</h1>
-                    <ul>
-                        {favs.map(favorit => {
-                            return <li>{favorit.name}</li>
-                        })}
-                    </ul>
+                <div className="block">
+                    {
+                        name && (
+                            <div>
+                                <div >
+                                    <div>
+                                        <h1>&bull; {name.toUpperCase()} &bull;</h1>
+                                        <details>
+                                            <summary>Philosophy of {name}</summary>
+                                            <p>{philosophy}</p>
+                                        </details>
+                                        <Contact name={boss} phone={phone} email={this.props.email} />
+                                        <p>Web: {web}</p>
+                                    </div>
+                                    <div>
+                                        <h1>&bull; EVENTS &bull;</h1>
+                                        <button onClick={this.handleNewEvent} className="landing-submit">CREATE EVENT</button>
+                                        <p>Events on the past</p>
+                                    </div>
+                                    <div>
+                                        <h1>&bull; YOUR BEST HOSTESSES &bull;</h1>
+                                        <ul>
+                                            {favs.map(favorit => {
+                                                return <li>{favorit.name}</li>
+                                            })}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        )
+                    }
+                    {
+                        !name && (<div>
+                            <div className="complete-please">Complete your profile please</div>
+                            <button onClick={this.goToProfile}>EDIT PROFILE</button>
+                        </div>
+                        )
+                    }
                 </div>
             </div>
         )

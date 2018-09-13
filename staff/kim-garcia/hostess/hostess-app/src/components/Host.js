@@ -37,7 +37,6 @@ class Host extends Component {
                         <h1>{name.toUpperCase()}, {age}</h1>
                         <p>Born in {origin}</p>
                     </div>
-                    <div className="cuadricula__hostess__history" >HISTORY</div>
                     <div className="cuadricula__hostess__skills" >
                         <p>About {name}: {myself}</p>
                         <p>Languages: {languages}</p>
@@ -46,7 +45,7 @@ class Host extends Component {
                             jobType === 'image' && (<p>I'm {height} tall</p>)
                         }
                     </div>
-                    <button onClick={this.selectHost}>SELECT</button>
+                    <button onClick={this.selectHost} className="select-host">+</button>
                     {
                         success && (<div>{success}</div>)
                     }

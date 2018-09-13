@@ -5,17 +5,17 @@ import logic from '../logic'
 class Header extends Component {
 
 
-    goToHome = (event) => {
-        event.preventDefault()
-        this.props.history.push('/')
-    }
+    // goToHome = (event) => {
+    //     event.preventDefault()
+    //     this.props.history.push('/')
+    // }
 
     goToEditHostessProfil = (event) => {
         event.preventDefault()
         this.props.history.push('/hostess/profile')
     }
 
-    gotToEditBusinessProfile = (event) => {
+    goToEditBusinessProfil = (event) => {
         event.preventDefault()
         this.props.history.push('/business/profile')
     }
@@ -27,35 +27,46 @@ class Header extends Component {
 
     render() {
         return (
-            <header>
-                <div>
-                    <a onClick={this.goToHome}>
-                        <h1>&bull; HOSTESS &bull;</h1>
-                    </a>
-                </div>
-                <details className="details-header">
-                    <summary>
-                        <img src="./image/hostess-icon.png" className="icono" height="30" width="30"></img>
-                    </summary>
-                    <details-menu className="dropdown-menu" role="menu">
-                        <ul className="list-header">
-                            {
-                                this.props.hostessProfile && <li><a role="menuitem" onClick={this.goToEditHostessProfil}>Edit profile</a> </li>
-                            }
-                            {
-                                this.props.hostessEdit && <li><a role="menuitem" onClick={this.goToProfile}>My profile</a> </li>
-                            }
-                            {
-                                this.props.businessProfile && <li><a role="menuitem" onClick={this.goToEditBusinessProfil}>Edit profile</a></li>
-                            }
-                            {
-                                this.props.businessEdit && <li><a role="menuitem" onClick={this.props.goToProfile}>My profile</a></li>
-                            }
-                            <li><a role="menuitem" onClick={this.props.onLogout}>Logout</a></li>
-                        </ul>
-                    </details-menu>
-                </details>
+            <div>
+            <header className="header-nav">
+
+                        <div className="header-title">
+                            <a onClick={this.goToProfile}>
+                                <h1>&bull; HOSTESS &bull;</h1>
+                            </a>
+                        </div>
+                 
+                        <div className="header-logo">
+                            <details className="header-details">
+                                <summary>
+                                    <img src="./image/hostess-icon.png" style={{color:'red'}} className="header-icono" height="30" width="30"></img>
+                                </summary>
+                                {/* <details-menu className="header-dropdown-menu" role="menu"> */}
+                                <ul className="header-list">
+                                    {
+                                        this.props.hostessProfile && <li><a role="menuitem" onClick={this.goToEditHostessProfil}>Edit profile</a> </li>
+                                    }
+                                    {
+                                        this.props.hostessEdit && <li><a role="menuitem" onClick={this.goToProfile}>My profile</a> </li>
+                                    }
+                                    {
+                                        this.props.businessProfile && <li><a role="menuitem" onClick={this.goToEditBusinessProfil}>Edit profile</a></li>
+                                    }
+                                    {
+                                        this.props.businessEdit && <li><a role="menuitem" onClick={this.goToProfile}>My profile</a></li>
+                                    }
+                                    <li><a role="menuitem" onClick={this.props.onLogout}>Logout</a></li>
+                                </ul>
+                                {/* </details-menu> */}
+                            </details>
+                        </div>
+
             </header>
+            </div>
+
+
+            
+                    
         )
     }
 }

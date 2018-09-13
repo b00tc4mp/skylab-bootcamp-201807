@@ -1,7 +1,7 @@
 const validateEmail = require('../utils/validate-email')
 
 const logic = {
-    url: 'http://localhost:8080/api',
+    url: 'https://lit-brook-74141.herokuapp.com/api',
 
     _call(path, method, headers, body, expectedStatus) {
         const config = { method }

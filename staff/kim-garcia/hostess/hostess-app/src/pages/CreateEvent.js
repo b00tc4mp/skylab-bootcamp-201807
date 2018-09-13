@@ -17,7 +17,8 @@ class CreateEvent extends Component {
         date: '',
         description: '',
         hostesses: '',
-        event: ''
+        event: '',
+        error: ''
     }
 
     handleTitle = (event) => {
@@ -98,95 +99,104 @@ class CreateEvent extends Component {
         logic.createEvent(this.props.email, date, location, title, description, this.props.token)
             .then(id => {
                 // this.setState({ event: id })
-                
+
                 // this.props.idEvent(id)
 
                 this.props.history.push(`/event/${id}`)
             })
-    }
+            .catch(err => this.setState({ error: err.message }))
+        }
 
 
     render() {
-        const { hostesses } = this.state
+        const { hostesses, jobType, error } = this.state
 
         return (
             <div>
                 <Header businessEdit={true} onLogout={this.props.onLogout} />
-                <h1>&bull; NEW EVENT &bull;</h1>
-                <form onSubmit={this.handleSubmit}>
-                    <div>
-                        <label htmlFor="title">Title</label>
-                        <input id="title" type="text" placeholder="Title of the event" onChange={this.handleTitle}></input>
-                    </div>
-                    <div>
-                        <label htmlFor="location">Location</label>
-                        <input id="location" type="text" placeholder="The event is going to take place..." onChange={this.handleLocation}></input>
-                    </div>
-                    <div>
-                        <label htmlFor="date">Date</label>
-                        <input id="date" type="text" placeholder="YYYY/MM/DD" onChange={this.handleDate}></input>
-                    </div>
-                    <div>
-                        <label htmlFor="description">Description</label>
-                        <textarea id="description" type="text" placeholder="Describe the event" onChange={this.handleDescription}></textarea>
-                    </div>
-                    <div>
-                        <div>SEARCH WORKERS</div>
+                <div className="block">
+
+                    <h1>&bull; NEW EVENT &bull;</h1>
+                    <form onSubmit={this.handleSubmit}>
                         <div>
-                            <fieldset data-role="controlgroup" onClick={this.handleGender}>
-                                <legend>Choose your gender:</legend>
-                                <label for="woman">Woman</label>
-                                <input type="radio" name="gender" id="woman" value="W"></input>
-                                <label for="man">Man</label>
-                                <input type="radio" name="gender" id="man" value="M"></input>
-                            </fieldset>
+                            <input id="title" type="text" placeholder="Title of the event" onChange={this.handleTitle}></input>
                         </div>
                         <div>
-                            <select name="hostess_profile" onClick={this.handleProfile}>
-                                <option value="" disabled hidden selected>What type of profile are you looking for?</option>
-                                <option value="info">Information hostess </option>
-                                <option value="image">Image hostess</option>
-                                <option value="animation">Animation</option>
-                                <option value="sells">Comercial profile</option>
-                                <option value="">All profiles</option>
-                            </select>
+                            <input id="location" type="text" placeholder="The event is going to take place..." onChange={this.handleLocation}></input>
                         </div>
                         <div>
-                            <fieldset data-role="controlgroup" >
-                                <legend>In wich languages is going to work?</legend>
-                                <label htmlFor="catalan">Catalan</label>
-                                <input type="checkbox" name="languages" id="catalan" value="catalan" onChange={this.handleLanguages} ></input>
-                                <label for="spanish">Spanish</label>
-                                <input type="checkbox" name="languages" id="spanish" value="spanish" onChange={this.handleLanguages}></input>
-                                <label for="english">English</label>
-                                <input type="checkbox" name="languages" id="english" value="english" onChange={this.handleLanguages}></input>
-                                <label for="german">German</label>
-                                <input type="checkbox" name="languages" id="german" value="german" onChange={this.handleLanguages}></input>
-                                <label for="french">French</label>
-                                <input type="checkbox" name="languages" id="french" value="french" onChange={this.handleLanguages}></input>
-                                <label for="japanese">Japanese</label>
-                                <input type="checkbox" name="languages" id="japanese" value="japanese" onChange={this.handleLanguages}></input>
-                                <label for="chinese">Chinese</label>
-                                <input type="checkbox" name="languages" id="chinese" value="chinese" onChange={this.handleLanguages}></input>
-                                <label for="others">Other language</label>
-                                <input type="text" name="languages" id="others" onChange={this.handleOtherLanguage}></input>
-                            </fieldset>
+                            <input id="date" type="text" placeholder="YYYY/MM/DD" onChange={this.handleDate}></input>
                         </div>
                         <div>
-                            <label for="hieght">Minimum height</label>
-                            <input type="text" name="height" id="height" onChange={this.handleHeight}></input>
+                            <textarea rows={5} id="description" type="text" placeholder="Make a breafing of the event for the hostess, duties, 
+schedule, about the event, ..." onChange={this.handleDescription}></textarea>
                         </div>
-                    </div>
-                    <button type="submit">SEARCH WORKERS</button>
-                </form>
-                {
-                    hostesses && (<ul>
-                        {hostesses.map(hostess => {
-                            return <Host hostess={hostess} email={this.props.email} token={this.props.token} />
-                        })}
-                    </ul>)
-                }
-                <button onClick={this.handleCreate}>CREATE EVENT</button>
+                        <div>
+                            <h1>SEARCH WORKERS</h1>                            
+                            <div>
+                                <select name="hostess_profile" onClick={this.handleProfile}>
+                                    <option value="" disabled hidden selected>What type of profile are you looking for?</option>
+                                    <option value="info">Information hostess </option>
+                                    <option value="image">Image hostess</option>
+                                    <option value="animation">Animation</option>
+                                    <option value="sells">Comercial profile</option>
+                                    <option value="">All profiles</option>
+                                </select>
+                            </div>
+                            { 
+                                jobType === 'image' && (
+                                <div className="height-box">
+                                <label for="hieght">Minimum height</label>
+                                <input type="text" name="height" id="height" onChange={this.handleHeight} className="height"></input>
+                            </div>
+                            )
+                            }
+                            <div className="flex-box">
+                                <fieldset data-role="controlgroup" onClick={this.handleGender} className="gender-box">
+                                    <legend>Choose your gender:</legend>
+                                    <label for="woman">Woman</label>
+                                    <input type="radio" name="gender" id="woman" value="W"></input>
+                                    <label for="man">Man</label>
+                                    <input type="radio" name="gender" id="man" value="M"></input>
+                                </fieldset>
+                            </div>
+                            <div className="flex-box">
+                                <fieldset data-role="controlgroup" className="languages-box">
+                                    <legend>In wich languages is going to work?</legend>
+                                    <input type="checkbox" name="languages" id="catalan" value="catalan" onChange={this.handleLanguages} ></input>
+                                    <label htmlFor="catalan">Catalan</label>
+                                    <input type="checkbox" name="languages" id="spanish" value="spanish" onChange={this.handleLanguages}></input>
+                                    <label for="spanish">Spanish</label>
+                                    <input type="checkbox" name="languages" id="english" value="english" onChange={this.handleLanguages}></input>
+                                    <label for="english">English</label>
+                                    <input type="checkbox" name="languages" id="german" value="german" onChange={this.handleLanguages}></input>
+                                    <label for="german">German</label>
+                                    <input type="checkbox" name="languages" id="french" value="french" onChange={this.handleLanguages}></input>
+                                    <label for="french">French</label>
+                                    <input type="checkbox" name="languages" id="japanese" value="japanese" onChange={this.handleLanguages}></input>
+                                    <label for="japanese">Japanese</label>
+                                    <input type="checkbox" name="languages" id="chinese" value="chinese" onChange={this.handleLanguages}></input>
+                                    <label for="chinese">Chinese</label>
+                                    <input type="text" name="languages" id="others" onChange={this.handleOtherLanguage} placeholder="other languages"></input>
+                                </fieldset>
+                            </div>
+                        </div>
+                        <button type="submit" className="deletes-button">SEARCH WORKERS</button>
+                    </form>
+                    {
+                        hostesses && (<ul>
+                            {hostesses.map(hostess => {
+                                return <Host hostess={hostess} email={this.props.email} token={this.props.token} />
+                            })}
+                        </ul>)
+                    }
+                    <button onClick={this.handleCreate} className="landing-submit">CREATE EVENT</button>
+                    {
+                        error && (
+                            <div>{error}</div>
+                        )
+                    }
+                </div>
             </div>
         )
     }

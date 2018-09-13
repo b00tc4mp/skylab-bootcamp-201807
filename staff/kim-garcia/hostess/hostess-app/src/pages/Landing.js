@@ -16,35 +16,39 @@ class Landing extends Component {
     }
 
     handleEmail = (event) => {
-        this.setState({email: event.target.value})
+        this.setState({ email: event.target.value })
     }
 
     handlePassword = (event) => {
-        this.setState({password: event.target.value})
+        this.setState({ password: event.target.value })
     }
 
-    handleHostess = () => {
+    handleHostess = (event) => {
         this.setState({ hostess: true })
     }
 
-    handleBusiness = () => {
+    handleBusiness = (event) => {
         this.setState({ business: true })
     }
 
     handleHostessRegister = () => {
         this.setState({ register: true, login: false })
+        // this.setState({ login: false })
     }
 
     handleHostessLogin = () => {
-        this.setState({ login: true, register: false})
+        this.setState({ login: true, register: false })
+        // this.setState({ register: false})
     }
 
     handleBusinessRegister = () => {
         this.setState({ register: true, login: false })
+        // this.setState({ login: false })
     }
 
     handleBusinessLogin = () => {
         this.setState({ login: true, register: false })
+        // this.setState({ register: false})
     }
 
     handleSubmit = (event) => {
@@ -89,81 +93,93 @@ class Landing extends Component {
     }
 
     render() {
+
+        const clickedRegister = (this.state.register || this.state.login) ? ' clicked register ' : ' '
+        const clickedLogin = (this.state.login || this.state.register) ? ' clicked login ' : ' '
+
         return (
             <div className="block">
-                <header>
-                    <h1>&bull; WELCOME TO HOSTESS &bull;</h1>
-                    <details>
-                        <summary>Our philosophy</summary>
-                        <p>This is a virtual hostess agency</p>
-                    </details>
-                </header>
-                {
-                    this.state.error && (
-                        <div className="error">{this.state.error}</div>
-                    )
-                }
-                {
-                    !this.state.hostess && !this.state.business && (
-                        <div className="buttons">
-                            <button type="button" onClick={this.handleHostess} className="buttons__hostess">HOSTESS</button>
-                            <button type="button" onClick={this.handleBusiness} className="buttons__business">BUSINESS</button>
-                        </div>
-                    )
-                }
-                {
-                    this.state.hostess && !this.state.register &&  !this.state.login && (
-                        <div className="buttons">
-                            <button type="button" onClick={this.handleHostessLogin} className="buttons__hostess">LOGIN</button>
-                            <button type="button" onClick={this.handleHostessRegister} className="buttons__business">REGISTER</button>
-                        </div>
-                    )
-                }
-                {
-                    this.state.business && !this.state.register &&   !this.state.login && (
-                        <div className="buttons">
-                            <button type="button" onClick={this.handleBusinessLogin} className="buttons__hostess">LOGIN</button>
-                            <button type="button" onClick={this.handleBusinessRegister} className="buttons__business">REGISTER</button>
-                        </div>
-                    )
-                }
-                {
-                    this.state.register && this.state.hostess && (
-                        <form onSubmit={this.handleSubmit}>
-                            <input type="text" placeholder="hostess@mail.com" onChange={this.handleEmail}></input>
-                            <input type="password" placeholder="password" onChange={this.handlePassword}></input>
-                            <button type="submit">REGISTER</button>
-                        </form>
-                    )
-                }
-                {
-                    this.state.register && this.state.business && (
-                        <form onSubmit={this.handleSubmit}>
-                            <input type="text" placeholder="business@mail.com" onChange={this.handleEmail}></input>
-                            <input type="password" placeholder="password" onChange={this.handlePassword}></input>
-                            <button type="submit">REGISTER</button>
-                        </form>
-                    )
-                }
-                {
-                    this.state.login && this.state.hostess && (
-                        <form onSubmit={this.handleSubmit}>
-                            <input type="text" placeholder="hostess@mail.com" onChange={this.handleEmail}></input>
-                            <input type="password" placeholder="password" onChange={this.handlePassword}></input>
-                            <button type="submit">LOGIN</button>
-                        </form>
-                    )
-                }
-                {
-                    this.state.login && this.state.business && (
-                        <form onSubmit={this.handleSubmit}>
-                            <input type="text" placeholder="business@mail.com" onChange={this.handleEmail}></input>
-                            <input type="password" placeholder="password" onChange={this.handlePassword}></input>
-                            <button type="submit">LOGIN</button>
-                        </form>
-                    )
-                }
-
+                <div className="landing">
+                    <div>
+                        <header>
+                            <h1 className="landing-welcome">&bull; WELCOME TO HOSTESS &bull;</h1>
+                        </header>
+                        {
+                            !this.state.hostess && !this.state.business && (
+                                <div className="buttons">
+                                    <button type="button" onClick={this.handleHostess} className="buttons-landing">HOSTESS</button>
+                                    <button type="button" onClick={this.handleBusiness} className="buttons-landing">BUSINESS</button>
+                                </div>
+                            )
+                        }
+                        {
+                            this.state.hostess && (
+                                <div className="buttons">
+                                    <button type="button" onClick={this.handleHostessLogin} className={clickedLogin + ' buttons-landing'}>LOGIN</button>
+                                    <button type="button" onClick={this.handleHostessRegister} className={clickedRegister + ' buttons-landing'}>REGISTER</button>
+                                </div>
+                            )
+                        }
+                        {
+                            this.state.business && (
+                                <div className="buttons">
+                                    <button type="button" onClick={this.handleBusinessLogin} className={clickedLogin + ' buttons-landing'}>LOGIN</button>
+                                    <button type="button" onClick={this.handleBusinessRegister} className={clickedRegister + ' buttons-landing'}>REGISTER</button>
+                                </div>
+                            )
+                        }
+                        {
+                            this.state.register && this.state.hostess && (
+                                <form onSubmit={this.handleSubmit} className="landing-form">
+                                    <input className="input-login" type="text" placeholder="hostess@mail.com" onChange={this.handleEmail}></input>
+                                    <input className="input-login" type="password" placeholder="password" onChange={this.handlePassword}></input>
+                                    <button type="submit" className="landing-submit">REGISTER</button>
+                                </form>
+                            )
+                        }
+                        {
+                            this.state.register && this.state.business && (
+                                <form onSubmit={this.handleSubmit} className="landing-form">
+                                    <input className="input-login" type="text" placeholder="business@mail.com" onChange={this.handleEmail}></input>
+                                    <input className="input-login" type="password" placeholder="password" onChange={this.handlePassword}></input>
+                                    <button type="submit" className="landing-submit">REGISTER</button>
+                                </form>
+                            )
+                        }
+                        {
+                            this.state.login && this.state.hostess && (
+                                <form onSubmit={this.handleSubmit} className="landing-form">
+                                    <input className="input-login" type="text" placeholder="hostess@mail.com" onChange={this.handleEmail}></input>
+                                    <input className="input-login" type="password" placeholder="password" onChange={this.handlePassword}></input>
+                                    <button type="submit" className="landing-submit">LOGIN</button>
+                                </form>
+                            )
+                        }
+                        {
+                            this.state.login && this.state.business && (
+                                <form onSubmit={this.handleSubmit} className="landing-form">
+                                    <input className="input-login" type="text" placeholder="business@mail.com" onChange={this.handleEmail}></input>
+                                    <input className="input-login" type="password" placeholder="password" onChange={this.handlePassword}></input>
+                                    <button type="submit" className="landing-submit">LOGIN</button>
+                                </form>
+                            )
+                        }
+                        {
+                            this.state.error && (
+                                <div className="error">{this.state.error}</div>
+                            )
+                        }
+                        {
+                            !this.state.hostess && !this.state.business && (
+                                <div className="philosophy-hostess">
+                                    <p>This is a virtual hostess agency</p>
+                                    <p>Select <span> HOSTESS </span> if you want to create your profile</p>
+                                    <p>Select <span> BUSINESS </span> if you are looking for workers for your event </p>
+                                </div>
+                            )
+                        }
+                    </div>
+                </div>
             </div>
         )
     }

@@ -7,6 +7,7 @@
     "get-age": "^1.0.1",
     "moment": "^2.22.2",
     "react": "^16.4.2",
+    "react-autosize-textarea": "^4.0.0",
     "react-dom": "^16.4.2",
     "react-radio-group": "^3.0.3",
     "react-router-dom": "^4.3.1",

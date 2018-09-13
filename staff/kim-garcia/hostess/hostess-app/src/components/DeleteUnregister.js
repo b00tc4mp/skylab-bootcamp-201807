@@ -50,8 +50,8 @@ class DeleteUnregister extends Component {
                 {
                     !this.state.changePas && !this.state.delete && (
                         <div className="buttons">
-                            <button type="button" onClick={this.handleChangePas} className="buttons__hostess">CHANGE PASSWORD</button>
-                            <button type="button" onClick={this.handleUnregister} className="buttons__business">DELETE ACOUNT</button>
+                            <button type="button" onClick={this.handleChangePas} className="deletes-button">CHANGE PASSWORD</button>
+                            <button type="button" onClick={this.handleUnregister} className="deletes-button">DELETE ACOUNT</button>
                         </div>
                     )
                 }
@@ -60,8 +60,8 @@ class DeleteUnregister extends Component {
                         <div className="buttons">
                             <p>Are you sure you wana delete the acount for ever?</p>
                             <input type="password" onChange={this.handleOld} placeholder="Insert password to delete the acount"></input>
-                            <button type="button" onClick={this.handleNo} className="buttons__hostess">NO</button>
-                            <button type="button" onClick={this.handleYes} className="buttons__business">YES</button>
+                            <button type="button" onClick={this.handleNo} className="deletes-button">NO</button>
+                            <button type="button" onClick={this.handleYes} className="deletes-button">YES</button>
                         </div>
                     )
                 }
@@ -70,7 +70,7 @@ class DeleteUnregister extends Component {
                         <div className="buttons">
                             <input type="password" placeholder="Password" onChange={this.handleOld}></input>
                             <input type="text" placeholder="New password" onChange={this.handleNew}></input>
-                            <button type="button" onClick={this.handleTheChange} className="buttons__business">CHANGE PASSWORD</button>
+                            <button type="button" onClick={this.handleTheChange} className="deletes-button">CHANGE PASSWORD</button>
                         </div>
                     )
                 }
