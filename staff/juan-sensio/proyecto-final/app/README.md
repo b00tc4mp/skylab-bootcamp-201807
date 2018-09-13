@@ -44,3 +44,11 @@ The front end of the application was built using **React**, **React Router** and
 ![create-result](docs/create-result.png)
 
 ### Class diagram
+
+- Global
+
+![class-diagram-global](docs/class-diagram-global.png)
+
+- Profile
+
+![class-diagram-profile](docs/class-diagram-profile.png)
