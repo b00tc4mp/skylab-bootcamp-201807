@@ -2,6 +2,9 @@ import React, { Component } from 'react'
 import './PostDetail.sass'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
+// TODO: define env variables
+const DEFAULT_AVATAR = 'https://goo.gl/F65XTo'
+
 class PostDetail extends Component {
 
   state = {
@@ -43,7 +46,7 @@ class PostDetail extends Component {
   handleSaveIconClick = event => {
     event.preventDefault()
 
-    
+
 
     this.setState({ isSaved: !this.state.isSaved })
 
@@ -81,7 +84,10 @@ class PostDetail extends Component {
             <div className="PostDetail-header">
               <div className="PostDetail-avatarImageWrapper">
                 <a href="#/" data-user={post.user.username} onClick={this.handleUserClick}>
-                  <img src={post.user.imageUrl} className="PostDetail-avatarImage" alt={post.user.username} />
+                  <img
+                    src={post.user.imageUrl ? post.user.imageUrl : DEFAULT_AVATAR}
+                    className="PostDetail-avatarImage"
+                    alt={post.user.username} />
                 </a>
               </div>
               <div className="PostDetail-headerInfo">
@@ -93,7 +99,6 @@ class PostDetail extends Component {
                 >
                   <h5 className="PostDetail-username">{post.user.username}</h5>
                 </a>
-                {/* <span className="PostDetail-location">Barcelona, Spain</span> */}
               </div>
             </div>
             <div className="PostDetail-commentsWrapper">
@@ -159,13 +164,6 @@ class PostDetail extends Component {
             <time className="PostDetail-creation">{createdAtFormated}</time>
             <div className="PostDetail-addComment">
               <form onSubmit={this.handleAddCommentSubmit}>
-                {/* <textarea
-                ref="addCommentTextarea"
-                name=""
-                className="PostDetail-addCommentTextarea"
-                placeholder="Add comment"
-                onChange={this.handleCommentChange}
-              ></textarea> */}
                 <input
                   type="text"
                   ref="addCommentTextarea"

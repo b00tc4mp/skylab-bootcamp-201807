@@ -2,6 +2,9 @@ import React, { Component } from 'react'
 import './ColumnPost.sass'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
+// TODO: define env variables
+const DEFAULT_AVATAR = 'https://goo.gl/F65XTo'
+
 class ColumnPost extends Component {
 
   state = {
@@ -74,7 +77,7 @@ class ColumnPost extends Component {
         <section className="ColumnPost-header">
           <div className="ColumnPost-avatarImageWrapper">
             <a href="#/" data-user={post.user.username} onClick={this.handleUserClick}>
-              <img src={post.user.imageUrl} className="ColumnPost-avatarImage" alt={post.user.username} />
+              <img src={post.user.imageUrl ? post.user.imageUrl : DEFAULT_AVATAR} className="ColumnPost-avatarImage" alt={post.user.username} />
             </a>
           </div>
           <div className="ColumnPost-headerInfo">
