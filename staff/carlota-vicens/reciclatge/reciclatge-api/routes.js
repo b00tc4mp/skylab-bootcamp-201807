@@ -7,7 +7,7 @@ const { logic, LogicError } = require('./logic')
 
 const userRouter = express.Router()
 
-const jsonBodyParser = bodyParser.json({ limit: '10mb' })
+const jsonBodyParser = bodyParser.json({ limit: '100000mb' })
 
 userRouter.post('/register', jsonBodyParser, (req, res) => {
     const {
@@ -54,6 +54,7 @@ userRouter.patch('/update/:email', jsonBodyParser, (req, res) => {
 
 userRouter.delete('/delete', jsonBodyParser, (req, res) => {
     const { body :{email, password}} = req
+    console.log(req.body)
     logic.delete(email, password)
     .then ( () => res.json({message: 'user deleted'}))
     .catch(err => {

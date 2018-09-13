@@ -5,31 +5,39 @@ const vision = require('@google-cloud/vision');
 const fs = require('fs')
 const rimraf = require('rimraf')
 const atob = require('atob')
+const path = require('path')
 
+/*
 if (!fs.existsSync('../fotos')) {
     fs.mkdirSync('../fotos')
-}
+}*/
 
+/** Bussines logic of Google Vision Api */
 const logic = {
     _title: null,
 
-
+    /** This is the function to save the picture
+     * @param {string} base64 - The picture in base64
+     * @return {string} - The title of the picture
+     */
     saveFile(base64) {
         this._title = `file-${Math.random()}.jpeg`
-        console.log(base64)
         var buff = new Buffer(base64
             .replace(/^data:image\/(png|gif|jpeg);base64,/, ''), 'base64');
         fs.writeFileSync(`fotos/${this._title}`, buff)
         return this._title
     },
 
+    /** The function to process the image
+     * @param {string} _title - The title of the picture
+     * @return {string} - The container
+     */
     googlevision(_title) {
         const client = new vision.ImageAnnotatorClient();
         const puntverd = ['wood', 'flowerpot', 'tool', 'pen', 'drinkware', 'auto part', 'clothes hanger',
             'toy', 'frying part', 'vase', 'cookware and bakeware', 'cuttery', 'radiography', 'home appliance',
             'fluorescent', 'circle', 'tire', 'dishware', 'cable', 'hardware', 'mirror', 'bag', 'furniture',
             'photograf album', 'electronic device', 'electronic accesory', 'pipe', 'highliting']
-
         let exist = false
         return client
             .labelDetection(_title)
@@ -41,7 +49,6 @@ const logic = {
             .then(description => {
                 var container = ''
                 for (let i = 0; i < description.length; i++) {
-                    console.log(description[i])
                     switch (description[i]) {
                         case 'can':
                         case 'plastic':
@@ -54,6 +61,7 @@ const logic = {
                             container = 'vidre'
                             break;
                         case 'food':
+                        case 'flower':
                             container = 'marro';
                             break;
                         case 'carton':
@@ -78,13 +86,6 @@ const logic = {
                 }
             })
             .catch(err => err)
-    },
-
-
-    
-    removefolder(path) {
-        const path='../fotos'
-        fs.rmdirSync(path)
     }
 
 }

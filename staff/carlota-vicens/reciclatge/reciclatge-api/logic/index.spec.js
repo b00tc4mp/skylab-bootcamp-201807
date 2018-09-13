@@ -127,7 +127,7 @@ describe('logic', () => {
         it('should login correctly', () =>
             logic.login(email, password)
                 .then(res => {
-                    expect(res).to.be.true
+                    expect(res).not.empty
                 })
         )
 
@@ -168,7 +168,107 @@ describe('logic', () => {
         )
     })
 
-    
+    describe('update password', () => {
+        const newPassword = `${password}-${Math.random()}`
+
+        beforeEach(() =>
+            User.create({ email, password })
+        )
+
+        it('should succeed on correct passwords', () => {
+            logic.update(email, password, newPassword)
+                .then(res => {
+                    expect(res).to.be.true
+
+                    return users.findOne({ email })
+                })
+                .then(user => {
+                    expect(user).to.exist
+                    expect(user.email).to.equal.email
+                    expect(user.password).to.equal(newPassword)
+                })
+        })
+
+        it('should fail on emptr.email', () => {
+            logic.update('', password, newPassword)
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal('invalid email'))
+        })
+
+        it('should fail on empty password', () => {
+            logic.update(email, '', newPassword)
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal('invalid password'))
+        })
+
+        it('should fail on empty new password', () =>
+            logic.update(email, password, '')
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal('invalid new password'))
+        )
+
+        it('should fail on numerir.email', () => {
+            logic.update(123, password, newPassword)
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal('invalid email'))
+        })
+
+        it('should fail on numeric password', () => {
+            logic.update(email, 123, newPassword)
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal('invalid password'))
+        })
+
+        it('should fail on numeric new password', () =>
+            logic.update(email, password, 123)
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`invalid new password`))
+        )
+
+        it('should fail on undefiner.email', () => {
+            logic.update(undefined, password, newPassword)
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`invalir.email`))
+        })
+
+        it('should fail on undefined password', () => {
+            logic.update(email, undefined, newPassword)
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal('invalid password'))
+        })
+
+        it('should fail on undefined new password', () =>
+            logic.update(email, password, undefined)
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`invalid new password`))
+        )
+
+        it('should fail on numerir.email', () => {
+            logic.update(123, password, newPassword)
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`invalir.email`))
+        })
+
+        it('should fail on numeric password', () => {
+            logic.update(email, 123, newPassword)
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal('invalid password'))
+        })
+
+        it('should fail on numeric new password', () =>
+            logic.update(email, password, 123)
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`invalid new password`))
+        )
+
+        it('should fail on new password same as current password', () =>
+            logic.update(email, password, password)
+                .catch(err => err)
+                .then(({ message }) => expect(message).to.equal(`new password cannot be same as current password`))
+        )
+    })
+
+
     after(() =>
         Promise.all([
 

@@ -7,7 +7,7 @@ import Landing from './components/Landing'
 import Register from './components/Register'
 import Login from './components/Login'
 import Profile from './components/Profile'
-import Camera from './components/Camera'
+import Main from './components/Main'
 import Container from './components/Container'
 import PuntVerd from './components/PuntVerd'
 import Navbar from './components/NavBar'
@@ -16,7 +16,7 @@ import Navbar from './components/NavBar'
 
 class App extends Component {
   state = {
-    loggedIn: logic.loggedIn,
+    loggedIn: true,
     container: null,
     namecontainer: null
   }
@@ -25,7 +25,7 @@ class App extends Component {
   onLogin = () => this.props.history.push('/login')
   goToProfile = () => this.props.history.push('/profile')
   goToHome = () => this.props.history.push('/home')
-  goToMap = () =>  this.props.history.push('/puntverd')
+  goToMap = () => this.props.history.push('/puntverd')
 
 
   registerUser = (email, password) => {
@@ -56,17 +56,13 @@ class App extends Component {
       .then(({ data }) => {
         this.setState({
           namecontainer: data
-
         })
         return data
-      }
-
-      )
-
+      })
   }
 
-  deleteUser = (email, password) => {
-    return logic.delete(email, password)
+  deleteUser = (password) => {
+    return logic.delete(password)
       .then(() => this.setState({ loggedIn: false }))
   }
 
@@ -82,7 +78,7 @@ class App extends Component {
         <Route exact path="/" render={() => !loggedIn ? <Landing onRegister={onRegister} onLogin={onLogin} /> : <Redirect to="/home" />} />
         <Route path="/register" render={() => !loggedIn ? <Register onRegister={registerUser} onLogin={onLogin} /> : <Redirect to="/home" />} />
         <Route path="/login" render={() => !loggedIn ? <Login onLogin={loginUser} onRegister={onRegister} /> : <Redirect to="/home" />} />
-        <Route path="/home" render={() => loggedIn ? <Camera upload={uploadImage} /> : <Redirect to="/" />} />
+        <Route path="/home" render={() => loggedIn ? <Main upload={uploadImage} /> : <Redirect to="/" />} />
         <Route path="/profile" render={() => loggedIn ? <Profile onLogout={logout} updateUser={updateUser} deleteUser={deleteUser} /> : <Redirect to="/" />} />
         <Route path="/container" render={() => loggedIn ? <Container namecontainer={this.state.namecontainer} /> : <Redirect to="/home" />} />
         <Route path="/puntverd" render={() => loggedIn ? <PuntVerd /> : <Redirect to='/home' />} />
