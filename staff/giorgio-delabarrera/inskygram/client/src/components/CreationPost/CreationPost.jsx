@@ -57,7 +57,7 @@ class CreationPost extends Component {
               ></textarea>
             </div>
             <div>
-              <button className="button is-primary" type="submit" >Submit</button>
+              <button refs="submit-" className="button is-primary" type="submit" >Submit</button>
             </div>
             {
               this.state.error && (
