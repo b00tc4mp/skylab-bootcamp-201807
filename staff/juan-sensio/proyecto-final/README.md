@@ -28,6 +28,15 @@ Note that you will need to start mongo in order to allow the use of the data mod
 sudo mongod
 ```
 
+and set the env variables
+
+```bash
+PORT = 8080
+JWT_SECRET = whatever 
+JWT_EXP = 24h
+MONGO_URL = mongodb://localhost:27017/api-p2p
+```
+
 To run the tests
 
 ```bash
