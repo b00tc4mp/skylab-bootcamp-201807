@@ -46,10 +46,8 @@ const styles = {
 };
 
 function ProductDetailCard(props) {
-  //const { classes, state, photo, price, title, description, addFavourite, removeFavourite, idProd, isFav } = props
-
-
-  const {
+  
+    const {
             classes,
             addFavourite, 
             removeFavourite, 

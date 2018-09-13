@@ -146,7 +146,7 @@ userRouter.post('/me/:user/review', [validateJwt, jsonBodyParser], (req, res) =>
     const { params: { user }, body: { userTo, score, idProd, description } } = req
 
     userLogic.addReview(user, userTo, score, idProd, description)
-        .then(() => res.json({ message: 'review added' }))
+        .then(() => res.status(201).json({ message: 'review added' }))
         .catch(err => {
             const { message } = err
 

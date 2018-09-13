@@ -413,6 +413,37 @@ const logic = {
             })
     },
 
+    //// REVIEWS //////
+
+    /*listReviewsByUserId() {
+        return Promise.resolve()
+            .then(() => {
+                return this._call(`/me/${this._userId}/chat`, 'GET', { 
+                    'Authorization': `bearer ${this._userToken}`,
+                    'Content-Type': 'application/json' 
+                }, undefined, 200)
+                    .then(res => res.json())
+            })
+    },*/
+
+    addReview(userTo, score, idProd, description) {
+        return Promise.resolve()
+            .then(() => {
+                validate._stringField('userTo', userTo)
+                validate._stringField('idProd', idProd)
+                validate._intField('score', score, 0, 5)
+                validate._stringField('description', description)
+
+                const body = { userTo, score, idProd, description }
+
+                return this._call(`me/${this._userId}/review`, 'POST', { 
+                    'Authorization': `bearer ${this._userToken}`,
+                    'Content-Type': 'application/json' 
+                }, JSON.stringify(body), 201)
+                    .then(() => true)
+            })
+    },    
+
 }
 
 module.exports = logic

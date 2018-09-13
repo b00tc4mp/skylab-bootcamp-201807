@@ -47,9 +47,7 @@ class Mychats extends Component {
             .then(chat => {
                 const chatId = chat._id || chat.chat
                 return logic.getChatById(chatId)
-            }).then(chat => {
-                this.setState({messages: chat.messages, chatId: chat._id})
-            })
+            }).then(chat => this.setState({messages: chat.messages, chatId: chat._id}) )
             .catch(({ message }) => Alert.error(message, { position: 'bottom-right', effect: 'slide', timeout: 3000 }))
     }
 
@@ -99,7 +97,7 @@ class Mychats extends Component {
     }
 
     onGoToChatById = () => {
-        const { chatId } = this.setState
+        const { chatId } = this.state
 
         logic.getChatById(chatId)
             .then(res => this.setState({messages: res.messages}))
@@ -143,14 +141,14 @@ class Mychats extends Component {
                     </form>
                 </div>
                 <div className="mychats-product-preview">
-                    <SimplePreviewCard 
+                    {productId && <SimplePreviewCard 
                         photo={prodPhoto}
                         price={prodPrice}
                         title={prodTitle}
                         idProd={productId}
                         description={prodDescription}
                         getProductDetail={this.onProductDetail}          
-                    />
+                    />}
                 </div>
             </div>
         )

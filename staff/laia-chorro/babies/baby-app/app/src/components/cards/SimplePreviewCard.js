@@ -36,7 +36,7 @@ const styles = {
   }
 };
 
-function PreviewCard(props) {
+function SimplePreviewCard(props) {
 
   const { getProductDetail } = props
 
@@ -76,8 +76,8 @@ function PreviewCard(props) {
   );
 }
 
-PreviewCard.propTypes = {
+SimplePreviewCard.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(PreviewCard);
+export default withStyles(styles)(SimplePreviewCard);
