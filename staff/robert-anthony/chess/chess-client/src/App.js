@@ -185,7 +185,7 @@ class App extends Component {
       <header>
         <NavBar nickname={nickname} isLoggedIn={this.isLoggedIn()} onLogout={this.onLogout}/>
       </header>
-      {error && <UncontrolledAlert color="dark"> {error}</UncontrolledAlert>}
+      {error && <UncontrolledAlert color="dark"><i className="fas fa-2x fa-exclamation-circle"></i>&nbsp; {error}</UncontrolledAlert>}
       <main>
         <Switch>
           <Route exact path="/" render={() => <Main/>}/>

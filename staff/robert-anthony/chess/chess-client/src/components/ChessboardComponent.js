@@ -95,11 +95,12 @@ class ChessboardComponent extends Component {
         <Col xs="0" md="1">
         </Col>
         <Col className="chessBoardGroup__gameInfoArea" xs="12" md="3">
-         {currentGame && <h3 className="chessBoardGroup__players"><span>White: </span>{currentGame.initiator} </h3>}
-         {currentGame && <h3 className="chessBoardGroup__players"><span>Black: </span>{currentGame.acceptor} </h3>}
-          {currentGame && !endOfGameText && <h3  className="chessBoardGroup__toPlay">{currentGame.toPlay} <span>to play</span></h3>}
-          {currentGame && !endOfGameText &&  inCheckText && <h3  className="chessBoardGroup__inCheck">{inCheckText} <span>is in check</span></h3>}
-          {currentGame && !endOfGameText && <p  className="chessBoardGroup__pgn">{currentGame.pgn} </p>}
+         {currentGame && <h3 className="chessBoardGroup__players"><span><i className="fas fa-chess-knight"></i>&nbsp;White: </span>{currentGame.initiator} </h3>}
+         {currentGame && <h3 className="chessBoardGroup__players"><span><i className="fas fa-chess-knight"></i>&nbsp;Black: </span>{currentGame.acceptor} </h3>}
+          {currentGame && !endOfGameText && <h3  className="chessBoardGroup__toPlay"><i className="fas fa-spinner"></i>&nbsp;{currentGame.toPlay} <span>to play</span></h3>}
+          {currentGame && !endOfGameText &&  inCheckText && <h3  className="chessBoardGroup__inCheck"><i
+            className="fas fa-exclamation-triangle"></i>&nbsp;{inCheckText} <span>is in check</span></h3>}
+          {currentGame && !endOfGameText && <h3  className="chessBoardGroup__pgn"><i className="fas fa-pen-nib"></i>&nbsp;Moves:&nbsp;{currentGame.pgn} </h3>}
 
         </Col>
       </Row>

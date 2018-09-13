@@ -78,6 +78,10 @@ nav {
     font-size: 1.8em;
     letter-spacing: .2em;
     font-weight: 400;
+    @media  (max-width: 414px) {
+      font-size:1em;
+      letter-spacing:0;
+    }
     img {
       max-width: 50px;
 
@@ -182,7 +186,7 @@ main div.games__mainChessRow.row div.chessBoardGroup__gameInfoArea.col-12.col-md
   }
 }
 
-main div.games__mainChessRow.row div.chessBoardGroup__gameInfoArea.col-12.col-md-3 p.chessBoardGroup__pgn {
+main div.games__mainChessRow.row div.chessBoardGroup__gameInfoArea.col-12.col-md-3 h3.chessBoardGroup__pgn {
   font-size: 1em;
   color: $text_color3;
 
