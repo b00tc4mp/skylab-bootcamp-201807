@@ -68,9 +68,7 @@ class Register extends Component {
     render() {
         return <div>
             <nav class="navbar is-primary nav">
-                {/* <a class="navbar-item" href="/"><button class="button is-success">Home</button></a> */}
                 <Link to={'/'} class="navbar-item"><button class="button is-success">Home</button></Link>
-                {/* <a class="navbar-item" href="/#/login"><button class="button is-success">Login</button></a> */}
                 <Link to={'/login'} class="navbar-item"><button class="button is-success">Login</button></Link>
             </nav>
             <div class="container-form">
@@ -126,13 +124,13 @@ class Register extends Component {
                                             this.confirmLatitude(latitude)
                                         this.confirmLongitude(longitude)
                                     }}>Ok</button>}
+                                    
                                 </div>
                             </div>
                         )}
                     />
-
+                    <p className="location-required">Location not required</p>
                     <button class="button is-success" type="submit">Register</button>
-
                 </form >
             </div>
         </div>

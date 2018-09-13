@@ -28,3 +28,8 @@
     background-color: #8A4D76 !important;
     color: #FFFFFF !important;
   }
+  .location-required{
+    text-align: left; 
+    font-size: 0.7em;
+    margin-bottom: 2em;
+  }

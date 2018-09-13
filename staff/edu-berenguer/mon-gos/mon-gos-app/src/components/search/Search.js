@@ -49,16 +49,13 @@ class Search extends Component {
         return <div>
             <nav class="navbar nav">
                 <div class="navbar-start">
-                    {/* <a href="/" class="navbar-item logo">MON-GOS</a> */}
                     <Link to={'/'}><button class="navbar-item logo">MON-GOS</button></Link>
                 </div>
                 <div class="navbar-end">
                     <nav class="breadcrumb" >
                         <ul>
                             <li>Are you a shelter?</li>
-                            {/* <li><a href="/#/register" class="navbar-item goShelter ">Register</a></li> */}
                             <li><Link to={'/register'}><li class="navbar-item goShelter">Register</li></Link></li>
-                            {/* <li><a href="/#/login" class="navbar-item goShelter">login</a></li> */}
                             <li><Link to={'/login'}><li class="navbar-item goShelter">Login</li></Link></li>
 
                         </ul>
@@ -69,14 +66,14 @@ class Search extends Component {
                 <form onChange={this.listDogs}>
                     <div class="select" >
                         <select name="gender" id="" onChange={this.handleChange}>
-                            <option value="">Both</option>
+                            <option value="">All genders</option>
                             <option value="male" onChange={this.handleChange}>Male</option>
                             <option value="female" onChange={this.handleChange}>Female</option>
                         </select>
                     </div>
                     <div class="select">
                         <select class="select" name="weight" id="" onChange={this.handleChange}>
-                            <option value="">All</option>
+                            <option value="">All sizes</option>
                             <option value="little" onChange={this.handleChange}>Little</option>
                             <option value="medium" onChange={this.handleChange}>Medium</option>
                             <option value="big" onChange={this.handleChange}>Big</option>
@@ -84,7 +81,7 @@ class Search extends Component {
                     </div>
                     <div class="select">
                         <select name="age" id="" onChange={this.handleChange}>
-                            <option value="">All</option>
+                            <option value="">All ages</option>
                             <option value="puppy" onChange={this.handleChange}>Puppy</option>
                             <option value="young" onChange={this.handleChange}>Young</option>
                             <option value="adult" onChange={this.handleChange}>Adult</option>

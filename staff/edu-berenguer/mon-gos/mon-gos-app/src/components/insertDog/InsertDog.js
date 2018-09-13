@@ -84,7 +84,7 @@ class InsertDog extends Component {
                     <div>
                         <div class="select is-fullwidth" >
                             <select name="gender" id="" onChange={this.handleChange}>
-                                <option value="" hidden >-- Choose an option --</option>
+                                <option value="" hidden >-- Choose gender --</option>
                                 <option value="male" onChange={this.handleChange}>Male</option>
                                 <option value="female" onChange={this.handleChange}>Female</option>
                             </select>

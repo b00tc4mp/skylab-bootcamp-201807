@@ -72,7 +72,7 @@ class FormAdopted extends Component {
                     </div>
                     <div class="field">
                         <p class="control has-icons-left has-icons-right">
-                            <textarea class="textarea" type="text" placeholder="Name" onChange={this.handleChange} name="info"></textarea>
+                            <textarea class="textarea" type="text" placeholder="About me..." onChange={this.handleChange} name="info"></textarea>
                         </p>
                     </div>
                     <div class="field">

@@ -1,13 +1,12 @@
 ## MON-GOS
 ![Data model](./images/skylab.png)
 
-![slider](./images/logos-side.png)
-
 ## Introduction
 
 It is an application where the protectors can show users the dogs that are available for adoption
 
 ## Functional description
+![slider](./images/logos-side.png)
 
 ## Use case diagram    
 ![Case Use](./images/case-use.png)

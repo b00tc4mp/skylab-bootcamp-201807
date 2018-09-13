@@ -83,9 +83,9 @@ class Landing extends Component {
             <div className="container-landing">
                 <div className="container-list">
                     <div className="container-title-landing">
-                        <h2 className="title">LIST OF DOGS</h2>
+                        <h2 className="title">DOGS</h2>
                         {this.state.loading ? <MDSpinner /> : ''}
-                        <a href="/#/insertDog"><button class="button is-success">Add dog</button></a>
+                        <a href="/#/insertDog"><button class="button is-success">Add a dog</button></a>
                     </div>       
                     <ul>
                         {this.state.dogs.map(dog => {

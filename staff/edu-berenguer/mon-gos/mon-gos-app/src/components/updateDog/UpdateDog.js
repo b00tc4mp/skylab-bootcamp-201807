@@ -98,7 +98,7 @@ class UpdateDog extends Component {
             </nav>
             <div>
                 <div className="container-title-update">
-                    <h1 className="title">Update dog</h1>
+                    <h1 className="title">Edit dog/Information</h1>
                     <label class="tag">{this.state.gender}</label>
                 </div>
                 <form onSubmit={this.updateDog} className="form-update">

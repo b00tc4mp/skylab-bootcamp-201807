@@ -42,13 +42,13 @@ class DetailDog extends Component {
                 </div>
             </nav >
             <div className="detailDog">
-                <h2 className="title">Information of {this.state.dog.name}</h2>
+                <h2 className="title">Information about {this.state.dog.name}</h2>
                 <div className="infoDog">
                     <div className="dataDog">
                         <h6>Gender: </h6> <p>{this.state.dog.gender}</p>
                         <h6>Weight:</h6> <p>{this.state.dog.weight} kg.</p>
                         <h6>Age: </h6><p>{this.state.dog.age} years</p>
-                        <h6>Text:</h6><p>{this.state.dog.description}</p>
+                        <h6>Description:</h6><p>{this.state.dog.description}</p>
                     </div>
                     <img class="imageDetail" style={{backgroundImage:`url(${this.state.dog.photo})`, height:'215px',backgroundSize:'cover',backgroundPosition:'center'}}/>
                 </div>
