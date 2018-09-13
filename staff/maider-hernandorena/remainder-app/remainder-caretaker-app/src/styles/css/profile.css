@@ -6,10 +6,11 @@
   margin: 3% auto 0 auto;
   width: 80%; }
   .profile__title {
-    margin: 7% 0 3% 0; }
+    margin: 5% 0 3% 0; }
     @media screen and (max-width: 600px) {
       .profile__title {
-        margin: 15% 0; } }
+        padding: 2% 0;
+        font-size: 28px; } }
   .profile__form {
     display: flex;
     flex-wrap: wrap;

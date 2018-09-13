@@ -50,7 +50,8 @@
           margin: 0;
           width: 90%;
           color: #333333;
-          padding: 10% 0 10% 10%; } }
+          padding: 10% 0 10% 10%;
+          height: 100%; } }
       .all__data__treatments__title {
         margin-bottom: 0; }
       .all__data__treatments__list {
