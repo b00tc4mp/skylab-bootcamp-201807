@@ -52,8 +52,8 @@ class App extends Component {
                 <a href="/#/home" ><img className="header__panel__logo" src="/images/logoHome.svg"/></a>
               </header>
               <nav className="header__nav">
-                <a className="header__nav__link" href="/#/home" ><img className="header__nav__link__icon" src="/images/home.svg"/>Home</a>
                 <a className="header__nav__link" href="/#/profile" ><img className="header__nav__link__icon" src="/images/user.svg"/>Profile</a>
+                <a className="header__nav__link" href="/#/home" ><img className="header__nav__link__icon" src="/images/home.svg"/>Home</a>
                 <a className="header__nav__link" href="" onClick={onLogout}><img className="header__nav__link__icon" src="/images/exit.svg"/>Logout</a>
               </nav>
             </div> : <div className="noHome">
