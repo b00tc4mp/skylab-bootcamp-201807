@@ -55,15 +55,6 @@ class App extends Component {
     sessionStorage.setItem('patient dni', patientDni)
   }
 
-  removePatient = dni => {
-    const { id, token } = this.state
-    dni = parseInt(dni)
-
-    logic.removePatient(dni, id, token)
-        .then(() => true)
-        .then(() => this.props.history.push('/patients'))
-  }
-
   goToAddCaretaker = () => this.props.history.push('/addcaretaker')
 
   caretakerData = caretakerDni => {
@@ -94,7 +85,7 @@ class App extends Component {
 
             <Switch>
               <Route exact path="/" render={() => this.isLoggedIn() ? <Redirect to="/patients" /> : <Login onLoggedIn={onLoggedIn} />} />
-              <Route path="/patients" render={() => this.isLoggedIn() ? <Patients goToAddPatient={goToAddPatient} patientData={patientData} removePatient={removePatient}/> : <Redirect to="/" />} />
+              <Route path="/patients" render={() => this.isLoggedIn() ? <Patients goToAddPatient={goToAddPatient} patientData={patientData} id={id} token={token}/> : <Redirect to="/" />} />
               <Route path="/addpatient" render={() => this.isLoggedIn() ? <AddPatient id={id} token={token}/> : <Redirect to="/" />} />
               <Route path="/patient/:dni" render={() => this.isLoggedIn() ? <PatientData patientDni={patientDni} id={id} token={token}/> : <Redirect to="/" />} />
               <Route path="/doctors" render={() => this.isLoggedIn() ? <Doctors id={id} token={token}/> : <Redirect to="/" />} />

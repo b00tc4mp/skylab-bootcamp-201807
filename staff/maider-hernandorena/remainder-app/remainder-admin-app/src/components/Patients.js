@@ -50,7 +50,14 @@ class Patients extends Component {
             .catch(({ message }) => this.setState({ error: message }))
     }
 
-    removePatient = dni => this.props.removePatient(dni)
+    removePatient = dni => {
+        const { id, token } = this.props
+        dni = parseInt(dni)
+    
+        logic.removePatient(dni, id, token)
+            .then(() => true)
+            .then(() => this.listPatients())
+    }
 
     render() {
         const { state: { error, name, patients }, keepName, onSearch, goToAddPatient, patientData } = this
