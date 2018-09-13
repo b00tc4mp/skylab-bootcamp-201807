@@ -7,7 +7,8 @@ class CreationPost extends Component {
   state = {
     image: undefined,
     caption: '',
-    modalIsOpen: false
+    modalIsOpen: false,
+    error: ''
   }
 
   handleImage = event => {
@@ -16,12 +17,18 @@ class CreationPost extends Component {
 
   handleCaption = event => this.setState({ caption: event.target.value })
 
-  handleSubmit = event => {
+  handleSubmit = async (event) => {
     event.preventDefault()
 
     const { image, caption } = this.state
 
-    this.props.onSubmit(image, caption)
+    try {
+      await this.props.onSubmit(image, caption)
+    } catch ({ message }) {
+      this.setState({ error: message })
+
+      this.props.onError(message)
+    }
   }
 
   render() {
@@ -38,6 +45,7 @@ class CreationPost extends Component {
                 <span className="CreationPost-uploadButtonLabel"> Choose a file</span>
               </span>
             </label>
+            {this.state.image && <div>File selected! <span role="img" aria-label="yeah!">😎</span></div>}
           </div>
           <div className="CreationPost-fieldsWrapper">
             <div className="CreationPost-field">
@@ -51,6 +59,11 @@ class CreationPost extends Component {
             <div>
               <button className="button is-primary" type="submit" >Submit</button>
             </div>
+            {
+              this.state.error && (
+                <div className="CreationPost-formFeedback CreationPost-formFeedback--error">{this.state.error}</div>
+              )
+            }
           </div>
         </form>
       </div>

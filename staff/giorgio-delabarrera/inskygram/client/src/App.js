@@ -19,7 +19,7 @@ class App extends Component {
   state = {
     loggedInUsername: sessionStorage.getItem('username') || '',
     token: sessionStorage.getItem('token') || '',
-    modalContent: ''
+    modalContent: '',
   }
 
   componentWillMount() {
@@ -47,6 +47,8 @@ class App extends Component {
     if (this.props.location.pathname !== '/') this.props.history.push('/')
   }
 
+  redirectToLogin = () => this.props.history.push('/accounts/login')
+
   onRegistered = (username, token) => this.onLoggedIn(username, token)
 
   handleCreationSubmit = (image, caption) => {
@@ -54,11 +56,13 @@ class App extends Component {
 
     return logic.createPost(loggedInUsername, image, caption, token)
       .then(() => {
-        //alert("post creado")
         this.closeModal()
         this.onHomeClick()
       })
-      .catch(err => console.log(err))
+  }
+
+  onErrorCreationPostSubmit = message => {
+    if (message === 'invalid token') this.redirectToLogin()
   }
 
   onHomeClick = () => {
@@ -67,7 +71,14 @@ class App extends Component {
   }
 
   onNewPostClick = () => {
-    this.setState({ modalContent: <CreationPost onSubmit={this.handleCreationSubmit} /> }, this.openModal())
+    this.setState({
+      modalContent: (
+        <CreationPost
+          onSubmit={this.handleCreationSubmit}
+          onError={this.onErrorCreationPostSubmit}
+        />
+      )
+    }, this.openModal())
   }
 
   onExploreClick = () => {
