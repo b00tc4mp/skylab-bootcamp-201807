@@ -43,6 +43,8 @@ class PostDetail extends Component {
   handleSaveIconClick = event => {
     event.preventDefault()
 
+    
+
     this.setState({ isSaved: !this.state.isSaved })
 
     const { post } = this.props

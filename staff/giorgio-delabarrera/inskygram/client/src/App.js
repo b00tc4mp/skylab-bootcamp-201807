@@ -91,6 +91,11 @@ class App extends Component {
     this.props.history.push(`/${username}`)
   }
 
+  onUnauthorizedInModal = () => {
+    this.closeModal()
+    this.redirectToLogin()
+  }
+
   onPostDetailClick = async (postId) => {
     const { loggedInUsername, token } = this.state
 
@@ -101,7 +106,9 @@ class App extends Component {
             postId={postId}
             loggedInUsername={loggedInUsername}
             token={token}
-            onUserClick={this.onUserInModalClick} />
+            onUserClick={this.onUserInModalClick}
+            onUnauthorized={this.onUnauthorizedInModal}
+          />
         )
       }, this.openModal())
 

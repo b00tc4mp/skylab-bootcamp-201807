@@ -4,7 +4,6 @@ import { withRouter } from 'react-router-dom'
 import Header from '../components/Header';
 import Profile from '../components/Profile';
 import GridPost from '../components/GridPost';
-import InfiniteScroll from 'react-infinite-scroller';
 
 class ProfilePage extends Component {
 
@@ -18,9 +17,7 @@ class ProfilePage extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    // if (nextProps.username !== this.state.user.username) {
     this.loadProfile(nextProps)
-    // }
   }
 
   async loadProfile(props) {
@@ -50,13 +47,9 @@ class ProfilePage extends Component {
     if (user) this.setState({ user }, () => this.setState({ posts }))
   }
 
-  onEditProfileClick = () => {
-    this.props.history.push(`/accounts/edit`)
-  }
+  onEditProfileClick = () => this.props.history.push(`/accounts/edit`)
 
-  onLogoutClick = () => {
-    this.props.history.push(`/accounts/logout`)
-  }
+  onLogoutClick = () => this.props.history.push(`/accounts/logout`)
 
   onToggleFollowClick = async () => {
     const { username, loggedInUsername, token } = this.props
@@ -75,17 +68,11 @@ class ProfilePage extends Component {
     }
   }
 
-  onUserPostsClick = username => {
-    this.props.history.push(`/${username}`)
-  }
+  onUserPostsClick = username => this.props.history.push(`/${username}`)
 
-  onUserSavedPostsClick = username => {
-    this.props.history.push(`/${username}/saved`)
-  }
+  onUserSavedPostsClick = username => this.props.history.push(`/${username}/saved`)
 
-  isEdit = () => {
-    return this.props.loggedInUsername === this.state.user.username
-  }
+  isEdit = () => this.props.loggedInUsername === this.state.user.username
 
   isFollowing = () => {
     const { user } = this.state
@@ -142,36 +129,6 @@ class ProfilePage extends Component {
       )
     }
   }
-
-  // handleLoadMore = async (page) => {
-  //   if (this.state.loadMore) {
-  //     const { username, loggedInUsername, token } = this.props
-
-  //     try {
-  //       let newPosts = []
-
-  //       if (loggedInUsername) {
-  //         if (loggedInUsername === username) {
-  //           newPosts = await logic.listUserPosts(username, undefined, token, page)
-  //         } else {
-  //           const targetUsername = username
-  //           newPosts = await logic.listUserPosts(loggedInUsername, targetUsername, token, page)
-  //         }
-  //       }
-  //       else {
-  //         const targetUsername = username
-  //         newPosts = await logic.listUserPosts(undefined, targetUsername, undefined, page)
-  //       }
-
-  //       if (newPosts.length === 0) {
-  //         this.setState({ loadMore: false })
-  //       } else {
-  //         const posts = [...this.state.posts, ...newPosts]
-  //         this.setState({ posts })
-  //       }
-  //     } catch (err) { }
-  //   }
-  // }
 
   _renderPosts() {
     return (

@@ -14,13 +14,16 @@ class ModalPostDetail extends Component {
     const { postId, loggedInUsername, token } = this.props
 
     try {
-      const user = await logic.retrieveUser(loggedInUsername, undefined, token)
+      if (loggedInUsername) {
+        const user = await logic.retrieveUser(loggedInUsername, undefined, token)
 
-      this.setState({ user })
-      
+        this.setState({ user })
+      }
+
       const post = await logic.retrievePost(postId, loggedInUsername, token)
 
       this.setState({ post })
+
     } catch (err) {
       // TODO
     }
@@ -28,6 +31,8 @@ class ModalPostDetail extends Component {
 
   onToggleLikeClick = async (postId) => {
     const { loggedInUsername, token } = this.props
+
+    if (!loggedInUsername) this.props.onUnauthorized()
 
     try {
       await logic.toggleLikePost(token, loggedInUsername, postId)
@@ -43,6 +48,9 @@ class ModalPostDetail extends Component {
 
   onToggleSaveClick = async (postId) => {
     const { loggedInUsername, token } = this.props
+
+    if (!loggedInUsername) this.props.onUnauthorized()
+
     try {
       await logic.toggleSavePost(token, loggedInUsername, postId)
     } catch (err) {
@@ -52,6 +60,8 @@ class ModalPostDetail extends Component {
 
   onAddCommentSubmit = async (postId, description) => {
     const { loggedInUsername, token } = this.props
+
+    if (!loggedInUsername) this.props.onUnauthorized()
 
     try {
       await logic.addCommentToPost(token, loggedInUsername, postId, description)
@@ -81,7 +91,7 @@ class ModalPostDetail extends Component {
               onToggleSaveClick={this.onToggleSaveClick}
               onAddCommentSubmit={this.onAddCommentSubmit}
               isLiked={this.isLiked(this.state.post.likes)}
-              isSaved={this.isSaved(this.state.post, this.state.user.savedPosts)}
+              isSaved={this.state.user && this.isSaved(this.state.post, this.state.user.savedPosts)}
             />
           )
         }
