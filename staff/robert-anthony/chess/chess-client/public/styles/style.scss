@@ -3,24 +3,7 @@
 @import url('https://fonts.googleapis.com/css?family=Josefin+Sans');
 @import url('https://fonts.googleapis.com/css?family=Pathway+Gothic+One');
 
-/*font-family: 'Merriweather', serif;
 
-font-family: 'Uncial Antiqua', cursive;
-font-family: 'Vollkorn', serif;
-
-
-*/
-
-/*
-
-font-family: 'Domine', serif;
-font-family: 'Cormorant Unicase', serif;
-font-family: 'Marcellus SC', serif;
-font-family: 'Cinzel Decorative', cursive;
-font-family: 'Aladin', cursive;
-font-family: 'Megrim', cursive;
-font-family: 'Mate SC', serif;
-*/
 
 $text_font: 'Megrim', cursive;
 $text_font: 'Marcellus SC', serif;
@@ -107,7 +90,7 @@ div.chessBoardComponent__chessBoardArea {
   margin-bottom: 15px;
 }
 
-main div.games__mainChessRow.row div.chessBoardGroup__gameInfoArea.col-12.col-md-3 h3.chessBoardGroup__players {
+main div.games__mainChessRow.row div.chessBoardGroup__gameInfoArea.col-12.col-lg-3 h3.chessBoardGroup__players {
   font-size: 1.2em;
   color: $text_color1;
   padding-bottom: 10px;
@@ -163,7 +146,7 @@ main div.mainContainer.register__container.container, main div.mainContainer.log
   }
 }
 
-main div.games__mainChessRow.row div.chessBoardGroup__gameInfoArea.col-12.col-md-3 {
+main div.games__mainChessRow.row div.chessBoardGroup__gameInfoArea.col-12.col-lg-3 {
   padding: .5em;
   padding-left: 1em;
   padding-right: 1em;
@@ -176,7 +159,7 @@ div.alert.alert-dark.alert-dismissible.fade.show {
   color: $text_color3;
 }
 
-main div.games__mainChessRow.row div.chessBoardGroup__gameInfoArea.col-12.col-md-3 h3.chessBoardGroup__toPlay {
+main div.games__mainChessRow.row div.chessBoardGroup__gameInfoArea.col-12.col-lg-3 h3.chessBoardGroup__toPlay {
   font-size: 1.2em;
   color: $text_color1;
   padding-bottom: 10px;
@@ -186,13 +169,13 @@ main div.games__mainChessRow.row div.chessBoardGroup__gameInfoArea.col-12.col-md
   }
 }
 
-main div.games__mainChessRow.row div.chessBoardGroup__gameInfoArea.col-12.col-md-3 h3.chessBoardGroup__pgn {
+main div.games__mainChessRow.row div.chessBoardGroup__gameInfoArea.col-12.col-lg-3 h3.chessBoardGroup__pgn {
   font-size: 1em;
   color: $text_color3;
 
 }
 
-main div.games__mainChessRow.row div.chessBoardGroup__gameInfoArea.col-12.col-md-3 h3.chessBoardGroup__inCheck {
+main div.games__mainChessRow.row div.chessBoardGroup__gameInfoArea.col-12.col-lg-3 h3.chessBoardGroup__inCheck {
   font-size: 1.2em;
   color: $text_color1;
   padding-bottom: 10px;

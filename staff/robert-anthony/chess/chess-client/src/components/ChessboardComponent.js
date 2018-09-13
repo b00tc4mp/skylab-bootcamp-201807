@@ -81,7 +81,7 @@ class ChessboardComponent extends Component {
 
     return <Container>
       <Row>
-        <Col xs="12" md="8">
+        <Col xs="12" lg="8">
 
           <div className="chessBoardComponent__chessBoardArea">
             {currentGame && <Chessboard orientation={isWhite ? 'white' : 'black'} onDrop={this.onDrop}
@@ -92,9 +92,9 @@ class ChessboardComponent extends Component {
                                         position={currentGame.fen}/>}
           </div>
         </Col>
-        <Col xs="0" md="1">
+        <Col xs="0" lg="1">
         </Col>
-        <Col className="chessBoardGroup__gameInfoArea" xs="12" md="3">
+        <Col className="chessBoardGroup__gameInfoArea" xs="12" lg="3">
          {currentGame && <h3 className="chessBoardGroup__players"><span><i className="fas fa-chess-knight"></i>&nbsp;White: </span>{currentGame.initiator} </h3>}
          {currentGame && <h3 className="chessBoardGroup__players"><span><i className="fas fa-chess-knight"></i>&nbsp;Black: </span>{currentGame.acceptor} </h3>}
           {currentGame && !endOfGameText && <h3  className="chessBoardGroup__toPlay"><i className="fas fa-spinner"></i>&nbsp;{currentGame.toPlay} <span>to play</span></h3>}

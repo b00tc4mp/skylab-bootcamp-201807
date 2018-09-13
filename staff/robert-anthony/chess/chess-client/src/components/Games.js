@@ -76,7 +76,7 @@ class Games extends Component {
     <Container className="games__mainChessContainer">
 
           <Row className="games__mainChessRow">
-            <Col xs="12" md="3">
+            <Col xs="12" lg="3">
               {(currentGames.length !== 0) && <OpenGames onUserClick={this.onOpenGamesUserClick}
                                                  games={currentGames.filter(game => game.state !== 'terminated')}
                                                  nickname={nickname}
@@ -95,10 +95,10 @@ class Games extends Component {
             </Col>
 
           </Row> <Row>
-          <Col xs="0" md="4">
+          <Col xs="0" lg="4">
 
           </Col>
-          <Col xs="12" md="4">
+          <Col xs="12" lg="4">
             {error && <Alert color="warning"> {error}</Alert>}
           </Col>
         </Row>
