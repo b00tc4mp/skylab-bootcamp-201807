@@ -1,7 +1,8 @@
 
 const logic = {
 
-  url: 'http://localhost:8080/api',
+  // url: 'http://localhost:8080/api',
+  url: 'https://fierce-stream-12141.herokuapp.com/api',
 
   _buildUri(parameters) {
     let uri = ''
