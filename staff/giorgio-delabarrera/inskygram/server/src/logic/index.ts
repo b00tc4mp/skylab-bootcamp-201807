@@ -11,6 +11,13 @@ import SavedPost, { SavedPostModelInterface } from "../models/saved-post";
 
 const logic = {
 
+  /**
+   * Check if the user is following the target user
+   *
+   * @param {UserModelInterface} user
+   * @param {UserModelInterface} targetUser
+   * @returns {(Promise<boolean> | never)}
+   */
   _isFollowingUser(user: UserModelInterface, targetUser: UserModelInterface): Promise<boolean> | never {
     return Promise.resolve()
       .then(() => User.findOne({ _id: user._id, "followings.user": targetUser._id }))
@@ -19,10 +26,25 @@ const logic = {
       });
   },
 
+  /**
+   * Check if user is the same user as the target user
+   *
+   * @param {UserModelInterface} user
+   * @param {UserModelInterface} targetUser
+   * @returns {boolean}
+   */
   _isSameUser(user: UserModelInterface, targetUser: UserModelInterface): boolean {
     return user._id.toString() === targetUser._id.toString();
   },
 
+  /**
+   * Register a user
+   *
+   * @param {string} username
+   * @param {string} email
+   * @param {string} password
+   * @returns {(Promise<boolean> | never)}
+   */
   register(username: string, email: string, password: string): Promise<boolean> | never {
 
     return Promise.resolve()
@@ -48,6 +70,13 @@ const logic = {
       .then(() => true);
   },
 
+  /**
+   * Authenticate a user
+   *
+   * @param {string} username
+   * @param {string} password
+   * @returns {(Promise<boolean> | never)}
+   */
   authenticate(username: string, password: string): Promise<boolean> | never {
     return Promise.resolve()
       .then(() => {
@@ -69,6 +98,19 @@ const logic = {
       .then((user: UserModelInterface) => true);
   },
 
+  /**
+   * Retrieve a user
+   *
+   * If there is only user parameter, it returns the user's data
+   * If there is a user and a target user, it returns the data of the target user requested by the user.
+   * If there is no user and target user, it returns the data of the target user requested by an unauthenticated user.
+   *
+   * If there is a target user parameter, the security checks of the person requesting your information is done by a follower.
+   *
+   * @param {string} [username]
+   * @param {string} [targetUsername]
+   * @returns {(Promise<UserModelInterface> | never)}
+   */
   retrieveUser(username?: string, targetUsername?: string): Promise<UserModelInterface> | never {
     return Promise.resolve()
       .then(() => {
@@ -127,6 +169,21 @@ const logic = {
       });
   },
 
+  /**
+   * Update user
+   *
+   * If there parameter newEmail verify that it is not used by another user
+   *
+   * @param {string} username
+   * @param {string} [newEmail]
+   * @param {string} [name]
+   * @param {string} [website]
+   * @param {string} [phoneNumber]
+   * @param {string} [gender]
+   * @param {string} [biography]
+   * @param {boolean} [privateAccount]
+   * @returns {(Promise<boolean> | never)}
+   */
   updateUser(
     username: string,
     newEmail?: string,
@@ -175,6 +232,14 @@ const logic = {
       .then(() => true);
   },
 
+  /**
+   * Update the user password
+   *
+   * @param {string} username
+   * @param {string} password
+   * @param {string} newPassword
+   * @returns {(Promise<boolean> | never)}
+   */
   updateUserPassword(username: string, password: string, newPassword: string): Promise<boolean> | never {
     return Promise.resolve()
       .then(() => {
@@ -198,6 +263,14 @@ const logic = {
       .then(() => true);
   },
 
+  /**
+   * Update the user avatar
+   *
+   * @param {string} username
+   * @param {string} filename
+   * @param {Buffer} buffer
+   * @returns {(Promise<boolean> | never)}
+   */
   updateUserAvatar(username: string, filename: string, buffer: Buffer): Promise<boolean> | never {
     return Promise.resolve()
       .then(() => {
@@ -227,6 +300,13 @@ const logic = {
       .then((user: UserModelInterface) => true);
   },
 
+  /**
+   * Actuate that a user follows or stops following the target user
+   *
+   * @param {string} username
+   * @param {string} targetUsername
+   * @returns {(Promise<boolean> | never)}
+   */
   toggleFollowUser(username: string, targetUsername: string): Promise<boolean> | never {
     let user: UserModelInterface;
     let targetUser: UserModelInterface;
@@ -280,6 +360,19 @@ const logic = {
       });
   },
 
+  /**
+   * Returns the list of followers of the user
+   *
+   * If there is only user parameter, it returns the list of followers
+   * If there is a user and a target user, it returns the list of followers of the target user requested by the user.
+   * If there is no user and target user, it returns the list of followers of the target user requested by an unauthenticated user.
+   *
+   * If there is a target user parameter, the security checks of the person requesting your information is done by a follower.
+   *
+   * @param {string} [username]
+   * @param {string} [targetUsername]
+   * @returns {(Promise<UserModelInterface[]> | never)}
+   */
   listUserFollowers(username?: string, targetUsername?: string): Promise<UserModelInterface[]> | never {
     let user: UserModelInterface;
     let targetUser: UserModelInterface;
@@ -347,6 +440,19 @@ const logic = {
       });
   },
 
+  /**
+   * Returns the list of followings of the user
+   *
+   * If there is only user parameter, it returns the list of followings
+   * If there is a user and a target user, it returns the list of followings of the target user requested by the user.
+   * If there is no user and target user, it returns the list of followings of the target user requested by an unauthenticated user.
+   *
+   * If there is a target user parameter, the security checks of the person requesting your information is done by a follower.
+   *
+   * @param {string} [username]
+   * @param {string} [targetUsername]
+   * @returns {(Promise<UserModelInterface[]> | never)}
+   */
   listUserFollowings(username?: string, targetUsername?: string): Promise<UserModelInterface[]> | never {
     let user: UserModelInterface;
     let targetUser: UserModelInterface;
@@ -414,6 +520,17 @@ const logic = {
       });
   },
 
+  /**
+   * Create a post
+   *
+   * Image upload uses the cloudinary service
+   *
+   * @param {string} username
+   * @param {string} filename
+   * @param {Buffer} buffer
+   * @param {string} [caption]
+   * @returns {(Promise<string> | never)}
+   */
   createPost(username: string, filename: string, buffer: Buffer, caption?: string): Promise<string> | never {
     return Promise.resolve()
       .then(() => {
@@ -446,6 +563,15 @@ const logic = {
       .then((post: PostModelInterface) => post.id);
   },
 
+  /**
+   * Retrieve a post
+   *
+   * If there is a user parameter, check if you have the permissions to obtain the information of post
+   *
+   * @param {string} postId
+   * @param {string} [username]
+   * @returns {(Promise<PostModelInterface> | never)}
+   */
   retrievePost(postId: string, username?: string): Promise<PostModelInterface> | never {
     let post: PostModelInterface;
     let targetUser: UserModelInterface;
@@ -517,6 +643,19 @@ const logic = {
       .then((post: PostModelInterface) => post);
   },
 
+  /**
+   * Returns the list of posts of the user
+   *
+   * If there is only user parameter, it returns the list of posts
+   * If there is a user and a target user, it returns the list of posts of the target user requested by the user.
+   * If there is no user and target user, it returns the list of posts of the target user requested by an unauthenticated user.
+   *
+   * If there is a target user parameter, the security checks of the person requesting your information is done by a follower.
+   *
+   * @param {string} [username]
+   * @param {string} [targetUsername]
+   * @returns {(Promise<PostModelInterface[]> | never)}
+   */
   listUserPosts(username?: string, targetUsername?: string): Promise<PostModelInterface[]> | never {
     let user: UserModelInterface;
     let targetUser: UserModelInterface;
@@ -595,6 +734,20 @@ const logic = {
       });
   },
 
+  /**
+   * Returns the list of saved posts of the user
+   *
+   * If there is only user parameter, it returns the list of saved posts
+   * If there is a user and a target user, it returns the list of saved posts of the target user requested by the user.
+   * If there is no user and target user, it returns the list of saved posts of the target user requested by an unauthenticated user.
+   *
+   * If there is a target user parameter, the security checks of the person requesting your information is done by a follower.
+   *
+   *
+   * @param {string} [username]
+   * @param {string} [targetUsername]
+   * @returns {(Promise<PostModelInterface[]> | never)}
+   */
   listUserSavedPosts(username?: string, targetUsername?: string): Promise<PostModelInterface[]> | never {
     let user: UserModelInterface;
     let targetUser: UserModelInterface;
@@ -677,6 +830,16 @@ const logic = {
       });
   },
 
+  /**
+   * Returns the list of posts of the user's wall
+   *
+   * The posts to return are the posts of the users that the target user follows
+   *
+   * @param {string} username
+   * @param {number} [perPage=10]
+   * @param {number} [page=0]
+   * @returns {(Promise<PostModelInterface[]> | never)}
+   */
   listUserWall(username: string, perPage: number = 10, page: number = 0): Promise<PostModelInterface[]> | never {
     let user: UserModelInterface;
 
@@ -707,6 +870,14 @@ const logic = {
       });
   },
 
+  /**
+   * Add comment to a post
+   *
+   * @param {string} username
+   * @param {string} postId
+   * @param {string} description
+   * @returns {(Promise<boolean> | never)}
+   */
   addCommentToPost(username: string, postId: string, description: string): Promise<boolean> | never {
     let user: UserModelInterface;
     let post: PostModelInterface;
@@ -743,6 +914,13 @@ const logic = {
       .then((post: PostModelInterface) => true);
   },
 
+  /**
+   * Actuate that a user likes a post
+   *
+   * @param {string} username
+   * @param {string} postId
+   * @returns {(Promise<boolean> | never)}
+   */
   toggleLikePost(username: string, postId: string): Promise<boolean> | never {
     let user: UserModelInterface;
     let post: PostModelInterface;
@@ -786,6 +964,13 @@ const logic = {
       });
   },
 
+  /**
+   * Actuate that a user saves a post in his list of saved posts
+   *
+   * @param {string} username
+   * @param {string} postId
+   * @returns {(Promise<boolean> | never)}
+   */
   toggleSavePost(username: string, postId: string): Promise<boolean> | never {
     let user: UserModelInterface;
     let post: PostModelInterface;
@@ -827,10 +1012,17 @@ const logic = {
       .then(() => true);
   },
 
+  /**
+   * Returns the list of all posts of users with public profile
+   *
+   * @param {string} username
+   * @param {number} [perPage=10]
+   * @param {number} [page=0]
+   * @returns {(Promise<PostModelInterface[]> | never)}
+   */
   listExplorePosts(username: string, perPage: number = 10, page: number = 0): Promise<PostModelInterface[]> | never {
     let user: UserModelInterface;
 
-    // TODO: optimize join post with user
     return Promise.resolve()
       .then(() => {
         if (!username) { throw new LogicError("invalid username"); }
@@ -858,6 +1050,12 @@ const logic = {
       .then((posts: PostModelInterface[]) => posts);
   },
 
+  /**
+   * Search for users
+   *
+   * @param {string} query
+   * @returns {(Promise<UserModelInterface[]> | never)}
+   */
   search(query: string): Promise<UserModelInterface[]> | never {
     return Promise.resolve()
       .then(() => {
@@ -868,6 +1066,12 @@ const logic = {
       .then((users: UserModelInterface[]) => users);
   },
 
+  /**
+   * Returns the statistics of a user
+   *
+   * @param {string} username
+   * @returns {(Promise<object> | never)}
+   */
   retrieveUserStats(username: string): Promise<object> | never {
     let user: UserModelInterface;
     const stats: any = {};
