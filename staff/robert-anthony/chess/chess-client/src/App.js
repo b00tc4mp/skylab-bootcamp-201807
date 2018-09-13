@@ -12,7 +12,7 @@ import NavBar from "./components/NavBar"
 import Invite from "./components/Invite"
 import {UncontrolledAlert} from 'reactstrap'
 
-import NotificationSystem  from 'react-notification-system';
+import NotificationSystem from 'react-notification-system';
 
 class App extends Component {
 
@@ -20,13 +20,31 @@ class App extends Component {
 
   _notificationSystem = null
 
+  _notificationStyle = {
+    NotificationItem: { // Override the notification item
+      DefaultStyle: {
+        borderRadius: '5px',
+        fontSize: '15px',
+      },
+      info: {
+        color: '#ff002d',
+        background: 'rgba(60,60,65,0.7',
+        borderTop: '3px solid #ff002d',
+        WebkitBoxShadow: '1px 1px 1px 1px rgba(30,30,30,0.9)',
+        MozBoxShadow: '1px 1px 1px 1px rgba(30,30,30,0.9)',
+        boxShadow: '1px 1px 1px 1px rgba(30,30,30,0.9)',
+      }
+    }
+  }
+
+
   onAddNotification = message => {
     this._notificationSystem.addNotification({
       message,
+      autoDismiss: 0,
       level: 'info'
     });
   }
-
 
   needToUpdateGamesFlagFromSocketIO = false
 
@@ -48,7 +66,7 @@ class App extends Component {
     {
       nickname = sessionStorage.getItem('nickname')
       token = sessionStorage.getItem('token')
-      this.setupSocketListeners(nickname, token)  // add socket listeners again
+      if (!this.socket) this.setupSocketListeners(nickname, token)  // add socket listeners again
     }
   }
 
@@ -123,8 +141,8 @@ class App extends Component {
 
       this.socket.on(`error ${nickname}`, message => console.error(message))
 
-      this.socket.on(`update to games ${nickname}`, (user,type) => {
-        log.debug(`%c APP.JS: update to games: NICKNAME: ${nickname},  USER: ${user},  TYPE: ${type},  THIS.STATE.NICKNAME: ${this.state.nickname}`,'background: #222; color: #bada55')
+      this.socket.on(`update to games ${nickname}`, (user, type) => {
+        log.debug(`%c APP.JS: update to games: NICKNAME: ${nickname},  USER: ${user},  TYPE: ${type},  THIS.STATE.NICKNAME: ${this.state.nickname}`, 'background: #222; color: #bada55')
         this.needToUpdateGamesFlagFromSocketIO = true
         this.getCurrentGamesForUser(nickname, token)
         if (type === 'made a move') this.onAddNotification(`${user} made a move`)
@@ -147,7 +165,7 @@ class App extends Component {
         // else the socket will automatically try to reconnect
       });
 
-    } else  log.debug(`APP.JS: failed to establish connection with socketIO server`)
+    } else log.debug(`APP.JS: failed to establish connection with socketIO server`)
 
   }
 
@@ -190,6 +208,7 @@ class App extends Component {
   onLogout = () => {
     this.setState({nickname: '', token: '', users: [], currentGames: []})
     sessionStorage.clear()
+    if (this.socket) this.socket.close()
   }
 
   render() {
@@ -197,12 +216,13 @@ class App extends Component {
     log.debug(`APP.JS: render: NICKNAME: ${nickname}, NEEDTOUPDATEGAMESFLAG: ${this.needToUpdateGamesFlagFromSocketIO}`)
 
     return <div className="app__main">
-      <NotificationSystem ref="notificationSystem" />
+      <NotificationSystem ref="notificationSystem" style={this._notificationStyle}/>
 
       <header>
         <NavBar nickname={nickname} isLoggedIn={this.isLoggedIn()} onLogout={this.onLogout}/>
       </header>
-      {error && <UncontrolledAlert color="dark"><i className="fas fa-2x fa-exclamation-circle"></i>&nbsp; {error}</UncontrolledAlert>}
+      {error && <UncontrolledAlert color="dark"><i className="fas fa-lg fa-angry"></i>&nbsp; {error}
+      </UncontrolledAlert>}
       <main>
         <Switch>
           <Route exact path="/" render={() => <Main/>}/>
