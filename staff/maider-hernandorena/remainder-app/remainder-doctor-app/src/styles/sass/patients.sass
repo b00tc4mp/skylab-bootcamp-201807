@@ -1,5 +1,5 @@
 .patients
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+    font-family: 'Quicksand', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
     font-size: 18px
     color: #333333
 
@@ -10,17 +10,17 @@
 
         &__search
             float: left
-            width: 90%
+            width: 60%
 
             &__form
 
                 &__input
                     border: none
                     border-bottom: solid 1px #999999
-                    font-size: 18px
+                    font-size: 16px
                     color: #777777
                     padding-bottom: 10px
-                    width: 40%
+                    width: 70%
 
                     &:focus
                         outline: 0px
@@ -28,16 +28,17 @@
                 &__button
                     padding: 10px
                     margin-left: 5px
-                    background-color: #2fbdbb
+                    background: linear-gradient(left, rgba(85,191,159,1) 0%, rgba(47,189,187,1) 100%)
                     color: #ffffff
                     border: none
                     border-radius: 10px
                     width: 100px
                     cursor: pointer
                     font-size: 18px
+                    box-shadow: 0px 2px 10px 0px #cccccc
 
                     &:hover
-                        background-color: #308079
+                        background: linear-gradient(left, #49a589 0%, #269c9a 100%)
 
                     &:focus
                         outline: 0px
@@ -50,35 +51,53 @@
 
             &__button
                 padding: 10px 20px
-                margin-right: -50px
-                background-color: #2fbdbb
+                float: right
+                margin-top: -4%
+                background: linear-gradient(left, rgba(85,191,159,1) 0%, rgba(47,189,187,1) 100%)
                 color: #ffffff
                 border: none
                 border-radius: 10px
                 cursor: pointer
                 font-size: 18px
+                box-shadow: 0px 2px 10px 0px #cccccc
 
                 &:hover
-                    background-color: #308079
+                    background: linear-gradient(left, #49a589 0%, #269c9a 100%)
 
                 &:focus
                     outline: 0px
 
-        &__title
-            margin: 7% 0 3% 0
-
         &__all
+            box-shadow: 0px 1px 15px -3px #333333
+            border-radius: 10px
+            padding: 2% 5%
+            margin-top: 10%
+            height: 100vh
+
+            &__title
+                margin-bottom: 4%
 
             &__list
-                list-style-type: circle
                 color: #2fbdbb
-                padding: 0 2%
+                padding: 0 2% 0 0
+                margin-left: -1.5%
 
                 &__item
+                    margin: 20px
+                    width: 100%
+                    display: block
 
                     &__link
+                        margin: 0
                         text-decoration: none
                         color: #333333
 
-                        &:hover
-                            color: #2fbdbb
+                        &__text
+                            margin: 0
+
+                    &__info
+                        float: right
+                        width: 20px
+                        height: 20px
+                        margin: -2.5% 2%
+                        cursor: pointer

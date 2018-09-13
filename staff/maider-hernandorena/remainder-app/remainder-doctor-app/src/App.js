@@ -54,13 +54,13 @@ class App extends Component {
             { this.isLoggedIn() ? 
             <div className="header">
               <header className="header__panel">
-                <img className="header__panel__logo" src="/images/logoHome.svg"/>
+                <a href="/#/patients" onClick={listPatients}><img className="header__panel__logo" src="/images/logoHome.svg"/></a>
+                <nav className="header__panel__nav">
+                  <a className="header__panel__nav__link" href="/#/patients" onClick={listPatients}><img className="header__panel__nav__link__icon" src="/images/icons/couple.svg"/>Patients</a>
+                  <a className="header__panel__nav__link" href="/#/cites"><img className="header__panel__nav__link__icon" src="/images/icons/appointment.svg"/>Cites</a>
+                  <a className="header__panel__nav__link" href="/#/" onClick={onLogout}><img className="header__panel__nav__link__icon" src="/images/icons/exit.svg"/>Logout</a>
+                </nav>
               </header>
-              <nav className="header__nav">
-                <a className="header__nav__link" href="/#/patients" onClick={listPatients}>Patients</a>
-                <a className="header__nav__link" href="/#/cites">Cites</a>
-                <a className="header__nav__link" href="/#/" onClick={onLogout}>Logout</a>
-              </nav>
             </div> : <div className="noHome">
                 <img className="noHome__logo" src="/images/logo.svg"/>
             </div> }

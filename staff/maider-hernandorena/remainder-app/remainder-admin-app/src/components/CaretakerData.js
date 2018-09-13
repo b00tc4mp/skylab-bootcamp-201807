@@ -113,7 +113,8 @@ class CaretakerData extends Component {
                     <ul className="caretaker__all__list">
                         {patients.map(patient => <li className="caretaker__all__list__item" key={patient.dni} onClick={() => patientData(patient.dni)}>
                             <a className="caretaker__all__list__item__link" href={`/#/patient/${patient.dni}`}><p className="caretaker__all__list__item__link__text"><strong>{patient.name} {patient.surname}</strong>. DNI: {patient.dni}. {patient.age} years old, {patient.gender}.</p></a>
-                            <a className="caretaker__all__list__item__delete" onClick={(e) => this.unassignPatient(e, patient.dni)}>Unassign Patient</a>
+                            <a href="" onClick={(e) => this.unassignPatient(e, patient.dni)}><img className="patients__group__all__list__item__delete" src="/images/icons/remove.svg" /></a>
+                            <a href={`/#/patient/${patient.dni}`} onClick={() => patientData(patient.dni)}><img className="patients__group__all__list__item__info" src="/images/icons/info.svg" /></a>
                         </li> )}
                     </ul>
                 </div>

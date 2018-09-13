@@ -60,12 +60,13 @@ class Caretakers extends Component {
                 <div className="caretakers__group__add">
                     <button className="caretakers__group__add__button" onClick={goToAddCaretaker}>Add Caretaker</button>
                 </div>
-                <h2 className="caretakers__group__title">Caretakers</h2>
                 <div className="caretakers__group__all">
+                    <h2 className="caretakers__group__all__title">Caretakers</h2>
                     <ul className="caretakers__group__all__list">
                         {caretakers.map(caretaker => <li className="caretakers__group__all__list__item" key={caretaker.dni} onClick={() => caretakerData(caretaker.dni)}>
-                            <a className="patients__group__all__list__item__link" href={`/#/caretaker/${caretaker.dni}`}><p className="patients__group__all__list__item__link__text"><strong>{caretaker.name} {caretaker.surname}</strong>. {caretaker.dni}</p></a>
-                            <a className="caretakers__group__all__list__item__delete" href=""  onClick={(e) => removeCaretaker(e, caretaker.dni)}>Delete Caretaker</a>
+                            <a className="caretakers__group__all__list__item__link" href={`/#/caretaker/${caretaker.dni}`}><p className="caretakers__group__all__list__item__link__text"><strong>{caretaker.name} {caretaker.surname}</strong>. {caretaker.dni}</p></a>
+                            <a href="" onClick={(e) => removeCaretaker(e, caretaker.dni)}><img className="caretakers__group__all__list__item__delete" src="/images/icons/remove.svg" /></a>
+                            <a href={`/#/caretaker/${caretaker.dni}`} onClick={() => caretakerData(caretaker.dni)}><img className="caretakers__group__all__list__item__info" src="/images/icons/info.svg" /></a>
                         </li> )}
                     </ul>
                 </div>

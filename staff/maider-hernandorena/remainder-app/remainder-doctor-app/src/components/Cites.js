@@ -38,12 +38,14 @@ class Cites extends Component {
                         <input className="cites__form__input" type="date" value={date} onChange={keepDay} />
                         <button className="cites__form__button" type="submit">Choose Day</button>
                     </form>
-                    <h2 className="cites__title">Cites</h2>
-                    <ul className="cites__list">
-                        {cites.map(cite => <li className="cites__list__item" key={cite.date}>
-                            <p>{cite.name}, {new Date(cite.date).toLocaleString()}</p>
-                        </li> )}
-                    </ul>
+                    <div className="cites__all">
+                        <h2 className="cites__all__title">Cites</h2>
+                        <ul className="cites__all__list">
+                            {cites.map(cite => <li className="cites__all__list__item" key={cite.date}>
+                                <p>{cite.name}, {new Date(cite.date).toLocaleString()}</p>
+                            </li> )}
+                        </ul>
+                    </div>
                 </main>
     }
 }

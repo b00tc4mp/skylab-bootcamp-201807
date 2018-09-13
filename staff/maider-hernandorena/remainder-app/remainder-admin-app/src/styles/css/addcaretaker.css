@@ -1,5 +1,5 @@
 .add {
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Quicksand", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   font-size: 18px;
   color: #333333; }
   .add__group {
@@ -17,7 +17,7 @@
       .add__group__form__row__input {
         border: none;
         border-bottom: solid 1px #999999;
-        font-size: 18px;
+        font-size: 16px;
         color: #777777;
         height: 20px;
         margin: 20px 100px 0px 10px;
@@ -27,7 +27,7 @@
       .add__group__form__row__num {
         border: none;
         border-bottom: solid 1px #999999;
-        font-size: 18px;
+        font-size: 16px;
         color: #777777;
         height: 20px;
         margin: 20px 100px 0px 10px;
@@ -42,14 +42,14 @@
           margin: 0; }
       .add__group__form__row__rad {
         color: #555555;
-        margin-top: 18px;
+        margin-top: 16px;
         width: 28%; }
         .add__group__form__row__rad__item {
           margin: 7px 5px 0px 15px; }
       .add__group__form__row__age {
         border: none;
         border-bottom: solid 1px #999999;
-        font-size: 18px;
+        font-size: 16px;
         color: #777777;
         height: 20px;
         margin: 20px 100px 0px 10px;
@@ -76,14 +76,15 @@
       .add__group__form__row__button {
         padding: 0px 20px;
         height: 40px;
-        background-color: #2fbdbb;
+        background: linear-gradient(left, #55bf9f 0%, #2fbdbb 100%);
         color: #ffffff;
         border: none;
         border-radius: 10px;
         cursor: pointer;
-        font-size: 18px; }
+        font-size: 18px;
+        box-shadow: 0px 2px 10px 0px #cccccc; }
         .add__group__form__row__button:hover {
-          background-color: #308079; }
+          background: linear-gradient(left, #49a589 0%, #269c9a 100%); }
         .add__group__form__row__button:focus {
           outline: 0px; }
     .add__group__added {

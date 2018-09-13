@@ -1,9 +1,9 @@
 .profile {
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Quicksand", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   font-size: 18px;
   color: #333333;
   padding: 2% 0;
-  margin: 3% auto 0 auto;
+  margin: 3% auto 100px auto;
   width: 80%; }
   .profile__title {
     margin: 5% 0 3% 0; }
@@ -60,7 +60,8 @@
           width: 100%;
           margin: 30px 0;
           height: 60px;
-          background: linear-gradient(left, #55bf9f 0%, #2fbdbb 100%); }
+          background: linear-gradient(left, #55bf9f 0%, #2fbdbb 100%);
+          box-shadow: 0px 2px 10px 0px #cccccc; }
           .profile__form__button:active {
             background-color: #308079; } }
       .profile__form__button:hover {

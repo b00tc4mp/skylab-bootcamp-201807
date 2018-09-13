@@ -1,22 +1,23 @@
 .all {
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  font-size: 18px;
+  font-family: "Quicksand", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 20px;
   color: #333333;
   padding: 5% 10%;
   width: 80%; }
   .all__data {
     display: grid;
-    grid-template-columns: 40% 30% 30%; }
+    grid-template-columns: 70% 30%; }
     .all__data__forms__title {
       font-size: 18px;
-      margin-left: 17%; }
+      margin-left: 17%;
+      margin-bottom: 15%; }
     .all__data__forms__form {
       margin-top: 5%;
       margin-left: 15%; }
       .all__data__forms__form__input {
         border: none;
         border-bottom: solid 1px #999999;
-        font-size: 18px;
+        font-size: 16px;
         color: #777777;
         display: block;
         height: 20px;
@@ -27,7 +28,7 @@
       .all__data__forms__form__num {
         border: none;
         border-bottom: solid 1px #999999;
-        font-size: 18px;
+        font-size: 16px;
         color: #777777;
         display: block;
         height: 20px;
@@ -44,16 +45,17 @@
       .all__data__forms__form__button {
         padding: 0px 20px;
         height: 40px;
-        background-color: #2fbdbb;
+        background: linear-gradient(left, #55bf9f 0%, #2fbdbb 100%);
         color: #ffffff;
         border: none;
         border-radius: 10px;
         cursor: pointer;
         font-size: 18px;
-        margin: 60px 100px 0px 10px;
-        width: 200px; }
+        margin: 30px 100px 0px 10px;
+        width: 200px;
+        box-shadow: 0px 2px 10px 0px #cccccc; }
         .all__data__forms__form__button:hover {
-          background-color: #308079; }
+          background: linear-gradient(left, #49a589 0%, #269c9a 100%); }
         .all__data__forms__form__button:focus {
           outline: 0px; }
     .all__data__forms__error {

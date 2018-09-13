@@ -158,7 +158,7 @@ class PatientData extends Component {
                     <ul className="all__list__each__list">
                         {cites.map(cite => <li className="all__list__each__list__item" key={cite.name}>
                             <p>{cite.name}, {new Date(cite.date).toLocaleString()}. 
-                                 <a className="all__list__each__list__item__link" href={`/#/patient/${dni}`} onClick={() => this.removeCite(cite.name, cite.date)}>Delete</a>
+                                <a href={`/#/patient/${dni}`} onClick={() => this.removeCite(cite.name, cite.date)}><img className="all__list__each__list__item__delete" src="/images/icons/remove.svg" /></a>
                             </p>
                         </li> )}
                     </ul>
@@ -168,7 +168,7 @@ class PatientData extends Component {
                     <ul className="all__list__each__list">
                         {treatments.map(treatment => <li className="all__list__each__list__item" key={treatment.pill}>
                             <p>{treatment.pill}, {treatment.quantity}, {treatment.frequency}.
-                                <a className="all__list__each__list__item__link" href={`/#/patient/${dni}`} onClick={() => this.removeTreatment(treatment.pill)}>Delete</a>
+                                <a href={`/#/patient/${dni}`} onClick={() => this.removeTreatment(treatment.pill)}><img className="all__list__each__list__item__delete" src="/images/icons/remove.svg" /></a>
                             </p>
                         </li> )}
                     </ul>

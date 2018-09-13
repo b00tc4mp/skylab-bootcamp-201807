@@ -55,7 +55,7 @@ class Doctors extends Component {
 
         return <main className="doctors">
             <div className="doctors__add">
-                <h3 className="doctors__add__title">Add Doctor</h3>
+                <h3 className="doctors__add__title">Register a new Doctor</h3>
                 <form className="doctors__add__form" onSubmit={addDoctor}>
                     <input className="doctors__add__form__input" type="text" name={code} value={code} placeholder="doctor code" onChange={keepCode} />
                     <input className="doctors__add__form__input" type="password" name={password} value={password} placeholder="doctor password" onChange={keepPassword} />
@@ -64,12 +64,12 @@ class Doctors extends Component {
                 {error && <p className="doctors__add__error">{error}</p>}
             </div>
             <div className="doctors__group">
-                <h2 className="doctors__group__title">Doctors</h2>
                 <div className="doctors__group__all">
+                    <h2 className="doctors__group__all__title">Doctors</h2>
                     <ul className="doctors__group__all__list">
                         {doctors.map(doctor => <li className="doctors__group__all__list__item" key={doctor.code} >
-                            <p className="patients__group__all__list__item__text"><strong>{doctor.code}</strong></p>
-                            <a className="patients__group__all__list__item__delete" href="" onClick={(e) => removeDoctor(e, doctor.code)}>Delete Doctor</a>
+                            <p className="doctors__group__all__list__item__text"><strong>{doctor.code}</strong></p>
+                            <a href="" onClick={(e) => removeDoctor(e, doctor.code)}><img className="doctors__group__all__list__item__delete" src="/images/icons/remove.svg" /></a>
                         </li> )}
                     </ul>
                 </div>

@@ -18,7 +18,7 @@ class PatientData extends Component {
         date: new Date()
     }
 
-    componentWillMount() {
+    componentDidMount() {
         this.patientData()
     }
 
