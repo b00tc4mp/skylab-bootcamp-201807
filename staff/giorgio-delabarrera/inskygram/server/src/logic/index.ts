@@ -698,7 +698,7 @@ const logic = {
               .populate({ path: "comments.user", select: "username" })
               .populate({ path: "likes.user", select: "username" })
               .sort({ createdAt: -1 })
-              .skip(page)
+              .skip(page * perPage)
               .limit(perPage)
               ;
           });
@@ -852,7 +852,7 @@ const logic = {
           .populate({ path: "comments.user", select: "username" })
           .populate({ path: "likes.user", select: "username" })
           .sort({ createdAt: -1 })
-          .skip(page)
+          .skip(page * perPage)
           .limit(perPage);
       })
       .then((posts: PostModelInterface[]) => posts);

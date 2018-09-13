@@ -4,12 +4,14 @@ import logic from '../logic'
 import Header from '../components/Header';
 import Avatar from '../components/Avatar/Avatar';
 import ColumnPost from '../components/ColumnPost';
+import InfiniteScroll from 'react-infinite-scroller';
 
 class WallPage extends Component {
 
   state = {
     user: null,
     posts: [],
+    loadMore: true
   }
 
   componentDidMount() {
@@ -86,6 +88,23 @@ class WallPage extends Component {
 
   onRegisterClick = () => this.props.history.push('/accounts/register')
 
+  handleLoadMore = page => {
+    if (this.state.loadMore) {
+      const { loggedInUsername, token } = this.props
+
+      logic.listUserWall(token, loggedInUsername, page)
+        .then(newPosts => {
+          if (newPosts.length === 0) {
+            this.setState({ loadMore: false })
+          } else {
+            const posts = [...this.state.posts, ...newPosts]
+            this.setState({ posts })
+          }
+        })
+        .catch(err => false)
+    }
+  }
+
   render() {
     return (
       <div>
@@ -107,18 +126,25 @@ class WallPage extends Component {
             <section>
               {
                 this.state.posts.length > 0 ?
-                  this.state.posts.map(post => (
-                    <ColumnPost
-                      key={post._id}
-                      post={post}
-                      onPostDetailClick={this.onPostDetailClick}
-                      onUserClick={this.onUserClick}
-                      onToggleLikeClick={this.onToggleLikeClick}
-                      onToggleSaveClick={this.onToggleSaveClick}
-                      onAddCommentSubmit={this.onAddCommentSubmit}
-                      isLiked={this.isLiked(post.likes)}
-                      isSaved={this.isSaved(post, this.state.user.savedPosts)}
-                    />)) :
+                  <InfiniteScroll
+                    pageStart={0}
+                    loadMore={this.handleLoadMore}
+                    hasMore={this.state.loadMore}
+                    loader={<div className="loader" key={0}>Loading ...</div>}
+                  >
+                    {this.state.posts.map(post => (
+                      <ColumnPost
+                        key={post._id}
+                        post={post}
+                        onPostDetailClick={this.onPostDetailClick}
+                        onUserClick={this.onUserClick}
+                        onToggleLikeClick={this.onToggleLikeClick}
+                        onToggleSaveClick={this.onToggleSaveClick}
+                        onAddCommentSubmit={this.onAddCommentSubmit}
+                        isLiked={this.isLiked(post.likes)}
+                        isSaved={this.isSaved(post, this.state.user.savedPosts)}
+                      />))}
+                  </InfiniteScroll> :
                   (<div>This is very empty <span role="img" aria-label="sad">😔</span>.
                     Upload a photo or follow friends to be able to do what they do
                     <span role="img" aria-label="wink"> 😉</span>

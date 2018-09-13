@@ -3,12 +3,14 @@ import { withRouter } from 'react-router-dom'
 import logic from '../logic'
 import Header from '../components/Header';
 import GridPostList from '../components/GridPostList';
+import InfiniteScroll from 'react-infinite-scroller';
 
 class ExplorePage extends Component {
 
   state = {
     user: null,
     posts: [],
+    loadMore: true
   }
 
   componentDidMount() {
@@ -21,7 +23,6 @@ class ExplorePage extends Component {
         const posts = [...this.state.posts, ...newPosts]
         this.setState({ posts })
       })
-      // TODO
       .catch(err => false)
   }
 
@@ -30,6 +31,23 @@ class ExplorePage extends Component {
   onLoginClick = () => this.props.history.push('/accounts/login')
 
   onRegisterClick = () => this.props.history.push('/accounts/register')
+
+  handleLoadMore = page => {
+    if (this.state.loadMore) {
+      const { loggedInUsername, token } = this.props
+
+      logic.listExplorePosts(token, loggedInUsername, page)
+        .then(newPosts => {
+          if (newPosts.length === 0) {
+            this.setState({ loadMore: false })
+          } else {
+            const posts = [...this.state.posts, ...newPosts]
+            this.setState({ posts })
+          }
+        })
+        .catch(err => false)
+    }
+  }
 
   render() {
     return (
@@ -50,11 +68,20 @@ class ExplorePage extends Component {
         <div className="main-wrapper">
           <main>
             <h5 className="has-text-gray">Explore</h5>
-            {<GridPostList
-              posts={this.state.posts}
-              onPostDetailClick={this.props.onPostDetailClick}
-              onUserClick={this.onUserClick}
-            />}
+            {
+              <InfiniteScroll
+                pageStart={0}
+                loadMore={this.handleLoadMore}
+                hasMore={this.state.loadMore}
+                loader={<div className="loader" key={0}>Loading ...</div>}
+              >
+                <GridPostList
+                  posts={this.state.posts}
+                  onPostDetailClick={this.props.onPostDetailClick}
+                  onUserClick={this.onUserClick}
+                />
+              </InfiniteScroll>
+            }
           </main>
         </div>
       </div>

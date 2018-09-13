@@ -106,7 +106,7 @@ router.get("/me/followings", validateJwt, (req: Request, res: Response) => {
 router.get("/me/posts", validateJwt, (req: Request, res: Response) => {
   const username = req.user;
 
-  logic.listUserPosts(username)
+  logic.listUserPosts(username, undefined)
     .then((posts: PostModelInterface[]) => res.json(posts))
     .catch((err: Error) => {
       const { message } = err;
@@ -119,7 +119,7 @@ router.get("/me/posts", validateJwt, (req: Request, res: Response) => {
 router.get("/me/saved", validateJwt, (req: Request, res: Response) => {
   const username = req.user;
 
-  logic.listUserSavedPosts(username)
+  logic.listUserSavedPosts(username, undefined)
     .then((savedPosts: PostModelInterface[]) => res.json(savedPosts))
     .catch((err: Error) => {
       const { message } = err;

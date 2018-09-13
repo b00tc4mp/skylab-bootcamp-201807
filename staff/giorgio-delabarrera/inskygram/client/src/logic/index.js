@@ -275,7 +275,7 @@ const logic = {
       .catch(() => [])
   },
 
-  listUserWall(token, username, perPage = 10, page = 0) {
+  listUserWall(token, username, page = 0, perPage = 10) {
     return Promise.resolve()
       .then(() => {
         this._validateStringField('token', token)
@@ -333,7 +333,7 @@ const logic = {
       })
   },
 
-  listExplorePosts(token, username, perPage = 10, page = 0) {
+  listExplorePosts(token, username, page = 0, perPage = 10) {
     return Promise.resolve()
       .then(() => {
         this._validateStringField('token', token)

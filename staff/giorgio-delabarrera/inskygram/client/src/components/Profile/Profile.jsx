@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import './Profile.sass'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 // TODO: define env variables
 const DEFAULT_AVATAR = 'https://goo.gl/F65XTo'
@@ -12,6 +13,12 @@ class Profile extends Component {
     this.props.onEditProfileClick()
   }
 
+  handleLogoutClick = event => {
+    event.preventDefault()
+
+    this.props.onLogoutClick()
+  }
+
   handleToggleFollowClick = event => {
     event.preventDefault()
 
@@ -21,12 +28,21 @@ class Profile extends Component {
   _renderProfileActions = () => {
     if (this.props.isEdit) {
       return (
-        <button
-          className="Profile-button button"
-          onClick={this.handleEditClick}
-        >
-          Edit profile
-        </button>
+        <div>
+          <button
+            className="Profile-button button"
+            onClick={this.handleEditClick}
+          >
+            Edit profile
+          </button>
+          <button
+            className="Profile-buttonLogout button"
+            onClick={this.handleLogoutClick}
+            title="Logout"
+          >
+            <FontAwesomeIcon icon={['fas', 'sign-out-alt']} />
+          </button>
+        </div>
       )
     } else {
       if (this.props.isFollowing) {
