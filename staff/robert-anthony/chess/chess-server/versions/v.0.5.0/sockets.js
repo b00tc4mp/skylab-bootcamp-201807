@@ -18,13 +18,13 @@ const socketLogic = {
     logger.debug(`announceMoveMade,  CONTEXT: "sockets.js"", MOVER:${mover}, RECEIVER:${receiver}`)
 
    // this.io.emit(`update to games ${mover}`)
-    this.io.emit(`update to games ${receiver}`,mover,"made a move")
+    this.io.emit(`update to games ${receiver}`,mover)
   },
 
   requestConnection(destination) {
     logger.debug(`requestConnection,  CONTEXT: "sockets.js"", DESTINATION:${destination}`)
 
-    this.io.emit(`update to games ${destination}`,destination, "requested game")
+    this.io.emit(`update to games ${destination}`)
   },
 
  /* requestHasBeenRespondedTo(destination) {
