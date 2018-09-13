@@ -32,12 +32,15 @@ The front end of the application was built using **React**, **React Router** and
 ### Sequence diagram
 
 - Upload and save a video
+
 ![save-video](docs/save-video.png)
 
 - Create a dataset
+
 ![create-dataset](docs/create-dataset.png)
 
 - Create a result
+
 ![create-result](docs/create-result.png)
 
 ### Class diagram
