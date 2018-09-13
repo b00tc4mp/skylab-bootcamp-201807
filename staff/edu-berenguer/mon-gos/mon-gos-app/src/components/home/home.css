@@ -44,7 +44,7 @@
   }
 
   .navbar.is-fixed-bottom, .navbar.is-fixed-top {
-  margin-top: -5px;
+  margin-top: -0.1px;
   left: 0;
   position: fixed;
   right: 0;
