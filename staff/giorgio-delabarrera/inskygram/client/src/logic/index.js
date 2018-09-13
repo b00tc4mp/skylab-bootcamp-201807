@@ -4,6 +4,12 @@ const logic = {
   // url: 'http://localhost:8080/api',
   url: 'https://fierce-stream-12141.herokuapp.com/api',
 
+  /**
+   * Converts a parameter object to a string with uri format
+   *
+   * @param {object} parameters
+   * @returns
+   */
   _buildUri(parameters) {
     let uri = ''
 
@@ -19,6 +25,16 @@ const logic = {
     return uri;
   },
 
+  /**
+   * Http client to make requests
+   *
+   * @param {string} path
+   * @param {string} method
+   * @param {object|undefined} headers
+   * @param {object|undefined} body
+   * @param {number} expectedStatus
+   * @returns {Promise<object>}
+   */
   _httpClient(path, method, headers, body, expectedStatus) {
     const config = { method }
 
@@ -37,14 +53,34 @@ const logic = {
       })
   },
 
+  /**
+   * Validate that a value has a string format
+   *
+   * @param {string} fieldName
+   * @param {string} fieldValue
+   */
   _validateStringField(fieldName, fieldValue) {
     if (typeof fieldValue !== 'string' || !fieldValue.length) throw new Error(`invalid ${fieldName}`)
   },
 
+  /**
+   * Validate that a value has a boolean format
+   *
+   * @param {string} fieldName
+   * @param {string} fieldValue
+   */
   _validateBooleanField(fieldName, fieldValue) {
     if (typeof fieldValue !== 'boolean') throw new Error(`invalid ${fieldName}`)
   },
 
+  /**
+   * Register a user
+   *
+   * @param {string} username
+   * @param {string} email
+   * @param {string} password
+   * @returns {Promise<boolean>}
+   */
   register(username, email, password) {
     return Promise.resolve()
       .then(() => {
@@ -59,6 +95,13 @@ const logic = {
       })
   },
 
+  /**
+   * Authenticate a user
+   *
+   * @param {string} username
+   * @param {string} password
+   * @returns {Promise<string>}
+   */
   authenticate(username, password) {
     return Promise.resolve()
       .then(() => {
@@ -73,6 +116,14 @@ const logic = {
       })
   },
 
+  /**
+   * Register a user
+   *
+   * @param {string} [username='']
+   * @param {string} [targetUsername='']
+   * @param {string} [token='']
+   * @returns {Promise<object>}
+   */
   retrieveUser(username = '', targetUsername = '', token = '') {
     return Promise.resolve()
       .then(() => {
@@ -102,6 +153,20 @@ const logic = {
       })
   },
 
+  /**
+   * Update a user
+   *
+   * @param {string} username
+   * @param {string} newEmail
+   * @param {string} name
+   * @param {string} website
+   * @param {string} phoneNumber
+   * @param {string} gender
+   * @param {string} biography
+   * @param {boolean} privateAccount
+   * @param {string} token
+   * @returns {Promise<boolean>}
+   */
   updateUser(username, newEmail, name, website, phoneNumber, gender, biography, privateAccount, token) {
     return Promise.resolve()
       .then(() => {
@@ -130,6 +195,15 @@ const logic = {
       })
   },
 
+  /**
+   * Update the user's password
+   *
+   * @param {string} username
+   * @param {string} password
+   * @param {string} newPassword
+   * @param {string} token
+   * @returns {Promise<boolean>}
+   */
   updateUserPassword(username, password, newPassword, token) {
     return Promise.resolve()
       .then(() => {
@@ -147,6 +221,14 @@ const logic = {
       })
   },
 
+  /**
+   * Update the user's avatar
+   *
+   * @param {string} username
+   * @param {File} file
+   * @param {string} token
+   * @returns {Promise<boolean>}
+   */
   updateUserAvatar(username, file, token) {
     return Promise.resolve()
       .then(() => {
@@ -163,6 +245,14 @@ const logic = {
       })
   },
 
+  /**
+   * Actuate that a user follows or stops following the target user
+   *
+   * @param {string} token
+   * @param {string} username
+   * @param {string} targetUsername
+   * @returns {Promise<boolean>}
+   */
   toggleFollowUser(token, username, targetUsername) {
     return Promise.resolve()
       .then(() => {
@@ -179,6 +269,15 @@ const logic = {
       })
   },
 
+  /**
+   * Create a post
+   *
+   * @param {string} username
+   * @param {File} file
+   * @param {string} [caption='']
+   * @param {string} token
+   * @returns {Promise<boolean>}
+   */
   createPost(username, file, caption = '', token) {
     return Promise.resolve()
       .then(() => {
@@ -197,6 +296,14 @@ const logic = {
       })
   },
 
+  /**
+   * Retrieve a post
+   *
+   * @param {string} postId
+   * @param {string} [username='']
+   * @param {string} [token='']
+   * @returns {Promise<object>}
+   */
   retrievePost(postId, username = '', token = '') {
     return Promise.resolve()
       .then(() => {
@@ -216,6 +323,14 @@ const logic = {
       .then(res => res.json())
   },
 
+  /**
+   * Returns the list of posts of the user
+   *
+   * @param {string} [username='']
+   * @param {string} [targetUsername='']
+   * @param {string} [token='']
+   * @returns {Promise<Array>}
+   */
   listUserPosts(username = '', targetUsername = '', token = '') {
     return Promise.resolve()
       .then(() => {
@@ -246,6 +361,14 @@ const logic = {
       .catch(() => [])
   },
 
+  /**
+   * Returns the list of saved posts of the user
+   *
+   * @param {string} [username='']
+   * @param {string} [targetUsername='']
+   * @param {string} [token='']
+   * @returns {Promise<Array>}
+   */
   listUserSavedPosts(username = '', targetUsername = '', token = '') {
     return Promise.resolve()
       .then(() => {
@@ -276,6 +399,15 @@ const logic = {
       .catch(() => [])
   },
 
+  /**
+   * Returns the list of posts of the user's wall
+   *
+   * @param {string} token
+   * @param {string} username
+   * @param {number} [page=0]
+   * @param {number} [perPage=10]
+   * @returns {Promise<Array>}
+   */
   listUserWall(token, username, page = 0, perPage = 10) {
     return Promise.resolve()
       .then(() => {
@@ -289,6 +421,15 @@ const logic = {
       })
   },
 
+  /**
+   * Add comment to a post
+   *
+   * @param {*} token
+   * @param {*} username
+   * @param {*} postId
+   * @param {*} description
+   * @returns
+   */
   addCommentToPost(token, username, postId, description) {
     return Promise.resolve()
       .then(() => {
@@ -306,6 +447,14 @@ const logic = {
       })
   },
 
+  /**
+   * Actuate that a user likes a post
+   *
+   * @param {string} token
+   * @param {string} username
+   * @param {string} postId
+   * @returns {Promise<boolean>}
+   */
   toggleLikePost(token, username, postId) {
     return Promise.resolve()
       .then(() => {
@@ -320,6 +469,14 @@ const logic = {
       })
   },
 
+  /**
+   * Actuate that a user saves a post in his list of saved posts
+   *
+   * @param {string} token
+   * @param {string} username
+   * @param {string} postId
+   * @returns {Promise<boolean>}
+   */
   toggleSavePost(token, username, postId) {
     return Promise.resolve()
       .then(() => {
@@ -334,6 +491,15 @@ const logic = {
       })
   },
 
+  /**
+   * Returns the list of all posts of users with public profile
+   *
+   * @param {string} token
+   * @param {string} username
+   * @param {number} [page=0]
+   * @param {number} [perPage=10]
+   * @returns {Promise<Array>}
+   */
   listExplorePosts(token, username, page = 0, perPage = 10) {
     return Promise.resolve()
       .then(() => {
@@ -347,6 +513,12 @@ const logic = {
       })
   },
 
+  /**
+   * Search for users
+   *
+   * @param {string} query
+   * @returns {Promise<Array>}
+   */
   search(query) {
     return Promise.resolve()
       .then(() => {
@@ -359,6 +531,12 @@ const logic = {
       })
   },
 
+  /**
+   * Returns the statistics of a user
+   *
+   * @param {string} username
+   * @returns {Promise<object>}
+   */
   retrieveUserStats(username) {
     return Promise.resolve()
       .then(() => {
