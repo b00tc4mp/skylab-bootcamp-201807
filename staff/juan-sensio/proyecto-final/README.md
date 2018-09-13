@@ -54,11 +54,11 @@ npm run test-logic
 
 ### API
 
-[README.md](link)
+[README.md](api/README.md)
 
 ### APP
 
-[README.md](link)
+[README.md](app/README.md)
 
 ## Public URL
 
