@@ -733,9 +733,7 @@ describe("logic", () => {
           menus: menu
         }));
       it("should list all user menus", () => {
-        debugger;
         return logic.listMenus(email).then(menus => {
-          debugger;
           expect(menus.length).to.equal(1);
           expect(menus[0].title).to.equal("Monday");
         });
@@ -956,7 +954,6 @@ describe("logic", () => {
           })
           .then(user => {
             return logic.searchRecipeById(email, menuId).then(recipesData => {
-              debugger;
               expect(recipesData).to.exist;
               expect(recipesData.length).to.equal(2);
             });

@@ -110,14 +110,16 @@ export default class OneMenu extends React.Component {
           )
           .then(() => {
             if (titleDish == "Breakfast") {
+              debugger;
               let prevIds = this.state.breakfastId;
               prevIds.splice(prevIds.indexOf(recipeId), 1);
-
+              debugger;
               this.setState(
                 {
                   breakfastId: prevIds
                 },
                 () => {
+                  debugger;
                   this.listBrekfastRecipeById();
                 }
               );
@@ -179,6 +181,7 @@ export default class OneMenu extends React.Component {
     const breakfast = this.state.breakfastId;
 
     if (breakfast) {
+      debugger;
       const breakfastPromises = breakfast.map(recipeId =>
         logic.basicSearchRecipeById(recipeId).then(recipe => {
           return {

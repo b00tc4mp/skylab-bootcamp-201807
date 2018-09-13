@@ -141,7 +141,6 @@ const logic = {
         return User.findOne({ email });
       })
       .then(user => {
-        debugger;
         if (!user)
           throw new LogicError(`user with ${email} email does not exist`);
 
@@ -245,7 +244,7 @@ const logic = {
 
         const dishes = user.menus.find(menu => menu._id.toString() === menuId)
           .dishes;
-        const pos = dishes.findIndex(dish => dish._id.toString() === id);
+        const pos = dishes.findIndex(dish => dish.recipeId === id);
 
         dishes.splice(pos, 1);
 
