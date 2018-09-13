@@ -132,7 +132,7 @@ router.post('/user/:nickname/gamerequest', [validateJwt, jsonBodyParser], (req, 
 
   logic.requestNewGame(nickname, opponent)
     .then(_ => {
-        sockets.requestConnection(opponent)
+        sockets.requestConnection(opponent,nickname)
         res.json({message: 'game requested'})
       }
     )
