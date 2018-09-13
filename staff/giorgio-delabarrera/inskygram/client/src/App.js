@@ -209,18 +209,20 @@ class App extends Component {
             />
           )} />
           <Route path="/:username/saved" render={props => (
-            <SavedPage
-              username={props.match.params.username}
-              loggedInUsername={loggedInUsername}
-              token={token}
-              onHomeClick={this.onHomeClick}
-              onExploreClick={this.onExploreClick}
-              onNewPostClick={this.onNewPostClick}
-              onProfileClick={this.onProfileClick}
-              onPostDetailClick={this.onPostDetailClick}
-              onSearch={this.onSearch}
-              onSearchResultClick={this.onSearchResultClick}
-            />
+            !this.isLoggedIn() || (this.isLoggedIn() && (props.match.params.username !== loggedInUsername)) ?
+              <Redirect to="/accounts/login" /> :
+              <SavedPage
+                username={props.match.params.username}
+                loggedInUsername={loggedInUsername}
+                token={token}
+                onHomeClick={this.onHomeClick}
+                onExploreClick={this.onExploreClick}
+                onNewPostClick={this.onNewPostClick}
+                onProfileClick={this.onProfileClick}
+                onPostDetailClick={this.onPostDetailClick}
+                onSearch={this.onSearch}
+                onSearchResultClick={this.onSearchResultClick}
+              />
           )} />
           <Route path="/:username" render={props => (
             <ProfilePage

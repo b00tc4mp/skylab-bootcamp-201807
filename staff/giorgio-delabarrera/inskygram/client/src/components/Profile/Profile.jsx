@@ -68,7 +68,7 @@ class Profile extends Component {
   }
 
   render() {
-    const { user } = this.props
+    const { user, stats } = this.props
     return (
       <section className="Profile">
         <div className="Profile-avatarWrapper">
@@ -87,13 +87,13 @@ class Profile extends Component {
           </div>
           <div className="Profile-counters">
             <div className="Profile-counter">
-              <strong>?</strong> posts
+              <strong>{stats.posts}</strong> posts
             </div>
             <div className="Profile-counter">
-              <strong>{user.followers.length}</strong> followers
+              <strong>{stats.followers}</strong> followers
             </div>
             <div className="Profile-counter">
-              <strong>{user.followings.length}</strong> followings
+              <strong>{stats.followings}</strong> followings
             </div>
           </div>
           <h2 className="Profile-name">{user.name}</h2>

@@ -356,7 +356,17 @@ const logic = {
         return this._httpClient(`search?${uri}`, 'GET', undefined, undefined, 200)
           .then(res => res.json())
       })
-  }
+  },
+
+  retrieveUserStats(username) {
+    return Promise.resolve()
+      .then(() => {
+        this._validateStringField('username', username)
+
+        return this._httpClient(`users/${username}/stats`, 'GET', undefined, undefined, 200)
+          .then(res => res.json())
+      })
+  },
 
 }
 

@@ -9,6 +9,7 @@ class ProfilePage extends Component {
 
   state = {
     user: null,
+    stats: null,
     posts: []
   }
 
@@ -24,6 +25,7 @@ class ProfilePage extends Component {
     const { username, loggedInUsername, token } = props
 
     let user
+    let stats
     let posts = []
 
     try {
@@ -42,9 +44,11 @@ class ProfilePage extends Component {
         user = await logic.retrieveUser(undefined, targetUsername)
         posts = await logic.listUserPosts(undefined, targetUsername)
       }
+
+      stats = await logic.retrieveUserStats(username)
     } catch (err) { }
 
-    if (user) this.setState({ user }, () => this.setState({ posts }))
+    if (user) this.setState({ user }, () => this.setState({ posts, stats }))
   }
 
   onEditProfileClick = () => this.props.history.push(`/accounts/edit`)
@@ -60,8 +64,10 @@ class ProfilePage extends Component {
       await logic.toggleFollowUser(token, loggedInUsername, targetUsername)
 
       const user = await logic.retrieveUser(loggedInUsername, targetUsername, token)
+      const posts = await logic.listUserPosts(loggedInUsername, targetUsername, token)
+      const stats = await logic.retrieveUserStats(username)
 
-      this.setState({ user })
+      this.setState({ user, posts, stats })
 
     } catch ({ message }) {
       if (message === 'invalid token') this.redirectToLogin()
@@ -140,11 +146,13 @@ class ProfilePage extends Component {
                 <i className="fas fa-th"></i> Posts
               </span>
             </li>
-            <li className="Tabs-item">
-              <a href="#/" className="Tabs-itemLink" onClick={this.handleSavedPostsClick}>
-                <i className="far fa-bookmark"></i> Saved
+            {this.isEdit() &&
+              <li className="Tabs-item">
+                <a href="#/" className="Tabs-itemLink" onClick={this.handleSavedPostsClick}>
+                  <i className="far fa-bookmark"></i> Saved
               </a>
-            </li>
+              </li>
+            }
           </ul>
         </div>
         <div className="is-one-thirds grid-gap-30">
@@ -183,10 +191,10 @@ class ProfilePage extends Component {
         <div className="main-wrapper">
           <main>
             {
-              this.state.user && (
+              this.state.user && this.state.stats && (
                 <Profile
                   user={this.state.user}
-                  numPosts="?"
+                  stats={this.state.stats}
                   isEdit={this.isEdit()}
                   isFollowing={this.isFollowing()}
                   onEditProfileClick={this.onEditProfileClick}

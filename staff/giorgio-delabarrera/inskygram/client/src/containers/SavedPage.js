@@ -9,6 +9,7 @@ class SavedPage extends Component {
 
   state = {
     user: null,
+    stats: null,
     posts: []
   }
 
@@ -17,7 +18,6 @@ class SavedPage extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    // if (nextProps.username !== this.props.username) this.loadProfile(nextProps)
     this.loadProfile(nextProps)
   }
 
@@ -25,6 +25,7 @@ class SavedPage extends Component {
     const { username, loggedInUsername, token } = props
 
     let user
+    let stats
     let posts = []
 
     try {
@@ -43,9 +44,11 @@ class SavedPage extends Component {
         user = await logic.retrieveUser(undefined, targetUsername)
         posts = await logic.listUserSavedPosts(undefined, targetUsername)
       }
+
+      stats = await logic.retrieveUserStats(username)
     } catch (err) { }
 
-    if (user) this.setState({ user }, () => this.setState({ posts }))
+    if (user) this.setState({ user }, () => this.setState({ posts, stats }))
   }
 
   onEditProfileClick = () => {
@@ -154,7 +157,7 @@ class SavedPage extends Component {
             </li>
           </ul>
         </div>
-        {/* <div className="saved-info has-text-gray">Only you can see what you've saved</div> */}
+        <div className="saved-info has-text-gray">Only you can see what you've saved</div>
         <div className="is-one-thirds grid-gap-30">
           {this.state.posts && this.state.posts.map(post => (
             <GridPost
@@ -191,10 +194,10 @@ class SavedPage extends Component {
         <div className="main-wrapper">
           <main>
             {
-              this.state.user && (
+              this.state.user && this.state.stats && (
                 <Profile
                   user={this.state.user}
-                  numPosts="?"
+                  stats={this.state.stats}
                   isEdit={this.isEdit()}
                   isFollowing={this.isFollowing()}
                   onEditProfileClick={this.onEditProfileClick}
