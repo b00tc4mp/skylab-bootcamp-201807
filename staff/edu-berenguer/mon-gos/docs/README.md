@@ -1,15 +1,16 @@
 ## MON-GOS
 ![Data model](./images/skylab.png)
 
-## Introduction
-
-It is an application where the protectors can show users the dogs that are available for adoption
-
 ## Functional description
-![slider](./images/logos-side.png)
+This application allows shelters to add pictures, description, dog details(gender,age,weight,status) and modify all this information.
+
+Users will be able to see the dogs, filter them and contact the shelter for adoption information.
 
 ## Use case diagram    
 ![Case Use](./images/case-use.png)
+
+## Technical description
+![slider](./images/logos-side.png)
 
 ## Screenshots
 ![Case Use](./images/captura1.png)
