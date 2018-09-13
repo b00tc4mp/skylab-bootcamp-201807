@@ -12,21 +12,9 @@ import NavBar from "./components/NavBar"
 import Invite from "./components/Invite"
 import {UncontrolledAlert} from 'reactstrap'
 
-import NotificationSystem  from 'react-notification-system';
-
 class App extends Component {
 
   socket = null
-
-  _notificationSystem = null
-
-  onAddNotification = message => {
-    this._notificationSystem.addNotification({
-      message,
-      level: 'info'
-    });
-  }
-
 
   needToUpdateGamesFlagFromSocketIO = false
 
@@ -69,7 +57,6 @@ class App extends Component {
     const {state: {nickname, token}} = this
     this.clearError()
     if (this.isLoggedIn()) this.getCurrentGamesForUser(nickname, token)
-    this._notificationSystem = this.refs.notificationSystem;
   }
 
   getCurrentGamesForUser = (nickname, token) => {
@@ -123,12 +110,10 @@ class App extends Component {
 
       this.socket.on(`error ${nickname}`, message => console.error(message))
 
-      this.socket.on(`update to games ${nickname}`, (user,type) => {
-        log.debug(`%c APP.JS: update to games: NICKNAME: ${nickname},  USER: ${user},  TYPE: ${type},  THIS.STATE.NICKNAME: ${this.state.nickname}`,'background: #222; color: #bada55')
+      this.socket.on(`update to games ${nickname}`, (message) => {
+        log.debug(`%c APP.JS: update to games: NICKNAME: ${nickname},  MESSAGE: ${message},  THIS.STATE.NICKNAME: ${this.state.nickname}`,'background: #222; color: #bada55')
         this.needToUpdateGamesFlagFromSocketIO = true
         this.getCurrentGamesForUser(nickname, token)
-        if (type === 'made a move') this.onAddNotification(`${user} made a move`)
-        else if (type === 'requested game') this.onAddNotification(`${user} requested a game`)
       })
 
       this.socket.on('reconnect', (attemptNumber) => {
@@ -197,8 +182,6 @@ class App extends Component {
     log.debug(`APP.JS: render: NICKNAME: ${nickname}, NEEDTOUPDATEGAMESFLAG: ${this.needToUpdateGamesFlagFromSocketIO}`)
 
     return <div className="app__main">
-      <NotificationSystem ref="notificationSystem" />
-
       <header>
         <NavBar nickname={nickname} isLoggedIn={this.isLoggedIn()} onLogout={this.onLogout}/>
       </header>

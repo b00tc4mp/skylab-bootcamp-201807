@@ -1,6 +1,6 @@
 {
   "name": "chess-client",
-  "version": "0.6.0",
+  "version": "0.5.0",
   "private": true,
   "dependencies": {
     "ajv": "^6.5.3",
@@ -16,7 +16,6 @@
     "react": "^16.4.2",
     "react-confirm-alert": "^2.0.5",
     "react-dom": "^16.4.2",
-    "react-notification-system": "^0.2.17",
     "react-notifications-component": "0.0.6",
     "react-router-dom": "^4.3.1",
     "react-scripts": "1.1.5",
