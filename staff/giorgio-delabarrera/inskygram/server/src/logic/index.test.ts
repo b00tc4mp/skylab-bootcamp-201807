@@ -1893,4 +1893,76 @@ describe("logic", () => {
     });
   });
 
+  describe("retrieve user stats", () => {
+    let user: UserModelInterface;
+    let filename: string;
+
+    let targetUser: UserModelInterface;
+    let targetUsername: string;
+    let targetEmail: string;
+    let targetPassword: string;
+    let targetFilename: string;
+
+    beforeEach(async () => {
+      user = await User.create({ username, email, password });
+
+      targetUsername = `user-${Math.random()}`;
+      targetEmail = `user-${Math.random()}@inskygram.com`;
+      targetPassword = `123${Math.random()}`;
+      targetFilename = `${targetUsername}.png`;
+
+      let buffer: Buffer;
+
+      targetUser = await User.create({ username: targetUsername, email: targetEmail, password: targetPassword });
+
+      filename = `${username}.png`;
+
+      await new Promise((resolve, reject) => {
+        return new Jimp(256, 256, 0xff0000ff, (err: any, image: any) => {
+          if (err) { return reject(err); }
+
+          image.write(`${__dirname}/test/${filename}`, resolve);
+        });
+      });
+
+      buffer = fs.readFileSync(`${__dirname}/test/${filename}`);
+
+      await logic.createPost(username, filename, buffer);
+    });
+
+    afterEach(() => rimraf.sync(`${__dirname}/test`));
+
+    test("should list the user stats correctly", () => {
+      return Promise.resolve()
+        .then(() => {
+          const following = new Following();
+          following.user = targetUser._id;
+          following.createdAt = new Date();
+
+          user.followings.push(following);
+
+          return user.save();
+        })
+        .then((user: UserModelInterface) => {
+          const follower = new Follower();
+          follower.user = user._id;
+          follower.createdAt = new Date();
+
+          targetUser.followers.push(follower);
+
+          return targetUser.save();
+        })
+        .then((targetUser: UserModelInterface) => {
+          return logic.retrieveUserStats(username)
+            .then((stats: any) => {
+              expect(stats.user).toBeDefined();
+              expect(stats.user.username).toBe(username);
+              expect(stats.followers).toBe(0);
+              expect(stats.followings).toBe(1);
+              expect(stats.posts).toBe(1);
+            });
+        });
+    });
+  });
+
 });

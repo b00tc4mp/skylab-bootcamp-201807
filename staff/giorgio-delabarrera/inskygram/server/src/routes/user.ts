@@ -100,4 +100,17 @@ router.get("/users/:username/saved", publicPrivateAccessJwt, (req: Request, res:
     });
 });
 
+router.get("/users/:username/stats", (req: Request, res: Response) => {
+  const username = req.params.username;
+
+  logic.retrieveUserStats(username)
+    .then((stats: object) => res.json(stats))
+    .catch((err: Error) => {
+      const { message } = err;
+      const status = statusError(err);
+
+      res.status(status).json({ message });
+    });
+});
+
 export default router;

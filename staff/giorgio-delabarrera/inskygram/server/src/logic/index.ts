@@ -402,7 +402,7 @@ const logic = {
                       return User.find({ "followers.user": targetUser._id }, { password: 0, __v: 0 })
                         .then((followingUsers: UserModelInterface[]) => followingUsers);
                     } else {
-                      throw new AccessDeniedError(`user ${username} in can not see the following users of user ${targetUsername}`);
+                      throw new AccessDeniedError(`user ${username} can not see the following users of user ${targetUsername}`);
                     }
                   });
               } else {
@@ -580,7 +580,7 @@ const logic = {
                         .populate({ path: "likes.user", select: "username" })
                         .sort({ createdAt: -1 });
                     } else {
-                      throw new AccessDeniedError(`user ${username} in can not see the posts of user ${targetUsername}`);
+                      throw new AccessDeniedError(`user ${username} can not see the posts of user ${targetUsername}`);
                     }
                   });
               } else {
@@ -781,7 +781,7 @@ const logic = {
 
         } else {
           return Post.update({ _id: post._id }, { $pull: { likes: { user: user._id } } })
-            .then(() => false);
+            .then(() => true);
         }
       });
   },
@@ -866,6 +866,36 @@ const logic = {
         return User.find({ username: regexp }, "-password -__v");
       })
       .then((users: UserModelInterface[]) => users);
+  },
+
+  retrieveUserStats(username: string): Promise<object> | never {
+    let user: UserModelInterface;
+    const stats: any = {};
+
+    return Promise.resolve()
+      .then(() => {
+        if (!username) { throw new LogicError("invalid username"); }
+
+        return User.findOne({ username }, "username followers followings savedPosts");
+      })
+      .then((_user: UserModelInterface) => {
+        if (!_user) { throw new NotFoundError(`user with username ${username} does not exists`); }
+
+        user = _user;
+
+        stats.user = user;
+        stats.followers = user.followers.length;
+        stats.followings = user.followings.length;
+        stats.savedPosts = user.savedPosts.length;
+
+        return Post.find({ user: user._id });
+      })
+      .then((posts: PostModelInterface[]) => {
+
+        stats.posts = posts.length;
+
+        return stats;
+      });
   },
 
 };
