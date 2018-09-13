@@ -57,7 +57,6 @@ class Search extends Component {
                             <li>Are you a shelter?</li>
                             <li><Link to={'/register'}><li class="navbar-item goShelter">Register</li></Link></li>
                             <li><Link to={'/login'}><li class="navbar-item goShelter">Login</li></Link></li>
-
                         </ul>
                     </nav>
                 </div>

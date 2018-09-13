@@ -53,7 +53,7 @@ class Home extends Component {
                 </div>
                 <div class="navbar-end">
                     <Link to='/search' class="navbar-item"><button class="button search"><i class="fas fa-search"></i></button></Link>
-                    <nav class="breadcrumb" >
+                    <nav class="breadcrumb">
                         <ul>
                             <li>Are you a shelter?</li>
                             <Link to='/register'><li class="navbar-item goShelter">Register</li></Link>
