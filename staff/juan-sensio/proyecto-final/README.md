@@ -28,7 +28,7 @@ Note that you will need to start mongo in order to allow the use of the data mod
 sudo mongod
 ```
 
-and set the env variables
+and create the **.env** file with the following variables
 
 ```bash
 PORT = 8080
