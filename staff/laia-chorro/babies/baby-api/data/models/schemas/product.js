@@ -32,6 +32,8 @@ const Product = new Schema({
     updated_at: { type: Date, default: Date.now }
 })
 
+Product.index({title: 'text', description: 'text'});
+
 // Sets the created_at parameter equal to the current time
 Product.pre('save', (next) => {
     let now = new Date()

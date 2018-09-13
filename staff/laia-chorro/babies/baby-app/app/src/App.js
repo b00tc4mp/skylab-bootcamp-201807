@@ -30,7 +30,8 @@ class App extends Component {
 		idFavs: [],
 		profilePhoto: null,
 		detailProduct: null,
-		loaded: false
+		loaded: false,
+		searchVal: ''
 	}
 
 	hideFeedback = () => this.setState({errorMsg: null, showFeedback: false})
@@ -146,7 +147,12 @@ class App extends Component {
 	}
 
 	onGoToChat = () => {
-		this.props.history.push('/my')
+		this.props.history.push('/mychats')
+	}
+
+	onSearchFilter = searchVal => {
+		this.setState({searchVal})
+		this.props.history.push('/')
 	}
 
   /*onUpdate = (password, newUsername, newPassword) => {
@@ -161,16 +167,16 @@ class App extends Component {
 
 
 	render() {
-		const { loggedIn, errorMsg, showFeedback, idFavs, profilePhoto, product, loaded } =  this.state
+		const { loggedIn, errorMsg, showFeedback, idFavs, profilePhoto, product, loaded, searchVal } =  this.state
 		const { onRegister, onLogin, onLogout, onProductUpload, hideFeedback, 
 				getIdFavs, onAddFavourite, onRemoveFavourite, onUploadProfilePhoto,
-				onProductDetail } = this
+				onProductDetail, onSearchFilter } = this
 
 		return (
 			<div className="baby-app-container">
-				<Nav loggedIn={loggedIn} profilePhoto={profilePhoto}/>
+				<Nav onSearchFilter={onSearchFilter} loggedIn={loggedIn} profilePhoto={profilePhoto}/>
 					<Switch>
-						<Route path="/" exact render={() => <Home onAddFavourite={onAddFavourite} onRemoveFavourite={onRemoveFavourite} idFavs={idFavs} getIdFavs={getIdFavs} onProductDetail={onProductDetail}/>} />
+						<Route path="/" exact render={() => <Home searchVal={searchVal} onAddFavourite={onAddFavourite} onRemoveFavourite={onRemoveFavourite} idFavs={idFavs} getIdFavs={getIdFavs} onProductDetail={onProductDetail}/>} />
 						<Route path="/login" exact render={() => <Login onLogin={onLogin} errorMsg={errorMsg} showFeedback={showFeedback} hideFeedback={hideFeedback}/>} />
 						<Route path="/register" exact render={() => <Register onRegister={onRegister} errorMsg={errorMsg} showFeedback={showFeedback} hideFeedback={hideFeedback}/>} />
 						<Route path="/(profile|mylist|mychats|favourites|reviews|prod/upload)" exact render={() => 

@@ -10,7 +10,8 @@ import logo from '../../assets/block.svg'
 class Nav extends Component {
     state = {
         loggedIn: logic.loggedIn,
-        photoUrl: null
+        photoUrl: null,
+        searchVal: ''
       }
 
     static getDerivedStateFromProps(props, state) {
@@ -33,6 +34,10 @@ class Nav extends Component {
         if (logic.loggedIn && photoUrl) 
             this.setState({ photoUrl })
     }
+
+    keepSearchVal = value => this.setState({ searchVal: value})
+
+    onRequestSearch = () => this.props.onSearchFilter(this.state.searchVal)
     
     render() {
         const { loggedIn, photoUrl } = this.state
@@ -45,8 +50,8 @@ class Nav extends Component {
                     </li>
                     <li>
                         <SearchBar
-                            onChange={() => console.log('onChange')}
-                            onRequestSearch={() => console.log('onRequestSearch')}
+                            onChange={this.keepSearchVal}
+                            onRequestSearch={this.onRequestSearch}
                             style={{
                                 margin: '0 auto',
                                 maxWidth: 800,

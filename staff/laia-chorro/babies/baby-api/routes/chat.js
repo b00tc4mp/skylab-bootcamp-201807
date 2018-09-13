@@ -57,4 +57,17 @@ chatRouter.get('/me/:user/chat', validateJwt, (req, res) => {
         })
 })
 
+
+chatRouter.get('/me/:user/prod/:prod/chat', validateJwt, (req, res) => {
+    const { params: { user, prod } } = req
+
+    chatLogic.listChatByUserAndProdId(user, prod)
+        .then(res.json.bind(res))
+        .catch(err => {
+            const { message } = err
+
+            res.status(err instanceof LogicError ? 400 : 500).json({ message })
+        })
+})
+
 module.exports = chatRouter

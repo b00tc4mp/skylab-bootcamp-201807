@@ -6,9 +6,19 @@
     height: 90vh;
 }
 
+.mychats-container ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.mychats-product-preview {
+    margin: 20px;
+}
+
 .mychats-messages-container {
     height: 90%;
-    width: 800px;
+    min-width: 500px;
     background-color: white;
     border: 1px solid #ced4da;
 }

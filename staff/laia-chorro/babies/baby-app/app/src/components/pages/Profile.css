@@ -93,6 +93,13 @@
     height: 120px;
 }
 
+.profile-photo-container .material-icons {
+    align-self: center;
+    font-size: 75px;
+}
+
+
+
 .profile-info-container input {
     max-width: 50%;
 }

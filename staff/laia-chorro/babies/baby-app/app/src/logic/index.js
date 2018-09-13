@@ -339,7 +339,79 @@ const logic = {
             }, undefined, 200)
                 .then(() => true)
         })
-    }
+    },
+
+
+
+    //// CHATS //////
+
+    addChat(product) {
+        return Promise.resolve()
+            .then(() => {
+                validate._stringField('productId', product)
+
+                const body = { product }
+
+                return this._call(`me/${this._userId}/chat`, 'POST', { 
+                    'Authorization': `bearer ${this._userToken}`,
+                    'Content-Type': 'application/json' 
+                }, JSON.stringify(body), 201)
+                    .then(res => res.json())
+            })
+    },
+
+    addMessageToChat(chatId, text) {
+        return Promise.resolve()
+            .then(() => {
+                validate._stringField('chatId', chatId)
+                validate._stringField('text message', text)
+
+                const body = { text }
+
+                return this._call(`me/${this._userId}/chat/${chatId}/message`, 'POST', { 
+                    'Authorization': `bearer ${this._userToken}`,
+                    'Content-Type': 'application/json' 
+                }, JSON.stringify(body), 201)
+                    .then(() => true)
+            })
+    },
+
+    getChatById(chatId) {
+        return Promise.resolve()
+            .then(() => {
+                validate._stringField('chatId', chatId)
+                
+                return this._call(`/me/${this._userId}/chat/${chatId}`, 'GET', {
+                    'Authorization': `bearer ${this._userToken}`,
+                    'Content-Type': 'application/json' 
+                }, undefined, 200)
+                    .then(res => res.json())
+            })
+    },
+
+    listChatsByUserId() {
+        return Promise.resolve()
+            .then(() => {
+                return this._call(`/me/${this._userId}/chat`, 'GET', { 
+                    'Authorization': `bearer ${this._userToken}`,
+                    'Content-Type': 'application/json' 
+                }, undefined, 200)
+                    .then(res => res.json())
+            })
+    },
+
+    listChatByProductAndUserId(productId) {
+        return Promise.resolve()
+            .then(() => {
+                validate._stringField('productId', productId)
+                
+                return this._call(`/me/${this._userId}/prod/${productId}/chat`, 'GET', {
+                    'Authorization': `bearer ${this._userToken}`,
+                    'Content-Type': 'application/json' 
+                }, undefined, 200)
+                    .then(res => res.json())
+            })
+    },
 
 }
 

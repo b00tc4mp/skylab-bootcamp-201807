@@ -128,8 +128,7 @@ const productLogic = {
 
             fieldNames.forEach(fieldName => {
                 if(fieldName === 'txt') {
-                    parsedFilters.title = { $text: { $search: filters.txt } }
-                    parsedFilters.description = { $text: { $search: filters.txt } }
+                    parsedFilters['$text'] = { $search: filters.txt }
                 } else if(fieldName === 'cath') {
                     parsedFilters.cathegory = filters.cath.toLowerCase()
                 } else if(fieldName === 'date') {

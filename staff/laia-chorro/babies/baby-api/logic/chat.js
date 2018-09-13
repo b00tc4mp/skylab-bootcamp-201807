@@ -25,14 +25,14 @@ const chatLogic = {
 
                 return Product.findById(productId).select('user')
             })
-            .then(productOwner => 
-                User.findById(productOwner.user)
+            .then(({user}) => 
+                User.findById(user)
                     .then(user => {
-                        if (!user) throw new LogicError(`user with id: ${productOwner} does not exist`)
-
-                        return Chat.create({ users: [userId, productOwner], product: productId })
+                        if (!user) throw new LogicError(`user with id: ${user} does not exist`)
+    
+                        return Chat.create({ users: [userId, user.id], product: productId })
                     })
-                )
+            )
             .then(chat => chat.id)
     },
 
@@ -77,6 +77,31 @@ const chatLogic = {
 
                 return chat
             }))
+    },
+
+    listChatByUserAndProdId(userId, productId) {
+        return Promise.resolve()
+            .then(() => {
+                validate._objectId('user', userId)
+                validate._objectId('product', productId)
+
+                return User.findById(userId)
+            })
+            .then(user => {
+                if (!user) throw new LogicError(`user with id: ${userId} does not exist`)
+
+                return Product.findById(productId).select('user')
+            })
+            .then(({user}) => {
+                if (!user) throw new LogicError(`user with id: ${userId} does not exist`)
+
+                return Chat.findOne({ users: userId, product: productId })
+            })
+            .then(chat => {
+                delete chat._id
+
+                return chat
+            })
     },
 
     addMessageToChat(userId, chatId, text) {
