@@ -22,7 +22,7 @@ class DetailRecipe extends Component {
     showMenu: false,
     menus: [],
     sort: 1,
-    title: ""
+    title: "Select your meal"
   };
 
   componentDidMount() {
@@ -238,7 +238,9 @@ class DetailRecipe extends Component {
                       />{" "}
                       <label htmlFor={_id} />
                       <UncontrolledDropdown size="sm">
-                        <DropdownToggle caret>Select Meal</DropdownToggle>
+                        <DropdownToggle caret>
+                          {this.state.title}
+                        </DropdownToggle>
                         <DropdownMenu>
                           <DropdownItem
                             value="Breakfast"

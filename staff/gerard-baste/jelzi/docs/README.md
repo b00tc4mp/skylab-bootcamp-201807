@@ -22,17 +22,18 @@ The user can create menus and, when the recipe has been saved, he can choose the
 
 ![](images/spotify-app_login-activity-diagram-(flow-diagram).png) -->
 
-
 <!-- ### [Views (design)](design) -->
 
 ## Technical description
 
-The application is a web application that is meant to run within a browser environment. It consists of a ReactJS frontend with Reactstrap that connects to two APIS: 
+![](images/slidesLogos.png)
+
+The application is a web application that is meant to run within a browser environment. It consists of a ReactJS frontend with Reactstrap that connects to two APIS:
 
 - a "user" API that handles user data.
 - the Edamam API for searching the recipes database
 
-User data is persistent across page reloads, as local data is stored in the user's SessionStorage.  
+User data is persistent across page reloads, as local data is stored in the user's SessionStorage.
 
 ### Blocks
 
@@ -48,7 +49,6 @@ User data is persistent across page reloads, as local data is stored in the user
 
 ![](images/rainy-saturday_search-sequence-diagram.png) -->
 
-
 <!-- ### Classes
 
 - React App/Register components
@@ -58,7 +58,6 @@ User data is persistent across page reloads, as local data is stored in the user
 - React search components
 
 ![](images/rainy-saturday_classes-search.png) -->
-
 
 <!-- ### Data model
 
