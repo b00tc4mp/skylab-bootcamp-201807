@@ -5,4 +5,4 @@ If you want to try the app on your pc:
     $ git clone https://github.com/eduberenguer/final-project-SkylabCoders.git
     $ cd mon-gos/server/api
     $ npm i
-    $ node . `
+    $ node . 

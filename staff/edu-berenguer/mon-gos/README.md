@@ -5,7 +5,7 @@ Mon-Gos is an application where dog shelters can show users dogs that are availa
 ## Link o enlaces
 [Documentation](https://github.com/eduberenguer/skylab-bootcamp-201807/tree/develop/staff/edu-berenguer/mon-gos/docs)
 
-[API](hhttps://github.com/eduberenguer/skylab-bootcamp-201807/tree/develop/staff/edu-berenguer/mon-gos/mon-gos-api)
+[API](https://github.com/eduberenguer/skylab-bootcamp-201807/tree/develop/staff/edu-berenguer/mon-gos/mon-gos-api)
 
 [APP](https://github.com/eduberenguer/skylab-bootcamp-201807/tree/develop/staff/edu-berenguer/mon-gos/mon-gos-app)
 
