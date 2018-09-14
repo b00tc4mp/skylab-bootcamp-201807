@@ -21,9 +21,9 @@ Block Components
 ![BLOCK COMPONENTS](docs/images/babyboom_blocks_component.png)
 
 
-Components
+Schemas
 
-![COMPONENTS](skybets-app/docs/images/components.png)
+![SchEMAS](docs/images/babyboom_schema.png)
 
 
 
