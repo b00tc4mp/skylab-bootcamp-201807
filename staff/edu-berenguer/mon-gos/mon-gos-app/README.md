@@ -1,3 +1,13 @@
+If you want to try the app on your pc:
+
+Now you should run the client
+
+    $ cd mon-gos/client 
+    $ npm i
+    $ npm start
+
+Go to http://localhost:3000/ to visit the app
+
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
 Below you will find some information on how to perform common tasks.<br>
