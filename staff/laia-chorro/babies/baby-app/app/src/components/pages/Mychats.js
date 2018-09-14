@@ -23,7 +23,7 @@ class Mychats extends Component {
 
     socket = null
 
-    setSocketListeners = (userId, token) => {
+    setSocketListeners = (userId) => {
         this.socket = socketIOClient(process.env.REACT_APP_SOCKET_API) // connect with server
 
         if (this.socket) {
@@ -39,6 +39,9 @@ class Mychats extends Component {
     addToMessages = data => this.setState({messages: [...this.state.messages, data]})
 
     componentDidMount() {
+        const userId = logic._userId
+
+        this.setSocketListeners(userId)
         this.isEmptyChats(this.props.productId)
     }
 
@@ -91,12 +94,16 @@ class Mychats extends Component {
 
         this.setState({messages: [...this.state.messages, data]})
 
-        this.addMessageToChat(this.state.chatId, data.text, this.state.productId)
+        this.addMessageToChat(this.state.chatId, data.text)
     }
 
-
-    addMessageToChat(chatId, text, receiver) {
-        logic.addMessageToChat(chatId, text, receiver)
+    addMessageToChat(chatId, text) {
+        logic.getChatById(chatId)
+            .then(chat => {
+                const userId = logic._userId
+                const receiver = chat.users.find(item => item !== userId)
+                return logic.addMessageToChat(chatId, text, receiver)
+            })
             .then(() => logic.getChatById(chatId))
             .then(res => this.setState({messages: res.messages}))
             .catch(({ message }) => Alert.error(message, { position: 'bottom-right', effect: 'slide', timeout: 3000 }))

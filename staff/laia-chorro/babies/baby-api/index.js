@@ -30,6 +30,10 @@ mongoose.connect(MONGO_URL, { useNewUrlParser: true })
         const io = socket(server);
 
 
+        io.on('connection', (socket) => {
+            console.log(socket)
+            console.log('usuario conectado')
+        })
         socketLogic.setIO(io)
 
         server.listen(PORT, () => console.log(`${package.name} ${package.version} up and running on port ${PORT}`))

@@ -1,5 +1,3 @@
-const { userLogic, productLogic, LogicError } = require('../logic')
-
 
 const socketLogic = {
     io: null,
@@ -12,9 +10,10 @@ const socketLogic = {
         this.io = io
 
 
-        io.on('connection', (socket) => {
+        /*io.on('connection', (socket) => {
             console.log(socket)
-        })
+            console.log('usuario conectado')
+        })*/
 
     },
 
