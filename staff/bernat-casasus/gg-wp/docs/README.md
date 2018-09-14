@@ -29,28 +29,28 @@ The application is written in Javascript and takes advantage of ES6 and ESNext J
 
 User data is persistent across page reloads, as users data is stored in the user's SessionStorage --email and token.  
 
-### Use Cases Diagram
+## Use Cases Diagram
 
 ![](images/use-cases.png)
 
-### Blocks Diagram
+## Blocks Diagram
 
 ![](images/block-diagram.png)
 
-### Components Diagram
+## Components Diagram
 
 ![](images/components-diagram.png)
 
-### Sequences Diagram
+## Sequences Diagram
 
 - search
 
 ![](images/sequences-diagram.png)
 
-### Data Model Diagram
+## Data Model Diagram
 
 ![](images/data-model.png) 
 
-### Author
+## Author
 
 Bernat Casasús Vieco - [GitHub](https://github.com/bcasasus)
