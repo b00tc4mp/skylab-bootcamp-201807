@@ -128,6 +128,7 @@ The examples described below are when the user is not following the private user
 
 [Documentation API](https://documenter.getpostman.com/view/2257838/RWaKSo98)
 
+![](./images/api-doc.png)
 
 ### Data model
 
