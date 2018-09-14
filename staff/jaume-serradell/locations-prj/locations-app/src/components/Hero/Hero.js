@@ -5,7 +5,8 @@ import { withRouter } from 'react-router-dom'
 function Hero() {
     return <div className="hero">
         <h1>SEARCH LOCATIONS</h1>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc velit metus, aliquam ut magna at, venenatis feugiat ante. Vestibulum tempus elit quam, sit amet porttitor ipsum viverra non. Aliquam a urna ac nibh mattis elementum et varius ligula. Suspendisse consectetur, augue non ornare gravida, nisl mauris rutrum ligula, vitae dictum diam leo a nibh.</p>
+        <p>On this page you will discover all our locations for the realization of photo shoots and filming.<br />
+        This service has been created to facilitate the work of our clients, producers, agencies or photographers, in order to help them to find new spaces in the city.</p>
     </div>
 }
 

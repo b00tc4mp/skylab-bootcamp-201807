@@ -14,7 +14,7 @@ class PropertyCard extends Component {
                     <p className="card-text">{description}</p>
                     <br />
                     <div className="row borders">
-                        {categories.map(elem => <div className="col-6">{elem}</div>)}
+                        {categories.map(elem => <div key={Math.random()} className="col-6">{elem}</div>)}
                     </div>
                     {(userId !== owner) ? <a onClick={() => this.props.history.push(`/property/${id}`)} className="btn btn-info text-white mt-1"><i className="fa fa-plus"></i> Information</a> : <div>
                         <a onClick={() => this.props.history.push(`/propertyinfo/${id}`)} className="btn btn-info text-white mt-1 mr-2"><i className="fa fa-plus"></i> Details</a>

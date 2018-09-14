@@ -38,15 +38,15 @@ class Register extends Component {
                     <h4>Register</h4>
                     <form onSubmit={this.onRegisterSubmitted}>
                         <div className="form-group">
-                            <label for="exampleInputEmail1">Name</label>
+                            <label htmlFor="exampleInputEmail1">Name</label>
                             <input type="name" className="form-control" placeholder="Enter name" onChange={this.onNameChanged} />
                         </div>
                         <div className="form-group">
-                            <label for="exampleInputEmail1">Email address</label>
+                            <label htmlFor="exampleInputEmail1">Email address</label>
                             <input type="email" className="form-control" placeholder="Enter email" onChange={this.onEmailChanged} />
                         </div>
                         <div className="form-group">
-                            <label for="exampleInputPassword1">Password</label>
+                            <label htmlFor="exampleInputPassword1">Password</label>
                             <input type="password" className="form-control" placeholder="Password" onChange={this.onPasswordChanged} />
                             <small className="form-text text-muted">The password must be more than 6 characters</small>
                         </div>

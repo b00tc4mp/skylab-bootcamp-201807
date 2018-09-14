@@ -99,12 +99,12 @@ class Filters extends Component {
                             <h4>By Type:</h4>
                             <div className="form-group">
                                 <select className="form-control text-muted" onChange={this.onTypeChanged} value={this.state.type}>
-                                    <option selected value="all" name="all">All types</option>
-                                    <option value="Penthouse" name="Penthouse">Penthouse</option>
+                                    <option defaultValue value="all" name="all">All types</option>
+                                    <option value="Penthouse" name="Penthouse">Penthouses</option>
                                     <option value="Houses" name="Houses">Houses</option>
                                     <option value="Events Spaces" name="Events Spaces">Events Spaces</option>
                                     <option value="Singular Spaces" name="Singular Spaces">Singular Spaces</option>
-                                    <option value="Loft" name="Loft">Loft</option>
+                                    <option value="Loft" name="Loft">Lofts</option>
                                     <option value="Flats" name="Flats">Flats</option>
                                 </select>
                             </div>
@@ -115,10 +115,6 @@ class Filters extends Component {
                                     <div className="form-check form-check-inline">
                                         <input className="form-check-input" name="Events" type="checkbox" id="Events" value="Events" onChange={this.onCheckboxChanged} />
                                         <label className="form-check-label" htmlFor="Events">Events</label>
-                                    </div>
-                                    <div className="form-check form-check-inline">
-                                        <input className="form-check-input" name="Films" type="checkbox" id="Films" value="Films" onChange={this.onCheckboxChanged} />
-                                        <label className="form-check-label" htmlFor="Films">Films</label>
                                     </div>
                                     <div className="form-check form-check-inline">
                                         <input className="form-check-input" name="Shootings" type="checkbox" id="Shootings" value="Shootings" onChange={this.onCheckboxChanged} />

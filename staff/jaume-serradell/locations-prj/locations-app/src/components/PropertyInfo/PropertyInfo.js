@@ -43,7 +43,7 @@ class PropertyInfo extends Component {
                 <h4><i className="fa fa-star-o"></i> Space Features</h4>
                 <div className="infoBox bottom">
                     <div className="row">
-                        {categories ? categories.map(elem => <div className="col-3">{elem}</div>) : ""}
+                        {categories ? categories.map(elem => <div key={Math.random()} className="col-3">{elem}</div>) : ""}
                     </div>
                 </div>
             </div>

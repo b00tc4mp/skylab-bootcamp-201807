@@ -10,7 +10,7 @@ const jwt = require('jsonwebtoken')
 describe('logic', () => {
     const { JWT_SECRET } = process.env
     let email, password, name
-    const title = 'title', subtitle = 'subtitle', photo = 'http://res.cloudinary.com/locationssky/image/upload/v1535996939/kzoepp8xhrfb7wwy6iav.jpg', description = 'description', categories = ['Bathroom'], type = 'Penthouse'
+    const title = 'title', subtitle = 'subtitle', photo = 'http://res.cloudinary.com/locationssky/image/upload/v1536837487/pesd11dkwkv3b5wlxawv.jpg', description = 'description', categories = ['Bathroom'], type = 'Penthouse'
 
     beforeEach(() => {
         email = `mail-${Math.random()}@gmail.com`, password = '123456', name = 'Jhon Doe'
@@ -23,19 +23,18 @@ describe('logic', () => {
         )
 
         it('should fail on already existing owner', () => {
-            logic.register(name, email, password)
+            return logic.register(name, email, password)
                 .then(() => logic.register(name, email, password))
                 .catch(err => err)
                 .then(err => {
                     expect(err).to.exist
-                    expect(err.message).to.equal(`owner ${name} already exist`)
+                    expect(err.message).to.equal(`owner with ${email} email already exist`)
                 })
-
             }
         )
 
         it('should fail on empty owner name', () => {
-            logic.register('', email, password)
+            return logic.register('', email, password)
                 .catch(err => err)
                 .then(err => {
                     expect(err).to.exist
@@ -44,7 +43,7 @@ describe('logic', () => {
         })
 
         it('should fail on undefined owner name', () => {
-            logic.register(undefined, email, password)
+            return logic.register(undefined, email, password)
                 .catch(err => err)
                 .then(err => {
                     expect(err).to.exist
@@ -53,7 +52,7 @@ describe('logic', () => {
         })
 
         it('should fail on empty owner email', () => {
-            logic.register(name, '', password)
+            return logic.register(name, '', password)
                 .catch(err => err)
                 .then(err => {
                     expect(err).to.exist
@@ -62,7 +61,7 @@ describe('logic', () => {
         })
 
         it('should fail on undefined owner email', () => {
-            logic.register(name, undefined, password)
+            return logic.register(name, undefined, password)
                 .catch(err => err)
                 .then(err => {
                     expect(err).to.exist
@@ -71,7 +70,7 @@ describe('logic', () => {
         })
 
         it('should fail on empty owner password', () => {
-            logic.register(name, email, '')
+           return logic.register(name, email, '')
                 .catch(err => err)
                 .then(err => {
                     expect(err).to.exist
@@ -80,7 +79,7 @@ describe('logic', () => {
         })
 
         it('should fail on undefined owner password', () => {
-            logic.register(name, email, undefined)
+            return logic.register(name, email, undefined)
                 .catch(err => err)
                 .then(err => {
                     expect(err).to.exist
@@ -91,11 +90,15 @@ describe('logic', () => {
 
     !true && describe('authenticate owner', () => {
         it('should succeed on existing owner', () => {
-            logic.register(name, email, password)
+            return logic.register(name, email, password)
                 .then(() => logic.authenticate(email, password))
-                .then(token => {
-                    expect(token).to.be.a('string')
+                .then(res => {
+                    expect(res).to.be.an('object')
+                    expect(res).to.have.property('token')
+                    expect(res).to.have.property('id')
+                    expect(res).to.have.property('message')
 
+                    let token = res.token
                     let payload
 
                     expect(() => payload = jwt.verify(token, JWT_SECRET)).not.to.throw()
@@ -104,16 +107,16 @@ describe('logic', () => {
         })
 
         it('should fail on unregistered owner', () => {
-            logic.authenticate(email, password)
+            return logic.authenticate(email, password)
                 .catch(err => err)
                 .then(err => {
                     expect(err).to.exist
-                    expect(err.message).to.equal(`user ${email} does not exist`)
+                    expect(err.message).to.equal(`owner with ${email} email does not exist`)
                 })
         })
 
         it('should fail on empty email', () => {
-            logic.authenticate('', password)
+            return logic.authenticate('', password)
                 .catch(err => err)
                 .then(err => {
                     expect(err).to.exist
@@ -122,7 +125,7 @@ describe('logic', () => {
         })
 
         it('should fail on password owner', () => {
-            logic.authenticate(email, '')
+           return logic.authenticate(email, '')
                 .catch(err => err)
                 .then(err => {
                     expect(err).to.exist
@@ -133,14 +136,42 @@ describe('logic', () => {
 
     !true && describe('unregister owner', () => {
         it('should succeed on existing owner', () => {
-            logic.register(name, email, password)
+            return logic.register(name, email, password)
                 .then(() => logic.authenticate(email, password))
-                .then(token => logic.unregisterOwner(email, password, token))
+                .then(res => logic.unregisterOwner(email, password, res.token))
                 .then(res => expect(res).to.be.true)
-
-
             }
         )
+    })
+
+    true && describe('add property', () => {
+        it('should add a property correctly', () => {
+            return logic.register(name, email, password)
+                .then(() => {
+                    return logic.authenticate(email, password)
+                })
+                .then(res => {
+                    return logic.addProperty(email, title, subtitle, photo, description, categories, type, res.token)
+                        .then(data => {
+                            expect(data.message).to.equal('property added')
+                            expect(data.id).to.exist
+                        })
+                })
+        })
+
+        it('should add a property correctly', () => {
+            return logic.register(name, email, password)
+                .then(() => {
+                    return logic.authenticate(email, password)
+                })
+                .then(res => {
+                    return logic.addProperty(email, title, subtitle, photo, description, categories, type, res.token)
+                        .then(data => {
+                            expect(data.message).to.equal('property added')
+                            expect(data.id).to.exist
+                        })
+                })
+        })
     })
 
     !true && describe('delete property', () => {
@@ -150,10 +181,10 @@ describe('logic', () => {
                 .then(() => {
                     return logic.authenticate(email, password)
                 })
-                .then(token => {
-                    return logic.addProperty(email, title, subtitle, photo, description, categories, type, token)
-                        .then(propertyId => {
-                            return logic.deletePropertyById(email, propertyId, token)
+                .then(res => {
+                    return logic.addProperty(email, title, subtitle, photo, description, categories, type, res.token)
+                        .then(({id}) => {
+                            return logic.deletePropertyById(email, id, res.token)
                                 .then(({message}) => expect(message).to.equal('property deleted succesfully'))
                         })
                 })

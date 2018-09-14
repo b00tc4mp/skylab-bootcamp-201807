@@ -52,7 +52,7 @@ router.post('/authenticate', jsonBodyParser, (req, res) => {
 
 router.patch('/owner/:email/profile', [validateJwt, jsonBodyParser], (req, res) => {
     const { params: { email }, body: { password, newPassword } } = req
-    debugger
+
     logic.updatePassword(email, password, newPassword)
         .then(() => res.json({ message: 'owner password updated succesfully' }))
         .catch(err => {
@@ -90,7 +90,6 @@ router.post('/owner/:email/property', [validateJwt, jsonBodyParser], (req, res) 
         })
         .catch(err => {
             const { message } = err
-            debugger
 
             res.status(err instanceof LogicError ? 400 : 500).json({ message })
         })

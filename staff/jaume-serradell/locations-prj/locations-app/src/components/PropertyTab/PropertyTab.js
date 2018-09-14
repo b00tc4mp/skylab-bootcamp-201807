@@ -33,9 +33,9 @@ class PropertyTab extends Component {
         return <div className="container">
             <div className="row">
                 <div className="col-6">
-                    <div className="infoImg">
+                    <div>
                         <h4><i className="fa fa-picture-o"></i> Space Image</h4>
-                        <img className="img-fluid" src={photo} alt={title} />
+                        <div className="imgBig" style={{backgroundImage: `url(${photo})`}}></div>
                     </div>
                     <br />
                     <h4><i className="fa fa-info-circle"></i> Space Information</h4>

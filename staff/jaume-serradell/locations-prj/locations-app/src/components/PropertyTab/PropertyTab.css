@@ -42,3 +42,8 @@ p {
 .imgProperty {
     width: 555px;
 }
+
+.imgBig {
+    height: 350px;
+    background-size: cover;
+}

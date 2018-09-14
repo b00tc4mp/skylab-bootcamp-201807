@@ -20,7 +20,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "mocha src/logic",
+    "test": "mocha src/logic --timeout=15000",
     "eject": "react-scripts eject"
   },
   "devDependencies": {

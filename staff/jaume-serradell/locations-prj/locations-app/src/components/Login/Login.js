@@ -46,7 +46,7 @@ class Login extends Component {
                             <label>Email address</label>
                             <input type="email" className="form-control" placeholder="Enter email" onChange={this.onEmailChanged} />
                         </div>
-                        <div clclassNameass="form-group">
+                        <div className="form-group">
                             <label>Password</label>
                             <input type="password" className="form-control" placeholder="Password" onChange={this.onPasswordChanged} />
                             <small className="form-text text-muted">The password must be more than 6 characters</small>
