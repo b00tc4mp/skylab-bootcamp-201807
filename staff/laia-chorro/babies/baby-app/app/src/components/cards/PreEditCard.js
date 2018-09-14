@@ -103,7 +103,7 @@ class PreEditCard extends React.Component {
 
     onProductDetail = event => {
         event.preventDefault()
-    
+
         this.props.getProductDetail(this.props.idProd)
       }
 

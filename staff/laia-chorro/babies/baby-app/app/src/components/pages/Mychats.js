@@ -28,7 +28,8 @@ class Mychats extends Component {
 
         if (this.socket) {
             // TODO: make it socketIo-nonDependant
-            this.socket.on(`chat message for ${userId}`, () =>  this.isEmptyChats() )
+            this.socket.on(`chat message for ${userId}`, () =>  {
+                this.isEmptyChats()} ) 
         }
     }
 
@@ -38,29 +39,48 @@ class Mychats extends Component {
     addToMessages = data => this.setState({messages: [...this.state.messages, data]})
 
     componentDidMount() {
-        // this.updateChats()
-        this.isEmptyChats()
+        this.isEmptyChats(this.props.productId)
     }
 
-    updateChats = () => {
-        return this.getInfoFromMyChats(this.props.productId)
-            .then(_ => logic.listChatByProductAndUserId(this.state.productId) )
+    isEmptyChats = productId => {
+        logic.listChatsByUserId()
+            .then(chats => {
+                if(chats && chats.length) {
+                    this.updateChats(productId)
+                }
+                else if(this.props.productId) {
+                   this.createVeryFirstChat()
+                }
+            })
+    }
+
+    // messages: chat.messages, chatId: chat.id, chats: [ chat ]
+    updateChats = productId => {
+        return logic.listChatsByUserId()
+            .then(chats => {
+                if (!productId) productId = chats[0].product._id
+
+                this.setState({chats, productId})
+
+                return productId
+            })
+            .then(productId => logic.listChatByProductAndUserId(productId) )
             .catch(() => logic.addChat(this.state.productId))
             .then(chat => {
-                const chatId = chat._id || chat.chat
+                const chatId = chat.id || chat.chat
                 return logic.getChatById(chatId)
-            }).then(chat => this.setState({messages: chat.messages, chatId: chat._id}) )
+            }).then(chat => this.setState({messages: chat.messages, chatId: chat.id}) )
             .catch(({ message }) => Alert.error(message, { position: 'bottom-right', effect: 'slide', timeout: 3000 }))
     }
+
 
     createVeryFirstChat = () => {
         logic.addChat(this.props.productId)
             .then(chat => {
-                debugger;
                 const chatId = chat.chat
 
                 return logic.getChatById(chatId)
-            }).then(chat => this.setState({messages: chat.messages, chatId: chat._id, chats: [ chat ]}) )
+            }).then(chat => this.setState({messages: chat.messages, chatId: chat.id, chats: [ chat ]}) )
             .catch(({ message }) => Alert.error(message, { position: 'bottom-right', effect: 'slide', timeout: 3000 }))
     }
 
@@ -74,41 +94,6 @@ class Mychats extends Component {
         this.addMessageToChat(this.state.chatId, data.text, this.state.productId)
     }
 
-    isEmptyChats = () => {
-        logic.listChatsByUserId()
-            .then(chats => {
-                if(chats && chats.length) {
-                    this.updateChats()
-                }
-                else if(this.props.productId) {
-                   this.createVeryFirstChat()
-                }
-            })
-    }
-
-    getInfoFromMyChats = productId => {
-        return logic.listChatsByUserId()
-            .then(chats => {
-                if (!chats || !chats.length) throw new Error()
-
-                this.setState({chats})
-
-                if (!productId) productId = chats[0].product
-
-                return productId
-            })
-            .catch(() => this.setState({chats: []}) )
-            .then(productId => logic.getProductDetailById(productId))
-            .then(product => {
-                this.setState({prodTitle: product.title, 
-                    prodPhoto: product, 
-                    prodOwner: product.user_name,
-                    prodPrice: product.price,
-                    prodDescription: product.descrition,
-                    productId: product.id
-                })})
-            //.catch(({ message }) => Alert.error(message, { position: 'bottom-right', effect: 'slide', timeout: 3000 }))
-    }
 
     addMessageToChat(chatId, text, receiver) {
         logic.addMessageToChat(chatId, text, receiver)
@@ -128,19 +113,20 @@ class Mychats extends Component {
     onProductDetail = () => {return }
 
     render() {
-        const { messages, chats, prodTitle, prodPhoto, prodOwner, prodPrice, prodDescription, productId } = this.state
+        const { messages, chats, productId } = this.state
 
         return(
             <div className="mychats-container">
                 <div className="mychats-user-container">
                     <ul>
                         {chats && chats.map((chat, index) => {
-                            debugger;
                             return (
                                 <li key={index}>
                                     <ChatCard 
+                                        //chatId = {chat.}
+                                        cratedAt = {chat.created_at}
                                         title={chat.product.title}
-                                        photo={chat.product}
+                                        photo={chat.product.photos[0]}
                                         prodOwner={'Pepito'}
                                         onGoToChat={this.onGoToChatById}
                                     />
@@ -163,14 +149,15 @@ class Mychats extends Component {
                     </form>
                 </div>
                 <div className="mychats-product-preview">
-                    {productId && <SimplePreviewCard 
-                        photo={prodPhoto}
-                        price={prodPrice}
-                        title={prodTitle}
-                        idProd={productId}
-                        description={prodDescription}
-                        getProductDetail={this.onProductDetail}          
-                    />}
+                    {productId && chats && chats[0] && chats[0].products && 
+                        <SimplePreviewCard  
+                            photo={chats[0].products.photos[0]}
+                            price={chats[0].products.price}
+                            title={chats[0].products.title}
+                            idProd={productId}
+                            description={chats[0].products.description}
+                            getProductDetail={this.onProductDetail}          
+                        />}
                 </div>
             </div>
         )

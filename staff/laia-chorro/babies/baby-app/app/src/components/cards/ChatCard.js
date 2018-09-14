@@ -27,8 +27,6 @@ const styles = theme => ({
 function ChatCard(props) {
   const { classes, title, photo, prodOwner, onGoToChat } = props;
 
-  debugger
-
   const onOpenChat = event => {
     event.preventDefault()
 

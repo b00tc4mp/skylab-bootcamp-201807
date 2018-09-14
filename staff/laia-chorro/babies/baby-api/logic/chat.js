@@ -54,7 +54,7 @@ const chatLogic = {
                         , options: { lean: true}
                         , populate: {
                             path: 'user'
-                            , select: 'name '
+                            , select: 'name'
                             , options: { lean: true}
                         }
                     }).
@@ -64,7 +64,7 @@ const chatLogic = {
                 if (!chat.users.some(user => user.toString() === userId)) throw new LogicError(`user with id: ${userId} does not participate on chat with id: ${chatId}`)
 
                 // TODO improve
-
+                chat.id = chat._id.toString()
                 delete chat._id
 
                 return chat
@@ -82,8 +82,21 @@ const chatLogic = {
                 if (!user) throw new LogicError(`user with id: ${userId} does not exist`)
 
                 return Chat.find({ users: userId })
+                    .populate({
+                        path: 'product'
+                        , select: 'title photos price description'
+                        , options: { lean: true}
+                        , populate: {
+                            path: 'user'
+                            , select: 'name'
+                            , options: { lean: true}
+                        }
+                    }).
+                    lean()
             })
             .then(chats => chats.map(chat => {
+
+                chat.id = chat._id.toString()
                 delete chat._id
 
                 return chat
@@ -103,6 +116,7 @@ const chatLogic = {
                 return Chat.find({ product: productId })
             })
             .then(chats => chats.map(chat => {
+                chat.id = chat._id.toString()
                 delete chat._id
 
                 return chat
@@ -139,6 +153,7 @@ const chatLogic = {
                         lean()
             })
             .then(chat => {
+                chat.id = chat._id.toString()
                 delete chat._id
 
                 return chat
@@ -156,17 +171,6 @@ const chatLogic = {
                 if (!user) throw new LogicError(`user with id: ${userId} does not exist`)
 
                 return Chat.findById(chatId)
-                    .populate({
-                        path: 'product'
-                        , select: 'title photos price description'
-                        , options: { lean: true}
-                        , populate: {
-                            path: 'user'
-                            , select: 'name '
-                            , options: { lean: true}
-                        }
-                    }).
-                    lean()
             })
             .then(chat => {
                 if (!chat.users.some(user => user.toString() === userId)) throw new LogicError(`user with id: ${userId} does not participate on chat with id: ${chatId}`)

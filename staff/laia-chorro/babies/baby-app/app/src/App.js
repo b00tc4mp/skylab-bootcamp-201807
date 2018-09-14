@@ -10,8 +10,6 @@ import Myzone from './components/Myzone'
 import ProductDetail from './components/pages/ProductDetail'
 import PublicUser from './components/pages/PublicUser'
 
-import Loader from 'react-loader'
-
 import Alert from 'react-s-alert'
  
 import 'react-s-alert/dist/s-alert-default.css'

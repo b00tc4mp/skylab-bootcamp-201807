@@ -33,13 +33,6 @@ mongoose.connect(MONGO_URL, { useNewUrlParser: true })
         socketLogic.setIO(io)
 
         server.listen(PORT, () => console.log(`${package.name} ${package.version} up and running on port ${PORT}`))
-        /*io.on('connection', (socket) => {
-            console.log(socket.id);
-        
-            socket.on('SEND_MESSAGE', function(data){
-                io.emit('RECEIVE_MESSAGE', data);
-            })
-        });*/
 
     })
     .then(console.log('mongo db connected'))

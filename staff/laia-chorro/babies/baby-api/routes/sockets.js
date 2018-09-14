@@ -5,7 +5,7 @@ const socketLogic = {
     io: null,
 
     sendChat(receiver) {
-       this.io.emit(`chat message for ${receiver}` )
+        this.io.emit(`chat message for ${receiver}`)
     },
 
     setIO(io) {

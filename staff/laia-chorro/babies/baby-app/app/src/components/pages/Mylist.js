@@ -3,7 +3,6 @@ import PreEditCard from '../cards/PreEditCard'
 import logic from '../../logic'
 import './Mylist.css'
 import Alert from 'react-s-alert'
-import Loader from 'react-loader'
 //import background from '../../assets/playing-baby.svg'
 
 
@@ -19,23 +18,19 @@ class Mylist extends Component {
     }
 
     onProductUpdateState = (idProd, state) => {
-        this.setState({ loaded: false })
-
         logic.updateStateProd(idProd, state)
             .then(() => logic.getPrivateUser() )
             .then(() => this.setState({products: logic.getUserField('products')}))
             .catch(({ message }) => Alert.error(message, { position: 'bottom-right', effect: 'slide', timeout: 3000 }) )
-            .finally(() => this.setState({ loaded: true }))
       }
 
 
     render() {
 
-        const { state: {products, loaded}, onProductUpdateState, props: {onProductDetail} } = this
+        const { state: {products}, onProductUpdateState, props: {onProductDetail} } = this
         
         return (
             <div className="mylist-products-container">
-                <Loader loaded={loaded}>
                     <section className="flex-container">
                         <h1 className="mylist-products-heading">Your products</h1>
                         {products && products.map((prod, index) => {
@@ -54,7 +49,6 @@ class Mylist extends Component {
                             </div>)
                             })}
                     </section>
-                </Loader>
             </div>
 
         )

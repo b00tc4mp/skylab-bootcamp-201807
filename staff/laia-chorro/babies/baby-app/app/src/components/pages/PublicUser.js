@@ -48,32 +48,34 @@ class PublicUser extends Component {
                                 userPhoto={user.photo}
                                 onSelectTab={this.onSelectTab}
                                 />
-                            {tabSelected < 2 && user.products.map((prod, index) => {
-                                if ((tabSelected === 0 && prod.state === 'pending') || 
-                                    (tabSelected === 1 && prod.state === 'sold'))
-                                    return (<SimplePreviewCard 
-                                        key={index}
-                                        state={prod.state} 
-                                        photo={prod.photos[0]}
-                                        price={prod.price}
-                                        title={prod.title}
-                                        idProd={prod.id}
-                                        description={prod.description}  
-                                        getProductDetail={onProductDetail}          
-                                    /> )
-                                return
-                            })}
-                            {tabSelected === 2 && user.reviews.map((review, index) => {
-                                    return (<ReviewCard
-                                        key={index}
-                                        createdAt={review.created_at}
-                                        description={review.description}
-                                        idProd={review.productId}
-                                        score={review.score}
-                                        userFrom={review.userId_from}
-                                        /> )
-                                return
-                            })}
+                                <section className="flex-container">
+                                    {tabSelected < 2 && user.products.map((prod, index) => {
+                                        if ((tabSelected === 0 && prod.state === 'pending') || 
+                                            (tabSelected === 1 && prod.state === 'sold'))
+                                            return (<SimplePreviewCard 
+                                                key={index}
+                                                state={prod.state} 
+                                                photo={prod.photos[0]}
+                                                price={prod.price}
+                                                title={prod.title}
+                                                idProd={prod.id}
+                                                description={prod.description}  
+                                                getProductDetail={onProductDetail}          
+                                            /> )
+                                        return
+                                    })}
+                                    {tabSelected === 2 && user.reviews.map((review, index) => {
+                                            return (<ReviewCard
+                                                key={index}
+                                                createdAt={review.created_at}
+                                                description={review.description}
+                                                idProd={review.productId}
+                                                score={review.score}
+                                                userFrom={review.userId_from}
+                                                /> )
+                                        return
+                                    })}
+                                </section>
                         </div> :
 
                         <div className="publicUser-empty">

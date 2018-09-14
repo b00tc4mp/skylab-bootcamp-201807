@@ -25,8 +25,6 @@ chatRouter.post('/me/:user/chat', [validateJwt, jsonBodyParser], (req, res) => {
 chatRouter.post('/me/:user/chat/:chat/message', [validateJwt, jsonBodyParser], (req, res) => {
     const { params: { user, chat }, body: { receiver, text } } = req
 
-    debugger
-
     chatLogic.addMessageToChat(user, chat, text)
     .then(() => {
         sockets.sendChat(receiver)

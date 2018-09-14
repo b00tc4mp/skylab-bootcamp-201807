@@ -232,7 +232,7 @@ const logic = {
                 validate._stringField('product id', product)
 
                 const body = { user, product }
-
+debugger;
                 return this._call(`me/${this._userId}/feedback`, 'PATCH', { 
                     'Authorization': `bearer ${this._userToken}`,
                     'Content-Type': 'application/json' 
@@ -374,7 +374,6 @@ const logic = {
     addMessageToChat(chatId, text, receiver) {
         return Promise.resolve()
             .then(() => {
-                debugger
                 validate._stringField('chatId', chatId)
                 validate._stringField('text message', text)
                 validate._stringField('receiverId', receiver)

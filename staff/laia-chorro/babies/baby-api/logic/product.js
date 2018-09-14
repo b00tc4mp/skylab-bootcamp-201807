@@ -65,7 +65,7 @@ const productLogic = {
 
             delete product.user
         }
-debugger;
+
         product.user_reviews = numReviews
         product.user_avg_score = avgReviews
 
@@ -196,7 +196,6 @@ debugger;
     listProductById(productId) {
         return Promise.resolve()
             .then(() => {
-                debugger;
                 validate._objectId('product', productId)
 
                 return Product.
