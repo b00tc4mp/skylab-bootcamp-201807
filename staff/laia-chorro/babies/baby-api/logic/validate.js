@@ -2,7 +2,7 @@
 
 const validateEmail = require('../utils/validate-email')
 const validateBase64Image = require('../utils/validate-base64-img')
-const { LogicError } = require('./LogicError.js')
+const LogicError = require('./LogicError.js')
 const mongoose = require('mongoose')
 
 

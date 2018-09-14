@@ -6,22 +6,21 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import IconButton from '@material-ui/core/IconButton';
-import FavoriteIcon from '@material-ui/icons/Favorite'
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder'
 import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined'
 import DeleteIcon from '@material-ui/icons/Delete';
-import EditIcon from '@material-ui/icons/Edit';
+//import EditIcon from '@material-ui/icons/Edit';
 import TurnedInNotIcon from '@material-ui/icons/TurnedInNot';
 import TurnedInIcon from '@material-ui/icons/TurnedIn';
 import WorkIcon from '@material-ui/icons/Work';
 import WorkOutlineIcon from '@material-ui/icons/WorkOutline';
 import Typography from '@material-ui/core/Typography';
+import Alert from 'react-s-alert'
+import logic from '../../logic'
 
-//child_friendly
-// business_center
-// local_grocery_store
-// local_mall
-// business
+import UsersDialog from '../customElements/UsersDialog'
+
+
 
 const styles = theme => ({
   card: {
@@ -56,85 +55,114 @@ const styles = theme => ({
     paddingLeft: theme.spacing.unit,
     paddingBottom: theme.spacing.unit,
     marginLeft: 30,
+  },
+  button: {
+    color: '#0097A7',
   }
 });
 
 
+class PreEditCard extends React.Component {
 
-function PreEditCard(props) {
+    state = {
+        openDialog: false,
+        selectedUser: null//emails[1],
+    }    
 
-    const { classes, state, photo, price, title, numViews, numFavs, idProd, onProductUpdateState, getProductDetail } = props;
-
-    const onDelete = event => {
+    onDelete = event => {
         event.preventDefault()
 
-        onProductUpdateState(idProd, 'removed')
+        this.props.onProductUpdateState(this.props.idProd, 'removed')
     }
 
-    const onReserved = event => {
+    onReserved = event => {
         event.preventDefault()
 
-        onProductUpdateState(idProd, 'reserved')
+        this.props.onProductUpdateState(this.props.idProd, 'reserved')
     }
 
-    const onSold = event => {
+    onSold = event => {
         event.preventDefault()
-
-        onProductUpdateState(idProd, 'sold')
+        this.setState({ openDialog: true,})
+        this.props.onProductUpdateState(this.props.idProd, 'sold')
     }
 
-    const onPending = event => {
-        event.preventDefault()
 
-        onProductUpdateState(idProd, 'pending')
+    handleDialogClose = userId => this.setState({ selectedUser: userId, openDialog: false }, () => 
+                this.allowUserSelectedToAddReview(userId, this.props.idProd)
+            )
+
+    allowUserSelectedToAddReview = (userId, prodId) => {
+        return logic.allowProdReviewToUser(userId, prodId)
+            .then(() => Alert.success('Thank you for selling with BabyBoom!', { position: 'top-right', timeout: 3000 }))
+            .catch(({ message }) => Alert.error(message, { position: 'bottom-right', effect: 'slide', timeout: 3000 }))
     }
 
-    const onProductDetail = event => {
+    onPending = event => {
         event.preventDefault()
-    
-        getProductDetail(idProd)
+
+        this.props.onProductUpdateState(this.props.idProd, 'pending')
+    }
+
+    onProductDetail = event => {
+        event.preventDefault()
+
+        this.props.getProductDetail(this.props.idProd)
       }
 
 
-    return (
-        <Card className={classes.card}>
-            <CardActionArea className={classes.card} onClick={onProductDetail}>
-                <CardMedia
-                    className={classes.cover}
-                    image={photo}
-                    title={title}
-                />
-                <div className={classes.details}>
-                    <CardContent className={classes.content}>
-                    <Typography variant="headline"component="h1">{`${price}€`}</Typography>
-                    </CardContent>
+    render() {
+        const { classes, state, photo, price, title, numViews, numFavs, idProd } = this.props
+      
+    
+        return (
+            <Card className={classes.card}>
+                <CardActionArea className={classes.card} onClick={this.onProductDetail}>
+                    <CardMedia
+                        className={classes.cover}
+                        image={photo}
+                        title={title}
+                    />
+                    <div className={classes.details}>
+                        <CardContent className={classes.content}>
+                            <Typography variant="headline"component="h1">{`${price}€`}</Typography>
+                        </CardContent>
+                    </div>
+                    <div className={classes.details}>
+                        <CardContent className={classes.content}>
+                            <Typography variant="subheading" color="textSecondary">{title}</Typography>
+                        </CardContent>
+                    </div>
+                </CardActionArea>
+                <div className={classes.views}>
+                    <VisibilityOutlinedIcon className={classes.viewIcon} /><Typography variant="subheading" color="textSecondary">{numViews}</Typography>
+                    <FavoriteBorderIcon className={classes.viewIcon} /><Typography variant="subheading" color="textSecondary">{numFavs}</Typography>
                 </div>
-                <div className={classes.details}>
-                    <CardContent className={classes.content}>
-                    <Typography variant="subheading" color="textSecondary">{title}</Typography>
-                    </CardContent>
+                <div className={classes.states}>
+                    <IconButton className={classes.button} aria-label="Sold" color="primary">
+                        {state === 'sold' ?  <WorkIcon  onClick={this.onPending}/> : <WorkOutlineIcon onClick={this.onSold} />}
+                    </IconButton>
+                    <IconButton className={classes.button} aria-label="Reserved" color="primary">
+                        {state === 'reserved' ?  <TurnedInIcon onClick={this.onPending}/> : <TurnedInNotIcon onClick={this.onReserved} />}
+                    </IconButton>
+                    {/*<IconButton className={classes.button} aria-label="Edit" color="primary">
+                        <EditIcon />
+                    </IconButton>*/}
+
+                    <UsersDialog
+                        selectedValue={this.state.selectedUser}
+                        open={this.state.openDialog}
+                        onClose={this.handleDialogClose}
+                        idprod={idProd}
+                    />
+
+                    <IconButton className={classes.button} aria-label="Delete" onClick={this.onDelete} color="primary">
+                        <DeleteIcon />
+                    </IconButton>
                 </div>
-            </CardActionArea>
-            <div className={classes.views}>
-                <VisibilityOutlinedIcon className={classes.viewIcon} /><Typography variant="subheading" color="textSecondary">{numViews}</Typography>
-                <FavoriteBorderIcon className={classes.viewIcon} /><Typography variant="subheading" color="textSecondary">{numFavs}</Typography>
-            </div>
-            <div className={classes.states}>
-                <IconButton className={classes.button} aria-label="Sold" color="primary">
-                    {state === 'sold' ?  <WorkIcon  onClick={onPending}/> : <WorkOutlineIcon onClick={onSold} />}
-                </IconButton>
-                <IconButton className={classes.button} aria-label="Reserved" color="primary">
-                    {state === 'reserved' ?  <TurnedInIcon onClick={onPending}/> : <TurnedInNotIcon onClick={onReserved} />}
-                </IconButton>
-                <IconButton className={classes.button} aria-label="Edit" color="primary">
-                    <EditIcon />
-                </IconButton>
-                <IconButton className={classes.button} aria-label="Delete" onClick={onDelete} color="primary">
-                    <DeleteIcon />
-                </IconButton>
-            </div>
-        </Card>
-    );
+            </Card>
+        )
+    }
 }
 
 PreEditCard.propTypes = {

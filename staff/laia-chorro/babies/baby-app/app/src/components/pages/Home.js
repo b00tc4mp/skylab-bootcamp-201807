@@ -12,8 +12,7 @@ class Home extends Component {
     state = {
         products: [],
         idFavs: [],
-        loaded: true
-
+        loaded: true,
     }
 
     static getDerivedStateFromProps(props, state) {
@@ -22,6 +21,20 @@ class Home extends Component {
         return null; // Return null to indicate no change to state.
     }
 
+    componentDidUpdate(prevProps) {
+        if (this.props.searchVal !== prevProps.searchVal) {
+            if (this.props.searchVal) {
+                const query = {}
+                query.txt = this.props.searchVal
+    
+                this.getProducts(query)
+            } else {
+                this.getProducts()
+            }
+            
+        }
+      }
+
     componentDidMount() {
         this.props.getIdFavs()
         this.getProducts()
@@ -29,6 +42,7 @@ class Home extends Component {
 
     getProducts = (query) => {
         this.setState({ loaded: false })
+        
         return Promise.resolve()
             .then(() => logic.getSimpleProductsByFilters(query))
             .then(products => this.setState({ products: products || [] }) )
@@ -71,7 +85,7 @@ class Home extends Component {
                             </div>
                         }
                     </section>
-                    <Footer />
+                    {/* <Footer /> */}
                 </Loader>
             </main>
         )

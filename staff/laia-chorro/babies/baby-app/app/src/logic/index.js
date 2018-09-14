@@ -1,7 +1,8 @@
 const validate = require('./validate')
 
 const logic = {
-    url: 'http://localhost:8080/api',
+    // url: 'http://localhost:8080/api',
+    url: 'https://fierce-depths-84732.herokuapp.com/api',
 
     _call(path, method, headers, body, expectedStatus) {
         const config = { method }
@@ -224,6 +225,22 @@ const logic = {
             })
     },
 
+    allowProdReviewToUser(user, product) {
+        return Promise.resolve()
+            .then(() => {
+                validate._stringField('user id', user)
+                validate._stringField('product id', product)
+
+                const body = { user, product }
+
+                return this._call(`me/${this._userId}/feedback`, 'PATCH', { 
+                    'Authorization': `bearer ${this._userToken}`,
+                    'Content-Type': 'application/json' 
+                }, JSON.stringify(body), 200)
+                    .then(() => true)
+            })
+    },
+
     //PRODUCTS//
     getSimpleProductsByFilters(filters) {
         return Promise.resolve()
@@ -261,12 +278,6 @@ const logic = {
                 .then(() => true)
         })
     },
-
-    /*visitProductDetail(productId){
-        return Promise.resolve()
-            .then(() => this.incrementProductViewsById(productId))
-            .then(() => this.getProductDetailById(productId) )
-    },*/
 
     uploadProduct(title, cathegory, price, description, photos, longitude, latitude) {
 
@@ -339,7 +350,113 @@ const logic = {
             }, undefined, 200)
                 .then(() => true)
         })
-    }
+    },
+
+
+
+    //// CHATS //////
+
+    addChat(product) {
+        return Promise.resolve()
+            .then(() => {
+                validate._stringField('productId', product)
+
+                const body = { product }
+
+                return this._call(`me/${this._userId}/chat`, 'POST', { 
+                    'Authorization': `bearer ${this._userToken}`,
+                    'Content-Type': 'application/json' 
+                }, JSON.stringify(body), 201)
+                    .then(res => res.json())
+            })
+    },
+
+    addMessageToChat(chatId, text, receiver) {
+        return Promise.resolve()
+            .then(() => {
+                validate._stringField('chatId', chatId)
+                validate._stringField('text message', text)
+                validate._stringField('receiverId', receiver)
+
+                const body = { text, receiver }
+
+                return this._call(`me/${this._userId}/chat/${chatId}/message`, 'POST', { 
+                    'Authorization': `bearer ${this._userToken}`,
+                    'Content-Type': 'application/json' 
+                }, JSON.stringify(body), 201)
+                    .then(() => true)
+            })
+    },
+
+    getChatById(chatId) {
+        return Promise.resolve()
+            .then(() => {
+                validate._stringField('chatId', chatId)
+                
+                return this._call(`/me/${this._userId}/chat/${chatId}`, 'GET', {
+                    'Authorization': `bearer ${this._userToken}`,
+                    'Content-Type': 'application/json' 
+                }, undefined, 200)
+                    .then(res => res.json())
+            })
+    },
+
+    listChatsByUserId() {
+        return Promise.resolve()
+            .then(() => {
+                return this._call(`/me/${this._userId}/chat`, 'GET', { 
+                    'Authorization': `bearer ${this._userToken}`,
+                    'Content-Type': 'application/json' 
+                }, undefined, 200)
+                    .then(res => res.json())
+            })
+    },
+
+    listChatsByProductId(productId) {
+        validate._stringField('productId', productId)
+
+        return Promise.resolve()
+            .then(() => {
+                return this._call(`/me/${this._userId}/prod/${productId}/chats`, 'GET', { 
+                    'Authorization': `bearer ${this._userToken}`,
+                    'Content-Type': 'application/json' 
+                }, undefined, 200)
+                    .then(res => res.json())
+            })
+    },
+
+    listChatByProductAndUserId(productId) {
+        return Promise.resolve()
+            .then(() => {
+                validate._stringField('productId', productId)
+                
+                return this._call(`/me/${this._userId}/prod/${productId}/chat`, 'GET', {
+                    'Authorization': `bearer ${this._userToken}`,
+                    'Content-Type': 'application/json' 
+                }, undefined, 200)
+                    .then(res => res.json())
+            })
+    },
+
+    //// REVIEWS //////
+
+    addReview(userTo, score, idProd, description) {
+        return Promise.resolve()
+            .then(() => {
+                validate._stringField('userTo', userTo)
+                validate._stringField('idProd', idProd)
+                validate._intField('score', score, 0, 5)
+                validate._stringField('description', description)
+
+                const body = { userTo, score, idProd, description }
+
+                return this._call(`me/${this._userId}/review`, 'POST', { 
+                    'Authorization': `bearer ${this._userToken}`,
+                    'Content-Type': 'application/json' 
+                }, JSON.stringify(body), 201)
+                    .then(() => true)
+            })
+    },    
 
 }
 

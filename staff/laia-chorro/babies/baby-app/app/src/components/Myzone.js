@@ -17,7 +17,7 @@ class Myzone extends Component {
 
     render() {
 
-        const { onLogout, onProductUpload, onRemoveFavourite, onUploadProfilePhoto, idFavs, profilePhoto, onProductDetail } = this.props
+        const { onLogout, onProductUpload, onRemoveFavourite, onUploadProfilePhoto, idFavs, profilePhoto, onProductDetail, idProd, loaded } = this.props
 
         return (
             <div>
@@ -25,10 +25,10 @@ class Myzone extends Component {
                 <main className="main-zone">
                     <Route path="/profile" exact render={() => <Profile onUploadProfilePhoto={onUploadProfilePhoto} profilePhoto={profilePhoto} onLogout={onLogout}/>} />
                     <Route path="/mylist" exact render={() => <Mylist onProductDetail={onProductDetail}/>} />
-                    <Route path="/mychats" exact render={() => <Mychats/>} />
+                    <Route path="/mychats" exact render={() => <Mychats productId={idProd} />} />
                     <Route path="/favourites" exact render={() => <Favourites onRemoveFavourite={onRemoveFavourite} idFavs={idFavs} onProductDetail={onProductDetail}/>} />
                     <Route path="/reviews" exact render={() => <Reviews />} />
-                    <Route path="/prod/upload" exact render={() => <Upload onProductUpload={onProductUpload}/>} />
+                    <Route path="/prod/upload" exact render={() => <Upload onProductUpload={onProductUpload} loaded={loaded}/>} />
                 </main>
             </div>
         )

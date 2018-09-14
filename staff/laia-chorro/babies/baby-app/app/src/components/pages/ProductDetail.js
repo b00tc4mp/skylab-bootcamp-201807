@@ -21,15 +21,15 @@ class ProductDetail extends Component {
 
     componentDidMount () {
         const { idProd } = this.props.match.params
-
+        
         this.props.onProductDetail(idProd)
         this.props.getIdFavs()
-      }
+    }
 
 
     render() {
 
-        const { props: { onProductDetail, onAddFavourite, onRemoveFavourite, loaded }, state: { product, idFavs } } = this
+        const { props: { onProductDetail, onAddFavourite, onRemoveFavourite, loaded, onGoToChat }, state: { product, idFavs } } = this
 
         return(
             <main>
@@ -60,6 +60,7 @@ class ProductDetail extends Component {
                                 userReviews = {product.user_reviews}
                                 userPhoto = {product.user_photo}
                                 userId = {product.user_id}
+                                goToChat={onGoToChat}
                                 />
                         </div> :
 

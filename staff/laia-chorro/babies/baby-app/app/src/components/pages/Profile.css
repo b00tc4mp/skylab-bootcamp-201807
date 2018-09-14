@@ -22,7 +22,11 @@
 
 .profile-heading {
     color: #23383a;
-    font-size: 30px;
+    /*font-size: 30px;*/
+    text-transform: uppercase;
+    font-size: 18px;
+    margin-left: 20px;
+
 }
 
 .profile-btn {
@@ -92,6 +96,13 @@
     width: 120px;
     height: 120px;
 }
+
+.profile-photo-container .material-icons {
+    align-self: center;
+    font-size: 75px;
+}
+
+
 
 .profile-info-container input {
     max-width: 50%;

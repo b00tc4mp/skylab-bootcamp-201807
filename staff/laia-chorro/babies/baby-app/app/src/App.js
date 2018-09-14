@@ -10,13 +10,10 @@ import Myzone from './components/Myzone'
 import ProductDetail from './components/pages/ProductDetail'
 import PublicUser from './components/pages/PublicUser'
 
-import Loader from 'react-loader'
-
-
-import Alert from 'react-s-alert';
+import Alert from 'react-s-alert'
  
-import 'react-s-alert/dist/s-alert-default.css';
-import 'react-s-alert/dist/s-alert-css-effects/slide.css';
+import 'react-s-alert/dist/s-alert-default.css'
+import 'react-s-alert/dist/s-alert-css-effects/slide.css'
 
 import { Route, withRouter, Redirect, Switch } from 'react-router-dom'
 
@@ -30,7 +27,8 @@ class App extends Component {
 		idFavs: [],
 		profilePhoto: null,
 		detailProduct: null,
-		loaded: false
+		loaded: true,
+		searchVal: ''
 	}
 
 	hideFeedback = () => this.setState({errorMsg: null, showFeedback: false})
@@ -71,11 +69,13 @@ class App extends Component {
 	}
 
 	onProductUpload = (title, category, price, description, photo, longitude, latitude) => {
+		this.setState({ loaded: false })
 		logic.uploadProduct(title, category, price, description, photo, longitude, latitude)
 			.then(() => logic.getPrivateUser() )
 			.then(() => this.props.history.push('/mylist'))
 			.then(() => Alert.success('Your product was upload correctly!', { position: 'top-right', timeout: 3000 }))
-            .catch(({ message }) => Alert.error(message, { position: 'bottom-right', effect: 'slide', timeout: 3000 }) )
+			.catch(({ message }) => Alert.error(message, { position: 'bottom-right', effect: 'slide', timeout: 3000 }) )
+			.finally(() => this.setState({ loaded: true }) )
 	}
 
 
@@ -145,8 +145,14 @@ class App extends Component {
 			.finally(() => this.setState({ loaded: true }) )
 	}
 
-	onGoToChat = () => {
-		this.props.history.push('/my')
+	onGoToChat = (idProd) => {
+		this.setState({idProd})
+		this.props.history.push('/mychats')
+	}
+
+	onSearchFilter = searchVal => {
+		this.setState({searchVal})
+		this.props.history.push('/')
 	}
 
   /*onUpdate = (password, newUsername, newPassword) => {
@@ -161,30 +167,32 @@ class App extends Component {
 
 
 	render() {
-		const { loggedIn, errorMsg, showFeedback, idFavs, profilePhoto, product, loaded } =  this.state
+		const { loggedIn, errorMsg, showFeedback, idFavs, profilePhoto, product, loaded, searchVal, idProd } =  this.state
 		const { onRegister, onLogin, onLogout, onProductUpload, hideFeedback, 
 				getIdFavs, onAddFavourite, onRemoveFavourite, onUploadProfilePhoto,
-				onProductDetail } = this
+				onProductDetail, onSearchFilter, onGoToChat } = this
 
 		return (
 			<div className="baby-app-container">
-				<Nav loggedIn={loggedIn} profilePhoto={profilePhoto}/>
+				<Nav onSearchFilter={onSearchFilter} loggedIn={loggedIn} profilePhoto={profilePhoto}/>
 					<Switch>
-						<Route path="/" exact render={() => <Home onAddFavourite={onAddFavourite} onRemoveFavourite={onRemoveFavourite} idFavs={idFavs} getIdFavs={getIdFavs} onProductDetail={onProductDetail}/>} />
+						<Route path="/" exact render={() => <Home searchVal={searchVal} onAddFavourite={onAddFavourite} onRemoveFavourite={onRemoveFavourite} idFavs={idFavs} getIdFavs={getIdFavs} onProductDetail={onProductDetail}/>} />
 						<Route path="/login" exact render={() => <Login onLogin={onLogin} errorMsg={errorMsg} showFeedback={showFeedback} hideFeedback={hideFeedback}/>} />
 						<Route path="/register" exact render={() => <Register onRegister={onRegister} errorMsg={errorMsg} showFeedback={showFeedback} hideFeedback={hideFeedback}/>} />
 						<Route path="/(profile|mylist|mychats|favourites|reviews|prod/upload)" exact render={() => 
 							loggedIn ? 
-								<Myzone onLogout={onLogout} 
+								<Myzone loaded={loaded}
+										onLogout={onLogout} 
 										onProductUpload={onProductUpload} 
 										onRemoveFavourite={onRemoveFavourite} 
 										idFavs={idFavs} 
 										onUploadProfilePhoto={onUploadProfilePhoto}
 										profilePhoto={profilePhoto}
-										onProductDetail={onProductDetail}/> : 
+										onProductDetail={onProductDetail}
+										idProd={idProd}/> : 
 								<Redirect to="/login" />
 						} />
-						<Route path="/item/:idProd" exact render={() => <ProductDetail onAddFavourite={onAddFavourite} onRemoveFavourite={onRemoveFavourite} idFavs={idFavs} getIdFavs={getIdFavs} onProductDetail={onProductDetail} product={product} loaded={loaded}/>} />
+						<Route path="/item/:idProd" exact render={() => <ProductDetail onAddFavourite={onAddFavourite} onRemoveFavourite={onRemoveFavourite} idFavs={idFavs} getIdFavs={getIdFavs} onProductDetail={onProductDetail} product={product} loaded={loaded} onGoToChat={onGoToChat}/>} />
 						<Route path="/user/:idUser" exact render={() => <PublicUser onAddFavourite={onAddFavourite} onRemoveFavourite={onRemoveFavourite} idFavs={idFavs} getIdFavs={getIdFavs} onProductDetail={onProductDetail} />} />
 						{/*<Route path="/update" exact render={() => loggedIn ? <Update onUpdateProp={onUpdate} email={logic.userUsername} errorMsg={errorMsg} showFeedback={showFeedback} hideFeedback={hideFeedback}/> : <Redirect to="/login" />} />*/}
 					</Switch>

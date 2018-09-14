@@ -41,7 +41,7 @@ const userLogic = {
     },
 
     _parseUserItems(user) {
-        let reviews = [], products = [], favs = [], total_score = 0
+        let reviews = [], products = [], favs = [], feedbacks = [], total_score = 0
 
         user.id = user._id.toString()
         delete user._id
@@ -87,6 +87,17 @@ const userLogic = {
             })
 
             user.favs = favs
+        }
+
+        if (user.feedbacks && user.feedbacks.length) {
+            user.feedbacks.forEach( feedback => {
+                feedback.id = feedback._id.toString()
+                delete feedback._id
+
+                feedbacks.push(feedback)
+            })
+
+            user.feedbacks = feedbacks
         }
 
         if (user.name && user.surname) {
@@ -270,6 +281,61 @@ const userLogic = {
     },
 
     /**
+     * User it's allowed to add a review of a product that she has bought
+     * 
+     * @param {String} userId 
+     * @param {String} productId 
+     */
+    allowFeedback(userId, productId) {
+        return Promise.resolve()
+            .then(() => {
+                validate._objectId('user', userId)
+                validate._objectId('product', productId)
+
+                return Product.findById(productId)
+            })
+            .then(prod => { 
+                if (!prod) throw new LogicError(`product with id: ${productId} does not exist`)
+
+                return User.findById(userId)
+            })
+            .then(user => {
+                if (!user) throw new LogicError(`user with id: ${userId} does not exist`)
+
+                user.feedbacks.push(productId)
+
+                return user.save()
+            })
+            .then(() => true)
+    },
+
+    /**
+     * User has add a review of a product that she has bought and we remove 
+     * thisr pendent feeback from the array
+     * 
+     * @param {String} userId 
+     * @param {String} productId 
+     */
+    removeFeedback(userId, productId) {
+        return Promise.resolve()
+            .then(() => {
+                validate._objectId('user', userId)
+                validate._objectId('product', productId)
+
+                return Product.findById(productId)
+            })
+            .then(prod => { 
+                if (!prod) throw new LogicError(`product with id: ${productId} does not exist`)
+
+                return User.findByIdAndUpdate(userId, 
+                    { '$pull': { 'feedbacks': productId } }, 
+                    { 'new': true })
+            })
+            .then(() => true)
+    },
+
+
+    /**
      * Save a new user's review writted by another user who has bought a product from him.
      * 
      * @param {ObjectId} userFrom 
@@ -328,13 +394,19 @@ const userLogic = {
 
                 return User.
                     findById(userId).
-                    select('email name surname reviews products photo location').
-                    populate({
+                    select('email name surname reviews products photo location feedbacks').
+                    populate([{
                         path: 'products'
                         , select: 'title description price state cathegory location photos num_favs num_views created_at'
                         , match: { state: { $in: ['pending', 'sold', 'reserved'] }}
                         , options: { sort: { created_at: -1 }, lean: true}
-                    }).
+                    },
+                    {
+                        path: 'feedbacks'
+                        , select: 'title photos user'
+                        , match: { state: { $in: ['sold'] }}
+                        , options: { sort: { created_at: -1 }, lean: true}
+                    }]).
                     lean()
             })
             .then(user => {
@@ -358,7 +430,7 @@ const userLogic = {
 
                 return User.
                     findById(userId).
-                    select('email name surname photo birth gender location favs products reviews').
+                    select('email name surname photo birth gender location favs products reviews feedbacks').
                     populate([{
                         path: 'products'
                         , select: 'title description price state cathegory location photos num_favs num_views created_at'
@@ -369,6 +441,12 @@ const userLogic = {
                         path: 'favs'
                         , select: 'title description price state cathegory location photos num_favs num_views created_at'
                         , match: { state: { $in: ['pending', 'sold', 'reserved'] }}
+                        , options: { sort: { created_at: -1 }, lean: true}
+                    },
+                    {
+                        path: 'feedbacks'
+                        , select: 'title photos user'
+                        , match: { state: { $in: ['sold'] }}
                         , options: { sort: { created_at: -1 }, lean: true}
                     }]).
                     lean()
