@@ -3,11 +3,11 @@ const axios = require('axios')
 /**Bussines logic about Reciclatge-app */
 const logic = {
 
-    // url: 'https://reciclatge-api.herokuapp.com/api',
-    url: 'http://localhost:8080/api',
+    url: 'https://reciclatge-api.herokuapp.com/api',
+    // url: 'http://localhost:8080/api',
 
-    urlvision: 'http://localhost:5000/api',
-    // urlvision: 'https://reciclatge-vision-api.herokuapp.com/api',
+    // urlvision: 'http://localhost:5000/api',
+    urlvision: 'https://reciclatge-vision-api.herokuapp.com/api',
 
 
     /** This is a setter to store the user id in sessionStorage

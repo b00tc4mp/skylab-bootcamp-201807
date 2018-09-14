@@ -24,14 +24,12 @@
   margin: 0;
 }
 .main__title {
-  padding: 0;
-  margin: auto;
+  margin: 0 auto;
   color: white;
-  padding-bottom: 30px;
+  padding-bottom: 10px;
 }
 .main__btn {
   text-align: center;
-  padding: 20px;
   height: 10vh;
   width: 30vh;
   margin: 0 auto;
@@ -42,6 +40,11 @@
 .main__image {
   justify-items: center;
   text-align: center;
+}
+.main__image img {
+  object-fit: contain;
+  width: 350px;
+  height: 350px;
 }
 .main__file {
   text-align: center;

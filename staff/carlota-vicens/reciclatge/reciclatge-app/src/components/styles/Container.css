@@ -25,7 +25,7 @@
   text-align: center;
 }
 .container__image {
-  width: 400px;
+  width: 100%;
   height: 350px;
   text-align: center;
   margin: 0 auto;

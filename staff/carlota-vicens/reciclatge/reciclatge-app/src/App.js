@@ -16,7 +16,7 @@ import Navbar from './components/NavBar'
 
 class App extends Component {
   state = {
-    loggedIn: true,
+    loggedIn: logic.loggedIn,
     container: null,
     namecontainer: null
   }
