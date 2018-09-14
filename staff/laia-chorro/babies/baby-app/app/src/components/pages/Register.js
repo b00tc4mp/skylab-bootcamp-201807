@@ -44,13 +44,13 @@ class Register extends Component {
 
         return (
             <section>
-                <form className="form-register" onSubmit={submitRegistration}>
-                    <h1 className="h3 mb-3 font-weight-normal">Registration</h1>
+                <form className="babyboom-login form-register" onSubmit={submitRegistration}>
+                    <h1 className="title-login">Registration</h1>
                     <label className="sr-only">email</label>
                     <input type="text" className="form-control" placeholder="email@example.com" onChange={keepUsername}/>
                     <label className="sr-only">Password</label>
                     <input type="password" className="form-control" placeholder="Password" onChange={keepPassword}/>
-                    <button type="submit" className="btn btn-lg btn-block" >Register</button>
+                    <button type="submit" className="nav-btn btn-block" >Register</button>
                 </form>
                 {errorMsg && <Message success={false} text={this.props.errorMsg}/>}
                 {showFeedback && <Message success={true} text={'Your registration was successful'}/>}

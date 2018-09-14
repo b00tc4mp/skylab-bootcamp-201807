@@ -42,13 +42,13 @@ class Login extends Component {
         const { submitLogin, keepUsername, keepPassword, state: {errorMsg, showFeedback} } = this
 
         return (
-            <form className="form-signin" onSubmit={submitLogin}>
-                <h1 className="h3 mb-3 font-weight-normal">Please sign in</h1>
+            <form className="babyboom-login form-signin" onSubmit={submitLogin}>
+                <h1 className="title-login">Please sign in</h1>
                 <label className="sr-only">Username</label>
                 <input type="text" id="inputEmail" className="form-control" placeholder="Username" required="" autoFocus="" onChange={keepUsername}/>
                 <label className="sr-only">Password</label>
                 <input type="password" id="inputPassword" className="form-control" placeholder="Password" required="" onChange={keepPassword}/>
-                <button className="btn btn-lg btn-block" type="submit">Sign in</button>
+                <button className="nav-btn btn-block" type="submit">Sign in</button>
                 {errorMsg && <Message success={false} text={this.props.errorMsg}/>}
                 {showFeedback && <Message success={true} text={'Your Login was successful'}/>}
             </form>

@@ -9,15 +9,10 @@ body {
     margin: auto;
 }
 
+.babyboom-login.form-register {
+    margin-top: 277px;
+}
+
 .form-register input.form-control {
     margin: 20px 0;
-}
-
-.form-register button {
-    background-color: #6fa0c2;
-    border-color: #6fa0c2;
-}
-
-.form-register button:hover {
-    background-color: #3f6b91;
 }
