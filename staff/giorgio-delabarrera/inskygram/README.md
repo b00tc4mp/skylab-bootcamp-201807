@@ -4,6 +4,10 @@ Inskygram is a photo sharing social networking service.
 
 Web application that tries to simulate the behavior of the application [Instagram](http://instagram.com). It will be developed for the presentation of the final project of the bootcamp in [Skylab Coders](https://skylabcoders.com/).
 
+[Live demo](https://inskygram.surge.sh/)
+
+[Documentation](./doc/README.md)
+
 ## Screenshoot
 
 ![](./screenshot.png)
