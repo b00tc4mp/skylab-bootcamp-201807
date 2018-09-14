@@ -75,13 +75,10 @@ const logic = {
     authenticate(email, password) {
         return Promise.resolve()
             .then(() => {
-                //this._validateStringField('password', password)
-                //debugger
                 return this._call('authenticate', 'post', {
                     'Content-Type': 'application/json'
                 }, JSON.stringify({ email, password }), 200)
                     .then(res => res.json())
-                    //.then(({ token }) => token)
             })
     },
 

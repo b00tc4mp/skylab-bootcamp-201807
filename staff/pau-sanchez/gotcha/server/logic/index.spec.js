@@ -417,10 +417,6 @@ describe('logic', () => {
                     
                 })
 
-        //@@should fail to create a notebook without userid
-        //@@should fail to create a notebook without notebooktitle
-        //@@should fail to create a notebook without videourl
-        //@@should fail to create a notebook with a none youtube url
         
     )})
 
@@ -530,7 +526,7 @@ describe('logic', () => {
                     expect(res.notebooktitle).to.equal(newTitle)
                 })
         })
-        //@@should fail to update when sessionId is different of the notebook creator id
+        
 
     })
 
@@ -570,7 +566,7 @@ describe('logic', () => {
                     expect(res).to.equal(null)
                 })
         })
-        //@@should fail to remove when sessionId is different of the notebook creator id
+        
     })
 
      
@@ -812,7 +808,7 @@ describe('logic', () => {
                     expect(note).to.equal(null)
                 })
         })
-        //@@Should fail to remove notes if current user is not the note creator
+        
 
     })
 

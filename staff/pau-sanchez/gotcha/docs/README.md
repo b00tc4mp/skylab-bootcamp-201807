@@ -1,5 +1,12 @@
+## Local Setup
+
+[Client Setup](../client/README.md)
+<br>
+[Server Setup](../server/README.md)
+
+
 ## User cases
-![user cases](images/user_casespng)
+![user cases](images/user_cases.png)
 <br>
 ## Screenshots
 ![landing](images/screenshot_landing.png)

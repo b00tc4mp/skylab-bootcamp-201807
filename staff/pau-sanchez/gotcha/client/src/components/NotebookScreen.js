@@ -65,13 +65,13 @@ class NotebookScreen extends Component {
           played: 0,
           loaded: 0
         })
-      }
+    }
     
-      onProgress = state => {
+    onProgress = state => {
         if (!this.state.seeking) {
           this.setState(state)
         }
-      }
+    }
     
     
     ref = player => {

@@ -18,10 +18,8 @@ class Landing extends Component {
         let fieldValidationErrors = this.state.formErrors;
         let urlValid = this.state.urlValid;
         
-        
         urlValid = seturl.match(/^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})?$/)
-        console.log(urlValid)
-        
+                
         fieldValidationErrors.url = urlValid ? '' : 'invalid youtube';
         this.setState({url: seturl})
         this.setState({formErrors: fieldValidationErrors,

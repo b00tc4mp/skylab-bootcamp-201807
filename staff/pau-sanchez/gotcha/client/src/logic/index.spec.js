@@ -115,7 +115,6 @@ describe('logic', () => {
             
             .then(() => logic.authenticate(email, password))
             .then(res => {
-                debugger
                 const userId = res.id
                 const token = res.token
                 return logic.updatePassword(email, password, newPassword, userId, token)
@@ -418,7 +417,6 @@ describe('logic', () => {
                     return logic.createNotebook(userId, notebooktitle, videourl, token)
                 })
                 .then(res => {
-                    //debugger
                     expect(res.message).to.equal('Notebook created correctly')
                 })
 
