@@ -1,0 +1,1147 @@
+{
+	"info": {
+		"_postman_id": "353d3400-28bd-4516-9387-1cfd0a296b28",
+		"name": "reminder-api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Admin",
+			"item": [
+				{
+					"name": "Doctors",
+					"item": [
+						{
+							"name": "Register Doctor",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1YjkyNGNlMmUxZWFhOTc1MDQxMjYxYjgiLCJpYXQiOjE1MzYzMTQ4NDQsImV4cCI6MTUzNjM1ODA0NH0.S4TdU_xcONqK00VgqwdY7H4jhDfeBN6G3jivxS-6-TQ",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"code\": \"gerard\",\n\t\"password\": \"doctor\"\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/admin/5b924ce2e1eaa975041261b8/register-doctor",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"admin",
+										"5b924ce2e1eaa975041261b8",
+										"register-doctor"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Unregister Doctor",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1YjkyNGNlMmUxZWFhOTc1MDQxMjYxYjgiLCJpYXQiOjE1MzYzMTQ4NDQsImV4cCI6MTUzNjM1ODA0NH0.S4TdU_xcONqK00VgqwdY7H4jhDfeBN6G3jivxS-6-TQ",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"code\": \"gerard\",\n\t\"password\": \"doctor\"\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/admin/5b924ce2e1eaa975041261b8/remove-doctor",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"admin",
+										"5b924ce2e1eaa975041261b8",
+										"remove-doctor"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "List Doctors",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {},
+								"url": {
+									"raw": "http://localhost:8080/api/admin/doctors",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"admin",
+										"doctors"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Doctor Data",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {},
+								"url": {
+									"raw": "http://localhost:8080/api/admin/doctor/gerard",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"admin",
+										"doctor",
+										"gerard"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Patients",
+					"item": [
+						{
+							"name": "Patient",
+							"item": [
+								{
+									"name": "Patient Data",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"body": {},
+										"url": {
+											"raw": "http://localhost:8080/api/admin/patient/11112222",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api",
+												"admin",
+												"patient",
+												"11112222"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Update Patient",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1YjkyNGNlMmUxZWFhOTc1MDQxMjYxYjgiLCJpYXQiOjE1MzYzMTQ4NDQsImV4cCI6MTUzNjM1ODA0NH0.S4TdU_xcONqK00VgqwdY7H4jhDfeBN6G3jivxS-6-TQ",
+													"type": "string"
+												}
+											]
+										},
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n\t\"dni\": 11112222,\n\t\"newAddress\": \"Vila i Vila 73\",\n\t\"newPhone\": 111222333\n}"
+										},
+										"url": {
+											"raw": "http://localhost:8080/api/admin/5b924ce2e1eaa975041261b8/update-patient",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api",
+												"admin",
+												"5b924ce2e1eaa975041261b8",
+												"update-patient"
+											]
+										}
+									},
+									"response": []
+								}
+							],
+							"_postman_isSubFolder": true
+						},
+						{
+							"name": "Search Patients by Name",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {},
+								"url": {
+									"raw": "http://localhost:8080/api/doctor/patients/Edu",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"doctor",
+										"patients",
+										"Edu"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "List All Patients",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {},
+								"url": {
+									"raw": "http://localhost:8080/api/admin/patients",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"admin",
+										"patients"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add Patient",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1YjkyNGNlMmUxZWFhOTc1MDQxMjYxYjgiLCJpYXQiOjE1MzYzMTQ4NDQsImV4cCI6MTUzNjM1ODA0NH0.S4TdU_xcONqK00VgqwdY7H4jhDfeBN6G3jivxS-6-TQ",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"name\": \"Edu\",\n\t\"dni\": 11112222,\n\t\"surname\": \"Berenguer\",\n\t\"age\": 82,\n\t\"gender\": \"male\",\n\t\"address\": \"Roc Boronat 35, Barcelona\",\n\t\"phone\": 666333666\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/admin/5b924ce2e1eaa975041261b8/add-patient",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"admin",
+										"5b924ce2e1eaa975041261b8",
+										"add-patient"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Remove Patient",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1YjkyNGNlMmUxZWFhOTc1MDQxMjYxYjgiLCJpYXQiOjE1MzYzMTQ4NDQsImV4cCI6MTUzNjM1ODA0NH0.S4TdU_xcONqK00VgqwdY7H4jhDfeBN6G3jivxS-6-TQ",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"dni\": 11112222\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/admin/5b924ce2e1eaa975041261b8/remove-patient",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"admin",
+										"5b924ce2e1eaa975041261b8",
+										"remove-patient"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Caretakers",
+					"item": [
+						{
+							"name": "Patients",
+							"item": [
+								{
+									"name": "Patient Data",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"body": {},
+										"url": {
+											"raw": "http://localhost:8080/api/doctor/patient/11112222",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api",
+												"doctor",
+												"patient",
+												"11112222"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Caretakers Patient",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"body": {},
+										"url": {
+											"raw": "http://localhost:8080/api/caretaker/99998888/patients",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api",
+												"caretaker",
+												"99998888",
+												"patients"
+											]
+										}
+									},
+									"response": []
+								}
+							],
+							"_postman_isSubFolder": true
+						},
+						{
+							"name": "Register Caretaker",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1YjkyNGNlMmUxZWFhOTc1MDQxMjYxYjgiLCJpYXQiOjE1MzYzMTQ4NDQsImV4cCI6MTUzNjM1ODA0NH0.S4TdU_xcONqK00VgqwdY7H4jhDfeBN6G3jivxS-6-TQ",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"dni\": 99998888,\n\t\"password\": \"jaume\",\n\t\"name\": \"Jaume\",\n\t\"surname\": \"Serradell\",\n\t\"age\": 36,\n\t\"gender\": \"male\",\n\t\"phone\": 666111222\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/admin/5b924ce2e1eaa975041261b8/register-caretaker",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"admin",
+										"5b924ce2e1eaa975041261b8",
+										"register-caretaker"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Unregister Caretaker",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1YjkyNGNlMmUxZWFhOTc1MDQxMjYxYjgiLCJpYXQiOjE1MzYzMTQ4NDQsImV4cCI6MTUzNjM1ODA0NH0.S4TdU_xcONqK00VgqwdY7H4jhDfeBN6G3jivxS-6-TQ",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"dni\": 99998888\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/admin/5b924ce2e1eaa975041261b8/remove-caretaker",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"admin",
+										"5b924ce2e1eaa975041261b8",
+										"remove-caretaker"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Caretaker Data",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {},
+								"url": {
+									"raw": "http://localhost:8080/api/admin/caretaker/99998888",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"admin",
+										"caretaker",
+										"99998888"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "List Caretakers",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {},
+								"url": {
+									"raw": "http://localhost:8080/api/admin/caretakers",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"admin",
+										"caretakers"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Assign Patients",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1YjkyNGNlMmUxZWFhOTc1MDQxMjYxYjgiLCJpYXQiOjE1MzYzMTQ4NDQsImV4cCI6MTUzNjM1ODA0NH0.S4TdU_xcONqK00VgqwdY7H4jhDfeBN6G3jivxS-6-TQ",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"caretakerDni\": 99998888,\n\t\"patientDni\": 11112222\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/admin/5b924ce2e1eaa975041261b8/assign-patients",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"admin",
+										"5b924ce2e1eaa975041261b8",
+										"assign-patients"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Unassign Patients",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1YjkyNGNlMmUxZWFhOTc1MDQxMjYxYjgiLCJpYXQiOjE1MzYzMTQ4NDQsImV4cCI6MTUzNjM1ODA0NH0.S4TdU_xcONqK00VgqwdY7H4jhDfeBN6G3jivxS-6-TQ",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"caretakerDni\": 99998888,\n\t\"patientDni\": 11112222\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/admin/5b924ce2e1eaa975041261b8/assign-patients",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"admin",
+										"5b924ce2e1eaa975041261b8",
+										"assign-patients"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Authenticate Admin",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"code\": \"maider\",\n\t\"password\": \"maider31\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/admin/auth",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"admin",
+								"auth"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Doctor",
+			"item": [
+				{
+					"name": "Patient",
+					"item": [
+						{
+							"name": "Treatment",
+							"item": [
+								{
+									"name": "Add Treatment",
+									"request": {
+										"auth": {
+											"type": "noauth"
+										},
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n\t\"dni\": 11112222,\n\t\"pill\": \"nolotil\",\n\t\"quantity\": \"1\",\n\t\"frequency\": \"tuesday\"\n}"
+										},
+										"url": {
+											"raw": "http://localhost:8080/api/doctor/patient/5b92581c6f96413ef87a74cb/add-treatment",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api",
+												"doctor",
+												"patient",
+												"5b92581c6f96413ef87a74cb",
+												"add-treatment"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Delete Treatment",
+									"request": {
+										"auth": {
+											"type": "noauth"
+										},
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n\t\"dni\": 11112222,\n\t\"pill\": \"nolotil\"\n}"
+										},
+										"url": {
+											"raw": "http://localhost:8080/api/doctor/patient/5b92581c6f96413ef87a74cb/remove-treatment",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api",
+												"doctor",
+												"patient",
+												"5b92581c6f96413ef87a74cb",
+												"remove-treatment"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "List Treatments",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"body": {},
+										"url": {
+											"raw": "http://localhost:8080/api/doctor/patient/5b92581c6f96413ef87a74cb/treatments",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api",
+												"doctor",
+												"patient",
+												"5b92581c6f96413ef87a74cb",
+												"treatments"
+											]
+										}
+									},
+									"response": []
+								}
+							],
+							"_postman_isSubFolder": true
+						},
+						{
+							"name": "Cites",
+							"item": [
+								{
+									"name": "Add Cite",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n\t\"code\": \"gerard\",\n\t\"dni\": 11112222,\n\t\"name\": \"cite\",\n\t\"date\": \"2018-09-15 14:00\"\n}"
+										},
+										"url": {
+											"raw": "http://localhost:8080/api/doctor/add-cite",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api",
+												"doctor",
+												"add-cite"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Remove Cite",
+									"request": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n\t\"code\": \"gerard\",\n\t\"dni\": 11112222,\n\t\"name\": \"cite\",\n\t\"date\": \"2018-09-15 14:00\"\n}"
+										},
+										"url": {
+											"raw": "http://localhost:8080/api/doctor/remove-cite",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api",
+												"doctor",
+												"remove-cite"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "List Patient Cites",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"body": {},
+										"url": {
+											"raw": "http://localhost:8080/api/doctor/patient/5b92581c6f96413ef87a74cb/cites/2018-09",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api",
+												"doctor",
+												"patient",
+												"5b92581c6f96413ef87a74cb",
+												"cites",
+												"2018-09"
+											]
+										}
+									},
+									"response": []
+								}
+							],
+							"_postman_isSubFolder": true
+						},
+						{
+							"name": "Patient Data",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {},
+								"url": {
+									"raw": "http://localhost:8080/api/doctor/patient/11112222",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"doctor",
+										"patient",
+										"11112222"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "List Cites",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:8080/api/doctor/cites/2018-09-15",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"doctor",
+								"cites",
+								"2018-09-15"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Authenticate Doctor",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"code\": \"gerard\",\n\t\"password\": \"doctor\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/doctor/auth",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"doctor",
+								"auth"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search Patients by Name",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:8080/api/doctor/patients/Edu",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"doctor",
+								"patients",
+								"Edu"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List All Patients",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:8080/api/doctor/patients",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"doctor",
+								"patients"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Caretaker",
+			"item": [
+				{
+					"name": "Patients",
+					"item": [
+						{
+							"name": "List Patient Cites",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {},
+								"url": {
+									"raw": "http://localhost:8080/api/caretaker/patient/5b92581c6f96413ef87a74cb/cites/2018-09",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"caretaker",
+										"patient",
+										"5b92581c6f96413ef87a74cb",
+										"cites",
+										"2018-09"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "List Patient Treatments",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {},
+								"url": {
+									"raw": "http://localhost:8080/api/caretaker/patient/5b92581c6f96413ef87a74cb/treatments",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"caretaker",
+										"patient",
+										"5b92581c6f96413ef87a74cb",
+										"treatments"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Caretakers Patient",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {},
+								"url": {
+									"raw": "http://localhost:8080/api/caretaker/99998888/patients",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"caretaker",
+										"99998888",
+										"patients"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Patient Data",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {},
+								"url": {
+									"raw": "http://localhost:8080/api/doctor/patient/11112222",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"doctor",
+										"patient",
+										"11112222"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Authenticate Caretaker",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"dni\": 99998888,\n\t\"password\": \"jaume\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/caretaker/auth",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"caretaker",
+								"auth"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Caretakers Password",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1YjkyNWIwN2IxYWJlZDE3MThkODJkNDYiLCJpYXQiOjE1MzYzMTk2OTksImV4cCI6MTUzNjM2Mjg5OX0.zEG5VA6NnBRoENZOGn7PupM62CtE_fu8NAD-5L9z8MY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"dni\": 99998888,\n\t\"password\": \"pepito\",\n\t\"newPassword\": \"jaume\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/caretaker/update/5b925b07b1abed1718d82d46",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"caretaker",
+								"update",
+								"5b925b07b1abed1718d82d46"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
