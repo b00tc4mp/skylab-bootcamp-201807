@@ -6,4 +6,4 @@
 
 ## [Instructions Server](app/server/README.md)
 
-## [Live demo](http://https://gg-wp.surge.sh/#/)
+## [Live demo](https://gg-wp.surge.sh/#/)

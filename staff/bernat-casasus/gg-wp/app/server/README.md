@@ -4,34 +4,50 @@
 
 ### Running the application
 
-1. start the application
+1. get a new Riot Games api key  [here](https://developer.riotgames.com/)
+
+2. start the application
 
 ```sh
 $ npm start
 ```
 
-### Building the distribution package
+### Api Endpoints
+
+#### Game
+1. Retrive summuner summary information
 
 ```sh
-$ npm run build
+/game/summary/:username
 ```
-
-### Deploying the package in surge
-
-1. run surge
+2. Retrive league by league id
 
 ```sh
-$ surge
+/game/league/:leagueid
 ```
 
-2. enter credentials (if they are asked)
+3. Retrive onlythe players information of the live game info by summoner id
 
-3. enter the folder from which to deploy (```build```)
+```sh
+/game/live/:summonerid
+```
+
+4. Retrive full game info by game id
+
+```sh
+/game/spectate/:summonerid
+```
+
+5. Retrive summoner basic information
+
+```sh
+/game/summary/preview/:summonerid
+```
 
 ### Running tests
 
-1. open the specs runner in browser
+1. open your colsone, get into the project root.
 
 ```sh
-$ open SpecRunner.html
+$ mocha logic
 ```
