@@ -122,11 +122,27 @@ The examples described below are when the user is not following the private user
 - A user will not be able to see the posts of a private user. (with the url of the post for example)
 - A user can see the profile of a private user but only the data, not the photos.
 
+### Use case
+
+![Use case](./images/use-case.png)
+
 ## Technical description
+
+### Architecture
+
+![Data model](./images/architecture.png)
+
+#### Client side
+
+![Data model](./images/client-architecture.png)
+
+### Server side
+
+![Data model](./images/server-architecture.png)
 
 ### API
 
-[Documentation API](https://documenter.getpostman.com/view/2257838/RWaKSo98)
+[API Documentation](https://documenter.getpostman.com/view/2257838/RWaKSo98)
 
 ![](./images/api-doc.png)
 
