@@ -1,5 +1,7 @@
 # Jelzi Food App
 
+![](images/logoSkylab.png)
+
 ## Intro
 
 This application is thought to help people with different allergies. The user can create full menus and save recipes without the allergens indicated in their personal profiles.
@@ -15,14 +17,6 @@ The user can create menus and, when the recipe has been saved, he can choose the
 ### Use Cases
 
 ![](images/jelzi-food-uses-cases.png)
-
-<!-- ### Activities (flows)
-
-- login
-
-![](images/spotify-app_login-activity-diagram-(flow-diagram).png) -->
-
-<!-- ### [Views (design)](design) -->
 
 ## Technical description
 
@@ -43,22 +37,6 @@ User data is persistent across page reloads, as local data is stored in the user
 
 ![](images/jelzi-food_components-diagram.png)
 
-<!-- ### Sequences
+### Data model
 
-- search
-
-![](images/rainy-saturday_search-sequence-diagram.png) -->
-
-<!-- ### Classes
-
-- React App/Register components
-
-![](images/rainy-saturday_classes-main.png)
-
-- React search components
-
-![](images/rainy-saturday_classes-search.png) -->
-
-<!-- ### Data model
-
-![](images/spotify-app_data-model-diagram.png)  -->
+![](images/Jelzi-food-model.png)
