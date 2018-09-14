@@ -17,10 +17,11 @@ class Reviews extends Component {
     }
     
     componentDidMount(){
-        this.setState({
-            reviews: logic.getUserField('reviews'),
-            feedbacks: logic.getUserField('feedbacks')
-        })
+        logic.getPrivateUser()
+            .then(() => this.setState({
+                reviews: logic.getUserField('reviews'),
+                feedbacks: logic.getUserField('feedbacks')
+            }))
     }
 
     keepDescription = e => this.setState({description: e.target.value})
