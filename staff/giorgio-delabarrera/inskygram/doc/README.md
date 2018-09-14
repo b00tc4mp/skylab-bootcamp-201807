@@ -132,14 +132,6 @@ The examples described below are when the user is not following the private user
 
 ![Data model](./images/architecture.png)
 
-#### Client side
-
-![Data model](./images/client-architecture.png)
-
-### Server side
-
-![Data model](./images/server-architecture.png)
-
 ### API
 
 [API Documentation](https://documenter.getpostman.com/view/2257838/RWaKSo98)
