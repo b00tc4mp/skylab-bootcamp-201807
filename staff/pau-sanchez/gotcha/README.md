@@ -12,7 +12,7 @@ Once selected the video you are interested to take notes from, copy the youtube 
 
 ![00](docs/images/copy.png)
 
-In the main page, add the title, paste the youtube URL and press submit.
+In the main page, add the title, paste the youtube URL and press GO.
 
 ![01](docs/images/paste.png)
 
