@@ -1,0 +1,1 @@
+[Rindfleischetikettierungsüberwachungsaufgabenübertragungsgesetz](https://www.telegraph.co.uk/news/worldnews/europe/germany/10095976/Germany-drops-its-longest-word-Rindfleischeti....html)
