@@ -6,11 +6,7 @@
 
 1. get a new Jelzi Food app key and app id [here](https://developer.edamam.com/)
 
-2. update the key in ```jelzi-api/logic/index.js```
-
-```js
-museumKey: 'ROQio02r',
-```
+2. update the key in `jelzi-api/logic/index.js`
 
 3. start the application
 
@@ -34,7 +30,7 @@ $ surge
 
 2. enter credentials (if they are asked)
 
-3. enter the folder from which to deploy (```build```)
+3. enter the folder from which to deploy (`build`)
 
 ### Running tests
 
