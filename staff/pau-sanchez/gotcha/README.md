@@ -16,7 +16,7 @@ In the main page, add the title, paste the youtube URL and press GO.
 
 ![01](docs/images/paste.png)
 
-The user will be redirected to the 'editors area'
+The user will be redirected to the 'editor area'
 
 Press, play to the Youtube video.
 
