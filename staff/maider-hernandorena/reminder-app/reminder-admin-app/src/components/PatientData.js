@@ -45,7 +45,8 @@ class PatientData extends Component {
     keepNewAddress = e => this.setState({ newAddress: e.target.value, error: '' })
     keepNewPhone = e => this.setState({ newPhone: e.target.value, error: '' })
 
-    updatePatient = () => {
+    updatePatient = e => {
+        e.preventDefault()
         let { dni, newAddress, newPhone } = this.state
         const { id, token } = this.props
 
