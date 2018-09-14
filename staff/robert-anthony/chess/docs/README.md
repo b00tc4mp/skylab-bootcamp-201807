@@ -25,3 +25,12 @@ Tests are written in Mocha/Chai.
 ## Data Models
 
 ![](images/chess-data-models.png)
+
+## Basic Architecture
+
+![](images/chess-basic-architecture.png)
+
+
+## Making A Move: sample communication flow
+
+![](images/chess-make-a-move.png)
