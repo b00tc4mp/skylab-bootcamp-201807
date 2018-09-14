@@ -50,3 +50,7 @@ User data is persistent across page reloads, as users data is stored in the user
 ### Data Model Diagram
 
 ![](images/data-model.png) 
+
+### Author
+
+Bernat Casasús Vieco - [GitHub](https://github.com/bcasasus)
