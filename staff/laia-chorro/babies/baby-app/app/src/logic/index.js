@@ -1,8 +1,8 @@
 const validate = require('./validate')
 
 const logic = {
-    url: 'http://localhost:8080/api',
-    //url: 'https://rocky-harbor-82379.herokuapp.com/api',
+    // url: 'http://localhost:8080/api',
+    url: 'https://fierce-depths-84732.herokuapp.com/api',
 
     _call(path, method, headers, body, expectedStatus) {
         const config = { method }
