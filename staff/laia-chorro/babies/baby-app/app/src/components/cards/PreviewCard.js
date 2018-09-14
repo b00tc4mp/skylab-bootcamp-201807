@@ -9,7 +9,7 @@ import CardMedia from '@material-ui/core/CardMedia'
 import IconButton from '@material-ui/core/IconButton'
 import FavoriteIcon from '@material-ui/icons/Favorite'
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder'
-import ShareIcon from '@material-ui/icons/Share'
+//import ShareIcon from '@material-ui/icons/Share'
 import TurnedInIcon from '@material-ui/icons/TurnedIn'
 import WorkIcon from '@material-ui/icons/Work'
 import Typography from '@material-ui/core/Typography'
@@ -31,7 +31,7 @@ const styles = {
     position: 'absolute',
     right: '15px',
     top: '15px',
-    color: 'blue'
+    color: '#0097A7'
   },
   isFavourite: {
     color: '#4DD0E1'
@@ -89,9 +89,9 @@ function PreviewCard(props) {
             {isFav ?  <FavoriteIcon onClick={onNotFavourites} className={classes.isFavourite} /> : 
             <FavoriteBorderIcon onClick={onFavourites} className={classes.isFavourite} />}
           </IconButton>
-          <IconButton aria-label="Share">
+          {/*<IconButton aria-label="Share">
             <ShareIcon />
-          </IconButton>
+  </IconButton>*/}
       </CardActions>
     </Card>
   );

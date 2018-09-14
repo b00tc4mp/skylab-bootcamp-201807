@@ -232,7 +232,7 @@ const logic = {
                 validate._stringField('product id', product)
 
                 const body = { user, product }
-debugger;
+
                 return this._call(`me/${this._userId}/feedback`, 'PATCH', { 
                     'Authorization': `bearer ${this._userToken}`,
                     'Content-Type': 'application/json' 

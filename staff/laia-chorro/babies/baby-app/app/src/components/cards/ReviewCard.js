@@ -18,7 +18,7 @@ const styles = {
     cursor: 'pointer',
   },
   stars: {
-    width: 173
+    width: 175
   }
 }
 

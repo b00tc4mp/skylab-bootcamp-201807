@@ -35,7 +35,11 @@ class UsersDialog extends React.Component {
 
     getUsersFromChatsByProduct = productId => {
         return logic.listChatsByProductId(productId)
-            .then(chats => Promise.all(chats.map(chat => logic.getProductDetailById(chat.product))) )
+            .then(chats => Promise.all(chats.map(chat => {
+                const userId = logic._userId
+                const receiver = chat.users.find(item => item !== userId)
+                return logic.getPublicUser(receiver)
+            })) )
             .then(values => this.setState({ prodBuyers: values }) )
             .catch(({ message }) => Alert.error(message, { position: 'bottom-right', effect: 'slide', timeout: 3000 }))
     }
@@ -59,16 +63,16 @@ class UsersDialog extends React.Component {
             <div>
             <List>
                 {prodBuyers && prodBuyers.map((buyer, index) => (
-                <ListItem button onClick={() => this.handleListItemClick(buyer.user_id)} key={index}>
+                <ListItem button onClick={() => this.handleListItemClick(buyer.id)} key={index}>
                     <ListItemAvatar>
-                    {buyer.user_photo?
-                        <Avatar style={{display: 'inline-block', marginRight: '5px'}} alt="profile photo" style={{ height: '48px', width: '48px', margin: '10px auto' }} src={buyer.user_photo} className={classes.avatar} /> : 
+                    {buyer.photo?
+                        <Avatar style={{display: 'inline-block', marginRight: '5px'}} alt="profile photo" style={{ height: '48px', width: '48px', margin: '10px auto' }} src={buyer.photo} className={classes.avatar} /> : 
                         <i className="material-icons md-48">face</i>
                     }
                     </ListItemAvatar>
-                    <ListItemText primary={buyer.user_name} />
+                    <ListItemText primary={buyer.public_name} />
                 </ListItem>
-                ))}
+                ) )}
             </List>
             </div>
         </Dialog>

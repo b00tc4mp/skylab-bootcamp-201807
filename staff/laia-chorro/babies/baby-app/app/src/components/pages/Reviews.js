@@ -38,9 +38,11 @@ class Reviews extends Component {
 
         const idProd = feedback.id
         const userTo = feedback.user
+        let score = starsRating || 1
 
-        logic.addReview(userTo, starsRating, idProd, description)
+        logic.addReview(userTo, score, idProd, description)
             .then(() => logic.getPrivateUser() )
+            .then(()  => this.setState({feedbacks: logic.getUserField('feedbacks')}))
             .then(() => Alert.success('Thank you for your review!', { position: 'top-right', timeout: 3000 }))
             .catch(({ message }) => Alert.error(message, { position: 'bottom-right', effect: 'slide', timeout: 3000 }))
             .finally(() => this.setState({ loaded: true }))
@@ -54,7 +56,7 @@ class Reviews extends Component {
             <div className="mylist-products-container">
                 <Loader loaded={this.state.loaded}>
                 
-                    {feedbacks && ( <h1 className="mylist-products-heading">Some people are waiting for your feedback</h1> )}
+                    {feedbacks && !!feedbacks.length && ( <h1 className="mylist-products-heading">Some people are waiting for your feedback</h1> )}
                        {feedbacks && feedbacks.map((feedback, index) => {
                            return(
                            <div key={index} data-feedback={feedback.id}>

@@ -327,19 +327,10 @@ const userLogic = {
             .then(prod => { 
                 if (!prod) throw new LogicError(`product with id: ${productId} does not exist`)
 
-                //return User.findById(userId)
-
                 return User.findByIdAndUpdate(userId, 
                     { '$pull': { 'feedbacks': productId } }, 
                     { 'new': true })
             })
-            /*.then(user => {
-                if (!user) throw new LogicError(`user with id: ${userId} does not exist`)
-
-                user.feedbacks.pull(productId)
-
-                return user.save()
-            })*/
             .then(() => true)
     },
 

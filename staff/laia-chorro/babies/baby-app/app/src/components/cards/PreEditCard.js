@@ -55,6 +55,9 @@ const styles = theme => ({
     paddingLeft: theme.spacing.unit,
     paddingBottom: theme.spacing.unit,
     marginLeft: 30,
+  },
+  button: {
+    color: '#0097A7',
   }
 });
 
