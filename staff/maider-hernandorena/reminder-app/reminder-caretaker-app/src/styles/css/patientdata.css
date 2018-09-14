@@ -28,10 +28,10 @@
       @media screen and (max-width: 600px) {
         .all__data__cites {
           margin: 0;
-          width: 90%;
+          width: 85%;
           background: linear-gradient(left, #55bf9f 0%, #2fbdbb 100%);
           color: #ffffff;
-          padding: 10% 0 10% 10%; } }
+          padding: 10% 5% 10% 10%; } }
       .all__data__cites__title {
         margin-bottom: 0; }
       .all__data__cites__list {
@@ -48,9 +48,9 @@
       @media screen and (max-width: 600px) {
         .all__data__treatments {
           margin: 0;
-          width: 90%;
+          width: 85%;
           color: #333333;
-          padding: 10% 0 10% 10%;
+          padding: 10% 5% 10% 10%;
           height: 100%; } }
       .all__data__treatments__title {
         margin-bottom: 0; }

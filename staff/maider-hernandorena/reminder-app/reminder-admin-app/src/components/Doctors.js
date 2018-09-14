@@ -40,7 +40,8 @@ class Doctors extends Component {
     keepCode = e => this.setState({ code: e.target.value, error: '' })
     keepPassword = e => this.setState({ password: e.target.value, error: '' })
 
-    addDoctor = () => {
+    addDoctor = e => {
+        e.preventDefault()
         const { code, password } = this.state
         const { id, token } = this.props
 
