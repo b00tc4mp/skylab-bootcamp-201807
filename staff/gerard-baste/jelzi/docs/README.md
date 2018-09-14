@@ -29,6 +29,10 @@ The application is a web application that is meant to run within a browser envir
 
 User data is persistent across page reloads, as local data is stored in the user's SessionStorage.
 
+## Api Test
+
+![](images/test.png)
+
 ### Blocks
 
 ![](images/jelzi-food-app_block-diagram.png)

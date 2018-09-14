@@ -4,6 +4,6 @@
 
 ## [Instructions App](jelzi-app/README.md)
 
-## [Instructions API](jelzi-api/README.md)
+## [Instructions Api](jelzi-api/README.md)
 
 ## [Live demo](http://jelzi-food.surge.sh/)
