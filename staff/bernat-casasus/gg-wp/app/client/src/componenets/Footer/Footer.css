@@ -1,0 +1,23 @@
+.footer{
+    padding-top: 25px;
+    background-color: rgb(26, 164, 248);
+    color: white;
+    padding-bottom: 25px;
+}
+ul{
+    list-style-type: none;
+    color: white;
+}
+
+li{
+    float: left;
+    margin: 5px;
+    color: white;
+}
+.footer-element{
+    color: white;
+}
+
+.footer-element:hover{
+    color: white;
+}

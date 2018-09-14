@@ -1,0 +1,45 @@
+/* .navbar-maindiv .navbar.navbar-expand-md a.navbar-brand {
+    font-size: 1em;
+    letter-spacing: .2em;
+    font-weight: 700;
+    margin-left: 50px;
+    color: white; 
+  } */
+
+  .nav {
+    background-color: rgb(29, 46, 81);
+    /* height:43px; */
+  }
+  .cool{
+    height:43px;
+  }
+
+  .nav-link{
+    color: #638BB5;
+    font-size: 0.9em;
+  }
+
+  .active{
+    color: white;
+    border-bottom: 2px solid white;
+  }
+
+  .navBarItem:hover{
+    color: white;
+    border-bottom: 2px solid white;
+  }
+
+  .disabled:hover{
+    color: none;
+    border-bottom: none;
+  }
+
+  .div-space{
+    margin-left:153px;
+  }
+
+  @media screen and (max-width: 414px) {
+    .div-space{
+      margin-left:0px;
+    }
+}

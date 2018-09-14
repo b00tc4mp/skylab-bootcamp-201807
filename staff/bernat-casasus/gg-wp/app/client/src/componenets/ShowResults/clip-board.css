@@ -1,0 +1,130 @@
+.results-container{
+    padding-top: 50px;
+    padding-bottom: 50px;
+    background-color:rgb(234, 234, 234);
+}
+
+#user-ico{
+    border-radius: 25px; 
+}
+
+#user-matches{
+    margin-top: 15px;
+}
+#list-group{
+    background-color:rgb(26, 164, 248);
+    color:white;
+}
+
+#league-img{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 40%;
+}
+
+#card-conmtainer{
+    /* width:5px; */
+    box-sizing: border-box;
+    /* margin:60px; */
+}
+
+.table{
+    width:50%;
+}
+#radar-champion-img{
+    text-align: center;
+
+}
+#profile-icon{
+    border-radius: 50%;
+    margin-right: 15px;
+}
+
+.fa-lg{
+    margin-right: 15px;
+}
+
+#user-data,#user-winrate,#user-winrate,#user-champion-stats, #user-champion-analytics,#user-main-role,#user-game-style{
+    background-color:rgb(237, 237, 237);
+    margin-bottom: 10px;
+}
+#user-preview{
+    background-color:rgb(237, 237, 237);
+}
+
+#summary-nav-bar{
+    background-color:#EAEAEA;
+    margin-top: 15px;
+}
+#summary-nav-item-1-active,#summary-nav-item-2-active,#summary-nav-item-3-active,#follow-button{
+    background-color: rgb(230, 230, 230);
+    border-color:#CFCFCF;
+    color:#495057;
+    cursor: pointer;
+}
+
+#summary-nav-item-1,#summary-nav-item-2,#summary-nav-item-3{
+    color:#495057;
+}
+#summary-nav-item-1:hover{
+    color:black;
+    cursor: pointer;
+}
+#summary-nav-item-2:hover{
+    color:black;
+    cursor: pointer;
+}
+#summary-nav-item-3:hover{
+    color:black;
+    cursor: pointer;
+}
+/* Follow button */
+#social{
+    margin-top:20px;
+    text-align: center;
+}
+#follow-button{
+    padding-right:10px;
+    padding-left:10px;
+    margin-left: 15px;
+}
+
+/* Sipnner */
+.lds-ring {
+    display: inline-block;
+    position: relative;
+    width: 64px;
+    height: 64px;
+    margin: 0 auto;
+  }
+  .lds-ring div {
+    box-sizing: border-box;
+    display: block;
+    position: absolute;
+    width: 51px;
+    height: 51px;
+    margin: 6px;
+    border: 6px solid rgb(61, 149, 229);
+    border-radius: 50%;
+    animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+    border-color:rgb(61, 149, 229) transparent transparent transparent;
+  }
+  .lds-ring div:nth-child(1) {
+    animation-delay: -0.45s;
+  }
+  .lds-ring div:nth-child(2) {
+    animation-delay: -0.3s;
+  }
+  .lds-ring div:nth-child(3) {
+    animation-delay: -0.15s;
+  }
+  @keyframes lds-ring {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  

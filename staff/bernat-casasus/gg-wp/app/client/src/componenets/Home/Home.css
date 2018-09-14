@@ -1,0 +1,64 @@
+#card-style{
+    border-radius: 0%;
+}
+.main {
+    background-color: inherit;
+
+}
+
+#welcomeImg{
+    padding-top: 50px;
+}
+
+#welcomeInfo{
+    text-align: center;
+
+
+}
+.info-container a img{
+    width:326px;
+    height:176px;
+}
+
+#info-row{
+    margin:15px;
+}
+
+#search-img{
+    width:360px;
+    height:221px;
+}
+
+@media screen and (max-width: 800px) {
+    .info-container a img{
+        width:250px;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .info-container a img{
+        width:250px;
+    }
+}
+
+@media screen and (max-width: 430px) {
+    #search-img{
+        width:240px;
+        height:151px;
+    }
+}
+
+@media screen and (max-width: 350px) {
+    .info-container a img{
+        width:150px;
+    }
+}
+
+@media (max-height: 959px){
+    #info-row{
+        margin:-15px;
+    }
+    .main {
+        background-color: rgb(26, 164, 248);
+    }
+  }

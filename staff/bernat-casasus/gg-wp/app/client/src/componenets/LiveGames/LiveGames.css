@@ -1,0 +1,69 @@
+.spell-icon{
+    display: block;
+}
+
+.blue-team{
+    width: 7px;
+    height: 47px;
+    background-color: rgb(31, 142, 205);
+    display: inline-block;
+    margin-bottom: -18px;
+    margin-top: -15px;
+    margin-left: -20px;
+    border: 1px solid rgb(26, 120, 174);
+    border-top-left-radius: 5%;
+}
+
+.blue-team-text{
+    color:rgb(31, 142, 205);
+    font-weight: 630;
+    display: inline;
+    margin-left: 5px;
+}
+.white{
+    color:white;
+}
+
+.red-team{
+    width: 7px;
+    height: 47px;
+    background-color: rgb(238, 90, 82);
+    display: inline-block;
+    margin-bottom: -18px;
+    margin-top: -15px;
+    margin-left: -20px;
+    border: 1px solid rgb(198, 68, 62);
+    border-top-left-radius: 5%;
+}
+
+.red-team-text{
+    color:rgb(238, 90, 82);
+    font-weight: 630;
+    display: inline;
+    margin-left: 5px;
+}
+
+.live-images{
+    display: inline;
+}
+
+#headingOne,#headingTwo{
+    color:white;
+    background-color:rgb(54, 164, 164);
+}
+
+#toggler-one,#toggler-two{
+    color:white;
+}
+
+#modal-title{
+    color: rgb(109, 116, 116);
+    background-color:rgb(230, 230, 230);
+}
+
+#download-btn{
+    background-color:rgb(54, 164, 164);
+    color:white;
+    /* margin-right: 50%; */
+    /* margin-left: 50%; */
+}
