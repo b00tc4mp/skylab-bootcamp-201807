@@ -33,13 +33,10 @@ User data is persistent across page reloads, as local data is stored in the user
 
 ![](images/test.png)
 
-### Components
+### Block Model
 
 ![](images/jelzi-food-app_block-diagram.png)
 
-### Blocks
-
-![](images/jelzi-food_components-diagram.png)
 
 ### Data model
 
