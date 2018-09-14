@@ -12,7 +12,6 @@ class Navbar extends Component {
                     <button className='navbar-btn'><a href='/#/market'><img src='images/icons/icon_market.png'/></a></button>
                     <button className='navbar-btn'><a href='/#/news'><img src='images/icons/icon_news.png'/></a></button>
                     <button className='navbar-btn'><a href='/#/user/profile'><img src='images/icons/icon_profile.png'/></a></button> 
- 
                 </header>
                 <div></div>
             </div>

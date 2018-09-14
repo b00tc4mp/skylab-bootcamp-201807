@@ -25,13 +25,14 @@ class Footer extends Component {
             
             <footer className="page-footer font-small stylish-color-dark pt-4">
                 <div className="container text-center text-md-left">
-                    <div className="footer-copyright text-center py-3">
-                    2018 SKYLAB PROJECT &nbsp;&nbsp;&nbsp;
+                    <div className="footer-copyright text-center py-3 footer-text">
+                    <em>© 2018 SKYLAB PROJECT </em>&nbsp;&nbsp;&nbsp;
                             <Button onClick={this.toggle}>{this.props.buttonLabel}<img src='images/icon_bitcoin.png' /></Button>
-                            &nbsp;&nbsp;&nbsp; WITH ♥ BY SERGI SANRAMA
+                            &nbsp;&nbsp;&nbsp; <em>WITH ♥ BY SERGI SANRAMA</em>
                             <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
                                 
                                 <ModalBody className='modal-style'>
+                                {/* <abbr title="World Health Organization">WHO</abbr> */}
                                 Tips are welcome ;)<br/><br/>You can send BTC to this address: <br/><br/>3KG7mENGbbiXVQEu9dPnv6UbTXZmv34sHM<br/><br/> Or scan this QR:<br/><br/>
                                     <img id='qr_btc' src='images/qr_btc.png'></img>
                                     <br/><br/>

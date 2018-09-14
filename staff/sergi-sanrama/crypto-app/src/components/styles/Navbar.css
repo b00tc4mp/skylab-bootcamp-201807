@@ -23,13 +23,13 @@
 .navbar-btn{
     background: none;
     border: none;
-    width: 15%;
+    
     height: 100%;
     cursor: pointer;
 }
 
 .navbar-btn:hover{
-    background-color: #6b68682c;
+    background-color: #111314;
 }
 
 img{

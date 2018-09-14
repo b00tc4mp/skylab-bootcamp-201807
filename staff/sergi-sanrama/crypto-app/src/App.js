@@ -4,9 +4,7 @@ import Navbar from './components/Navbar'
 import Register from './components/Register'
 import Login from './components/Login'
 import Profile from './components/Profile'
-import Landing from './components/Landing'
 import Market from './components/Market'
-import Footer from './components/Footer'
 import Trading from './components/Trading'
 import Portfolio from './components/Portfolio'
 import News from './components/News'
@@ -47,17 +45,19 @@ class App extends Component {
       <Navbar />
       <div className='site-content'>
         <Switch>
-          <Route exact path='/' render={() => this.isLoggedIn() ? <Redirect to='/user/portfolio'/> : <Landing />} />      
+          <Route exact path='/' render={() => this.isLoggedIn() ? <Redirect to='/user/portfolio'/> : <Login handleLogin={this.handleLogin} />} />      
           <Route path='/user/register' render={() => this.isLoggedIn() ? <Redirect to='/market'/> : <Register/>} />      
           <Route path='/user/authenticate' render={() => this.isLoggedIn() ? <Redirect to='/market'/> : <Login handleLogin={this.handleLogin} />} />      
           <Route path='/user/portfolio' render={() => this.isLoggedIn() ? <Portfolio email={this.state.email} token={this.state.token}/> : <Login  handleLogin={this.handleLogin} /> } />
           <Route path='/trading' render={() => <Trading /> } />  
           <Route path='/market' render={() => <Market /> } />      
           <Route path='/news' render={() => <News /> } />
-          <Route path='/user/profile' render={() => this.isLoggedIn() ? <Profile onLogout={this.logout} updateUser={this.updateUser} deleteUser={this.deleteUser} email={this.state.email} token={this.state.token}/> : <Login  handleLogin={this.handleLogin} /> } />
+          <Route path='/user/profile' render={() => this.isLoggedIn() ? <Profile logout={this.logout} /> : <Login  handleLogin={this.handleLogin} /> } />
         </Switch>
+        
+       
+        
         </div>
-        <Footer />
     </div>
   }
 

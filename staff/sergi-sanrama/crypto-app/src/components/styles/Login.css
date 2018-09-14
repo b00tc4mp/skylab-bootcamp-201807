@@ -6,11 +6,12 @@
     box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.22);
     margin-bottom: 21vh;
     border: 2px solid whitesmoke;
+    font: whitesmoke;
 }
 
 .login_form h2{
     align-content: center;
-    background: #6b6868;
+    background: #111314;
     color: white;
     font-size: 18px;
     font-weight: 100;

@@ -24,7 +24,7 @@ router.get('/test/sayhello', (req, res) => {
 //REGISTER USER
 router.post('/user/register', jsonBodyParser, (req, res) => {
     const { body: { username, email, password } } = req
-    // req.body.username
+    
 
     logic.register(username, email, password)
         .then(() => res.status(201).json({message: 'user registered'}))
@@ -52,6 +52,7 @@ router.post('/user/authenticate',  jsonBodyParser, (req, res) => {
 })
 
 //UPDATE PASSWORD
+
 router.post('/user/update',  [validateJwt, jsonBodyParser], (req, res) => {
     const { body: { email, password, newPassword} } = req
 

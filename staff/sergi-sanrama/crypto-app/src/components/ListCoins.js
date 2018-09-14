@@ -8,15 +8,26 @@ import { Table } from 'reactstrap'
 class ListCoins extends Component {
     state = {
         coins: [],
-        limit:''
     }
 
-    componentDidMount(){
+    componentDidMount() {
         this.getCoins()
-        this.interval = setInterval(() => this.getCoins(), 60 * 1000)
-    }   
 
-    getCoins(limit){
+        if(this.props.limit) this.interval = setInterval(() => this.getCoins(this.props.limit), 120 * 1000)
+        else this.interval = setInterval(() => this.getCoins(), 120 * 1000)
+    }
+    
+    componentWillReceiveProps(nextProps) {
+        if(nextProps.limit) {
+            this.getCoins(nextProps.limit)
+        }
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.interval)
+    }
+
+    getCoins(limit = 100){
         logic.getCoins(limit)
             .then(coins => {
                return this.setState({ coins: coins.data })
@@ -25,8 +36,9 @@ class ListCoins extends Component {
 
     render() {
       const { coins } = this.state
+      const { symbol } = this.props
       
-      return (
+      return (<div>
           <div className='container col-sm-12 history-table text-center'>
                 <Table size="xs" hover dark responsive striped>
                   <thead>
@@ -46,7 +58,7 @@ class ListCoins extends Component {
                         {coins.map(data => {
                             let negative1h = '', negative24h = '', negative7d = ''
                             let positive1h = '', positive24h = '', positive7d = ''
-
+                            
                             if(Number(data.percent_change_1h) < 0) {negative1h = 'negative' } 
                             if(Number(data.percent_change_24h) < 0) {negative24h = 'negative'}
                             if(Number(data.percent_change_7d) < 0) {negative7d = 'negative' }
@@ -54,6 +66,7 @@ class ListCoins extends Component {
                             if(Number(data.percent_change_24h) > 0) {positive24h = 'positive' }
                             if(Number(data.percent_change_7d) > 0) {positive7d = 'positive' }
 
+                            if (!symbol || (symbol && data.symbol === symbol)) {
                             return (
                                 <tr>
                                     <td>{data.rank}</td>
@@ -68,11 +81,15 @@ class ListCoins extends Component {
                                 </tr>
                                 
                                 )
-                        })}
+                            }
+                            
+                            })}
                      </tbody>
                 </Table>
             </div>
+            <div className='text-center small'><em> All information is updated automatically every 2-5 minutes</em></div>
+           </div> 
       )
-}}
-
+    }}
+    
 export default ListCoins

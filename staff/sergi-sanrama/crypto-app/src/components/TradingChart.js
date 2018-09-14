@@ -9,7 +9,7 @@ class TradingChart extends Component {
     state = {
         coin: 'BTC',
         coin2: 'USD',
-        timePeriod: '1d'
+        timePeriod: '1m'
     }
 
     handleChange = (e) => {
@@ -65,19 +65,19 @@ class TradingChart extends Component {
                             </select>
                     
                             <select onChange={this.handleChange} name='timePeriod' class='form-control'>
-                                <option>1m</option>
-                                <option>3m</option>
-                                <option>5m</option>
-                                <option>15m</option>
-                                <option>30m</option>
-                                <option>1h</option>
-                                <option>2h</option>
-                                <option>4h</option>
-                                <option>6h</option>
-                                <option>12h</option>
-                                <option>1d</option>
-                                <option>3d</option>
-                                <option>1w</option>  
+                                <option>1M</option>
+                                <option>3M</option>
+                                <option>5M</option>
+                                <option>15M</option>
+                                <option>30M</option>
+                                <option>1H</option>
+                                <option>2H</option>
+                                <option>4H</option>
+                                <option>6H</option>
+                                <option>12H</option>
+                                <option>1D</option>
+                                <option>3D</option>
+                                <option>1W</option>  
                             </select>
                             <button className='button_form' type='submit'>Create</button>
                         </div>

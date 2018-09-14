@@ -14,7 +14,6 @@ class GlobalStats extends Component {
         return logic.getGlobalStats()
             .then(stats => {
                 this.setState({stats})
-                this.interval = setInterval(() => this.getGlobalStats(), 120 * 1000);
             })
     }
 

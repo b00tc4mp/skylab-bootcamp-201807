@@ -1,6 +1,8 @@
+
+
 .Site {
   display: block;
-  min-height: 600vh;
+  min-height: 500vh;
   flex-direction: column;
 }
 
@@ -10,8 +12,6 @@
 
 body{
   background-color: #212529;
-font-family: sans-serif;
+  font-family: sans-serif;
   color: whitesmoke;
-
-
 }

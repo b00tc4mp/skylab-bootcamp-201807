@@ -3,6 +3,7 @@ import logic from '../logic/logic'
 import ListNews from './ListNews'
 import swal from 'sweetalert';
 import './styles/News.css'
+import Footer from '../components/Footer'
 import { Form, FormGroup, Label, Input } from 'reactstrap';
 
 
@@ -50,7 +51,7 @@ class News extends Component {
              <Form onSubmit={this.handleSubmit}>
                 <FormGroup row>
                 <Label for="select"></Label>
-                    <Input className="select__news mr-sm-2" value={this.state.site} onChange={this.handleChange} type="select" name="select" >
+                    <Input className="select__news mr-sm-2 dropdown-dark" value={this.state.site} onChange={this.handleChange} type="select" name="select" >
                         <option value="bitcoin.com">Bitcoin.com</option> 
                         <option value="bitcoinmagazine">Bitcoin Magazine</option> 
                         <option value="blokt">Blokt</option> 
@@ -71,7 +72,8 @@ class News extends Component {
                 </FormGroup>
              </Form>
 
-         <ListNews news={this.state.news} />
+            <ListNews news={this.state.news} />
+            <Footer />
          </div>
         </div>
     }

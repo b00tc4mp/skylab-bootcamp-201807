@@ -1,11 +1,14 @@
 .form_add_transaction{  
     width: 80%;
     margin: 1vh 125px;
-    border-radius: 10%;
     padding: 10px;
+    margin-top: 4vh;
 }
 
+.negative{
+    color: rgb(255, 39, 39);
+}
 
-.history-table{
-    border-radius: 10%;
+.positive{
+    color: rgb(13, 196, 13);
 }

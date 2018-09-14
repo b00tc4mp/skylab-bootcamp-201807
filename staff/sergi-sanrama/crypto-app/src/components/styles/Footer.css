@@ -6,10 +6,15 @@
 .footer-copyright{
 font: bold;
 
+
 }
 
 .modal-style{
     background-color: #212529;
+}
+
+.footer-text{
+    font-size: 10px;
 }
 
 /* .page-footer{

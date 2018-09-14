@@ -68,26 +68,46 @@ const logic = {
             })
     },
 
-    updatePassword(username, password, newPassword) {
-        return Promise.resolve()
-            .then(() => {
-                this._validateStringField('username', username)
-                this._validateStringField('password', password)
-                this._validateStringField('new password', newPassword)
+    // updatePassword(username, password, newPassword) {
+    //     return Promise.resolve()
+    //         .then(() => {
+    //             this._validateStringField('username', username)
+    //             this._validateStringField('password', password)
+    //             this._validateStringField('new password', newPassword)
 
-                return this._users.findOne({ username })
-            })
-            .then(user => {
-                if (!user) throw new LogicError(`user ${username} does not exists`)
+    //             return this._users.findOne({ username })
+    //         })
+    //         .then(user => {
+    //             if (!user) throw new LogicError(`user ${username} does not exists`)
 
-                if (user.password !== password) throw new LogicError('wrong credentials')
+    //             if (user.password !== password) throw new LogicError('wrong credentials')
 
-                if (password === newPassword) throw new LogicError('new password cannot be same as current password')
+    //             if (password === newPassword) throw new LogicError('new password cannot be same as current password')
 
-                //return this._users.updateOne({ username }, { $set: { password: newPassword } })
-                return this._users.updateOne({ _id: user._id }, { $set: { password: newPassword } })
-            })
-    },
+    //             //return this._users.updateOne({ username }, { $set: { password: newPassword } })
+    //             return this._users.updateOne({ _id: user._id }, { $set: { password: newPassword } })
+    //         })
+    // },
+
+
+    // unregister(email, password) {
+    //     return Promise.resolve()
+    //         .then(() => {
+    //             this._validateStringField('password', password)
+
+    //             return User.findOne({ email })
+    //         })
+    //         .then(user => {
+    //             if (!user) throw new LogicError(`The email ${email} does not correspond to any of our user`)
+
+    //             if (user.password !== password) throw new LogicError(`Wrong password`)
+
+    //             return user.deleteOne({ _id: user._id })
+    //         })
+    //         .then(() => true)
+
+    // },
+
 
     listFiles(username) {
         return Promise.resolve()

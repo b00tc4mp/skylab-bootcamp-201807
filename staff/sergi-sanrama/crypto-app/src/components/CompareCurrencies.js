@@ -11,7 +11,7 @@ class CompareCurrencies extends Component {
         coin: '',
         coin2: '',
         quantity: '',
-        resultCoin: 0        
+        resultCoin: null        
     }
 
     handleChange = (e) => {
@@ -59,12 +59,12 @@ class CompareCurrencies extends Component {
                     </div>
                     <div className="row justify-content-center align-items-start">
                         <div className="col-lg-3 cols">
-								<input onChange={this.handleChange} type="text" name="coin" placeholder="BTC, ETH, USD..." className="form-control mb-20" required/>
+								<input onChange={this.handleChange} type="text" name="coin" placeholder="BTC, ETH, BNB, USD..." className="form-control mb-20" required/>
 								<input onChange={this.handleChange} type="number" name="quantity" placeholder="Quantity" className="form-control mb-20" required/>
                             <button className='button_form' type="submit">Calculate</button>
                         </div>
                         <div className="col-lg-3 cols">
-                            <input onChange={this.handleChange} type="text" name="coin2" placeholder="BTC, EUR, ARS.." className="form-control mb-20" required/>
+                            <input onChange={this.handleChange} type="text" name="coin2" placeholder="BTC, EUR, PHP, ARS.." className="form-control mb-20" required/>
                             <div className="form-control mb-20 disabled">Result: {calcValue} {coin2}</div>
 
                         </div>

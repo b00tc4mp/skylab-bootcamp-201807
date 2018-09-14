@@ -21,15 +21,15 @@ const logic = {
     },
 
 
-    ///////////////
+    
     //LOGIC USER//
-    /////////////
+   
 
     //REGISTER
     register(username, email, password){
         return Promise.resolve()
             .then(() =>{
-                this._validateStringField('username', username)
+                // this._validateStringField('username', username)
                 this._validateStringField('password', password)
                 this._validateEmail(email)
                 this._validateStringField('email', email)   
@@ -63,6 +63,8 @@ const logic = {
     },
 
     //UPDATE PASSWORD
+
+
     updatePassword(email, password, newPassword){
         return Promise.resolve()
             .then(() => {
@@ -209,7 +211,7 @@ const logic = {
 
 
     //GET MARKET COINS, limit= nº coins retrieve
-    getCoins(limit = 10) {
+    getCoins(limit = 100) {
        return axios.get(`https://api.coinmarketcap.com/v1/ticker/?limit=${limit}`)
             .then(res => {
                 if (!res || !res.data) throw new LogicError(`Something has failed, it was not possible to load the cryptocurrencies, try later`)
@@ -245,10 +247,10 @@ const logic = {
                 .then(res => {
                     if (result.length) throw new LogicError(`query with ${name} failed`)
                 })
-                // return res.data
+                
             })
     },
-    // https://min-api.cryptocompare.com/data/pricemulti?fsyms=ETH,BTC&tsyms=USD
+    
 
 
     //COMPARE CURRENCIES
@@ -269,7 +271,7 @@ const logic = {
     getCryptoNews(site){
         return axios.get(`https://min-api.cryptocompare.com/data/v2/news/?feeds=${site}`)
             .then(res => {
-                const cryptoNews = res.data.Data.map((news) => {
+                    let cryptoNews = res.data.Data.map((news) => {
 
                     const {imageurl, title, url, body, source} = news
 
