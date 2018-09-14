@@ -87,7 +87,7 @@ class Nav extends Component {
                     </li>}
                     <li>
                         <Link to='/prod/upload'>
-                            <button className="nav-btn nav-btn-upload">Upload product</button>
+                            <button className="nav-btn nav-btn-upload"><span className="nav-plus-symbol">&#43;</span>Upload product</button>
                         </Link>
                     </li>
                 </ul>

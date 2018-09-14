@@ -21,7 +21,8 @@ const styles = {
   },
   content: {
     height: 186,
-    width: 250
+    width: 250,
+    overflow: 'hidden',
   },
   media: {
     // ⚠️ object-fit is not supported by IE11.

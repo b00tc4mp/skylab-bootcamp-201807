@@ -25,12 +25,12 @@ const styles = theme => ({
 });
 
 function ChatCard(props) {
-  const { classes, title, photo, prodOwner, onGoToChat } = props;
+  const { classes, title, photo, prodOwner, onGoToChat, chatId } = props;
 
   const onOpenChat = event => {
     event.preventDefault()
 
-    onGoToChat()
+    onGoToChat(chatId)
   }
 
   return (

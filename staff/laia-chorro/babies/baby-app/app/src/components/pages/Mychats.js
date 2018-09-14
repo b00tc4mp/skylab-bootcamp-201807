@@ -1,15 +1,18 @@
 import React, { Component } from 'react'
 import logic from '../../logic'
 import ChatCard from '../cards/ChatCard'
-import SimplePreviewCard from '../cards/SimplePreviewCard'
+//import SimplePreviewCard from '../cards/SimplePreviewCard'
 import Alert from 'react-s-alert'
 import './Mychats.css'
 import socketIOClient from 'socket.io-client'
+import { Launcher } from 'react-chat-window'
+import logo from '../../assets/block.svg'
+
 
 class Mychats extends Component {
     state = {
         //loaded: false,
-        messages: [],
+        messageList: null,
         message: '',
         chatId: '',
         chats: [],
@@ -33,10 +36,23 @@ class Mychats extends Component {
         }
     }
 
-    keepMessage = e => this.setState({message: e.target.value})
+
+    parseToObjectMessages = (messages) => {
+        const userId = logic._userId
+
+        return messages.map(message => {
+            return {
+                author: message.user === userId ? 'me' : 'them',
+                type: 'text',
+                data: { text: message.text }
+            }
+        })
+    }
+
+    //keepMessage = e => this.setState({message: e.target.value})
 
     // to sockets
-    addToMessages = data => this.setState({messages: [...this.state.messages, data]})
+    //addToMessages = data => this.setState({messageList: [...this.state.messageList, data]})
 
     componentDidMount() {
         const userId = logic._userId
@@ -57,7 +73,7 @@ class Mychats extends Component {
             })
     }
 
-    // messages: chat.messages, chatId: chat.id, chats: [ chat ]
+    // messageList: chat.messageList, chatId: chat.id, chats: [ chat ]
     updateChats = productId => {
         return logic.listChatsByUserId()
             .then(chats => {
@@ -72,7 +88,7 @@ class Mychats extends Component {
             .then(chat => {
                 const chatId = chat.id || chat.chat
                 return logic.getChatById(chatId)
-            }).then(chat => this.setState({messages: chat.messages, chatId: chat.id}) )
+            }).then(chat => this.setState({messageList: this.parseToObjectMessages(chat.messages), chatId: chat.id}) )
             .catch(({ message }) => Alert.error(message, { position: 'bottom-right', effect: 'slide', timeout: 3000 }))
     }
 
@@ -83,19 +99,10 @@ class Mychats extends Component {
                 const chatId = chat.chat
 
                 return logic.getChatById(chatId)
-            }).then(chat => this.setState({messages: chat.messages, chatId: chat.id, chats: [ chat ]}) )
+            }).then(chat => this.setState({messageList: this.parseToObjectMessages(chat.messages), chatId: chat.id, chats: [ chat ]}) )
             .catch(({ message }) => Alert.error(message, { position: 'bottom-right', effect: 'slide', timeout: 3000 }))
     }
 
-    sendMessage = e => {
-        e.preventDefault();
-        const data = {}
-        data.text = this.state.message
-
-        this.setState({messages: [...this.state.messages, data]})
-
-        this.addMessageToChat(this.state.chatId, data.text)
-    }
 
     addMessageToChat(chatId, text) {
         logic.getChatById(chatId)
@@ -105,22 +112,51 @@ class Mychats extends Component {
                 return logic.addMessageToChat(chatId, text, receiver)
             })
             .then(() => logic.getChatById(chatId))
-            .then(res => this.setState({messages: res.messages}))
+            .then(chat => this.setState({messageList: this.parseToObjectMessages(chat.messages)}))
             .catch(({ message }) => Alert.error(message, { position: 'bottom-right', effect: 'slide', timeout: 3000 }))
     }
 
-    onGoToChatById = () => {
-        const { chatId } = this.state
+    
+    //onProductDetail = () => {return }
+    
+    _onMessageWasSent(message) {
+        this.setState({ messageList: [...this.state.messageList, message] }, () => 
+            this.addMessageToChat(this.state.chatId, message.data.text)
+            )      
+    }
 
+    /*
+    sendMessage = e => {
+        e.preventDefault();
+        const data = {}
+        data.text = this.state.message
+
+        this.setState({messageList: [...this.state.messageList, data]})
+
+        this.addMessageToChat(this.state.chatId, data.text)
+    }
+    */
+    
+    /*_sendMessage(text) {
+        if (text.length > 0) {
+            this.setState({
+                messageList: [...this.state.messageList, {
+                    author: 'me',
+                    type: 'text',
+                    data: { text }
+                }]
+            })
+        }
+    }*/
+
+    onGoToChatById = chatId => {
         logic.getChatById(chatId)
-            .then(res => this.setState({messages: res.messages}))
+            .then(chat => this.setState({messageList: this.parseToObjectMessages(chat.messages)}))
             .catch(({ message }) => Alert.error(message, { position: 'bottom-right', effect: 'slide', timeout: 3000 }))
     }
-
-    onProductDetail = () => {return }
 
     render() {
-        const { messages, chats, productId } = this.state
+        const { messageList, chats, productId } = this.state
 
         return(
             <div className="mychats-container">
@@ -130,11 +166,11 @@ class Mychats extends Component {
                             return (
                                 <li key={index}>
                                     <ChatCard 
-                                        //chatId = {chat.}
+                                        chatId={chat.id}
                                         cratedAt = {chat.created_at}
                                         title={chat.product.title}
                                         photo={chat.product.photos[0]}
-                                        prodOwner={'Pepito'}
+                                        prodOwner={`${chat.product.price} €`}
                                         onGoToChat={this.onGoToChatById}
                                     />
                                 </li>
@@ -143,20 +179,33 @@ class Mychats extends Component {
                     </ul>
                 </div>
                 <div className="mychats-chat-container">
-                    <div className="mychats-messages-container">
-                        {messages && messages.map((message, index) => {
+                    <div className="mychats-messageList-container">
+                        {//messageList && 
+                             (<div>
+                                <Launcher
+                                  agentProfile={{
+                                    teamName: 'BabyBoom-chat',
+                                    //imageUrl: 'https://a.slack-edge.com/66f9/img/avatars-teams/ava_0001-34.png'
+                                  }}
+                                  onMessageWasSent={this._onMessageWasSent.bind(this)}
+                                  messageList={messageList}
+                                  showEmoji={false}
+                                />
+                              </div>)
+                        }
+                        {/*messageList && messageList.map((message, index) => {
                             return (
                                 <div key={index}>{message.text}</div>
                             )
-                        })}
+                        })*/}
                     </div>
-                    <form onSubmit={this.sendMessage}>
+                    {/*<form onSubmit={this.sendMessage}>
                         <input value={this.state.message} onChange={this.keepMessage} type="text" placeholder="Message"/>
                         <button type="submit" >Send</button>
-                    </form>
+                    </form>*/}
                 </div>
                 <div className="mychats-product-preview">
-                    {productId && chats && chats[0] && chats[0].products && 
+                    {/*productId && chats && chats[0] && chats[0].products && 
                         <SimplePreviewCard  
                             photo={chats[0].products.photos[0]}
                             price={chats[0].products.price}
@@ -164,7 +213,7 @@ class Mychats extends Component {
                             idProd={productId}
                             description={chats[0].products.description}
                             getProductDetail={this.onProductDetail}          
-                        />}
+                    />*/}
                 </div>
             </div>
         )

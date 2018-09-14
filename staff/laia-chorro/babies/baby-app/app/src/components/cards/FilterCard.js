@@ -58,13 +58,13 @@ const cathegories = [
   ]
 
 
-
+// TODO: escala logarítmica en el filtro hasta llegar a 30000
 class FilterCard extends Component {
 
     state = {
         cath: 'all',
         minVal: 0,
-        maxVal: 30000,
+        maxVal: 1000,
         dist: 400,
         period: 'any',
         long: -3.70379, 
@@ -93,7 +93,7 @@ class FilterCard extends Component {
     onPriceRangeAfterChange = value => {
         const minVal = value[0], maxVal = value[1]
 
-        if (minVal === 0 && maxVal === 30000) {
+        if (minVal === 0 && maxVal === 1000) {
             delete this.state.filters.minVal
             delete this.state.filters.maxVal
             this.setState({ filters: {...this.state.filters} }, () => this.onGetProductsByFiltersChange())
@@ -158,16 +158,16 @@ class FilterCard extends Component {
                         ))}
                     </TextField>
 
-                    <div style={sliderStyle}>
+                    {/* <div style={sliderStyle}>
                         <FormLabel component="legend">Distance</FormLabel>
                         <p style={sliderSubHeadingStyle}>{`${dist}+ Km`}</p>
                         <Slider trackStyle={[{backgroundColor: '#0097A7'}]} handleStyle={[{borderColor: '#0097A7'}]} onChange={this.onDistChange} onAfterChange={this.onDistAfterChange} defaultValue={400} max={400} />
-                    </div>
+                    </div> */}
 
                     <div style={sliderStyle}>
                         <FormLabel component="legend">Price</FormLabel>
-                        <p style={sliderSubHeadingStyle}>{minVal === 0 && maxVal === 30000 ? 'Any price' : `${minVal}€ - ${maxVal}€`}</p>
-                        <Range trackStyle={[{backgroundColor: '#0097A7'}]} handleStyle={[{borderColor: '#0097A7'}, {borderColor: '#0097A7'}]} onChange={this.onPriceRangeChange} onAfterChange={this.onPriceRangeAfterChange} allowCross={false} defaultValue={[0, 30000]} min={0} max={30000} />
+                        <p style={sliderSubHeadingStyle}>{minVal === 0 && maxVal === 1000 ? 'Any price' : `${minVal}€ - ${maxVal}€`}</p>
+                        <Range trackStyle={[{backgroundColor: '#0097A7'}]} handleStyle={[{borderColor: '#0097A7'}, {borderColor: '#0097A7'}]} onChange={this.onPriceRangeChange} onAfterChange={this.onPriceRangeAfterChange} allowCross={false} defaultValue={[0, 1000]} min={0} max={1000} />
                     </div>
 
                     <FormControl component="fieldset" className={classes.formControl}>
