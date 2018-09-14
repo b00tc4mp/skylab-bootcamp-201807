@@ -38,3 +38,7 @@ Data models:
 
 ![DataModel](images/DataModel.png)
 
+
+#### Testing API
+
+![testing-api](images/testing-api.png)

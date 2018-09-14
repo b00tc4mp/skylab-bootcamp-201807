@@ -1,4 +1,4 @@
-# REMINDER CARETAKET APP
+# REMINDER API
 
 **How to launch**
 
@@ -13,4 +13,4 @@ $ npm start
 
 **Documentation**
 
-[Reminder Caretaker App](docs/)
+[Data Models and API](docs/)

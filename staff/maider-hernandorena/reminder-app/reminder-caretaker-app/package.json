@@ -8,7 +8,7 @@
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.3.1",
     "react-scripts": "1.1.4",
-    "remainder-data": "file:../reminder-data",
+    "reminder-data": "file:../reminder-data",
     "serve": "^10.0.0",
     "server": "^1.0.18"
   },

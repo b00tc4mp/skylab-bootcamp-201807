@@ -1,5 +1,5 @@
 {
-  "name": "remainder-app",
+  "name": "reminder-app",
   "version": "1.0.0",
   "private": true,
   "dependencies": {
@@ -7,7 +7,7 @@
     "react-dom": "^16.4.2",
     "react-router-dom": "^4.3.1",
     "react-scripts": "1.1.4",
-    "remainder-data": "file:../remainder-data"
+    "reminder-data": "file:../reminder-data"
   },
   "devDependencies": {
     "chai": "^4.1.2",
