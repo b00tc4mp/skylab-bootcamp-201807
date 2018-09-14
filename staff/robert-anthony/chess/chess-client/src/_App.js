@@ -18,15 +18,6 @@ class App extends Component {
 
   socket = null
 
-  timer = null
-
-  periodicCheck = () => {
-    const {state: {nickname, token}} = this
-    if (nickname && token) {
-       this.getCurrentGamesForUser(nickname,token)
-    }
-  }
-
   _notificationSystem = null
 
   _notificationStyle = {
@@ -142,8 +133,6 @@ class App extends Component {
 
 
   setupSocketListeners = (nickname, token) => {
-    return;
-
     log.debug(`APP.JS: setupSocketListeners: NICKNAME: ${nickname},  THIS.STATE.NICKNAME: ${this.state.nickname}`)
 
     this.socket = socketIOClient(process.env.REACT_APP_SOCKET_SERVER_URL);
@@ -183,7 +172,7 @@ class App extends Component {
 
   onLoggedIn = (nickname, token) => {
     log.debug(`APP.JS: onLoggedIn: NICKNAME: ${nickname},  THIS.STATE.NICKNAME: ${this.state.nickname}`)
-    this.timer = setInterval(this.periodicCheck,10000)
+
     this.setupSocketListeners(nickname, token)
     this.getCurrentGamesForUser(nickname, token)
     this.setState({nickname: nickname, token})
@@ -220,7 +209,6 @@ class App extends Component {
     this.setState({nickname: '', token: '', users: [], currentGames: []})
     sessionStorage.clear()
     if (this.socket) this.socket.close()
-    if (this.timer) clearInterval(this.timer)
   }
 
   render() {
@@ -233,8 +221,7 @@ class App extends Component {
       <header>
         <NavBar nickname={nickname} isLoggedIn={this.isLoggedIn()} onLogout={this.onLogout}/>
       </header>
-      {error &&
-      <UncontrolledAlert className="app__mainAlert" color="dark"><i className="fas fa-lg fa-angry"></i>&nbsp; {error}
+      {error && <UncontrolledAlert className="app__mainAlert" color="dark"><i className="fas fa-lg fa-angry"></i>&nbsp; {error}
       </UncontrolledAlert>}
       <main>
         <Switch>
