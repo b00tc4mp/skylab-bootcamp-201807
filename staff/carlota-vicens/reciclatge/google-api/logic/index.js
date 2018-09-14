@@ -7,11 +7,6 @@ const rimraf = require('rimraf')
 const atob = require('atob')
 const path = require('path')
 
-/*
-if (!fs.existsSync('../fotos')) {
-    fs.mkdirSync('../fotos')
-}*/
-
 /** Bussines logic of Google Vision Api */
 const logic = {
     _title: null,
@@ -24,7 +19,7 @@ const logic = {
         this._title = `file-${Math.random()}.jpeg`
         var buff = new Buffer(base64
             .replace(/^data:image\/(png|gif|jpeg);base64,/, ''), 'base64');
-        fs.writeFileSync(`fotos/${this._title}`, buff)
+        fs.writeFileSync(`${__dirname}/../fotos/${this._title}`, buff)
         return this._title
     },
 

@@ -51,7 +51,7 @@ class Profile extends Component {
         return (
             <div className="profile">
                 <Navbar />
-                <h1>Profile</h1>
+                <h1 className='profile__title'>Profile</h1>
                 <div className="profile__change-password">
                     <h3 className="profile__text"> Update password </h3>
                     <input type="password" className="profile__input" placeholder=" password" onChange={keepPassword}></input>

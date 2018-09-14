@@ -54,12 +54,13 @@ class WebcamCapture extends React.Component {
           {!this.state.imageSrc && <Webcam audio={false} height={350} ref={this.setRef} screenshotFormat="image/jpeg"
             width={350} videoConstraints={videoConstraints} />}
         </div>
-        {this.state.imageSrc ? <div className='main__image'> <img style={{ height: '350px', width: '350px' }} alt='' src={this.state.imageSrc} />
-          <br></br><button className='main__btn' onClick={this.uploadImage}>Save</button> </div> : null}
+        {this.state.imageSrc ? <div className='main__image'> <img className='main__image' alt='' src={this.state.imageSrc} />
+         <br></br> <button className='main__btn' onClick={this.uploadImage}>Save</button> </div> : null}
         <Navbar />
       </div>
     )
   }
 }
+
 
 export default withRouter(WebcamCapture)

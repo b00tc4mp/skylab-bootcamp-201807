@@ -10,13 +10,11 @@
     flex-direction: column
     margin: 0
     &__title
-        padding: 0
-        margin: auto
+        margin: 0 auto
         color: white
-        padding-bottom: 30px
+        padding-bottom: 10px
     &__btn 
         text-align: center
-        padding: 20px
         height: 10vh    
         width: 30vh
         margin: 0 auto
@@ -25,7 +23,11 @@
         color: white
     &__image
         justify-items: center
-        text-align: center
+        text-align: center 
+        & img
+            object-fit: contain
+            width: 350px
+            height: 350px   
     &__file 
         text-align: center
         justify-items: center

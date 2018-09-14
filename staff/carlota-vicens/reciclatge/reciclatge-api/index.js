@@ -13,7 +13,7 @@ const {
 const userRouter = require('./routes')
 
 
-mongoose.connect(MONGO_URL)
+mongoose.connect(MONGO_URL_PROD)
     .then(() => {
         const app = express()
 
