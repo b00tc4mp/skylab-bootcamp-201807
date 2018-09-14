@@ -1,4 +1,4 @@
-# GG.WP App
+# GG.WP Api
 
 ## Instructions
 
