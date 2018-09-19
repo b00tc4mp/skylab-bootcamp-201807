@@ -1,0 +1,37 @@
+.trading-chart{
+    margin: 2vh;
+    
+}
+
+.converter{
+    border: 1px solid;
+    border-radius: 10px;
+    /* background-image: url('/images/math-bg.jpg'); */
+    background-color: #212529;
+    opacity: 0.9;
+    margin-top: 7vh;    
+    margin-bottom: 7vh;
+}
+
+.trading__title{
+    color: whitesmoke;
+    margin: 1vh 1vh 1vh 1vh;
+}
+
+.trading__subtitle{
+    color: whitesmoke;
+    margin: 1vh 1vh 1vh 1vh;
+}
+
+.button_form{
+    background-color: black;
+    margin: 2vh;
+}
+
+.form-control{
+    margin: 1vh 1vh 1vh 1vh;
+}
+
+.button_form{
+    border-color: whitesmoke;
+}

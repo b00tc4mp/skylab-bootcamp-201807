@@ -1,0 +1,13 @@
+table{
+    border-radius: 10%;
+    border: 2px solid whitesmoke;    
+}
+
+.negative{
+    color: rgb(255, 39, 39);
+}
+
+.positive{
+    color: rgb(13, 196, 13);
+}
+

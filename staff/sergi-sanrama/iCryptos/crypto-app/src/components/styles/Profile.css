@@ -1,0 +1,23 @@
+/* .git_fork{
+    position: absolute; bottom: 0; right: 0; border: 0;
+} */
+
+.alert-underconstruction{
+    
+        margin-top: 8vh ;
+        margin-left: 2vh;
+        margin-right: 2vh;
+}
+
+.btn-logout{
+    margin-left: 3vh;
+    margin-top: 10vh;
+    margin-bottom: 45vh;
+}
+
+.profile-container{
+    margin-top: 15vh;
+}
+
+
+
