@@ -10,33 +10,63 @@ const { Hostess, Business, Events } = require('../data/models')
 const { env: { MONGO_URL } } = process
 
 describe('logic', () => {
-    const email = `client-${Math.random()}@mail.com`
+    const email = `test${Math.random()}@mail.com`
     const password = `oldpassword`
     const newPassword = `newpassword`
     let _connection
 
-    const failEvents = {
-        location: "Barcelona",
+    const event = {
+        location: "barcelona",
         date: "01/01/2000",
-        title: "The event",
-        description: "Description of the event"
+        hours: "horas del evento",
+        title: "the title",
+        goal: "finalidad del evento",
+        briefing: "briefing del evento",
+        contactName: "rudolf",
+        contactPhone: "666",
+    }
+
+    const event2 = {
+        location: "kiribati",
+        date: "07/10/1991",
+        hours: "horas del evento dos",
+        title: "the title dos",
+        goal: "finalidad del evento dos",
+        briefing: "briefing del evento dos",
+        contactName: "arnold",
+        contactPhone: "777",
     }
 
     const business1 = {
         email: 'business1@mail.com',
         password: password,
-        favs: [],
-        philosophy: "Go slow to go fast"
+        name: "the company",
+        boss: "director",
+        phone: "111",
+        web: "web.com",
+        philosophy: "go slow to go fast",
+    }
+
+    const business2 = {
+        email: 'business2@mail.com',
+        password: password,
+        name: "the company dos",
+        boss: "director dos",
+        phone: "222",
+        web: "web.com.com",
+        philosophy: "piedra a piedra, tecla a tecla",
     }
 
     const host1 = {
         email: 'host1@mail.com',
         name: 'kim',
         password: password,
+        birth: "01/02/2003",
+        myself: "im super",
+        origin: "kiribati",
         gender: 'M',
         jobType: 'sells',
-        languages: ['catalan', 'spanish'],
-        height: 150
+        languages: ['catalan', 'spanish', 'otra'],
     }
 
     const host2 = {
@@ -45,7 +75,6 @@ describe('logic', () => {
         gender: 'M',
         jobType: 'animation',
         languages: ['english', 'spanish'],
-        height: 160
     }
 
     const host3 = {
@@ -54,7 +83,6 @@ describe('logic', () => {
         gender: 'W',
         jobType: 'image',
         languages: ['english', 'german'],
-        height: 170
     }
 
     const host4 = {
@@ -62,8 +90,7 @@ describe('logic', () => {
         password: password,
         gender: 'W',
         jobType: 'info',
-        languages: ['english', 'catalan'],
-        height: 180
+        languages: ['english', 'catalan', 'otra'],
     }
 
     const host5 = {
@@ -72,10 +99,11 @@ describe('logic', () => {
         gender: 'W',
         jobType: 'info',
         languages: ['spanish', 'catalan'],
-        height: 180
     }
 
     const hostesses = [host1, host2, host3, host4, host5]
+    const businesses = [business1, business2]
+    const events = [event, event2]
 
     before(() =>
         mongoose.connect(MONGO_URL, { useNewUrlParser: true })
@@ -92,14 +120,20 @@ describe('logic', () => {
 
     false && describe('validate fields', () => {
         it('should succeed on correct value', () => {
-            expect(() => logic._validateStringField('email', email).to.equal(email))
+            expect(() => logic._validateStringcd.Field('email', email).to.equal(email))
             expect(() => logic._validateStringField('password', password).to.equal(password))
         })
 
         it('should fail on undefined value', () => {
             expect(() => logic._validateStringField('name', undefined).to.throw('invalid name'))
+            expect(() => logic._validateStringField('password', undefined).to.throw('invalid password'))
+            expect(() => logic._validateStringField('password', 111).to.throw('invalid password'))
         })
     })
+
+    /**
+     * Register, authenticate, retrieve, update password, update details, unregister
+     */
 
     false && describe('register hostess', () => {
         it('should register correctly', () =>
@@ -128,7 +162,7 @@ describe('logic', () => {
             Hostess.create({ email, password })
                 .then(() => logic.registerHostess(email, password))
                 .catch(err => err)
-                .then(({ message }) => expect(message).to.equal(`We allready have and acount with this email`))
+                .then(({ message }) => expect(message).to.equal(`We allready have and acount with this email ${email}`))
         )
 
         it('should fail on trying to register a hostess with an undefined email', () =>
@@ -194,24 +228,34 @@ describe('logic', () => {
 
 
     false && describe('authenticatation of the hostess', () => {
-        beforeEach(() => Hostess.create({ email, password }))
+        beforeEach(() => Hostess.insertMany(hostesses))
 
         it('should login correctly for a hostess', () =>
-            logic.authenticateHostess(email, password)
-                .then(res => {
-                    expect(res).to.be.true
+            logic.authenticateHostess('host1@mail.com', password)
+                .then(objectId => {
+                    expect(objectId).to.exist
+
+                    return Hostess.findById({ _id: objectId })
+                })
+                .then(hostess => {
+                    expect(hostess.name).to.equal('kim')
                 })
         )
 
     })
 
     false && describe('authenticatation of the hostess', () => {
-        beforeEach(() => Business.create({ email, password }))
+        beforeEach(() => Business.insertMany(businesses))
 
         it('should login correctly for a hostess', () =>
-            logic.authenticateBusiness(email, password)
-                .then(res => {
-                    expect(res).to.be.true
+            logic.authenticateBusiness('business1@mail.com', password)
+                .then(objectId => {
+                    expect(objectId).to.exist
+
+                    return Business.findById({ _id: objectId })
+                })
+                .then(business => {
+                    expect(business.name).exist.equal('the company')
                 })
         )
     })
@@ -253,60 +297,86 @@ describe('logic', () => {
         )
     })
 
-    true && describe('retrieve hostess details', () => {
+    false && describe('retrieve hostess details', () => {
         beforeEach(() => Hostess.insertMany(hostesses))
 
         it('should retrieve the hostess details', () =>
-            logic.retrieveHostess('host1@mail.com')
-                .then(hostess => {
-                    expect(hostess).to.exist
-                    expect(hostess.name).to.equal('kim')
+            logic.authenticateHostess('host1@mail.com', password)
+                .then(id => {
+                    logic.retrieveHostess(id)
+                        .then(hostess => {
+                            expect(hostess).to.exist
+                            expect(hostess.name).to.equal('kim')
+                        })
                 })
         )
     })
 
-    true && describe('retrieve business details', () => {
-        beforeEach(() => Business.insertMany(business1))
+    false && describe('retrieve business details', () => {
+        beforeEach(() => Business.insertMany(businesses))
 
         it('should retrieve the business details', () =>
-            logic.retrieveBusiness('business1@mail.com')
-                .then(business => {
-                    expect(business).to.exist
-                    expect(business.philosophy).to.equal('Go slow to go fast')
+            logic.authenticateBusiness('business1@mail.com', password)
+                .then(id => {
+                    logic.retrieveBusiness(id)
+                        .then(business => {
+                            expect(business).to.exist
+                            expect(business.philosophy).to.equal('go slow to go fast')
+                        })
                 })
         )
     })
 
     false && describe('update hostess details', () => {
-        beforeEach(() => Hostess.create({ email, password }))
+        beforeEach(() => Hostess.insertMany(hostesses))
 
         it('should update the hostess details correctly', () =>
-            logic.editHostessProfile(email, 'Arantxa', '05/05/2005', 'Palms', 'W', '1234567', ['catalan', 'castellano'], 'info', 150, 'im describing my super self', ['skill1', 'skill2'])
-                .then(res => {
-                    expect(res).to.be.true
-
-                    return Hostess.findOne({ email })
+            logic.authenticateHostess('host1@mail.com', password)
+                .then(id => {
+                    debugger
+                    logic.editHostessProfile(id, password, 'Arantxa', '05/05/2005', 'Palms', '1234567', 'im describing my super self', 'W', ['catalan', 'castellano'], 'image', 'photo here')
+                        .then(res => {
+                            debugger
+                            expect(res).to.be.true
+                            // debugger
+                            // return Hostess.findById({ _id: id })
+                        })
+                    // .then(hostess => {
+                    //     debugger
+                    //     expect(hostess).to.exist
+                    //     expect(hostess.name).exist.equal('Arantxa')
+                    //     expect(hostess.languages).to.exist
+                    // })
                 })
-                .then(hostess => {
-                    expect(hostess).to.exist
-                    expect(hostess.name).exist.equal('Arantxa')
+        )
+        it('should fail with wrong password', () =>
+            logic.authenticateHostess('host1@mail.com', password)
+                .then(id => {
+                    logic.editHostessProfile(id, '111222', 'Arantxa', '05/05/2005', 'Palms', '1234567', 'im describing my super self', 'W', ['catalan', 'castellano'], 'image', 'photo here')
+                        .catch(err => err)
+                        .then(({ message }) => expect(message).to.equal(`use the correct password`))
                 })
         )
     })
 
     false && describe('update business details', () => {
-        beforeEach(() => Business.create({ email, password }))
+        beforeEach(() => Business.insertMany(businesses))
 
         it('should update the business details correctly', () =>
-            logic.editBusinessProfile(email, 'Aguas saladas', 'www.aguitas.com', 'Christof', '123456', 'Desalinar las aguas saladas')
-                .then(res => {
-                    expect(res).to.be.true
-
-                    return Business.findOne({ email })
-                })
-                .then(business => {
-                    expect(business).to.exist
-                    expect(business.name).exist.equal('Aguas saladas')
+            logic.authenticateBusiness('business1@mail.com', password)
+                .then((id) => {
+                    
+                    logic.editBusinessProfile(id, password, 'Aguas saladas', 'www.aguitas.com', 'Christof', '123456', 'Desalinar las aguas saladas', 'photos card')
+                        .then(res => {
+                            expect(res).to.be.true
+                            
+                            return Business.findOne({ name: 'Aguas saladas' })
+                        })
+                        .then(business => {
+                            expect(business).to.exist
+                            expect(business.name).exist.equal('Aguas saladas')
+                            expect(business.web).exist.equal('www.aguitas.com')
+                        })
                 })
         )
     })
@@ -344,24 +414,104 @@ describe('logic', () => {
     })
 
 
-    false && describe('search hostesses', () => {
-        beforeEach(() => Hostess.insertMany(hostesses))
-        beforeEach(() => Business.insertMany(business1))
+    /**
+     * Comandos internos
+     */
 
-        it('should search the correct hostesses', () =>
-            logic.searchWorkers('business1@mail.com', 'W', 'info', 150, ['catalan'])
-                .then(searched => {
-                    expect(searched).to.exist
-                    expect(searched.length).to.equal(2)
+
+    true && describe('create event', () => {
+
+        beforeEach(() => Business.insertMany(businesses))
+
+        it('should create an event', () =>
+            logic.authenticateBusiness('business1@mail.com', password)
+                .then(id => {
+                    return logic.newEvent(id, 'Barcelona', 'dates', 'hours to work', 'title of the event', 'final goal')
+                        .then(event => {
+                            expect(event).to.be.true
+                            debugger
+                            // debugger
+                            // expect(event.location).to.equal('Barcelona')
+                            // expect(event.business).to.exist
+                            // expect(event.location).to.equal('Barcelona')
+                            // expect(event.date).to.exist
+                            // expect(event.hours).to.exist
+                            // expect(event.title).to.equal('title of the event')
+                            // expect(event.goal).to.equal('final goal')
+                        })
                 })
         )
     })
+
+    
+    false && describe('create event', () => {
+        beforeEach(() => {
+            return Hostess.insertMany(hostesses)
+                .then(hostesses => {
+                    return hostesses
+                })
+                .then(hostesses => {
+                    return Business.insertMany(businesses)
+                        .then(business => {
+                        })
+                })
+        })
+
+        it('should create an event', () =>
+            logic.createEvent(business1.email, new Date('01/01/2000'), 'Barcelona', 'title', 'description')
+                .then(event => {
+                    expect(event.business).to.exist
+                    expect(event.date).to.exist
+                    expect(event.location).to.equal('Barcelona')
+                    expect(event.title).to.equal('title')
+                    expect(event.description).to.equal('description')
+                    expect(event.hostesses.length).to.equal(4)
+                })
+        )
+    })
+
+    false && describe('search hostesses', () => {
+        beforeEach(() => Hostess.insertMany(hostesses))
+        beforeEach(() => Business.insertMany(businesses))
+
+        it('should search the correct hostesses', () =>
+            logic.searchWorkers('W', ['catalan', 'spanish'], 'info')
+                .then(searched => {
+                    expect(searched).to.exist
+                    expect(searched.length).to.equal(1)
+                })
+        )
+
+        it('should search only with languages', () =>
+            logic.searchWorkers('', ['english'], '')
+                .then(searched => {
+                    expect(searched).to.exist
+                    expect(searched.length).to.equal(3)
+                })
+        )
+
+        it('should retrieve all hostesses', () =>
+            logic.searchWorkers()
+                .then(all => {
+                    expect(all).to.exist
+                    expect(all.length).to.equal(5)
+                })
+        )
+    })
+
+
+
+
+
+
+
+
+
 
     false && describe('list hostesses', () => {
         beforeEach(() => Hostess.insertMany(hostesses))
 
         it('should list correctly', () =>
-
             logic.hostesDetails('host1@mail.com')
                 .then(listed => {
                     expect(listed).to.exist
@@ -392,7 +542,7 @@ describe('logic', () => {
         )
     })
 
-    true && describe('select hostesses', () => {
+    false && describe('select hostesses', () => {
         beforeEach(() =>
             Promise.all([
                 Hostess.insertMany(hostesses),
@@ -436,40 +586,12 @@ describe('logic', () => {
         )
     })
 
-    false && describe('create event', () => {
-        beforeEach(() => {
-            return Hostess.insertMany(hostesses)
-                .then(hostesses => {
-                    return hostesses
-                })
-                .then(hostesses => {
-                    return Business.create(business1)
-                        .then(business => {
-                            business.selected.push(...hostesses.map(hostess => hostess._id))
-
-                            return business.save()
-                        })
-                })
-        })
-
-        it('should create an event', () =>
-            logic.createEvent(business1.email, new Date('01/01/2000'), 'Barcelona', 'title', 'description')
-                .then(event => {
-                    expect(event.business).to.exist
-                    expect(event.date).to.exist
-                    expect(event.location).to.equal('Barcelona')
-                    expect(event.title).to.equal('title')
-                    expect(event.description).to.equal('description')
-                    expect(event.hostesses.length).to.equal(4)
-                })
-        )
-    })
 
     false && describe('return all details of the event', () => {
         let id
 
         beforeEach(() => {
-            return Events.insertMany(failEvents)
+            return Events.insertMany(event)
                 .then(() => {
                     return Events.findOne({ "location": "Barcelona" })
                 })
@@ -498,3 +620,4 @@ describe('logic', () => {
             .then(() => _connection.disconnect())
     )
 })
+

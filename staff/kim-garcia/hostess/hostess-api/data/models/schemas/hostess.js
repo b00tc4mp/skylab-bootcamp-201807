@@ -1,10 +1,13 @@
-const { Schema } = require('mongoose')
+'use strict'
+
+const { Schema, Schema: { Types: { ObjectId } } } = require('mongoose')
 
 function validatePassword(password) {
     if (password.length < 5) throw Error('password lenght is too short')
 }
 
 module.exports = new Schema({
+
     email: {
         type: String,
         required: true,
@@ -19,28 +22,22 @@ module.exports = new Schema({
         trim: true,
     }, 
 
-    photo: {
-        type: String,
-    },
+    photo: String,
 
-    name: {
-        type: String,
-    },
+    name: String,
 
-    birth: {
-        type: Date,
-    },
+    birth: Date,
 
     origin: String,
-
-    gender: {
-        type: String,
-        enum: ['W', 'M'],
-    },
 
     phone: {
         type: String,
         trim: true
+    },
+
+    gender: {
+        type: String,
+        enum: ['W', 'M'],
     },
 
     languages: [String],
@@ -50,18 +47,29 @@ module.exports = new Schema({
         enum: ['info', 'image', 'sells', 'animation']
     },
 
-    skills: [String],
-
-    height: {
-        type: Number,
-        min: 120,
-        max: 250
-    },
-
     myself: {
         type: String,
         maxlength: 300,
-        lowercase: true,
     },
 
+    requests: [{
+        type: ObjectId,
+        ref: 'Business'
+    }],
+
+    accepted: [{
+        type: ObjectId,
+        ref: 'Business'
+    }],
+
+    toConfirm: [{
+        type: ObjectId,
+        ref: 'Events'
+    }],
+
+    toAsist: [{
+        type: ObjectId,
+        ref: 'Events'
+    }],
+    
 })

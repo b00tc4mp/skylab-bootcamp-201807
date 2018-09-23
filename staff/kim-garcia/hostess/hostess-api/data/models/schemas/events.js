@@ -4,25 +4,38 @@ module.exports = new Schema({
 
     location: String,
 
-    date: {
-        type: Date,
-        default: Date.now
-    },
+    date: String,
 
-    photos: String,
+    hours: String,
 
     title: String,
 
-    description: String,
+    goal: String,
+
+    briefing: String,
+
+    contactName: String,
+
+    contactPhone: String,
 
     business: {
         type: ObjectId,
         ref: 'Business'
     },
 
-    hostesses: [{
+    candidates: [{
         type: ObjectId,
         ref: 'Hostess'
-    }]
+    }],
+
+    approved: [{
+        type: ObjectId,
+        ref: 'Hostess'
+    }],
+
+    confirmed: [{
+        type: ObjectId,
+        ref: 'Hostess'
+    }],
 
 })

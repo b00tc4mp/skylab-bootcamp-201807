@@ -10,11 +10,11 @@ function validateJwt(req, res, next) {
     try {
         const authorization = req.get('authorization')
 
-        if (!authorization || !authorization.length) throw new Error('1 invalid token')
+        if (!authorization || !authorization.length) throw new Error('0 invalid token')
 
         const parts = authorization.split(' ')
 
-        if (parts.length !== 2) throw new Error('invalid token')
+        if (parts.length !== 2) throw new Error('1 invalid token')
 
         if (parts[0].toLowerCase() !== 'bearer') throw new Error('2 invalid token')
 
