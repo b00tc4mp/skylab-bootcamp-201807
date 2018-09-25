@@ -127,18 +127,18 @@ const logic = {
             .then(() => true)
     },
 
-    retrieveHostess(id) {
+    retrieveHostess(idH) {
         return Promise.resolve()
-            .then(() => Hostess.findById({ _id: id }))
+            .then(() => Hostess.findById(idH).populate('requests').populate('accepted').populate('toConfirm').populate('toAssist'))
             .then(hostess => {
                 if (!hostess) throw new LogicError('can not find the hostess')
                 return hostess
             })
     },
 
-    retrieveBusiness(id) {
+    retrieveBusiness(idB) {
         return Promise.resolve()
-            .then(() => Business.findById({ _id: id }))
+            .then(() => Business.findById(idB))
             .then(business => {
                 if (!business) throw new LogicError('can not find the business')
                 return business
@@ -160,7 +160,7 @@ const logic = {
 
                 if (!(languages instanceof Array)) throw new LogicError('invalid array of languages')
 
-                return Hostess.findById({ _id: id })
+                return Hostess.findById(id)
             })
             .then(hostess => {
                 if (!hostess) throw new LogicError(`wrong credentials`)
@@ -181,7 +181,7 @@ const logic = {
                 this._validateStringField('company philosophy', philosophy)
                 this._validateStringField('business card', businessCard)
 
-                return Business.findById({ _id: id })
+                return Business.findById(id)
             })
             .then(business => {
                 if (!business) throw new LogicError(`wrong credentials`)
@@ -237,32 +237,6 @@ const logic = {
      * Comandos hostess
      */
 
-  
-    newEvent(idB, location, date, hours, title, goal) {
-        let idE = ''
-
-        return Promise.resolve()
-            .then(() => {
-                if (!date) throw new LogicError('Missing a date for this event')
-                if (!location) throw new LogicError('Missing the location of the event')
-                if (!title) throw new LogicError('Missing a title of the event')
-                if (!goal) throw new LogicError('Missing a goal of the event')
-
-                const event = { business: idB, location, date, hours, title, goal }
-
-                return Events.create( event )
-            })
-            .then(event => {
-                idE = event.id
-                return Business.findById({ _id: idB })
-            })
-            .then(business => {
-                business._doc.events.push(idE)
-                return business.save()
-            })
-            .then(() => true)
-    },
-
     searchWorkers(gender, languages, jobType) {
         return Promise.resolve()
             .then(() => {
@@ -299,68 +273,122 @@ const logic = {
             })
     },
 
-
-
-
+    
     /**
-     * CONTINU HERE
+     * Me cagoen
+     * se para despues del primer  y en mongoose no estan las hostess
+     * 
+     * el save() me borra las hostess
      */
 
-
-    addFavs(emailHost, emailBus) {
-
-        let idHost
-
+    sendRequest(idB, idH) {
         return Promise.resolve()
-            .then(() => Hostess.findOne({ email: emailHost }))
-            .then(host => {
-                idHost = host.id
-                return Business.findOne({ email: emailBus })
-            })
-            .then(business => {
-                business._doc.favs.push(idHost)
-                return business.save()
-            })
-            .then(() => true)
-
+        .then(() => {
+            return Hostess.updateOne({ _id: idH }, { $push: { requests: idB }})
+        })
+        .then(() => true )
     },
 
-    addHostess(emailBus, emailHost) {
+    acceptRequest(idH, idB) {
+        return Promise.resolve()
+        .then(() => {
+            debugger
+            return Hostess.updateOne({ _id: idH }, { $push: { accepted: idB }})
+        })
+        .then(() => {
+            debugger
+            return Business.findById(idB).populate('events')
+        })
+        .then(business => {
+            debugger
+            return business._doc
+        })
+    },
 
-        let idHost
+    businessEvents(idB) {
+        return Promise.resolve()
+        .then(() => {
+            // return Business.findById(idB).populate({path: 'events', populate: { path: 'candidates', path: 'approved', path: 'confirmed' }})
+            return Business.findById(idB).populate({path: 'events', populate: { path: 'candidates'}})
+        })
+        .then(business => {
+            return business._doc
+        })
+    },
+
+    joinToEvent(idH, idE) {
+        return Promise.resolve()
+            .then(() => {
+                return Events.updateOne({ _id: idE }, { $push: { candidates: idH } })
+            })
+            .then(() => {
+                return true
+            })
+    },
+
+    newEvent(idB, location, date, hours, title, goal) {
+        let idE = ''
+        const event = { business: idB, location, date, hours, title, goal }
 
         return Promise.resolve()
             .then(() => {
-                if (!emailBus) throw new LogicError('Missing the business in charge of this event')
-                if (!emailHost) throw new LogicError('You should select at least one hostess for your event')
+                if (!date) throw new LogicError('Missing a date for this event')
+                if (!location) throw new LogicError('Missing the location of the event')
+                if (!title) throw new LogicError('Missing a title of the event')
+                if (!goal) throw new LogicError('Missing a goal of the event')
 
-                return Hostess.findOne({ email: emailHost })
-            })
-            .then(host => {
-                idHost = host.id
-                return Business.findOne({ email: emailBus })
-            })
-            .then(business => {
-                business._doc.selected.map(selectedId => {
-                    if (selectedId === idHost) throw new LogicError('Hostess already selected')
-                })
-
-                business._doc.selected.push(idHost)
-                return business.save()
-            })
-            .then(() => true)
-    },
-
-
-    retrieveEventById(id) {
-        return Promise.resolve()
-            .then(() => {
-                return Events.findById(id).populate('business').populate('hostesses')
+                return Events.create(event)
             })
             .then(event => {
-                if (!event) throw new LogicError('can not find the event')
-                return event
+                idE = event.id
+                
+                return Business.updateOne({ _id: idB }, { $push: { events: idE }})
+                // return Business.findById(idB)
             })
+            .then(() => {
+                
+                return idE
+            })
+            // .then(business => {
+                // business._doc.events.push(idE)
+                // return business.save()
+            // })
+            // .then(() => Events.findOne(event))
+            // .then(event => event._doc._id)
+    },
+
+    makeBriefing(idE, contactName, contactPhone, briefing) {
+        return Promise.resolve()
+            .then(() => {
+                return Events.updateOne({ _id: idE }, { $set: { contactName, contactPhone, briefing } })
+            })
+            .then(() => true)
+    },
+
+    closeEvent(idE, idH) {
+        return Promise.resolve()
+        .then(() => {
+            return Hostess.updateOne({ _id: idH }, { $push: { toConfirm: idE }})
+        })
+        .then(() => {
+            return Events.updateOne({ _id: idE }, { $pull: { candidates: idH }, $push: { approved: idH }})
+        })
+        .then(() => {
+            return true
+        })
+    },
+
+    iAssist(idE, idH) {
+        return Promise.resolve()
+        .then(() => {
+            return Hostess.updateOne({ _id: idH }, { $pull: { toConfirm: idE }, $push: { toAssist: idE }})
+        })
+        .then(() => {
+            return Events.updateOne({ _id: idE }, { $pull: { approved: idH }, $push: { confirmed: idH }})
+        })
+        .then(() => {
+            return true
+        })
     },
 
 

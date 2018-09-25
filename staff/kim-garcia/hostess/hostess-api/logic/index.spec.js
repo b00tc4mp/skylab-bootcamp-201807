@@ -333,20 +333,17 @@ describe('logic', () => {
         it('should update the hostess details correctly', () =>
             logic.authenticateHostess('host1@mail.com', password)
                 .then(id => {
-                    debugger
-                    logic.editHostessProfile(id, password, 'Arantxa', '05/05/2005', 'Palms', '1234567', 'im describing my super self', 'W', ['catalan', 'castellano'], 'image', 'photo here')
+                    return logic.editHostessProfile(id, password, 'Arantxa', '05/05/2005', 'Palms', '1234567', 'im describing my super self', 'W', ['catalan', 'castellano'], 'image', 'photo here')
                         .then(res => {
-                            debugger
                             expect(res).to.be.true
-                            // debugger
-                            // return Hostess.findById({ _id: id })
+
+                            return Hostess.findById(id)
                         })
-                    // .then(hostess => {
-                    //     debugger
-                    //     expect(hostess).to.exist
-                    //     expect(hostess.name).exist.equal('Arantxa')
-                    //     expect(hostess.languages).to.exist
-                    // })
+                        .then(hostess => {
+                            expect(hostess).to.exist
+                            expect(hostess.name).exist.equal('Arantxa')
+                            expect(hostess.languages).to.exist
+                        })
                 })
         )
         it('should fail with wrong password', () =>
@@ -365,12 +362,11 @@ describe('logic', () => {
         it('should update the business details correctly', () =>
             logic.authenticateBusiness('business1@mail.com', password)
                 .then((id) => {
-                    
-                    logic.editBusinessProfile(id, password, 'Aguas saladas', 'www.aguitas.com', 'Christof', '123456', 'Desalinar las aguas saladas', 'photos card')
+                    return logic.editBusinessProfile(id, password, 'Aguas saladas', 'www.aguitas.com', 'Christof', '123456', 'Desalinar las aguas saladas', 'photos card')
                         .then(res => {
                             expect(res).to.be.true
-                            
-                            return Business.findOne({ name: 'Aguas saladas' })
+
+                            return Business.findById(id)
                         })
                         .then(business => {
                             expect(business).to.exist
@@ -392,7 +388,7 @@ describe('logic', () => {
                     return Hostess.findOne({ email })
                 })
                 .then(hostess => {
-                    expect(hostess).not.to.exist
+                    expect(hostess).to.be.null
                 })
         )
     })
@@ -408,10 +404,17 @@ describe('logic', () => {
                     return Business.findOne({ email })
                 })
                 .then(business => {
-                    expect(business).not.to.exist
+                    expect(business).to.be.null
                 })
         )
     })
+
+
+
+
+
+
+
 
 
     /**
@@ -419,58 +422,7 @@ describe('logic', () => {
      */
 
 
-    true && describe('create event', () => {
-
-        beforeEach(() => Business.insertMany(businesses))
-
-        it('should create an event', () =>
-            logic.authenticateBusiness('business1@mail.com', password)
-                .then(id => {
-                    return logic.newEvent(id, 'Barcelona', 'dates', 'hours to work', 'title of the event', 'final goal')
-                        .then(event => {
-                            expect(event).to.be.true
-                            debugger
-                            // debugger
-                            // expect(event.location).to.equal('Barcelona')
-                            // expect(event.business).to.exist
-                            // expect(event.location).to.equal('Barcelona')
-                            // expect(event.date).to.exist
-                            // expect(event.hours).to.exist
-                            // expect(event.title).to.equal('title of the event')
-                            // expect(event.goal).to.equal('final goal')
-                        })
-                })
-        )
-    })
-
-    
-    false && describe('create event', () => {
-        beforeEach(() => {
-            return Hostess.insertMany(hostesses)
-                .then(hostesses => {
-                    return hostesses
-                })
-                .then(hostesses => {
-                    return Business.insertMany(businesses)
-                        .then(business => {
-                        })
-                })
-        })
-
-        it('should create an event', () =>
-            logic.createEvent(business1.email, new Date('01/01/2000'), 'Barcelona', 'title', 'description')
-                .then(event => {
-                    expect(event.business).to.exist
-                    expect(event.date).to.exist
-                    expect(event.location).to.equal('Barcelona')
-                    expect(event.title).to.equal('title')
-                    expect(event.description).to.equal('description')
-                    expect(event.hostesses.length).to.equal(4)
-                })
-        )
-    })
-
-    false && describe('search hostesses', () => {
+    true && describe('search hostesses', () => {
         beforeEach(() => Hostess.insertMany(hostesses))
         beforeEach(() => Business.insertMany(businesses))
 
@@ -499,117 +451,265 @@ describe('logic', () => {
         )
     })
 
+    true && describe('create event', () => {
 
+        beforeEach(() => Business.insertMany(businesses))
 
+        it('should create an event', () =>
+            logic.authenticateBusiness('business1@mail.com', password)
+                .then(idB => {
+                    return logic.newEvent(idB, 'Barcelona', 'dates', 'hours to work', 'title of the event', 'final goal')
+                        .then(idE => {
+                            expect(idE).to.exist
 
-
-
-
-
-
-
-    false && describe('list hostesses', () => {
-        beforeEach(() => Hostess.insertMany(hostesses))
-
-        it('should list correctly', () =>
-            logic.hostesDetails('host1@mail.com')
-                .then(listed => {
-                    expect(listed).to.exist
-                    expect(listed.length).to.equal(1)
-                    expect(listed[0].email).to.equal('host1@mail.com')
-                    expect(listed[0].height).to.equal(150)
-                })
-        )
-
-        it('should fail with empty email', () =>
-            logic.hostesDetails('')
-                .catch(err => err)
-                .then(({ message }) => expect(message).to.equal('There is no hostess selected'))
-        )
-    })
-
-    false && describe('add to favorites', () => {
-        beforeEach(() =>
-            Promise.all([
-                Hostess.insertMany(hostesses),
-                Business.insertMany(business1)])
-        )
-
-        it('should add a hostess to the favorites of a company', () =>
-            logic.addFavs('host1@mail.com', 'business1@mail.com')
-                .then(res => expect(res).to.be.true)
-
-        )
-    })
-
-    false && describe('select hostesses', () => {
-        beforeEach(() =>
-            Promise.all([
-                Hostess.insertMany(hostesses),
-                Business.insertMany(business1)])
-        )
-
-        it('should select hostess for an event', () =>
-            logic.addHostess('business1@mail.com', 'host1@mail.com')
-                .then(res => {
-                    expect(res).to.be.true
-                })
-        )
-
-        it('should fail if the business email is missing', () =>
-            logic.addHostess()
-                .catch(err => err)
-                .then(({ message }) => {
-                    expect(message).to.equal('Missing the business in charge of this event')
-                })
-        )
-
-        it('should fail if the hostess email is missing', () =>
-            logic.addHostess('business1@mail.com', '')
-                .catch(err => err)
-                .then(({ message }) => expect(message).to.equal('You should select at least one hostess for your event'))
-        )
-
-        it('should fail if the hostess is already selected', () =>
-            logic.addHostess('business1@mail.com', 'host1@mail.com')
-                .then(() => {
-                    return logic.addHostess('business1@mail.com', 'host1@mail.com')
-                        .catch(err => {
-                            debugger
-                            return err
+                            Events.findById({ _id: idE })
+                                .then(event => {
+                                    expect(event.location).to.equal('Barcelona')
+                                    expect(event.business).to.exist
+                                    expect(event.location).to.equal('Barcelona')
+                                    expect(event.date).to.exist
+                                    expect(event.hours).to.exist
+                                    expect(event.title).to.equal('title of the event')
+                                    expect(event.goal).to.equal('final goal')
+                                })
+                            return Business.findById({ _id: idB })
                         })
-                        .then(({ message }) => {
-                            debugger
-                            expect(message).to.equal('Hostess already selected')
+                        .then(business => {
+                            expect(business).to.exist
+                            expect(business._doc.events.length).to.equal(1)
                         })
                 })
         )
     })
 
+    true && describe('update the event with the briefing', () => {
+        beforeEach(() => Business.insertMany(businesses))
 
-    false && describe('return all details of the event', () => {
-        let id
+        it('should create an event', () =>
+            logic.authenticateBusiness('business1@mail.com', password)
+                .then(idB => {
+                    return logic.newEvent(idB, 'Barcelona', 'dates', 'hours to work', 'title of the event', 'final goal')
+                        .then(idE => {
+                            expect(idE).to.exist
+
+                            return logic.makeBriefing(idE, 'pepito', '45654', 'detalles de la accion')
+                                .then(res => {
+                                    expect(res).to.be.true
+                                })
+                        })
+                })
+        )
+    })
+
+    true && describe('send request to the host', () => {
+
+        let idB = ''
+        let idH = ''
+
 
         beforeEach(() => {
-            return Events.insertMany(event)
-                .then(() => {
-                    return Events.findOne({ "location": "Barcelona" })
+            Business.insertMany(businesses)
+            Hostess.insertMany(hostesses)
+
+            return logic.authenticateBusiness('business1@mail.com', password)
+                .then(idBus => {
+                    idB = idBus
+                    return logic.authenticateHostess('host1@mail.com', password)
                 })
-                .then((event) => {
-                    return id = event._id
+                .then(idHost => {
+                    idH = idHost
+                    return true
                 })
         })
 
-        it('should retrieve an event', () =>
-            logic.retrieveEventById(id)
-
-                .then(event => {
-                    expect(event).to.exist
-                    expect(event.title).to.equal("The event")
+        it('should send a request', () => {
+            logic.sendRequest(idB, idH)
+                .then(res => {
+                    
+                    expect(res).to.be.true
                 })
+        })
 
-        )
     })
+
+
+    true && describe('close the event', () => {
+
+        let idB = ''
+        let idH = ''
+        let idE = ''
+
+        beforeEach(() => {
+            Business.insertMany(businesses)
+            Hostess.insertMany(hostesses)
+
+            return logic.authenticateBusiness('business1@mail.com', password)
+                .then(idBus => {
+                    idB = idBus
+                    return logic.authenticateHostess('host1@mail.com', password)
+                })
+                .then(idHost => {
+                    idH = idHost
+                    return logic.newEvent(idB, 'place', 'date', 'at some time', 'who knows', 'the goal')
+                })
+                .then(idEvent => idE = idEvent)
+        })
+
+        it('should close the event', () => {
+            logic.closeEvent(idE, idH)
+                .then(res => {
+                    expect(res).to.be.true
+                })
+        })
+    })
+
+    true && describe('assist to the event', () => {
+
+        let idB = ''
+        let idH = ''
+        let idE = ''
+
+        beforeEach(() => {
+            Business.insertMany(businesses)
+            Hostess.insertMany(hostesses)
+
+            return logic.authenticateBusiness('business1@mail.com', password)
+                .then(idBus => {
+                    idB = idBus
+                    return logic.authenticateHostess('host1@mail.com', password)
+                })
+                .then(idHost => {
+                    idH = idHost
+                    return logic.newEvent(idB, 'place', 'date', 'at some time', 'who knows', 'the goal')
+                })
+                .then(idEvent => idE = idEvent)
+        })
+
+        it('should close the event', () => {
+            logic.iAssist(idE, idH)
+                .then(res => {
+                    expect(res).to.be.true
+                })
+        })
+    })
+
+    /**
+     * dice que no se puede leeer _doc de undefined. en debugger viene definido y populado
+     */
+
+    false && describe('accept busines requestes', () => {
+
+        let idB = ''
+        let idH = ''
+        let idE = ''
+
+        beforeEach(() => {
+            Business.insertMany(businesses)
+            Hostess.insertMany(hostesses)
+
+            return logic.authenticateBusiness('business1@mail.com', password)
+                .then(idBus => {
+                    idB = idBus
+                    return logic.authenticateHostess('host1@mail.com', password)
+                })
+                .then(idHost => {
+                    idH = idHost
+                    return logic.newEvent(idB, 'place', 'date', 'at some time', 'who knows', 'the goal')
+                })
+                .then(idEvent => idE = idEvent)
+        })
+
+        it('accept the request', () => {
+            logic.acceptRequest(idH, idB)
+                .then(business => {
+                    debugger
+                    expect(business).to.exist
+                    expect(business.name).to.equal("the company")
+                    expect(business.events._doc.location).to.equal("place")
+                })
+        })
+    })
+    
+
+    /**
+     * lo hace todo correcto pero me elimina el evento antes de llegar al final
+     * en el debugger existe el evento con una candidata
+     */
+
+    false && describe('join to event as a candidate', () => {
+
+        let idB = ''
+        let idH = ''
+        let idE = ''
+
+        beforeEach(() => {
+            Business.insertMany(businesses)
+            Hostess.insertMany(hostesses)
+
+            return logic.authenticateBusiness('business1@mail.com', password)
+                .then(idBus => {
+                    idB = idBus
+                    return logic.authenticateHostess('host1@mail.com', password)
+                })
+                .then(idHost => {
+                    idH = idHost
+                    return logic.newEvent(idB, 'place', 'date', 'at some time', 'who knows', 'the goal')
+                })
+                .then(idEvent => idE = idEvent)
+        })
+
+
+        it('should join as a candidate', () => {
+            logic.joinToEvent(idH, idE)
+            .then(res => {
+                expect(res).to.be.true
+                debugger
+                return Events.findById(idE)
+            })
+            .then(event => {
+                expect(event).to.exist
+                expect(event._doc.location).to.equal('place')
+                expect(event._doc.candidates.length).to.equal(1)
+            })
+        })
+    })
+
+    true && describe('show busines events', () => {
+
+        let idB = ''
+        let idH = ''
+        let idE = ''
+
+        beforeEach(() => {
+            Business.insertMany(businesses)
+            Hostess.insertMany(hostesses)
+
+            return logic.authenticateBusiness('business1@mail.com', password)
+                .then(idBus => {
+                    idB = idBus
+                    return logic.authenticateHostess('host1@mail.com', password)
+                })
+                .then(idHost => {
+                    idH = idHost
+                    return logic.newEvent(idB, 'place', 'date', 'at some time', 'who knows', 'the goal')
+                })
+                .then(idEvent => {
+                    idE = idEvent
+                    return logic.joinToEvent(idH, idE)
+                })
+                .then(() => true)
+        })
+
+        it('show business events', () => {
+            logic.businessEvents(idB)
+                .then(events => {
+                    debugger
+                    expect(events).to.exist
+                })
+        })
+    })
+
+
 
     after(() =>
         Promise.all([

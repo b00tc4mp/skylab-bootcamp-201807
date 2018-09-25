@@ -67,7 +67,7 @@ module.exports = new Schema({
         ref: 'Events'
     }],
 
-    toAsist: [{
+    toAssist: [{
         type: ObjectId,
         ref: 'Events'
     }],
