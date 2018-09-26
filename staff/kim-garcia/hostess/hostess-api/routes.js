@@ -39,12 +39,12 @@ router.post('/hostess-auth', jsonBodyParser, (req, res) => {
     const { body: { email, password } } = req
 
     logic.authenticateHostess(email, password)
-        .then(() => {
+        .then(idH => {
             const { JWT_SECRET, JWT_EXP } = process.env
 
-            const token = jwt.sign({ sub: email }, JWT_SECRET, { expiresIn: JWT_EXP })
+            const token = jwt.sign({ sub: idH }, JWT_SECRET, { expiresIn: JWT_EXP })
 
-            res.json({ message: 'hostess authenticated', token })
+            res.json({ message: 'hostess authenticated', token, idH })
         })
         .catch(err => {
             const { message } = err
@@ -57,12 +57,12 @@ router.post('/business-auth', jsonBodyParser, (req, res) => {
     const { body: { email, password } } = req
 
     logic.authenticateBusiness(email, password)
-        .then(() => {
+        .then(idB => {
             const { JWT_SECRET, JWT_EXP } = process.env
 
-            const token = jwt.sign({ sub: email }, JWT_SECRET, { expiresIn: JWT_EXP })
+            const token = jwt.sign({ sub: idB }, JWT_SECRET, { expiresIn: JWT_EXP })
 
-            res.json({ message: 'business authenticated', token })
+            res.json({ message: 'business authenticated', token, idB })
         })
         .catch(err => {
             const { message } = err
@@ -71,11 +71,11 @@ router.post('/business-auth', jsonBodyParser, (req, res) => {
         })
 })
 
-router.get('/hostess-details/:email', [validateJwt, jsonBodyParser], (req, res) => {
-    const { params: { email }} = req
+router.get('/hostess-details/:id', [validateJwt, jsonBodyParser], (req, res) => {
+    const { params: { id }} = req
 
-    logic.retrieveHostess(email)
-    .then(hostesses => res.status(200).json({ status: 'OK', hostesses }))
+    logic.retrieveHostess(id)
+    .then(hostess => res.status(200).json({ status: 'OK', hostess }))
     .catch(err => {
         const { message } = err
 
@@ -83,11 +83,11 @@ router.get('/hostess-details/:email', [validateJwt, jsonBodyParser], (req, res) 
     })
 })
 
-router.get('/business-details/:email', [validateJwt, jsonBodyParser], (req, res) => {
-    const { params: { email }} = req
+router.get('/business-details/:id', [validateJwt, jsonBodyParser], (req, res) => {
+    const { params: { id }} = req
 
-    logic.retrieveBusiness(email)
-    .then(businesses => res.status(200).json({ status: 'OK', businesses }))
+    logic.retrieveBusiness(id)
+    .then(business => res.status(200).json({ status: 'OK', business }))
     .catch(err => {
         const { message } = err
 
@@ -97,10 +97,10 @@ router.get('/business-details/:email', [validateJwt, jsonBodyParser], (req, res)
 
 
 
-router.patch('/hostess-edit/:email', [validateJwt, jsonBodyParser], (req, res) => {
-    const { params: { email }, body: { password, newPassword } } = req
+router.patch('/hostess-edit/:id', [validateJwt, jsonBodyParser], (req, res) => {
+    const { params: { id }, body: { password, newPassword } } = req
 
-    logic.updatePasswordHostess(email, password, newPassword)
+    logic.updatePasswordHostess(id, password, newPassword)
         .then(() => res.json({ message: 'password updated' }))
         .catch(err => {
             const { message } = err
@@ -109,10 +109,10 @@ router.patch('/hostess-edit/:email', [validateJwt, jsonBodyParser], (req, res) =
         })
 })
 
-router.patch('/business-edit/:email', [validateJwt, jsonBodyParser], (req, res) => {
-    const { params: { email }, body: { password, newPassword } } = req
+router.patch('/business-edit/:id', [validateJwt, jsonBodyParser], (req, res) => {
+    const { params: { id }, body: { password, newPassword } } = req
 
-    logic.updatePasswordBusiness(email, password, newPassword)
+    logic.updatePasswordBusiness(id, password, newPassword)
         .then(() => res.json({ message: 'password updated' }))
         .catch(err => {
             const { message } = err
@@ -121,10 +121,10 @@ router.patch('/business-edit/:email', [validateJwt, jsonBodyParser], (req, res) 
         })
 })
 
-router.patch('/hostess/:email', [validateJwt, jsonBodyParser], (req, res) => {
-    const { params: { email }, body: { name, birth, origin, gender, phone, languages, jobType, skills, height, myself, photo } } = req
+router.patch('/hostess/:id', [validateJwt, jsonBodyParser], (req, res) => {
+    const { params: { id }, body: { password, name, birth, origin, phone, myself, gender, languages, jobType, photo } } = req
 
-    logic.editHostessProfile(email, name, birth, origin, gender, phone, languages, jobType, height, myself, skills, photo)
+    logic.editHostessProfile(id, password, name, birth, origin, phone, myself, gender, languages, jobType, photo)
         .then(() => res.json({ message: 'hostess profile updated' }))
         .catch(err => {
             const { message } = err
@@ -133,10 +133,10 @@ router.patch('/hostess/:email', [validateJwt, jsonBodyParser], (req, res) => {
         })
 })
 
-router.patch('/business/:email', [validateJwt, jsonBodyParser], (req, res) => {
-    const { params: { email }, body: { name, web, boss, phone, philosophy } } = req
+router.patch('/business/:id', [validateJwt, jsonBodyParser], (req, res) => {
+    const { params: { id }, body: { password, name, web, boss, phone, philosophy, businessCard } } = req
 
-    logic.editBusinessProfile(email, name, web, boss, phone, philosophy)
+    logic.editBusinessProfile(id, password, name, web, boss, phone, philosophy, businessCard)
         .then(() => res.json({ message: 'company profile updated' }))
         .catch(err => {
             const { message } = err
@@ -145,10 +145,10 @@ router.patch('/business/:email', [validateJwt, jsonBodyParser], (req, res) => {
         })
 })
 
-router.delete('/unregister-hostess/:email', [validateJwt, jsonBodyParser], (req, res) => {
-    const { params: { email }, body: { password } } = req
+router.delete('/unregister-hostess/:id', [validateJwt, jsonBodyParser], (req, res) => {
+    const { params: { id }, body: { password } } = req
 
-    logic.unregisterHostess(email, password)
+    logic.unregisterHostess(id, password)
         .then(() => res.json({ message: 'hostess deleted succesfully' }))
         .catch(err => {
             const { message } = err
@@ -156,10 +156,10 @@ router.delete('/unregister-hostess/:email', [validateJwt, jsonBodyParser], (req,
         })
 })
 
-router.delete('/unregister-business/:email', [validateJwt, jsonBodyParser], (req, res) => {
-    const { params: { email }, body: { password } } = req
+router.delete('/unregister-business/:id', [validateJwt, jsonBodyParser], (req, res) => {
+    const { params: { id }, body: { password } } = req
 
-    logic.unregisterBusiness(email, password)
+    logic.unregisterBusiness(id, password)
         .then(() => res.json({ message: 'company deleted succesfully' }))
         .catch(err => {
             const { message } = err
@@ -168,15 +168,18 @@ router.delete('/unregister-business/:email', [validateJwt, jsonBodyParser], (req
 })
 
 
-router.get('/:email/search', [validateJwt, jsonBodyParser], (req, res) => {
-    const email = req.params.email
+
+/**
+ * INTERNO
+ */
+
+
+router.get('/:id/search', [validateJwt, jsonBodyParser], (req, res) => {
     const gender = req.query.gender
     const jobType = req.query.jobType
-    const height = JSON.parse(req.query.height) 
-
     const languages = req.query.languages ? req.query.languages.split('|') : undefined
 
-    logic.searchWorkers(email, gender, jobType, height, languages)
+    logic.searchWorkers(gender, languages, jobType)
         .then(hostesses => {
             res.status(200).json({ status: 'OK', hostesses })
         })

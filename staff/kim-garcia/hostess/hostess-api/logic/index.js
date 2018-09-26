@@ -57,14 +57,15 @@ const logic = {
                 this._validateEmail(email)
                 this._validateStringField('password', password)
 
-                return Hostess.findOne({ email })
+                return Hostess.findOne({ email }).lean()
             })
             .then(hostess => {
+                debugger
                 if (!hostess) throw new LogicError(`Does not exist a hostess with this email: ${email}`)
 
                 if (hostess.password !== password) throw new LogicError('Wrong password')
 
-                return hostess._doc._id
+                return hostess._id
             })
     },
 
@@ -74,28 +75,51 @@ const logic = {
                 this._validateEmail(email)
                 this._validateStringField('password', password)
 
-                return Business.findOne({ email })
+                return Business.findOne({ email }).lean()
             })
             .then(business => {
                 if (!business) throw new LogicError(`There is no acount with this email: ${email}`)
 
                 if (business.password !== password) throw new LogicError('Wrong password')
 
-                return business._doc._id
+                return business._id
+            })
+    },
+    
+    retrieveHostess(idH) {
+        return Promise.resolve()
+            .then(() => Hostess.findById(idH).populate('requests').populate({path: 'accepted', select: { password: 0 }, populate: {path: 'events'}}).populate('toConfirm').populate('toAssist').lean())
+            .then(hostess => {
+                debugger
+                if (!hostess) throw new LogicError('can not find the hostess')
+                delete hostess.password
+                delete hostess.__v
+                return hostess
             })
     },
 
-    updatePasswordHostess(email, password, newPassword) {
+    retrieveBusiness(idB) {
+        return Promise.resolve()
+            .then(() => Business.findById(idB).populate({path: 'events', select: {__v: 0}, populate: [{ path: 'candidates', select: { password: 0 }}, {path: 'confirmed', select: { password: 0 }}, {path: 'approved', select: { password: 0 }}]}).lean())
+            .then(business => {
+                debugger
+                if (!business) throw new LogicError('can not find the business')
+                delete business.password
+                delete business.__v
+                return business
+            })
+    },
+
+    updatePasswordHostess(idH, password, newPassword) {
         return Promise.resolve()
             .then(() => {
-                this._validateEmail(email)
                 this._validateStringField('password', password)
                 this._validateStringField('new password', newPassword)
 
-                return Hostess.findOne({ email })
+                return Hostess.findById(idH)
             })
             .then(hostess => {
-                if (!hostess) throw new LogicError(`The email ${email} does not correspond to any of our hostess`)
+                if (!hostess) throw new LogicError(`Hostess not found`)
                 if (hostess.password !== password) throw new LogicError('Wrong password')
                 if (hostess.password === newPassword) throw new LogicError('Same old password, be more creative')
 
@@ -106,17 +130,16 @@ const logic = {
             .then(() => true)
     },
 
-    updatePasswordBusiness(email, password, newPassword) {
+    updatePasswordBusiness(idB, password, newPassword) {
         return Promise.resolve()
             .then(() => {
-                this._validateEmail(email)
                 this._validateStringField('password', password)
                 this._validateStringField('new password', newPassword)
 
-                return Business.findOne({ email })
+                return Business.findById(idB)
             })
             .then(business => {
-                if (!business) throw new LogicError(`The email ${email} does not correspond to any of our business`)
+                if (!business) throw new LogicError(`Business not found`)
                 if (business.password !== password) throw new LogicError('Wrong password')
                 if (business.password === newPassword) throw new LogicError('Same old password, be more creative')
 
@@ -125,24 +148,6 @@ const logic = {
                 return business.save()
             })
             .then(() => true)
-    },
-
-    retrieveHostess(idH) {
-        return Promise.resolve()
-            .then(() => Hostess.findById(idH).populate('requests').populate('accepted').populate('toConfirm').populate('toAssist'))
-            .then(hostess => {
-                if (!hostess) throw new LogicError('can not find the hostess')
-                return hostess
-            })
-    },
-
-    retrieveBusiness(idB) {
-        return Promise.resolve()
-            .then(() => Business.findById(idB))
-            .then(business => {
-                if (!business) throw new LogicError('can not find the business')
-                return business
-            })
     },
 
     editHostessProfile(id, password, name, birth, origin, phone, myself, gender, languages, jobType, photo) {
@@ -193,16 +198,15 @@ const logic = {
             .then(() => true)
     },
 
-    unregisterHostess(email, password) {
+    unregisterHostess(id, password) {
         return Promise.resolve()
             .then(() => {
-                this._validateEmail(email)
                 this._validateStringField('password', password)
 
-                return Hostess.findOne({ email })
+                return Hostess.findById(id)
             })
             .then(hostess => {
-                if (!hostess) throw new LogicError(`The email ${email} does not correspond to any of our hostess`)
+                if (!hostess) throw new LogicError(`Already deleted`)
 
                 if (hostess.password !== password) throw new LogicError(`Wrond password`)
 
@@ -212,16 +216,15 @@ const logic = {
 
     },
 
-    unregisterBusiness(email, password) {
+    unregisterBusiness(id, password) {
         return Promise.resolve()
             .then(() => {
-                this._validateEmail(email)
                 this._validateStringField('password', password)
 
-                return Business.findOne({ email })
+                return Business.findById(id)
             })
             .then(business => {
-                if (!business) throw new LogicError(`The email ${email} does not correspond to any of our business`)
+                if (!business) throw new LogicError(`Already deleted`)
 
                 if (business.password !== password) throw new LogicError(`Wrond password`)
 
@@ -261,11 +264,13 @@ const logic = {
 
                 return Hostess.find(criteria).lean()
                     .then(hostesses => {
-                        if (this.hostesses) {
+                        if (hostesses) {
+                            debugger
                             hostesses.forEach(hostess => {
-                                hostess.id = hostess.id.toString()
-                                delete hostess._id
-                                delete hostess._v
+                                // hostess.id = hostess._id.toString()
+                                // delete hostess._id
+                                delete hostess.__v
+                                delete hostess.password
                             })
                         }
                         return hostesses
@@ -292,27 +297,14 @@ const logic = {
     acceptRequest(idH, idB) {
         return Promise.resolve()
         .then(() => {
-            debugger
             return Hostess.updateOne({ _id: idH }, { $push: { accepted: idB }})
         })
         .then(() => {
-            debugger
-            return Business.findById(idB).populate('events')
+            return Business.findById(idB).populate('events').lean()
         })
         .then(business => {
-            debugger
-            return business._doc
-        })
-    },
-
-    businessEvents(idB) {
-        return Promise.resolve()
-        .then(() => {
-            // return Business.findById(idB).populate({path: 'events', populate: { path: 'candidates', path: 'approved', path: 'confirmed' }})
-            return Business.findById(idB).populate({path: 'events', populate: { path: 'candidates'}})
-        })
-        .then(business => {
-            return business._doc
+            delete business.password
+            return business
         })
     },
 
@@ -326,9 +318,9 @@ const logic = {
             })
     },
 
-    newEvent(idB, location, date, hours, title, goal) {
+    newEvent(idB, location, date, hours, salary, title, goal) {
         let idE = ''
-        const event = { business: idB, location, date, hours, title, goal }
+        const event = { business: idB, location, date, hours, salary, title, goal }
 
         return Promise.resolve()
             .then(() => {
@@ -336,25 +328,15 @@ const logic = {
                 if (!location) throw new LogicError('Missing the location of the event')
                 if (!title) throw new LogicError('Missing a title of the event')
                 if (!goal) throw new LogicError('Missing a goal of the event')
+                if (!salary) throw new LogicError('Missing a salary of the event')
 
                 return Events.create(event)
             })
             .then(event => {
                 idE = event.id
-                
                 return Business.updateOne({ _id: idB }, { $push: { events: idE }})
-                // return Business.findById(idB)
             })
-            .then(() => {
-                
-                return idE
-            })
-            // .then(business => {
-                // business._doc.events.push(idE)
-                // return business.save()
-            // })
-            // .then(() => Events.findOne(event))
-            // .then(event => event._doc._id)
+            .then(() => idE)
     },
 
     makeBriefing(idE, contactName, contactPhone, briefing) {

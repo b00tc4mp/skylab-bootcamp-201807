@@ -3,7 +3,7 @@
 const { Schema, Schema: { Types: { ObjectId } } } = require('mongoose')
 
 function validatePassword(password) {
-    if (password.length < 5) throw Error('password lenght is too short')
+    if (password.length < 3) throw Error('password lenght is too short')
 }
 
 module.exports = new Schema({

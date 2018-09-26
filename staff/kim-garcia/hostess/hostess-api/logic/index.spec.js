@@ -118,7 +118,7 @@ describe('logic', () => {
         ])
     )
 
-    false && describe('validate fields', () => {
+    true && describe('validate fields', () => {
         it('should succeed on correct value', () => {
             expect(() => logic._validateStringcd.Field('email', email).to.equal(email))
             expect(() => logic._validateStringField('password', password).to.equal(password))
@@ -135,7 +135,7 @@ describe('logic', () => {
      * Register, authenticate, retrieve, update password, update details, unregister
      */
 
-    false && describe('register hostess', () => {
+    true && describe('register hostess', () => {
         it('should register correctly', () =>
             Hostess.findOne({ email: email })
                 .then(hostess => {
@@ -202,7 +202,7 @@ describe('logic', () => {
         )
     })
 
-    false && describe('register business', () => {
+    true && describe('register business', () => {
         it('should register a business correctly', () =>
             Business.findOne({ email: email })
                 .then(business => {
@@ -227,7 +227,7 @@ describe('logic', () => {
     })
 
 
-    false && describe('authenticatation of the hostess', () => {
+    true && describe('authenticatation of the hostess', () => {
         beforeEach(() => Hostess.insertMany(hostesses))
 
         it('should login correctly for a hostess', () =>
@@ -244,7 +244,7 @@ describe('logic', () => {
 
     })
 
-    false && describe('authenticatation of the hostess', () => {
+    true && describe('authenticatation of the hostess', () => {
         beforeEach(() => Business.insertMany(businesses))
 
         it('should login correctly for a hostess', () =>
@@ -260,14 +260,13 @@ describe('logic', () => {
         )
     })
 
-    false && describe('update hostess password', () => {
+    true && describe('update hostess password', () => {
         beforeEach(() => Hostess.create({ email, password }))
 
         it('should update the hostess password correctly', () =>
             logic.updatePasswordHostess(email, password, newPassword)
                 .then(res => {
                     expect(res).to.be.true
-                    const pepe = Hostess.findOne({ email })
                     return Hostess.findOne({ email })
                 })
                 .then(hostess => {
@@ -278,7 +277,7 @@ describe('logic', () => {
         )
     })
 
-    false && describe('update business password', () => {
+    true && describe('update business password', () => {
         beforeEach(() => Business.create({ email, password }))
 
         it('should update the business password correctly', () =>
@@ -297,13 +296,13 @@ describe('logic', () => {
         )
     })
 
-    false && describe('retrieve hostess details', () => {
+    true && describe('retrieve hostess details', () => {
         beforeEach(() => Hostess.insertMany(hostesses))
 
         it('should retrieve the hostess details', () =>
             logic.authenticateHostess('host1@mail.com', password)
                 .then(id => {
-                    logic.retrieveHostess(id)
+                    return logic.retrieveHostess(id)
                         .then(hostess => {
                             expect(hostess).to.exist
                             expect(hostess.name).to.equal('kim')
@@ -312,13 +311,13 @@ describe('logic', () => {
         )
     })
 
-    false && describe('retrieve business details', () => {
+    true && describe('retrieve business details', () => {
         beforeEach(() => Business.insertMany(businesses))
 
         it('should retrieve the business details', () =>
             logic.authenticateBusiness('business1@mail.com', password)
                 .then(id => {
-                    logic.retrieveBusiness(id)
+                    return logic.retrieveBusiness(id)
                         .then(business => {
                             expect(business).to.exist
                             expect(business.philosophy).to.equal('go slow to go fast')
@@ -327,7 +326,7 @@ describe('logic', () => {
         )
     })
 
-    false && describe('update hostess details', () => {
+    true && describe('update hostess details', () => {
         beforeEach(() => Hostess.insertMany(hostesses))
 
         it('should update the hostess details correctly', () =>
@@ -348,15 +347,15 @@ describe('logic', () => {
         )
         it('should fail with wrong password', () =>
             logic.authenticateHostess('host1@mail.com', password)
-                .then(id => {
+                .then(id => 
                     logic.editHostessProfile(id, '111222', 'Arantxa', '05/05/2005', 'Palms', '1234567', 'im describing my super self', 'W', ['catalan', 'castellano'], 'image', 'photo here')
                         .catch(err => err)
                         .then(({ message }) => expect(message).to.equal(`use the correct password`))
-                })
+                )
         )
     })
 
-    false && describe('update business details', () => {
+    true && describe('update business details', () => {
         beforeEach(() => Business.insertMany(businesses))
 
         it('should update the business details correctly', () =>
@@ -377,7 +376,7 @@ describe('logic', () => {
         )
     })
 
-    false && describe('unregister hostess', () => {
+    true && describe('unregister hostess', () => {
         beforeEach(() => Hostess.create({ email, password }))
 
         it('should unregister the hostess acound correctly', () =>
@@ -393,7 +392,7 @@ describe('logic', () => {
         )
     })
 
-    false && describe('unregister business', () => {
+    true && describe('unregister business', () => {
         beforeEach(() => Business.create({ email, password }))
 
         it('should unregister the business acound correctly', () =>
@@ -458,7 +457,7 @@ describe('logic', () => {
         it('should create an event', () =>
             logic.authenticateBusiness('business1@mail.com', password)
                 .then(idB => {
-                    return logic.newEvent(idB, 'Barcelona', 'dates', 'hours to work', 'title of the event', 'final goal')
+                    return logic.newEvent(idB, 'Barcelona', 'dates', 'hours to work', '10/hora', 'title of the event', 'final goal')
                         .then(idE => {
                             expect(idE).to.exist
 
@@ -488,7 +487,7 @@ describe('logic', () => {
         it('should create an event', () =>
             logic.authenticateBusiness('business1@mail.com', password)
                 .then(idB => {
-                    return logic.newEvent(idB, 'Barcelona', 'dates', 'hours to work', 'title of the event', 'final goal')
+                    return logic.newEvent(idB, 'Barcelona', 'dates', 'hours to work', 'salary', 'title of the event', 'final goal')
                         .then(idE => {
                             expect(idE).to.exist
 
@@ -523,9 +522,8 @@ describe('logic', () => {
         })
 
         it('should send a request', () => {
-            logic.sendRequest(idB, idH)
+            return logic.sendRequest(idB, idH)
                 .then(res => {
-                    
                     expect(res).to.be.true
                 })
         })
@@ -550,13 +548,13 @@ describe('logic', () => {
                 })
                 .then(idHost => {
                     idH = idHost
-                    return logic.newEvent(idB, 'place', 'date', 'at some time', 'who knows', 'the goal')
+                    return logic.newEvent(idB, 'place', 'date', 'at some time', 'salary', 'who knows', 'the goal')
                 })
                 .then(idEvent => idE = idEvent)
         })
 
         it('should close the event', () => {
-            logic.closeEvent(idE, idH)
+            return logic.closeEvent(idE, idH)
                 .then(res => {
                     expect(res).to.be.true
                 })
@@ -580,13 +578,13 @@ describe('logic', () => {
                 })
                 .then(idHost => {
                     idH = idHost
-                    return logic.newEvent(idB, 'place', 'date', 'at some time', 'who knows', 'the goal')
+                    return logic.newEvent(idB, 'place', 'date', 'at some time', 'salary', 'who knows', 'the goal')
                 })
                 .then(idEvent => idE = idEvent)
         })
 
         it('should close the event', () => {
-            logic.iAssist(idE, idH)
+            return logic.iAssist(idE, idH)
                 .then(res => {
                     expect(res).to.be.true
                 })
@@ -594,10 +592,10 @@ describe('logic', () => {
     })
 
     /**
-     * dice que no se puede leeer _doc de undefined. en debugger viene definido y populado
+     * dice que no se puede leeer _doc de undefined. en  viene definido y populado
      */
 
-    false && describe('accept busines requestes', () => {
+    true && describe('accept busines requestes', () => {
 
         let idB = ''
         let idH = ''
@@ -614,29 +612,23 @@ describe('logic', () => {
                 })
                 .then(idHost => {
                     idH = idHost
-                    return logic.newEvent(idB, 'place', 'date', 'at some time', 'who knows', 'the goal')
+                    return logic.newEvent(idB, 'place', 'date', 'at some time', 'salary', 'who knows', 'the goal')
                 })
                 .then(idEvent => idE = idEvent)
         })
 
         it('accept the request', () => {
-            logic.acceptRequest(idH, idB)
+            return logic.acceptRequest(idH, idB)
                 .then(business => {
-                    debugger
+                    
                     expect(business).to.exist
                     expect(business.name).to.equal("the company")
-                    expect(business.events._doc.location).to.equal("place")
+                    expect(business.events[0].location).to.equal("place")
                 })
         })
     })
-    
 
-    /**
-     * lo hace todo correcto pero me elimina el evento antes de llegar al final
-     * en el debugger existe el evento con una candidata
-     */
-
-    false && describe('join to event as a candidate', () => {
+    true && describe('join to event as a candidate', () => {
 
         let idB = ''
         let idH = ''
@@ -653,17 +645,16 @@ describe('logic', () => {
                 })
                 .then(idHost => {
                     idH = idHost
-                    return logic.newEvent(idB, 'place', 'date', 'at some time', 'who knows', 'the goal')
+                    return logic.newEvent(idB, 'place', 'date', 'at some time', 'salary', 'who knows', 'the goal')
                 })
                 .then(idEvent => idE = idEvent)
         })
 
 
         it('should join as a candidate', () => {
-            logic.joinToEvent(idH, idE)
+            return logic.joinToEvent(idH, idE)
             .then(res => {
                 expect(res).to.be.true
-                debugger
                 return Events.findById(idE)
             })
             .then(event => {
@@ -673,8 +664,8 @@ describe('logic', () => {
             })
         })
     })
-
-    true && describe('show busines events', () => {
+    
+    true && describe('probando repopulacion', () => {
 
         let idB = ''
         let idH = ''
@@ -691,7 +682,7 @@ describe('logic', () => {
                 })
                 .then(idHost => {
                     idH = idHost
-                    return logic.newEvent(idB, 'place', 'date', 'at some time', 'who knows', 'the goal')
+                    return logic.newEvent(idB, 'place', 'date', 'at some time', 'salary', 'who knows', 'the goal')
                 })
                 .then(idEvent => {
                     idE = idEvent
@@ -700,11 +691,10 @@ describe('logic', () => {
                 .then(() => true)
         })
 
-        it('show business events', () => {
-            logic.businessEvents(idB)
-                .then(events => {
-                    debugger
-                    expect(events).to.exist
+        it('should close the event', () => {
+            return logic.retrieveBusiness(idB)
+                .then(business => {
+                    expect(business).to.exist
                 })
         })
     })

@@ -8,13 +8,15 @@ module.exports = new Schema({
 
     hours: String,
 
+    salary: String,
+
     title: String,
 
     goal: String,
 
     briefing: String,
 
-    contactName: String,
+    contactName: String, 
 
     contactPhone: String,
 

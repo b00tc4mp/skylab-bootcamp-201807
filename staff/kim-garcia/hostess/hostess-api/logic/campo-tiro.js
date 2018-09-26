@@ -1,7 +1,7 @@
 
-//     /**
-//      * Comandos perfil usuario
-//      */
+    /**
+     * Comandos perfil usuario
+     */
 
 //     registerHostess(email, password) { return true },
 
