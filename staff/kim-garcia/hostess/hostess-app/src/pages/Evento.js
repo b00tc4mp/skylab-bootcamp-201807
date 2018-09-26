@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 import logic from '../logic'
-import Contact from '../components/Contact'
-import Header from '../components/Header';
+import Host from '../components/Host'
+import AnEvent from '../components/AnEvent';
 var moment = require('moment');
 
-class Events extends Component {
+class Evento extends Component {
     state = {
         event: null,
     }
@@ -51,4 +51,4 @@ class Events extends Component {
     }
 }
 
-export default withRouter(Events)
+export default withRouter(Evento)

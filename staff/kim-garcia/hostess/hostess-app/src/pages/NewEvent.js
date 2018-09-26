@@ -1,10 +1,8 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 import logic from '../logic'
-import Header from '../components/Header'
-import Host from '../components/Host';
 
-class CreateEvent extends Component {
+class newEvent extends Component {
     state = {
         height: 120,
         languagesSelected: [],
@@ -100,7 +98,7 @@ class CreateEvent extends Component {
 
         const { location, title, description, date } = this.state
 
-        logic.createEvent(this.props.email, date, location, title, description, this.props.token)
+        logic.newEvent(this.props.email, date, location, title, description, this.props.token)
             .then(id => {
                 // this.setState({ event: id })
 
@@ -211,4 +209,4 @@ schedule, about the event, ..." onChange={this.handleDescription}></textarea>
 
 
 
-export default withRouter(CreateEvent)
+export default withRouter(newEvent)

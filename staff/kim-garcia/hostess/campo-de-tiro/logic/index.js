@@ -396,3 +396,48 @@ class LogicError extends Error {
 
 module.exports = { logic, LogicError }
 
+
+
+
+// router.post('/favorites/:email', [validateJwt, jsonBodyParser], (req, res) => {
+//     const { params: { email }, body: { emailHost } } = req
+
+//     logic.addFavs(emailHost, email)
+//         .then(() => {
+//             res.status(200).json({ status: 'OK' })
+//         })
+//         .catch(err => {
+//             const { message } = err
+
+//             res.status(err instanceof LogicError ? 400 : 500).json({ message })
+//         })
+// })
+
+
+// router.post('/select/:email', [validateJwt, jsonBodyParser], (req, res) => {
+//     const { params: { email }, body: { emailHost } } = req
+
+//     logic.addHostess(email, emailHost)
+//         .then(() => {
+//             res.status(200).json({ status: 'OK' })
+//         })
+//         .catch(err => {
+//             const { message } = err
+
+//             res.status(err instanceof LogicError ? 400 : 500).json({ message })
+//         })
+// })
+
+// router.get('/event/:id', (req, res) => {
+//     const { params: { id } } = req
+
+//     logic.retrieveEventById(id)
+//     .then(event => {
+//         res.status(200).json({ status: 'OK', event })
+//     })
+//     .catch(err => {
+//         const { message } = err
+
+//         res.status(err instanceof LogicError ? 400 : 500).json({ message })
+//     })    
+// })

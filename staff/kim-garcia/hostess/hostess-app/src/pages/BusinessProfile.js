@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 import logic from '../logic'
-import Header from '../components/Header'
-import Contact from '../components/Contact';
+import BusinessCard from '../components/BusinessCard'
+import HomeButton from '../components/HomeButton'
 
 class Business extends Component {
     state = {

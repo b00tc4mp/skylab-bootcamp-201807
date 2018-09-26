@@ -1,13 +1,12 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
-import Header from '../components/Header'
 import logic from '../logic'
-import Contact from '../components/Contact'
+import HomeButton from '../components/HomeButton'
 
 var getAge = require('get-age')
 
 
-class Hostess extends Component {
+class HostessProfile extends Component {
 
     state = {
         name: '',
@@ -96,4 +95,4 @@ class Hostess extends Component {
     }
 }
 
-export default withRouter(Hostess)
+export default withRouter(HostessProfile)

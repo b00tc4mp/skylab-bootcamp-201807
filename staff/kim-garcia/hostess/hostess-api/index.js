@@ -12,17 +12,17 @@ const { env: { MONGO_URL } } = process
 mongoose.connect(MONGO_URL, { useNewUrlParser: true })
 .then(() => {
     const { PORT } = process.env
-
+    
     const app = express()
-
+    
     app.use(cors())
-
+    
     app.use('/api', router)
-
+    
     app.listen(PORT, () => console.log(`${package.name} ${package.version} up and running on port ${PORT}`))
 })
 .then(console.log('mongo db connected'))
-.catch(console.error)
+.catch(err => console.error(err))
 
 
 

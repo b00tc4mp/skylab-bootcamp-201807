@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Contact = props => {
+const BusinessCard = props => {
     return (
         <li className="contact">
             <fieldset className="contact-field">
@@ -19,4 +19,4 @@ const Contact = props => {
     )
 }
 
-export default Contact
+export default BusinessCard

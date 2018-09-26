@@ -2,78 +2,56 @@ import React, { Component } from 'react';
 import './App.css';
 import { Switch, Route, withRouter, Redirect } from 'react-router-dom'
 import Landing from './pages/Landing'
-import Hostess from './pages/Hostess'
-import Business from './pages/Business'
-import HostessEditProfile from './pages/HostessEditProfile'
-import BusinessEditProfile from './pages/BusinessEditProfile'
-import Event from './pages/Event'
-import CreateEvent from './pages/CreateEvent'
+
 
 
 class App extends Component {
 
   state = {
-    email: sessionStorage.getItem('email') || '',
     token: sessionStorage.getItem('token') || '',
     profile: sessionStorage.getItem('profile') || '',
-
-
-    // business: sessionStorage.getItem('business') || '',
-    idEvent: ''
+    id: sessionStorage.getItem('id') || '',
+    // idE = ''
   }
 
-  hostessLogged = (email, token) => {
-    this.setState({ email, token, profile: 'hostess' })
+  hostessLogin = (id, token) => {
+    this.setState({ id, token, profile: 'hostess' })
 
-    sessionStorage.setItem('email', email)
+    sessionStorage.setItem('id', id)
     sessionStorage.setItem('token', token)
     sessionStorage.setItem('profile', 'hostess')
-
-
-    // sessionStorage.setItem('hostess', 'hostess')
-    // sessionStorage.setItem('business', '')
   }
   
-  businessLogged = (email, token) => {
+  businessLogin = (id, token) => {
     this.setState({ email, token, profile: 'business' })
 
-    sessionStorage.setItem('email', email)
+    sessionStorage.setItem('id', id)
     sessionStorage.setItem('token', token)
     sessionStorage.setItem('profile', 'business')
-
-
-    // sessionStorage.setItem('business', 'business')
-    // sessionStorage.setItem('hostess', '')
   }
 
   isHostessLoggedIn() {
     if(this.state.profile === 'hostess') return true
-    
-    // return !!this.state.hostess
   }
   
   isBusinessLoggedIn() {
     if(this.state.profile === 'business') return true
-
-    // return !!this.state.business
   }
 
   onLogout = event => {
     event.preventDefault()
 
-    this.setState({ email: '', token: '', hostess: '', business: '', profile: ''})
+    this.setState({ id: '', token: '', profile: ''})
 
     sessionStorage.clear()
   }
 
-  handleIdEvent = (id) => {
-    this.setState({ idEvent: id })
-  }
-
-
+  // handleIdEvent = (id) => {
+  //   this.setState({ idE: id })
+  // }
 
   render() {
-    const { email, token } = this.state
+    const { id, token } = this.state
 
     return (
       <div>

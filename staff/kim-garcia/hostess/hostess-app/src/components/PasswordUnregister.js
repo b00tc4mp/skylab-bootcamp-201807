@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 import logic from '../logic'
 
-class DeleteUnregister extends Component {
+class PasswordUnregister extends Component {
 
     state = {
         changePas: false,
@@ -111,4 +111,4 @@ class DeleteUnregister extends Component {
     }
 }
 
-export default withRouter(DeleteUnregister)
+export default withRouter(PasswordUnregister)

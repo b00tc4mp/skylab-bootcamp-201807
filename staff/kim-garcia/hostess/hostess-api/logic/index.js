@@ -1,7 +1,23 @@
 const validateEmail = require('../utils/validate-email')
 const { Hostess, Business, Events } = require('../data/models')
+const cloudinary = require ('cloudinary')
+
+const {CLOUDINARY_CLOUD_NAME = "skykim" , CLOUDINARY_API_KEY = "279145917177247", CLOUDINARY_API_SECRET = "2d0aI-dRxQsSj6IM1p-c1StbZSk"} = process.env
+
+cloudinary.config({
+    cloud_name: CLOUDINARY_CLOUD_NAME,
+    api_key: CLOUDINARY_API_KEY,
+    api_secret: CLOUDINARY_API_SECRET
+})
 
 const logic = {
+
+    saveImage(base64Image) {
+        return new Promise((resolve, reject) => cloudinary.v2.uploader.upload(base64Image, (err, data) => {
+            if (err) return reject(err)
+            resolve(data.url)
+        }))
+    },
 
     _validateStringField(name, value) {
         if (typeof value !== 'string' || !value.length) throw new LogicError(`invalid ${name}`)
@@ -234,8 +250,6 @@ const logic = {
 
     },
 
-
-
     /**
      * Comandos hostess
      */
@@ -278,17 +292,12 @@ const logic = {
             })
     },
 
-    
-    /**
-     * Me cagoen
-     * se para despues del primer  y en mongoose no estan las hostess
-     * 
-     * el save() me borra las hostess
-     */
-
     sendRequest(idB, idH) {
         return Promise.resolve()
-        .then(() => {
+        .then(() => Hostess.findById(idH))
+        .then(hostess => {
+            if(hostess.requests.indexOf(idB) !== -1 ) throw new LogicError ('Already selected')
+
             return Hostess.updateOne({ _id: idH }, { $push: { requests: idB }})
         })
         .then(() => true )
@@ -296,7 +305,10 @@ const logic = {
 
     acceptRequest(idH, idB) {
         return Promise.resolve()
-        .then(() => {
+        .then(() => Hostess.findById(idH))
+        .then(hostess => {
+            if(hostess.accepted.indexOf(idB) !== -1 ) throw new LogicError ('Already accepted')
+
             return Hostess.updateOne({ _id: idH }, { $push: { accepted: idB }})
         })
         .then(() => {
@@ -310,7 +322,10 @@ const logic = {
 
     joinToEvent(idH, idE) {
         return Promise.resolve()
-            .then(() => {
+            .then(() => Events.findById(idE))
+            .then(event => {
+                if(event.candidates.indexOf(idH) !== -1 ) throw new LogicError ('Already sent')
+
                 return Events.updateOne({ _id: idE }, { $push: { candidates: idH } })
             })
             .then(() => {
@@ -349,7 +364,10 @@ const logic = {
 
     closeEvent(idE, idH) {
         return Promise.resolve()
-        .then(() => {
+        .then(() => Hostess.findById(idH))
+        .then(hostess => {
+            if(hostess.toConfirm.indexOf(idE) !== -1 ) throw new LogicError ('Already aproved')
+
             return Hostess.updateOne({ _id: idH }, { $push: { toConfirm: idE }})
         })
         .then(() => {
@@ -362,7 +380,10 @@ const logic = {
 
     iAssist(idE, idH) {
         return Promise.resolve()
-        .then(() => {
+        .then(() => Hostess.findById(idH))
+        .then(hostess => {
+            if(hostess.toAssist.indexOf(idE) !== -1 ) throw new LogicError ('Already selected')
+
             return Hostess.updateOne({ _id: idH }, { $pull: { toConfirm: idE }, $push: { toAssist: idE }})
         })
         .then(() => {
@@ -372,7 +393,6 @@ const logic = {
             return true
         })
     },
-
 
 }
 

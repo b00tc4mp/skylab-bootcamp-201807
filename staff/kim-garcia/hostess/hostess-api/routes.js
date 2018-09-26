@@ -1,4 +1,3 @@
-// CRUD
 require('dotenv').config()
 
 const express = require('express')
@@ -9,7 +8,7 @@ const validateJwt = require('./helpers/validate-jwt')
 
 const router = express.Router()
 
-const jsonBodyParser = bodyParser.json()
+const jsonBodyParser = bodyParser.json({limit: '10mb'})
 
 router.post('/hostess-register', jsonBodyParser, (req, res) => {
     const { body: { email, password } } = req
@@ -95,8 +94,6 @@ router.get('/business-details/:id', [validateJwt, jsonBodyParser], (req, res) =>
     })
 })
 
-
-
 router.patch('/hostess-edit/:id', [validateJwt, jsonBodyParser], (req, res) => {
     const { params: { id }, body: { password, newPassword } } = req
 
@@ -167,14 +164,22 @@ router.delete('/unregister-business/:id', [validateJwt, jsonBodyParser], (req, r
         })
 })
 
+router.post('/saveimage',jsonBodyParser, (req, res) => {
+    const { body: { base64Image } } = req
 
+    logic.saveImage(base64Image)
+        .then(url => res.json({ message: 'Save image correctly', url }))
+        .catch(err => {
+            const { message } = err
+            res.status(err instanceof LogicError ? 400 : 500).json({ message })
+        })
+})
 
 /**
  * INTERNO
  */
 
-
-router.get('/:id/search', [validateJwt, jsonBodyParser], (req, res) => {
+ router.get('/:id/search', [validateJwt, jsonBodyParser], (req, res) => {
     const gender = req.query.gender
     const jobType = req.query.jobType
     const languages = req.query.languages ? req.query.languages.split('|') : undefined
@@ -191,10 +196,24 @@ router.get('/:id/search', [validateJwt, jsonBodyParser], (req, res) => {
 })
 
 
-router.post('/favorites/:email', [validateJwt, jsonBodyParser], (req, res) => {
-    const { params: { email }, body: { emailHost } } = req
+router.post('/create-event/:id', [validateJwt, jsonBodyParser], (req, res) => {
+    const { params: { id }, body: { location, date, hours, salary, title, goal } } = req
 
-    logic.addFavs(emailHost, email)
+    logic.newEvent(id, location, date, hours, salary, title, goal)
+        .then(idE => {
+            res.status(200).json({ status: 'OK', idE })
+        })
+        .catch(err => {
+            const { message } = err
+
+            res.status(err instanceof LogicError ? 400 : 500).json({ message })
+        })
+})
+
+router.post('/breafing-event/:id/:idE', [validateJwt, jsonBodyParser], (req, res) => {
+    const { params: {idE}, body: { contactName, contactPhone, briefing } } = req
+
+    logic.makeBriefing(idE, contactName, contactPhone, briefing)
         .then(() => {
             res.status(200).json({ status: 'OK' })
         })
@@ -205,11 +224,10 @@ router.post('/favorites/:email', [validateJwt, jsonBodyParser], (req, res) => {
         })
 })
 
+router.put('/send-request/:id/:idH', [validateJwt, jsonBodyParser], (req, res) => {
+    const { params: { id, idH } } = req
 
-router.post('/select/:email', [validateJwt, jsonBodyParser], (req, res) => {
-    const { params: { email }, body: { emailHost } } = req
-
-    logic.addHostess(email, emailHost)
+    logic.sendRequest(id, idH)
         .then(() => {
             res.status(200).json({ status: 'OK' })
         })
@@ -220,12 +238,13 @@ router.post('/select/:email', [validateJwt, jsonBodyParser], (req, res) => {
         })
 })
 
-router.post('/create-event/:email', [validateJwt, jsonBodyParser], (req, res) => {
-    const { params: { email }, body: { date, location, title, description } } = req
+router.put('/accept-request/:id/:idB', [validateJwt, jsonBodyParser], (req, res) => {
+    const { params: { id, idB } } = req
 
-    logic.createEvent(email, date, location, title, description)
-        .then(id => {
-            res.status(200).json({ status: 'OK', id })
+    logic.acceptRequest(id, idB)
+        .then(business => {
+
+            res.status(200).json({ status: 'OK', business })
         })
         .catch(err => {
             const { message } = err
@@ -234,21 +253,47 @@ router.post('/create-event/:email', [validateJwt, jsonBodyParser], (req, res) =>
         })
 })
 
-router.get('/event/:id', (req, res) => {
-    const { params: { id } } = req
+router.put('/join-to-event/:id/:idE', [validateJwt, jsonBodyParser], (req, res) => {
+    const { params: { id, idE } } = req
 
-    logic.retrieveEventById(id)
-    .then(event => {
-        res.status(200).json({ status: 'OK', event })
-    })
-    .catch(err => {
-        const { message } = err
+    logic.joinToEvent(id, idE)
+        .then(() => {
+            res.status(200).json({ status: 'OK' })
+        })
+        .catch(err => {
+            const { message } = err
 
-        res.status(err instanceof LogicError ? 400 : 500).json({ message })
-    })    
+            res.status(err instanceof LogicError ? 400 : 500).json({ message })
+        })
 })
 
+router.put('/close-event/:id/:idE/:idH', [validateJwt, jsonBodyParser], (req, res) => {
+    const { params: { idE, idH } } = req
 
+    logic.closeEvent(idE, idH)
+        .then(() => {
+            res.status(200).json({ status: 'OK' })
+        })
+        .catch(err => {
+            const { message } = err
+
+            res.status(err instanceof LogicError ? 400 : 500).json({ message })
+        })
+})
+
+router.put('/assist/:id/:idE', [validateJwt, jsonBodyParser], (req, res) => {
+    const { params: { idE, id } } = req
+
+    logic.iAssist(idE, id)
+        .then(() => {
+            res.status(200).json({ status: 'OK' })
+        })
+        .catch(err => {
+            const { message } = err
+
+            res.status(err instanceof LogicError ? 400 : 500).json({ message })
+        })
+})
 
 
 module.exports = router

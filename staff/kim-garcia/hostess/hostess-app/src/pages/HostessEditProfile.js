@@ -1,11 +1,8 @@
 import React, { Component } from 'react'
-import Utils from '../utils/validate-email'
-import isBlank from '../utils/isBlank'
 import { withRouter } from 'react-router-dom'
-import Header from '../components/Header'
 import logic from '../logic'
+import PasswordUnregister from '../components/PasswordUnregister';
 import { RadioGroup, Radio } from 'react-radio-group'
-import DeleteUnregister from '../components/DeleteUnregister';
 
 class HostessEditProfile extends Component {
     state = {
