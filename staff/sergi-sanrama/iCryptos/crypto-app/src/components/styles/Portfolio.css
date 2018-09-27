@@ -1,0 +1,14 @@
+.form_add_transaction{  
+    width: 80%;
+    margin: 1vh 125px;
+    padding: 10px;
+    margin-top: 4vh;
+}
+
+.negative{
+    color: rgb(255, 39, 39);
+}
+
+.positive{
+    color: rgb(13, 196, 13);
+}

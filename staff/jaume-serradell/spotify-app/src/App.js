@@ -1,96 +1,70 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
-import SearchPanel from './components/SearchPanel';
-import ResultList from './components/ResultList';
-import TrackList from './components/TrackList';
+import React, { Component } from 'react'
+import logo from './logo.svg'
+import './App.css'
 import logic from './logic'
+import Landing from './components/Landing'
+import Register from './components/Register'
+import Login from './components/Login'
+import GoToLogin from './components/GoToLogin'
+import Main from './components/Main'
 
-logic.token = 'BQC8O9Ks6Er16GrtNnswBciN_TxuSNwA7l4l5fvQo3j1tOwgj-1CTyqVWJE5Dq4h2RE3ADIfqVp70gO2y3EUi-ULUNV5S8EsCvo4wdjnDJFrY7roKa6vNzyVPx2mi5v1UdM-a06OWhGhZnGmxBhG3Dgxe0PIcjQRepz5a_ro9tRDRkyAuMRpTTjWNirvVzkng4C5CUB681wao3qyjQbaAyBZQMlck3e747luVJ5SVuo3zLfWkuyP-CpRVlz7GPlrdCn_6Rf3bxE';
+logic.spotifyToken = 'BQALQdM91bB94L46-LHYny5yzS4KSZW9NqhnaGrtf9Hi7Yvv9uVfcYKsgxqbYyrryQwM3JwzKEb8cmlygJ6d1jDyvsMg9hcsITVls5I1hT8BYJKAMjaXUDUBRYPLWIPnOumMJ_3zONiT0Jc2s4MU_9L3WR4toWsVrYL7HbSpPEPxmZh671nj0YUi0rV5_8Wl8XVzB1NPI4klyzhA-wnpZrt4yNr8naOTV6lrzaU7YOc16IC5q3s7Funj4EWCEsXaWbusHGy_rxw'
 
 class App extends Component {
-  state = { 
-    artists: [],
-    albums: [],
-    tracks: [],
-    track: undefined 
-  }
-  
-  onSearch = query => {
-    logic.searchArtists(query)
-      .then(artists => {
-        this.setState({ 
-          artists: artists.map(({ id, name:text }) => ({ id, text })),
-          albums: [],
-          tracks: [],
-          track: undefined
-        })
-      })
-      .catch(console.error)
+  state = {
+    registerActive: false,
+    loginActive: false,
+    goToLoginActive: false,
+    loggedIn: logic.loggedIn,
+    errorLogin: null,
+    errorRegister: null
   }
 
-  //Método onArtistClick
-  onArtistClick = id => {
-    logic.retrieveAlbumsByArtistId(id)
-      .then(albums => {
-        this.setState({
-          albums: albums.map(({ id, name: text }) => ({ id, text })),
-          tracks: [],
-          track: undefined
-        })
-      })
-      .catch(console.error)
+  goToRegister = () => this.setState({ registerActive: true, loginActive: false })
+
+  goToLogin = () => this.setState({ loginActive: true })
+
+  registerUser = (username, password) =>
+    logic.registerUser(username, password)
+      .then(() => this.setState({ goToLoginActive: true, registerActive: false }))
+      .catch(({ message }) => this.setState({ errorRegister: message }))
+
+  loginUser = (username, password) =>
+    logic.loginUser(username, password)
+      .then(() => this.setState({ loggedIn: true, loginActive: false }))
+      .catch(({ message }) => this.setState({ errorLogin: message }))
+
+  goToLogin = () => this.setState({ loginActive: true, goToLoginActive: false, error: null, registerActive: false })
+
+  logoutUser = () => {
+    logic.logout()
+
+    this.setState({ loggedIn: false })
   }
 
-  //Método onAlbumClick
-  onAlbumClick = id => {
-    logic.retrieveTracksByAlbumId(id)
-      .then(tracks => {
-        this.setState({
-          tracks: tracks.map(({ id, name:text }) => ({ id, text })),
-          track: undefined
-        })
-      })
-      .catch(console.error)
-  }
-
-  onTrackClick = id => {
-    logic.retrieveTrackById(id)
-      .then(track => {
-        this.setState({
-          track: {
-            title: track.name,
-            image: track.album.images[0].url,
-            file: track.preview_url,
-            link: track.external_urls.spotify
-          }
-        }) 
-      })
-      .catch(console.error)
-  }
-  
   render() {
+    const { state: { registerActive, loginActive, goToLoginActive, loggedIn, errorRegister, errorLogin }, goToRegister, goToLogin, registerUser, loginUser, logoutUser } = this
+
     return (
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">Spotify App</h1>
+          {loggedIn && <button onClick={logoutUser}>Logout</button>}
         </header>
-        
-        {/* Componente SearchPanel con su propiedad onSearch */}
-        <SearchPanel onSearch={this.onSearch} />
 
-        <ResultList results={this.state.artists} onItemClick={this.onArtistClick} />
+        {!(registerActive || loginActive || goToLoginActive || loggedIn) && <Landing onRegister={goToRegister} onLogin={goToLogin} />}
 
-        <ResultList results={this.state.albums} onItemClick={this.onAlbumClick} />
+        {registerActive && <Register onRegister={registerUser} onGoToLogin={goToLogin} error={errorRegister} />}
 
-        <ResultList results={this.state.tracks} onItemClick={this.onTrackClick} />
+        {loginActive && <Login onLogin={loginUser} onGoToRegister={goToRegister} error={errorLogin} />}
 
-        {this.state.track && <TrackList results={this.state.track}/>}
-        
+        {goToLoginActive && <GoToLogin onLogin={goToLogin} />}
+
+        {loggedIn && <Main />}
       </div>
-    );
+    )
   }
 }
 
-export default App;
+export default App

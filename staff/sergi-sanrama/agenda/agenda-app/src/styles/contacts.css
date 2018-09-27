@@ -1,0 +1,191 @@
+
+
+  h1{
+    margin-left: 20px;
+  }
+
+  input::placeholder, textarea::placeholder {
+    color: #aca49c;
+    font-size: 0.875em;
+  }
+  
+  input:focus::placeholder, textarea::focus:placeholder {
+    color: #bbb5af;
+  }
+  
+
+  
+  /* on hover placeholder */
+  
+  input:hover::placeholder, textarea:hover::placeholder {
+    color: #e2dedb;
+    font-size: 0.875em;
+  }
+  
+  input:hover:focus::placeholder, textarea:hover:focus::placeholder {
+    color: #cbc6c1;
+  }
+  
+  input:hover::placeholder, textarea:hover::placeholder {
+    color: #e2dedb;
+    font-size: 0.875em;
+  }
+  
+
+  
+  body {
+    font-family: 'Lato', sans-serif;
+    background: #e2dedb;
+    /* background-image: url(../files/Texture_Boards_Wooden_479402_2880x1800.jpg); */
+    color: #b3aca7;
+  }
+  
+  header {
+    position: relative;
+    margin: 100px 0 25px 0;
+    font-size: 2.3em;
+    text-align: center;
+    letter-spacing: 7px;
+  }
+  
+  #form {
+    position: relative;
+    width: 500px;
+    margin: 50px auto 100px auto;
+  }
+  
+  input {
+    font-family: 'Lato', sans-serif;
+    font-size: 0.875em;
+    width: 470px;
+    height: 50px;
+    padding: 0px 15px 0px 15px;
+    
+    /* background: transparent; */
+    outline: none;
+    color: #726659;
+    background-color: #e2dedb;
+    
+    border: solid 1px #b3aca7;
+    border-bottom: none;
+    
+    transition: all 0.3s ease-in-out;
+    
+  }
+  
+  input:hover {
+    background: #b3aca7;
+    color: #e2dedb;
+  }
+  
+  textarea {
+    width: 470px;
+    max-width: 470px;
+    height: 110px;
+    max-height: 110px;
+    padding: 15px;
+    
+    background: transparent;
+    outline: none;
+    
+    color: #726659;
+    font-family: 'Lato', sans-serif;
+    font-size: 0.875em;
+    
+    border: solid 1px #b3aca7;
+    
+    transition: all 0.3s ease-in-out;
+  }
+  
+  textarea:hover {
+    background: #b3aca7;
+    color: #e2dedb;
+  }
+  
+  #submit {
+    width: 502px;
+    
+    padding: 10px;
+    margin: -5px 0px 0px 0px;
+    
+    font-family: 'Lato', sans-serif;
+    font-size: 0.875em;
+    color: #b3aca7;
+    
+    outline:none;
+    cursor: pointer;
+    
+    border: solid 1px #b3aca7;
+    
+  }
+  
+  #submit:hover {
+    color: rgb(71, 165, 71);
+  }
+
+  /************ List ************/
+
+  #list ul {
+    counter-reset: li; 
+    list-style: none; 
+    *list-style: decimal; 
+    font: 15px 'trebuchet MS', 'lucida sans';
+    padding: 0;
+    margin-bottom: 4em;
+    text-shadow: 0 1px 0 rgba(255,255,255,.5);
+}
+
+#list ul {
+    margin: 0 0 0 2em; 
+}
+
+#list {
+    list-style-type: none;
+   
+    justify-content: center;
+    margin: 3%;;
+    margin-left: 3em;
+    padding: 0;
+     
+    counter-reset: li-counter;
+}
+
+#list > li{
+    position: relative;
+    margin-bottom: 20px;
+    padding: 1em;
+    border-left: 2px solid #CCCCCC;
+    background-color: #f5f5f5;
+}
+
+#list > li:before {
+    position: absolute;
+    top: 0;
+    left: -0.95em;
+    width: 1em;
+ 
+    font-size: 4em;
+    line-height: 1;
+    font-weight: bold;
+    text-align: right;
+    color: #464646;
+     
+    transform: rotate(-25deg);
+    z-index: -99;
+    overflow: hidden;
+     
+    content: counter(li-counter);
+    counter-increment: li-counter;
+}
+
+.block{
+    display: block;
+    font-family: 'trebuchet MS', 'lucida sans';
+    width: 100%;
+    border: none;
+    background-color: #b3aca7;
+    padding: 14px 28px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+}

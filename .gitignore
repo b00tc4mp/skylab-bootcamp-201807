@@ -6,3 +6,4 @@ node_modules
 .idea
 .idea_backup
 yarn.lock
+_.git

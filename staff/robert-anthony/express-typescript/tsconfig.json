@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "esnext",
+    "sourceMap": true,
+    "jsx":"React",
+    "allowSyntheticDefaultImports": true
+  },
+  "include": [
+    "src/**/*",
+    "typings/**/*" // <-- don't forget this line!
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

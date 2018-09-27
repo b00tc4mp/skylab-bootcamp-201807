@@ -1,0 +1,16 @@
+.myfavs-products-container {
+    max-width: 800px;
+    margin: auto;
+    /*background-image: url('../../assets/playing-baby.svg');
+    background-color: red;*/
+    /*-webkit-mask:  url('../../assets/playing-baby.svg') no-repeat 50% 50%;
+    mask: url('../../assets/playing-baby.svg') no-repeat 50% 50%;*/
+}
+
+.myfavs-products-heading {
+    padding-top: 30px;
+    color: #23383a;
+    text-transform: uppercase;
+    font-size: 18px;
+    margin-left: 20px;
+}

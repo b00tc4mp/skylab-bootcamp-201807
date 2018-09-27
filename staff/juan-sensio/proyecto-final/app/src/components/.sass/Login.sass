@@ -1,0 +1,27 @@
+@import 'Common' 
+
+.login 
+    display: grid 
+    grid-template: 30vh repeat(2, 5vh) 20vh repeat(2, 5vh) / 1fr
+    justify-items: center
+    grid-gap: 10px
+    & h3
+        font-size: 30px
+        justify-self: start
+        padding: 10%
+        color: $app-red
+    & p
+       color: $app-red
+    & button 
+        width: 50%
+        height: 100%
+        background: none
+        border-radius: 10px
+        margin-bottom: 10px
+        font-size: 18px
+    & input 
+        border: none
+        background-color: rgba($app-lightgray, 0.3)
+        border-radius: 10px
+        padding: 5px
+        width: 50%

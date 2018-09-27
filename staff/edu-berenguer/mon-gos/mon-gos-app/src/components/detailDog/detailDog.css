@@ -1,0 +1,37 @@
+.detailDog{
+    margin: 0 auto;
+    margin-top: 2em;
+    width: 55em;
+  }
+
+  .title{
+    margin-top: 1em;
+    font-size: 1.5em !important;
+    color:#8A4D76 !important;
+  }
+
+  .detailDog h6{
+    color:#8A4D76;
+    font-weight: bold;
+    display: block;
+ }
+ .imageDetail{
+   height: 15em;
+   width: 20em;
+   border-radius:10px;
+ }
+
+ .dataDog{
+   float: left;
+   width: 33em;
+   margin-right: 1em;
+  }
+
+ .accordion{
+   margin-bottom: 1em;
+ }
+
+ .informationShelter{
+   display: flex;
+   justify-content: space-between
+ }

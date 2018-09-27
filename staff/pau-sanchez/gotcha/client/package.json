@@ -1,0 +1,35 @@
+{
+  "name": "gotcha",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@trendmicro/react-sidenav": "^0.4.5",
+    "bootstrap": "^4.1.1",
+    "deepmerge": "^2.0.1",
+    "load-script": "^1.0.0",
+    "prop-types": "^15.5.6",
+    "query-string": "^6.1.0",
+    "react": "^16.3.2",
+    "react-copy-to-clipboard": "^5.0.1",
+    "react-dom": "^16.3.2",
+    "react-loader-spinner": "^2.0.6",
+    "react-player": "^1.6.4",
+    "react-router-dom": "^4.3.1",
+    "react-scripts": "1.1.5",
+    "reactstrap": "^6.4.0",
+    "screenfull": "^3.3.3"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "test-logic": "mocha src/logic"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "dotenv": "^6.0.0",
+    "isomorphic-fetch": "^2.2.1",
+    "jsonwebtoken": "^8.3.0"
+  }
+}

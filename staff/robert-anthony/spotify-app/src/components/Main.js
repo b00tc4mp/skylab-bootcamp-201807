@@ -102,30 +102,24 @@ class Main extends Component {
   _favoritesSet = null;
 
 
-  componentDidMount() {
-    debugger
-    logic.retrieveUserData('favorites')
-      .then(res => {
-        if (res && res.length) {
-          console.log("in componentDidMount received favorites = ",res)
-          this._favoritesSet = new Set(res);
-          console.log("transofmred into  set",this._favoritesSet)
-        } else {
-          console.log("in componentDidMount DID NOT RECEIVE favorites = ",res)
-          console.log("created new set set",this._favoritesSet)
 
-          this._favoritesSet = new Set();
-
-        }
-      })
-      .catch((err) => this.setState({mountError: ERROR_HOUSTON}))
-  }
 
 
   Section = styled.section` 
     background:lightgrey;
     `
 
+  componentDidMount() {
+    logic.retrieveUserData('favorites')
+      .then(res => {
+        if (res && res.length) {
+          this._favoritesSet = new Set(res);
+        } else {
+          this._favoritesSet = new Set();
+        }
+      })
+      .catch((err) => this.setState({mountError: ERROR_HOUSTON}))
+  }
 
   onFavorite = id => {
     let arr;
@@ -133,6 +127,7 @@ class Main extends Component {
       this._favoritesSet.add(id);
        arr = Array.from(this._favoritesSet);
     }
+
     logic.storeUserData('favorites', arr)
       .then(res => {
         if (res) console.log("added successfully")
@@ -149,6 +144,7 @@ class Main extends Component {
       this._favoritesSet.delete(id);
        arr = Array.from(this._favoritesSet);
     }
+    
     logic.storeUserData('favorites', arr)
       .then(res => {
         if (res) console.log("removed successfully")
@@ -159,16 +155,6 @@ class Main extends Component {
       .catch(() => this.setState({favoriteError: ERROR_HOUSTON}))
 
   }
-
-  /*
-       favoriteTracks() {
-        logic.retrieveUserData('favorites')
-          .then(res => {
-            if (res && res.length) {
-              _favoritesSet = new Set(res);
-            }
-          })
-      }*/
 
 
   render() {

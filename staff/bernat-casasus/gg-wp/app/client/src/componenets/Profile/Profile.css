@@ -1,0 +1,42 @@
+.profile-container{
+    padding-top: 50px;
+    padding-bottom: 50px;
+    background-color:rgb(234, 234, 234);
+}
+
+#profile-footer{
+    text-align: center;
+}
+
+#profile-btn{
+    margin-top: 10px;
+    background-color: rgb(26, 164, 248);
+}
+
+#profile-title{
+    background-color: rgb(26, 164, 248);
+    color:white;
+    border-radius: 0%;
+}
+#update-footer{
+    text-align: center;
+}
+
+#update-btn{
+    margin-top: 10px;
+    background-color: rgb(26, 164, 248);
+}
+
+#update-title{
+    background-color: rgb(26, 164, 248);
+    color:white;
+    border-radius: 0%;
+}
+
+#current-data-card{
+    margin-bottom: 15px;
+}
+
+#profile-card-1{
+    border-radius: 0%;
+}

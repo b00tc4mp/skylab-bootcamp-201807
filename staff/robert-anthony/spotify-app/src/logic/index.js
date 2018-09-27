@@ -16,7 +16,7 @@ const logic = {
   get _userToken() {
     return sessionStorage.getItem(this.USER_TOKEN)
   },
-  get _userUsername() {
+  get userUsername() {
     return sessionStorage.getItem(this.USER_NAME)
   },
   get _userPassword() {
@@ -86,13 +86,13 @@ const logic = {
   // user's
 
   get loggedIn() {
-    console.log(this._userUsername && this._userId && this._userToken)
-    return this._userUsername && this._userId && this._userToken;
+    console.log(this.userUsername && this._userId && this._userToken)
+    return this.userUsername && this._userId && this._userToken;
   },
 
   storeUserData( fieldName, data) {
     return this._callUsersApi(`/user/${this._userId}`, 'put', {
-      username: this._userUsername,
+      username: this.userUsername,
       password: this._userPassword,
       [fieldName]: data,
     }, true)
@@ -128,7 +128,7 @@ const logic = {
 
   unregisterUser(password) {
     return this._callUsersApi(`/user/${this._userId}`, 'delete', {
-      username: this._userUsername,
+      username: this.userUsername,
       password
     }, true)
       .then(() => true)
@@ -142,14 +142,19 @@ const logic = {
   },
 
   updateUser(password, newUsername, newPassword) {
-    return this._callUsersApi(`/user/${this._userId}`, 'put', {
-      username: this._userUsername,
-      password: password,
-      newUsername: newUsername,
-      newPassword: newPassword
-    }, true)
+
+    const data = {
+      username:this.userUsername,
+      password:this._userPassword
+    }
+    if (newUsername) data.newUsername = newUsername;
+    if (newPassword) data.newPassword = newPassword;
+
+
+    return this._callUsersApi(`/user/${this._userId}`, 'put', data, true)
       .then(() => {
-        this._userUsername = newUsername;
+       if (newUsername) this._userUsername = newUsername;
+        if (newPassword) this._userPassword = newPassword;
 
         return true
       })

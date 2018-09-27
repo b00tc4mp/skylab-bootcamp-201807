@@ -1,0 +1,52 @@
+@import 'Common' 
+
+.account
+    padding: 10px
+    overflow-y: scroll
+    & button 
+        padding: 5px
+        backgroun: none 
+        border-radius: 10px
+    & h3 
+        margin-top: 20px
+    & input
+        border-radius: 10px
+        border: none
+        background-color: rgba($app-lightgray,0.3)
+        padding: 5px
+    &__main
+        display: grid 
+        grid-template: repeat(2, 150px) 130px auto 80px/ 1fr
+    &__group
+        display: grid 
+        grid-template: repeat(4, 1fr) / 1fr
+        grid-gap: 10px
+        & input
+            justify-self: center
+            width: 48%
+        & button 
+            justify-self: center
+            width: 50%
+            background: none
+            border-radius: 10px
+    &__group2
+        display: grid 
+        grid-template: repeat(3, 1fr) / 1fr
+        grid-gap: 10px
+        & input
+            justify-self: center
+            width: 48%
+        & button 
+            justify-self: center
+            width: 50%
+            background: none
+            border-radius: 10px
+    &__logout
+        align-self: end
+        width: 50%
+        background: none 
+        border-radius: 10px
+        font-size: 20px 
+        text-transform: uppercase
+        color: $app-red
+        margin-top: 20px

@@ -1,0 +1,35 @@
+.position{
+    margin-bottom: 1em;
+  }
+
+  .container-location{
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .coordinates{
+    background-color: #8A4D76 !important;
+    color: #ffffff !important;
+    width: 15% !important;
+    margin-bottom: 0.6em;
+  }
+
+  .no-coordinates{
+    background-color: green !important;
+    color: #ffffff !important;
+    width: 15% !important;
+    margin-bottom: 0.6em;
+  }
+
+  .location{
+    width: 40% !important;
+  }
+  .confirm{
+    background-color: #8A4D76 !important;
+    color: #FFFFFF !important;
+  }
+  .location-required{
+    text-align: left; 
+    font-size: 0.7em;
+    margin-bottom: 2em;
+  }

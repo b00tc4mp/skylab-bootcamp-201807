@@ -1,0 +1,139 @@
+.button-wrapper {
+    position: relative;
+    margin: auto;
+}
+
+.button-progress {
+    width: 24px;
+    height: 24px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -12px;
+    margin-left: -12px;
+}
+
+.profile-logout {
+    display: flex;
+    max-width: 1200px;
+    margin: 0 auto;  
+    padding-top: 40px;
+}
+
+.profile-heading {
+    color: #23383a;
+    /*font-size: 30px;*/
+    text-transform: uppercase;
+    font-size: 18px;
+    margin-left: 20px;
+
+}
+
+.profile-btn {
+    margin: 0 3px 20px 0px;
+    border: 2px solid #0097A7;
+    border-radius: 50px;
+    padding: 6px 18px;
+    font-size: 16px;
+    cursor: pointer;
+	background: #0097A7;
+	color: #ffffff;
+
+}
+
+.profile-btn:hover {
+	background: #067682;
+	color: #ffffff;
+}
+
+.profile-logout .profile-btn {
+    margin-left: auto;
+    background-color: #eceff1;
+    border: 1px solid #cfd8dc;
+    color: #546e7a;
+}
+
+.profile-logout .profile-btn:hover {
+    background: #cfd8dc;
+    color: #546e7a;
+}
+
+.profile-form-container {
+    background-color: #ffffff;
+    padding: 30px;
+    padding-left: 210px;
+    max-width: 1200px;
+    margin: 40px auto;
+    border: 1px solid #ced4da;
+    border-radius: .45rem;
+}
+
+.profile-photo-container {
+    padding-left: 30px;
+}
+
+.profile-photo-container .form-group {
+    margin-left: 35px;
+}
+
+.profile-photo-description {
+    margin: 0 60px;
+    width: 300px;
+}
+
+.profile-photo-description {
+    margin: 27px;
+    width: 300px;
+}
+
+.profile-photo-container input {
+    display: none;
+}
+
+.profile-photo-container img {
+    object-fit: cover;
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+}
+
+.profile-photo-container .material-icons {
+    align-self: center;
+    font-size: 75px;
+}
+
+
+
+.profile-info-container input {
+    max-width: 50%;
+}
+
+.profile-form-gender .col-sm-10 {
+    padding-top: 6px;
+}
+
+.profile-field-map-container {
+    margin-top: 40px;
+}
+
+.profile-map-container {
+    position: relative;
+    height: 350px;
+}
+
+.profile-btn {
+    margin: 0 3px 20px 0px;
+    border: 2px solid #0097A7;
+    border-radius: 50px;
+    padding: 6px 18px;
+    font-size: 16px;
+    cursor: pointer;
+	background: #0097A7;
+	color: #ffffff;
+
+}
+
+.profile-btn:hover {
+	background: #067682;
+	color: #ffffff;
+}

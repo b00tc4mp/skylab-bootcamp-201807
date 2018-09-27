@@ -1,0 +1,19 @@
+.footer{
+    padding-top: 25px;
+    background-color: #C70039;
+    color: white;
+    padding-bottom: 25px;
+}
+ul{
+    list-style-type: none;
+    color: white;
+}
+
+li{
+    float: left;
+    margin: 5px;
+    color: white;
+}
+.footer-element{
+    color: white;
+}

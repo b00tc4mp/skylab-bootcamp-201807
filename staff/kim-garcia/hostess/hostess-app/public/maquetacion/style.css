@@ -1,0 +1,122 @@
+@import url(https://fonts.googleapis.com/css?family=Montserrat:400,700);
+
+html {
+    font-family: 'Montserrat', Arial, sans-serif;
+}
+
+#container {
+    border: solid 3px #474544;
+    max-width: 768px;
+    margin: 60px auto;
+    position: relative;
+    padding: 20px;
+}
+
+.underline {
+    border-bottom: solid 3px #474544;
+    margin: -0.512em auto;
+    width: 100px;
+}
+
+.register_title {
+    color: #474544;
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: 7px;
+    text-align: center;
+    text-transform: uppercase;
+    padding-top: 1em;
+}
+
+.hostess_form {
+    padding: 37.5px;
+    margin: 50px 0;
+}
+
+input, select, textarea {
+    padding: 0.5em;
+    background: none;
+    border: none;
+    border-bottom: solid 2px #474544;
+    color: #474544;
+    font-size: 1.000em;
+    font-weight: 400;
+    letter-spacing: 1px;
+    margin: 1em;
+    text-transform: uppercase;
+    width: 100%;
+}
+
+input:focus {
+    outline: none;
+    padding: 0 0 0.875em 0;
+}
+
+select {
+    background: url('https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-ios7-arrow-down-32.png') no-repeat right;
+    outline: none;
+}
+
+textarea {
+    line-height: 150%;
+    height: 150px;
+    resize: none;
+    width: 100%;
+}
+
+fieldset {
+    margin: 20px;
+}
+
+.note {
+    font-size: 10px;
+}
+
+.name {
+    display: block;
+    float: left;
+}
+
+.password {
+    display: block;
+    float: right;
+}
+
+.details {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* width: 95%;
+    margin: 10px;
+    margin-left: auto;
+    margin-right: auto; */
+
+}
+
+.date {
+    float: left;
+    display: block;
+}
+
+.born {
+    float: right;
+    display: block;
+}
+
+.contact_details {
+    padding: 30px;
+    width: 85%;
+    margin: 20px;
+}
+
+.about_you {
+    padding: 20px;
+    margin: 20px;
+}
+
+.about_you_container {
+    width: 90%;
+}
+
+
+

@@ -1,0 +1,28 @@
+{
+  "name": "thunder-bid",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node . 8080",
+    "debug": "node debug . 8080",
+    "test": "mocha logic",
+    "dev": "nodemon .",
+    "test-debug": "mocha debug logic/index.spec.js",
+    "test-coverage": "nyc npm test",
+    "test-coverage-report": "nyc report --reporter=html"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "cors": "^2.8.4",
+    "dotenv": "^6.0.0",
+    "express": "^4.16.3",
+    "jsonwebtoken": "^8.3.0",
+    "mongoose": "^5.2.9",
+    "socket.io": "^2.1.1"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "nyc": "^13.0.1"
+  }
+}

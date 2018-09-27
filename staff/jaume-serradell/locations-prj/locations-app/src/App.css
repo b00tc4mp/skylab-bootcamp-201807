@@ -1,0 +1,26 @@
+html {
+  background-color: #353A3F;
+}
+
+.Site {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  background: #8e9eab;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #eef2f3, #8e9eab);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #eef2f3, #8e9eab); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+}
+
+.Site-content {
+  flex: 1;
+}
+
+button {
+  font-family: 'M PLUS Rounded 1c', sans-serif !important;
+}
+
+.container {
+  padding: 40px 0;
+  font-family: 'M PLUS Rounded 1c', sans-serif;
+}

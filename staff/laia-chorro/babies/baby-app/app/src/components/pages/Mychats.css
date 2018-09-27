@@ -1,0 +1,31 @@
+.mychats-container {
+    display: flex;
+    flex-wrap: wrap;
+    height: 400px;
+    align-content: space-between;
+    height: 90vh;
+    min-width: 1090px;
+}
+
+.mychats-container ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.mychats-product-preview {
+    margin: 20px;
+}
+
+.mychats-messages-container {
+    height: 90%;
+    min-width: 500px;
+    background-color: white;
+    border: 1px solid #ced4da;
+}
+
+.mychats-chat-container input{
+    width: 100%;
+}
+
+

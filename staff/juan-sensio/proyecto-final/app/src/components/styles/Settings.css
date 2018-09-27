@@ -1,0 +1,43 @@
+.app {
+  display: grid;
+  grid-template: 100vh/5% 40% auto;
+}
+
+.app-mobile {
+  display: grid;
+  grid-template: 1fr/1fr;
+}
+
+.setting {
+  display: grid;
+  grid-template: repeat(4, 100px)/1fr;
+  align-items: center;
+  grid-gap: 20px;
+  padding: 5px;
+}
+.setting input {
+  width: 50%;
+  height: 20px;
+  font-size: 15px;
+  justify-self: center;
+  margin: 10px 0;
+  border-radius: 10px;
+  border: none;
+  background-color: rgba(178, 178, 178, 0.3);
+  padding: 5px;
+}
+.setting_container {
+  display: grid;
+  grid-template: repeat(2, 1fr)/1fr;
+  align-items: center;
+}
+.setting_container2 {
+  display: grid;
+  grid-template: 1fr/repeat(2, 1fr);
+  align-items: center;
+}
+.setting h4 {
+  color: #EA6848;
+}
+
+/*# sourceMappingURL=Settings.css.map */

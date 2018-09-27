@@ -1,0 +1,43 @@
+.product-detail-card {
+    max-width: 800px;
+    margin: 20px auto;
+    height: 100%;
+}
+
+.product-detail-flex {
+    display: flex;
+    justify-content: space-between;
+}
+
+.product-detail-carousel {
+    margin: 20px;
+}
+
+
+.product-detail-flex:hover svg {
+    fill: #0097a7 !important;
+}
+
+.product-detail-name {
+    margin-top: 8px;
+    margin-left: 20px;
+}
+
+.product-detail-user:hover {
+    text-decoration: none;
+}
+
+.product-detail-user .material-icons {
+    align-self: center;
+    color: grey;
+}
+
+.product-detail-carousel .slick-prev {
+    left: 17px;
+    z-index: 3;
+}
+
+.product-detail-carousel .slick-next {
+    right: 17px;
+    z-index: 3;
+}

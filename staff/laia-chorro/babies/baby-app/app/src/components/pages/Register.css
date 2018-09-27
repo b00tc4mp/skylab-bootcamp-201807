@@ -1,0 +1,18 @@
+body {
+    background-color: #f5f5f5;
+}
+
+.form-register {
+    width: 100%;
+    max-width: 330px;
+    padding: 15px;
+    margin: auto;
+}
+
+.babyboom-login.form-register {
+    margin-top: 277px;
+}
+
+.form-register input.form-control {
+    margin: 20px 0;
+}

@@ -48,10 +48,11 @@ class App extends Component {
     this.setState({updateUserActive: true})
     logic.updateUser(password,newUsername,newPassword)
       .then((res) => {
-        if (res)
+        /*if (res)
         {
-          this.setState({ updateUserActive: false,errorUpdateUserData:null})
-        }
+         */
+        this.setState({ updateUserActive: false,errorUpdateUserData:null})
+        /*}*/
         })
       .catch(({message}) => this.setState({errorUpdateUserData: message}))
   }

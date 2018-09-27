@@ -1,0 +1,74 @@
+.app {
+  display: grid;
+  grid-template: 100vh/5% 40% auto;
+}
+
+.app-mobile {
+  display: grid;
+  grid-template: 1fr/1fr;
+}
+
+.account {
+  padding: 10px;
+  overflow-y: scroll;
+}
+.account button {
+  padding: 5px;
+  backgroun: none;
+  border-radius: 10px;
+}
+.account h3 {
+  margin-top: 20px;
+}
+.account input {
+  border-radius: 10px;
+  border: none;
+  background-color: rgba(178, 178, 178, 0.3);
+  padding: 5px;
+}
+.account__main {
+  display: grid;
+  grid-template: repeat(2, 150px) 130px auto 80px/1fr;
+}
+.account__group {
+  display: grid;
+  grid-template: repeat(4, 1fr)/1fr;
+  grid-gap: 10px;
+}
+.account__group input {
+  justify-self: center;
+  width: 48%;
+}
+.account__group button {
+  justify-self: center;
+  width: 50%;
+  background: none;
+  border-radius: 10px;
+}
+.account__group2 {
+  display: grid;
+  grid-template: repeat(3, 1fr)/1fr;
+  grid-gap: 10px;
+}
+.account__group2 input {
+  justify-self: center;
+  width: 48%;
+}
+.account__group2 button {
+  justify-self: center;
+  width: 50%;
+  background: none;
+  border-radius: 10px;
+}
+.account__logout {
+  align-self: end;
+  width: 50%;
+  background: none;
+  border-radius: 10px;
+  font-size: 20px;
+  text-transform: uppercase;
+  color: #EA6848;
+  margin-top: 20px;
+}
+
+/*# sourceMappingURL=Account.css.map */

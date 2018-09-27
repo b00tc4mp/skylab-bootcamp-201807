@@ -1,0 +1,27 @@
+.App-logo {
+    animation: App-logo-spin infinite 20s linear;
+    height: 15%;
+    width: 15%;
+    margin-left: 43%;
+    margin-top: 2%;
+  }
+
+ .App-logo-rotate{
+    height: 90%;
+    width: 90%;
+ }
+
+ h1 {
+    color: orangered !important;
+     font-family: 'Sunflower', sans-serif !important;;
+     font-size:3em  !important;
+     letter-spacing:.2em;
+
+ }
+
+ h2 {
+    color: orangered !important;
+    margin-top: 3%;
+     font-family: 'Sunflower', sans-serif !important;;
+
+ }

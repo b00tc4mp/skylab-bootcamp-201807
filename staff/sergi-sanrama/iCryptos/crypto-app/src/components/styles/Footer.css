@@ -1,0 +1,24 @@
+#qr_btc{
+    height: 200px;
+    width: 50%;
+}
+
+.footer-copyright{
+font: bold;
+
+
+}
+
+.modal-style{
+    background-color: #212529;
+}
+
+.footer-text{
+    font-size: 10px;
+}
+
+/* .page-footer{
+    position: fixed;
+  bottom: 0;
+  right: 0;
+} */

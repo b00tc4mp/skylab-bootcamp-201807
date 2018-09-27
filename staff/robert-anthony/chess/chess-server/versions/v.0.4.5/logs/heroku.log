@@ -1,0 +1,522 @@
+2018-09-10T13:26:28.399098+00:00 app[web.1]: getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:dobbie
+2018-09-10T13:26:28.518425+00:00 app[web.1]: getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:robbie
+2018-09-10T13:26:28.543075+00:00 app[web.1]: GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:dobbie
+2018-09-10T13:26:28.543280+00:00 app[web.1]: getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:dobbie
+2018-09-10T13:26:28.661441+00:00 app[web.1]: GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:robbie
+2018-09-10T13:26:28.661623+00:00 app[web.1]: getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:robbie
+2018-09-10T13:26:28.805699+00:00 app[web.1]: GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:robbie
+2018-09-10T13:26:28.805853+00:00 app[web.1]: getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:robbie
+2018-09-10T13:26:28.948082+00:00 app[web.1]: GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:robbie
+2018-09-10T13:26:28.948229+00:00 app[web.1]: getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:robbie
+2018-09-10T13:33:45.829621+00:00 app[web.1]: on disconnect,  CONTEXT: "sockets.js"", SOCKETID:hk6_oIQiW2zt1prpAAAF, REASON:ping timeout
+2018-09-10T13:33:49.048203+00:00 app[web.1]: on connection,  CONTEXT: "sockets.js"", SOCKETID:k8zakpp5Pz71W0gDAAAG
+2018-09-10T13:34:14.656405+00:00 app[web.1]: on disconnect,  CONTEXT: "sockets.js"", SOCKETID:2OFDOEU2AbQcLJWdAAAA, REASON:ping timeout
+2018-09-10T13:34:14.656763+00:00 app[web.1]: on disconnect,  CONTEXT: "sockets.js"", SOCKETID:I57CQDa-JsNrsWQHAAAC, REASON:ping timeout
+2018-09-10T13:34:14.657048+00:00 app[web.1]: on disconnect,  CONTEXT: "sockets.js"", SOCKETID:Yg3fitt3V38XQsZaAAAB, REASON:ping timeout
+2018-09-10T13:34:16.641975+00:00 app[web.1]: on connection,  CONTEXT: "sockets.js"", SOCKETID:3CCeHUsMZ-X34HGvAAAH
+2018-09-10T13:34:16.763100+00:00 app[web.1]: on connection,  CONTEXT: "sockets.js"", SOCKETID:TCjWMnFpZwoP6dYxAAAI
+2018-09-10T13:34:16.868436+00:00 app[web.1]: on connection,  CONTEXT: "sockets.js"", SOCKETID:r77U7qFhfaUUBBrSAAAJ
+2018-09-10T13:34:19.886602+00:00 app[web.1]: on disconnect,  CONTEXT: "sockets.js"", SOCKETID:k8zakpp5Pz71W0gDAAAG, REASON:ping timeout
+2018-09-10T13:34:22.732304+00:00 app[web.1]: on connection,  CONTEXT: "sockets.js"", SOCKETID:h7DMNV1NGuxGjiqwAAAK
+2018-09-10T13:34:39.727941+00:00 app[web.1]: on disconnect,  CONTEXT: "sockets.js"", SOCKETID:cv4rFAHsR8VojKpbAAAD, REASON:ping timeout
+2018-09-10T13:34:41.808720+00:00 app[web.1]: on connection,  CONTEXT: "sockets.js"", SOCKETID:lEDtUoMRe7RgTS5_AAAL
+2018-09-10T13:34:47.536098+00:00 app[web.1]: on disconnect,  CONTEXT: "sockets.js"", SOCKETID:6UVp-rBrWFCcKPsYAAAE, REASON:ping timeout
+2018-09-10T13:34:47.545078+00:00 app[web.1]: on disconnect,  CONTEXT: "sockets.js"", SOCKETID:TCjWMnFpZwoP6dYxAAAI, REASON:ping timeout
+2018-09-10T13:34:47.684991+00:00 app[web.1]: on disconnect,  CONTEXT: "sockets.js"", SOCKETID:r77U7qFhfaUUBBrSAAAJ, REASON:ping timeout
+2018-09-10T13:34:48.832518+00:00 app[web.1]: on connection,  CONTEXT: "sockets.js"", SOCKETID:2qBiZyBUHXocINedAAAM
+2018-09-10T13:34:48.833981+00:00 app[web.1]: on connection,  CONTEXT: "sockets.js"", SOCKETID:mB8rwUNZ5zyJFAdMAAAN
+2018-09-10T13:34:49.573545+00:00 app[web.1]: on connection,  CONTEXT: "sockets.js"", SOCKETID:3ZPntz_H0bvgJSvEAAAO
+2018-09-10T13:34:53.602975+00:00 app[web.1]: on disconnect,  CONTEXT: "sockets.js"", SOCKETID:h7DMNV1NGuxGjiqwAAAK, REASON:ping timeout
+2018-09-10T13:34:55.694984+00:00 app[web.1]: on connection,  CONTEXT: "sockets.js"", SOCKETID:n7IvnTf3Nkg3Gi03AAAP
+2018-09-10T13:35:12.927039+00:00 app[web.1]: on disconnect,  CONTEXT: "sockets.js"", SOCKETID:lEDtUoMRe7RgTS5_AAAL, REASON:ping timeout
+2018-09-10T13:35:14.703080+00:00 app[web.1]: on connection,  CONTEXT: "sockets.js"", SOCKETID:n_VKXf5jlsdqnaGRAAAQ
+2018-09-10T13:37:57.838997+00:00 app[web.1]: on disconnect,  CONTEXT: "sockets.js"", SOCKETID:3ZPntz_H0bvgJSvEAAAO, REASON:ping timeout
+2018-09-10T13:37:57.839337+00:00 app[web.1]: on disconnect,  CONTEXT: "sockets.js"", SOCKETID:2qBiZyBUHXocINedAAAM, REASON:ping timeout
+2018-09-10T13:37:57.839594+00:00 app[web.1]: on disconnect,  CONTEXT: "sockets.js"", SOCKETID:mB8rwUNZ5zyJFAdMAAAN, REASON:ping timeout
+2018-09-10T13:37:57.859198+00:00 app[web.1]: on disconnect,  CONTEXT: "sockets.js"", SOCKETID:3CCeHUsMZ-X34HGvAAAH, REASON:ping timeout
+2018-09-10T13:37:59.766200+00:00 app[web.1]: on disconnect,  CONTEXT: "sockets.js"", SOCKETID:n_VKXf5jlsdqnaGRAAAQ, REASON:ping timeout
+2018-09-10T13:37:59.902345+00:00 app[web.1]: on connection,  CONTEXT: "sockets.js"", SOCKETID:9RtbQCz4td5Pzy9vAAAR
+2018-09-10T13:37:59.904803+00:00 app[web.1]: on connection,  CONTEXT: "sockets.js"", SOCKETID:S7by5Ulst3JMD4CVAAAS
+2018-09-10T13:37:59.906988+00:00 app[web.1]: on connection,  CONTEXT: "sockets.js"", SOCKETID:4igFA5lO62DFqV-nAAAT
+2018-09-10T13:37:59.913594+00:00 app[web.1]: on connection,  CONTEXT: "sockets.js"", SOCKETID:_6Ou_TUv0YzBNZUiAAAU
+2018-09-10T13:38:00.865775+00:00 app[web.1]: on connection,  CONTEXT: "sockets.js"", SOCKETID:7Kqz0LZufwV97S-aAAAV
+2018-09-10T13:38:03.951027+00:00 app[web.1]: on disconnect,  CONTEXT: "sockets.js"", SOCKETID:n7IvnTf3Nkg3Gi03AAAP, REASON:ping timeout
+2018-09-10T13:38:05.601351+00:00 app[web.1]: on connection,  CONTEXT: "sockets.js"", SOCKETID:6OuLFSjN1toNO0q4AAAW
+2018-09-10T13:38:45.420386+00:00 app[web.1]: on disconnect,  CONTEXT: "sockets.js"", SOCKETID:6OuLFSjN1toNO0q4AAAW, REASON:transport close
+2018-09-10T13:38:46.533859+00:00 app[web.1]: on disconnect,  CONTEXT: "sockets.js"", SOCKETID:_6Ou_TUv0YzBNZUiAAAU, REASON:transport close
+2018-09-10T13:38:46.535172+00:00 app[web.1]: on disconnect,  CONTEXT: "sockets.js"", SOCKETID:9RtbQCz4td5Pzy9vAAAR, REASON:transport close
+2018-09-10T13:38:46.538294+00:00 app[web.1]: on disconnect,  CONTEXT: "sockets.js"", SOCKETID:S7by5Ulst3JMD4CVAAAS, REASON:transport close
+2018-09-10T13:38:46.539417+00:00 app[web.1]: on disconnect,  CONTEXT: "sockets.js"", SOCKETID:4igFA5lO62DFqV-nAAAT, REASON:transport close
+2018-09-10T13:38:55.547873+00:00 app[web.1]: POST:/authenticate,  CONTEXT: "router.js",  PASSWORD:robbie, NICKNAME:robbie
+2018-09-10T13:38:55.548040+00:00 app[web.1]: authenticate,  CONTEXT: "logic/index.js", NICKNAME:robbie, PASSWORD:robbie
+2018-09-10T13:38:55.694091+00:00 app[web.1]: on connection,  CONTEXT: "sockets.js"", SOCKETID:wHE1GmWfCmdenJBcAAAX
+2018-09-10T13:38:55.812161+00:00 app[web.1]: on authenticated
+2018-09-10T13:38:55.812305+00:00 app[web.1]: on authenticated,  CONTEXT: "sockets.js"", USERNAME:robbie
+2018-09-10T13:38:55.812434+00:00 app[web.1]: userConnected,  CONTEXT: "logic/index.js", NICKNAME:robbie
+2018-09-10T13:38:55.820816+00:00 app[web.1]: GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:robbie
+2018-09-10T13:38:55.820982+00:00 app[web.1]: getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:robbie
+2018-09-10T13:38:56.182708+00:00 app[web.1]: GET:/user/:nickname/users,  CONTEXT: "router.js", TERM: , NICKNAME:robbie
+2018-09-10T13:38:56.182851+00:00 app[web.1]: getUsersForString,  CONTEXT: "logic/index.js", TERM:
+2018-09-10T13:38:56.290729+00:00 app[web.1]: GET:/user/:nickname/users,  CONTEXT: "router.js", TERM: , NICKNAME:robbie
+2018-09-10T13:38:56.290900+00:00 app[web.1]: getUsersForString,  CONTEXT: "logic/index.js", TERM:
+2018-09-10T13:39:09.901897+00:00 app[web.1]: POST:/authenticate,  CONTEXT: "router.js",  PASSWORD:dobbie, NICKNAME:dobbie
+2018-09-10T13:39:09.902083+00:00 app[web.1]: authenticate,  CONTEXT: "logic/index.js", NICKNAME:dobbie, PASSWORD:dobbie
+2018-09-10T13:39:10.052667+00:00 app[web.1]: on connection,  CONTEXT: "sockets.js"", SOCKETID:LaYz-GT_rTetv0YDAAAY
+2018-09-10T13:39:10.186130+00:00 app[web.1]: GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:dobbie
+2018-09-10T13:39:10.186285+00:00 app[web.1]: getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:dobbie
+2018-09-10T13:39:10.196511+00:00 app[web.1]: on authenticated
+2018-09-10T13:39:10.196669+00:00 app[web.1]: on authenticated,  CONTEXT: "sockets.js"", USERNAME:dobbie
+2018-09-10T13:39:10.196811+00:00 app[web.1]: userConnected,  CONTEXT: "logic/index.js", NICKNAME:dobbie
+2018-09-10T13:39:10.689830+00:00 app[web.1]: GET:/user/:nickname/users,  CONTEXT: "router.js", TERM: , NICKNAME:robbie
+2018-09-10T13:39:10.689990+00:00 app[web.1]: getUsersForString,  CONTEXT: "logic/index.js", TERM:
+2018-09-10T13:39:10.705018+00:00 app[web.1]: GET:/user/:nickname/users,  CONTEXT: "router.js", TERM: , NICKNAME:dobbie
+2018-09-10T13:39:10.705159+00:00 app[web.1]: getUsersForString,  CONTEXT: "logic/index.js", TERM:
+2018-09-10T13:39:10.798383+00:00 app[web.1]: GET:/user/:nickname/users,  CONTEXT: "router.js", TERM: , NICKNAME:robbie
+2018-09-10T13:39:10.798574+00:00 app[web.1]: getUsersForString,  CONTEXT: "logic/index.js", TERM:
+2018-09-10T13:39:36.903433+00:00 app[web.1]: POST:/register, CONTEXT: "router.js", EMAIL: cobbie@c.bom, PASSWORD:cobbie, NICKNAME:cobbie
+2018-09-10T13:39:36.904055+00:00 app[web.1]: register,  CONTEXT: "logic/index.js", EMAIL:cobbie@c.bom, PASSWORD:cobbie,  NICKNAME: cobbie
+2018-09-10T13:39:36.904510+00:00 app[web.1]: cobbie@c.bom cobbie cobbie
+2018-09-10T13:39:43.583435+00:00 app[web.1]: POST:/authenticate,  CONTEXT: "router.js",  PASSWORD:cobbie, NICKNAME:cobbie
+2018-09-10T13:39:43.583599+00:00 app[web.1]: authenticate,  CONTEXT: "logic/index.js", NICKNAME:cobbie, PASSWORD:cobbie
+2018-09-10T13:39:43.747829+00:00 app[web.1]: on connection,  CONTEXT: "sockets.js"", SOCKETID:1nyavNWEt8_pxS-gAAAZ
+2018-09-10T13:39:43.865556+00:00 app[web.1]: GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:cobbie
+2018-09-10T13:39:43.865707+00:00 app[web.1]: getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:cobbie
+2018-09-10T13:39:43.869078+00:00 app[web.1]: on authenticated
+2018-09-10T13:39:43.869249+00:00 app[web.1]: on authenticated,  CONTEXT: "sockets.js"", USERNAME:cobbie
+2018-09-10T13:39:43.869416+00:00 app[web.1]: userConnected,  CONTEXT: "logic/index.js", NICKNAME:cobbie
+2018-09-10T13:39:44.226521+00:00 app[web.1]: GET:/user/:nickname/users,  CONTEXT: "router.js", TERM: , NICKNAME:robbie
+2018-09-10T13:39:44.226669+00:00 app[web.1]: getUsersForString,  CONTEXT: "logic/index.js", TERM:
+2018-09-10T13:39:44.243657+00:00 app[web.1]: GET:/user/:nickname/users,  CONTEXT: "router.js", TERM: , NICKNAME:dobbie
+2018-09-10T13:39:44.243779+00:00 app[web.1]: getUsersForString,  CONTEXT: "logic/index.js", TERM:
+2018-09-10T13:39:44.362215+00:00 app[web.1]: GET:/user/:nickname/users,  CONTEXT: "router.js", TERM: , NICKNAME:cobbie
+2018-09-10T13:39:44.362342+00:00 app[web.1]: getUsersForString,  CONTEXT: "logic/index.js", TERM:
+2018-09-10T13:39:44.363571+00:00 app[web.1]: GET:/user/:nickname/users,  CONTEXT: "router.js", TERM: , NICKNAME:robbie
+2018-09-10T13:39:44.363675+00:00 app[web.1]: getUsersForString,  CONTEXT: "logic/index.js", TERM:
+2018-09-10T13:39:48.603337+00:00 app[web.1]: GET:/user/:nickname/users,  CONTEXT: "router.js", TERM: r, NICKNAME:cobbie
+2018-09-10T13:39:48.603499+00:00 app[web.1]: getUsersForString,  CONTEXT: "logic/index.js", TERM:r
+2018-09-10T13:39:50.295832+00:00 app[web.1]: POST:/user/:nickname/gamerequest/,  CONTEXT: "router.js",  NICKNAME:cobbie, OPPONENT:robbie
+2018-09-10T13:39:50.296131+00:00 app[web.1]: requestNewGame,  CONTEXT: "logic/index.js", REQUESTER:cobbie, DESTINATION:robbie
+2018-09-10T13:39:50.385437+00:00 app[web.1]: _createGame,  CONTEXT: "logic/index.js", REQUESTER:cobbie, CONFIRMER:robbie
+2018-09-10T13:39:50.493789+00:00 app[web.1]: announceMoveMade,  CONTEXT: "sockets.js"", DESTINATION:robbie
+2018-09-10T13:39:50.726565+00:00 app[web.1]: GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:robbie
+2018-09-10T13:39:50.726745+00:00 app[web.1]: getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:robbie
+2018-09-10T13:39:50.762366+00:00 app[web.1]: GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:cobbie
+2018-09-10T13:39:50.762543+00:00 app[web.1]: getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:cobbie
+2018-09-10T13:39:50.877146+00:00 app[web.1]: GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:robbie
+2018-09-10T13:39:50.877320+00:00 app[web.1]: getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:robbie
+2018-09-10T13:39:56.024727+00:00 app[web.1]: GET:/user/:nickname/users,  CONTEXT: "router.js", TERM: b, NICKNAME:cobbie
+2018-09-10T13:39:56.025078+00:00 app[web.1]: getUsersForString,  CONTEXT: "logic/index.js", TERM:b
+2018-09-10T13:39:56.122819+00:00 app[web.1]: GET:/user/:nickname/users,  CONTEXT: "router.js", TERM: bo, NICKNAME:cobbie
+2018-09-10T13:39:56.122974+00:00 app[web.1]: getUsersForString,  CONTEXT: "logic/index.js", TERM:bo
+2018-09-10T13:39:56.251428+00:00 app[web.1]: GET:/user/:nickname/users,  CONTEXT: "router.js", TERM: bob, NICKNAME:cobbie
+2018-09-10T13:39:56.251582+00:00 app[web.1]: getUsersForString,  CONTEXT: "logic/index.js", TERM:bob
+2018-09-10T13:39:58.523831+00:00 app[web.1]: POST:/user/:nickname/gamerequest/,  CONTEXT: "router.js",  NICKNAME:cobbie, OPPONENT:bobbie
+2018-09-10T13:39:58.524820+00:00 app[web.1]: requestNewGame,  CONTEXT: "logic/index.js", REQUESTER:cobbie, DESTINATION:bobbie
+2018-09-10T13:39:58.622577+00:00 app[web.1]: _createGame,  CONTEXT: "logic/index.js", REQUESTER:cobbie, CONFIRMER:bobbie
+2018-09-10T13:39:58.715192+00:00 app[web.1]: announceMoveMade,  CONTEXT: "sockets.js"", DESTINATION:bobbie
+2018-09-10T13:39:58.938781+00:00 app[web.1]: GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:cobbie
+2018-09-10T13:39:58.938946+00:00 app[web.1]: getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:cobbie
+2018-09-10T13:40:07.683557+00:00 app[web.1]: POST:/user/:nickname/respondtorequest,  CONTEXT: "router.js",  NICKNAME:robbie, DESTINATION:cobbie,  GAMEID: 5b967426f4fad000140dd41a, ANSWER:true
+2018-09-10T13:40:07.683872+00:00 app[web.1]: respondToGameRequest,  CONTEXT: "logic/index.js", CONFIRMER:robbie, DESTINATION:cobbie, GAMEID:5b967426f4fad000140dd41a, ANSWER:true
+2018-09-10T13:40:07.746870+00:00 app[web.1]: gameAcceptedOrRejected,  CONTEXT: "sockets.js"", DESTINATION:cobbie
+2018-09-10T13:40:07.977236+00:00 app[web.1]: GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:robbie
+2018-09-10T13:40:07.977404+00:00 app[web.1]: getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:robbie
+2018-09-10T13:40:07.987754+00:00 app[web.1]: GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:cobbie
+2018-09-10T13:40:07.987901+00:00 app[web.1]: getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:cobbie
+2018-09-10T13:40:23.855045+00:00 app[web.1]: GET:/user/:nickname/users,  CONTEXT: "router.js", TERM: d, NICKNAME:cobbie
+2018-09-10T13:40:23.855275+00:00 app[web.1]: getUsersForString,  CONTEXT: "logic/index.js", TERM:d
+2018-09-10T13:40:23.915530+00:00 app[web.1]: GET:/user/:nickname/users,  CONTEXT: "router.js", TERM: do, NICKNAME:cobbie
+2018-09-10T13:40:23.915786+00:00 app[web.1]: getUsersForString,  CONTEXT: "logic/index.js", TERM:do
+2018-09-10T13:40:24.122219+00:00 app[web.1]: GET:/user/:nickname/users,  CONTEXT: "router.js", TERM: dob, NICKNAME:cobbie
+2018-09-10T13:40:24.122432+00:00 app[web.1]: getUsersForString,  CONTEXT: "logic/index.js", TERM:dob
+2018-09-10T13:40:24.295959+00:00 app[web.1]: GET:/user/:nickname/users,  CONTEXT: "router.js", TERM: dobb, NICKNAME:cobbie
+2018-09-10T13:40:24.296129+00:00 app[web.1]: getUsersForString,  CONTEXT: "logic/index.js", TERM:dobb
+2018-09-10T13:40:26.174361+00:00 app[web.1]: POST:/user/:nickname/gamerequest/,  CONTEXT: "router.js",  NICKNAME:cobbie, OPPONENT:dobbie
+2018-09-10T13:40:26.174559+00:00 app[web.1]: requestNewGame,  CONTEXT: "logic/index.js", REQUESTER:cobbie, DESTINATION:dobbie
+2018-09-10T13:40:26.272844+00:00 app[web.1]: _createGame,  CONTEXT: "logic/index.js", REQUESTER:cobbie, CONFIRMER:dobbie
+2018-09-10T13:40:26.365703+00:00 app[web.1]: announceMoveMade,  CONTEXT: "sockets.js"", DESTINATION:dobbie
+2018-09-10T13:40:26.606230+00:00 app[web.1]: GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:cobbie
+2018-09-10T13:40:26.606420+00:00 app[web.1]: getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:cobbie
+2018-09-10T13:40:26.608230+00:00 app[web.1]: GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:dobbie
+2018-09-10T13:40:26.608400+00:00 app[web.1]: getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:dobbie
+2018-09-10T13:40:34.251288+00:00 app[web.1]: POST:/user/:nickname/respondtorequest,  CONTEXT: "router.js",  NICKNAME:dobbie, DESTINATION:cobbie,  GAMEID: 5b96744af4fad000140dd41c, ANSWER:true
+2018-09-10T13:40:34.251477+00:00 app[web.1]: respondToGameRequest,  CONTEXT: "logic/index.js", CONFIRMER:dobbie, DESTINATION:cobbie, GAMEID:5b96744af4fad000140dd41c, ANSWER:true
+2018-09-10T13:40:34.314604+00:00 app[web.1]: gameAcceptedOrRejected,  CONTEXT: "sockets.js"", DESTINATION:cobbie
+2018-09-10T13:40:34.595223+00:00 app[web.1]: GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:cobbie
+2018-09-10T13:40:34.595403+00:00 app[web.1]: getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:cobbie
+2018-09-10T13:40:34.597602+00:00 app[web.1]: GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:dobbie
+2018-09-10T13:40:34.597827+00:00 app[web.1]: getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:dobbie
+2018-09-10T13:40:48.240093+00:00 app[web.1]: POST:/user/:nickname/game/:gameID,  CONTEXT: "router.js",  NICKNAME:cobbie, OPPONENT:robbie, GAMEID: 5b967426f4fad000140dd41a, MOVE:{"from":"d2","to":"d4","promotion":"q"}
+2018-09-10T13:40:48.240311+00:00 app[web.1]: move,  CONTEXT: "logic/index.js", GAMEID:5b967426f4fad000140dd41a, MOVE:{"from":"d2","to":"d4","promotion":"q"}
+2018-09-10T13:40:48.302690+00:00 app[web.1]: announceMoveMade,  CONTEXT: "sockets.js"", MOVER:cobbie, RECEIVER:robbie
+2018-09-10T13:40:48.559311+00:00 app[web.1]: GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:cobbie
+2018-09-10T13:40:48.559454+00:00 app[web.1]: getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:cobbie
+2018-09-10T13:40:48.561374+00:00 app[web.1]: GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:robbie
+2018-09-10T13:40:48.561503+00:00 app[web.1]: getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:robbie
+2018-09-10T13:40:48.703486+00:00 app[web.1]: GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:cobbie
+2018-09-10T13:40:48.703655+00:00 app[web.1]: getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:cobbie
+2018-09-10T13:40:48.705019+00:00 app[web.1]: GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:robbie
+2018-09-10T13:40:48.705164+00:00 app[web.1]: getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:robbie
+2018-09-10T13:40:54.316403+00:00 app[web.1]: POST:/user/:nickname/game/:gameID,  CONTEXT: "router.js",  NICKNAME:cobbie, OPPONENT:dobbie, GAMEID: 5b96744af4fad000140dd41c, MOVE:{"from":"g1","to":"f3","promotion":"q"}
+2018-09-10T13:40:54.316569+00:00 app[web.1]: move,  CONTEXT: "logic/index.js", GAMEID:5b96744af4fad000140dd41c, MOVE:{"from":"g1","to":"f3","promotion":"q"}
+2018-09-10T13:40:54.378207+00:00 app[web.1]: announceMoveMade,  CONTEXT: "sockets.js"", MOVER:cobbie, RECEIVER:dobbie
+2018-09-10T13:40:54.656956+00:00 app[web.1]: GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:cobbie
+2018-09-10T13:40:54.657144+00:00 app[web.1]: getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:cobbie
+2018-09-10T13:40:54.671017+00:00 app[web.1]: GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:dobbie
+2018-09-10T13:40:54.671136+00:00 app[web.1]: getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:dobbie
+2018-09-10T13:40:54.797395+00:00 app[web.1]: GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:cobbie
+2018-09-10T13:40:54.797530+00:00 app[web.1]: getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:cobbie
+2018-09-10T13:41:00.704041+00:00 app[web.1]: POST:/user/:nickname/game/:gameID,  CONTEXT: "router.js",  NICKNAME:robbie, OPPONENT:cobbie, GAMEID: 5b967426f4fad000140dd41a, MOVE:{"from":"d7","to":"d5","promotion":"q"}
+2018-09-10T13:41:00.704714+00:00 app[web.1]: move,  CONTEXT: "logic/index.js", GAMEID:5b967426f4fad000140dd41a, MOVE:{"from":"d7","to":"d5","promotion":"q"}
+2018-09-10T13:41:00.770232+00:00 app[web.1]: announceMoveMade,  CONTEXT: "sockets.js"", MOVER:robbie, RECEIVER:cobbie
+2018-09-10T13:41:01.111494+00:00 app[web.1]: GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:robbie
+2018-09-10T13:41:01.111729+00:00 app[web.1]: getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:robbie
+2018-09-10T13:41:01.118918+00:00 app[web.1]: GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:cobbie
+2018-09-10T13:41:01.119115+00:00 app[web.1]: getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:cobbie
+2018-09-10T13:41:01.266318+00:00 app[web.1]: GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:robbie
+2018-09-10T13:41:01.266466+00:00 app[web.1]: getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:robbie
+2018-09-10T13:41:01.407615+00:00 app[web.1]: GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:robbie
+2018-09-10T13:41:01.407798+00:00 app[web.1]: getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:robbie
+2018-09-10T13:41:13.041799+00:00 app[web.1]: POST:/user/:nickname/game/:gameID,  CONTEXT: "router.js",  NICKNAME:dobbie, OPPONENT:robbie, GAMEID: 5b92bd9f43062f00040cc5ba, MOVE:{"from":"f1","to":"b5","promotion":"q"}
+2018-09-10T13:41:13.041987+00:00 app[web.1]: move,  CONTEXT: "logic/index.js", GAMEID:5b92bd9f43062f00040cc5ba, MOVE:{"from":"f1","to":"b5","promotion":"q"}
+2018-09-10T13:41:13.104565+00:00 app[web.1]: announceMoveMade,  CONTEXT: "sockets.js"", MOVER:dobbie, RECEIVER:robbie
+2018-09-10T13:41:13.327432+00:00 app[web.1]: GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:robbie
+2018-09-10T13:41:13.327764+00:00 app[web.1]: getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:robbie
+2018-09-10T13:41:13.330190+00:00 app[web.1]: GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:dobbie
+2018-09-10T13:41:13.330410+00:00 app[web.1]: getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:dobbie
+2018-09-10T13:41:13.476845+00:00 app[web.1]: GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:robbie
+2018-09-10T13:41:13.477062+00:00 app[web.1]: getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:robbie
+2018-09-10T13:41:13.480737+00:00 app[web.1]: GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:dobbie
+2018-09-10T13:41:13.480982+00:00 app[web.1]: getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:dobbie
+2018-09-10T13:41:55.373736+00:00 app[web.1]: POST:/user/:nickname/game/:gameID,  CONTEXT: "router.js",  NICKNAME:robbie, OPPONENT:dobbie, GAMEID: 5b92bd9f43062f00040cc5ba, MOVE:{"from":"b8","to":"c6","promotion":"q"}
+2018-09-10T13:41:55.373932+00:00 app[web.1]: move,  CONTEXT: "logic/index.js", GAMEID:5b92bd9f43062f00040cc5ba, MOVE:{"from":"b8","to":"c6","promotion":"q"}
+2018-09-10T13:41:55.438642+00:00 app[web.1]: announceMoveMade,  CONTEXT: "sockets.js"", MOVER:robbie, RECEIVER:dobbie
+2018-09-10T13:41:55.657538+00:00 app[web.1]: GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:robbie
+2018-09-10T13:41:55.657699+00:00 app[web.1]: getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:robbie
+2018-09-10T13:41:55.671823+00:00 app[web.1]: GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:dobbie
+2018-09-10T13:41:55.673144+00:00 app[web.1]: getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:dobbie
+2018-09-10T13:41:55.808616+00:00 app[web.1]: GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:robbie
+2018-09-10T13:41:55.808782+00:00 app[web.1]: getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:robbie
+2018-09-10T13:41:55.959911+00:00 app[web.1]: GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:robbie
+2018-09-10T13:41:55.960085+00:00 app[web.1]: getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:robbie
+2018-09-10T13:42:06.268398+00:00 app[web.1]: POST:/user/:nickname/game/:gameID,  CONTEXT: "router.js",  NICKNAME:cobbie, OPPONENT:robbie, GAMEID: 5b967426f4fad000140dd41a, MOVE:{"from":"b1","to":"c3","promotion":"q"}
+2018-09-10T13:42:06.268766+00:00 app[web.1]: move,  CONTEXT: "logic/index.js", GAMEID:5b967426f4fad000140dd41a, MOVE:{"from":"b1","to":"c3","promotion":"q"}
+2018-09-10T13:42:06.335505+00:00 app[web.1]: announceMoveMade,  CONTEXT: "sockets.js"", MOVER:cobbie, RECEIVER:robbie
+2018-09-10T13:42:06.564410+00:00 app[web.1]: GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:cobbie
+2018-09-10T13:42:06.564654+00:00 app[web.1]: getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:cobbie
+2018-09-10T13:42:06.567119+00:00 app[web.1]: GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:robbie
+2018-09-10T13:42:06.567236+00:00 app[web.1]: getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:robbie
+2018-09-10T13:42:06.707070+00:00 app[web.1]: GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:cobbie
+2018-09-10T13:42:06.707267+00:00 app[web.1]: getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:cobbie
+2018-09-10T13:42:06.717312+00:00 app[web.1]: GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:robbie
+2018-09-10T13:42:06.717554+00:00 app[web.1]: getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:robbie
+2018-09-10T13:42:18.534392+00:00 app[web.1]: POST:/user/:nickname/game/:gameID,  CONTEXT: "router.js",  NICKNAME:dobbie, OPPONENT:cobbie, GAMEID: 5b96744af4fad000140dd41c, MOVE:{"from":"d7","to":"d5","promotion":"q"}
+2018-09-10T13:42:18.534603+00:00 app[web.1]: move,  CONTEXT: "logic/index.js", GAMEID:5b96744af4fad000140dd41c, MOVE:{"from":"d7","to":"d5","promotion":"q"}
+2018-09-10T13:42:18.595566+00:00 app[web.1]: announceMoveMade,  CONTEXT: "sockets.js"", MOVER:dobbie, RECEIVER:cobbie
+2018-09-10T13:42:18.846111+00:00 app[web.1]: GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:cobbie
+2018-09-10T13:42:18.846240+00:00 app[web.1]: getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:cobbie
+2018-09-10T13:42:18.861688+00:00 app[web.1]: GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:dobbie
+2018-09-10T13:42:18.861934+00:00 app[web.1]: getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:dobbie
+2018-09-10T13:42:19.005662+00:00 app[web.1]: GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:dobbie
+2018-09-10T13:42:19.005857+00:00 app[web.1]: getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:dobbie
+2018-09-10T13:42:22.866433+00:00 app[web.1]: POST:/user/:nickname/game/:gameID,  CONTEXT: "router.js",  NICKNAME:dobbie, OPPONENT:robbie, GAMEID: 5b92bd9f43062f00040cc5ba, MOVE:{"from":"d2","to":"d4","promotion":"q"}
+2018-09-10T13:42:22.866662+00:00 app[web.1]: move,  CONTEXT: "logic/index.js", GAMEID:5b92bd9f43062f00040cc5ba, MOVE:{"from":"d2","to":"d4","promotion":"q"}
+2018-09-10T13:42:22.929323+00:00 app[web.1]: announceMoveMade,  CONTEXT: "sockets.js"", MOVER:dobbie, RECEIVER:robbie
+2018-09-10T13:42:23.070272+00:00 app[web.1]: GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:dobbie
+2018-09-10T13:42:23.070523+00:00 app[web.1]: getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:dobbie
+2018-09-10T13:42:23.188570+00:00 app[web.1]: GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:robbie
+2018-09-10T13:42:23.188743+00:00 app[web.1]: getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:robbie
+2018-09-10T13:42:23.212561+00:00 app[web.1]: GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:dobbie
+2018-09-10T13:42:23.212754+00:00 app[web.1]: getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:dobbie
+2018-09-10T13:42:23.345483+00:00 app[web.1]: GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:robbie
+2018-09-10T13:42:23.345832+00:00 app[web.1]: getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:robbie
+2018-09-10T13:42:38.364913+00:00 app[web.1]: POST:/user/:nickname/game/:gameID,  CONTEXT: "router.js",  NICKNAME:robbie, OPPONENT:cobbie, GAMEID: 5b967426f4fad000140dd41a, MOVE:{"from":"c8","to":"g4","promotion":"q"}
+2018-09-10T13:42:38.365186+00:00 app[web.1]: move,  CONTEXT: "logic/index.js", GAMEID:5b967426f4fad000140dd41a, MOVE:{"from":"c8","to":"g4","promotion":"q"}
+2018-09-10T13:42:38.435164+00:00 app[web.1]: announceMoveMade,  CONTEXT: "sockets.js"", MOVER:robbie, RECEIVER:cobbie
+2018-09-10T13:42:38.664490+00:00 app[web.1]: GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:robbie
+2018-09-10T13:42:38.664715+00:00 app[web.1]: getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:robbie
+2018-09-10T13:42:38.673393+00:00 app[web.1]: GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:cobbie
+2018-09-10T13:42:38.673622+00:00 app[web.1]: getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:cobbie
+2018-09-10T13:42:38.809343+00:00 app[web.1]: GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:robbie
+2018-09-10T13:42:38.809481+00:00 app[web.1]: getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:robbie
+2018-09-10T13:42:38.958051+00:00 app[web.1]: GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:robbie
+2018-09-10T13:42:38.958221+00:00 app[web.1]: getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:robbie
+2018-09-10T13:42:46.206169+00:00 app[web.1]: POST:/user/:nickname/game/:gameID,  CONTEXT: "router.js",  NICKNAME:robbie, OPPONENT:dobbie, GAMEID: 5b92bd9f43062f00040cc5ba, MOVE:{"from":"d7","to":"d5","promotion":"q"}
+2018-09-10T13:42:46.206383+00:00 app[web.1]: move,  CONTEXT: "logic/index.js", GAMEID:5b92bd9f43062f00040cc5ba, MOVE:{"from":"d7","to":"d5","promotion":"q"}
+2018-09-10T13:42:46.275163+00:00 app[web.1]: announceMoveMade,  CONTEXT: "sockets.js"", MOVER:robbie, RECEIVER:dobbie
+2018-09-10T13:42:46.494342+00:00 app[web.1]: GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:robbie
+2018-09-10T13:42:46.494506+00:00 app[web.1]: getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:robbie
+2018-09-10T13:42:46.507075+00:00 app[web.1]: GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:dobbie
+2018-09-10T13:42:46.507220+00:00 app[web.1]: getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:dobbie
+2018-09-10T13:42:46.641960+00:00 app[web.1]: GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:robbie
+2018-09-10T13:42:46.642212+00:00 app[web.1]: getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:robbie
+2018-09-10T13:42:46.784452+00:00 app[web.1]: GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:robbie
+2018-09-10T13:42:46.784652+00:00 app[web.1]: getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:robbie
+2018-09-10T13:43:30.812572+00:00 app[web.1]: GET:/user/:nickname/users,  CONTEXT: "router.js", TERM: r, NICKNAME:dobbie
+2018-09-10T13:43:30.812756+00:00 app[web.1]: getUsersForString,  CONTEXT: "logic/index.js", TERM:r
+2018-09-10T13:43:32.643772+00:00 app[web.1]: GET:/user/:nickname/users,  CONTEXT: "router.js", TERM: , NICKNAME:dobbie
+2018-09-10T13:43:32.644130+00:00 app[web.1]: getUsersForString,  CONTEXT: "logic/index.js", TERM:
+2018-09-10T13:44:16.619348+00:00 app[web.1]: POST:/authenticate,  CONTEXT: "router.js",  PASSWORD:biffbiff, NICKNAME:biff
+2018-09-10T13:44:16.619555+00:00 app[web.1]: authenticate,  CONTEXT: "logic/index.js", NICKNAME:biff, PASSWORD:biffbiff
+2018-09-10T13:44:16.892863+00:00 app[web.1]: GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:biff
+2018-09-10T13:44:16.893383+00:00 app[web.1]: getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:biff
+2018-09-10T13:44:17.208984+00:00 app[web.1]: on connection,  CONTEXT: "sockets.js"", SOCKETID:gjck7kSGbmuAPprHAAAa
+2018-09-10T13:44:17.334812+00:00 app[web.1]: on authenticated
+2018-09-10T13:44:17.335081+00:00 app[web.1]: on authenticated,  CONTEXT: "sockets.js"", USERNAME:biff
+2018-09-10T13:44:17.335272+00:00 app[web.1]: userConnected,  CONTEXT: "logic/index.js", NICKNAME:biff
+2018-09-10T13:44:17.819554+00:00 app[web.1]: GET:/user/:nickname/users,  CONTEXT: "router.js", TERM: , NICKNAME:robbie
+2018-09-10T13:44:17.819685+00:00 app[web.1]: getUsersForString,  CONTEXT: "logic/index.js", TERM:
+2018-09-10T13:44:17.822924+00:00 app[web.1]: GET:/user/:nickname/users,  CONTEXT: "router.js", TERM: , NICKNAME:cobbie
+2018-09-10T13:44:17.823052+00:00 app[web.1]: getUsersForString,  CONTEXT: "logic/index.js", TERM:
+2018-09-10T13:44:17.947424+00:00 app[web.1]: GET:/user/:nickname/users,  CONTEXT: "router.js", TERM: , NICKNAME:robbie
+2018-09-10T13:44:17.947561+00:00 app[web.1]: getUsersForString,  CONTEXT: "logic/index.js", TERM:
+2018-09-10T13:44:17.948440+00:00 app[web.1]: GET:/user/:nickname/users,  CONTEXT: "router.js", TERM: , NICKNAME:dobbie
+2018-09-10T13:44:17.948549+00:00 app[web.1]: getUsersForString,  CONTEXT: "logic/index.js", TERM:
+2018-09-10T13:44:17.949523+00:00 app[web.1]: GET:/user/:nickname/users,  CONTEXT: "router.js", TERM: , NICKNAME:biff
+2018-09-10T13:44:17.949652+00:00 app[web.1]: getUsersForString,  CONTEXT: "logic/index.js", TERM:
+2018-09-10T13:44:22.072979+00:00 app[web.1]: POST:/user/:nickname/respondtorequest,  CONTEXT: "router.js",  NICKNAME:biff, DESTINATION:dobbie,  GAMEID: 5b937a80117e3900040103b3, ANSWER:true
+2018-09-10T13:44:22.073147+00:00 app[web.1]: respondToGameRequest,  CONTEXT: "logic/index.js", CONFIRMER:biff, DESTINATION:dobbie, GAMEID:5b937a80117e3900040103b3, ANSWER:true
+2018-09-10T13:44:22.140423+00:00 app[web.1]: gameAcceptedOrRejected,  CONTEXT: "sockets.js"", DESTINATION:dobbie
+2018-09-10T13:44:22.374285+00:00 app[web.1]: GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:biff
+2018-09-10T13:44:22.374614+00:00 app[web.1]: getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:biff
+2018-09-10T13:44:22.394697+00:00 app[web.1]: GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:dobbie
+2018-09-10T13:44:22.394887+00:00 app[web.1]: getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:dobbie
+2018-09-10T13:44:47.483720+00:00 app[web.1]: POST:/register, CONTEXT: "router.js", EMAIL: tobbie@t.com, PASSWORD:tobbie, NICKNAME:tobbie
+2018-09-10T13:44:47.483976+00:00 app[web.1]: register,  CONTEXT: "logic/index.js", EMAIL:tobbie@t.com, PASSWORD:tobbie,  NICKNAME: tobbie
+2018-09-10T13:44:47.484167+00:00 app[web.1]: tobbie@t.com tobbie tobbie
+2018-09-10T13:44:55.034671+00:00 app[web.1]: POST:/authenticate,  CONTEXT: "router.js",  PASSWORD:tobbie, NICKNAME:tobbie
+2018-09-10T13:44:55.036925+00:00 app[web.1]: authenticate,  CONTEXT: "logic/index.js", NICKNAME:tobbie, PASSWORD:tobbie
+2018-09-10T13:44:55.226664+00:00 app[web.1]: on connection,  CONTEXT: "sockets.js"", SOCKETID:q-IiiwiOXIslzLmwAAAb
+2018-09-10T13:44:55.344607+00:00 app[web.1]: on authenticated
+2018-09-10T13:44:55.344736+00:00 app[web.1]: on authenticated,  CONTEXT: "sockets.js"", USERNAME:tobbie
+2018-09-10T13:44:55.344865+00:00 app[web.1]: userConnected,  CONTEXT: "logic/index.js", NICKNAME:tobbie
+2018-09-10T13:44:55.358906+00:00 app[web.1]: GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:tobbie
+2018-09-10T13:44:55.359087+00:00 app[web.1]: getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:tobbie
+2018-09-10T13:44:55.603628+00:00 app[web.1]: GET:/user/:nickname/users,  CONTEXT: "router.js", TERM: , NICKNAME:biff
+2018-09-10T13:44:55.603936+00:00 app[web.1]: getUsersForString,  CONTEXT: "logic/index.js", TERM:
+2018-09-10T13:44:55.614092+00:00 app[web.1]: GET:/user/:nickname/users,  CONTEXT: "router.js", TERM: , NICKNAME:robbie
+2018-09-10T13:44:55.614252+00:00 app[web.1]: getUsersForString,  CONTEXT: "logic/index.js", TERM:
+2018-09-10T13:44:55.702410+00:00 app[web.1]: GET:/user/:nickname/users,  CONTEXT: "router.js", TERM: , NICKNAME:dobbie
+2018-09-10T13:44:55.702599+00:00 app[web.1]: getUsersForString,  CONTEXT: "logic/index.js", TERM:
+2018-09-10T13:44:55.708825+00:00 app[web.1]: GET:/user/:nickname/users,  CONTEXT: "router.js", TERM: , NICKNAME:cobbie
+2018-09-10T13:44:55.708952+00:00 app[web.1]: getUsersForString,  CONTEXT: "logic/index.js", TERM:
+2018-09-10T13:44:55.710389+00:00 app[web.1]: GET:/user/:nickname/users,  CONTEXT: "router.js", TERM: , NICKNAME:tobbie
+2018-09-10T13:44:55.710494+00:00 app[web.1]: getUsersForString,  CONTEXT: "logic/index.js", TERM:
+2018-09-10T13:44:55.743706+00:00 app[web.1]: GET:/user/:nickname/users,  CONTEXT: "router.js", TERM: , NICKNAME:robbie
+2018-09-10T13:44:55.743883+00:00 app[web.1]: getUsersForString,  CONTEXT: "logic/index.js", TERM:
+2018-09-10T13:45:14.711000+00:00 app[web.1]: GET:/user/:nickname/users,  CONTEXT: "router.js", TERM: r, NICKNAME:tobbie
+2018-09-10T13:45:14.711220+00:00 app[web.1]: getUsersForString,  CONTEXT: "logic/index.js", TERM:r
+2018-09-10T13:45:16.039294+00:00 app[web.1]: GET:/user/:nickname/users,  CONTEXT: "router.js", TERM: , NICKNAME:tobbie
+2018-09-10T13:45:16.039618+00:00 app[web.1]: getUsersForString,  CONTEXT: "logic/index.js", TERM:
+2018-09-10T13:45:23.501510+00:00 app[web.1]: GET:/user/:nickname/users,  CONTEXT: "router.js", TERM: r, NICKNAME:tobbie
+2018-09-10T13:45:23.501622+00:00 app[web.1]: getUsersForString,  CONTEXT: "logic/index.js", TERM:r
+2018-09-10T13:45:26.273772+00:00 app[web.1]: POST:/user/:nickname/gamerequest/,  CONTEXT: "router.js",  NICKNAME:tobbie, OPPONENT:robbie
+2018-09-10T13:45:26.273900+00:00 app[web.1]: requestNewGame,  CONTEXT: "logic/index.js", REQUESTER:tobbie, DESTINATION:robbie
+2018-09-10T13:45:26.360466+00:00 app[web.1]: _createGame,  CONTEXT: "logic/index.js", REQUESTER:tobbie, CONFIRMER:robbie
+2018-09-10T13:45:26.449062+00:00 app[web.1]: announceMoveMade,  CONTEXT: "sockets.js"", DESTINATION:robbie
+2018-09-10T13:45:26.687322+00:00 app[web.1]: GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:robbie
+2018-09-10T13:45:26.687639+00:00 app[web.1]: getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:robbie
+2018-09-10T13:45:26.716800+00:00 app[web.1]: GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:tobbie
+2018-09-10T13:45:26.717267+00:00 app[web.1]: getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:tobbie
+2018-09-10T13:45:26.836497+00:00 app[web.1]: GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:robbie
+2018-09-10T13:45:26.836684+00:00 app[web.1]: getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:robbie
+2018-09-10T13:45:33.969496+00:00 app[web.1]: GET:/user/:nickname/users,  CONTEXT: "router.js", TERM: , NICKNAME:tobbie
+2018-09-10T13:45:33.972176+00:00 app[web.1]: getUsersForString,  CONTEXT: "logic/index.js", TERM:
+2018-09-10T13:45:36.272404+00:00 app[web.1]: GET:/user/:nickname/users,  CONTEXT: "router.js", TERM: o, NICKNAME:tobbie
+2018-09-10T13:45:36.272633+00:00 app[web.1]: getUsersForString,  CONTEXT: "logic/index.js", TERM:o
+2018-09-10T13:45:36.501215+00:00 app[web.1]: GET:/user/:nickname/users,  CONTEXT: "router.js", TERM: ob, NICKNAME:tobbie
+2018-09-10T13:45:36.501454+00:00 app[web.1]: getUsersForString,  CONTEXT: "logic/index.js", TERM:ob
+2018-09-10T13:45:36.602337+00:00 app[web.1]: GET:/user/:nickname/users,  CONTEXT: "router.js", TERM: obb, NICKNAME:tobbie
+2018-09-10T13:45:36.603254+00:00 app[web.1]: getUsersForString,  CONTEXT: "logic/index.js", TERM:obb
+2018-09-10T13:45:36.720746+00:00 app[web.1]: GET:/user/:nickname/users,  CONTEXT: "router.js", TERM: obbi, NICKNAME:tobbie
+2018-09-10T13:45:36.720952+00:00 app[web.1]: getUsersForString,  CONTEXT: "logic/index.js", TERM:obbi
+2018-09-10T13:45:36.903240+00:00 app[web.1]: GET:/user/:nickname/users,  CONTEXT: "router.js", TERM: obbie, NICKNAME:tobbie
+2018-09-10T13:45:36.903436+00:00 app[web.1]: getUsersForString,  CONTEXT: "logic/index.js", TERM:obbie
+2018-09-10T13:45:38.818652+00:00 app[web.1]: POST:/user/:nickname/gamerequest/,  CONTEXT: "router.js",  NICKNAME:tobbie, OPPONENT:dobbie
+2018-09-10T13:45:38.818783+00:00 app[web.1]: requestNewGame,  CONTEXT: "logic/index.js", REQUESTER:tobbie, DESTINATION:dobbie
+2018-09-10T13:45:38.908022+00:00 app[web.1]: _createGame,  CONTEXT: "logic/index.js", REQUESTER:tobbie, CONFIRMER:dobbie
+2018-09-10T13:45:38.998170+00:00 app[web.1]: announceMoveMade,  CONTEXT: "sockets.js"", DESTINATION:dobbie
+2018-09-10T13:45:39.238844+00:00 app[web.1]: GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:tobbie
+2018-09-10T13:45:39.239087+00:00 app[web.1]: getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:tobbie
+2018-09-10T13:45:39.241168+00:00 app[web.1]: GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:dobbie
+2018-09-10T13:45:39.241328+00:00 app[web.1]: getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:dobbie
+2018-09-10T13:45:40.102604+00:00 app[web.1]: POST:/user/:nickname/gamerequest/,  CONTEXT: "router.js",  NICKNAME:tobbie, OPPONENT:cobbie
+2018-09-10T13:45:40.102740+00:00 app[web.1]: requestNewGame,  CONTEXT: "logic/index.js", REQUESTER:tobbie, DESTINATION:cobbie
+2018-09-10T13:45:40.190604+00:00 app[web.1]: _createGame,  CONTEXT: "logic/index.js", REQUESTER:tobbie, CONFIRMER:cobbie
+2018-09-10T13:45:40.282460+00:00 app[web.1]: announceMoveMade,  CONTEXT: "sockets.js"", DESTINATION:cobbie
+2018-09-10T13:45:40.399006+00:00 app[web.1]: GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:tobbie
+2018-09-10T13:45:40.399242+00:00 app[web.1]: getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:tobbie
+2018-09-10T13:45:40.519760+00:00 app[web.1]: GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:cobbie
+2018-09-10T13:45:40.519944+00:00 app[web.1]: getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:cobbie
+2018-09-10T13:45:42.449446+00:00 app[web.1]: POST:/user/:nickname/gamerequest/,  CONTEXT: "router.js",  NICKNAME:tobbie, OPPONENT:bobbie
+2018-09-10T13:45:42.449593+00:00 app[web.1]: requestNewGame,  CONTEXT: "logic/index.js", REQUESTER:tobbie, DESTINATION:bobbie
+2018-09-10T13:45:42.541163+00:00 app[web.1]: _createGame,  CONTEXT: "logic/index.js", REQUESTER:tobbie, CONFIRMER:bobbie
+2018-09-10T13:45:42.633884+00:00 app[web.1]: announceMoveMade,  CONTEXT: "sockets.js"", DESTINATION:bobbie
+2018-09-10T13:45:42.749496+00:00 app[web.1]: GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:tobbie
+2018-09-10T13:45:42.749612+00:00 app[web.1]: getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:tobbie
+2018-09-10T13:45:45.083967+00:00 app[web.1]: POST:/user/:nickname/gamerequest/,  CONTEXT: "router.js",  NICKNAME:tobbie, OPPONENT:slobbie
+2018-09-10T13:45:45.084330+00:00 app[web.1]: requestNewGame,  CONTEXT: "logic/index.js", REQUESTER:tobbie, DESTINATION:slobbie
+2018-09-10T13:45:45.175621+00:00 app[web.1]: _createGame,  CONTEXT: "logic/index.js", REQUESTER:tobbie, CONFIRMER:slobbie
+2018-09-10T13:45:45.265693+00:00 app[web.1]: announceMoveMade,  CONTEXT: "sockets.js"", DESTINATION:slobbie
+2018-09-10T13:45:45.497296+00:00 app[web.1]: GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:tobbie
+2018-09-10T13:45:45.497472+00:00 app[web.1]: getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:tobbie
+2018-09-10T13:46:20.951809+00:00 app[web.1]: on disconnect,  CONTEXT: "sockets.js"", SOCKETID:1nyavNWEt8_pxS-gAAAZ, REASON:ping timeout
+2018-09-10T13:46:22.950089+00:00 app[web.1]: on disconnect,  CONTEXT: "sockets.js"", SOCKETID:7Kqz0LZufwV97S-aAAAV, REASON:ping timeout
+2018-09-10T13:46:24.047108+00:00 app[web.1]: on connection,  CONTEXT: "sockets.js"", SOCKETID:GzKPAO_odBK_4-fcAAAc
+2018-09-10T13:46:24.810588+00:00 app[web.1]: on connection,  CONTEXT: "sockets.js"", SOCKETID:vJJ4Xg2RAnyfi8zAAAAd
+2018-09-10T13:47:03.105809+00:00 app[web.1]: POST:/authenticate,  CONTEXT: "router.js",  PASSWORD:bobbie, NICKNAME:bobbie
+2018-09-10T13:47:03.105958+00:00 app[web.1]: authenticate,  CONTEXT: "logic/index.js", NICKNAME:bobbie, PASSWORD:bobbie
+2018-09-10T13:47:03.490175+00:00 app[web.1]: GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:bobbie
+2018-09-10T13:47:03.490328+00:00 app[web.1]: getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:bobbie
+2018-09-10T13:47:03.623595+00:00 app[web.1]: on connection,  CONTEXT: "sockets.js"", SOCKETID:JoXgW_RPiy2krpPLAAAe
+2018-09-10T13:47:03.801187+00:00 app[web.1]: on authenticated
+2018-09-10T13:47:03.801341+00:00 app[web.1]: on authenticated,  CONTEXT: "sockets.js"", USERNAME:bobbie
+2018-09-10T13:47:03.801483+00:00 app[web.1]: userConnected,  CONTEXT: "logic/index.js", NICKNAME:bobbie
+2018-09-10T13:47:04.206594+00:00 app[web.1]: GET:/user/:nickname/users,  CONTEXT: "router.js", TERM: , NICKNAME:bobbie
+2018-09-10T13:47:04.206751+00:00 app[web.1]: getUsersForString,  CONTEXT: "logic/index.js", TERM:
+2018-09-10T13:47:04.466147+00:00 app[web.1]: GET:/user/:nickname/users,  CONTEXT: "router.js", TERM: , NICKNAME:dobbie
+2018-09-10T13:47:04.466341+00:00 app[web.1]: getUsersForString,  CONTEXT: "logic/index.js", TERM:
+2018-09-10T13:47:04.467212+00:00 app[web.1]: GET:/user/:nickname/users,  CONTEXT: "router.js", TERM: , NICKNAME:cobbie
+2018-09-10T13:47:04.467364+00:00 app[web.1]: getUsersForString,  CONTEXT: "logic/index.js", TERM:
+2018-09-10T13:47:04.468230+00:00 app[web.1]: GET:/user/:nickname/users,  CONTEXT: "router.js", TERM: , NICKNAME:robbie
+2018-09-10T13:47:04.468365+00:00 app[web.1]: getUsersForString,  CONTEXT: "logic/index.js", TERM:
+2018-09-10T13:47:04.471255+00:00 app[web.1]: GET:/user/:nickname/users,  CONTEXT: "router.js", TERM: , NICKNAME:tobbie
+2018-09-10T13:47:04.471399+00:00 app[web.1]: getUsersForString,  CONTEXT: "logic/index.js", TERM:
+2018-09-10T13:47:04.472246+00:00 app[web.1]: GET:/user/:nickname/users,  CONTEXT: "router.js", TERM: , NICKNAME:biff
+2018-09-10T13:47:04.472370+00:00 app[web.1]: getUsersForString,  CONTEXT: "logic/index.js", TERM:
+2018-09-10T13:47:04.581013+00:00 app[web.1]: GET:/user/:nickname/users,  CONTEXT: "router.js", TERM: , NICKNAME:robbie
+2018-09-10T13:47:04.581163+00:00 app[web.1]: getUsersForString,  CONTEXT: "logic/index.js", TERM:
+2018-09-10T13:47:09.075881+00:00 app[web.1]: POST:/user/:nickname/respondtorequest,  CONTEXT: "router.js",  NICKNAME:bobbie, DESTINATION:cobbie,  GAMEID: 5b96742ef4fad000140dd41b, ANSWER:true
+2018-09-10T13:47:09.076001+00:00 app[web.1]: respondToGameRequest,  CONTEXT: "logic/index.js", CONFIRMER:bobbie, DESTINATION:cobbie, GAMEID:5b96742ef4fad000140dd41b, ANSWER:true
+2018-09-10T13:47:09.136659+00:00 app[web.1]: gameAcceptedOrRejected,  CONTEXT: "sockets.js"", DESTINATION:cobbie
+2018-09-10T13:47:09.401134+00:00 app[web.1]: GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:cobbie
+2018-09-10T13:47:09.401297+00:00 app[web.1]: getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:cobbie
+2018-09-10T13:47:09.424960+00:00 app[web.1]: GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:bobbie
+2018-09-10T13:47:09.425098+00:00 app[web.1]: getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:bobbie
+2018-09-10T13:47:12.056108+00:00 app[web.1]: POST:/user/:nickname/respondtorequest,  CONTEXT: "router.js",  NICKNAME:bobbie, DESTINATION:tobbie,  GAMEID: 5b967586f4fad000140dd421, ANSWER:true
+2018-09-10T13:47:12.056237+00:00 app[web.1]: respondToGameRequest,  CONTEXT: "logic/index.js", CONFIRMER:bobbie, DESTINATION:tobbie, GAMEID:5b967586f4fad000140dd421, ANSWER:true
+2018-09-10T13:47:12.115534+00:00 app[web.1]: gameAcceptedOrRejected,  CONTEXT: "sockets.js"", DESTINATION:tobbie
+2018-09-10T13:47:12.253358+00:00 app[web.1]: GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:bobbie
+2018-09-10T13:47:12.253493+00:00 app[web.1]: getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:bobbie
+2018-09-10T13:47:12.481224+00:00 app[web.1]: GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:tobbie
+2018-09-10T13:47:12.481370+00:00 app[web.1]: getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:tobbie
+2018-09-10T13:47:38.854366+00:00 app[web.1]: on disconnect,  CONTEXT: "sockets.js"", SOCKETID:wHE1GmWfCmdenJBcAAAX, REASON:ping timeout
+2018-09-10T13:47:40.902440+00:00 app[web.1]: on connection,  CONTEXT: "sockets.js"", SOCKETID:q7-S9VEoksK8yEzBAAAf
+2018-09-10T13:47:47.545586+00:00 app[web.1]: on disconnect,  CONTEXT: "sockets.js"", SOCKETID:vJJ4Xg2RAnyfi8zAAAAd, REASON:ping timeout
+2018-09-10T13:47:49.706703+00:00 app[web.1]: on connection,  CONTEXT: "sockets.js"", SOCKETID:Mw0bOD3FHByYOtTNAAAg
+2018-09-10T13:48:28.012308+00:00 app[web.1]: POST:/user/:nickname/game/:gameID,  CONTEXT: "router.js",  NICKNAME:tobbie, OPPONENT:bobbie, GAMEID: 5b967586f4fad000140dd421, MOVE:{"from":"d2","to":"d4","promotion":"q"}
+2018-09-10T13:48:28.012548+00:00 app[web.1]: move,  CONTEXT: "logic/index.js", GAMEID:5b967586f4fad000140dd421, MOVE:{"from":"d2","to":"d4","promotion":"q"}
+2018-09-10T13:48:28.072109+00:00 app[web.1]: announceMoveMade,  CONTEXT: "sockets.js"", MOVER:tobbie, RECEIVER:bobbie
+2018-09-10T13:48:28.406810+00:00 app[web.1]: GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:tobbie
+2018-09-10T13:48:28.407011+00:00 app[web.1]: getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:tobbie
+2018-09-10T13:48:28.553646+00:00 app[web.1]: GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:tobbie
+2018-09-10T13:48:28.553852+00:00 app[web.1]: getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:tobbie
+2018-09-10T13:48:28.757802+00:00 app[web.1]: GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:bobbie
+2018-09-10T13:48:28.757932+00:00 app[web.1]: getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:bobbie
+2018-09-10T13:48:36.720272+00:00 app[web.1]: POST:/user/:nickname/game/:gameID,  CONTEXT: "router.js",  NICKNAME:bobbie, OPPONENT:tobbie, GAMEID: 5b967586f4fad000140dd421, MOVE:{"from":"d7","to":"d5","promotion":"q"}
+2018-09-10T13:48:36.720449+00:00 app[web.1]: move,  CONTEXT: "logic/index.js", GAMEID:5b967586f4fad000140dd421, MOVE:{"from":"d7","to":"d5","promotion":"q"}
+2018-09-10T13:48:36.780188+00:00 app[web.1]: announceMoveMade,  CONTEXT: "sockets.js"", MOVER:bobbie, RECEIVER:tobbie
+2018-09-10T13:48:37.008327+00:00 app[web.1]: GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:tobbie
+2018-09-10T13:48:37.008457+00:00 app[web.1]: getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:tobbie
+2018-09-10T13:48:37.375730+00:00 app[web.1]: GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:bobbie
+2018-09-10T13:48:37.375875+00:00 app[web.1]: getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:bobbie
+2018-09-10T13:48:37.630633+00:00 app[web.1]: GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:bobbie
+2018-09-10T13:48:37.630848+00:00 app[web.1]: getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:bobbie
+2018-09-10T13:48:44.370671+00:00 app[web.1]: POST:/user/:nickname/game/:gameID,  CONTEXT: "router.js",  NICKNAME:tobbie, OPPONENT:bobbie, GAMEID: 5b967586f4fad000140dd421, MOVE:{"from":"e2","to":"e4","promotion":"q"}
+2018-09-10T13:48:44.371135+00:00 app[web.1]: move,  CONTEXT: "logic/index.js", GAMEID:5b967586f4fad000140dd421, MOVE:{"from":"e2","to":"e4","promotion":"q"}
+2018-09-10T13:48:44.433123+00:00 app[web.1]: announceMoveMade,  CONTEXT: "sockets.js"", MOVER:tobbie, RECEIVER:bobbie
+2018-09-10T13:48:44.670398+00:00 app[web.1]: GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:tobbie
+2018-09-10T13:48:44.670602+00:00 app[web.1]: getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:tobbie
+2018-09-10T13:48:44.811994+00:00 app[web.1]: GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:tobbie
+2018-09-10T13:48:44.812124+00:00 app[web.1]: getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:tobbie
+2018-09-10T13:48:45.008723+00:00 app[web.1]: GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:bobbie
+2018-09-10T13:48:45.008851+00:00 app[web.1]: getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:bobbie
+2018-09-10T13:49:11.550385+00:00 app[web.1]: on disconnect,  CONTEXT: "sockets.js"", SOCKETID:Mw0bOD3FHByYOtTNAAAg, REASON:ping timeout
+2018-09-10T13:49:14.119342+00:00 app[web.1]: on connection,  CONTEXT: "sockets.js"", SOCKETID:ALcZTz4fY6FPVLUcAAAh
+2018-09-10T13:49:24.291787+00:00 app[web.1]: POST:/user/:nickname/game/:gameID,  CONTEXT: "router.js",  NICKNAME:bobbie, OPPONENT:tobbie, GAMEID: 5b967586f4fad000140dd421, MOVE:{"from":"c7","to":"c5","promotion":"q"}
+2018-09-10T13:49:24.291952+00:00 app[web.1]: move,  CONTEXT: "logic/index.js", GAMEID:5b967586f4fad000140dd421, MOVE:{"from":"c7","to":"c5","promotion":"q"}
+2018-09-10T13:49:24.358949+00:00 app[web.1]: announceMoveMade,  CONTEXT: "sockets.js"", MOVER:bobbie, RECEIVER:tobbie
+2018-09-10T13:49:24.634590+00:00 app[web.1]: GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:bobbie
+2018-09-10T13:49:24.634861+00:00 app[web.1]: getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:bobbie
+2018-09-10T13:49:24.717686+00:00 app[web.1]: GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:tobbie
+2018-09-10T13:49:24.717825+00:00 app[web.1]: getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:tobbie
+2018-09-10T13:49:24.801508+00:00 app[web.1]: GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:bobbie
+2018-09-10T13:49:24.801685+00:00 app[web.1]: getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:bobbie
+2018-09-10T13:49:32.984124+00:00 app[web.1]: POST:/user/:nickname/game/:gameID,  CONTEXT: "router.js",  NICKNAME:tobbie, OPPONENT:bobbie, GAMEID: 5b967586f4fad000140dd421, MOVE:{"from":"d4","to":"c5","promotion":"q"}
+2018-09-10T13:49:32.984277+00:00 app[web.1]: move,  CONTEXT: "logic/index.js", GAMEID:5b967586f4fad000140dd421, MOVE:{"from":"d4","to":"c5","promotion":"q"}
+2018-09-10T13:49:33.044202+00:00 app[web.1]: announceMoveMade,  CONTEXT: "sockets.js"", MOVER:tobbie, RECEIVER:bobbie
+2018-09-10T13:49:33.278080+00:00 app[web.1]: GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:tobbie
+2018-09-10T13:49:33.278265+00:00 app[web.1]: getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:tobbie
+2018-09-10T13:49:33.324915+00:00 app[web.1]: GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:bobbie
+2018-09-10T13:49:33.325106+00:00 app[web.1]: getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:bobbie
+2018-09-10T13:49:33.420690+00:00 app[web.1]: GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:tobbie
+2018-09-10T13:49:33.420905+00:00 app[web.1]: getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:tobbie
+2018-09-10T13:49:51.181362+00:00 app[web.1]: POST:/user/:nickname/game/:gameID,  CONTEXT: "router.js",  NICKNAME:bobbie, OPPONENT:tobbie, GAMEID: 5b967586f4fad000140dd421, MOVE:{"from":"e7","to":"e5","promotion":"q"}
+2018-09-10T13:49:51.181521+00:00 app[web.1]: move,  CONTEXT: "logic/index.js", GAMEID:5b967586f4fad000140dd421, MOVE:{"from":"e7","to":"e5","promotion":"q"}
+2018-09-10T13:49:51.240490+00:00 app[web.1]: announceMoveMade,  CONTEXT: "sockets.js"", MOVER:bobbie, RECEIVER:tobbie
+2018-09-10T13:49:51.516964+00:00 app[web.1]: GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:tobbie
+2018-09-10T13:49:51.517111+00:00 app[web.1]: getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:tobbie
+2018-09-10T13:49:51.544008+00:00 app[web.1]: GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:bobbie
+2018-09-10T13:49:51.544155+00:00 app[web.1]: getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:bobbie
+2018-09-10T13:49:51.701542+00:00 app[web.1]: GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:bobbie
+2018-09-10T13:49:51.701693+00:00 app[web.1]: getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:bobbie
+2018-09-10T13:49:55.692607+00:00 app[web.1]: POST:/user/:nickname/game/:gameID,  CONTEXT: "router.js",  NICKNAME:tobbie, OPPONENT:bobbie, GAMEID: 5b967586f4fad000140dd421, MOVE:{"from":"e4","to":"d5","promotion":"q"}
+2018-09-10T13:49:55.692891+00:00 app[web.1]: move,  CONTEXT: "logic/index.js", GAMEID:5b967586f4fad000140dd421, MOVE:{"from":"e4","to":"d5","promotion":"q"}
+2018-09-10T13:49:55.757220+00:00 app[web.1]: announceMoveMade,  CONTEXT: "sockets.js"", MOVER:tobbie, RECEIVER:bobbie
+2018-09-10T13:49:55.873743+00:00 app[web.1]: GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:tobbie
+2018-09-10T13:49:55.873870+00:00 app[web.1]: getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:tobbie
+2018-09-10T13:49:55.921342+00:00 app[web.1]: GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:bobbie
+2018-09-10T13:49:55.921516+00:00 app[web.1]: getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:bobbie
+2018-09-10T13:49:56.017144+00:00 app[web.1]: GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:tobbie
+2018-09-10T13:49:56.017349+00:00 app[web.1]: getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:tobbie
+2018-09-10T13:50:31.064587+00:00 app[web.1]: POST:/user/:nickname/game/:gameID,  CONTEXT: "router.js",  NICKNAME:bobbie, OPPONENT:tobbie, GAMEID: 5b967586f4fad000140dd421, MOVE:{"from":"c5","to":"a5","promotion":"q"}
+2018-09-10T13:50:31.064746+00:00 app[web.1]: move,  CONTEXT: "logic/index.js", GAMEID:5b967586f4fad000140dd421, MOVE:{"from":"c5","to":"a5","promotion":"q"}
+2018-09-10T13:50:52.830094+00:00 app[web.1]: on disconnect,  CONTEXT: "sockets.js"", SOCKETID:q7-S9VEoksK8yEzBAAAf, REASON:ping timeout
+2018-09-10T13:50:55.092649+00:00 app[web.1]: on connection,  CONTEXT: "sockets.js"", SOCKETID:65v2Cv6GdRiz3dOrAAAi
+2018-09-10T13:51:00.584805+00:00 app[web.1]: on disconnect,  CONTEXT: "sockets.js"", SOCKETID:LaYz-GT_rTetv0YDAAAY, REASON:ping timeout
+2018-09-10T13:51:01.771595+00:00 app[web.1]: on connection,  CONTEXT: "sockets.js"", SOCKETID:FIl77iZM3P2welYeAAAj
+2018-09-10T13:51:03.633773+00:00 app[web.1]: on disconnect,  CONTEXT: "sockets.js"", SOCKETID:ALcZTz4fY6FPVLUcAAAh, REASON:ping timeout
+2018-09-10T13:51:05.777190+00:00 app[web.1]: on connection,  CONTEXT: "sockets.js"", SOCKETID:qxUBqBP0yv8l0Fd3AAAk
+2018-09-10T13:51:15.824350+00:00 app[web.1]: on disconnect,  CONTEXT: "sockets.js"", SOCKETID:gjck7kSGbmuAPprHAAAa, REASON:ping timeout
+2018-09-10T13:51:17.667748+00:00 app[web.1]: on connection,  CONTEXT: "sockets.js"", SOCKETID:Y4QB4ft-y2CoJ0bkAAAl
+2018-09-10T13:52:07.672150+00:00 app[web.1]: POST:/user/:nickname/game/:gameID,  CONTEXT: "router.js",  NICKNAME:cobbie, OPPONENT:bobbie, GAMEID: 5b96742ef4fad000140dd41b, MOVE:{"from":"d2","to":"d4","promotion":"q"}
+2018-09-10T13:52:07.672490+00:00 app[web.1]: move,  CONTEXT: "logic/index.js", GAMEID:5b96742ef4fad000140dd41b, MOVE:{"from":"d2","to":"d4","promotion":"q"}
+2018-09-10T13:52:07.733282+00:00 app[web.1]: announceMoveMade,  CONTEXT: "sockets.js"", MOVER:cobbie, RECEIVER:bobbie
+2018-09-10T13:52:08.093070+00:00 app[web.1]: GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:cobbie
+2018-09-10T13:52:08.093268+00:00 app[web.1]: getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:cobbie
+2018-09-10T13:52:08.253453+00:00 app[web.1]: GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:cobbie
+2018-09-10T13:52:08.253640+00:00 app[web.1]: getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:cobbie
+2018-09-10T13:52:08.504171+00:00 app[web.1]: GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:bobbie
+2018-09-10T13:52:08.504341+00:00 app[web.1]: getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:bobbie
+2018-09-10T13:52:22.635059+00:00 app[web.1]: on disconnect,  CONTEXT: "sockets.js"", SOCKETID:FIl77iZM3P2welYeAAAj, REASON:ping timeout
+2018-09-10T13:52:24.317776+00:00 app[web.1]: on connection,  CONTEXT: "sockets.js"", SOCKETID:qs9f-gC_zXbRvCqoAAAm
+2018-09-10T13:52:27.915404+00:00 app[web.1]: on disconnect,  CONTEXT: "sockets.js"", SOCKETID:qxUBqBP0yv8l0Fd3AAAk, REASON:ping timeout
+2018-09-10T13:52:30.873948+00:00 app[web.1]: on connection,  CONTEXT: "sockets.js"", SOCKETID:NruO4zB9P8GpPBDYAAAn
+2018-09-10T13:52:38.493449+00:00 app[web.1]: POST:/authenticate,  CONTEXT: "router.js",  PASSWORD:robbie, NICKNAME:robbie
+2018-09-10T13:52:38.493689+00:00 app[web.1]: authenticate,  CONTEXT: "logic/index.js", NICKNAME:robbie, PASSWORD:robbie
+2018-09-10T13:52:38.824413+00:00 app[web.1]: GET:/user/:nickname/games,  CONTEXT: "router.js", NICKNAME:robbie
+2018-09-10T13:52:38.824618+00:00 app[web.1]: getGamesForUser,  CONTEXT: "logic/index.js", NICKNAME:robbie
+2018-09-10T13:52:39.032252+00:00 app[web.1]: on connection,  CONTEXT: "sockets.js"", SOCKETID:dHrfyzY29lfHz7mFAAAo
+2018-09-10T13:52:39.198167+00:00 app[web.1]: on authenticated
+2018-09-10T13:52:39.198329+00:00 app[web.1]: on authenticated,  CONTEXT: "sockets.js"", USERNAME:robbie
+2018-09-10T13:52:39.198498+00:00 app[web.1]: userConnected,  CONTEXT: "logic/index.js", NICKNAME:robbie
+2018-09-10T13:52:39.604111+00:00 app[web.1]: GET:/user/:nickname/users,  CONTEXT: "router.js", TERM: , NICKNAME:robbie
+2018-09-10T13:52:39.604404+00:00 app[web.1]: getUsersForString,  CONTEXT: "logic/index.js", TERM:
+2018-09-10T13:52:39.720087+00:00 app[web.1]: GET:/user/:nickname/users,  CONTEXT: "router.js", TERM: , NICKNAME:robbie
+2018-09-10T13:52:39.721313+00:00 app[web.1]: getUsersForString,  CONTEXT: "logic/index.js", TERM:
+2018-09-10T13:52:39.723943+00:00 app[web.1]: GET:/user/:nickname/users,  CONTEXT: "router.js", TERM: , NICKNAME:cobbie
+2018-09-10T13:52:39.724175+00:00 app[web.1]: getUsersForString,  CONTEXT: "logic/index.js", TERM:
+2018-09-10T13:52:39.725289+00:00 app[web.1]: GET:/user/:nickname/users,  CONTEXT: "router.js", TERM: , NICKNAME:tobbie
+2018-09-10T13:52:39.726398+00:00 app[web.1]: getUsersForString,  CONTEXT: "logic/index.js", TERM:
+2018-09-10T13:52:39.739282+00:00 app[web.1]: GET:/user/:nickname/users,  CONTEXT: "router.js", TERM: , NICKNAME:robbie
+2018-09-10T13:52:39.739484+00:00 app[web.1]: getUsersForString,  CONTEXT: "logic/index.js", TERM:
+2018-09-10T13:52:39.811637+00:00 app[web.1]: GET:/user/:nickname/users,  CONTEXT: "router.js", TERM: , NICKNAME:dobbie
+2018-09-10T13:52:39.811866+00:00 app[web.1]: getUsersForString,  CONTEXT: "logic/index.js", TERM:
+2018-09-10T13:52:39.867703+00:00 app[web.1]: GET:/user/:nickname/users,  CONTEXT: "router.js", TERM: , NICKNAME:biff
+2018-09-10T13:52:39.867809+00:00 app[web.1]: getUsersForString,  CONTEXT: "logic/index.js", TERM:
+2018-09-10T13:52:39.874875+00:00 app[web.1]: GET:/user/:nickname/users,  CONTEXT: "router.js", TERM: , NICKNAME:robbie
+2018-09-10T13:52:39.875200+00:00 app[web.1]: getUsersForString,  CONTEXT: "logic/index.js", TERM:
+2018-09-10T13:53:09.407652+00:00 app[web.1]: on disconnect,  CONTEXT: "sockets.js"", SOCKETID:q-IiiwiOXIslzLmwAAAb, REASON:ping timeout
+2018-09-10T13:53:10.666821+00:00 app[web.1]: on connection,  CONTEXT: "sockets.js"", SOCKETID:ZQMvPtEf6-PJXArQAAAp
+2018-09-10T13:53:11.961906+00:00 app[web.1]: on disconnect,  CONTEXT: "sockets.js"", SOCKETID:65v2Cv6GdRiz3dOrAAAi, REASON:ping timeout
+2018-09-10T13:53:13.581855+00:00 app[web.1]: on connection,  CONTEXT: "sockets.js"", SOCKETID:06EohGtpGHWjA3DmAAAq

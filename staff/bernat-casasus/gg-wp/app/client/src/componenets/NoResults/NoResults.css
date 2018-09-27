@@ -1,0 +1,11 @@
+#no-results-container{
+    text-align: center;
+    margin: 0 auto;
+    color:rgb(145, 151, 151);
+}
+.fas{
+    color:rgb(187, 187, 187);
+}
+.fa-exclamation{
+    margin-bottom: 5px;
+}

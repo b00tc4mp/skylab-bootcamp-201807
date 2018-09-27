@@ -1,0 +1,73 @@
+    .logo{
+    font-family: 'Risque', 'cursive';
+    font-size:2em;
+    color:#8A4D76 !important;
+    background-color: transparent !important;
+    border: none !important;
+    cursor: pointer;
+  }
+
+  .container{
+    display: flex;
+    justify-content: space-around ;
+    flex-wrap: wrap;
+  }
+
+  .items{
+    margin: 1em;
+    padding-bottom: 1em;
+    width: 20em;
+    height: 20em;
+    border-radius: 5px;
+    border: none; 
+  }
+
+  .items p{
+    margin-left: 0.5em;
+  }
+
+  .breadcrumb{
+    margin-top: 1em;
+    margin-left: 5em;
+  }
+
+  .dogAdopted{
+    cursor: pointer;
+  }
+
+  .navbar-item, .navbar-link {
+    color: #4a4a4a;
+    display: block;
+    line-height: 1.5;
+    padding: 0.3rem 0.3rem;
+    position: relative;
+  }
+
+  .navbar.is-fixed-bottom, .navbar.is-fixed-top {
+  margin-top: -0.1px;
+  left: 0;
+  position: fixed;
+  right: 0;
+  z-index: 30;
+  }
+    
+  h5{
+    color: #8A4D76 !important;
+  }
+
+  .search{
+    background-color: #8A4D76 !important;
+    color: white !important;
+    margin-top:0.3em;
+  }
+
+  .more-information{
+    background-color: #8A4D76 !important;
+    border-radius:5px !important;
+    margin-left: 23.5em;
+    color:white !important;
+  }
+
+  .more-information:hover{
+    background-color: rgb(155, 94, 135) !important;
+  }

@@ -1,0 +1,35 @@
+.home-empty-products {
+    width: 100%;
+}
+
+
+.home-empty-products > h1 {
+    margin: 300px 50px;
+    font-size: 18px;
+    text-align: center;
+}
+
+.filter-container {
+    float: left;
+    margin: 20px;
+}
+
+.flex-container {
+    padding-top: 10px;
+    margin: 20px;
+    max-width: 1100px;
+    min-height: 300px;
+    flex: 0 100%;
+    display: flex;
+    flex-flow: row wrap;
+    align-items: stretch;
+}
+  
+.flex-container > div {
+    margin: 10px;
+}
+
+.errorSearch {
+    font-size: 20px;
+    padding: 240px 20px;
+}
