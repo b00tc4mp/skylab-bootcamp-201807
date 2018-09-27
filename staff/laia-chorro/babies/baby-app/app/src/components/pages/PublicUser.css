@@ -1,0 +1,9 @@
+.public-user-container {
+    max-width: 800px;
+    margin: auto;
+}
+
+.public-user-map {
+    position: relative;
+    height: 250px;
+}

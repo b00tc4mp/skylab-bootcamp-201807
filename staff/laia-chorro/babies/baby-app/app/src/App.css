@@ -1,0 +1,7 @@
+.baby-app-container {
+    margin-top: 66px;
+}
+
+button:focus {
+    outline: none !important;
+}
