@@ -1,0 +1,59 @@
+.container-title-landing{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+ 
+  .container-landing{
+    display: flex;
+    justify-content: space-between;
+  }
+ 
+  .container-list{
+   width: 50%;
+   margin: 0 auto;
+  }
+ 
+  .button-landing{
+    margin-left: 0.5em;
+  }
+ 
+  .landing-label{
+    width: 15em;
+    display: inline-block; 
+  }
+ 
+  .image-list{
+    border-radius:50%;
+    width: 3em;
+    height: 3em;
+    margin-right: 1em; 
+  }
+ 
+  .element-list{
+    display: flex;
+    align-items: center;
+    margin: 0.8em;
+  }
+   .adopted{
+     background-color: #66BB6A !important;
+     color: #FFFFFF !important;
+   }
+ 
+   .parameters-dog{
+     display: flex;
+     justify-content: space-around;
+   }
+ 
+   .infoDog{
+     margin-bottom: 2em !important;
+   }
+ 
+   .is-fullwidth{
+     margin-bottom: 1em !important;  
+   }
+ 
+   textarea{
+     margin-bottom: 1em !important;
+   }
+ 

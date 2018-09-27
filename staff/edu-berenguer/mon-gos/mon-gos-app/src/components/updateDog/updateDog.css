@@ -1,0 +1,27 @@
+.form-update{
+    display: flex;
+    justify-content:center;
+  }
+
+  .container-title-update{
+    display: flex;
+    justify-content: space-evenly;
+    color: #8A4D76;
+    margin-top: 2em;
+  }
+
+  label{
+    color:#FFFFFF !important;
+    background-color: #8A4D76 !important;
+    font-size: 1em !important;
+  }
+  .parameter-dog{
+    color:#8A4D76;
+  }
+
+  .form-update img{
+    height: 200px;
+    width: 200px;
+    border-radius:50%;
+    margin-top: 2em;
+  }

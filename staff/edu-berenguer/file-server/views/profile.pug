@@ -1,0 +1,15 @@
+doctype html
+head
+  meta(charset='UTF-8')
+  meta(name='viewport' content='width=device-width, initial-scale=1.0')
+  meta(http-equiv='X-UA-Compatible' content='ie=edge')
+  title FILES
+  link(rel='stylesheet' href='style.css')
+.screen
+  h1 PROFILE
+  form(action='/profile' method='post')
+    input(type='text' name='username' placeholder='username' disable value=(session.username))
+    input(type='password' name='newPassword' placeholder='newPassword')
+    button(type='submit') Update
+  if (session.updateError)
+    h2.error #{session.updateError}
