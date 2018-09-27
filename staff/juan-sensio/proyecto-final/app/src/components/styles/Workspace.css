@@ -1,0 +1,75 @@
+.app {
+  display: grid;
+  grid-template: 100vh/5% 40% auto;
+}
+
+.app-mobile {
+  display: grid;
+  grid-template: 1fr/1fr;
+}
+
+.workspace {
+  background-color: #878787;
+  display: grid;
+  grid-template: 10vh 60vh 10vh/1fr;
+  grid-gap: 20px;
+  align-items: center;
+  justify-items: center;
+}
+.workspace__nav {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template: 1fr/repeat(3, 1fr);
+  justify-items: center;
+  align-items: center;
+  background-color: #B2B2B2;
+}
+.workspace__nav button {
+  padding: 5px;
+  height: 50%;
+  margin: 2px;
+  background: none;
+  border: none;
+}
+.workspace__nav button img {
+  height: 5vh;
+}
+.workspace__nav__upload {
+  width: 80%;
+}
+@media screen and (max-width: 700px) {
+  .workspace {
+    grid-template: 10vh 60vh 20vh/1fr;
+    margin-bottom: 10vh;
+  }
+  .workspace__nav {
+    grid-template: 1fr/repeat(3, 1fr);
+  }
+  .workspace button {
+    padding: 0;
+    height: 50%;
+    margin: 2px;
+    background: none;
+    border: none;
+  }
+  .workspace button img {
+    height: 5vh;
+  }
+}
+
+.video {
+  max-width: 90%;
+  max-height: 60vh;
+  display: block;
+  margin: auto;
+}
+
+.video-small {
+  max-width: 100%;
+  max-height: 20vh;
+  display: block;
+  margin: 10px auto;
+}
+
+/*# sourceMappingURL=Workspace.css.map */
