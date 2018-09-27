@@ -1,0 +1,36 @@
+{
+  "name": "hostess-app",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "dotenv": "^6.0.0",
+    "get-age": "^1.0.1",
+    "moment": "^2.22.2",
+    "react": "^16.4.2",
+    "react-autosize-textarea": "^4.0.0",
+    "react-cropper": "^1.0.1",
+    "react-dom": "^16.4.2",
+    "react-file-base64": "^1.0.3",
+    "react-radio-group": "^3.0.3",
+    "react-router-dom": "^4.3.1",
+    "react-scripts": "1.1.5",
+    "vegas": "^2.4.3"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "test-logic": "mocha src/logic"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "core-js": "^2.5.7",
+    "form-data": "^2.3.2",
+    "isomorphic-fetch": "^2.2.1",
+    "jimp": "^0.4.0",
+    "jsonwebtoken": "^8.3.0",
+    "mocha": "^5.2.0",
+    "rimraf": "^2.6.2"
+  }
+}

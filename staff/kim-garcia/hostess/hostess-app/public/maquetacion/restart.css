@@ -1,0 +1,162 @@
+/* .App { */
+    /* text-align: center;
+  }
+  
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+    height: 80px;
+  }
+  
+  .App-header {
+    background-color: #222;
+    height: 150px;
+    padding: 20px;
+    color: white;
+  }
+  
+  .App-title {
+    font-size: 1.5em;
+  }
+  
+  .App-intro {
+    font-size: large;
+  } */
+  
+  ul li{
+    color: #AAAAAA;
+    display: block;
+    position: relative;
+    float: left;
+    width: 100%;
+    height: 100px;
+      border-bottom: 1px solid #333;
+  }
+
+
+  ul li .check::before {
+    display: block;
+    position: absolute;
+      content: '';
+    border-radius: 100%;
+    height: 15px;
+    width: 15px;
+    top: 5px;
+      left: 5px;
+    margin: auto;
+      transition: background 0.25s linear;
+      -webkit-transition: background 0.25s linear;
+  }
+
+
+
+
+  @keyframes App-logo-spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  } */
+  
+
+
+  
+
+
+  .philosophy-hostess {
+    margin: 40px;
+  }
+  
+  details {
+    list-style-type: none;
+  
+  }
+  
+  ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  a {
+    text-decoration: none;
+  }
+  
+
+  
+  h1 {
+    color: #474544;
+    font-size: 2.2em;
+    font-weight: 700;
+    letter-spacing: 7px;
+    text-transform: uppercase;
+    padding-top: 1em;
+  }
+  
+  details {
+    margin: 30px;
+  }
+  
+  button {
+    font-size: 2em;
+    font-weight: 30;
+    background-color: #E73104;
+    border: none;
+    color: #FFFAE4;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin: 15px;
+    cursor: pointer;
+    border-radius: 3px;
+    height: 100px;
+    width: 250px;
+  }
+  
+  .buttons-landing {
+    margin: 40px;
+  
+  }
+  
+  
+  
+  /* input:focus, textarea:focus, summary:focus button:focus details:focus {
+    outline: none !important;
+  } */
+  
+  button:focus {
+    background-color: bisque;
+  }
+  
+  
+  
+  
+  @media {
+
+
+      
+      .block {
+          margin: 0;
+          padding: 0;
+          border: solid 1px #474544;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          height: 600px;
+        }
+        
+        .inside-block {
+            
+        }
+        
+        button {
+            height: 80px;
+            width: 100%;
+            text-align: center;
+            font-weight: 30;
+            padding: 0;
+            margin: 0;
+            margin-top: 5px;
+        }
+    }
+    
+    

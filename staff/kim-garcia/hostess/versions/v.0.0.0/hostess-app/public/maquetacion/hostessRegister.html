@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="style.css">
+    <title>Register</title>
+</head>
+
+<body>
+    <div id="container">
+        <h1 class="register_title">&bull; HOSTESS REGISTER &bull;</h1>
+        <div class="underline"></div>
+        <form method="POST" class="hostess_form">
+            <div class="name">
+                <input type="text" name="name" placeholder="My name is">
+            </div>
+            <div class="password">
+                <input type="password" name="password" placeholder="Secret password">
+            </div>
+            <div class="date">
+                <input type="date" name="date" placeholder="My birth date is">
+            </div>
+            <div class="born">
+                <input type="text" name="born" placeholder="I come from">
+            </div>
+            <fieldset class="contact_details">
+                <legend>Contact details</legend>
+                <div class="details">
+                    <div class="email">
+                        <input type="email" name="email" placeholder="My email is">
+                    </div>
+                    <div class="telephone">
+                        <input type="tel" name="tel" placeholder="My telephone number is">
+                    </div>
+                </div>
+            </fieldset>
+            <div class="gender">
+                <label for="woman">Woman
+                    <input type="radio" name="gender" value="man" id="woman">
+                </label>
+                <label for="man">Man
+                    <input type="radio" name="gender" value="woman" id="man">
+                </label>
+            </div>
+            <table class="sizes">
+                <tr>
+                    <td>Top</td>
+                    <td><input type="text" name="size" placeholder="ex. M"></td>
+                </tr>
+                <tr>
+                    <td>Pants</td>
+                    <td><input type="text" name="size" placeholder="ex. 38"></td>
+                </tr>
+                <tr>
+                    <td>Shoes</td>
+                    <td><input type="text" name="size" placeholder="ex. 40"></td>
+                </tr>
+                <tr>
+                    <td>Dress</td>
+                    <td><input type="text" name="size" placeholder="ex. M"></td>
+                </tr>
+            </table>
+            <fieldset class="about_you">
+                <legend>About you</legend>
+                <div class="about_you_container">
+
+                    <div>
+                        <select name="hostess_profile">
+                            <option value="" disabled hidden selected>What is your hostess profile?</option>
+                            <option>Information hostess (Congresses, inform people, basic task)</option>
+                            <option>Image hostess (Required more than 1'65m tall)</option>
+                            <option>Animation (Cheerleader, act, wear costumes)</option>
+                            <option>Comercial profile (Sells, marketing, comercial)</option>
+                        </select>
+                    </div>
+                    <div class="idioms">
+                        <label><input type="checkbox" name="catalan" value="idioms">Catalan</label>
+                        <label><input type="checkbox" name="spanish" value="idioms">Spanish</label>
+                        <label><input type="checkbox" name="english" value="idioms">English</label>
+                        <label><input type="checkbox" name="german" value="idioms">German</label>
+                        <label><input type="checkbox" name="french" value="idioms">French</label>
+                        <label><input type="checkbox" name="chinese" value="idioms">Chinese</label>
+                        <label><input type="checkbox" name="japanese" value="idioms">Japanese</label>
+                    </div>
+                    <div class="describe">
+                        <label for="describe">This is going to be included on your presentation card as part of your profile
+                            <textarea name="describe" id="describe" cols="30" rows="7" placeholder="Describe yourself in a few words (Studies, hobbies, ambitions, live, ...)"></textarea>
+                        </label>
+                    </div>
+                </div>
+            </fieldset>
+            <label><input type="checkbox" name="terminos" required>I agree to the terms</label>
+            <button class="submit">CREATE PROFILE</button>
+        </form>
+
+    </div>
+
+</body>
+
+</html>
