@@ -1,0 +1,24 @@
+.login-container{
+    padding-top: 50px;
+    padding-bottom: 50px;
+    background-color:rgb(234, 234, 234);
+}
+
+#login-footer{
+    text-align: center;
+}
+
+#login-btn{
+    margin-top: 10px;
+    background-color: rgb(26, 164, 248);
+}
+
+#login-title{
+    background-color: rgb(26, 164, 248);
+    color:white;
+    border-radius: 0%;
+}
+
+#login-card{
+    border-radius: 0%;
+}

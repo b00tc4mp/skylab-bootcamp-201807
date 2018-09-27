@@ -1,0 +1,68 @@
+/* Main Search */
+#searchPanel{
+    margin: 50px;
+}
+
+#searchButton{
+    background-color: rgb(0, 178, 255);
+    border-color: white;
+
+}
+
+#selectRegion{
+    background-color: rgb(0, 178, 255);
+    border-color: white;
+
+}
+
+#searchInput{
+    background-color:white;
+    border-color: white;
+    border-radius: 2px;
+    height:50px;
+
+
+}
+
+@media screen and (max-width: 485px) {
+    #searchPanel{
+        margin-left: 0px;
+        margin-right:0px;
+    }
+
+}
+
+/* Mini Search */
+#searchPanel-mini{
+    margin: 6px;
+    margin-left: -135px;
+}
+
+#searchButton-mini{
+    background-color: rgb(0, 178, 255);
+    border-color: white;
+    font-size: 0.9em;
+    height:30px;
+}
+
+#selectRegion-mini{
+    background-color: rgb(0, 178, 255);
+    border-color: white;
+    font-size: 0.9em;
+    height:30px;
+}
+
+#searchInput-mini{
+    background-color:white;
+    border-color: white;
+    border-radius: 2px;
+    font-size: 0.9em;
+    height:30px;
+}
+
+@media screen and (max-width: 624px) {
+    #searchPanel-mini{
+        margin-left: 7px;
+    }
+}
+

@@ -1,0 +1,24 @@
+.error404-container{
+    text-align: center;
+    margin-top: 50px;
+}
+.error404-title{
+    margin-top:15px;
+    color:rgb(69, 104, 152);
+    font-size: 3.8em;
+}
+.error404-img{
+    width:360x;
+}
+
+@media screen and (max-width: 600px) {
+    .error404-img{
+        width:400px;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .error404-img{
+        width:250px;
+    }
+}

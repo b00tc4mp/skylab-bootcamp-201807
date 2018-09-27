@@ -1,0 +1,37 @@
+.wins-graph{
+    color:white;
+    padding:5px;
+    padding-left:15px;
+    padding-right:15px;
+    background-color:rgb(31, 142, 205);
+    border-top-left-radius: 5%;
+    border-bottom-left-radius: 5%;
+    display: inline;
+}
+
+.losses-graph{
+    color:white;
+    padding:5px;
+    padding-left:15px;
+    padding-right:15px;
+    background-color:rgb(238, 90, 82);
+    display: inline;
+    border-top-right-radius: 5%;
+    border-bottom-right-radius: 5%;
+}
+
+.league-item{
+    text-align: center;
+}
+
+.league-name{
+    text-align: left;
+}
+
+.dark{
+color:black;
+}
+
+.featured-summoner{
+    border: 2px solid rgb(61, 149, 229)
+}

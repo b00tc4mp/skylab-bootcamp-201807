@@ -1,0 +1,130 @@
+[
+    {
+      "id": "barrier",
+      "name": "Barrier",
+      "key": "21",
+      "icon": "http://ddragon.leagueoflegends.com/cdn/8.11.1/img/spell/SummonerBarrier.png"
+      
+    },
+    {
+      "id": "boost",
+      "name": "Cleanse",
+      "key": "1",
+      "icon": "http://ddragon.leagueoflegends.com/cdn/8.11.1/img/spell/SummonerBoost.png"
+      
+    },
+    {
+      "id": "darkstarchampselect1",
+      "name": "Disabled Summoner Spells",
+      "key": "35",
+      "icon": "http://ddragon.leagueoflegends.com/cdn/8.11.1/img/spell/SummonerDarkStarChampSelect1.png"
+      
+    },
+    {
+      "id": "darkstarchampselect2",
+      "name": "Disabled Summoner Spells",
+      "key": "36",
+      "icon": "http://ddragon.leagueoflegends.com/cdn/8.11.1/img/spell/SummonerDarkStarChampSelect2.png"
+      
+    },
+    {
+      "id": "dot",
+      "name": "Ignite",
+      "key": "14",
+      "summonerLevel": 9,
+      "maxammo": "-1",
+      "icon": "http://ddragon.leagueoflegends.com/cdn/8.11.1/img/spell/SummonerDot.png"
+      
+    },
+    {
+      "id": "exhaust",
+      "name": "Exhaust",
+      "key": "3",
+      "icon": "http://ddragon.leagueoflegends.com/cdn/8.11.1/img/spell/SummonerExhaust.png"
+      
+    },
+    {
+      "id": "flash",
+      "name": "Flash",
+      "key": "4",
+      "icon": "http://ddragon.leagueoflegends.com/cdn/8.11.1/img/spell/SummonerFlash.png"
+      
+    },
+    {
+      "id": "haste",
+      "name": "Ghost",
+      "key": "6",
+      "icon": "http://ddragon.leagueoflegends.com/cdn/8.11.1/img/spell/SummonerHaste.png"
+      
+    },
+    {
+      "id": "heal",
+      "name": "Heal",
+      "key": "7",
+      "icon": "http://ddragon.leagueoflegends.com/cdn/8.11.1/img/spell/SummonerHeal.png"
+      
+    },
+    {
+      "id": "mana",
+      "name": "Clarity",
+      "key": "13",
+      "icon": "http://ddragon.leagueoflegends.com/cdn/8.11.1/img/spell/SummonerMana.png"
+      
+    },
+    {
+      "id": "pororecall",
+      "name": "To the King!",
+      "key": "30",
+      "icon": "http://ddragon.leagueoflegends.com/cdn/8.11.1/img/spell/SummonerPoroRecall.png"
+      
+    },
+    {
+      "id": "porothrow",
+      "name": "Poro Toss",
+      "key": "31",
+      "icon": "http://ddragon.leagueoflegends.com/cdn/8.11.1/img/spell/SummonerPoroThrow.png"
+      
+    },
+    {
+      "id": "siegechampselect1",
+      "name": "Nexus Siege: Siege Weapon Slot",
+      "key": "33",
+      "icon": "http://ddragon.leagueoflegends.com/cdn/8.11.1/img/spell/SummonerSiegeChampSelect1.png"
+      
+    },
+    {
+      "id": "siegechampselect2",
+      "name": "Nexus Siege: Siege Weapon Slot",
+      "key": "34",
+      "icon": "http://ddragon.leagueoflegends.com/cdn/8.11.1/img/spell/SummonerSiegeChampSelect2.png"
+      
+    },
+    {
+      "id": "smite",
+      "name": "Smite",
+      "key": "11",
+      "icon": "http://ddragon.leagueoflegends.com/cdn/8.11.1/img/spell/SummonerSmite.png"
+      
+    },
+    {
+      "id": "snowurfsnowball_mark",
+      "name": "Ultra (Rapidly Flung) Mark",
+      "key": "39",
+      "icon": "http://ddragon.leagueoflegends.com/cdn/8.11.1/img/spell/SummonerSnowURFSnowball_Mark.png"
+      
+    },
+    {
+      "id": "snowball",
+      "name": "Mark",
+      "key": "32",
+      "icon": "http://ddragon.leagueoflegends.com/cdn/8.11.1/img/spell/SummonerSnowball.png"
+      
+    },
+    {
+      "id": "teleport",
+      "name": "Teleport",
+      "key": "12",
+      "icon": "http://ddragon.leagueoflegends.com/cdn/8.11.1/img/spell/SummonerTeleport.png"
+      
+    }
+  ]

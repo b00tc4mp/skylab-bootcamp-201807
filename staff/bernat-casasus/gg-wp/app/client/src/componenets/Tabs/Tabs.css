@@ -1,0 +1,26 @@
+#summary-nav-bar{
+    background-color:#EAEAEA;
+    margin-top: 15px;
+}
+#summary-nav-item-1-active,#summary-nav-item-2-active,#summary-nav-item-3-active,#follow-button{
+    background-color: rgb(230, 230, 230);
+    border-color:#CFCFCF;
+    color:#495057;
+    cursor: pointer;
+}
+
+#summary-nav-item-1,#summary-nav-item-2,#summary-nav-item-3{
+    color:#495057;
+}
+#summary-nav-item-1:hover{
+    color:black;
+    cursor: pointer;
+}
+#summary-nav-item-2:hover{
+    color:black;
+    cursor: pointer;
+}
+#summary-nav-item-3:hover{
+    color:black;
+    cursor: pointer;
+}

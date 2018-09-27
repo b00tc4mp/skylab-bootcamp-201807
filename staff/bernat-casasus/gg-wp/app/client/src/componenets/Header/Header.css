@@ -1,0 +1,19 @@
+.header-maindiv {
+    background-color: rgb(26, 164, 248);
+    color: white;
+    /* background-repeat: repeat-y;
+    background-size: cover;  */
+}
+.header-maindiv a.navbar-brand {
+  font-size: 1.7em;
+  /* letter-spacing: 0.1em; */
+  font-weight: 700;
+  /* margin-left: 50px; */
+  color: white; 
+  margin-left:35px;
+}
+
+#btn-logout, #btn-login, #btn-profile ,#btn-register, #btn-language{
+  cursor:pointer;
+  color:white;
+}

@@ -1,0 +1,22 @@
+.results-container{
+    padding-top: 50px;
+    padding-bottom: 50px;
+    background-color:rgb(234, 234, 234);
+    
+}
+#jumbotron-results{
+    background-color:white;
+    border-radius: 0%;
+    box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.5);
+}
+
+#nav-results{
+    box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.5);
+}
+.link{
+    color:red;
+}
+
+#user-matches{
+    margin-top: 15px;
+}
