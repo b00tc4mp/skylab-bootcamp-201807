@@ -1,0 +1,23 @@
+{
+  "name": "v4",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "ava",
+    "ava-init": "ava --init"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@google-cloud/nodejs-repo-tools": "^2.3.3",
+    "@google-cloud/storage": "^1.7.0",
+    "@google-cloud/vision": "^0.21.0",
+    "dotenv": "^6.0.0",
+    "path": "^0.12.7"
+  },
+  "devDependencies": {
+    "ava": "^0.25.0"
+  }
+}

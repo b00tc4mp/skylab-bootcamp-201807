@@ -1,0 +1,50 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+* {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.navbar {
+  widht: 100%;
+  height: 100%;
+  background-color: #45B649;
+  height: 10vh;
+  display: grid;
+  grid-template: 1fr/repeat(3, 1fr);
+  justify-items: center;
+}
+.navbar__btn {
+  color: white;
+  background: none;
+  border: none;
+  width: 100%;
+  height: 100%;
+  font-size: 20px;
+}
+.navbar i {
+  color: rgba(255, 255, 255, 0.8);
+}
+.navbar i:hover {
+  color: rgba(0, 0, 0, 0.8);
+}
+
+.navbar__container {
+  background-color: #45B649;
+  background-color-height: 10%;
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  display: grid;
+  justify-items: space-between;
+}
+
+/*# sourceMappingURL=Navbar.css.map */
