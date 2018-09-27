@@ -1,0 +1,7 @@
+extends base_layout
+
+block content_block
+
+    form(action='/files/newfolder/' method='post')
+        input(type='text' name='foldername' placeholder='New Folder Name' autofocus)
+        button(type='submit') Submit

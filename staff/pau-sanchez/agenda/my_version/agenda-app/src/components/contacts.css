@@ -1,0 +1,80 @@
+.tabbutton {
+    
+    background-color: inherit;
+    color: black;
+    padding: 5px 16px;
+    width: 100%;
+    border: none;
+    outline: none;
+    text-align: left;
+    cursor: pointer;
+    transition: 0.3s;
+    font-size: 17px;
+}
+
+h1{
+    color: white;
+}
+
+.headernav{
+    width: 100%;
+    display: inline; 
+    margin-bottom: 50px;
+}
+
+.headernav ul {
+    list-style-type: none;
+    margin-top: 0px;
+    margin-bottom: 30px;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+
+.headernav li {float: left;}
+
+.headernav li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+.sidebarleft{
+    float: left;         
+    width: 5%;
+    background:transparent;
+    
+}
+
+.content{
+    float: left;         
+    width: 80%;
+    font-family: 'Gochi Hand';
+}
+
+table {
+    width: 100%;
+    text-align: center;
+}
+
+
+.sidebarright{
+    float: right;         
+    width: 15%;
+}
+
+a {
+    text-decoration: none   
+}
+
+.paper{
+    background-image: url("paper.jpg");
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+     
+
+}

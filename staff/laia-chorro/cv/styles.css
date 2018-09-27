@@ -1,0 +1,95 @@
+html {
+    height: 100%;
+    background-color: beige;
+    font-family: 'Montserrat', sans-serif;
+}
+
+body {
+    margin: 40px;
+}
+
+li {
+    list-style-type: none;
+}
+
+/*header*/
+header {
+    overflow: hidden;
+}
+
+header > h1 {
+    margin: 40px;
+}
+
+
+header > figure {
+    float: left;
+}
+
+header > aside {
+    margin-top: 56px;
+}
+
+/*main*/
+main {
+    margin: 0 40px;
+}
+
+main section:first-child {
+    margin-top: -24px;
+}
+
+main section:first-child h2 {
+    margin-bottom: 0px;
+}
+
+main section:first-child p {
+    margin-top: 5px;
+    max-width: 900px;
+    line-height: 1.5em;
+}
+
+main section:nth-child(2) {
+    margin-top: 50px;
+}
+
+/*footer*/
+
+/*footer {
+    position: fixed;
+    margin-bottom: 10px; 
+}*/
+
+/*footer share icons*/
+.fa {
+    padding: 20px;
+    font-size: 30px;
+    width: 50px;
+    text-align: center;
+    text-decoration: none;
+    margin: 5px 2px;
+  }
+  
+  .fa:hover {
+      opacity: 0.7;
+  }
+  
+  .fa-github {
+    background: #e64980;
+    color: white;
+  }
+  
+  .fa-twitter {
+    background: #55ACEE;
+    color: white;
+  }
+  
+  .fa-google {
+    background: #dd4b39;
+    color: white;
+  }
+  
+  .fa-linkedin {
+    background: #007bb5;
+    color: white;
+  }

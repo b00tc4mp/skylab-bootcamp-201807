@@ -1,0 +1,25 @@
+doctype html
+head
+  meta(charset='UTF-8')
+  meta(name='viewport' content='width=device-width, initial-scale=1.0')
+  meta(http-equiv='X-UA-Compatible' content='ie=edge')
+  title FILES
+  link(rel='stylesheet' href='style.css')
+  link(href='icon.png' type='image/png' rel='shorcut icon')
+header
+  h1.off FILES
+main
+  .screen
+    nav
+      | &gt; register or 
+      a(href='/login') login
+      | 
+      span.blink _
+    form(action='/register' method='post')
+      input(type='text' name='username' placeholder='username' autofocus='')
+      input(type='password' name='password' placeholder='password')
+      button(type='submit') register
+    if (session.registerError)
+      h2.error #{session.registerError}
+footer
+  span.power.on &#x23FB;

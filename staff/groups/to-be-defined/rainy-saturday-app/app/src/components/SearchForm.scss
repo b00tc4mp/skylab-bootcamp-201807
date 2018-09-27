@@ -1,0 +1,19 @@
+@import "../App.scss";
+
+formSubmitButton.btn.btn-secondary {
+margin-top:20px;
+  margin-bottom:20px;
+  background:$orangey;
+  color: $orangey
+
+}
+
+.formSubmitButton{
+  margin-left: 25px;
+  margin-bottom: 4px;
+  background:$orangey;
+}
+
+.buttonSituation{
+  display: inline-grid;
+}

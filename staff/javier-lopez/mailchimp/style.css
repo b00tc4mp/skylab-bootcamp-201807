@@ -1,0 +1,177 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+body{
+    background-color: #42BDD6;
+}
+
+/*Logo and button bar container*/
+header{
+    display: flex;
+    justify-content: flex-end;
+    width: 1000px;
+    margin: 0 auto;
+    padding-top: 30px;
+}
+
+/* Logo mainchimp container*/
+header div{
+    flex-grow: 1;
+}
+
+/*Black button of sign up fre*/
+header button{
+    border-radius: 10px;
+    background: linear-gradient(to bottom, rgba(125,126,125,1) 0%,rgba(14,14,14,1) 100%);   
+    border: none;
+    margin-right: 20px;
+    padding: 0 30px;
+    font-size: 14px;
+    color: white;
+}
+
+/*Button bar container*/
+header nav {
+    display: flex;
+    border-radius: 10px;
+    background-color: #D1EEF5;
+}
+
+/*Bar button list*/
+header nav ul{
+    display: flex;   
+    color: black;
+    align-items: center;
+}
+
+/*Elements of the bar button list*/
+nav ul li{
+    padding: 17px;
+    border-right: 1px solid black;
+    list-style:none;
+}
+
+/*Searcher*/
+input[type="text"]{
+    background-image: url("./images/search.png");
+    background-repeat: no-repeat;
+    background-position: 160px;
+    margin: 10px 15px 10px 10px;
+    padding-left: 13px;
+    border-radius: 7px;
+}
+
+/*Monkey photo, title, contente and button section*/
+main .easymail{
+    display: flex;
+    margin-top: 10px;
+    justify-content: center;
+}
+
+/*Monkey photo, title, parag and button container*/
+.easymail #freeSign{
+    margin-top: 50px;
+}
+
+/*Title, parag and button container*/
+#freeSign{
+    margin-left: 50px;
+}
+
+/*Paragraph and red button position*/
+#freeSign p, #freeSign button{
+    margin-top: 20px;
+}
+
+/*Position and style of the button*/
+#freeSign button{
+    background: linear-gradient(to bottom, rgb(255, 37, 37) 0%,rgb(255, 0, 0) 100%);
+    border: 0;
+    padding: 20px 10px;
+    width: 200px;
+    font-size: 18px;
+    color: white;
+    border-radius: 5px;
+}
+
+/*Background of the article background*/
+#grey-background{
+    background-image: url("./images/noisepattern.png");
+}
+
+/*Article container*/
+.news{
+    background-color: white;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    padding-left: 30px;
+    padding-top: 30px;
+    margin-left: 130px;
+    margin-right: 130px;
+    margin-top: -4px;
+    -moz-box-shadow: 0px 0px 8px 2px rgba(0,0,0,0.15);
+    -webkit-box-shadow: 0px 0px 8px 2px rgba(0,0,0,0.15);
+    box-shadow: 0px 0px 8px 2px rgba(0,0,0,0.15);
+}
+
+/* Articles Section*/
+.news section{
+    display: flex;
+    margin-top: 15px;
+}
+
+/*Articles*/
+.articles{
+    margin-left: 20px;
+}
+
+/*Article text*/
+.article_text{
+    margin-top: 20px;
+}
+
+/*Moving article paragraph and button*/
+.article_text p, .article_text button{
+    margin-top: 20px;
+}
+
+/*Button style*/
+.article_text button{
+    background-color: #3F3E37;
+    color: white;
+    border: 0;
+    padding: 5px 15px;
+    width: 210px;
+    text-align: left;
+    border-radius: 5px;
+    margin-bottom: 60px;
+}
+
+/*Footer*/
+footer{
+    background-color: #171713;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.Title{
+    font-weight: bold;
+    color: white;
+    margin-bottom: 10px;
+}
+
+footer ul{
+    list-style: none;
+    margin-left: 155px;
+    margin-top: 20px;
+    color: #787773;
+}
+
+footer p{
+    margin-left: 350px;
+    margin-top: 100px;
+    margin-bottom: 200px;
+    color: #787773;
+}

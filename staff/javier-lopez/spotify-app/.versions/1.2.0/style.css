@@ -1,0 +1,20 @@
+body{
+    background-image: url("https://images.pexels.com/photos/326311/pexels-photo-326311.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");
+}
+
+.list-group {
+    width: 50%;
+    margin: 0 auto;
+}
+
+.list-group-item{
+    font-weight: bold;
+}
+
+.columns{
+    margin-top: 30px;
+}
+
+.player{
+    width: 100%;
+}

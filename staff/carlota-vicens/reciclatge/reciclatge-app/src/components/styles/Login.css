@@ -1,0 +1,73 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+* {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.login {
+  background-image: url("./register.jpg");
+  background-repeat: no-repeat;
+  background-size: 300%;
+  height: 100vh;
+  display: grid;
+  grid-template: 30% 5% 5% 1% 5% 5%/1fr;
+  grid-gap: 30px;
+  align-items: center;
+  justify-items: center;
+}
+.login__title {
+  color: white;
+}
+.login__group {
+  width: 65%;
+  max-width: 400px;
+  color: white;
+  display: grid;
+  justify-items: start;
+}
+.login__text {
+  margin: 0;
+  justify-self: center;
+}
+.login__input {
+  color: white;
+  margin: 0 auto;
+  width: 50%;
+  max-width: 400px;
+  height: 30px;
+  border-radius: 10px;
+  border: none;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 5px;
+}
+.login__btn {
+  color: white;
+  border: none;
+  border-radius: 30px;
+  width: 30%;
+  max-width: 400px;
+  height: 40px;
+  background-color: rgba(0, 0, 0, 0.3);
+  font-size: 16px;
+  text-transform: uppercase;
+}
+.login__btn:hover {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.login__btn--secondary {
+  color: darkgray;
+}
+.login__error {
+  color: white;
+}
+
+/*# sourceMappingURL=Login.css.map */

@@ -1,0 +1,21 @@
+.search {
+  width: 100vw;
+  background-color: #F1F1F1;
+  padding: 1em 0;
+  margin-bottom: 6em;
+}
+
+.input--noborder {
+  border: 0;
+}
+
+button {
+  min-height: 2.7em;
+  background-color: #D3D3D3;
+  border-radius: 0.6em;
+  border: 0.1em;
+  padding: 0.5em 1em;
+  margin: 0.3em;
+}
+
+/*# sourceMappingURL=search.css.map */

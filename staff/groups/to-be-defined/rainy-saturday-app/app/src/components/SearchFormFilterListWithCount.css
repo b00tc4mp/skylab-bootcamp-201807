@@ -1,0 +1,10 @@
+.mt-5.container .row h2.page-mainTitle {
+  color: orangered;
+  letter-spacing: .2em;
+  font-weight: 700;
+  margin-bottom: 20px;
+  font-family: "Sunflower", sans-serif; }
+
+.searchFormFilterList-title {
+  color: grey; }
+

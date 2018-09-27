@@ -1,0 +1,14 @@
+extends layout
+
+include files_mixin
+
+block content
+
+
+    +file_list(files)
+
+    form(action='/files', method='POST', encType="multipart/form-data")
+
+        input(type='file', name='upload')
+        |
+        button(type='submit', value='Submit') Submit

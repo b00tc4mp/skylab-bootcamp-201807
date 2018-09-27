@@ -1,0 +1,4 @@
+* :parameters in React router
+* res.redirect like res.end
+* listFiles
+* difference between React and Express routes: express routes are more like actions

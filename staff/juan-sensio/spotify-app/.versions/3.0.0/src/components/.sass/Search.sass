@@ -1,0 +1,29 @@
+$bg-color: #424141
+    
+.search
+    height: 100vh
+    background-color: black
+    &__form
+        background-color: $bg-color
+    &__input
+        border: none
+        height: 30px
+        width: 75%
+        margin: 10px 8px
+        border-radius: 10px
+        background: rgba(grey, 0.3)
+        color: rgba(white, 0.8)
+        font-size: 20px
+    &::placeholder
+        color: grey
+    &__btn
+       background: rgba(grey, 0.3)
+       color: rgba(white, 0.8)
+       border: none
+       width: 60px
+       height: 30px
+       border-radius: 10px
+       font-size: 15px 
+    &__text
+        &--error
+            color: red

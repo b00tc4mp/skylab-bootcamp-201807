@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Pasapalabra Skylab</title>
+    
+    <!-- CUSTOM CSS -->
+    <link rel="stylesheet" href="styles/styles.css">
+    <link href="https://fonts.googleapis.com/css?family=Encode+Sans+Condensed" rel="stylesheet">
+    
+</head>
+<body>
+    <header>
+        <div id="wrapper-header">
+            <div id="logo">
+                <img src="./img/descarga.png" width="180" height="auto" alt="">
+            </div>
+            <div id="user">
+                <img src="./img/85105_1.jpg" width="30px;">
+                <p>Bienvenido <span id="name"></span></p>
+            </div>
+        </div>
+    </header>
+    <div id="container">
+        
+        <!-- BLOQUE WELCOME -->
+        <div id="welcome">
+            <div id="left" class="animate fadeInLeft three">
+                <h2>Bienvenido al Pasapalabra de Skylab</h2>
+                <p>El juego consiste en acertar las veintisiete palabras, cada una de las cuales se corresponde con una letra del rosco para la que se ofrece una definición relativa a un concepto Físico. Los aciertos se reflejarán en las letras mediante el color verde, mientras que los fallos se mostrarán en color rojo. Las cuestiones no respondidas o "pasapalabra" se mostrarán en color naranja.</p>
+            </div>
+            <div id="right" class="animate fadeIn five">
+                <div id="form">
+                    <div id="formTop">
+                        <label>Tu nombre</label>
+                        <input maxlength="20" type="text" class="fullWidth" id="textInputName" placeholder="Escribe tu nombre">
+                        <span id="alertName">Debes introducir tu nombre</span>
+                    </div>
+                    <div id="formBottom">
+                        <input type="checkbox" id="checkConditions">Confirmo que voy a poner buena nota al creador
+                        <p id="alertCheckbox">Clica sobre la confirmación</p>
+                    </div>
+                    <button id="btnCheckName" class="buttonBlue">Aceptar</button>
+                </div>
+            </div>
+        </div>
+        <!-- BLOQUE WELCOME -->
+        
+        <!-- BLOQUE GAME-->
+        <div id="game" class="animate fadeIn five">
+            <div id="counterAciertos"></div>
+            <div>
+                <p id="question"></p>
+            </div>
+            <div id="rosco">
+                <ul>
+                    <li id="0">A</li>
+                    <li id="1">B</li>
+                    <li id="2">C</li>
+                    <li id="3">D</li>
+                    <li id="4">E</li>
+                    <li id="5">F</li>
+                    <li id="6">G</li>
+                    <li id="7">H</li>
+                    <li class="lastChild" id="8">I</li>
+                    <br>
+                    <li id="9">J</li>
+                    <li id="10">K</li>
+                    <li id="11">L</li>
+                    <li id="12">M</li>
+                    <li id="13">N</li>
+                    <li id="14">Ñ</li>
+                    <li id="15">O</li>
+                    <li id="16">P</li>
+                    <li class="lastChild" id="17">Q</li>
+                    <br>
+                    <li id="18">R</li>
+                    <li id="19">S</li>
+                    <li id="20">T</li>
+                    <li id="21">U</li>
+                    <li id="22">V</li>
+                    <li id="23">W</li>
+                    <li id="24">X</li>
+                    <li id="25">Y</li>
+                    <li class="lastChild" id="26">Z</li>              
+                </ul>
+            </div>
+            <div id="controls">
+                <input class="width30" type="text" name="" id="inputTextGame" placeholder="Escribe tu respuesta">
+                <button class="btnGreen" id="validateBtn">VALIDAR</button>
+                <button class="btnOrange" id="pasapalabraBtn">PASAPALABRA</button>
+            </div>
+        </div>
+        <!-- BLOQUE GAME -->
+
+        <!-- BLOQUE RANKING -->
+        <div id="ranking">
+            <h2>Gracias por jugar</h2>
+            <div id="tableRanking">
+                <div class="tableRankingTitle">RANKING</div>
+                <ul id="printPlayer"></ul>
+            </div>
+            <button id="playAgainBtn">JUGAR DE NUEVO</button>
+            <button id="endGameBtn">SALIR DEL JUEGO <img src="./img/logOut.png"></button>
+        </div>
+        <!-- BLOQUE RANKING -->
+
+        <!-- BLOQUE GOODBYE -->
+		<div id="endGame">
+			<h2>Hasta pronto y mañana es VEVES 🤤!!!</h2>
+		</div>
+        <!-- BLOQUE GOODBYE -->
+
+    </div>
+    <footer>
+        Pasapalabra made by Jaume Serradell
+    </footer>
+    
+    <!-- CUSTOM JAVASCRIPT-->
+    <script src="app/app.js"></script>
+
+</body>
+</html>
+
+
+
+

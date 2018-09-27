@@ -1,0 +1,21 @@
+.admin {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  background-color: #333333; }
+  .admin__button {
+    color: #000000;
+    font-size: 0.9em;
+    background-color: #239e4c;
+    color: white;
+    margin: 10px;
+    width: 120px;
+    height: 30px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer; }
+    .admin__button:hover {
+      background-color: #14612e;
+      font-size: 1em; }
+
+/*# sourceMappingURL=admin.css.map */

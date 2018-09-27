@@ -1,0 +1,31 @@
+{
+  "name": "gotcha-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node . 8080",
+    "debug": "node debug . 8080",
+    "test": "mocha logic --timeout 10000",
+    "test-debug": "mocha debug logic/index.spec.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "body-parser": "^1.18.3",
+    "cors": "^2.8.4",
+    "dotenv": "^6.0.0",
+    "express": "^4.16.3",
+    "express-session": "^1.15.6",
+    "jsonwebtoken": "^8.3.0",
+    "moment": "^2.22.2",
+    "mongodb": "^3.1.4",
+    "mongoose": "^5.2.9"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "mocha": "^5.2.0",
+    "nodemon": "^1.18.3"
+  }
+}
