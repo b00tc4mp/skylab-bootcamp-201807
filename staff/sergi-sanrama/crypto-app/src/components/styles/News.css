@@ -1,0 +1,23 @@
+.container_news{
+    margin-left: 5%;
+    margin-right: 5%;
+    width: 90%;
+    background-color:#212529;
+    
+}
+
+.select__news{
+    margin-top: 1vh;
+    width: 100%;
+    margin-top: 30px;
+}
+
+.card-body{
+    background-color: #212529;
+    max-height: 70vh;
+    max-height: 80vh;
+}
+
+.card-card{
+    max-height: 50vh;
+}

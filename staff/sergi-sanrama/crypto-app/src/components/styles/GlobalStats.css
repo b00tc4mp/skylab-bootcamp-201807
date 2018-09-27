@@ -1,0 +1,23 @@
+.global-stats-container{
+    margin-top: 3vh;
+}
+
+.global-stats-item{
+    background-clip: black;
+    display:block;
+    margin-top: 2%;
+    margin-right: 5px;
+    margin-left: 5px;
+}
+
+.stats__item{
+    display: inline;
+}
+
+.global-stats__title{
+    font-size: 20px;
+}
+
+.global-stats__content{
+    font-size: 14px;
+}

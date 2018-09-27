@@ -1,0 +1,40 @@
+.navbar{
+    background-color:#111314;
+    width: 100%;
+    height: 8vh;
+    min-height: 3vh;
+    min-width:150px;
+    display: grid;
+    grid-template: 1fr / repeat(5,1fr);
+    justify-items: center;
+    border-bottom: 2px solid white;
+    
+}
+
+.navbar-container{
+    margin-top: 30px;
+    width: 100%;
+    display: grid;
+    grid-template: 1fr /auto  100% auto;
+    justify-items: center;
+   
+}
+
+.navbar-btn{
+    background: none;
+    border: none;
+    
+    height: 100%;
+    cursor: pointer;
+}
+
+.navbar-btn:hover{
+    background-color: #111314;
+}
+
+img{
+    width: 5vh;
+    min-width: 4vh;
+}
+
+

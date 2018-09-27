@@ -1,0 +1,55 @@
+.register_form{
+    width: 500px;
+    padding: 30px;
+    background: #212529;
+    margin: 50px auto;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.22);
+    border: 2px solid whitesmoke;
+}
+
+.register_form h2{
+    align-content: center;
+    background: #111314;
+    color: whitesmoke;
+    font-size: 18px;
+    font-weight: 100;
+    padding: 20px;
+    margin: -30px -30px 30px -30px;
+}
+
+.register_form input[type='username'],
+.register_form input[type="text"],
+.register_form input[type="password"],
+.register_form select 
+{
+    box-sizing: border-box;
+    outline: none;
+    display: block;
+    width: 100%;
+    padding: 7px;
+    border: none;
+    border-bottom: 1px solid #ddd;
+    background: transparent;
+    margin-bottom: 10px;
+    font: 16px;
+    height: 45px;
+}
+
+a:link {
+    text-decoration: none;
+    color: whitesmoke;
+}
+
+button_return{
+    text-decoration: none;
+    align-content: center;   
+    box-shadow: inset 0px 1px 0px 0px ;
+    background-color: #2CBBBB;
+    border: 1px solid #27A0A0;
+    display: flex;
+    cursor: pointer;
+    color: whitesmoke;
+    font-size: 14px;
+    padding: 8px 18px;
+    text-decoration: none;
+}
