@@ -1,0 +1,66 @@
+.all {
+  font-family: "Quicksand", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 18px;
+  color: #333333;
+  margin-top: 5%; }
+  @media screen and (max-width: 600px) {
+    .all {
+      font-size: 22px;
+      margin: 0; } }
+  .all__data {
+    display: grid;
+    grid-template-columns: 40% 30% 30%; }
+    @media screen and (max-width: 600px) {
+      .all__data {
+        grid-template-columns: 100%; } }
+    .all__data__patient {
+      padding: 5% 10%;
+      width: 80%; }
+      @media screen and (max-width: 600px) {
+        .all__data__patient {
+          padding: 20% 10%; } }
+      @media screen and (max-width: 600px) {
+        .all__data__patient__name {
+          margin-bottom: 15%; } }
+    .all__data__cites {
+      padding: 5% 10%;
+      width: 80%; }
+      @media screen and (max-width: 600px) {
+        .all__data__cites {
+          margin: 0;
+          width: 85%;
+          background: linear-gradient(left, #55bf9f 0%, #2fbdbb 100%);
+          color: #ffffff;
+          padding: 10% 5% 10% 10%; } }
+      .all__data__cites__title {
+        margin-bottom: 0; }
+      .all__data__cites__list {
+        margin-top: 5%;
+        list-style-type: circle;
+        padding: 0 4%; }
+        @media screen and (max-width: 600px) {
+          .all__data__cites__list {
+            list-style: none;
+            padding: 0; } }
+    .all__data__treatments {
+      padding: 5% 10%;
+      width: 80%; }
+      @media screen and (max-width: 600px) {
+        .all__data__treatments {
+          margin: 0;
+          width: 85%;
+          color: #333333;
+          padding: 10% 5% 10% 10%;
+          height: 100%; } }
+      .all__data__treatments__title {
+        margin-bottom: 0; }
+      .all__data__treatments__list {
+        margin-top: 5%;
+        list-style-type: circle;
+        padding: 0 4%; }
+        @media screen and (max-width: 600px) {
+          .all__data__treatments__list {
+            list-style: none;
+            padding: 0; } }
+
+/*# sourceMappingURL=patientdata.css.map */

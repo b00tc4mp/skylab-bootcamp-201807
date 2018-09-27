@@ -1,0 +1,81 @@
+.all
+    font-family: 'Quicksand', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+    font-size: 20px
+    color: #333333
+    padding: 5% 10%
+    width: 80%
+    
+    &__data
+        display: grid
+        grid-template-columns: 40% 30% 30%
+
+        &__forms
+
+            &__each
+                margin-top: 5%
+                margin-left: 15%
+
+                &__form
+
+                    &__input
+                        border: none
+                        border-bottom: solid 1px #999999
+                        font-size: 16px
+                        color: #777777
+                        display: block
+                        margin-top: 25px
+                        width: 90%
+
+                        &:focus
+                            outline: 0px
+                        
+                    &__button
+                        padding: 10px
+                        margin-top: 30px
+                        background: linear-gradient(left, rgba(85,191,159,1) 0%, rgba(47,189,187,1) 100%)
+                        color: #ffffff
+                        border: none
+                        border-radius: 10px
+                        width: 90%
+                        cursor: pointer
+                        font-size: 18px
+                        box-shadow: 0px 2px 10px 0px #cccccc
+
+                        &:hover
+                            background: linear-gradient(left, #49a589 0%, #269c9a 100%)
+
+                        &:focus
+                            outline: 0px
+
+                &__error
+                    color: #ca6262
+                    font-size: 20px
+    
+    &__list
+        display: grid
+        grid-template-columns: 1fr 1fr
+        margin: 5% -2.5%
+
+        &__each
+            box-shadow: 0px 1px 15px -3px #333333
+            border-radius: 10px
+            padding: 2% 5%
+            margin: 0 5%
+
+            &__title
+                margin: 4%
+
+            &__list
+                margin-top: 5%
+                list-style: none
+                padding: 0 4%
+
+                &__item
+                    color: #333333
+                    text-decoration: none
+
+                    &__delete
+                        float: right
+                        width: 20px
+                        height: 20px
+                        cursor: pointer

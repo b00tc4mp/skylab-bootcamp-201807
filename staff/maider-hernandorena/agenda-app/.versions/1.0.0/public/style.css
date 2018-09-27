@@ -1,0 +1,162 @@
+* {
+    box-sizing: border-box;
+    color: #333333;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 20px;
+}
+
+html {
+    height: 100%;
+}
+
+main {
+    padding: 0 10%;
+}
+
+h1 {
+    text-align: center;
+    padding: 5%;
+    color: #ffffff;
+    font-size: 32px;
+    background-color: #4299a5;
+    width: 100%;
+    margin: 0;
+}
+
+h3 {
+    padding: 5px;
+    margin-left: 3.5%;
+    margin-top: 5%;
+    font-size: 22px;
+}
+
+p {
+    padding: 5px;
+    margin: 5px;
+    margin-top: 5%;
+}
+
+.landing, .gotologin {
+    text-align: center;
+}
+
+a {
+    font-size: 22px;
+    text-decoration: none;
+    color: #4299a5;
+}
+
+a:hover {
+    color: #215b63;
+}
+
+form, nav {
+    padding-left: 3%;
+    padding-right: 3%;
+}
+
+.error {
+    padding-left: 3%;
+    padding-right: 3%;
+    color: #db5050;
+    font-size: 16px;
+    margin-top: 0;
+    margin-left: 10px;
+}
+
+.okey {
+    padding-left: 3%;
+    padding-right: 3%;
+    margin-top: 0;
+    margin-left: 10px;
+}
+
+input {
+    padding: 10px;
+    margin: 10px;
+    border: solid 0.5px #888888;
+    border-radius: 10px;
+}
+
+input:focus, textarea:focus, button:focus {
+    outline: 0px;
+}
+
+textarea {
+    width: 108%;
+    height: 200px;
+    margin: 3%;
+    padding: 10px;
+    border: solid 0.5px #888888;
+    border-radius: 10px;
+}
+
+button {
+    padding: 10px 20px;
+    margin: 10px;
+    background-color: #4299a5;
+    color: #ffffff;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #215b63;
+}
+
+.flex {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    background-color: #215b63;
+}
+
+.flex a {
+    color: #ffffff;
+    text-decoration: none;
+    margin: 10px 20px;
+}
+
+.flex a:hover {
+    color: #4299a5;
+}
+
+.search {
+    text-align: center;
+    margin-top: 5%;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: 40% 60%;
+}
+
+.grid-container div {
+    margin-left: 5%;
+}
+
+ul {
+    list-style: none;
+    padding: 0 10%;
+    margin-left: 10%;
+}
+
+li {
+    margin: 3%;
+    padding: 0;
+}
+
+li p, li h4 {
+    margin: 0;
+    padding: 0;
+    margin-left: 10%;
+}
+
+li a {
+    float: left;
+    padding-right: 5%;
+}

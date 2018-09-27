@@ -1,0 +1,58 @@
+.caretakers {
+  font-family: "Quicksand", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 18px;
+  color: #333333; }
+  .caretakers__group {
+    padding: 2% 0;
+    margin: 3% auto 0 auto;
+    width: 80%; }
+    .caretakers__group__add__button {
+      padding: 10px 20px;
+      float: right;
+      background: linear-gradient(left, #55bf9f 0%, #2fbdbb 100%);
+      color: #ffffff;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 18px;
+      box-shadow: 0px 2px 10px 0px #cccccc; }
+      .caretakers__group__add__button:hover {
+        background: linear-gradient(left, #49a589 0%, #269c9a 100%); }
+      .caretakers__group__add__button:focus {
+        outline: 0px; }
+    .caretakers__group__all {
+      box-shadow: 0px 1px 15px -3px #333333;
+      border-radius: 10px;
+      padding: 2% 5%;
+      margin-top: 10%;
+      margin-bottom: 5%; }
+      .caretakers__group__all__title {
+        margin-bottom: 4%; }
+      .caretakers__group__all__list {
+        color: #2fbdbb;
+        padding: 0 2% 0 0;
+        margin-left: -1.5%; }
+        .caretakers__group__all__list__item {
+          margin: 20px;
+          width: 100%;
+          display: block; }
+          .caretakers__group__all__list__item__link {
+            margin: 0;
+            text-decoration: none;
+            color: #333333; }
+            .caretakers__group__all__list__item__link__text {
+              margin: 0; }
+          .caretakers__group__all__list__item__info {
+            float: right;
+            width: 20px;
+            height: 20px;
+            margin: -2.5% 2%;
+            cursor: pointer; }
+          .caretakers__group__all__list__item__delete {
+            float: right;
+            width: 20px;
+            height: 20px;
+            margin: -2.5%;
+            cursor: pointer; }
+
+/*# sourceMappingURL=caretakers.css.map */

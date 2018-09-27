@@ -1,0 +1,73 @@
+.all
+    font-family: 'Quicksand', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+    font-size: 18px
+    color: #333333
+    margin-top: 5%
+
+    @media screen and (max-width: 600px)
+        font-size: 22px
+        margin: 0
+    
+    &__data
+        display: grid
+        grid-template-columns: 40% 30% 30%
+
+        @media screen and (max-width: 600px)
+            grid-template-columns: 100%
+
+        &__patient
+            padding: 5% 10%
+            width: 80%
+            
+            @media screen and (max-width: 600px)
+                padding: 20% 10%
+
+            &__name
+                @media screen and (max-width: 600px)
+                    margin-bottom: 15%
+
+        &__cites
+            padding: 5% 10%
+            width: 80%
+
+            @media screen and (max-width: 600px)
+                margin: 0
+                width: 85%
+                background: linear-gradient(left, rgba(85,191,159,1) 0%, rgba(47,189,187,1) 100%)
+                color: #ffffff
+                padding: 10% 5% 10% 10%
+
+            &__title
+                margin-bottom: 0
+
+            &__list
+                margin-top: 5%
+                list-style-type: circle
+                padding: 0 4%
+
+                @media screen and (max-width: 600px)
+                    list-style: none
+                    padding: 0
+
+        &__treatments
+            padding: 5% 10%
+            width: 80%
+
+            @media screen and (max-width: 600px)
+                margin: 0
+                width: 85%
+                color: #333333
+                padding: 10% 5% 10% 10%
+                height: 100%
+
+            &__title
+                margin-bottom: 0
+
+            &__list
+                margin-top: 5%
+                list-style-type: circle
+                padding: 0 4%
+
+                @media screen and (max-width: 600px)
+                    list-style: none
+                    padding: 0

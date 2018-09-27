@@ -1,0 +1,46 @@
+.header {
+  box-sizing: border-box;
+  color: #333333;
+  margin: 0;
+  padding: 0;
+  font-family: "Quicksand", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 18px;
+  height: 100%; }
+  .header__panel {
+    height: 100px;
+    box-shadow: 0 3px 5px 0 #cccccc; }
+    .header__panel__logo {
+      margin: 10px;
+      width: 80px;
+      float: left; }
+    .header__panel__nav {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      height: 60px;
+      float: right;
+      padding: 2% 0; }
+      .header__panel__nav__link {
+        color: #333333;
+        text-decoration: none;
+        margin: 10px 20px;
+        font-size: 20px; }
+        .header__panel__nav__link:hover {
+          color: #3bb69b; }
+        .header__panel__nav__link:active {
+          color: #3bb69b; }
+        .header__panel__nav__link__icon {
+          width: 25px;
+          height: 25px;
+          margin-right: 10px; }
+
+.noHome {
+  background: linear-gradient(left, #55bf9f 0%, #2fbdbb 100%); }
+  .noHome__logo {
+    margin: 0 auto 0% auto;
+    padding-top: 5%;
+    display: block;
+    width: 150px; }
+
+/*# sourceMappingURL=app.css.map */

@@ -1,0 +1,66 @@
+.login
+    background: linear-gradient(left, rgba(85,191,159,1) 0%, rgba(47,189,187,1) 100%)
+    height: 100vh
+    font-family: 'Quicksand', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+    font-size: 16px
+
+    @media screen and (max-width: 600px)
+        height: 100vh
+        width: 100%
+        margin-top: -5px
+
+    &__group
+        padding: 5% 0
+        margin: 0 auto
+        width: 20%
+
+        @media screen and (max-width: 600px)
+            width: 70%
+            padding: 20% 0
+
+        &__form
+
+            &__input
+                display: block
+                padding: 10px
+                margin-top: 10px
+                border: none
+                border-radius: 10px
+                width: 90%
+
+                @media screen and (max-width: 600px)
+                    font-size: 20px
+                    padding: 20px
+                    margin-top: 20px
+
+                &:focus
+                    outline: 0px
+
+            &__button
+                padding: 10px
+                margin-top: 10px
+                background-color: #308079
+                color: #ffffff
+                border: none
+                border-radius: 10px
+                cursor: pointer
+                font-size: 18px
+                width: 98%
+
+                @media screen and (max-width: 600px)
+                    font-size: 22px
+                    padding: 20px
+                    margin-top: 20px
+                    width: 104%
+
+                &:hover
+                    background-color: #215b63
+
+                &:focus
+                    outline: 0px
+
+        &__error
+            color: #ee7575
+
+            @media screen and (max-width: 600px)
+                font-size: 20px

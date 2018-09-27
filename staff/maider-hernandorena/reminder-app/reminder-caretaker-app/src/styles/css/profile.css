@@ -1,0 +1,83 @@
+.profile {
+  font-family: "Quicksand", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 18px;
+  color: #333333;
+  padding: 2% 0;
+  margin: 3% auto 100px auto;
+  width: 80%; }
+  .profile__title {
+    margin: 5% 0 3% 0; }
+    @media screen and (max-width: 600px) {
+      .profile__title {
+        padding: 2% 0;
+        font-size: 28px; } }
+  .profile__form {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 3%; }
+    .profile__form__input {
+      border: none;
+      border-bottom: solid 1px #999999;
+      font-size: 18px;
+      color: #777777;
+      height: 20px;
+      margin: 30px 100px 0px 0px;
+      width: 200px; }
+      @media screen and (max-width: 600px) {
+        .profile__form__input {
+          font-size: 22px;
+          width: 100%;
+          margin: 30px 0; } }
+      .profile__form__input:focus {
+        outline: 0px; }
+    .profile__form__inputReadOnly {
+      border: none;
+      font-size: 18px;
+      color: #555555;
+      height: 20px;
+      margin: 30px 100px 0px 0px;
+      width: 200px; }
+      @media screen and (max-width: 600px) {
+        .profile__form__inputReadOnly {
+          font-size: 22px;
+          width: 100%;
+          margin: 30px 0; } }
+      .profile__form__inputReadOnly:focus {
+        outline: 0px; }
+    .profile__form__button {
+      padding: 0px 20px;
+      height: 40px;
+      background-color: #2fbdbb;
+      color: #ffffff;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 18px;
+      margin-top: 15px; }
+      @media screen and (max-width: 600px) {
+        .profile__form__button {
+          font-size: 24px;
+          width: 100%;
+          margin: 30px 0;
+          height: 60px;
+          background: linear-gradient(left, #55bf9f 0%, #2fbdbb 100%);
+          box-shadow: 0px 2px 10px 0px #cccccc; }
+          .profile__form__button:active {
+            background-color: #308079; } }
+      .profile__form__button:hover {
+        background-color: #308079; }
+      .profile__form__button:focus {
+        outline: 0px; }
+  .profile__added {
+    color: #333333;
+    font-size: 20px; }
+    .profile__added__link {
+      text-decoration: none;
+      color: #2fbdbb; }
+      .profile__added__link:hover {
+        color: #308079; }
+  .profile__error {
+    color: #ca6262;
+    font-size: 20px; }
+
+/*# sourceMappingURL=profile.css.map */

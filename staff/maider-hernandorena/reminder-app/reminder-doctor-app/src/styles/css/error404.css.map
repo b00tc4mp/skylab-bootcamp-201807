@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AAAA,SAAS;EACL,UAAU,EAAE,+CAAqE;EACjF,MAAM,EAAE,IAAI;EACZ,WAAW,EAAE,4DAA4D;EACzE,SAAS,EAAE,IAAI;EACf,OAAO,EAAE,GAAG;EACZ,KAAK,EAAE,OAAO",
+"sources": ["../sass/error404.sass"],
+"names": [],
+"file": "error404.css"
+}

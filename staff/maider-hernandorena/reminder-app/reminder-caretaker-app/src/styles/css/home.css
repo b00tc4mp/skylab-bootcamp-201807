@@ -1,0 +1,40 @@
+.patients {
+  font-family: "Quicksand", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 18px;
+  color: #333333;
+  padding: 2% 0;
+  margin: 3% auto 0 auto;
+  width: 80%; }
+  .patients__title {
+    margin: 5% 0; }
+    @media screen and (max-width: 600px) {
+      .patients__title {
+        font-size: 28px;
+        padding: 2% 0; } }
+  .patients__list {
+    list-style-type: circle;
+    color: #2fbdbb;
+    padding: 0 2%; }
+    @media screen and (max-width: 600px) {
+      .patients__list {
+        list-style: none;
+        padding: 0;
+        margin-bottom: 100px; } }
+    .patients__list__item {
+      margin: 5% 0; }
+      @media screen and (max-width: 600px) {
+        .patients__list__item {
+          margin: 10% 0;
+          border: solid 2px #2fbdbb;
+          border-radius: 10px;
+          padding: 15px;
+          box-shadow: 0px 2px 10px 0px #cccccc; }
+          .patients__list__item:active {
+            background: linear-gradient(left, #55bf9f 0%, #2fbdbb 100%); } }
+      .patients__list__item__link {
+        text-decoration: none;
+        color: #333333; }
+        .patients__list__item__link:hover {
+          color: #2fbdbb; }
+
+/*# sourceMappingURL=home.css.map */

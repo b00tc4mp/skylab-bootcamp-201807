@@ -1,0 +1,97 @@
+.add {
+  font-family: "Quicksand", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 18px;
+  color: #333333; }
+  .add__group {
+    padding: 2% 0;
+    margin: 3% auto 0 auto;
+    width: 80%; }
+    .add__group__title {
+      margin: 3% 0 3% 0; }
+    .add__group__form__row {
+      display: flex;
+      margin-bottom: 3%; }
+      .add__group__form__row__text {
+        font-weight: bold;
+        color: #555555; }
+      .add__group__form__row__input {
+        border: none;
+        border-bottom: solid 1px #999999;
+        font-size: 16px;
+        color: #777777;
+        height: 20px;
+        margin: 20px 100px 0px 10px;
+        width: 200px; }
+        .add__group__form__row__input:focus {
+          outline: 0px; }
+      .add__group__form__row__num {
+        border: none;
+        border-bottom: solid 1px #999999;
+        font-size: 16px;
+        color: #777777;
+        height: 20px;
+        margin: 20px 100px 0px 10px;
+        width: 200px; }
+        .add__group__form__row__num:focus {
+          outline: 0px; }
+        .add__group__form__row__num::-webkit-inner-spin-button {
+          -webkit-appearance: none;
+          margin: 0; }
+        .add__group__form__row__num::-webkit-outer-spin-button {
+          -webkit-appearance: none;
+          margin: 0; }
+      .add__group__form__row__rad {
+        color: #555555;
+        margin-top: 18px;
+        width: 28%; }
+        .add__group__form__row__rad__item {
+          margin: 7px 5px 0px 15px; }
+      .add__group__form__row__age {
+        border: none;
+        border-bottom: solid 1px #999999;
+        font-size: 16px;
+        color: #777777;
+        height: 20px;
+        margin: 20px 100px 0px 10px;
+        width: 30px;
+        text-align: right; }
+        .add__group__form__row__age:focus {
+          outline: 0px; }
+        .add__group__form__row__age::-webkit-inner-spin-button {
+          -webkit-appearance: none;
+          margin: 0; }
+        .add__group__form__row__age::-webkit-outer-spin-button {
+          -webkit-appearance: none;
+          margin: 0; }
+      .add__group__form__row__address {
+        border: none;
+        border-bottom: solid 1px #999999;
+        font-size: 16px;
+        color: #777777;
+        height: 20px;
+        margin: 20px 100px 0px 10px;
+        width: 52%; }
+        .add__group__form__row__address:focus {
+          outline: 0px; }
+      .add__group__form__row__button {
+        padding: 0px 20px;
+        height: 40px;
+        background: linear-gradient(left, #55bf9f 0%, #2fbdbb 100%);
+        color: #ffffff;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        font-size: 18px;
+        box-shadow: 0px 2px 10px 0px #cccccc; }
+        .add__group__form__row__button:hover {
+          background: linear-gradient(left, #49a589 0%, #269c9a 100%); }
+        .add__group__form__row__button:focus {
+          outline: 0px; }
+    .add__group__added {
+      color: #2fbdbb;
+      font-size: 20px; }
+    .add__group__error {
+      color: #ca6262;
+      font-size: 20px; }
+
+/*# sourceMappingURL=addpatient.css.map */
