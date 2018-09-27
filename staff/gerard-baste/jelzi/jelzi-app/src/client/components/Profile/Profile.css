@@ -1,0 +1,47 @@
+.position-relative {
+    width: 650px;
+    margin:0 auto;
+    text-align: center;
+}
+
+small{
+    text-align: left;
+}
+
+.allergens div{
+    text-align: left;
+    padding-top: 10px
+
+}
+
+.allergens{
+    display: flex;
+    border-top: 1px solid green;
+}
+
+.submitButton{
+    margin-top: 40px;
+    background-color: #5FB854 !important;
+}
+
+.passwordInput{
+    margin-top: 40px;
+
+}
+
+.labelAllergens{
+    margin-top: 40px;
+    margin-top: 20px;
+    font-size: 20px;
+}
+
+.titleProfile{
+    margin-top: 20px;
+    font-size: 40px;
+}
+
+.custom-checkbox .custom-control-input:checked~.custom-control-label::after {
+    
+    background-color: #5FB854;
+    border-radius: 4px;
+}

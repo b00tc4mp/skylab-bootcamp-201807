@@ -1,0 +1,23 @@
+#searchPanel {
+  margin-top: 50px;
+  margin-bottom: 50px;
+  margin-left: -400px;
+}
+
+#searchInput {
+  margin-left: 35%;
+}
+
+#searchButton {
+  background-color: #5fb854;
+}
+
+.form-control:focus {
+  -webkit-box-shadow: none !important;
+  box-shadow: none !important;
+  border-color: 0 !important;
+}
+
+.textInformation {
+  margin-left: 36%;
+}

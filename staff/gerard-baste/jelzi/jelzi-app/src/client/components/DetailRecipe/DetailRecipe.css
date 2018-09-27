@@ -1,0 +1,96 @@
+#recipeImageOnly {
+  border-radius: 20px;
+}
+
+#recipeInformation {
+  display: flex;
+}
+#nutrientInfo {
+  padding: 0 40px;
+  width: 560px;
+}
+
+#section {
+  margin-left: 15%;
+  margin-top: 4%;
+}
+
+#title {
+  margin-bottom: 2%;
+}
+
+#circle {
+  width: 50px;
+  height: 50px;
+  -webkit-border-radius: 25px;
+  -moz-border-radius: 25px;
+  border-radius: 25px;
+  background: #5cb94e7a;
+  padding-top: 12px;
+  padding-left: 6px;
+}
+
+h3 {
+  font-size: 15px !important;
+}
+
+#readDirections {
+  margin-top: 15px !important;
+  margin-left: -18px !important;
+  background-color: #5fb854 !important;
+  border-color: #5fb854 !important;
+}
+
+#listIngredients {
+  margin-left: 19px;
+}
+
+#circlesNutrition {
+  display: flex;
+  flex-wrap: wrap;
+  width: 400px;
+  margin-top: 20px;
+}
+
+#calories {
+  margin-bottom: 0;
+}
+
+#circles {
+  margin-right: 10px;
+  width: 80px;
+  margin-bottom: 40px;
+}
+
+#imageAndButton {
+  display: inline-grid;
+}
+
+#addToMenuButton {
+  margin-top: 10px;
+  height: 40px;
+  background-color: #5fb854 !important;
+  border-color: #5fb854 !important;
+}
+
+.form-check-input {
+  position: 0 !important;
+  margin-top: 0.3rem;
+  margin-left: 10px !important;
+}
+
+#menuOpen {
+  margin-left: 15%;
+  margin-top: 1%;
+}
+
+.btn:not(:disabled):not(.disabled) {
+  cursor: pointer;
+  background-color: #5fb854;
+  border-color: #5fb854;
+}
+
+.listDetailRecipe {
+  list-style: none !important;
+  margin-top: 1%;
+}
