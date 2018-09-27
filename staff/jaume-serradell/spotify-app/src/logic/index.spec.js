@@ -1,51 +1,144 @@
-'use strict';
+'use strict'
 
-describe('logic (spotify)', function () {
-    
-    describe('search artists', function () {
-        it('should find artists matching criteria', function () {
-            return logic.searchArtists('madonna')
-                .then(function (artists) {
-                    expect(artists).toBeDefined();
-                    expect(artists.length).toBe(20);
-                    expect(artists[0].name).toBe('Madonna');
-                    expect(artists[0].type).toBe('artist');
-                });
-        });
-    });
+describe('logic (spotify-app)', () => {
+    describe('user\'s', () => {
 
-    describe('retrieve albums by artist id', function () {
-        it('should retrieve albums for given artist id', function () {
-            return logic.retrieveAlbumsByArtistId('4BH2S4t8fh9YqRIXnEEDEN')
-                .then(function (albums) {
-                    expect(albums).toBeDefined();
-                    expect(albums.length).toBe(3);
-                    expect(albums[0].name).toBe('Hunter');
-                    expect(albums[0].type).toBe('album');
-                });
-        });
-    });
+        describe('register user', () => {
+            const username = 'jaume-serradell-' + Math.random(), password = '123'
 
-    describe('retrieve tracks by album id', function () {
-        it('should retrieve tracks for given album id', function () {
-            return logic.retrieveTracksByAlbumId('7lnYU1xXbEiKPTZk3ltDE2')
-                .then(function (tracks) {
-                    expect(tracks).toBeDefined();
-                    expect(tracks.length).toBe(1);
-                    expect(tracks[0].name).toBe('Hunter');
-                    expect(tracks[0].type).toBe('track');
-                });
-        });
-    });
+            it('should register on correct data', () => {
+                return logic.registerUser(username, password)
+                    .then(id => {
+                        expect(id).toBeDefined()
+                    })
+            })
+        })
 
-    describe('retrieve track by id', function () {
-        it('should retrieve track for given id', function () {
-            return logic.retrieveTrackById('4QxwXcPUm1VfkHksz6VuFi')
-                .then(function (track) {
-                    expect(track).toBeDefined();
-                    expect(track.name).toBe('Hunter');
-                    expect(track.type).toBe('track');
-                });
-        });
-    });
-});
+        describe('login user', () => {
+            const username = 'jaume-serradell-' + Math.random(), password = '123'
+            let userId
+
+            beforeEach(() => {
+                return logic.registerUser(username, password)
+                    .then(id => userId = id)
+            })
+
+            it('should login on correct data', () => {
+                return logic.loginUser(username, password)
+                    .then(res => {
+                        expect(res).toBeTruthy()
+
+                        expect(logic._userId).toBe(userId)
+                        expect(logic._userToken).toBeDefined()
+                        expect(logic._userUsername).toBe(username)
+
+                    })
+            })
+        })
+
+        describe('update user', () => {
+            const username = 'jaume-serradell-' + Math.random(), password = '123', newPassword = '456', newUsername = 'jaume-serradell--' + Math.random()
+
+            beforeEach(() => {
+                return logic.registerUser(username, password)
+                    .then(() => logic.loginUser(username, password))
+            })
+
+            it('should update on correct data', () => {
+                return logic.updateUser(password, newUsername, newPassword)
+                    .then(res => {
+                        expect(res).toBeTruthy()
+                        expect(newPassword).toBe('456');
+                    })
+            })
+        })
+
+        describe('unregister user', () => {
+            const username = 'jaume-serradell-' + Math.random(), password = '123'
+
+            beforeEach(() => {
+                return logic.registerUser(username, password)
+                    .then(() => logic.loginUser(username, password))
+            })
+
+            it('should unregister on correct data', () => {
+                return logic.unregisterUser(password)
+                    .then(res => {
+                        expect(res).toBeTruthy()
+                    })
+            })
+        })
+
+        describe('logout user', () => {
+            const username = 'jaume-serradell-' + Math.random(), password = '123'
+
+            beforeEach(() => {
+                return logic.registerUser(username, password)
+                    .then(() => logic.loginUser(username, password))
+            })
+
+            it('should logout correctly', () => {
+                expect(logic._userId).toBeDefined()
+                expect(logic._userToken).toBeDefined()
+                expect(logic._userUsername).toBeDefined()
+
+                logic.logout()
+
+                expect(logic._userId).toBeNull()
+                expect(logic._userToken).toBeNull()
+                expect(logic._userUsername).toBeNull()
+            })
+        })
+    })
+
+    describe('spotify\'s', () => {
+        logic.spotifyToken = 'BQALQdM91bB94L46-LHYny5yzS4KSZW9NqhnaGrtf9Hi7Yvv9uVfcYKsgxqbYyrryQwM3JwzKEb8cmlygJ6d1jDyvsMg9hcsITVls5I1hT8BYJKAMjaXUDUBRYPLWIPnOumMJ_3zONiT0Jc2s4MU_9L3WR4toWsVrYL7HbSpPEPxmZh671nj0YUi0rV5_8Wl8XVzB1NPI4klyzhA-wnpZrt4yNr8naOTV6lrzaU7YOc16IC5q3s7Funj4EWCEsXaWbusHGy_rxw'
+
+        describe('search artists', () => {
+            it('should find artists matching criteria', () => {
+                return logic.searchArtists('madonna')
+                    .then(artists => {
+                        expect(artists).toBeDefined()
+                        expect(artists.length).toBe(20)
+                        expect(artists[0].name).toBe('Madonna')
+                        expect(artists[0].type).toBe('artist')
+                    })
+            })
+        })
+
+        describe('retrieve albums by artist id', () => {
+            it('should retrieve albums for given artist id', () => {
+                return logic.retrieveAlbumsByArtistId('4BH2S4t8fh9YqRIXnEEDEN')
+                    .then(albums => {
+                        expect(albums).toBeDefined()
+                        expect(albums.length).toBe(3)
+                        expect(albums[0].name).toBe('Hunter')
+                        expect(albums[0].type).toBe('album')
+                    })
+            })
+        })
+
+        describe('retrieve tracks by album id', () => {
+            it('should retrieve tracks for given album id', () => {
+                return logic.retrieveTracksByAlbumId('7lnYU1xXbEiKPTZk3ltDE2')
+                    .then(tracks => {
+                        expect(tracks).toBeDefined()
+                        expect(tracks.length).toBe(1)
+                        expect(tracks[0].name).toBe('Hunter')
+                        expect(tracks[0].type).toBe('track')
+                    })
+            })
+        })
+
+        describe('retrieve track by id', () => {
+            it('should retrieve track for given id', () => {
+                return logic.retrieveTrackById('4QxwXcPUm1VfkHksz6VuFi')
+                    .then(track => {
+                        expect(track).toBeDefined()
+                        expect(track.name).toBe('Hunter')
+                        expect(track.type).toBe('track')
+                    })
+            })
+        })
+    })
+})

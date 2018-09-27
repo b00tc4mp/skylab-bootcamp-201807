@@ -1,0 +1,49 @@
+.container {
+    padding: 40px 0;
+    font-family: 'M PLUS Rounded 1c', sans-serif;
+}
+
+.container h4 {
+    font-family: 'Quicksand', sans-serif;
+    font-size: 20px;
+    text-transform: uppercase;
+}
+
+p {
+    padding: 0;
+    margin: 0;
+}
+
+.title {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.subtitle {
+    font-style: italic;
+    margin-bottom: 10px;
+}
+
+.infoBox {
+    padding:20px;
+    background-color: #f1f1f1;
+    border-radius: 5px;
+    border: 1px solid #e8e8e8;
+}
+
+.infoBox bottom {
+    margin-top: 30px;
+}
+
+.infoImg img {
+    border-radius: 4px;
+}
+
+.imgProperty {
+    width: 555px;
+}
+
+.imgBig {
+    height: 350px;
+    background-size: cover;
+}
