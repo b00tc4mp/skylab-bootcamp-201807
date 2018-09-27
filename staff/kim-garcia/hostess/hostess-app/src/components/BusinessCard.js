@@ -1,22 +1,55 @@
-import React from 'react'
+import React, { Component } from 'react'
+import logic from '../logic'
 
-const BusinessCard = props => {
-    return (
-        <li className="contact">
-            <fieldset className="contact-field">
-                <legend> Contact card:  </legend>
-                {
-                    props.name && <p className="contact__name"><span> {props.name}</span> </p>
-                }
-                {
-                    props.phone && <p className="contact__phone"><span>Whatsapp:</span> {props.phone}</p>
-                }
-                {
-                    props.email && <p className="contact__email"><span>Email:</span> {props.email}</p>
-                }
-            </fieldset>
-        </li>
-    )
+class BusinessCard extends Component {
+
+    // state = {
+    //     name: '',
+    //     web: '',
+    //     philosophy: '',
+    //     businessCard: ''
+    // }
+
+    acceptRequest = (event) => {
+        event.preventDefault()
+
+        logic.acceptRequest(this.props.idH, this.props.business.id, this.props.token)
+            .then(() => true)
+    }
+
+    render() {
+
+        const { request, business } = this.props
+
+        return (
+            <div className="card">
+                <div className="big">
+                    {
+                        request && (
+                            <div className="left">
+                                <div className="foto card">
+                                    {business.businessCard}
+                                </div>
+                            </div>
+                        )
+                    }
+                    <div className="right without-card">
+                        <div>
+                            <div>{business.name}</div>
+                            <div>{business.philosophy}</div>
+                            <div>{business.web}</div>
+                        </div>
+                    </div>
+                    {
+                        request && (<div>
+                            <button onClick={this.acceptRequest} className="regular-button">Accept request</button>
+                        </div>)
+                    }
+                </div>
+            </div>
+        )
+    }
+
 }
 
 export default BusinessCard

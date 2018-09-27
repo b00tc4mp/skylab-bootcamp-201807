@@ -4,96 +4,40 @@ import logic from '../logic'
 import BusinessCard from '../components/BusinessCard'
 import HomeButton from '../components/HomeButton'
 
-class Business extends Component {
+class BusinessProfile extends Component {
     state = {
-        name: '',
-        philosophy: '',
-        web: '',
-        boss: '',
-        phone: '',
-        favs: [],
         business: '',
     }
 
     componentDidMount() {
-        logic.retrieveBusiness(this.props.email, this.props.token)
+        logic.retrieveBusiness(this.props.id, this.props.token)
             .then(business => {
                 this.setState({ business })
-
-
-                // const { name, philosophy, web, boss, phone, favs } = business
-                // this.setState({ name, phone, philosophy, web, boss, favs })
             })
     }
 
-    handleNewEvent = (event) => {
-        event.preventDefault()
-
-        this.props.history.push('/event/create')
-    }
-
-    goToProfile = (event) => {
-        event.preventDefault()
-
-        this.props.history.push('/business/profile')
-    }
-
-
     render() {
-        const { name, philosophy, web, boss, phone, favs } = this.state.business
-        // const { name, philosophy, web, boss, phone, favs } = this.state
+
+        const { name, web, boss, phone, philosophy, events, businessCard } = this.state
+        const { business } = this.state
 
         return (
             <div>
-                <Header businessProfile={true} onLogout={this.props.onLogout} />
-                <div className="block">
-                    {
-                        name && (
-                            <div>
-                                <div >
-                                    <table className="table-business">
-                                        <tr>
-                                            <div>
-                                                <h1>&bull; {name.toUpperCase()} &bull;</h1>
-                                                <div>
-                                                    <p><span>Philosophy of {name}: </span></p>
-                                                    <p>{philosophy}</p>
-                                                    <p>{web}</p>
-                                                </div>
-                                                <Contact name={boss} phone={phone} email={this.props.email} />
-                                            </div>
-                                        </tr>
-                                        <tr>
-                                            <div>
-                                                <h1>&bull; EVENTS &bull;</h1>
-                                                <button onClick={this.handleNewEvent} className="landing-submit">CREATE EVENT</button>
-                                                {/* <p>Events on the past</p> */}
-                                            </div>
-                                        </tr>
-                                    </table>
-                                    {/* <div>
-                                        <h1>&bull; YOUR BEST HOSTESSES &bull;</h1>
-                                        <ul>
-                                            {favs.map(favorit => {
-                                                return <li>{favorit.name}</li>
-                                            })}
-                                        </ul>
-                                    </div> */}
-                                </div>
-                            </div>
-                        )
-                    }
-                    {
-                        !name && (<div>
-                            <div  className="flex-box-complete">Complete your profile please</div>
-                            <button onClick={this.goToProfile} className="landing-submit">EDIT PROFILE</button>
-                        </div>
-                        )
-                    }
+                <div className="big">
+                    <div className="left">
+                        <div>{businessCard}</div>
+                    </div>
+                    <div className="right">
+                        <BusinessCard business={business} />
+                        <div>Contact details</div>
+                        <div>{business.boss}</div>
+                        <div>{business.phone}</div>
+                        
+                    </div>
                 </div>
             </div>
         )
     }
 }
 
-export default withRouter(Business)
+export default withRouter(BusinessProfile)
