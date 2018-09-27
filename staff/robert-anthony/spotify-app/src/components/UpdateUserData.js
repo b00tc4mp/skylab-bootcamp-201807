@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import Feedback from './Feedback'
+import logic from '../logic'
 
 class UpdateUserData extends Component {
-    state = {  password: null, nUserName: null,nPassword:null}
+    state = { username:logic.userUsername, password: null, nUserName: null,nPassword:null}
 
     storePassword = event => this.setState({ password: event.target.value })
 

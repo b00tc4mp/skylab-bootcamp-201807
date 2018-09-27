@@ -1,0 +1,74 @@
+.mt-5.container .row h2.page-mainTitle {
+  color: orangered;
+  letter-spacing: .2em;
+  font-weight: 700;
+  margin-bottom: 20px;
+  font-family: "Sunflower", sans-serif; }
+
+/*
+
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 80px;
+}
+
+.App-header {
+  background-color: #222;
+  height: 150px;
+  padding: 20px;
+  color: white;
+}
+
+.App-title {
+  font-size: 1.5em;
+}
+
+.App-intro {
+  font-size: large;
+}
+
+@keyframes App-logo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+*/
+.imageProfile {
+  width: 70px;
+  height: 70px;
+  margin-top: -15; }
+
+.navLinks {
+  margin-top: 13px;
+  font-size: 20px; }
+
+.navbar-maindiv {
+  background: url(/images/rembrandt.jpg);
+  background-repeat: repeat-y;
+  background-size: cover; }
+  .navbar-maindiv .bg-dark {
+    background: transparent; }
+  .navbar-maindiv .navbar.navbar-expand-md a.navbar-brand {
+    font-size: 3em;
+    letter-spacing: .2em;
+    font-family: "Sunflower", sans-serif;
+    font-weight: 900;
+    color: orangered; }
+  .navbar-maindiv .navbar.navbar-expand-md .nav-item a.navLinks.nav-link {
+    color: #eeeeee; }
+    .navbar-maindiv .navbar.navbar-expand-md .nav-item a.navLinks.nav-link:hover {
+      color: #ff6e1f; }
+
+/*
+
+font-family: 'Slackey', cursive;
+font-family: 'Baloo Tamma', cursive;
+font-family: 'Sonsie One', cursive;
+font-family: 'Diplomata SC', cursive;
+font-family: 'Kumar One', cursive;
+*/
+
+/*# sourceMappingURL=NavBar.css.map */

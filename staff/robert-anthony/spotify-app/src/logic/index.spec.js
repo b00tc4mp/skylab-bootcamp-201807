@@ -30,7 +30,7 @@ describe('logic (spotify-app)', () => {
 
                         expect(logic._userId).toBe(userId)
                         expect(logic._userToken).toBeDefined()
-                        expect(logic._userUsername).toBe(username)
+                        expect(logic.userUsername).toBe(username)
                     })
             })
         })
@@ -62,36 +62,37 @@ describe('logic (spotify-app)', () => {
             it('should logout correctly', () => {
                 expect(logic._userId).toBeDefined()
                 expect(logic._userToken).toBeDefined()
-                expect(logic._userUsername).toBeDefined()
+                expect(logic.userUsername).toBeDefined()
 
                 logic.logout()
 
                 expect(logic._userId).toBeNull()
                 expect(logic._userToken).toBeNull()
-                expect(logic._userUsername).toBeNull()
+                expect(logic.userUsername).toBeNull()
             })
         })
 
       describe('update user', () => {
-        const username = 'robert-anthony-' + Math.random()
-        const password = '123'
-        const newUsername = "bubbles-" + Math.random();
-        const newPassword = "onehundred"
+        let username,password,newUsername,newPassword;
 
         beforeEach(() => {
+           username = 'robert-anthony-' + Math.random()
+           password = '123'
+           newUsername = "bubbles-" + Math.random();
+           newPassword = "onehundred" + Math.random();
           return logic.registerUser(username, password)
             .then(() => logic.loginUser(username, password))
             .catch(console.error)
         })
 
-        it('should update correctly', () => {
+        it('should update username and password correctly', () => {
           expect(logic._userId).toBeDefined()
           expect(logic._userToken).toBeDefined()
-          expect(logic._userUsername).toBeDefined()
+          expect(logic.userUsername).toBeDefined()
          return logic.updateUser(password,newUsername,newPassword)
            .then((res) => {
              expect(res).toBeTruthy();
-             expect(logic._userUsername).toBe(newUsername);
+            expect(logic.userUsername).toBe(newUsername);
            }).then(()=> {
              return logic.loginUser(newUsername,newPassword)
                .then((res) => {
@@ -100,6 +101,41 @@ describe('logic (spotify-app)', () => {
            }).catch(console.error)
 
         })
+
+        it('should update username  correctly', () => {
+          expect(logic._userId).toBeDefined()
+          expect(logic._userToken).toBeDefined()
+          expect(logic.userUsername).toBeDefined()
+         return logic.updateUser(password,newUsername,undefined)
+           .then((res) => {
+             expect(res).toBeTruthy();
+            expect(logic.userUsername).toBe(newUsername);
+           }).then(()=> {
+             return logic.loginUser(newUsername,password)
+               .then((res) => {
+                 expect(res).toBeTruthy()
+               });
+           }).catch(console.error)
+
+        })
+
+        it('should update password  correctly', () => {
+          expect(logic._userId).toBeDefined()
+          expect(logic._userToken).toBeDefined()
+          expect(logic.userUsername).toBeDefined()
+          return logic.updateUser(password,undefined,newPassword)
+            .then((res) => {
+              expect(res).toBeTruthy();
+              expect(logic.userUsername).toBe(username);
+            }).then(()=> {
+              return logic.loginUser(username,newPassword)
+                .then((res) => {
+                  expect(res).toBeTruthy()
+                });
+            }).catch(console.error)
+
+        })
+
       })
 
 
@@ -120,7 +156,7 @@ describe('logic (spotify-app)', () => {
     it('should store an array of data correctly', () => {
       expect(logic._userId).toBeDefined()
       expect(logic._userToken).toBeDefined()
-      expect(logic._userUsername).toBeDefined()
+      expect(logic.userUsername).toBeDefined()
       return logic.storeUserData(dataFieldName,dataArray)
         .then((res) => {
           expect(res).toBeTruthy();
@@ -136,7 +172,7 @@ describe('logic (spotify-app)', () => {
     it('should store object data correctly', () => {
       expect(logic._userId).toBeDefined()
       expect(logic._userToken).toBeDefined()
-      expect(logic._userUsername).toBeDefined()
+      expect(logic.userUsername).toBeDefined()
       return logic.storeUserData(dataFieldName,dataObj)
         .then((res) => {
           expect(res).toBeTruthy();
@@ -174,7 +210,7 @@ describe('logic (spotify-app)', () => {
     it('should retrieve an array of data correctly', () => {
       expect(logic._userId).toBeDefined()
       expect(logic._userToken).toBeDefined()
-      expect(logic._userUsername).toBeDefined()
+      expect(logic.userUsername).toBeDefined()
       return logic.retrieveUserData(dataFieldNameArray)
         .then((res) => {
           expect(res).toEqual(dataArray);
@@ -187,7 +223,7 @@ describe('logic (spotify-app)', () => {
     it('should retrieve object data correctly', () => {
       expect(logic._userId).toBeDefined()
       expect(logic._userToken).toBeDefined()
-      expect(logic._userUsername).toBeDefined()
+      expect(logic.userUsername).toBeDefined()
       return logic.retrieveUserData(dataFieldNameObject)
         .then((res) => {
           expect(res).toEqual(dataObj);

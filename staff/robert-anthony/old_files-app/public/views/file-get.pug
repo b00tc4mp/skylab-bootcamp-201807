@@ -1,0 +1,39 @@
+extends base_layout
+
+block content_block
+    | &nbsp;&nbsp;&nbsp;
+    a(href='/files/newfolder') add folder
+
+
+    if session.currentUserDirectory !== ""
+        br
+        | &nbsp;&nbsp;&nbsp;
+        a(href='/files/updirectory') up 1 level
+        i.fas.fa-arrow-up
+
+    | &nbsp;
+    - const cd = session.currentUserDirectory === "" ? "/" : session.currentUserDirectory
+    p Current Directory: #{cd}
+    | &nbsp;
+    ul
+       each file in fileList
+            li
+                a(href=`/fileclick/${file.name}`)  #{file.name}
+                if file.isDir
+                    | &nbsp;
+                    i.far.fa-folder
+                else
+                    | &nbsp;
+                    a(href=`/delete/${file.name}`): i.far.fa-trash-alt
+       else
+           p no files
+
+    if (session.filesError)
+        h2.error #{session.filesError}
+
+    button
+        label(for='upload') Choose a file
+    form(action='/files' method='post' enctype='multipart/form-data' )
+        input#upload(type='file' name='upload' placeholder='' autofocus='')
+        button(type='submit') upload
+
